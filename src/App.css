@@ -1,26 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');
-/* @font-face {
-  font-family: 'THARWAT EMARA RUQAA LIGHT';
-  src: url('../src/assest/fonts/alfont_com_ArbFONTS-THARWATEMARARUQAALIGHT.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-} */
+
+/* General Styles */
 body.modal-open {
   overflow: hidden;
 }
-body { direction: rtl ; }
-/**
-* Template Name: iPortfolio
-* Updated: Jul 27 2023 with Bootstrap v5.3.1
-* Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
 body {
+  direction: rtl;
   font-family: 'Cairo', sans-serif;
   color: #272829;
 }
@@ -78,6 +64,24 @@ h6 {
 }
 
 /*--------------------------------------------------------------
+# TopNav
+--------------------------------------------------------------*/
+.top-nav-container{
+  background: #f8f9fa;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}
+  .dropdown-top-nav-item {
+    /* Adjust the left padding of the dropdown as needed */
+    padding-left: 55px;
+    /* Add other styles for the dropdown menu as needed */
+  }
+
+
+
+
+
+/*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
 #header {
@@ -96,16 +100,13 @@ h6 {
 direction:rtl;
   overflow-y: auto;
 }
-/* Add this to your CSS file */
-.header-hidden {
-  display: none;
-}
-
 .header-visible {
   display: block;
 }
 
-
+.header-hidden {
+  display: none;
+}
 #header .profile img {
   margin:15px auto;
   display: block;
@@ -151,7 +152,7 @@ direction:rtl;
 }
 
 #main {
-  margin-right: 300px;
+  margin-right: 50px;
 }
 
 .container,
@@ -166,7 +167,7 @@ direction:rtl;
   }
 
   #main {
-    margin-right: 0;
+    margin-right: 150;
   }
 
   .container,
@@ -175,6 +176,23 @@ direction:rtl;
     padding-left: 12px;
   }
 }
+/* تحديد ظهور الشريط الجانبي على الهواتف المحمولة */
+@media (max-width: 767px) {
+  #header {
+    right: 0;
+  }
+
+  #main {
+    margin: auto;
+  }
+
+  .container,
+  .container-fluid {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+
 /* Desktop Navigation */
 .nav-menu {
   padding-top: 30px;
@@ -1118,7 +1136,7 @@ section {
   width: 100%;
   z-index: 9999;
   text-align: center;
-  background: #040b14;
+  background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
 }
 
 #footer .container {

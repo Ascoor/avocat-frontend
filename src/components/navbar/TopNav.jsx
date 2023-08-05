@@ -27,8 +27,8 @@ const TopNav = ({ userId, logoutUser }) => {
 
   return (
     <div className="top-nav-container">
-      <Nav as="ul" className="justify-content-center pt-2">
-        <Nav.Item as="li">
+      <Nav as="ul" className="justify-content-end pt-2">
+        <Nav.Item as="li" className="nav-item-auth">
           <NavDropdown
             title={<BiBell />}
             id="notification-dropdown"
@@ -41,8 +41,9 @@ const TopNav = ({ userId, logoutUser }) => {
             <NavDropdown.Item>Separated link</NavDropdown.Item>
           </NavDropdown>
         </Nav.Item>
-        <Nav.Item as="li">
+        <Nav.Item as="li" className="nav-item-auth">
           <NavDropdown
+          className="dropdown-top-nav-item"
             title={<BiUser />}
             id="profile-dropdown"
             show={profileDropdownVisible}

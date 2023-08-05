@@ -146,6 +146,7 @@ export default function LegCaseCreate ({ legCaseId, isEditing }) {
     };
 
     return (
+        <>
         <Card className="shadow py-4">
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Card.Header>
@@ -498,5 +499,6 @@ export default function LegCaseCreate ({ legCaseId, isEditing }) {
                 </Card.Body>
             </Form>
         </Card>
+        </>
     );
 }

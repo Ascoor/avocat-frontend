@@ -397,7 +397,7 @@ const CourtSetting = () => {
         setShowConfirmationModal(false);
     };
     return (
-        <div>
+<>
             <Row>
 
             <Row>
@@ -886,7 +886,7 @@ const CourtSetting = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </>
     );
 };
 export default CourtSetting;

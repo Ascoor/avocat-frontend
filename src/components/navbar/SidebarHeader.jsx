@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from "react";
+import  { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo2.png";
-import { useTransition, animated } from "@react-spring/web";
+import { useTransition, animated, config } from "@react-spring/web";
+import { MdOutlineDashboard, MdSpaceDashboard } from "react-icons/md";
 
 const SidebarHeader = () => {
-  const [headerVisible, setHeaderVisible] = useState(true);
-
-  const transitions = useTransition(headerVisible, {
-    from: { opacity: 0, transform: "translateX(100%)" },
-    enter: { opacity: 1, transform: "translateX(0%)" },
-    leave: { opacity: 0, transform: "translateX(100%)" },
-    config: { duration: 300 } // Adjust the duration as needed
-  });
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const [mouseOver, setMouseOver] = useState(false);
 
   // Function to toggle header visibility
   const toggleHeaderVisibility = () => {
@@ -20,21 +15,30 @@ const SidebarHeader = () => {
 
   useEffect(() => {
     const loadingDelay = setTimeout(() => {
-      setHeaderVisible(false); // Hide the header after some idle time
-    }, 3000); // Change the value according to your preference
+      if (!mouseOver && headerVisible) {
+        setHeaderVisible(false); // Hide the header if mouse is not over and it's visible
+      }
+    }, 1000); // Change the value according to your preference
 
     return () => clearTimeout(loadingDelay);
-  }, []);
+  }, [mouseOver, headerVisible]);
 
-  // Reset the header visibility on mouse move over the header
   const handleHeaderMouseEnter = () => {
     setHeaderVisible(true);
+    setMouseOver(true);
   };
 
   // Hide the header on mouse leave from the header area
   const handleHeaderMouseLeave = () => {
-    setHeaderVisible(false);
+    setMouseOver(false);
   };
+
+  const transitions = useTransition(headerVisible, {
+    from: { opacity: 0, transform: "translateX(100%)" },
+    enter: { opacity: 1, transform: "translateX(0%)" },
+    leave: { opacity: 0, transform: "translateX(100%)" },
+    config: config.default,
+  });
 
   const getUserName = () => {
     const userString = sessionStorage.getItem("user");
@@ -44,25 +48,27 @@ const SidebarHeader = () => {
 
   return (
     <>
-      <div className="mobile-nav-toggle" onClick={toggleHeaderVisibility}>
-        {/* Use the imported icons instead of <i> */}
-        {transitions((styles, item) =>
-          item ? (
-            <animated.div style={styles}>
-              <BiList size={24} />
-            </animated.div>
-          ) : (
-            <animated.div style={styles}>
-              <BiX size={24} />
-            </animated.div>
-          )
-        )}
+      <div
+        className="mobile-nav-toggle"
+        onClick={toggleHeaderVisibility}
+        onMouseEnter={handleHeaderMouseEnter}
+        onMouseLeave={handleHeaderMouseLeave}
+      >
+        {transitions((styles, item) => (
+          <animated.div style={styles}>
+            {item ? (
+              <MdSpaceDashboard size={24} />
+            ) : (
+              <MdOutlineDashboard size={24} />
+            )}
+          </animated.div>
+        ))}
       </div>
-
       {transitions((styles, item) => (
         <animated.div
           id="header"
-          style={{ ...styles, display: item ? "block" : "none" }}
+          className={item ? "header-visible" : "header-hidden"}
+          style={styles}
           onMouseEnter={handleHeaderMouseEnter}
           onMouseLeave={handleHeaderMouseLeave}
         >
@@ -74,12 +80,6 @@ const SidebarHeader = () => {
               </h1>
             </div>
 
-            <div className="profile">
-            <img src={logo} alt="" className="img-fluid rounded-circle" />
-            <h1 className="text-light">
-              <Link to="/">المستشار/{getUserName()} </Link>
-            </h1>
-          </div>
 
           <nav id="navbar" className="nav-menu navbar">
             <ul>
