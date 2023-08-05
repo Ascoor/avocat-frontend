@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import {useState } from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import { useSpring, animated } from "@react-spring/web";
+import Pagination from '../home_tools/Pagination'
+import PropTypes from "prop-types";
+const LegCaseSearch = ({ searchResults, casesPerPage, currentPage, paginate }) => {
+  
 
-const LegCaseSearch = ({ searchResults }) => {
-    const [currentPage, setCurrentPage] = useState(1);
     const [showAlert, setShowAlert] = useState(false);
-    const [casesPerPage] = useState(5);
+  
 
     const handleSpringProps = useSpring({
         from: { rotation: 0 },
@@ -13,38 +15,7 @@ const LegCaseSearch = ({ searchResults }) => {
         config: { tension: 200, friction: 10 },
     });
 
-    const Pagination = ({ casesPerPage, totalCases, paginate, currentPage }) => {
-        const pageNumbers = [];
-
-        for (let i = 1; i <= Math.ceil(totalCases / casesPerPage); i++) {
-            pageNumbers.push(i);
-        }
-
-        return (
-            <nav>
-                <ul className="pagination">
-                    {pageNumbers.map((number) => (
-                        <li key={number} className="page-item">
-                            <a
-                                onClick={() => paginate(number)}
-                                href="#!"
-                                className={`page-link ${currentPage === number ? "active" : ""}`}
-                            >
-                                {number}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-        );
-    };
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    if (!searchResults) {
-        return null; // Handle case when searchResults is not yet defined
-    }
-
+  
     const indexOfLastCase = currentPage * casesPerPage;
     const indexOfFirstCase = indexOfLastCase - casesPerPage;
     const currentCases = searchResults.slice(indexOfFirstCase, indexOfLastCase);
@@ -127,5 +98,12 @@ const LegCaseSearch = ({ searchResults }) => {
         </Row>
     );
 };
+LegCaseSearch.propTypes = {
+    searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+    casesPerPage: PropTypes.number.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    paginate: PropTypes.func.isRequired,
+};
 
-export default LegCaseSearch;
+  
+  export default LegCaseSearch;

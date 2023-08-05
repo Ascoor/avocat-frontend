@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import {useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FcBusinessman, FcLibrary, FcOvertime, FcBriefcase } from "react-icons/fc";
-
+import PropTypes from 'prop-types';
 import { ClientIcon, DashBoard } from '../assets/icons';
 import { Card, Row, Col, Button, Form } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
@@ -46,8 +46,8 @@ const useIconCardAnimation = () => {
 };
 const EventCard = ({ title, color, count, icon }) => {
     const { cardSpringStyles, handleHover, handleHoverEnd } = useIconCardAnimation();
-
     return (
+  
         <animated.div
             style={cardSpringStyles}
             onMouseEnter={handleHover}
@@ -92,6 +92,10 @@ const Home = () => {
     const [showResults, setShowResults] = useState(false); // State to determine whether search results should be displayed or not
     const [searchType, setSearchType] = useState('clients'); // State to store the selected search type
     const [events, setEvents] = useState([]);
+    
+// State to manage the current page and cases per page
+const [currentPage, setCurrentPage] = useState(1);
+const casesPerPage = 5; // Change this value as per your requirement
     useEffect(() => {
         axios.get(`${API_CONFIG.baseURL}/api/agenda-events`)
             .then(response => {
@@ -119,7 +123,7 @@ const Home = () => {
         }
     };
 
-
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
     const handleFormSubmit = async (e) => {
@@ -127,35 +131,35 @@ const Home = () => {
         handleSearch();
     };
 
-    const handleSearch = async () => {
-        setShowResults(true); // Show search results
-
-        try {
-            let endpoint = '';
-
-            if (searchType === 'clients') {
-                endpoint = `${API_CONFIG.baseURL}/api/client-search`;
-            } else if (searchType === 'legCases') {
-                endpoint = `${API_CONFIG.baseURL}/api/leg-case-search`;
-            }
-
-            const response = await axios.get(endpoint, {
-                params: {
-                    query: searchText,
-                },
-            });
-
-
-            setSearchResults(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
 
     const handleSearchInputChange = (e) => {
         setSearchText(e.target.value);
     };
+
+   const handleSearch = async () => {
+       setShowResults(true); // Show search results
+
+       try {
+           let endpoint = '';
+
+           if (searchType === 'clients') {
+               endpoint = `${API_CONFIG.baseURL}/api/client-search`;
+           } else if (searchType === 'legCases') {
+               endpoint = `${API_CONFIG.baseURL}/api/leg-case-search`;
+           }
+
+           const response = await axios.get(endpoint, {
+               params: {
+                   query: searchText,
+               },
+           });
+
+           setSearchResults(response.data);
+       } catch (error) {
+           console.log(error);
+       }
+   };
 
     return (
 
@@ -274,7 +278,6 @@ const Home = () => {
                             </Form>
                         </Card.Body>
                     </Card>
-
                     {showResults && (
                         <Card className="mt-3">
                             <Card.Header className="home-text-center">
@@ -284,7 +287,12 @@ const Home = () => {
                                 {searchType === 'clients' ? (
                                     <ClientSearch searchResults={searchResults} />
                                 ) : (
-                                    <LegCaseSearch searchResults={searchResults} />
+                                    <LegCaseSearch
+                                        searchResults={searchResults}
+                                        casesPerPage={casesPerPage}
+                                        currentPage={currentPage}
+                                        paginate={paginate} // Pass the paginate function as a prop
+                                    />
                                 )}
                             </Card.Body>
                         </Card>
@@ -316,6 +324,12 @@ const Home = () => {
 
 </>
     );
+};
+EventCard.propTypes = {
+    title: PropTypes.string.isRequired, // title prop should be a string and is required
+    color: PropTypes.string.isRequired, // color prop should be a string and is required
+    count: PropTypes.string.isRequired, // count prop should be a string and is required
+    icon: PropTypes.node.isRequired, // icon prop can be any valid React node and is required
 };
 
 export default Home;

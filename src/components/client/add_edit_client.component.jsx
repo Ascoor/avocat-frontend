@@ -139,6 +139,7 @@ const AddEditClient = () => {
     };
 
     return (
+        <>
         <Card className="p-2">
             <Card.Header>
                 <div className="custom-card-header">
@@ -349,6 +350,7 @@ const AddEditClient = () => {
                 </Form>
             </Card.Body>
         </Card>
+        </>
     );
 };
 

@@ -1,29 +1,51 @@
-import React, { useState, useEffect } from "react";
-import {CourtIcon} from '../../assets/icons';
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { FcFullTrash } from "react-icons/fc";
+import Pagination from "../home_tools/Pagination"; // Assuming you have a Pagination component
+import { CourtIcon } from "../../assets/icons";
 import {
-    Row,
-    Col,
-    Button,
-    Modal,
-    Form,
-    Card,
-    Alert,
-    ButtonGroup,
-    Pagination,
+  Row,
+  Col,
+  Button,
+  Modal,
+  Form,
+  Card,
+  Alert,
+  ButtonGroup,
 } from "react-bootstrap";
 import API_CONFIG from "../../config";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import { FcFullTrash } from 'react-icons/fc';
 
-const CourtSetting = () => {
-    // Court Type data (replace with actual data from API or state)
+
+const CourtSetting = ({
+    items,
+    itemsPerPage,
+    currentPage,
+  }) => {
+    // الحالة الخاصة بإظهار وإخفاء النماذج
+    const [showAddCourtTypeModal, setShowAddCourtTypeModal] = useState(false);
+    const [showAddCourtLevelModal, setShowAddCourtLevelModal] = useState(false);
+    const [showAddCourtSubTypeModal, setShowAddCourtSubTypeModal] = useState(false);
+    const [showAddCourtModal, setShowAddCourtModal] = useState(false);
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  
+    // الحالة الخاصة بإدخالات النماذج
+    const [newCourtTypeName, setNewCourtTypeName] = useState('');
+    const [newCourtLevelName, setNewCourtLevelName] = useState('');
+    const [newCourtSubTypeName, setNewCourtSubTypeName] = useState('');
+    const [newCourtTypeId, setNewCourtTypeId] = useState('');
+    const [newCourtSubTypeId, setNewCourtSubTypeId] = useState('');
+    const [newCourtLevelId, setNewCourtLevelId] = useState('');
+    const [newCourtName, setNewCourtName] = useState('');
+    const [newCourtAddress, setNewCourtAddress] = useState('');
+  
+    // الحالة الخاصة بعرض التنبيهات
     const [showAlert, setShowAlert] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
+    const [alertMessage, setAlertMessage] = useState('');
     const [deleteSuccess, setDeleteSuccess] = useState(false);
     const [deleteError, setDeleteError] = useState(false);
-    const [deleteItem, setDeleteItem] = useState({});
-    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+    const [deleteItem, setDeleteItem] = useState(null);
     const [showMessage, setShowMessage] = useState(false);
     const [message, setMessage] = useState("");
 
@@ -34,27 +56,13 @@ const CourtSetting = () => {
     const [courtLevels, setCourtLevels] = useState([]);
     const [courts, setCourts] = useState([]);
 
-    const [showAddCourtTypeModal, setShowAddCourtTypeModal] = useState(false);
-    const [showAddCourtSubTypeModal, setShowAddCourtSubTypeModal] =
-        useState(false);
-    const [showAddCourtLevelModal, setShowAddCourtLevelModal] = useState(false);
-    const [showAddCourtModal, setShowAddCourtModal] = useState(false);
-    const [newCourtTypeName, setNewCourtTypeName] = useState("");
-    const [newCourtSubTypeName, setNewCourtSubTypeName] = useState("");
-    const [newCourtLevelName, setNewCourtLevelName] = useState("");
-    const [newCourtName, setNewCourtName] = useState("");
-    const [newCourtTypeId, setNewCourtTypeId] = useState("");
-    const [newCourtSubTypeId, setNewCourtSubTypeId] = useState("");
-    const [newCourtLevelId, setNewCourtLevelId] = useState("");
-    const [newCourtAddress, setNewCourtAddress] = useState("");
     const [error, setError] = useState(null);
     const [courtTypesPage, setCourtTypesPage] = useState(1);
     const [courtLevelsPage, setCourtLevelsPage] = useState(1);
     const [courtSubTypesPage, setCourtSubTypesPage] = useState(1);
     const [courtTypeSubTypes, setCourtTypeSubTypes] = useState(1);
     const [courtsPage, setCourtsPage] = useState(1);
-    const itemsPerPage = 30;
-
+  
     useEffect(() => {
         const fetchCourtTypeSubTypes = async () => {
             try {
@@ -129,59 +137,13 @@ const CourtSetting = () => {
         setSelectedCourtTypeId(selectedTypeId);
         setNewCourtTypeId(selectedTypeId);
     };
-
-    const handleCourtTypesPageChange = (page) => {
+    const handlePageChange = (page) => {
         setCourtTypesPage(page);
-    };
-
-    const handleCourtLevelsPageChange = (page) => {
         setCourtLevelsPage(page);
-    };
-
-    const handleCourtSubTypesPageChange = (page) => {
         setCourtSubTypesPage(page);
-    };
-
-    const handleCourtsPageChange = (page) => {
         setCourtsPage(page);
-    };
-
-    const PaginationComponent = ({
-        items,
-        itemsPerPage,
-        currentPage,
-        onPageChange,
-    }) => {
-        const totalPages = Math.ceil(items.length / itemsPerPage);
-
-        const handleClick = (page) => {
-            if (typeof onPageChange === "function") {
-                onPageChange(page);
-            }
-        };
-
-        return (
-            <Pagination>
-                <Pagination.Prev
-                    onClick={() => handleClick(currentPage - 1)}
-                    disabled={currentPage === 1}
-                />
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <Pagination.Item
-                        key={index + 1}
-                        active={index + 1 === currentPage}
-                        onClick={() => handleClick(index + 1)}
-                    >
-                        {index + 1}
-                    </Pagination.Item>
-                ))}
-                <Pagination.Next
-                    onClick={() => handleClick(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                />
-            </Pagination>
-        );
-    };
+        // قد تحتاج إلى تنفيذ بعض الأكواد الإضافية هنا لاستعادة البيانات الجديدة بناءً على الصفحة الجديدة.
+      };
 
     const handleAddCourtSubType = () => {
         fetch(`${API_CONFIG.baseURL}/api/court_sub_types/`, {
@@ -201,11 +163,12 @@ const CourtSetting = () => {
                 setNewCourtSubTypeName("");
                 setNewCourtTypeId("");
                 setShowAlert(true);
-                setAlertMessage("تمت إضافة نوع المحكمة الفرعية بنجاح.");
+                setAlertMessage(`تمت إضافة نوع المحكمة الفرعية بنجاح. البيانات: ${JSON.stringify(data)}`);
                 setTimeout(() => {
                     setShowAlert(false);
                 }, 5000);
             })
+            
             .catch((error) => {
                 setError("حدث خطأ في إضافة نوع المحكمة الفرعية");
                 console.error("حدث خطأ في إضافة نوع المحكمة الفرعية: ", error);
@@ -233,11 +196,12 @@ const CourtSetting = () => {
                 setShowAddCourtLevelModal(false);
                 setNewCourtLevelName("");
                 setShowAlert(true);
-                setAlertMessage("تمت إضافة مستوى المحكمة بنجاح.");
+                setAlertMessage(`تمت إضافة مستوى المحكمة بنجاح. البيانات: ${JSON.stringify(data)}`);
                 setTimeout(() => {
                     setShowAlert(false);
                 }, 5000);
             })
+            
             .catch((error) => {
                 setError("حدث خطأ في إضافة مستوى المحكمة");
                 console.error("حدث خطأ في إضافة مستوى المحكمة: ", error);
@@ -273,11 +237,12 @@ const CourtSetting = () => {
                 setNewCourtLevelId("");
                 setNewCourtAddress("");
                 setShowAlert(true);
-                setAlertMessage("تمت إضافة المحكمة بنجاح.");
+                setAlertMessage(`تمت إضافة المحكمة بنجاح. البيانات: ${JSON.stringify(data)}`);
                 setTimeout(() => {
                     setShowAlert(false);
                 }, 5000);
             })
+            
             .catch((error) => {
                 setError("حدث خطأ في إضافة المحكمة");
                 console.error("حدث خطأ في إضافة المحكمة: ", error);
@@ -305,11 +270,12 @@ const CourtSetting = () => {
                 setShowAddCourtTypeModal(false);
                 setNewCourtTypeName("");
                 setShowAlert(true);
-                setAlertMessage("تمت إضافة نوع المحكمة بنجاح.");
+                setAlertMessage(`تمت إضافة نوع المحكمة بنجاح. البيانات: ${JSON.stringify(data)}`);
                 setTimeout(() => {
                     setShowAlert(false);
                 }, 5000);
             })
+            
             .catch((error) => {
                 setError("حدث خطأ في إضافة نوع المحكمة");
                 console.error("حدث خطأ في إضافة نوع المحكمة: ", error);
@@ -409,23 +375,24 @@ const CourtSetting = () => {
             </Row>
 
             <Row>
-                {showAlert && (
-                    <div className="alert alert-success" role="alert">
-                        {alertMessage}
-                        {showMessage}
-                        {message}
-                    </div>
-                )}
-                {deleteSuccess && (
-                    <Alert variant="success" onClose={() => setDeleteSuccess(false)} dismissible>
-                        تم  {deleteItem.tableName} "{deleteItem.value}" بنجاح.
-                    </Alert>
-                )}
-                {deleteError && (
-                    <Alert variant="danger" onClose={() => setDeleteError(false)} dismissible>
-                        فشل في  {deleteItem.tableName} "{deleteItem.value}". الرجاء المحاولة مرة أخرى لاحقًا.
-                    </Alert>
-                )}
+            {showAlert && (
+  <div className="alert alert-success" role="alert">
+    {alertMessage}
+    {showMessage && <p>{message}</p>}
+  </div>
+)}
+{deleteSuccess && (
+  <Alert variant="success" onClose={() => setDeleteSuccess(false)} dismissible>
+    تم حذف {deleteItem.message} &quot;{deleteItem.value}&quot; بنجاح.
+  </Alert>
+)}
+{deleteError && (
+  <Alert variant="danger" onClose={() => setDeleteError(false)} dismissible>
+    فشل في حذف {deleteItem.message} &quot;{deleteItem.value}&quot;. الرجاء المحاولة مرة أخرى لاحقًا.
+  </Alert>
+)}
+
+
             </Row>
             <Col className="text-center">
                     {error && <Alert variant="danger">{error}</Alert>}
@@ -489,12 +456,8 @@ const CourtSetting = () => {
                                 </Card.Body>
                                 <Row>
                                     <Card.Footer>
-                                        <PaginationComponent
-                                            items={courtTypes}
-                                            itemsPerPage={itemsPerPage}
-                                            currentPage={courtTypesPage}
-                                            onPageChange={handleCourtTypesPageChange}
-                                        />
+<Pagination items={items} currentPage={currentPage} onPageChange={handlePageChange} itemsPerPage={itemsPerPage} />
+
                                     </Card.Footer>
                                 </Row>
                             </Col>
@@ -540,12 +503,8 @@ const CourtSetting = () => {
                             </Table>
                         </Card.Body>
                         <Card.Footer>
-                            <PaginationComponent
-                                items={courtLevels}
-                                itemsPerPage={itemsPerPage}
-                                currentPage={courtLevelsPage}
-                                onPageChange={handleCourtLevelsPageChange}
-                            />
+                <Pagination items={items} currentPage={currentPage} onPageChange={handlePageChange} itemsPerPage={itemsPerPage} />
+
                         </Card.Footer>
                     </Col>
                 </Row>
@@ -590,12 +549,9 @@ const CourtSetting = () => {
                             </Table>
                         </Card.Body>
                         <Card.Footer>
-                            <PaginationComponent
-                                items={courtSubTypes}
-                                itemsPerPage={itemsPerPage}
-                                currentPage={courtSubTypesPage}
-                                onPageChange={handleCourtSubTypesPageChange}
-                            />
+                        
+<Pagination items={items} currentPage={currentPage} onPageChange={handlePageChange} itemsPerPage={itemsPerPage} />
+
                         </Card.Footer>
                     </Col>
                 </Row>
@@ -646,12 +602,7 @@ const CourtSetting = () => {
                 <Card.Footer>
                     <Row>
                         <Col>
-                            <PaginationComponent
-                                items={courts}
-                                itemsPerPage={itemsPerPage}
-                                currentPage={courtsPage}
-                                onPageChange={handleCourtsPageChange}
-                            />
+                        <Pagination items={items} currentPage={currentPage} onPageChange={handlePageChange} itemsPerPage={itemsPerPage} />
                         </Col>
                     </Row>
                 </Card.Footer>
@@ -661,7 +612,8 @@ const CourtSetting = () => {
                 onHide={() => setShowAddCourtTypeModal(false)}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>إضافة نوع المحكمة</Modal.Title>
+                <Modal.Title>إضافة نوع المحكمة</Modal.Title>
+
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -693,7 +645,7 @@ const CourtSetting = () => {
                 onHide={() => setShowAddCourtSubTypeModal(false)}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>إضافة نوع المحكمة الفرعي</Modal.Title>
+                <Modal.Title>إضافة نوع المحكمة الفرعي</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -868,14 +820,16 @@ const CourtSetting = () => {
 
             <Modal show={showConfirmationModal} onHide={handleCloseConfirmationModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>تأكيد الحذف</Modal.Title>
+
+<Modal.Title>تأكيد الحذف</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {deleteItem && (
-                        <p>
-                            هل أنت متأكد من  {deleteItem.message} "{deleteItem.value}"؟
-                        </p>
-                    )}
+                {deleteItem && (
+  <p>
+    هل أنت متأكد من حذف {deleteItem.message} &quot;{deleteItem.value}&quot;؟
+  </p>
+)}
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseConfirmationModal}>
@@ -889,4 +843,11 @@ const CourtSetting = () => {
         </>
     );
 };
+CourtSetting.propTypes = {
+    items: PropTypes.array.isRequired,
+    itemsPerPage: PropTypes.number.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    onPageChange: PropTypes.func.isRequired,
+  };
+
 export default CourtSetting;

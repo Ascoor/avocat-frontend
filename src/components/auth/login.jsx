@@ -5,10 +5,14 @@ import { FaSignInAlt } from "react-icons/fa";
 import AuthUser from "./AuthUser";
 import API_CONFIG from '../../config';
 import axios from "axios";
+import PropTypes from "prop-types";
 const Login = ({ handleCloseForm }) => {
     const navigate = useNavigate();
     const { setToken } = AuthUser();
 
+    Login.propTypes = {
+        handleCloseForm: PropTypes.func.isRequired,
+    };
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -98,4 +102,7 @@ const Login = ({ handleCloseForm }) => {
         </>
     );
 }
+Login.propTypes = {
+    handleCloseForm: PropTypes.func.isRequired,
+  }
 export default Login;

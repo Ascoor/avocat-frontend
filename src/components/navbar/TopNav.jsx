@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import {useState } from "react";
 import { Nav, NavDropdown } from "react-bootstrap";
 import { BiBell, BiUser } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";

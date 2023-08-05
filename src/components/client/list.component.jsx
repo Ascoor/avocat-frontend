@@ -1,4 +1,4 @@
-import React, { useState, Suspense,useEffect } from "react";
+import {useState, Suspense,useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Table, Alert, Card, Button, Row, Modal, Col } from "react-bootstrap";
@@ -6,7 +6,7 @@ import {ClientIcon} from "../../assets/icons";
 import API_CONFIG from '../../config';
 import { FcPlus } from "react-icons/fc";
 import { TiArrowBackOutline } from "react-icons/ti";
-
+import Pagination from '../home_tools/Pagination';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { AiFillIdcard, AiFillCalendar, AiFillPhone } from 'react-icons/ai';
@@ -46,32 +46,8 @@ export default function Clients () {
         }
     }, [location]);
 
-    const Pagination = ({ clientsPerPage, totalClients, paginate, currentPage }) => {
-        const pageNumbers = [];
-
-        for (let i = 1; i <= Math.ceil(totalClients / clientsPerPage); i++) {
-            pageNumbers.push(i);
-        }
-
-        return (
-            <nav>
-                <ul className="pagination">
-                    {pageNumbers.map((number) => (
-                        <li key={number} className="page-item">
-                            <a
-                                onClick={() => paginate(number)}
-                                href="#!"
-                                className={`page-link ${currentPage === number ? "active" : ""}`}
-                            >
-                                {number}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-        );
-    };
-
+  
+       
     const fetchClients = async () => {
         try {
             const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
@@ -255,11 +231,11 @@ export default function Clients () {
                     </Suspense>
                 </Table>
                 <Pagination
-                    clientsPerPage={clientsPerPage}
-                    totalClients={filteredClients.length}
-                    paginate={paginate}
-                    currentPage={currentPage}
-                />
+        clientsPerPage={clientsPerPage}
+        totalClients={filteredClients.length} // Pass the correct value for totalClients
+        paginate={paginate}
+        currentPage={currentPage}
+      />
             </Card>
             <Modal show={showModal} onHide={() => setShowModal(false)} dir="rtl">
                 <div className="court-setting-card-header">

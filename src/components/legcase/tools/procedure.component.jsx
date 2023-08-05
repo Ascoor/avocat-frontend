@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Table, Button, Modal, Row, Form } from "react-bootstrap";
 import { Alert } from "react-bootstrap";
@@ -6,7 +6,7 @@ import { BiPlusCircle } from "react-icons/bi";
 import useAuth from "../../auth/AuthUser";
 import API_CONFIG from "../../../config";
 import { BiPencil, BiTrash } from "react-icons/bi";
-
+import PropTypes from "prop-types";
 const Procedure = ({ legCaseId }) => {
     const { getUser } = useAuth();
     const [alert, setAlert] = useState(null);
@@ -219,8 +219,10 @@ const Procedure = ({ legCaseId }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {procedures.map((procedure, index) => (
+                    {procedures.map((procedure) => ( // Removed the unused 'index' variable
                             <tr key={procedure.id}>
+                       
+                
                                 <td>{procedure.procedure_type?.name}</td>
                                 <td>{procedure.court?.name}</td>
                                 <td>{procedure.job}</td>
@@ -415,5 +417,8 @@ const Procedure = ({ legCaseId }) => {
         </>
     );
 };
-
+Procedure.propTypes = {
+    legCaseId: PropTypes.string.isRequired,
+  };
+  
 export default Procedure;

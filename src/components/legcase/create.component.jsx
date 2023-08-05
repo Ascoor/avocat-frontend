@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiMinusCircle, BiPlusCircle } from "react-icons/bi";
+import PropTypes from 'prop-types';
 
 import {favicon} from "../../assets/icons";
 import { Form, Button, Card, Alert, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import useAuth from "../auth/AuthUser";
 import API_CONFIG from "../../config";
-
-export default function LegCaseCreate ({ legCaseId, isEditing }) {
+const LegCaseCreate = () => {
     const navigate = useNavigate();
+
+    const isEditing = true; // Replace 'true' with the appropriate value based on your use case
 
     const [slug, setSlug] = useState("");
     const [validated, setValidated] = useState(false);
@@ -151,7 +153,8 @@ export default function LegCaseCreate ({ legCaseId, isEditing }) {
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Card.Header>
                     <div className="custom-card-header">
-                        <h2>{isEditing ? "تعديل بيانات القضية" : "إضافة قضية"}</h2>
+                    <h2>{isEditing ? "تعديل بيانات القضية" : "إضافة قضية"}</h2>
+
                         <img src={favicon} alt="Icon" className="legCase-icon" />
                     </div>
                 </Card.Header>
@@ -502,3 +505,8 @@ export default function LegCaseCreate ({ legCaseId, isEditing }) {
         </>
     );
 }
+LegCaseCreate.propTypes = {
+    legCaseId: PropTypes.string,
+    isEditing: PropTypes.bool.isRequired,
+  };
+export default   LegCaseCreate;

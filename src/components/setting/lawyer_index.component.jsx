@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button, Card, Row, Modal } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";

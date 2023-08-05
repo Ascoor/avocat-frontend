@@ -3,24 +3,24 @@ import { useTransition, useSpring, animated } from "@react-spring/web";
 import { Card, Button, Container, Spinner } from "react-bootstrap";
 import { RiLoginCircleLine, RiUserAddLine } from "react-icons/ri";
 import { Collapse } from "bootstrap/dist/js/bootstrap.bundle";
-
 import logo from "../../images/logo512.png";
 import patternLogo from "../../images/welcome.jpg";
 import patternLogoSmall from "../../images/logo2.png";
 import LawyerServices from "./LawyerService.component";
 
 const Login = React.lazy(() => import("../auth/login"));
+
 const Register = React.lazy(() => import("../auth/register"));
 
 const Guest = () => {
-    const [showLoginForm, setShowLoginForm] = useState(false);
-    const [showRegisterForm, setShowRegisterForm] = useState(false);
-    const [showLogoAndButtons, setShowLogoAndButtons] = useState(true);
-    const handleCloseForm = () => {
-        setShowLoginForm(false);
-        setShowRegisterForm(false);
-        setShowLogoAndButtons(true);
-    };
+  const [showLoginForm, setShowLoginForm] = useState(false);
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const [showLogoAndButtons, setShowLogoAndButtons] = useState(true);
+  const handleCloseForm = () => {
+    setShowLoginForm(false);
+    setShowRegisterForm(false);
+    setShowLogoAndButtons(true);
+  };
 
 
     const handleShowLoginForm = () => {
@@ -62,52 +62,51 @@ const Guest = () => {
         },
         config: { duration: 500 },
     });
-
     useEffect(() => {
         const mainNav = document.querySelector("#mainNav");
-
+      
         if (mainNav) {
-            const navbarCollapse = mainNav.querySelector(".navbar-collapse");
-
-            if (navbarCollapse) {
-                const collapse = new Collapse(navbarCollapse, {
-                    toggle: false,
-                });
-
-                const navbarItems = navbarCollapse.querySelectorAll("a");
-
-                // Closes responsive menu when a scroll trigger link is clicked
-                for (let item of navbarItems) {
-                    item.addEventListener("click", function (event) {
-                        collapse.hide();
-                    });
-                }
+          const navbarCollapse = mainNav.querySelector(".navbar-collapse");
+      
+          if (navbarCollapse) {
+            const collapse = new Collapse(navbarCollapse, {
+              toggle: false,
+            });
+      
+            const navbarItems = navbarCollapse.querySelectorAll("a");
+      
+            // Closes responsive menu when a scroll trigger link is clicked
+            for (let item of navbarItems) {
+              item.addEventListener("click", function () {
+                collapse.hide();
+              });
             }
+          }
 
             // Collapse Navbar
             const collapseNavbar = () => {
                 const scrollTop =
-                    window.pageYOffset !== undefined
-                        ? window.pageYOffset
-                        : (
-                            document.documentElement ||
-                            document.body.parentNode ||
-                            document.body
-                        ).scrollTop;
-
+                  window.pageYOffset !== undefined
+                    ? window.pageYOffset
+                    : (
+                        document.documentElement ||
+                        document.body.parentNode ||
+                        document.body
+                      ).scrollTop;
+          
                 if (scrollTop > 100) {
-                    mainNav.classList.add("navbar-shrink");
+                  mainNav.classList.add("navbar-shrink");
                 } else {
-                    mainNav.classList.remove("navbar-shrink");
+                  mainNav.classList.remove("navbar-shrink");
                 }
-            };
+              };
+          
+    // Collapse now if page is not at top
+    collapseNavbar();
 
-            // Collapse now if page is not at top
-            collapseNavbar();
-
-            // Collapse the navbar when page is scrolled
-            document.addEventListener("scroll", collapseNavbar);
-        }
+    // Collapse the navbar when page is scrolled
+    document.addEventListener("scroll", collapseNavbar);
+  }
     }, []);
 
     const logoAnimation = useSpring({

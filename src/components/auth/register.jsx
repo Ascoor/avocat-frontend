@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import  { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Form, Button, Row, Col } from "react-bootstrap";
@@ -15,7 +16,10 @@ const Register = ({ handleCloseForm }) => {
     const [rePassword, setRePassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-
+        Register.propTypes = {
+            handleCloseForm: PropTypes.func.isRequired,
+        };
+        
     const submitForm = async () => {
         setLoading(true);
         setError("");

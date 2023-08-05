@@ -1,11 +1,12 @@
-import React from "react";
+
+import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 
 const ClientSearch = ({ searchResults }) => {
     if (!searchResults) {
         searchResults = []; // Assign an empty array if searchResults is undefined
     }
-
+    const clients = searchResults || [];
     return (
         <Table striped bordered hover>
             {/* Table header */}
@@ -20,7 +21,7 @@ const ClientSearch = ({ searchResults }) => {
 
             {/* Table body */}
             <tbody>
-                {searchResults.map((client, index) => (
+                {clients.map((client, index) => (
                     <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{client.name}</td>
@@ -32,5 +33,7 @@ const ClientSearch = ({ searchResults }) => {
         </Table>
     );
 };
-
+ClientSearch.propTypes = {
+    searchResults: PropTypes.array.isRequired,
+  };
 export default ClientSearch;

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+
+import {useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Table, Button, Modal, Form, Alert } from "react-bootstrap";
 import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
@@ -7,12 +8,17 @@ import arEG from "date-fns/locale/ar-EG";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import useAuth from "../../auth/AuthUser";
 import API_CONFIG from "../../../config";
-
+import PropTypes from "prop-types";
 
 registerLocale("ar_eg", arEG);
 setDefaultLocale("ar_eg");
 
 const LegalAd = ({ legCaseId }) => {
+    LegalAd.propTypes = {
+        legCaseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      };
+      
+    
     const { getUser } = useAuth();
     const [showAlert, setShowAlert] = useState(false);
     const [alert, setAlert] = useState(null);

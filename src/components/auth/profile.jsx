@@ -1,5 +1,5 @@
 import  { useState, useEffect } from 'react';
-import { Card, Row, Col, Container,Alert } from 'react-bootstrap';
+import { Card, Row, Col,Alert } from 'react-bootstrap';
 import axios from 'axios';
 import API_CONFIG from '../../config';
 import { useParams } from 'react-router-dom';
@@ -90,7 +90,7 @@ const ProfileUpdateComponent = () => {
         return () => clearTimeout(timer);
     }, [showAlert]);
     return (
-        <Container>
+        <>
             <Card className="card ">
 
                 <div className="custom-card-header">
@@ -210,7 +210,7 @@ const ProfileUpdateComponent = () => {
                     </form>
                 </Card.Body>
             </Card>
-        </Container>
+        </>
     );
 };
 

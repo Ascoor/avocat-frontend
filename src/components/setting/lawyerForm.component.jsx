@@ -1,6 +1,6 @@
 import { Button, Form } from "react-bootstrap";
-import React, { useState } from "react";
-
+import {useState } from "react";
+import PropTypes from 'prop-types';
 const LawyerAddEdit = ({ onSubmit, initialValues }) => {
     const [name, setName] = useState(initialValues ? initialValues.name : "");
     const [birthdate, setBirthdate] = useState(
@@ -143,4 +143,19 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
     );
 };
 
+LawyerAddEdit.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    initialValues: PropTypes.shape({
+      name: PropTypes.string,
+      birthdate: PropTypes.string,
+      identity_number: PropTypes.string,
+      law_reg_num: PropTypes.string,
+      lawyer_class: PropTypes.string,
+      email: PropTypes.string,
+      phone_number: PropTypes.string,
+      religion: PropTypes.string,
+      gender: PropTypes.string,
+    }),
+  };
+  
 export default LawyerAddEdit;

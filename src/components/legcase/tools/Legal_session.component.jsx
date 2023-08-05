@@ -1,13 +1,18 @@
-import React, { useState, useEffect, useCallback } from "react";
+import {useState, useEffect, useCallback } from "react";
 import { Table, Button, Row, Modal, Card, Form, Alert } from "react-bootstrap";
 import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
 import axios from "axios";
+import PropTypes from "prop-types";
 import useAuth from "../../auth/AuthUser";
 import API_CONFIG from "../../../config";
 import arEG from "date-fns/locale/ar-EG";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import DatePicker from 'react-datepicker';
 const LegalSession = ({ legCaseId }) => {
+    
+LegalSession.propTypes = {
+    legCaseId: PropTypes.string.isRequired,
+  };
     const { getUser } = useAuth();
     const [alert, setAlert] = useState(null);
     const [selectStatus, setSelectStatus] = useState("");
@@ -45,8 +50,23 @@ const LegalSession = ({ legCaseId }) => {
     }, [legCaseId]);
 
     useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const [sessionsResponse, lawyersResponse, courtsResponse] = await Promise.all([
+              axios.get(`${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`),
+              axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
+              axios.get(`${API_CONFIG.baseURL}/api/courts`),
+            ]);
+            setLegalSessions(sessionsResponse.data);
+            setLawyers(lawyersResponse.data);
+            setCourts(courtsResponse.data);
+          } catch (error) {
+            console.log("Error fetching data:", error);
+          }
+        };
+      
         fetchData();
-    }, [fetchData]);
+      }, [legCaseId]);
 
     const handleEditLegalSession = (legalSession) => {
         setModalMode("edit");

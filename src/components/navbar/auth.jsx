@@ -1,5 +1,3 @@
-
-import React from "react";
 import { Container } from "react-bootstrap";
 import {  Routes, Route } from "react-router-dom";
 import useAuth from "../auth/AuthUser";
@@ -16,7 +14,7 @@ import AddEditClient from "../client/add_edit_client.component";
 import Clients from "../client/list.component";
 /**LegCases**/
 import LegCaseDetail from "../legcase/leg_case_detail.component";
-import LegCase from "../legcase/create.component";
+
 import LegcaseList from "../legcase/list.component";
 import LegalSession from "../legcase/tools/Legal_session.component";
 /**reports**/
@@ -24,6 +22,7 @@ import SidebarHeader from "./SidebarHeader";
 import ProfileUpdateComponent from "../auth/profile";
 import ProcedureSearch from "../reports/procedure_search.component";
 import Footer from "./Footer";
+import LegCaseCreate from "../legcase/create.component";
 
 
 const Auth = () => {
@@ -56,12 +55,16 @@ const Auth = () => {
                         {/* <Route path="/court_search" element={<CourtSearch />} /> */}
                         <Route path="/lawyer_setting" element={<Lawyers />} />
                         <Route path="/cases_setting" element={<CaseTypeSet />} />
+          
                         <Route path="/client/create" element={<AddEditClient />} />
                         <Route path="/client/edit/:id" element={<AddEditClient />} />
                         <Route path="/legcases/show/:id" element={<LegCaseDetail />} />
-                        <Route path="/profile/:userId" element={<ProfileUpdateComponent />} />
+                        <Route path="/profile/:userId" element={<s />} />
                         <Route path="/legcases" element={<LegcaseList />} />
-                        <Route path="/legcases/create" element={<LegCase />} />
+                        <Route path="/legcases/edit/:id" element={<LegCaseCreate isEditing={true} />} />
+
+        <Route path="/legcases/create" element={<LegCaseCreate isEditing={false} />} />
+      
                         <Route path="/home" element={<Home />} />
                         <Route path="/legal_session" element={<LegalSession />} />
                         {/* <Route path="/legal_doc_list" element={<LegalDocList />} /> */}

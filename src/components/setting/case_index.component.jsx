@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import API_CONFIG from '../../config';
 import {JudgeIcon} from '../../assets/icons';
 import {
@@ -198,7 +198,9 @@ const CaseType = () => {
         setShowConfirmationModal(false);
     };
 
-    return (<Card>
+    return (
+    <>
+    <Card>
      
         <Row>
             <div className="court-setting-card-header">
@@ -511,11 +513,12 @@ const CaseType = () => {
             <>
                 <Modal show={showConfirmationModal} onHide={handleCloseConfirmationModal}>
                     <Modal.Body>
-                        {deleteItem && (
-                            <p>
-                                Are you sure you want to delete {deleteItem.message} "{deleteItem.name}"?
-                            </p>
-                        )}
+                    {deleteItem && (
+                  <p>
+                    Are you sure you want to delete {deleteItem.message} &quot;
+                    {deleteItem.name}&quot;?
+                  </p>
+                )}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleCloseConfirmationModal}>
@@ -554,6 +557,7 @@ const CaseType = () => {
             </>
         </Card.Body>
     </Card>
+    </>
     );
 };
 export default CaseType;
