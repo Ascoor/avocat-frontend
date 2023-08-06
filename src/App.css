@@ -29,6 +29,9 @@ h5,
 h6 {
   font-family: "Raleway", sans-serif;
 }
+.logo {
+  background-image: url('/logo.png');
+}
 
 /*--------------------------------------------------------------
 # Back to top button
