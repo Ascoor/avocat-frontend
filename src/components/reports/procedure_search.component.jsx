@@ -1,12 +1,12 @@
-import {useState, useCallback, useEffect } from 'react';
+import {useState, useEffect } from 'react';
 import { Form, Table, Row, Col } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import API_CONFIG from '../../config';
 import DatePicker from 'react-datepicker';
-
+import axios from 'axios';
 const ProcedureSearch = () => {
     const [procedureTypes, setProcedureTypes] = useState([]);
-    const [procedures, setProcedures] = useState([]);
+
     const [lawyers, setLawyers] = useState([]);
     const [courts, setCourts] = useState([]);
 
@@ -15,6 +15,7 @@ const ProcedureSearch = () => {
     const [selectedDateStart, setSelectedDateStart] = useState(null);
     const [selectedDateEnd, setSelectedDateEnd] = useState(null);
     const [selectedCourt, setSelectedCourt] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('');
 
     const [filteredProcedures, setFilteredProcedures] = useState([]);
     useEffect(() => {
@@ -33,43 +34,38 @@ const ProcedureSearch = () => {
             .then((data) => setCourts(data))
             .catch((error) => console.error('Error fetching courts:', error));
 
-        fetch(`${API_CONFIG.baseURL}/api/procedures`)
-            .then((response) => response.json())
-            .then((data) => {
-                setProcedures(data);
-                setFilteredProcedures(data);
-            })
-            .catch((error) => console.error('Error fetching procedures:', error));
     }, []);
 
-    const filterProcedures = useCallback(() => {
-        let filtered = [...procedures]; // Start with all procedures
-        if (selectedProcedureType) {
-            filtered = filtered.filter((procedure) => procedure.procedure_type === selectedProcedureType);
-        }
-        if (selectedLawyer) {
-            filtered = filtered.filter((procedure) => procedure.lawyer === selectedLawyer);
-        }
-        if (selectedDateStart && selectedDateEnd) {
-            filtered = filtered.filter((procedure) => {
-                const date = new Date(procedure.date);
-                return date >= selectedDateStart && date <= selectedDateEnd;
-            });
-        }
-        if (selectedCourt) {
-            filtered = filtered.filter((procedure) => procedure.court === selectedCourt);
-        }
-        setFilteredProcedures(filtered);
-    }, [selectedProcedureType, selectedLawyer, selectedDateStart, selectedDateEnd, selectedCourt, procedures]);
-
-    const handleSearch = (event) => {
+    const handleFormSubmit = (event) => {
         event.preventDefault();
-
-        filterProcedures();
+    
+        // Prepare the query parameters based on the form input
+        const queryParams = {};
+        if (selectedDateStart) queryParams.date_start = selectedDateStart;
+        if (selectedDateEnd) queryParams.date_end = selectedDateEnd;
+        if (selectedLawyer) queryParams.lawyer_id = selectedLawyer;
+        if (selectedCourt) queryParams.court_id = selectedCourt;
+        if (selectedProcedureType) queryParams.procedure_type_id = selectedProcedureType;
+        if (selectedStatus) queryParams.status = selectedStatus;
+    
+        // Send the GET request with query parameters to the API
+        axios.get(`${API_CONFIG.baseURL}/api/procedures-search`, {
+            params: queryParams,
+        })
+        .then((response) => {
+            // Handle the API response here (e.g., update state with search results)
+            setFilteredProcedures(response.data); // Update the state with the received data
+    
+            console.log(response.data);
+        })
+        .catch((error) => {
+            // Handle errors here if necessary
+            console.error(error);
+        });
     };
     return (
         <div className="procedure-search">
-            <Form onSubmit={handleSearch}>
+            <Form onSubmit={handleFormSubmit}>
                 <Row>
                     <Col xs={12} sm={6}>
                         <Form.Group controlId="procedureType">
@@ -149,6 +145,21 @@ const ProcedureSearch = () => {
                                 ))}
                             </Form.Control>
                         </Form.Group>
+                        <Form.Group>
+  <label htmlFor="status">Status:</label>
+  <Form.Control
+    as="select"
+    id="status"
+    value={selectedStatus}
+    onChange={(event) => setSelectedStatus(event.target.value)}
+  >
+    <option value="">All</option>
+    <option value="منتهي">منتهي</option>
+    <option value="لم ينفذ">لم ينفذ</option>
+    <option value="قيد التنفيذ">قيد التنفيذ</option>
+  </Form.Control>
+</Form.Group>
+
                     </Col>
                 </Row>
                 <button type="submit" className="search-button">
@@ -167,6 +178,7 @@ const ProcedureSearch = () => {
                             <th>تاريخ الانتهاء</th>
                             <th>نتيجة الإجراء</th>
                             <th>حالة الإجراء</th>
+                            <th>أخر تحديث</th>
                             {/* Add additional table headers as per your requirements */}
                         </tr>
                     </thead>
@@ -180,6 +192,8 @@ const ProcedureSearch = () => {
                                 <td>{result.date_end}</td>
                                 <td className="col-4">{result.result}</td>
                                 <td>{result.status}</td>
+                                <td>{result.created_by?.name}</td>
+                      
                                 {/* Display additional result fields in table cells */}
                             </tr>
                         ))}

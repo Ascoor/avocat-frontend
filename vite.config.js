@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [react()],
   publicDir: 'public',
   server: {
+    // host:"127.0.0.1",
     port: 3000,
   },
   css: {
@@ -22,5 +23,5 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 500,
   },
-  base: 'https://avocat.live', // اسم النطاق هنا يكون https://example.com/subfolder/
+ 
 });

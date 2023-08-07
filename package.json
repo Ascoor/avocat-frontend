@@ -2,6 +2,7 @@
   "name": "avocat-frontend",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://app.avocat.live",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +10,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "devDependencies": {
+  "dependencies": {
     "@babel/preset-react": "^7.22.5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
@@ -33,7 +34,9 @@
     "web-vitals": "^3.3.1",
     "yup": "^1.1.1"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@babel/core": "7.15.0",
+    "@popperjs/core": "^2.11.8",
     "@react-spring/web": "^9.7.3",
     "prop-types": "^15.8.1"
   }

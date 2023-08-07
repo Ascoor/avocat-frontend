@@ -159,11 +159,11 @@ const Guest = () => {
                     }}
                 >
                     {showLogoAndButtons && (
-                        <animated.div style={logoAnimation} className="logo-container">
+                        <animated.div style={logoAnimation} className="logo">
                             <img
                                 src={patternLogoSmall}
                                 alt="Pattern Logo"
-                                className="logo img-fluid"
+          
                                 style={{ width: "200px", height: "auto" }}
                             />
                         </animated.div>
