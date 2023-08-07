@@ -121,40 +121,41 @@ const LegCaseList = () => {
               </tr>
             </thead>
             <tbody>
-            {paginatedLegCases.map((legCase) => (
-                <tr key={legCase.id}>
-                  <td>{legCase.slug}</td>
-                  <td>
-                    {legCase.clients.map((client) => (
-                      <div key={client.id}>
-                        <small>{client.name}</small>
-                      </div>
-                    ))}
-                  </td>
-                  <td>{legCase.client_capacity}</td>
-                  <td>{legCase.title}</td>
-                  <td>{legCase.case_sub_type.name}</td>
-                  <td>
-                    {legCase.courts.map((court) => (
-                      <div key={court.id}>
-                        <small>{court.name}</small>
-                      </div>
-                    ))}
-                  </td>
-                  <td>{legCase.status}</td>
-                  <td>
-                    <div className="button-container">
-                      <Link className="btn btn-secondary mb-2 float-end" to={`/legcases/show/${legCase.id}`}>
-                        عرض
-                      </Link>
-                      <Link className="btn btn-danger mb-2 float-end" onClick={() => deleteLegCase(legCase.id)}>
-                        حذف
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+  {paginatedLegCases.map((legCase, index) => (
+    <tr key={index}>
+      <td>{legCase.slug}</td>
+      <td>
+        {legCase.clients.map((client, clientIndex) => (
+          <div key={clientIndex}>
+            <small>{client.name}</small>
+          </div>
+        ))}
+      </td>
+      <td>{legCase.client_capacity}</td>
+      <td>{legCase.title}</td>
+      <td>{legCase.case_sub_type.name}</td>
+      <td>
+        {legCase.courts.map((court, courtIndex) => (
+          <div key={courtIndex}>
+            <small>{court.name}</small>
+          </div>
+        ))}
+      </td>
+      <td>{legCase.status}</td>
+      <td>
+        <div className="button-container">
+          <Link className="btn btn-secondary mb-2 float-end" to={`/legcases/show/${legCase.id}`}>
+            عرض
+          </Link>
+          <Link className="btn btn-danger mb-2 float-end" onClick={() => deleteLegCase(legCase.id)}>
+            حذف
+          </Link>
+        </div>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
           </Table>
         </Card.Body>
       </Card>

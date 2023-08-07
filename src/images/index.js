@@ -1,0 +1,1 @@
+export { default as LogoImage } from './logo512.png';

@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 
-const Pagination = ({ clientsPerPage, totalClients, paginate, currentPage }) => {
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(totalClients / clientsPerPage); i++) {
+  for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
 
@@ -13,9 +13,9 @@ const Pagination = ({ clientsPerPage, totalClients, paginate, currentPage }) => 
         {pageNumbers.map((number) => (
           <li key={number} className="page-item">
             <a
-              onClick={() => paginate(number)}
-              href="#!"
-              className={`page-link ${currentPage === number ? "active" : ""}`}
+              onClick={() => onPageChange(number)}
+              href="#"
+              className={currentPage === number ? 'page-link active' : 'page-link'}
             >
               {number}
             </a>
@@ -24,13 +24,6 @@ const Pagination = ({ clientsPerPage, totalClients, paginate, currentPage }) => 
       </ul>
     </nav>
   );
-};
-
-Pagination.propTypes = {
-  clientsPerPage: PropTypes.number.isRequired,
-  totalClients: PropTypes.number.isRequired,
-  paginate: PropTypes.func.isRequired,
-  currentPage: PropTypes.number.isRequired,
 };
 
 export default Pagination;

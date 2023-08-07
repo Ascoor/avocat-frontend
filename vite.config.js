@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   publicDir: 'public',
   server: {
-    // host:"127.0.0.1",
+    host: '127.0.0.1',
     port: 3000,
   },
   css: {
@@ -21,7 +21,15 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 500,
+    chunkSizeWarningLimit: 1000, // Adjust the limit as per your preference
   },
- 
+
+  // Optimize dependencies for faster development
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'axios', // Add other essential dependencies here
+    ],
+  },
 });

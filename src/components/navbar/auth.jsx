@@ -23,6 +23,7 @@ import ProfileUpdateComponent from "../auth/profile";
 import ProcedureSearch from "../reports/procedure_search.component";
 import Footer from "./Footer";
 import LegCaseCreate from "../legcase/create.component";
+import MouseFloat from "../home_tools/MouseFloat";
 
 
 const Auth = () => {
@@ -44,7 +45,8 @@ const Auth = () => {
         userId={userId}
         ProfileUpdateComponent={ProfileUpdateComponent}
         logoutUser={logoutUser}
-      />
+        />
+        <MouseFloat/>
       <div id="main" style={{ paddingBottom: "16px", minHeight: "calc(100vh - 152px)" }}>
         <Container>
           <Routes>

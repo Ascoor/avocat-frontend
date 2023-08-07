@@ -33,6 +33,55 @@ h6 {
   background-image:url("../images/logo2.png");
   ;
 } */
+/* Add the shadow effect to the logo */
+.logo-with-shadow {
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1), 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+/*--------------------------------------------------------------
+#mOUSE bUTTON
+
+--------------------------------------------------------------*/
+/* Mouse Floating Button */
+.mouse-float-button {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #149ddd;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown Menu */
+.mouse-float-dropdown {
+  position: absolute;
+  z-index: 999;
+  padding: 8px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu-items div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* Optional: Add any additional styles as needed */
+
 
 /*--------------------------------------------------------------
 # Back to top button
@@ -71,7 +120,7 @@ h6 {
 # TopNav
 --------------------------------------------------------------*/
 .top-nav-container{
-  background: #f8f9fa;
+  background: #afb9bf;
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
   padding: 10px;
 }
@@ -261,29 +310,6 @@ direction:rtl;
   margin-left: auto;
 }
 
-/* Default styles for the toggle button */
-.mobile-nav-toggle {
-  position: fixed;
-  left: 15px;
-  top: 15px;
-  z-index: 9998;
-  border: 0;
-  font-size: 1.2rem;
-  transition: all 0.4s;
-  outline: none !important;
-  background-color: #149ddd;
-  color: #fff;
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 0;
-  border-radius: 50px;
-    font-family: 'Cairo', sans-serif; 
-  
-  cursor: pointer;
-}
 
 /* Styles for RTL layout */
 /* Adjust the position of the toggle button when in RTL layout */
