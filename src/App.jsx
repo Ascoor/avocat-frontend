@@ -1,4 +1,4 @@
-import React from 'react';
+
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import AuthUser from './components/auth/AuthUser';

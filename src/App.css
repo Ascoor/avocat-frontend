@@ -43,41 +43,89 @@ h6 {
 
 --------------------------------------------------------------*/
 /* Mouse Floating Button */
-.mouse-float-button {
+/* Add styles for the FloatingButton component */
+.floating-button-container {
   position: fixed;
-  bottom: 16px;
-  right: 16px;
-  z-index: 1000;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #149ddd;
+  bottom: 20px;
+  left: 20px; /* Adjusted left position for RTL layout */
+  z-index: 9999; /* Adjust the z-index to make sure it appears on top of other elements */
+}
+
+.floating-button {
+  background-color: #007bff;
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Dropdown Menu */
-.mouse-float-dropdown {
+.menu {
   position: absolute;
-  z-index: 999;
+  bottom: 90px;
+  left: 20px; /* Adjusted left position for RTL layout */
+  background-color: #007bff;
+  border-radius: 8px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
   padding: 8px;
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown-menu-items {
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
-
-.dropdown-menu-items div {
+* Default styles for the toggle button */
+.mobile-nav-toggle {
+  position: fixed;
+  left: 15px;
+  top: 15px;
+  z-index: 9998;
+  border: 0;
+  font-size: 24px;
+  transition: all 0.4s;
+  outline: none !important;
+  background-color: #149ddd;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  border-radius: 50px;
+    font-family: 'Cairo', sans-serif; 
+  
+  cursor: pointer;
+}
+.menu-item {
+  color: #fff;
+  font-size: 18px;
   padding: 8px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.menu-item:hover {
+  background-color: #0056b3;
+}
+
+.icon {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.open {
+  background-color: #dc3545;
+  transform: rotate(45deg);
+}
+
+.close {
+  background-color: #28a745;
+  transform: rotate(0);
 }
 
 /* Optional: Add any additional styles as needed */

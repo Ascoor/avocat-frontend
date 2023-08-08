@@ -23,8 +23,8 @@ import ProfileUpdateComponent from "../auth/profile";
 import ProcedureSearch from "../reports/procedure_search.component";
 import Footer from "./Footer";
 import LegCaseCreate from "../legcase/create.component";
-import MouseFloat from "../home_tools/MouseFloat";
 
+import MouseFloat from "../home_tools/FloatingButton";
 
 const Auth = () => {
   const { token, logout } = useAuth();
@@ -39,16 +39,18 @@ const Auth = () => {
 
   return (
     <>
-    <SidebarHeader />
-    <div id="content">
+        <div id="content">
       <TopNav
         userId={userId}
         ProfileUpdateComponent={ProfileUpdateComponent}
         logoutUser={logoutUser}
         />
-        <MouseFloat/>
+    <SidebarHeader />
       <div id="main" style={{ paddingBottom: "16px", minHeight: "calc(100vh - 152px)" }}>
+
         <Container>
+        <MouseFloat/> 
+
           <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/procedures" element={<ProcedureSearch />} />
@@ -76,6 +78,9 @@ const Auth = () => {
                         </Container>
       </div>
     </div>
+
+
+
     <Footer />
   </>
   );

@@ -1,9 +1,14 @@
 import {useState } from "react";
-import { Nav, NavDropdown } from "react-bootstrap";
+import { Nav, NavDropdown,Navbar } from "react-bootstrap";
 import { BiBell, BiUser } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate,Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import {LogoNav} from '../../assets/icons/index'
 const TopNav = ({ userId, logoutUser }) => {
+  TopNav.propTypes = {
+    userId: PropTypes.string.isRequired,
+    logoutUser: PropTypes.func.isRequired,
+  };
   const [notificationDropdownVisible, setNotificationDropdownVisible] = useState(
     false
   );
@@ -26,7 +31,16 @@ const TopNav = ({ userId, logoutUser }) => {
   };
 
   return (
-    <div className="top-nav-container">
+    <Navbar className="top-nav-container">
+      <Navbar.Brand as={Link} to="/" className="navbar-brand--start me-0">
+                        <img
+                            src={LogoNav}
+                            width="120"
+                            height="60"
+                            className="d-inline-block align-top"
+                            alt="React Bootstrap logo"
+                        />
+                    </Navbar.Brand>
       <Nav as="ul" className="justify-content-end pt-2">
         <Nav.Item as="li" className="nav-item-auth">
           <NavDropdown
@@ -58,7 +72,7 @@ const TopNav = ({ userId, logoutUser }) => {
           </NavDropdown>
         </Nav.Item>
       </Nav>
-    </div>
+    </Navbar>
   );
 };
 
