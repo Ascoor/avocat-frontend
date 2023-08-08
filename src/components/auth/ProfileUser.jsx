@@ -4,7 +4,7 @@ import axios from 'axios';
 import API_CONFIG from '../../config';
 import { useParams } from 'react-router-dom';
 
-const ProfileUpdateComponent = () => {
+const ProfileUser = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -214,4 +214,4 @@ const ProfileUpdateComponent = () => {
     );
 };
 
-export default ProfileUpdateComponent;
+export default ProfileUser;

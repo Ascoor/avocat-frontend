@@ -54,6 +54,7 @@ const ProcedureSearch = () => {
             return;
           }
       
+      
         // Prepare the query parameters based on the form input
         const queryParams = {};
         if (selectedDateStart) queryParams.date_start = selectedDateStart;
@@ -82,7 +83,7 @@ const ProcedureSearch = () => {
         <div className="procedure-search">
             <Form onSubmit={handleFormSubmit}>
                 <Row>
-                <Col xs={12} sm={6} md={4} lg={3}>
+                    <Col xs={12} sm={6}>
                         <Form.Group controlId="procedureType">
                             <Form.Label>نوع الإجراء</Form.Label>
                             <Form.Control
@@ -99,8 +100,7 @@ const ProcedureSearch = () => {
                                 ))}
                             </Form.Control>
                         </Form.Group>
-                        </Col>
-                        <Col xs={12} sm={6} md={4} lg={3}>
+
                         <Form.Group controlId="lawyer">
                             <Form.Label>المحامي</Form.Label>
                             <Form.Control
@@ -117,10 +117,9 @@ const ProcedureSearch = () => {
                             </Form.Control>
                         </Form.Group>
                     </Col>
-                    </Row>
-<Row>
-                           <Form.Group controlId="dateRange">
-                    <Col xs={6} sm={6} md={4} lg={3}>
+
+                    <Col xs={12} sm={6}>
+                        <Form.Group controlId="dateRange">
                             <Form.Label>الفترة الزمنية</Form.Label>
                             <DatePicker
                                 selected={selectedDateStart}
@@ -133,8 +132,7 @@ const ProcedureSearch = () => {
                                 showYearDropdown
                                 scrollableYearDropdown
                             />
-</Col>
-                    <Col xs={6} sm={6} md={4} lg={3}>
+
                             <DatePicker
                                 selected={selectedDateEnd}
                                 onChange={(date) => setSelectedDateEnd(date)}
@@ -146,13 +144,7 @@ const ProcedureSearch = () => {
                                 showYearDropdown
                                 scrollableYearDropdown
                             />
-                        </Col>
                         </Form.Group>
-                        
-</Row>
- <Row>
-                        <Col xs={12} md={6} lg={4}>
-
 
                         <Form.Group controlId="court">
                             <Form.Label>المحكمة</Form.Label>
@@ -169,12 +161,6 @@ const ProcedureSearch = () => {
                                 ))}
                             </Form.Control>
                         </Form.Group>
-                        </Col>
-                        </Row>
-                        <Row>
-
-                        <Col xs={12} md={6} lg={4}>
-
                         <Form.Group>
   <label htmlFor="status">Status:</label>
   <Form.Control
@@ -192,16 +178,14 @@ const ProcedureSearch = () => {
 
                     </Col>
                 </Row>
-                <button type="submit" className="btn btn-primary">
-  <FaSearch /> بحث
-</button>
-
+                <button type="submit" className="search-button">
+                    <FaSearch /> بحث
+                </button>
             </Form>
-
             {searchError && <p>{searchError}</p>}
 
             {filteredProcedures.length > 0 && (
-                <Table striped bordered hover responsive>
+                <Table>
                     <thead>
                         <tr>
                             <th>نوع اإجراء</th>
@@ -216,21 +200,21 @@ const ProcedureSearch = () => {
                         </tr>
                     </thead>
                     <tbody>
-  {filteredProcedures.map((result, index) => (
-    <tr key={`${result._id}-${index}`}>
-      <td>{result.procedure_type?.name}</td>
-      <td>{result.lawyer?.name}</td>
-      <td>{result.court?.name}</td>
-      <td>{result.date_start}</td>
-      <td>{result.date_end}</td>
-      <td className="col-4">{result.result}</td>
-      <td>{result.status}</td>
-      <td>{result.created_by?.name}</td>
-      {/* Display additional result fields in table cells */}
-    </tr>
-  ))}
-</tbody>
-
+                        {filteredProcedures.map((result) => (
+                            <tr key={result._id}>
+                                <td>{result.procedure_type?.name}</td>
+                                <td>{result.lawyer?.name}</td>
+                                <td>{result.court?.name}</td>
+                                <td>{result.date_start}</td>
+                                <td>{result.date_end}</td>
+                                <td className="col-4">{result.result}</td>
+                                <td>{result.status}</td>
+                                <td>{result.created_by?.name}</td>
+                      
+                                {/* Display additional result fields in table cells */}
+                            </tr>
+                        ))}
+                    </tbody>
                 </Table>
             )}
         </div>
