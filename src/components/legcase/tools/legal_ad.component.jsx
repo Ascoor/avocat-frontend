@@ -6,7 +6,7 @@ import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
 import DatePicker from 'react-datepicker';
 import arEG from "date-fns/locale/ar-EG";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
-import useAuth from "../../auth/AuthUser";
+import useAuth from "../../Auth/AuthUser";
 import API_CONFIG from "../../../config";
 import PropTypes from "prop-types";
 

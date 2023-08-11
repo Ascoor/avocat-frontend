@@ -7,20 +7,20 @@ import CourtSetting from '../setting/court_index.component';
 // import CourtSearch from "../reports/court_search.component";
 import CaseTypeSet from '../setting/case_index.component';
 import AddEditClient from '../client/add_edit_client.component';
-import Clients from '../client/list.component';
+import ClientsList from '../client/ClientsList';
 import LegCaseDetail from '../legcase/leg_case_detail.component';
 import LegcaseList from '../legcase/list.component';
 import LegalSession from '../legcase/tools/Legal_session.component';
 import ProcedureSearch from '../reports/procedure_search.component';
 import LegCaseCreate from '../legcase/create.component';
-import ProfileUser from './ProfileUser';
+import ProfileUser from '../Auth/ProfileUser';
 
 const AuthRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/procedures" element={<ProcedureSearch />} />
-      <Route path="/clients" element={<Clients />} />
+      <Route path="/clients" element={<ClientsList  />} />
       <Route path="/courts" element={<CourtSetting />} />
       {/* <Route path="/court_search" element={<CourtSearch />} /> */}
       <Route path="/lawyer_setting" element={<Lawyers />} />
@@ -33,10 +33,8 @@ const AuthRoutes = () => {
       <Route path="/legcases/edit/:id" element={<LegCaseCreate isEditing={true} />} />
       <Route path="/legcases/create" element={<LegCaseCreate isEditing={false} />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/legal_session" element={<LegalSession />} />
-      {/* <Route path="/legal_doc_list" element={<LegalDocList />} /> */}
-      {/* <Route path="/legal_doc_create" element={<LegalDocCreate />} /> */}
-      <Route path="/lawyers/form" element={<LawyersAddEdit />} />
+      <Route path="/legal_session" element={<LegalSession legCaseId />} />
+       <Route path="/lawyers/form" element={<LawyersAddEdit />} />
     </Routes>
   );
 };

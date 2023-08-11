@@ -1,9 +1,8 @@
-import React from 'react';
-import  AuthUser  from './components/auth/AuthUser';
-import Guest from './components/navbar/guest';
-import { Box, CssBaseline } from '@mui/material';
-import Auth from './components/navbar/auth';
 
+import  AuthUser  from './components/Auth/AuthUser';
+import './App.css';
+import Guest from './components/layout/Guest';
+import Auth from './components/layout/Auth';
 const App =() => {
   const { getToken } = AuthUser();
 
@@ -12,10 +11,9 @@ const App =() => {
   }
 
   return (
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
+  
         <Auth />
-      </Box>
+
   );
 }
 export default App;

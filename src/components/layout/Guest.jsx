@@ -1,135 +1,113 @@
-import React, { useState, useEffect } from "react";
-import { useTransition, useSpring, animated } from "@react-spring/web";
-import { Card, Button, Container, Spinner } from "react-bootstrap";
-import { RiLoginCircleLine, RiUserAddLine } from "react-icons/ri";
-import { Collapse } from "bootstrap/dist/js/bootstrap.bundle";
-import logo from "../../images/logo512.png";
-import patternLogo from "../../images/welcome.jpg";
-import patternLogoSmall from "../../images/logo2.png";
-// import LawyerServices from "./LawyerService.component";
+import React, { useState, useEffect } from 'react';
+import { useTransition, useSpring, animated } from '@react-spring/web';
+import { Card, Button, Container, Spinner } from 'react-bootstrap';
+import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
+import { Collapse } from 'bootstrap/dist/js/bootstrap.bundle';
 
-const Login = React.lazy(() => import("../auth/login"));
-
-const Register = React.lazy(() => import("../auth/register"));
+import { WelcomeImage, WelcomePatren, WelcomeLogo } from '../../images/index';
+const Login = React.lazy(() => import('../Auth/Login'));
+const Register = React.lazy(() => import('../Auth/Register'));
 
 const Guest = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showLogoAndButtons, setShowLogoAndButtons] = useState(true);
+
   const handleCloseForm = () => {
     setShowLoginForm(false);
     setShowRegisterForm(false);
     setShowLogoAndButtons(true);
   };
 
+  const handleShowLoginForm = () => {
+    setShowLoginForm(true);
+    setShowRegisterForm(false);
+    setShowLogoAndButtons(false);
+  };
 
-    const handleShowLoginForm = () => {
-        setShowLoginForm(true);
-        setShowRegisterForm(false);
-        setShowLogoAndButtons(false);
+  const handleShowRegisterForm = () => {
+    setShowLoginForm(false);
+    setShowRegisterForm(true);
+    setShowLogoAndButtons(false);
+  };
+
+  const formsTransition = useTransition(showLoginForm || showRegisterForm, {
+    from: {
+      opacity: 0,
+      transform: 'translate(-50%, -50%) scale(0.8)',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      zIndex: 2,
+    },
+    enter: {
+      opacity: 1,
+      transform: 'translate(-50%, -50%) scale(1)',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      zIndex: 2,
+    },
+    leave: {
+      opacity: 0,
+      transform: 'translate(-50%, -50%) scale(0.8)',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      zIndex: 2,
+    },
+    config: { duration: 500 },
+  });
+
+  useEffect(() => {
+    const mainNav = document.querySelector('#mainNav');
+    if (mainNav) {
+      const navbarCollapse = mainNav.querySelector('.navbar-collapse');
+      if (navbarCollapse) {
+        const collapse = new Collapse(navbarCollapse, {
+          toggle: false,
+        });
+        const navbarItems = navbarCollapse.querySelectorAll('a');
+        for (let item of navbarItems) {
+          item.addEventListener('click', function () {
+            collapse.hide();
+          });
+        }
+      }
+    }
+    const collapseNavbar = () => {
+      const scrollTop = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+      if (scrollTop > 100) {
+        mainNav.classList.add('navbar-shrink');
+      } else {
+        mainNav.classList.remove('navbar-shrink');
+      }
     };
-
-    const handleShowRegisterForm = () => {
-        setShowLoginForm(false);
-        setShowRegisterForm(true);
-        setShowLogoAndButtons(false);
-    };
-
-    const formsTransition = useTransition(showLoginForm || showRegisterForm, {
-        from: {
-            opacity: 0,
-            transform: "translate(-50%, -50%) scale(0.8)",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            zIndex: 2,
-        },
-        enter: {
-            opacity: 1,
-            transform: "translate(-50%, -50%) scale(1)",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            zIndex: 2,
-        },
-        leave: {
-            opacity: 0,
-            transform: "translate(-50%, -50%) scale(0.8)",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            zIndex: 2,
-        },
-        config: { duration: 500 },
-    });
-    useEffect(() => {
-        const mainNav = document.querySelector("#mainNav");
-      
-        if (mainNav) {
-          const navbarCollapse = mainNav.querySelector(".navbar-collapse");
-      
-          if (navbarCollapse) {
-            const collapse = new Collapse(navbarCollapse, {
-              toggle: false,
-            });
-      
-            const navbarItems = navbarCollapse.querySelectorAll("a");
-      
-            // Closes responsive menu when a scroll trigger link is clicked
-            for (let item of navbarItems) {
-              item.addEventListener("click", function () {
-                collapse.hide();
-              });
-            }
-          }
-
-            // Collapse Navbar
-            const collapseNavbar = () => {
-                const scrollTop =
-                  window.pageYOffset !== undefined
-                    ? window.pageYOffset
-                    : (
-                        document.documentElement ||
-                        document.body.parentNode ||
-                        document.body
-                      ).scrollTop;
-          
-                if (scrollTop > 100) {
-                  mainNav.classList.add("navbar-shrink");
-                } else {
-                  mainNav.classList.remove("navbar-shrink");
-                }
-              };
-          
-    // Collapse now if page is not at top
     collapseNavbar();
+    document.addEventListener('scroll', collapseNavbar);
+  }, []);
 
-    // Collapse the navbar when page is scrolled
-    document.addEventListener("scroll", collapseNavbar);
-  }
-    }, []);
+  const logoAnimation = useSpring({
+    opacity: 1,
+    transform: 'translateY(0)',
+    from: { opacity: 0, transform: 'translateY(-100px)' },
+    delay: 500,
+  });
 
-    const logoAnimation = useSpring({
-        opacity: 1,
-        transform: "translateY(0)",
-        from: { opacity: 0, transform: "translateY(-100px)" },
-        delay: 500,
-    });
-
-    return (
-        <>
-            <header
-                className="masthead"
-                style={{
-                    backgroundImage: `url(${patternLogo})`,
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                    height: "100vh",
-                }}
-            >
-                <div className="navbar navbar-light fixed-top" id="mainNav">
+  return (
+    <>
+      <header
+        className="masthead"
+        style={{
+          backgroundImage: `url(${WelcomeImage})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          height: '100vh',
+        }}
+      >
+     <div className="navbar navbar-light fixed-top" id="mainNav">
                     <div className="container">
-                        <img src={logo} width="118" height="54" alt="Logo" />
+                        <img src={WelcomeLogo} width="118" height="54" alt="Logo" />
                         <button
                             className="navbar-toggler navbar-toggler-right"
                             type="button"
@@ -161,7 +139,7 @@ const Guest = () => {
                     {showLogoAndButtons && (
                         <animated.div style={logoAnimation} className="logo">
                             <img
-                                src={patternLogoSmall}
+                                src={WelcomePatren}
                                 alt="Pattern Logo"
           
                                 style={{ width: "200px", height: "auto" }}
@@ -226,30 +204,25 @@ const Guest = () => {
                         ) : null
                     )}
                 </div>
-            </header>
+      </header>
 
-        
-
-
-
-
-            <footer
-                style={{
-                    background: "linear-gradient(rgb(11 22 26), rgb(14 48 66), rgb(10 18 24))",
-                    direction: "rtl",
-                    color: "#fff",
-                    textAlign: "center",
-                    padding: "10px 0",
-                }}
-            >
-                <Container>
-                    <p style={{ margin: 0 }}>
-                        &copy; {new Date().getFullYear()} Avocat All rights reserved
-                    </p>
-                </Container>
-            </footer>
-        </>
-    );
+      <footer
+        style={{
+          background: 'linear-gradient(rgb(11 22 26), rgb(14 48 66), rgb(10 18 24))',
+          direction: 'rtl',
+          color: '#fff',
+          textAlign: 'center',
+          padding: '10px 0',
+        }}
+      >
+        <Container>
+          <p style={{ margin: 0 }}>
+            &copy; {new Date().getFullYear()} Avocat All rights reserved
+          </p>
+        </Container>
+      </footer>
+    </>
+  );
 };
 
 export default Guest;

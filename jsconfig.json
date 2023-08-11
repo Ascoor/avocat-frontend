@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "resolveJsonModule": true,
+    "paths": {
+      "@mui/*": ["node_modules/@mui/*"]
+    }
+  },
+  "include": ["src", "node_modules/@types"],
+  "exclude": ["node_modules", "build"]
+}

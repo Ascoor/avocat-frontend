@@ -3,7 +3,7 @@ import axios from "axios";
 import { Card, Table, Button, Modal, Row, Form } from "react-bootstrap";
 import { Alert } from "react-bootstrap";
 import { BiPlusCircle } from "react-icons/bi";
-import useAuth from "../../auth/AuthUser";
+import useAuth from "../../Auth/AuthUser";
 import API_CONFIG from "../../../config";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import PropTypes from "prop-types";

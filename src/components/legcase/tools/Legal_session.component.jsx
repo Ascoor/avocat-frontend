@@ -3,7 +3,7 @@ import { Table, Button, Row, Modal, Card, Form, Alert } from "react-bootstrap";
 import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
 import axios from "axios";
 import PropTypes from "prop-types";
-import useAuth from "../../auth/AuthUser";
+import useAuth from "../../Auth/AuthUser";
 import API_CONFIG from "../../../config";
 import arEG from "date-fns/locale/ar-EG";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
