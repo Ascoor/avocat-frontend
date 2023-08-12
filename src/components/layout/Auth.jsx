@@ -24,6 +24,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
+"./TopNav";
 
 export default function Auth() {
   const [open, setOpen] = React.useState(false);
@@ -38,11 +39,9 @@ export default function Auth() {
       ? localStorage.getItem("currentMode")
       : "light"
   );
-  const [isRTL, setIsRTL] = React.useState(false); // Add isRTL state
+  const [isRTL, setIsRTL] = React.useState(false);
 
- 
-const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
-
+  const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -52,16 +51,20 @@ const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
           open={open}
           handleDrawerOpen={handleDrawerOpen}
           setMode={setMode}
-          setIsRTL={setIsRTL} isRTL={isRTL}/>
+          setIsRTL={setIsRTL}
+          isRTL={isRTL}
+        />
 
-<SideBar
+        <SideBar
           open={open}
           handleDrawerClose={handleDrawerClose}
-          isRTL={isRTL} setRTL={setIsRTL}/>
-
-
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <DrawerHeader />
+          isRTL={isRTL}
+          setRTL={setIsRTL}
+        />
+        <Box
+          component="main"
+        
+        >
           <AuthRoutes />
         </Box>
       </Box>

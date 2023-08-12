@@ -46,25 +46,23 @@ const closedMixin = (theme) => ({
   },
 });
 
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-
-  // @ts-ignore
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  //@ts-ignore
+  ({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
   }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
-
+);
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -75,17 +73,17 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const Array1 = [
-  { text: "Dashboard", icon: <HomeOutlinedIcon />, path: "/" },
-  { text: "Manage Team", icon: <PeopleOutlinedIcon />, path: "/team" },
+  { text: "الرئيسية", icon: <HomeOutlinedIcon />, path: "/" },
+  { text: "محامون المكتب", icon: <PeopleOutlinedIcon />, path: "/lawyer_setting" },
   {
-    text: "Contacts Information",
+    text: "القضايا",
     icon: <ContactsOutlinedIcon />,
-    path: "/contacts",
+    path: "/legcases",
   },
   {
-    text: "Invoices Balances",
+    text: "العملاء",
     icon: <ReceiptOutlinedIcon />,
-    path: "/invoices",
+    path: "/clients",
   },
 ];
 
@@ -112,16 +110,23 @@ const SideBar = ({ open, handleDrawerClose, setRTL,isRTL }) => {
   const sidebarPosition = isRTL ? "right" : "left"; // Determine the sidebar position based on RTL
 
   return (
-    <Drawer variant="permanent" open={open}>
-  <DrawerHeader>
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === "rtl" ? (
-            <ChevronLeftIcon />
-          ) : (
-            <ChevronRightIcon />
-          )}
-        </IconButton>
-      </DrawerHeader>
+    <Drawer
+    variant="permanent"
+    open={open}
+    sx={{
+      ...(isRTL ? { right: 0 } : { left: 0 }), // Set positioning based on RTL/LTR
+    }}
+    anchor={isRTL ? "right" : "left"} // Set anchor based on RTL/LTR
+  >
+    <DrawerHeader>
+      <IconButton onClick={handleDrawerClose}>
+        {theme.direction === "rtl" ? (
+          <ChevronRightIcon />
+        ) : (
+          <ChevronLeftIcon />
+        )}
+      </IconButton>
+    </DrawerHeader>
       <Divider />
       <Avatar
         sx={{
@@ -239,7 +244,7 @@ const SideBar = ({ open, handleDrawerClose, setRTL,isRTL }) => {
       <List>
         {Array1.map((item) => (
           <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
-            <Tooltip title={open ? null : item.text} placement="left">
+            <Tooltip title={open ? null : item.text} placement="right">
               <ListItemButton
                 onClick={() => {
                   navigate(item.path);
