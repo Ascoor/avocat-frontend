@@ -1,29 +1,24 @@
-import React from 'react';
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const pageNumbers = [];
-
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
+const CustomPagination = ({ clientsPerPage, totalClients, paginate, currentPage }) => {
+  const pageCount = Math.ceil(totalClients / clientsPerPage);
 
   return (
-    <nav>
-      <ul className="pagination">
-        {pageNumbers.map((number) => (
-          <li key={number} className="page-item">
-            <a
-              onClick={() => onPageChange(number)}
-              href="#"
-              className={currentPage === number ? 'page-link active' : 'page-link'}
-            >
-              {number}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <Pagination
+      count={pageCount}
+      page={currentPage}
+      onChange={(event, value) => paginate(value)}
+      renderItem={(item) => (
+        <PaginationItem
+          component="a"
+          onClick={(e) => {
+            e.preventDefault();
+            paginate(item.page);
+          }}
+          {...item}
+        />
+      )}
+    />
   );
 };
-
-export default Pagination;

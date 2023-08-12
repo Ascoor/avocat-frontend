@@ -73,10 +73,7 @@ export default function Auth() {
           isRTL={isRTL}
           setRTL={setIsRTL}
         />
-        <Box
-          component="main"
-        
-        >
+         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <AuthRoutes />
         </Box>
       </Box>
