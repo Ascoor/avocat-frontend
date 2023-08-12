@@ -2,7 +2,7 @@ import  { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FcBusinessman, FcLibrary, FcOvertime, FcBriefcase } from "react-icons/fc";
 
-import { ClientIcon, DashBoard } from '../assets/icons';
+import { ClientIcon, DashBoard } from '../assets/icons/index';
 import { Card, Row, Col, Button, Form } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
 import axios from 'axios';
@@ -212,13 +212,13 @@ const Home = () => {
                                     </Link>
                                 </Col>
                                 <Col sm={6} md={4} lg={2}>
-                                    <EventCard
-                                        lang="ar"
-                                        title="المحامين"
-                                        color="#002d43ed"
-                                        count={toArabicNumeral(lawyerCount)}
-                                        icon={<FcBusinessman size={50} />}
-                                    />
+                                <EventCard
+    title="المحامين"
+    color="#002d43ed"
+    count={toArabicNumeral(lawyerCount)}
+    icon={<FcBusinessman size={50} />}
+/>
+
                                 </Col>
                                 <Col sm={6} md={4} lg={2}>
                                     <EventCard

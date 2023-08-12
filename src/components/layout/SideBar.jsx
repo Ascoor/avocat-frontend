@@ -1,19 +1,15 @@
-import React from "react";
+
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { Avatar, styled, useTheme, Typography, Tooltip } from "@mui/material";
+import { Avatar, styled, useTheme, Stack,Typography, Tooltip } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import { HomeOutlined } from "@mui/icons-material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
@@ -52,6 +48,7 @@ const closedMixin = (theme) => ({
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
+
   // @ts-ignore
 })(({ theme, open }) => ({
   width: drawerWidth,
@@ -71,7 +68,7 @@ const Drawer = styled(MuiDrawer, {
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "flex-end",
+  justifyContent: "flex-",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
@@ -108,19 +105,20 @@ const Array3 = [
   { text: "Line Chart", icon: <TimelineOutlinedIcon />, path: "/line" },
   { text: "Geography Chart", icon: <MapOutlinedIcon />, path: "/geography" },
 ];
-
-const SideBar = ({ open, handleDrawerClose }) => {
+const SideBar = ({ open, handleDrawerClose, setRTL,isRTL }) => {
   let location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
+  const sidebarPosition = isRTL ? "right" : "left"; // Determine the sidebar position based on RTL
+
   return (
     <Drawer variant="permanent" open={open}>
-      <DrawerHeader>
+  <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "rtl" ? (
-            <ChevronRightIcon />
-          ) : (
             <ChevronLeftIcon />
+          ) : (
+            <ChevronRightIcon />
           )}
         </IconButton>
       </DrawerHeader>
@@ -239,7 +237,7 @@ const SideBar = ({ open, handleDrawerClose }) => {
       <Divider />
 
       <List>
-        {Array3.map((item) => (
+        {Array1.map((item) => (
           <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
             <Tooltip title={open ? null : item.text} placement="left">
               <ListItemButton
@@ -248,7 +246,7 @@ const SideBar = ({ open, handleDrawerClose }) => {
                 }}
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
+                  justifyContent: "space-between", // Adjusted to align content to the right
                   px: 2.5,
                   bgcolor:
                     location.pathname === item.path
@@ -258,24 +256,31 @@ const SideBar = ({ open, handleDrawerClose }) => {
                       : null,
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {item.icon}
+                <Stack direction="row" alignItems="center">
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 0,
+                      justifyContent: "center",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.text}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </Stack>
+                {/* This IconButton will be displayed at the right */}
+                <ListItemIcon>
+                  <ChevronRightIcon />
                 </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
               </ListItemButton>
             </Tooltip>
           </ListItem>
         ))}
       </List>
+
     </Drawer>
   );
 };

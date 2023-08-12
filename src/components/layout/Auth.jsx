@@ -5,14 +5,16 @@ import {
   styled,
   useTheme,
 } from "@mui/material/styles";
+import PropTypes from 'prop-types';
+
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
- 
-import TopBar from "./TopNav";
+
 import SideBar from "./SideBar";
 import { getDesignTokens } from "./theme";
 import AuthRoutes from "./AuthRoutes";
+import TopNav from "./TopNav";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -28,29 +30,35 @@ export default function Auth() {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
   const [mode, setMode] = React.useState(
     Boolean(localStorage.getItem("currentMode"))
       ? localStorage.getItem("currentMode")
       : "light"
   );
-  const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+  const [isRTL, setIsRTL] = React.useState(false); // Add isRTL state
+
+ 
+const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <TopBar
+        <TopNav
           open={open}
           handleDrawerOpen={handleDrawerOpen}
           setMode={setMode}
-        />
+          setIsRTL={setIsRTL} isRTL={isRTL}/>
 
-        <SideBar open={open} handleDrawerClose={handleDrawerClose} />
+<SideBar
+          open={open}
+          handleDrawerClose={handleDrawerClose}
+          isRTL={isRTL} setRTL={setIsRTL}/>
+
 
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
