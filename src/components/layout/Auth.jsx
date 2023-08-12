@@ -5,6 +5,7 @@ import {
   styled,
   useTheme,
 } from "@mui/material/styles";
+import useAuth from "../Auth/AuthUser";
 import PropTypes from 'prop-types';
 
 import Box from "@mui/material/Box";
@@ -31,6 +32,14 @@ export default function Auth() {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+  const { token, logout } = useAuth();
+  const userId = useAuth().user.id;
+  const logoutUser = () => {
+    if (token !== undefined) {
+      logout();
+    }
+  };
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -48,6 +57,9 @@ export default function Auth() {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <TopNav
+        //@ts-ignore
+                userId={userId}  logoutUser={logoutUser}
+        
           open={open}
           handleDrawerOpen={handleDrawerOpen}
           setMode={setMode}

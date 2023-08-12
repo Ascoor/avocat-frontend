@@ -1,148 +1,129 @@
-import React, { useState } from 'react';
-import { useTransition,useSpring, animated } from '@react-spring/web';
-import { Card, Button, CircularProgress, Box, Collapse } from '@mui/material';
-import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
-import PropTypes from 'prop-types';
-import { WelcomeImage, WelcomePatren } from '../../images/index';
-const Login = React.lazy(() => import('../Auth/Login'));
-const Register = React.lazy(() => import('../Auth/Register'));
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const Guest = () => {
-  const [showLoginForm, setShowLoginForm] = useState(false);
-  const [showRegisterForm, setShowRegisterForm] = useState(false);
-  const [showLogoAndButtons, setShowLogoAndButtons] = useState(true);
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
-  const handleCloseForm = () => {
-    setShowLoginForm(false);
-    setShowRegisterForm(false);
-    setShowLogoAndButtons(true);
+// TODO remove, this demo shouldn't need to reset the theme.
+
+const defaultTheme = createTheme();
+
+export default function SignInSide() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
   };
-
-  const handleShowLoginForm = () => {
-    setShowLoginForm(true);
-    setShowRegisterForm(false);
-    setShowLogoAndButtons(false);
-  };
-
-  const handleShowRegisterForm = () => {
-    setShowLoginForm(false);
-    setShowRegisterForm(true);
-    setShowLogoAndButtons(false);
-  };
-
-  const formsTransition = useTransition(showLoginForm || showRegisterForm, {
-    from: {
-      opacity: 0,
-      transform: 'translate(-50%, -50%) scale(0.8)',
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      zIndex: 2,
-    },
-    enter: {
-      opacity: 1,
-      transform: 'translate(-50%, -50%) scale(1)',
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      zIndex: 2,
-    },
-    leave: {
-      opacity: 0,
-      transform: 'translate(-50%, -50%) scale(0.8)',
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      zIndex: 2,
-    },
-    config: { duration: 500 },
-  });
-
-  const logoAnimation = useSpring({
-    opacity: 1,
-    transform: 'translateY(0)',
-    from: { opacity: 0, transform: 'translateY(-100px)' },
-    delay: 500,
-  });
 
   return (
-    <div>
-      <header
-        className="masthead"
-        style={{
-          backgroundImage: `url(${WelcomeImage})`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-          height: '100vh',
-        }}
-      >
-        <Box
-          className="d-flex flex-column justify-content-center align-items-center"
-          style={{
-            paddingLeft: 10,
-            height: '100%',
+    <ThemeProvider theme={defaultTheme}>
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
           }}
-        >
-          {showLogoAndButtons && (
-            <animated.div style={logoAnimation} className="logo">
-              <img
-                src={WelcomePatren}
-                alt="Pattern Logo"
-                style={{ width: '200px', height: 'auto' }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
               />
-            </animated.div>
-          )}
-          {showLogoAndButtons && (
-            <Box mt={4} style={{ display: 'flex', justifyContent: 'center' }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
               <Button
+                type="submit"
+                fullWidth
                 variant="contained"
-                color="success"
-                onClick={handleShowLoginForm}
-                style={{ marginRight: 10 }}
+                sx={{ mt: 3, mb: 2 }}
               >
-                <RiLoginCircleLine className="mr-1" />
-                دخول
+                Sign In
               </Button>
-              <Button variant="contained" color="warning" onClick={handleShowRegisterForm}>
-                <RiUserAddLine className="mr-1" />
-                تسجيل اشتراك
-              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+              <Copyright sx={{ mt: 5 }} />
             </Box>
-          )}
-          {formsTransition((styles, item) =>
-            item ? (
-              <animated.div
-              style={{
-                ...styles,
-                position: 'absolute', // Explicitly set the position
-              }}
-            >
-                <Collapse in={showLoginForm}>
-                  <Card className="card-login">
-                    <React.Suspense fallback={<CircularProgress />}>
-                      <Login handleCloseForm={handleCloseForm} />
-                    </React.Suspense>
-                  </Card>
-                </Collapse>
-                <Collapse in={showRegisterForm}>
-                  <Card className="card-login">
-                    <React.Suspense fallback={<CircularProgress />}>
-                      <Register handleCloseForm={handleCloseForm} />
-                    </React.Suspense>
-                  </Card>
-                </Collapse>
-              </animated.div>
-            ) : null
-          )}
-        </Box>
-      </header>
-    </div>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
-};
-
-Guest.propTypes = {
-  open: PropTypes.bool,
-  handleDrawerOpen: PropTypes.func,
-};
-
-export default Guest;
+}

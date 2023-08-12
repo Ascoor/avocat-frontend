@@ -4,8 +4,6 @@ import { useTheme } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
-import MuiAppBar from "@mui/material/AppBar";
-import { alpha } from "@mui/material/styles";
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -40,13 +38,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const gradientBackground = (theme) => `
   linear-gradient(to ${theme.direction === "rtl" ? "left" : "right"}, ${theme.palette.primary.dark}, ${theme.palette.primary.main}, ${theme.palette.error.main})
 `;
-
+//@ts-ignore
 const StyledAppBar = styled(AppBar)(({ theme, open }) => ({
-  background: gradientBackground(theme), // تعديل الخلفية بالألوان المطلوبة
-  // ... باقي الخصائص
+  background: gradientBackground(theme),
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  zIndex: theme.zIndex.drawer + 2, // Set a higher zIndex
 }));
 
-const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL }) => {
+const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL,
+  userId,logoutUser }) => {
   const theme = useTheme();
   const handleRTLToggle = () => {
     document.documentElement.dir = isRTL ? "ltr" : "rtl";
@@ -85,7 +88,7 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL }) => {
   };
 
   return (
-   
+   //@ts-ignore
     <StyledAppBar style={topNavStyles} open={open}>
       
       <Toolbar>
@@ -101,24 +104,8 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL }) => {
         >
           <MenuIcon />
         </IconButton>
-        <IconButton color="inherit" onClick={handleOpenMemberDropdown}>
-          <Person2OutlinedIcon />
-        </IconButton>
-        <Menu
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: isRTL ? "left" : "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: isRTL ? "left" : "right",
-          }}
-          open={openMemberDropdown}
-          onClose={handleCloseMemberDropdown}
-        >
-          <MenuItem>Profile</MenuItem>
-          <MenuItem>Logout</MenuItem>
-        </Menu>
+        
+  
         <Box sx={{ flexGrow: 1, marginLeft: theme.spacing(3) }}>
           <SearchIcon sx={{ marginRight: theme.spacing(2) }} />
           <StyledInputBase
@@ -127,9 +114,71 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL }) => {
           />
         </Box>
 
-        <Stack direction="row">
-          {/* Toggle Buttons */}
-        </Stack>
+        <Stack direction={"row"}>
+            {theme.palette.mode === "light" ? (
+              <IconButton
+                onClick={() => {
+                  localStorage.setItem(
+                    "currentMode",
+                    theme.palette.mode === "dark" ? "light" : "dark"
+                  );
+                  setMode((prevMode) =>
+                    prevMode === "light" ? "dark" : "light"
+                  );
+                }}
+                color="inherit"
+              >
+                <LightModeOutlinedIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                onClick={() => {
+                  localStorage.setItem(
+                    "currentMode",
+                    theme.palette.mode === "dark" ? "light" : "dark"
+                  );
+                  setMode((prevMode) =>
+                    prevMode === "light" ? "dark" : "light"
+                  );
+                }}
+                color="inherit"
+              >
+                <DarkModeOutlinedIcon />
+              </IconButton>
+            )}
+
+            <IconButton color="inherit">
+              <NotificationsOutlinedIcon />
+            </IconButton>
+
+            <IconButton color="inherit">
+              <SettingsOutlinedIcon />
+            </IconButton>
+
+            {userId ? ( // Check if the user is authenticated
+            <>
+              <IconButton color="inherit" onClick={handleOpenMemberDropdown}>
+                <Person2OutlinedIcon />
+              </IconButton>
+              <Menu
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: isRTL ? "left" : "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: isRTL ? "left" : "right",
+                }}
+                open={openMemberDropdown}
+                onClose={handleCloseMemberDropdown}
+              >
+                <MenuItem>Profile</MenuItem>
+                <MenuItem onClick={logoutUser}>Logout</MenuItem>
+              </Menu>
+            </>
+          ) : null}
+        
+          </Stack>
 
         <Switch
           checked={isRTL}
@@ -144,6 +193,8 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL }) => {
 
 TopNav.propTypes = {
   open: PropTypes.bool.isRequired,
+  logoutUser: PropTypes.bool.isRequired,
+  userId: PropTypes.bool.isRequired,
   handleDrawerOpen: PropTypes.func.isRequired,
   setMode: PropTypes.func.isRequired,
   isRTL: PropTypes.bool.isRequired,

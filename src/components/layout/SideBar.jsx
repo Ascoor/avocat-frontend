@@ -241,50 +241,6 @@ const SideBar = ({ open, handleDrawerClose, setRTL,isRTL }) => {
 
       <Divider />
 
-      <List>
-        {Array1.map((item) => (
-          <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
-            <Tooltip title={open ? null : item.text} placement="right">
-              <ListItemButton
-                onClick={() => {
-                  navigate(item.path);
-                }}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: "space-between", // Adjusted to align content to the right
-                  px: 2.5,
-                  bgcolor:
-                    location.pathname === item.path
-                      ? theme.palette.mode === "dark"
-                        ? grey[800]
-                        : grey[300]
-                      : null,
-                }}
-              >
-                <Stack direction="row" alignItems="center">
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 0,
-                      justifyContent: "center",
-                    }}
-                  >
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.text}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </Stack>
-                {/* This IconButton will be displayed at the right */}
-                <ListItemIcon>
-                  <ChevronRightIcon />
-                </ListItemIcon>
-              </ListItemButton>
-            </Tooltip>
-          </ListItem>
-        ))}
-      </List>
 
     </Drawer>
   );
