@@ -86,7 +86,7 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL,
   const handleCloseNotificationDropdown = () => {
     setOpenNotificationDropdown(false);
   };
-
+  
   return (
    //@ts-ignore
     <StyledAppBar style={topNavStyles} open={open}>
@@ -155,28 +155,31 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL,
               <SettingsOutlinedIcon />
             </IconButton>
 
-            {userId ? ( // Check if the user is authenticated
-            <>
-              <IconButton color="inherit" onClick={handleOpenMemberDropdown}>
-                <Person2OutlinedIcon />
-              </IconButton>
-              <Menu
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: isRTL ? "left" : "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: isRTL ? "left" : "right",
-                }}
-                open={openMemberDropdown}
-                onClose={handleCloseMemberDropdown}
-              >
-                <MenuItem>Profile</MenuItem>
-                <MenuItem onClick={logoutUser}>Logout</MenuItem>
-              </Menu>
-            </>
-          ) : null}
+          <IconButton
+            color="inherit"
+            onClick={handleOpenMemberDropdown}
+            aria-controls="member-menu" // Add this aria-controls attribute
+            aria-haspopup="true"
+          >
+            <Person2OutlinedIcon />
+          </IconButton>
+          <Menu
+            id="member-menu" // Add this id for reference
+                
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: isRTL ? "left" : "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: isRTL ? "left" : "right",
+            }}
+            open={openMemberDropdown}
+            onClose={handleCloseMemberDropdown}
+          >
+            <MenuItem>Profile</MenuItem>
+            <MenuItem onClick={logoutUser}>Logout</MenuItem>
+          </Menu>
         
           </Stack>
 
@@ -193,8 +196,8 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL,
 
 TopNav.propTypes = {
   open: PropTypes.bool.isRequired,
-  logoutUser: PropTypes.bool.isRequired,
-  userId: PropTypes.bool.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+ 
   handleDrawerOpen: PropTypes.func.isRequired,
   setMode: PropTypes.func.isRequired,
   isRTL: PropTypes.bool.isRequired,

@@ -23,7 +23,8 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
-
+import {WelcomePatren} from "../../images/index"
+import { light } from "@mui/material/styles/createPalette";
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -103,11 +104,24 @@ const Array3 = [
   { text: "Line Chart", icon: <TimelineOutlinedIcon />, path: "/line" },
   { text: "Geography Chart", icon: <MapOutlinedIcon />, path: "/geography" },
 ];
-const SideBar = ({ open, handleDrawerClose, setRTL,isRTL }) => {
+const SideBar = ({ open, handleDrawerClose, userId,setRTL,isRTL }) => {
   let location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
   const sidebarPosition = isRTL ? "right" : "left"; // Determine the sidebar position based on RTL
+  const getUserName = () => {
+    const userString = sessionStorage.getItem('user');
+    
+    const user = JSON.parse(userString);
+    return user ? user.name : '';
+};
+const primaryColor = "#FF9800"; // Primary color (orange)
+const secondaryColor = "#4CAF50"; // Secondary color (green)
+
+const gradientBackground = (theme) => `
+  linear-gradient(to ${theme.direction === "rtl" ? "left" : "right"}, ${primaryColor}, ${secondaryColor})
+`;
+
 
   return (
     <Drawer
@@ -118,6 +132,14 @@ const SideBar = ({ open, handleDrawerClose, setRTL,isRTL }) => {
     }}
     anchor={isRTL ? "right" : "left"} // Set anchor based on RTL/LTR
   >
+    <div  style={{
+    background: gradientBackground(theme),
+    display: "flex",
+    flexDirection: "column",
+    color: theme.palette.common.white, // Set text color to white for better visibility
+  }}
+        >
+    
     <DrawerHeader>
       <IconButton onClick={handleDrawerClose}>
         {theme.direction === "rtl" ? (
@@ -128,6 +150,7 @@ const SideBar = ({ open, handleDrawerClose, setRTL,isRTL }) => {
       </IconButton>
     </DrawerHeader>
       <Divider />
+      
       <Avatar
         sx={{
           mx: "auto",
@@ -138,13 +161,16 @@ const SideBar = ({ open, handleDrawerClose, setRTL,isRTL }) => {
           transition: "0.25s",
         }}
         alt="Remy Sharp"
-        src="https://media.allure.com/photos/5a26c1d8753d0c2eea9df033/3:4/w_1262,h_1683,c_limit/mostbeautiful.jpg"
+        src={WelcomePatren}
       />
+    
+    {userId ? ( // Check if the user is authenticated
+        <>
       <Typography
         align="center"
         sx={{ fontSize: open ? 17 : 0, transition: "0.25s" }}
       >
-        Layla Ali
+       {getUserName()}
       </Typography>
       <Typography
         align="center"
@@ -156,7 +182,9 @@ const SideBar = ({ open, handleDrawerClose, setRTL,isRTL }) => {
       >
         Admin
       </Typography>
-
+</>
+) : null}
+  
       <Divider />
 
       <List>
@@ -241,7 +269,7 @@ const SideBar = ({ open, handleDrawerClose, setRTL,isRTL }) => {
 
       <Divider />
 
-
+</div>
     </Drawer>
   );
 };

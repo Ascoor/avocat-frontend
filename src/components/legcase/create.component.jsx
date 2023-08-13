@@ -222,11 +222,12 @@ const LegCaseCreate = () => {
                             <Form.Group>
                                 <Form.Label>القضية</Form.Label>
                                 <Form.Control
-                                    as="select"
-                                    value={status[0]} // Use the first value from the 'status' array
-                                    onChange={(e) => setStatus([e.target.value])} // Wrap the selected value in an array
-                                    required
-                                >
+  as="select"
+  value={status[0]}
+  onChange={(e) => setStatus([e.target.value])} // Wrap the selected value in an array
+  required
+>
+
                                     <option value="">حالة القضية</option>
                                     <option value="قيد التجهيز">قيد التجهيز</option>
                                     <option value="متداولة">متداولة</option>

@@ -72,6 +72,7 @@ export default function Auth() {
           handleDrawerClose={handleDrawerClose}
           isRTL={isRTL}
           setRTL={setIsRTL}
+          userId={userId}
         />
          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <AuthRoutes />

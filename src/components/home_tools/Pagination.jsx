@@ -22,3 +22,5 @@ const CustomPagination = ({ clientsPerPage, totalClients, paginate, currentPage 
     />
   );
 };
+
+export default CustomPagination;
