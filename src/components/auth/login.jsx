@@ -1,19 +1,10 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import axios from 'axios';
-import {
-  Card,
-  CardContent,
-  Box,
-  TextField,
-  Button,
-  CircularProgress
-} from '@mui/material';
-import { FaSignInAlt } from 'react-icons/fa';
-import API_CONFIG from '../../config';
+import  { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, Form, Button, Row } from "react-bootstrap";
+import { FaSignInAlt } from "react-icons/fa";
 import AuthUser from "./AuthUser";
-
+import API_CONFIG from '../../config';
+import axios from "axios";
 const Login = ({ handleCloseForm }) => {
     const navigate = useNavigate();
     const { setToken } = AuthUser();
@@ -44,72 +35,67 @@ const Login = ({ handleCloseForm }) => {
         }
     };
 
-  return (
-    <Card variant="outlined">
-      <CardContent>
-        <div className="court-setting-card-header">
-          <h2>
-            تسجيل الدخول
-            <FaSignInAlt style={{ marginRight: '5px' }} className="welcome-page-icon" />
-          </h2>
-        </div>
-<div className="login-form p-4">
+    return (
 
-        <form onSubmit={onSubmit}>
-          <Box mb={3}>
-            <TextField
-              fullWidth
-              id="email"
-              label="عنوان البريد الإلكتروني"
-              type="email"
-              variant="outlined"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              />
-          </Box>
-          <Box mb={3}>
-            <TextField
-              fullWidth
-              id="password"
-              label="كلمة المرور"
-              type="password"
-              variant="outlined"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              />
-          </Box>
-         <div className="d-flex justify-content-between">
-            {loading ? (
-              <Button disabled variant="contained" color="warning" >
-                <CircularProgress size={20} style={{ marginRight: '8px' }} />
-                جارى الدخول
-              </Button>
-            ) : (
-              <Button type="submit" variant="contained" color="success" >
-                تسجيل الدخول
-              </Button>
-            )}
-          </div>
-        </form>
-            </div>
-        {error && (
-          <Box mt={3} textAlign="center">
-            <p className="text-danger">{error}</p>
-          </Box>
-        )}
-      </CardContent>
+        <>
+            <Card.Header>
+                <div className="court-setting-card-header">
+                    <Card.Title>تسجيل الدخول
+                        <FaSignInAlt style={{ marginRight: "5px" }} className="welcome-page-icon" />
+                    </Card.Title>
+                </div>
+            </Card.Header>
 
-      <Box display="flex" justifyContent="center" mt={2}>
-        <Button onClick={handleCloseForm} variant="contained" color="error" className="login-back">
-          العودة للرئيسية
-        </Button>
-      </Box>
-    </Card>
-  );
-};
+            <Card.Body>
+                <Form onSubmit={onSubmit}>
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label>عنوان البريد الإلكتروني</Form.Label>
+                        <Form.Control
+                            type="email"
+                            placeholder="Enter an email address"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </Form.Group>
 
-Login.propTypes = {
-  handleCloseForm: PropTypes.func.isRequired,
-};
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label>كلمة المرور</Form.Label>
+                        <Form.Control
+                            type="password"
+                            placeholder="Enter your password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Form.Group>
 
+                    <Row className="mt-4 justify-content-center">
+                        {loading ? (
+                            <Button type="button" disabled className="btn-warning login-btn">
+                                ...جارى الدخول
+                            </Button>
+                        ) : (
+
+                            <Button type="submit" className="btn-success login-btn">
+
+                                تسجيل الدخول
+                            </Button>
+
+                        )}
+                    </Row>
+                </Form>
+
+
+
+                {error && <p className="text-danger mt-3 text-center">{error}</p>}
+            </Card.Body>
+            <Card.Footer>
+
+                <Button type="button" onClick={handleCloseForm} className="btn-danger login-back">
+                    العودة للرئيسية
+                </Button>
+            </Card.Footer>
+
+        </>
+    );
+}
 export default Login;

@@ -1,0 +1,31 @@
+
+/* MainContent.css */
+.main-content {
+  margin-left: 0; /* Adjust this value based on your sidebar width */
+  padding-top: 60px; /* Adjust this value based on your top navigation height */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.main-content.sidebar-open {
+  margin-left: 250px; /* Adjust this value based on your sidebar width */
+}
+
+/* Media Query for Small Screens */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    right: -100%;
+  }
+
+  .sidebar.open {
+    right: 0;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .main-content.sidebar-open {
+    margin-left: 0;
+  }
+}

@@ -29,7 +29,8 @@ export default defineConfig({
     include: [
       'react',
       'react-dom',
-      'axios', // Add other essential dependencies here
+      'axios',
+      'bootstrap'
     ],
   },
 });

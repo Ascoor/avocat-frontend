@@ -1,32 +1,24 @@
-
-import PropTypes from "prop-types"; // Import PropTypes
-
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
+import PropTypes from "prop-types";
+import { Pagination } from "react-bootstrap";
 
 const CustomPagination = ({ totalCount, itemsPerPage, currentPage, onPageChange }) => {
   const pageCount = Math.ceil(totalCount / itemsPerPage);
 
   return (
-    <Pagination
-      count={pageCount}
-      page={currentPage}
-      onChange={(event, value) => onPageChange(value)}
-      renderItem={(item) => (
-        <PaginationItem
-          component="a"
-          onClick={(e) => {
-            e.preventDefault();
-            onPageChange(item.page);
-          }}
-          {...item}
-        />
-      )}
-    />
+    <Pagination>
+      {Array.from({ length: pageCount }, (_, index) => (
+        <Pagination.Item
+          key={index + 1}
+          active={index + 1 === currentPage}
+          onClick={() => onPageChange(index + 1)}
+        >
+          {index + 1}
+        </Pagination.Item>
+      ))}
+    </Pagination>
   );
 };
 
-// Define prop types
 CustomPagination.propTypes = {
   totalCount: PropTypes.number.isRequired,
   itemsPerPage: PropTypes.number.isRequired,

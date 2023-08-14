@@ -1,0 +1,45 @@
+.calender {
+    font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .month-picker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+    
+    .month-picker button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    }
+    
+    .weekdays {
+    display: flex;
+    }
+    
+    .weekdays .weekday {
+    width: calc(100% / 7);
+    text-align: center;
+    }
+    
+    .days {
+    display: grid;
+    grid-template-columns: repeat(7, calc(100% / 7));
+    }
+    
+    @media (max-width: 768px) {
+    .calender {
+    font-size: 0.8rem;
+    }
+    }
+    
+    @media (max-width: 425px) {
+    .calender {
+    font-size: 0.6rem;
+    }
+    
+    .days {
+    grid-template-columns: repeat(3, calc(100% / 3));
+    }
+    }

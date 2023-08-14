@@ -1,0 +1,23 @@
+/* Use Cairo font */
+body {
+  font-family: 'Cairo', sans-serif;
+}
+
+
+
+  /* Example responsive adjustments */
+  @media (max-width: 768px) {
+    .dashboard-container {
+        transition: margin-left 0.3s ease-in-out; /* Add a transition to the margin */
+    
+    }
+    .dashboard-container.sidebar-open {
+        margin-left: 250px; /* Adjust this value as needed */
+      }
+    }
+  /* Auth.css */
+/* Reset default margin and padding */
+body, div, h1, h2, h3, p, ul, li {
+  margin: 0;
+  padding: 0;
+}

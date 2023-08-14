@@ -14,7 +14,7 @@ import LegalSession from '../legcase/tools/Legal_session.component';
 import ProcedureSearch from '../reports/procedure_search.component';
 import LegCaseCreate from '../legcase/create.component';
 import ProfileUser from '../Auth/ProfileUser';
-import {  Typography } from "@mui/material";
+
 
 const AuthRoutes = () => {
   return (
