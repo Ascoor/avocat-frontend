@@ -69,33 +69,35 @@ const Row2 = () => {
         </Paper>
 
         {Transactions.map((item) => {
-          return (
-            <Paper
-              sx={{
-                mt: 0.4,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Box p={1.2}>
-                <Typography variant="body1">{item.txId}</Typography>
-                <Typography variant="body2">{item.user} </Typography>
-              </Box>
-              <Typography variant="body1">{item.date} </Typography>
+  return (
+    <Paper
+      key={item.txId} // هنا نقوم بتقديم مفتاح فريد
+      sx={{
+        mt: 0.4,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <Box p={1.2}>
+        <Typography variant="body1">{item.txId}</Typography>
+        <Typography variant="body2">{item.user} </Typography>
+      </Box>
+      <Typography variant="body1">{item.date} </Typography>
 
-              <Typography
-                borderRadius={1.4}
-                p={1}
-                bgcolor={theme.palette.error.main}
-                color={theme.palette.getContrastText(theme.palette.error.main)}
-                variant="body2"
-              >
-                ${item.cost}
-              </Typography>
-            </Paper>
-          );
-        })}
+      <Typography
+        borderRadius={1.4}
+        p={1}
+        bgcolor={theme.palette.error.main}
+        color={theme.palette.getContrastText(theme.palette.error.main)}
+        variant="body2"
+      >
+        ${item.cost}
+      </Typography>
+    </Paper>
+  );
+})}
+
       </Box>
     </Stack>
   );

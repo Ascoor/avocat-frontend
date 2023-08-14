@@ -1,26 +1,37 @@
+
+import PropTypes from "prop-types"; // Import PropTypes
+
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 
-const CustomPagination = ({ clientsPerPage, totalClients, paginate, currentPage }) => {
-  const pageCount = Math.ceil(totalClients / clientsPerPage);
+const CustomPagination = ({ totalCount, itemsPerPage, currentPage, onPageChange }) => {
+  const pageCount = Math.ceil(totalCount / itemsPerPage);
 
   return (
     <Pagination
       count={pageCount}
       page={currentPage}
-      onChange={(event, value) => paginate(value)}
+      onChange={(event, value) => onPageChange(value)}
       renderItem={(item) => (
         <PaginationItem
           component="a"
           onClick={(e) => {
             e.preventDefault();
-            paginate(item.page);
+            onPageChange(item.page);
           }}
           {...item}
         />
       )}
     />
   );
+};
+
+// Define prop types
+CustomPagination.propTypes = {
+  totalCount: PropTypes.number.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 };
 
 export default CustomPagination;

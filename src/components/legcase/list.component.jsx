@@ -65,7 +65,8 @@ const LegCaseList = () => {
   };
 
   return (
-    <>
+
+
       <Card>
         <div className="court-setting-card-header">
           قائمة القضايا
@@ -158,15 +159,19 @@ const LegCaseList = () => {
 
           </Table>
         </Card.Body>
-      </Card>
-      <Pagination
+        <Card.Footer>
+        <Pagination
         items={filteredLegCases} // Pass the original array of filteredLegCases
         itemsPerPage={itemsPerPage}
         currentPage={legCasesPage}
         onPageChange={setLegCasesPage}
       />
+        </Card.Footer>
+      </Card>
 
-    </>
+
+
+
   );
 };
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import  { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Card, Form, Row, Col, Alert, Button } from "react-bootstrap";
@@ -14,7 +14,7 @@ import {
     FaOrcid,
 } from "react-icons/fa";
 import { BsArrowLeft, BsPersonPlus } from "react-icons/bs";
-import {ClientAddIcon} from "../../assets/icons";
+import {ClientAddIcon} from "../../assets/icons/index";
 import API_CONFIG from "../../config";
 const AddEditClient = () => {
     const navigate = useNavigate();
@@ -139,10 +139,9 @@ const AddEditClient = () => {
     };
 
     return (
-        <>
         <Card className="p-2">
             <Card.Header>
-                <div className="custom-card-header">
+            <div className="court-setting-card-header">
                     {id ? "تعديل العميل" : "إضافة عميل جديد"}
                     <img src={ClientAddIcon} alt="Icon" className="client-add-icon" />
                 </div>
@@ -350,7 +349,6 @@ const AddEditClient = () => {
                 </Form>
             </Card.Body>
         </Card>
-        </>
     );
 };
 

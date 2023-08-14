@@ -15,8 +15,10 @@ import ProcedureSearch from '../reports/procedure_search.component';
 import LegCaseCreate from '../legcase/create.component';
 import ProfileUser from '../Auth/ProfileUser';
 
+
 const AuthRoutes = () => {
   return (
+
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/procedures" element={<ProcedureSearch />} />
@@ -36,6 +38,7 @@ const AuthRoutes = () => {
       <Route path="/legal_session" element={<LegalSession legCaseId />} />
        <Route path="/lawyers/form" element={<LawyersAddEdit />} />
     </Routes>
+
   );
 };
 

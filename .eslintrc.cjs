@@ -17,9 +17,6 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   settings: { react: { version: '18.2' } },
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+
   },
 };

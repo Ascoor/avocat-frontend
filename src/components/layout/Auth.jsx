@@ -2,29 +2,19 @@ import * as React from "react";
 import {
   ThemeProvider,
   createTheme,
-  styled,
-  useTheme,
 } from "@mui/material/styles";
 import useAuth from "../Auth/AuthUser";
-import PropTypes from 'prop-types';
 
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 
 import SideBar from "./SideBar";
 import { getDesignTokens } from "./theme";
 import AuthRoutes from "./AuthRoutes";
 import TopNav from "./TopNav";
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
+
 "./TopNav";
 
 export default function Auth() {
@@ -44,7 +34,8 @@ export default function Auth() {
     setOpen(false);
   };
   const [mode, setMode] = React.useState(
-    Boolean(localStorage.getItem("currentMode"))
+    
+    localStorage.getItem("currentMode")
       ? localStorage.getItem("currentMode")
       : "light"
   );
@@ -67,17 +58,30 @@ export default function Auth() {
           isRTL={isRTL}
         />
 
-        <SideBar
+     
+            
+    <Stack 
+           sx={{
+            display: 'flex',
+            flexDirection: 'col',
+            justifyContent: 'center',
+            alignItems: 'center', // يمكن تغييرها إلى 'center' لتوسيط العناصر عمودياً
+            flexGrow: 1,
+            overflow: 'hidden',
+            marginTop: '84px', // الهامش العلوي
+          }}>
+    
+   <SideBar
           open={open}
           handleDrawerClose={handleDrawerClose}
           isRTL={isRTL}
           setRTL={setIsRTL}
           userId={userId}
         />
-         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <AuthRoutes />
-        </Box>
+    </  Stack>
       </Box>
+
     </ThemeProvider>
   );
 }

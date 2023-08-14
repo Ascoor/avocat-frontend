@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -15,31 +15,34 @@ import API_CONFIG from '../../config';
 import AuthUser from "./AuthUser";
 
 const Login = ({ handleCloseForm }) => {
-  const navigate = useNavigate();
-  const { setToken } = AuthUser();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const { setToken } = AuthUser();
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    try {
-      const response = await axios.post(`${API_CONFIG.baseURL}/api/login`, {
-        email,
-        password,
-      });
-      setToken(response.data.user, response.data.access_token);
-      navigate('/'); // Replace "/" with the desired route after successful login
-    } catch (error) {
-      setError('فشل تسجيل الدخول. يرجى المحاولة مرة أخرى لاحقًا.');
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            const response = await axios.post(`${API_CONFIG.baseURL}/api/login`, {
+                email,
+                password,
+            });
+            setToken(response.data.user, response.data.access_token);
+            navigate("/"); // Replace "/" with the desired route after successful login
+        } catch (error) {
+            setError(
+                "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى لاحقًا."
+            );
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
   return (
     <Card variant="outlined">

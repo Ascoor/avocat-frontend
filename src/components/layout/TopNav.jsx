@@ -36,11 +36,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 const gradientBackground = (theme) => `
-  linear-gradient(to ${theme.direction === "rtl" ? "left" : "right"}, ${theme.palette.primary.dark}, ${theme.palette.primary.main}, ${theme.palette.error.main})
+  linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 17%,
+    rgba(1, 34, 45, 1) 51%,
+    rgba(3, 33, 42, 1) 74%,
+    rgba(0, 0, 0, 1) 100%
+  )
 `;
+
+//@ts-ignore
 //@ts-ignore
 const StyledAppBar = styled(AppBar)(({ theme, open }) => ({
-  background: gradientBackground(theme),
+  background: gradientBackground(theme), // هنا يتم تطبيق التدرج
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -68,7 +76,7 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL,
   };
 
   const [openMemberDropdown, setOpenMemberDropdown] = React.useState(false);
-  const [openNotificationDropdown, setOpenNotificationDropdown] = React.useState(false);
+  // const [openNotificationDropdown, setOpenNotificationDropdown] = React.useState(false);
 
   // Define functions to open/close dropdown menus
   const handleOpenMemberDropdown = (event) => {
@@ -79,13 +87,13 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL,
     setOpenMemberDropdown(false);
   };
 
-  const handleOpenNotificationDropdown = (event) => {
-    setOpenNotificationDropdown(true);
-  };
+  // const handleOpenNotificationDropdown = (event) => {
+  //   setOpenNotificationDropdown(true);
+  // };
 
-  const handleCloseNotificationDropdown = () => {
-    setOpenNotificationDropdown(false);
-  };
+  // const handleCloseNotificationDropdown = () => {
+  //   setOpenNotificationDropdown(false);
+  // };
   
   return (
    //@ts-ignore
@@ -98,20 +106,24 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL,
           onClick={handleDrawerOpen}
           edge="start"
           sx={{
-            marginRight: 5,
+      
             ...(open && { display: "none" }),
           }}
         >
+
           <MenuIcon />
         </IconButton>
+      <img src="/logo512.png" alt="Logo" style={{ height: 55,width:120, marginRight: theme.spacing(2) }} />
         
   
         <Box sx={{ flexGrow: 1, marginLeft: theme.spacing(3) }}>
+    
           <SearchIcon sx={{ marginRight: theme.spacing(2) }} />
           <StyledInputBase
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
           />
+
         </Box>
 
         <Stack direction={"row"}>
@@ -197,6 +209,7 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL,
 TopNav.propTypes = {
   open: PropTypes.bool.isRequired,
   logoutUser: PropTypes.func.isRequired,
+  theme: PropTypes.func.isRequired,
  
   handleDrawerOpen: PropTypes.func.isRequired,
   setMode: PropTypes.func.isRequired,

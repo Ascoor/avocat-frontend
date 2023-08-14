@@ -1,4 +1,4 @@
-
+import React from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -8,7 +8,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Avatar, styled, useTheme, Stack,Typography, Tooltip } from "@mui/material";
+import { Avatar, styled, useTheme, Stack, Typography, Tooltip } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -48,7 +48,6 @@ const closedMixin = (theme) => ({
 });
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  //@ts-ignore
   ({ theme, open }) => ({
     width: drawerWidth,
     flexShrink: 0,
@@ -64,6 +63,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   }),
 );
+
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -109,20 +109,29 @@ const SideBar = ({ open, handleDrawerClose, userId,setRTL,isRTL }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const sidebarPosition = isRTL ? "right" : "left"; // Determine the sidebar position based on RTL
+
   const getUserName = () => {
     const userString = sessionStorage.getItem('user');
-    
     const user = JSON.parse(userString);
     return user ? user.name : '';
-};
-const primaryColor = "#FF9800"; // Primary color (orange)
-const secondaryColor = "#4CAF50"; // Secondary color (green)
+  };
 
-const gradientBackground = (theme) => `
-  linear-gradient(to ${theme.direction === "rtl" ? "left" : "right"}, ${primaryColor}, ${secondaryColor})
-`;
-
-
+  const gradientBackground = (theme) => `
+    linear-gradient(
+      90deg,
+      rgba(2, 0, 36, 1) 17%,
+      rgba(1, 34, 45, 1) 51%,
+      rgba(3, 33, 42, 1) 74%,
+      rgba(0, 0, 0, 1) 100%
+    )
+  `;
+  const TitleContainer = styled("div")({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "8px",
+    marginBottom: "16px",
+  });
   return (
     <Drawer
     variant="permanent"
@@ -132,14 +141,9 @@ const gradientBackground = (theme) => `
     }}
     anchor={isRTL ? "right" : "left"} // Set anchor based on RTL/LTR
   >
-    <div  style={{
-    background: gradientBackground(theme),
-    display: "flex",
-    flexDirection: "column",
-    color: theme.palette.common.white, // Set text color to white for better visibility
-  }}
-        >
+
     
+      <TitleContainer>
     <DrawerHeader>
       <IconButton onClick={handleDrawerClose}>
         {theme.direction === "rtl" ? (
@@ -149,6 +153,7 @@ const gradientBackground = (theme) => `
         )}
       </IconButton>
     </DrawerHeader>
+    </TitleContainer>
       <Divider />
       
       <Avatar
@@ -159,6 +164,7 @@ const gradientBackground = (theme) => `
           my: 1,
           border: "2px solid grey",
           transition: "0.25s",
+          background:"#1f2328"
         }}
         alt="Remy Sharp"
         src={WelcomePatren}
@@ -187,89 +193,77 @@ const gradientBackground = (theme) => `
   
       <Divider />
 
-      <List>
-        {Array1.map((item) => (
-          <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
-            <Tooltip title={open ? null : item.text} placement="left">
-              <ListItemButton
-                onClick={() => {
-                  navigate(item.path);
-                }}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                  bgcolor:
-                    location.pathname === item.path
-                      ? theme.palette.mode === "dark"
-                        ? grey[800]
-                        : grey[300]
-                      : null,
-                }}
-              >
-                <ListItemIcon
+        <List>
+          {Array1.map((item) => (
+            <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
+              <Tooltip title={open ? null : item.text} placement="left">
+                <ListItemButton
+                  onClick={() => {
+                    navigate(item.path);
+                  }}
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                    boxShadow: location.pathname === item.path ? theme.shadows[3] : "none",
                   }}
                 >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </Tooltip>
-          </ListItem>
-        ))}
-      </List>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </Tooltip>
+            </ListItem>
+          ))}
+        </List>
 
-      <Divider />
+        <Divider />
 
-      <List>
-        {Array2.map((item) => (
-          <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
-            <Tooltip title={open ? null : item.text} placement="left">
-              <ListItemButton
-                onClick={() => {
-                  navigate(item.path);
-                }}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                  bgcolor:
-                    location.pathname === item.path
-                      ? theme.palette.mode === "dark"
-                        ? grey[800]
-                        : grey[300]
-                      : null,
-                }}
-              >
-                <ListItemIcon
+        <List>
+          {Array2.map((item) => (
+            <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
+              <Tooltip title={open ? null : item.text} placement="left">
+                <ListItemButton
+                  onClick={() => {
+                    navigate(item.path);
+                  }}
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                    bgcolor:
+                      location.pathname === item.path
+                        ? theme.palette.mode === "dark"
+                          ? grey[800]
+                          : grey[300]
+                        : null,
                   }}
                 >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </Tooltip>
-          </ListItem>
-        ))}
-      </List>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </Tooltip>
+            </ListItem>
+          ))}
+        </List>
 
-      <Divider />
+        <Divider />
 
-</div>
     </Drawer>
   );
 };

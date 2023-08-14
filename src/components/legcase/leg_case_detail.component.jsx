@@ -2,6 +2,7 @@ import {useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import API_CONFIG from "../../config";
+import {Box, Stack} from "@mui/material";
 import {
     Col,
     Row,
@@ -80,7 +81,13 @@ export default function LegCaseDetail () {
     }
 
     return (
-        <>
+
+        <Stack width={1500}
+          direction={"row"}
+          flexWrap={"wrap"}
+          gap={2}
+          justifyContent={"center"}
+        >
             <Card>
                 <Card.Header>
                     <div className="custom-card-header">
@@ -353,18 +360,19 @@ export default function LegCaseDetail () {
                         onSelect={(k) => setKey(k)}
                     >
                         <Tab eventKey="procedure" title="الإجراءات">
-                            <Procedure legCaseId={id} />
+                            <Procedure  legCaseId={String(id)} />
                         </Tab>
                         <Tab eventKey="session" title="الجلسات">
-                            <LegalSession legCaseId={id} />
+                            <LegalSession  legCaseId={String(id)} />
                         </Tab>
                         <Tab eventKey="legalAd" title="الإعلانات">
-                            <LegalAd legCaseId={id} />
+                            <LegalAd  legCaseId={String(id)} />
                         </Tab>
                     </Tabs>
                 </Card.Body>
                 <Card.Footer></Card.Footer>
             </Card>
-        </>
+ </Stack>
+
     );
 }
