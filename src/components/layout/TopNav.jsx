@@ -56,7 +56,7 @@ const StyledAppBar = styled(AppBar)(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 2, // Set a higher zIndex
 }));
 
-const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL,
+const TopNav = ({ open,handleDrawerOpen, setMode, isRTL, setIsRTL,
   userId,logoutUser }) => {
   const theme = useTheme();
   const handleRTLToggle = () => {
@@ -209,8 +209,6 @@ const TopNav = ({ open, handleDrawerOpen, setMode, isRTL, setIsRTL,
 TopNav.propTypes = {
   open: PropTypes.bool.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  theme: PropTypes.func.isRequired,
- 
   handleDrawerOpen: PropTypes.func.isRequired,
   setMode: PropTypes.func.isRequired,
   isRTL: PropTypes.bool.isRequired,

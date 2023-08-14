@@ -118,9 +118,10 @@ const CourtSubType = () => {
             </Button>
 
             <Card.Body>
-              <Table striped bordered hover>
-                <thead style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}>
-                  <tr style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}>
+           
+            <Table striped bordered hover responsive>
+                    <thead className="table-success text-center">
+                        <tr style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}>
                     <th>الاسم</th>
                     <th>اسم نوع المحكمة</th>
                     <th>الإجراءات</th>

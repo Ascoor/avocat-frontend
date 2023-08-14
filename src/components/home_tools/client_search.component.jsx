@@ -8,9 +8,9 @@ const ClientSearch = ({ searchResults }) => {
     }
     const clients = searchResults || [];
     return (
-        <Table striped bordered hover>
-            {/* Table header */}
-            <thead>
+   
+        <Table striped bordered hover responsive>
+        <thead className="table-success text-center">
                 <tr>
                     <th>#</th>
                     <th>الاسم</th>

@@ -5,23 +5,12 @@ const Home = () => {
   const theme = useTheme(); // استخدام useTheme للوصول إلى theme
 
   return (
-    <Stack width={1500}
-    direction={"row"}
-    flexWrap={"wrap"}
-    gap={2}
-    justifyContent={"center"}
-  >
-      <Typography
-        sx={{
-          color: theme.palette.info.light,
-          fontWeight: "bold",
-        }}
-        variant="h5"
-      >
-        <DashBoard />   
-      </Typography>
+   <Typography variant="h6" align="center" sx={{ mt: "15px",m:"20px" }}>
+     <DashBoard />   
+     </Typography>
+
      
-    </Stack>
+     
   );
 };
 

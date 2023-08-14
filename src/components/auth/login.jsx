@@ -8,7 +8,7 @@ import {
   Box,
   TextField,
   Button,
-  CircularProgress,
+  CircularProgress
 } from '@mui/material';
 import { FaSignInAlt } from 'react-icons/fa';
 import API_CONFIG from '../../config';
@@ -53,6 +53,7 @@ const Login = ({ handleCloseForm }) => {
             <FaSignInAlt style={{ marginRight: '5px' }} className="welcome-page-icon" />
           </h2>
         </div>
+<div className="login-form p-4">
 
         <form onSubmit={onSubmit}>
           <Box mb={3}>
@@ -64,7 +65,7 @@ const Login = ({ handleCloseForm }) => {
               variant="outlined"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-            />
+              />
           </Box>
           <Box mb={3}>
             <TextField
@@ -75,21 +76,22 @@ const Login = ({ handleCloseForm }) => {
               variant="outlined"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-            />
+              />
           </Box>
-          <Box display="flex" justifyContent="center">
+         <div className="d-flex justify-content-between">
             {loading ? (
-              <Button disabled variant="contained" color="warning" className="login-btn">
+              <Button disabled variant="contained" color="warning" >
                 <CircularProgress size={20} style={{ marginRight: '8px' }} />
                 جارى الدخول
               </Button>
             ) : (
-              <Button type="submit" variant="contained" color="success" className="login-btn">
+              <Button type="submit" variant="contained" color="success" >
                 تسجيل الدخول
               </Button>
             )}
-          </Box>
+          </div>
         </form>
+            </div>
         {error && (
           <Box mt={3} textAlign="center">
             <p className="text-danger">{error}</p>

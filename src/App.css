@@ -1155,8 +1155,10 @@ section {
     /**Procedure Search End***/
     /**Login Page ***/
     .login-btn{
-  
-      padding: 10px;
+      background-color: #0da73b;
+      color: #FFFFFF  ;
+            padding: 10px;
+            border-radius: 20px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   
     }

@@ -6,7 +6,7 @@ import { FcPlus } from "react-icons/fc";
 import { TiArrowBackOutline } from "react-icons/ti";
 import API_CONFIG from "../../config";
 import { LegCaseIcon } from "../../assets/icons";
-import Pagination from "../home_tools/Pagination"; // Import your custom Pagination component here
+import CustomPagination from "../home_tools/Pagination"; // Import your custom Pagination component here
 
 const LegCaseList = () => {
   const itemsPerPage = 10; // Set the number of items to display per page
@@ -15,11 +15,18 @@ const LegCaseList = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [currentAlertMessage, setCurrentAlertMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [filteredLegCases, setFilteredLegCases] = useState([]);
+  const data = Array.from({ length: 100 }, (_, index) => `Item ${index + 1}`);
+ 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = (newPage) => {
+    setLegCasesPage(newPage);
+  };
+
   const startIndex = (legCasesPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const [filteredLegCases, setFilteredLegCases] = useState([]);
   const paginatedLegCases = filteredLegCases.slice(startIndex, endIndex);
-
 
   useEffect(() => {
     fetchLegCases();
@@ -109,7 +116,7 @@ const LegCaseList = () => {
         </div>
         <Card.Body>
           <Table striped bordered hover responsive>
-            <thead className="info">
+            <thead className="table-success">
               <tr>
                 <th className="header-cell">رقم الملف</th>
                 <th className="header-cell"> الموكل</th>
@@ -160,12 +167,13 @@ const LegCaseList = () => {
           </Table>
         </Card.Body>
         <Card.Footer>
-        <Pagination
-        items={filteredLegCases} // Pass the original array of filteredLegCases
-        itemsPerPage={itemsPerPage}
-        currentPage={legCasesPage}
-        onPageChange={setLegCasesPage}
-      />
+        <CustomPagination
+  totalCount={filteredLegCases.length} // Use the filteredLegCases array's length
+  itemsPerPage={itemsPerPage}
+  currentPage={legCasesPage}
+  onPageChange={handlePageChange}
+/>
+
         </Card.Footer>
       </Card>
 

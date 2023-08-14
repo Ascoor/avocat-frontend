@@ -2,7 +2,6 @@ import {useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import API_CONFIG from "../../config";
-import {Box, Stack} from "@mui/material";
 import {
     Col,
     Row,
@@ -82,12 +81,6 @@ export default function LegCaseDetail () {
 
     return (
 
-        <Stack width={1500}
-          direction={"row"}
-          flexWrap={"wrap"}
-          gap={2}
-          justifyContent={"center"}
-        >
             <Card>
                 <Card.Header>
                     <div className="custom-card-header">
@@ -209,11 +202,11 @@ export default function LegCaseDetail () {
                         </>
                     )}
                 </Card.Body>
-            </Card>
+       
             <Card.Body>
                 <LegCaseClients legCaseId={id} />
             </Card.Body>
-            <Card>
+        
                 <Card.Header>
                     <div className="custom-card-header">
                         <h3 style={{ fontWeight: "bold" }}>بيانات المحاكم</h3>
@@ -229,9 +222,9 @@ export default function LegCaseDetail () {
                 <Card.Body>
                     <Row>
                         <Col>
-                            <Table responsive>
-                                <thead>
-                                    <tr>
+                       
+                <Table striped bordered hover responsive>
+                    <thead className="table-success text-center">        <tr>
                                         <th>رقم القضية</th>
                                         <th>سنة القضية</th>
                                         <th>المحكمة</th>
@@ -350,9 +343,7 @@ export default function LegCaseDetail () {
                         </Col>
                     </Row>
                 </Card.Body>
-            </Card>
-
-            <Card>
+         
                 <Card.Body>
                     <Tabs
                         id="controlled-tab-example"
@@ -372,7 +363,8 @@ export default function LegCaseDetail () {
                 </Card.Body>
                 <Card.Footer></Card.Footer>
             </Card>
- </Stack>
+         
+
 
     );
 }

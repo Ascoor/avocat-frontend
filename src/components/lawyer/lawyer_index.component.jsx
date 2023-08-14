@@ -81,7 +81,7 @@ const Lawyers = () => {
                     اضافة محامى
                 </Button>
                 <Table striped bordered responsive className="rtl-table">
-                    <thead>
+                     <thead className="table-success">
                         <tr>
                             <th>الاسم</th>
                             <th>تاريخ الميلاد</th>

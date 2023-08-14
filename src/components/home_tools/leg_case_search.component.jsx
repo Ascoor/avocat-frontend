@@ -56,9 +56,9 @@ const LegCaseSearch = ({ searchResults, casesPerPage, currentPage, paginate }) =
                     {searchResults.length > 0 ? (
                         <>
                             {/* Display search results */}
-                            <Table striped bordered hover>
-                                <thead>
-                                    <tr>
+                         
+                <Table striped bordered hover responsive>
+                    <thead className="table-success text-center">   <tr>
                                         <th scope="col">رقم القضية</th>
                                         <th scope="col">العنوان</th>
                                         <th scope="col">الحالة</th>

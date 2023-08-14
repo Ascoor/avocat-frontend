@@ -12,6 +12,7 @@ import { AiFillIdcard, AiFillCalendar, AiFillPhone } from 'react-icons/ai';
 import { RiGenderlessFill } from 'react-icons/ri';
 import { GiPrayer } from 'react-icons/gi';
 import { MdWork } from 'react-icons/md';
+import CustomPagination from "../home_tools/Pagination"
 export default function Clients() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,6 +23,13 @@ export default function Clients() {
     const [filteredClients, setFilteredClients] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null); // تعريف العميل المحدد
+
+    const itemsPerPage = 5;
+    const [clientsPage, setClientsPage] = useState(1);
+    const startIndex = (clientsPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, filteredClients.length);
+    
+  const paginatedClients = filteredClients.slice(startIndex, endIndex);
 
     useEffect(() => {
         fetchClients();
@@ -51,6 +59,10 @@ export default function Clients() {
         } catch (error) {
             console.log(error.response.data.message);
         }
+    };
+
+    const handlePageChange = (newPage) => {
+        setClientsPage(newPage);
     };
 
     const deleteClient = async (id) => {
@@ -149,7 +161,7 @@ export default function Clients() {
                 </div>
 
                 <Table striped bordered hover responsive>
-                    <thead>
+                    <thead className="table-success text-center">
                         <tr>
                             <th>رقم المكتب</th>
                             <th>اسم العميل</th>
@@ -161,7 +173,7 @@ export default function Clients() {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredClients.length === 0 ? (
+                        {paginatedClients.length === 0 ? (
                             <tr>
                                 <td colSpan="5">
                                     <Alert variant="warning">لا يوجد موكلين لعرضهم.</Alert>
@@ -184,15 +196,12 @@ export default function Clients() {
                                     </td>
 
                                     <td>
-                                    <Button
-                                        variant={client.status === "active" ? "success" : "warning"}
-                                        onClick={() => {
-                                            setSelectedClient(client); // تحديد العميل عند النقر
-                                            setShowModal(true);
-                                        }}
-                                    >
-                                        {client.status === "active" ? "إلغاء التنشيط" : "تنشيط"}
-                                    </Button>
+                                        <Button
+                                            variant={client.status === "active" ? "success" : "warning"}
+                                            onClick={() => handleToggleStatus(client.id)}
+                                        >
+                                            {client.status === "active" ? "إلغاء التنشيط" : "تنشيط"}
+                                        </Button>
 
                                         <Button
                                             variant="primary"
@@ -212,6 +221,15 @@ export default function Clients() {
                         )}
                     </tbody>
                 </Table>
+                <Card.Footer>
+        {/* Render the CustomPagination component */}
+        <CustomPagination
+          totalCount={filteredClients.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={clientsPage}
+          onPageChange={handlePageChange}
+        />
+      </Card.Footer>
             </Card>
 
             <Modal show={showModal} onHide={() => setShowModal(false)} dir="rtl">

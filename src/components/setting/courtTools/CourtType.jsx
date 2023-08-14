@@ -86,9 +86,10 @@ return(
               إضافة تصنيف محكمة
             </Button>
                 <Card.Body className="court-index">
-                                    <Table striped bordered hover>
-                                        <thead style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}>
-                                            <tr>
+                                  
+                <Table striped bordered hover responsive>
+                    <thead className="table-success text-center">
+                               <tr>
                                                 <th>الاسم</th>
                                                 <th>الإجراءات</th>
                                             </tr>

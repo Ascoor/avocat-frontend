@@ -1,8 +1,8 @@
 
 import { Routes, Route } from 'react-router-dom';
 import Home from '../home';
-import Lawyers from '../setting/lawyer_index.component';
-import LawyersAddEdit from '../setting/lawyer_index.component';
+import Lawyers from '../lawyer/lawyer_index.component';
+import LawyersAddEdit from '../lawyer/lawyer_index.component';
 import CourtSetting from '../setting/court_index.component';
 // import CourtSearch from "../reports/court_search.component";
 import CaseTypeSet from '../setting/case_index.component';
@@ -14,7 +14,7 @@ import LegalSession from '../legcase/tools/Legal_session.component';
 import ProcedureSearch from '../reports/procedure_search.component';
 import LegCaseCreate from '../legcase/create.component';
 import ProfileUser from '../Auth/ProfileUser';
-
+import {  Typography } from "@mui/material";
 
 const AuthRoutes = () => {
   return (

@@ -247,9 +247,9 @@ const CaseType = () => {
                         <h3 style={{ color: "#006e5d" }}>أنواع القضايا</h3>
                     </Card.Header>
 
-                    <Table striped bordered hover>
-                        <thead style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}>
-                            <tr>
+                
+                    <Table striped bordered hover responsive>
+                    <thead className="table-success text-center">       <tr>
                                 <th>الاسم</th>
                                 <th>التحكم</th>
                             </tr>
@@ -285,9 +285,9 @@ const CaseType = () => {
                         <h3 style={{ color: "#006e5d" }}>أنواع القضايا الفرعية</h3>
                     </Card.Header>
 
-                    <Table striped bordered hover>
-                        <thead style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}>
-                            <tr>
+              
+                    <Table striped bordered hover responsive>
+                    <thead className="table-success text-center">     <tr>
                                 <th>النوع الفرعي</th>
                                 <th>اسم نوع القضية</th>
                                 <th>التحكم</th>
@@ -331,9 +331,9 @@ const CaseType = () => {
                         <h3 style={{ color: "#006e5d" }}>أنواع الإجراءات</h3>
                     </Card.Header>
 
-                    <Table striped bordered hover>
-                        <thead style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}>
-                            <tr>
+                 
+                <Table striped bordered hover responsive>
+                    <thead className="table-success text-center">   <tr>
                                 <th>الاسم</th>
                                 <th>التحكم</th>
                             </tr>
@@ -372,9 +372,9 @@ const CaseType = () => {
                         <h3 style={{ color: "#006e5d" }}>أنواع الإعلانات</h3>
                     </Card.Header>
 
-                    <Table striped bordered hover>
-                        <thead style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}>
-                            <tr>
+                 
+                <Table striped bordered hover responsive>
+                    <thead className="table-success text-center">      <tr>
                                 <th>الاسم</th>
                                 <th>التحكم</th>
                             </tr>

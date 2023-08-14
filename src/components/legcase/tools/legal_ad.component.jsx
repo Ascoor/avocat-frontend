@@ -210,9 +210,9 @@ const LegalAd = ({ legCaseId }) => {
 
             </Card.Header>
             <Card.Body>
-                <Table striped bordered hover responsive>
-                    <thead>
-                        <tr>
+              
+            <Table striped bordered hover responsive>
+                    <thead className="table-success text-center">                        <tr>
                             <th>نوع الإعلان القانوني</th>
                             <th>تاريخ التسليم</th>
                             <th>تاريخ الإستلام</th>

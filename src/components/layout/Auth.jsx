@@ -55,7 +55,7 @@ export default function Auth() {
           handleDrawerOpen={handleDrawerOpen}
           setMode={setMode}
           setIsRTL={setIsRTL}
-          isRTL={isRTL}
+          isRTL={isRTL} 
         />
 
      
@@ -63,7 +63,7 @@ export default function Auth() {
     <Stack 
            sx={{
             display: 'flex',
-            flexDirection: 'col',
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center', // يمكن تغييرها إلى 'center' لتوسيط العناصر عمودياً
             flexGrow: 1,

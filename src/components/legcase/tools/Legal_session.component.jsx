@@ -198,9 +198,9 @@ LegalSession.propTypes = {
             </Card.Header>
             <Card.Body>
                 <Row>
-                    <Table responsive bordered hover>
-                        <thead>
-                            <tr>
+               
+                <Table striped bordered hover responsive>
+                    <thead className="table-success text-center">      <tr>
                                 <th className="col-2">تاريخ الجلسة</th>
                                 <th className="col-2">اسم المحامي</th>
                                 <th className="col-1">الرول</th>
