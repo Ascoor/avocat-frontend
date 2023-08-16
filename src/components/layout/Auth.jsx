@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import TopNav from './TopNav';
 import Sidebar from './Sidebar';
+
+import '../../App.css';
 import MainContent from './MainContent';
 import '../../assets/css/Auth.css'
 function Auth() {
