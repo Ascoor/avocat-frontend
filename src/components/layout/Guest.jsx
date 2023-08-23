@@ -9,8 +9,8 @@ import patternLogo from "../../images/welcome.jpg";
 import patternLogoSmall from "../../images/logo2.png";
 import LawyerServices from "./LawyerService.component";
 
-const Login = React.lazy(() => import("../auth/login"));
-const Register = React.lazy(() => import("../auth/register"));
+const Login = React.lazy(() => import("../Auth/Login"));
+const Register = React.lazy(() => import("../Auth/Register"));
 
 const Guest = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);

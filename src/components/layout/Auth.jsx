@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import TopNav from './TopNav';
-import Sidebar from './Sidebar';
+import Sidebar from './SideBar';
 
 import '../../App.css';
 import MainContent from './MainContent';

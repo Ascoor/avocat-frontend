@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
-import '../../assets/css/Sidebar.css';
+import '../../assets/css/SideBar.css';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const sidebarAnimation = useSpring({
