@@ -17,12 +17,13 @@ function Auth() {
   };
 
   return (
+<>
 
-      <div className="App">
         <TopNav onToggleSidebar={handleToggleSidebar} sidebarOpen={sidebarOpen} />
         <Sidebar isOpen={sidebarOpen} onClose={handleCloseSidebar} />
         <MainContent isOpen={sidebarOpen} />
-      </div>
+</>
+
 
   );
 }

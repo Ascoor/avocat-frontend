@@ -1,13 +1,13 @@
-
 /* MainContent.css */
 .main-content {
-  margin-left: 0; /* Adjust this value based on your sidebar width */
+  margin-right: 0; /* Adjust this value based on your sidebar width */
   padding-top: 60px; /* Adjust this value based on your top navigation height */
-  transition: margin-left 0.3s ease-in-out;
+  transition: margin-right 0.3s ease-in-out;
+  text-align: center; /* Center align the content */
 }
 
 .main-content.sidebar-open {
-  margin-left: 250px; /* Adjust this value based on your sidebar width */
+  margin-right: 250px; /* Adjust this value based on your sidebar width */
 }
 
 /* Media Query for Small Screens */
@@ -22,10 +22,11 @@
   }
 
   .main-content {
-    margin-left: 0;
+    margin-right: 0;
+    text-align: left; /* Reset text alignment for small screens */
   }
 
   .main-content.sidebar-open {
-    margin-left: 0;
+    margin-right: 0;
   }
 }

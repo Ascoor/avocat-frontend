@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types'; // تعديل هنا
 import { Link } from 'react-router-dom';
-import { FcBusinessman, FcLibrary, FcOvertime, FcBriefcase } from "react-icons/fc";
-import {ClientIcon,DashBoard} from "../assets/icons/index";
- 
+import { FcBusinessman, FcLibrary, FcOvertime, FcBriefcase } from 'react-icons/fc';
+import { ClientIcon, DashBoard } from '../assets/icons/index';
 import { Card, Row, Col, Button, Form } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
 import axios from 'axios';
-import  Calendar  from './home_tools/Calender';
+import Calendar from './home_tools/Calender';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import API_CONFIG from '../config';
-import ClientSearch from "./home_tools/client_search.component";
-import LegCaseSearch from "./home_tools/leg_case_search.component";
+import ClientSearch from './home_tools/client_search.component';
+import LegCaseSearch from './home_tools/leg_case_search.component';
 import 'moment/locale/ar';
 import moment from 'moment';
 import '../assets/css/home.css';
@@ -43,7 +42,7 @@ const useIconCardAnimation = () => {
 
     return { cardSpringStyles, handleHover, handleHoverEnd, handleTouchStart, handleTouchEnd };
 };
-const EventCard = ({ title, color, count, icon }) => {
+const EventCard = ({ title, color, count, icon }) => { // تعديل هنا
     const { cardSpringStyles, handleHover, handleHoverEnd } = useIconCardAnimation();
 
     return (
@@ -58,14 +57,10 @@ const EventCard = ({ title, color, count, icon }) => {
                 <Card.Body className="event-card-body">
                     <div className="event-card-content p-1">
                         <span className="icon">{icon}</span>
-
                     </div>
                     <div className="event-card-title  m-10">{title}</div>
                     <span className="count">{count}</span>
                 </Card.Body>
-
-
-
             </Card>
         </animated.div>
     );
@@ -319,13 +314,11 @@ const Home = () => {
 
   
 EventCard.propTypes = {
-  open: PropTypes.bool.isRequired,
-  handleDrawerClose: PropTypes.func.isRequired,
-  count: PropTypes.func.isRequired,
-  icon: PropTypes.func.isRequired,
-  title: PropTypes.string, // Update the type accordingly
-  color: PropTypes.string, // Update the type accordingly
-
+    open: PropTypes.bool.isRequired,
+    count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired, // تعديل هنا
+    icon: PropTypes.element.isRequired, // تعديل هنا
+    title: PropTypes.string, // تعديل النوع هنا
+    color: PropTypes.string, // تعديل النوع هنا
 };
 
 
