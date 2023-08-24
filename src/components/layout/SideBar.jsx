@@ -1,12 +1,13 @@
+
 import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
 import '../../assets/css/Sidebar.css';
 
-const Sidebar = ({ isOpen, onClose }) => {
+const Sidebar = ({ sidebarOpen, onClose }) => {
   const sidebarAnimation = useSpring({
-    right: isOpen ? 0 : -250, // Adjust the value based on your sidebar width
+    right: sidebarOpen ? 0 : -250, // Adjust the value based on your sidebar width
   });
 
   const userDropdownAnimation = useSpring({
@@ -16,11 +17,15 @@ const Sidebar = ({ isOpen, onClose }) => {
   });
 
   return (
-    <animated.aside dir="rtl" className={`sidebar ${isOpen ? 'open' : ''}`} style={sidebarAnimation}>
+    <animated.aside
+      dir="rtl"
+      className={`sidebar ${sidebarOpen ? 'open' : ''}`}
+      style={sidebarAnimation}
+    >
       <button onClick={onClose} className="close-icon">
         <FaTimes />
       </button>
-      <div className="user-profile">
+  <div className="user-profile">
         <img src="/log1.png" alt="صورة المستخدم" />
         <animated.span style={userDropdownAnimation}>جون دو</animated.span>
       </div>
@@ -29,36 +34,29 @@ const Sidebar = ({ isOpen, onClose }) => {
           <Link to="/">الصفحة الرئيسية</Link>
         </li>
         <li>
-          <Link to="/clients">العملاء</Link>
+          <Link to="/lawyer_setting">المحامون</Link>
         </li>
         <li>
           <Link to="/clients">الموكلين</Link>
         </li>
-        <li className="sub-menu">
-          القضايا
-          <ul className="sub-menu-items">
+
             <li>
-              <Link to="/cases">القضايا</Link>
+              <Link to="/legcases">القضايا</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/sessions">الجلسات</Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/procedures">الإجراءات</Link>
             </li>
-          </ul>
-        </li>
-        <li className="sub-menu">
-          إعدادات المكتب
-          <ul className="sub-menu-items">
+        
             <li>
-              <Link to="/court-settings">اعدادات المحاكم</Link>
+              <Link to="/courts">اعدادات المحاكم</Link>
             </li>
             <li>
-              <Link to="/case-settings">اعدادات القضايا</Link>
+              <Link to="/cases_setting">اعدادات القضايا</Link>
             </li>
-          </ul>
-        </li>
+     
       </ul>
     </animated.aside>
   );
@@ -66,7 +64,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
 
 Sidebar.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  sidebarOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

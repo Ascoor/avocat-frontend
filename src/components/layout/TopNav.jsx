@@ -1,3 +1,4 @@
+
 import { FaBars, FaUser, FaBell, FaSearch } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import { useSpring, animated } from '@react-spring/web';
@@ -11,16 +12,13 @@ const TopNav = ({ onToggleSidebar, sidebarOpen }) => {
   });
 
   return (
-    <nav className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}>
-     
-      <div className="navbar-brand">
-        <button onClick={onToggleSidebar} className="navbar-toggler">
-          <FaBars />
-        </button>
-        <a href="/" className="brand-logo">
-          <img src="logo512.png" alt="Brand Logo" />
-        </a>
-      </div>
+    <animated.nav className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}>
+      <button onClick={onToggleSidebar} className="navbar-toggler">
+        <FaBars />
+      </button>
+      <a href="/" className="brand-logo">
+        <img src="logo512.png" alt="Brand Logo" />
+      </a>
       <div className="search-form">
         <form>
           <input type="text" placeholder="Search" />
@@ -30,9 +28,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen }) => {
         </form>
       </div>
       <div className="user-menu">
-      
         <div className="user-dropdown">
-          {/* Apply animation */}
           <animated.button
             className="dropdown-toggle"
             id="userDropdown"
@@ -59,14 +55,14 @@ const TopNav = ({ onToggleSidebar, sidebarOpen }) => {
             <p>New notification: You have a new message!</p>
           </div>
         </div>
-        
       </div>
-    </nav>
+    </animated.nav>
   );
 };
+
 TopNav.propTypes = {
   onToggleSidebar: PropTypes.func.isRequired,
-  sidebarOpen: PropTypes.bool.isRequired, // not PropTypes.func
+  sidebarOpen: PropTypes.bool.isRequired,
 };
 
 export default TopNav;

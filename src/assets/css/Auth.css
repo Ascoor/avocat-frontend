@@ -2,20 +2,15 @@
 body {
   font-family: 'Cairo', sans-serif;
 }
+.admin-dashboard {
+  display: flex;
+  flex-direction: row-reverse; /* RTL layout */
+  transition: margin-right 0.3s ease-in-out;
+}
 
-
-
-  /* Example responsive adjustments */
-  @media (max-width: 768px) {
-    .dashboard-container {
-        transition: margin-left 0.3s ease-in-out; /* Add a transition to the margin */
-    
-    }
-    .dashboard-container.sidebar-open {
-        margin-left: 250px; /* Adjust this value as needed */
-      }
-    }
-  /* Auth.css */
+.admin-dashboard.sidebar-open .sidebar {
+  transform: translateX(0);
+}
 /* Reset default margin and padding */
 body, div, h1, h2, h3, p, ul, li {
   margin: 0;

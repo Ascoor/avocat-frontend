@@ -4,15 +4,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-
+  
   background:linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
-
   color: #fff;
-}
-
-.navbar-brand {
-  display: flex;
-  align-items: center;
 }
 
 .navbar-toggler {
@@ -22,6 +16,12 @@
   font-size: 1.5rem;
   color: #fff;
   margin-right: 1rem;
+}
+
+.brand-logo {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .brand-logo img {
@@ -101,26 +101,16 @@
 .notification-button:hover + .notification-alert {
   display: block;
 }
-
-/* Add responsive styles for smaller screens */
-@media (max-width: 768px) {
-  .navbar-toggler {
-    margin-right: 0;
-  }
-
-  .search-form {
-    display: none;
-  }
-
-  .user-profile {
-    margin-right: 0;
-  }
+.sidebar-open .top-nav {
+  margin-right: 250px; /* Adjust the value based on your sidebar width */
 }
 
-/* Add responsive styles for smaller screens */
+/* ... (other styles) */
+
+/* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .navbar-toggler {
-    margin-right: 1rem;
+    margin-right: 0.5rem; /* Adjust margin for smaller screens */
   }
 
   .search-form {
@@ -128,6 +118,6 @@
   }
 
   .user-profile {
-    margin-right: 1rem;
+    margin-right: 0.5rem; /* Adjust margin for smaller screens */
   }
 }

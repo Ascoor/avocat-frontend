@@ -11,10 +11,12 @@
     color: #fff;
     padding-top: 20px;
     overflow-x: hidden;
-    transition: right 0.3s ease-in-out;
     z-index: 1000;
-  }
-  
+ 
+  min-height: 100vh;
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
   .sidebar.open {
     right: 0;
   }
