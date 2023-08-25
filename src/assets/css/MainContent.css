@@ -1,12 +1,15 @@
 /* MainContent.css */
 .main-content {
-  margin-right: 30px; /* Adjust this value based on your sidebar width */
-  margin-left: 80px; /* Adjust this value based on your sidebar width */
+  margin-right: 130px; /* Adjust this value based on your sidebar width */
+  margin-left: 180px; /* Adjust this value based on your sidebar width */
   padding-top: 60px; /* Adjust this value based on your top navigation height */
   transition: margin-right 0.3s ease-in-out;
   text-align: center; /* Center align the content */
 }
-
+/* Optional: Apply a box-shadow to the main content area */
+.main-content {
+  box-shadow: 0 0 10px rgba(63, 32, 32, 0.1);
+}
 .main-content.sidebar-open {
   margin-right: 270px; /* Adjust this value based on your sidebar width */
 }
