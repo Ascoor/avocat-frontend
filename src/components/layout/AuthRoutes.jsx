@@ -35,7 +35,6 @@ const AuthRoutes = () => {
       <Route path="/legcases/edit/:id" element={<LegCaseCreate isEditing={true} />} />
       <Route path="/legcases/create" element={<LegCaseCreate isEditing={false} />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/legal_session" element={<LegalSession legCaseId />} />
        <Route path="/lawyers/form" element={<LawyersAddEdit />} />
     </Routes>
 
