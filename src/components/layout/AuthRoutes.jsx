@@ -1,6 +1,6 @@
 
 import { Routes, Route } from 'react-router-dom';
-import Home from '../home';
+import Home from '../Home';
 import Lawyers from '../lawyer/lawyer_index.component';
 import LawyersAddEdit from '../lawyer/lawyer_index.component';
 import CourtSetting from '../setting/court_index.component';

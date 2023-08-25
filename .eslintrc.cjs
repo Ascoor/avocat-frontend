@@ -5,6 +5,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
+    'airbnb', 'airbnb/hooks',
     'plugin:react-hooks/recommended',
   ],
   parserOptions: {

@@ -379,3 +379,32 @@ h6 {
       font-family: "cairo",sans-serif;
       font-size: 1.2rem;
     }
+  /* Procdure Search */
+  .search-label-text {
+    font-family: 'Cairo', sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #f3e6e6;
+    border: 1px solid #031738; /* Add a border value */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67)); /* Use 'background' property */
+    padding: 10px; /* Add padding to create space around the text */
+  }
+  .search-button {
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #b14141;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    border-radius: 10px; /* Add border-radius for a cute rounded look */
+  
+    /* Add a cute hover effect */
+    &:hover {
+      background-color: #ff7f7f;
+    }
+  }
+  
+  

@@ -4,11 +4,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  
+  transition: transform 0.3s ease-in-out;
   background:linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
   color: #fff;
 }
-
+.dropdown-menu {
+  background:#fff;
+  text-align: center;
+}
 .navbar-toggler {
   background: none;
   border: none;
@@ -25,7 +28,7 @@
 }
 
 .brand-logo img {
-  width: 50px;
+  width: 100px;
   height: auto;
 }
 
@@ -65,6 +68,7 @@
 .user-menu {
   display: flex;
   align-items: center;
+  text-align: center;
 }
 
 .notification-button {

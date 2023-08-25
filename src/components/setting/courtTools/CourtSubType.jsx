@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { FcFullTrash } from "react-icons/fc";
-import Pagination from "../../home_tools/Pagination";
+import CustomPagination from "../../home_tools/Pagination";
 import { Row, Col, Button, Modal, Form, Card } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
@@ -154,8 +154,10 @@ const CourtSubType = () => {
             </Card.Body>
             <Card.Footer>
 
-              <Pagination items={items} currentPage={currentPage} onPageChange={handlePageChange} itemsPerPage={itemsPerPage} />
-
+              <CustomPagination items={items}  itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+                />
             </Card.Footer>
           </Col>
         </Row>

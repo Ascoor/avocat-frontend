@@ -314,7 +314,7 @@ const Home = () => {
 
   
 EventCard.propTypes = {
-    open: PropTypes.bool.isRequired,
+
     count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired, // تعديل هنا
     icon: PropTypes.element.isRequired, // تعديل هنا
     title: PropTypes.string, // تعديل النوع هنا

@@ -1,5 +1,6 @@
-import React,{ useState } from "react";
+
 import { CourtIcon } from "../../assets/icons";
+import React, { Suspense } from 'react';
 import {
     Row,
     Col
@@ -13,37 +14,18 @@ const Court = React.lazy(() => import('./courtTools/Court'));
 const CourtSetting = () => {
     const itemsPerPage = 10;
 
-    return (
-        <>
-
-            <div className="court-setting-card-header">
-                إعدادات المحاكم
-                <img src={CourtIcon} alt="Icon" className="court-icon" />
-            </div>
-
-
-            <div>
-                <Row>
-                    <Col>
-                        <Court itemsPerPage={itemsPerPage} />
-                    </Col>
-                </Row>
-                <Row>
-
-                    <Col>
-                        <CourtLevel itemsPerPage={itemsPerPage} />
-                    </Col>
-
-                    <Col>
-                        <CourtType itemsPerPage={itemsPerPage} />
-                    </Col>
-                    <Col>
-                        <CourtSubType itemsPerPage={itemsPerPage} />
-                    </Col>
-
-                </Row>
-            </div>
-        </>
+    return (   <div>
+        <div className="court-setting-card-header">
+          إعدادات المحاكم
+          <img src={CourtIcon} alt="Icon" className="court-icon" />
+        </div>
+        <Suspense fallback={<div>Loading...</div>}>
+        <Court itemsPerPage={itemsPerPage} />
+          <CourtLevel itemsPerPage={itemsPerPage} />
+          <CourtType itemsPerPage={itemsPerPage} />
+          <CourtSubType itemsPerPage={itemsPerPage} />
+        </Suspense>
+      </div>
     );
 };
 export default CourtSetting;

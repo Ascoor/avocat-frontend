@@ -1,13 +1,14 @@
 /* MainContent.css */
 .main-content {
-  margin-right: 0; /* Adjust this value based on your sidebar width */
+  margin-right: 30px; /* Adjust this value based on your sidebar width */
+  margin-left: 80px; /* Adjust this value based on your sidebar width */
   padding-top: 60px; /* Adjust this value based on your top navigation height */
   transition: margin-right 0.3s ease-in-out;
   text-align: center; /* Center align the content */
 }
 
 .main-content.sidebar-open {
-  margin-right: 250px; /* Adjust this value based on your sidebar width */
+  margin-right: 270px; /* Adjust this value based on your sidebar width */
 }
 
 /* Media Query for Small Screens */
@@ -22,8 +23,11 @@
   }
 
   .main-content {
-    margin-right: 0;
-    text-align: left; /* Reset text alignment for small screens */
+    margin-right:3px;
+    margin-left: 3px; /* Reset left margin for small screens */
+    text-align: center; /* Reset text alignment for small screens */
+    padding-top: 20px; /* Adjust padding for small screens */
+    transition: none; /* Remove transition for small screens */
   }
 
   .main-content.sidebar-open {

@@ -30,7 +30,7 @@ export default defineConfig({
       'react',
       'react-dom',
       'axios',
-      'bootstrap'
+      'bootstrap',
     ],
   },
 });

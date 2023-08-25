@@ -20,7 +20,6 @@ const CustomPagination = ({ totalCount, itemsPerPage, currentPage, onPageChange 
 };
 
 CustomPagination.propTypes = {
-  totalCount: PropTypes.number.isRequired,
   itemsPerPage: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,

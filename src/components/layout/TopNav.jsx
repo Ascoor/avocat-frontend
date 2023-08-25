@@ -1,23 +1,27 @@
-
+import { useEffect , useState} from 'react';
 import { FaBars, FaUser, FaBell, FaSearch } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import { useSpring, animated } from '@react-spring/web';
 import '../../assets/css/TopNav.css';
-
-const TopNav = ({ onToggleSidebar, sidebarOpen }) => {
+const TopNav = ({ onToggleSidebar, sidebarOpen,userId, logoutUser }) => {
   const userDropdownAnimation = useSpring({
     opacity: 1,
     transform: 'scale(1)',
     from: { opacity: 0, transform: 'scale(0.8)' },
   });
-
+  useEffect(() => {
+    document.body.classList.toggle('sidebar-open', sidebarOpen);
+   
+  }, [sidebarOpen]);
+  
   return (
+  
     <animated.nav className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}>
-      <button onClick={onToggleSidebar} className="navbar-toggler">
+ <button onClick={onToggleSidebar} className="navbar-toggler">
         <FaBars />
       </button>
       <a href="/" className="brand-logo">
-        <img src="logo512.png" alt="Brand Logo" />
+      <img src="/logo512.png" alt="Brand Logo" />
       </a>
       <div className="search-form">
         <form>
@@ -28,41 +32,44 @@ const TopNav = ({ onToggleSidebar, sidebarOpen }) => {
         </form>
       </div>
       <div className="user-menu">
-        <div className="user-dropdown">
-          <animated.button
-            className="dropdown-toggle"
-            id="userDropdown"
-            data-bs-toggle="dropdown"
-            style={userDropdownAnimation}
-          >
-            <FaUser />
-          </animated.button>
-          <ul className="dropdown-menu" aria-labelledby="userDropdown">
-            <li>
-              <a href="/profile">Profile</a>
-            </li>
-            <li>
-              <a href="/logout">Logout</a>
-            </li>
-          </ul>
-        </div>
+      <div className="user-dropdown">
+        <animated.button
+          className="dropdown-toggle"
+          id="userDropdown"
+          data-bs-toggle="dropdown"
+          style={userDropdownAnimation}
+        >
+          <FaUser />
+        </animated.button>
+        <ul className="dropdown-menu" aria-labelledby="userDropdown">
+          <li>
+            <a href={`/profile/${userId}`}>Profile</a>
+          </li>
+          <li>
+            <button onClick={logoutUser}>Logout</button>
+          </li>
+        </ul>
+      </div>
         <div className="notification-icon">
           <button className="notification-button">
             <FaBell />
             <span className="notification-badge">1</span>
           </button>
           <div className="notification-alert">
-            <p>New notification: You have a new message!</p>
+        
+                    <p> welcome</p>
+   
+      
           </div>
         </div>
       </div>
     </animated.nav>
   );
 };
-
 TopNav.propTypes = {
   onToggleSidebar: PropTypes.func.isRequired,
   sidebarOpen: PropTypes.bool.isRequired,
+  userId: PropTypes.number.isRequired,
+  logoutUser: PropTypes.func.isRequired,
 };
-
 export default TopNav;

@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import TopNav from './TopNav';
 import Sidebar from './SideBar';
-
+import useAuth from '../Auth/AuthUser';
 import '../../App.css';
 import MainContent from './MainContent';
 import '../../assets/css/Auth.css'
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { token, logout } = useAuth();
+  const userId = useAuth().user.id;
 
+  const logoutUser = () => {
+    if (token !== undefined) {
+      logout();
+    }
+  };
   const onToggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -18,7 +25,7 @@ function Auth() {
 
   return ( 
     <>
-    <TopNav onToggleSidebar={onToggleSidebar} sidebarOpen={sidebarOpen} />
+    <TopNav onToggleSidebar={onToggleSidebar} userId={userId} logoutUser={logoutUser} sidebarOpen={sidebarOpen} />
     <div className={`admin-dashboard ${sidebarOpen ? 'sidebar-open' : ''}`}>
 <Sidebar sidebarOpen={sidebarOpen} onClose={handleCloseSidebar} onToggleSidebar={onToggleSidebar} />
 </div>
