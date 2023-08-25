@@ -4,10 +4,8 @@
     top: 0;
     right: -250px; /* Adjust this value based on your sidebar width */
     height: 100%;
-    width: 250px;
-  
+    width: 250px; 
     background:linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
-  
     color: #fff;
     padding-top: 20px;
     overflow-x: hidden;
@@ -160,11 +158,7 @@
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    left: -100%;
-    width: 100%; /* Adjust the width for mobile screens */
-  
-  }
+
 
   .sidebar.open {
     right: 0;

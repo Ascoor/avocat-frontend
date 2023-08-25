@@ -120,39 +120,7 @@
     }
     
     /**Welcome Page End***/
-    /**Procedure Search Page ***/
-    .procedure-search {
-      padding: 20px;
-    }
   
-    .form-group {
-      margin-bottom: 20px;
-    }
-  
-    .form-label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-  
-    .search-button {
-      background-color: #002d43;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  
-    .search-button:hover {
-      background-color: #001d2b;
-    }
-  
-    .details-row {
-      display: flex;
-      justify-content: space
-    }  
-    /**Procedure Search End***/
     /**Login Page ***/
     .login-btn{
       background-color: #0da73b;

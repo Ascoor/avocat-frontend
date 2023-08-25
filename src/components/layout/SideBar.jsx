@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import '../../assets/css/SideBar.css';
 import useAuth from '../Auth/AuthUser';
 
-const Sidebar = ({ sidebarOpen, onClose }) => {
+const Sidebar = ({ sidebarOpen, onClose ,handleLinkClick}) => {
   const sidebarAnimation = useSpring({
     right: sidebarOpen ? 0 : -450, // Adjust the value based on your sidebar width
   });
@@ -25,7 +25,6 @@ const user = useAuth().user;
 
   return (
     <animated.aside
-      dir="rtl"
       className={`sidebar ${sidebarOpen ? 'open' : ''}`}
       style={sidebarAnimation}
     >
@@ -40,30 +39,30 @@ const user = useAuth().user;
 </div>
 
       <ul className="sidebar-nav">
-        <li>
+        <li onClick={handleLinkClick}>
           <Link to="/">الصفحة الرئيسية</Link>
         </li>
-        <li>
+        <li onClick={handleLinkClick}>
           <Link to="/lawyer_setting">المحامون</Link>
         </li>
-        <li>
+        <li onClick={handleLinkClick}>
           <Link to="/clients">الموكلين</Link>
         </li>
 
-            <li>
+            <li onClick={handleLinkClick}>
               <Link to="/legcases">القضايا</Link>
             </li>
-            {/* <li>
+            {/* <li onClick={handleLinkClick}>
               <Link to="/sessions">الجلسات</Link>
             </li> */}
-            <li>
+            <li onClick={handleLinkClick}>
               <Link to="/procedures">الإجراءات</Link>
             </li>
         
-            <li>
+            <li onClick={handleLinkClick}>
               <Link to="/courts">اعدادات المحاكم</Link>
             </li>
-            <li>
+            <li onClick={handleLinkClick}>
               <Link to="/cases_setting">اعدادات القضايا</Link>
             </li>
      
@@ -76,6 +75,7 @@ const user = useAuth().user;
 Sidebar.propTypes = {
   sidebarOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  handleLinkClick: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

@@ -1,10 +1,12 @@
+
 import { useState } from 'react';
 import TopNav from './TopNav';
 import Sidebar from './SideBar';
 import useAuth from '../Auth/AuthUser';
 import '../../App.css';
 import MainContent from './MainContent';
-import '../../assets/css/Auth.css'
+import '../../assets/css/Auth.css';
+
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { token, logout } = useAuth();
@@ -15,6 +17,7 @@ function Auth() {
       logout();
     }
   };
+
   const onToggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -22,17 +25,17 @@ function Auth() {
   const handleCloseSidebar = () => {
     setSidebarOpen(false);
   };
-
-  return ( 
+  const handleLinkClick = () => {
+    if (sidebarOpen) {
+      setSidebarOpen(false);
+    }
+  };
+  return (
     <>
-    <TopNav onToggleSidebar={onToggleSidebar} userId={userId} logoutUser={logoutUser} sidebarOpen={sidebarOpen} />
-    <div className={`admin-dashboard ${sidebarOpen ? 'sidebar-open' : ''}`}>
-<Sidebar sidebarOpen={sidebarOpen} onClose={handleCloseSidebar} onToggleSidebar={onToggleSidebar} />
-</div>
+      <TopNav onToggleSidebar={onToggleSidebar} userId={userId} logoutUser={logoutUser} sidebarOpen={sidebarOpen} />
+      <Sidebar handleLinkClick={handleLinkClick} sidebarOpen={sidebarOpen} onClose={handleCloseSidebar} onToggleSidebar={onToggleSidebar} />
 <MainContent sidebarOpen={sidebarOpen}   />
     </>
-
-
   );
 }
 

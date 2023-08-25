@@ -312,7 +312,39 @@ h6 {
       height: 100px;
     }
 
+  /**Procedure Search Page ***/
+  .procedure-search {
+    padding: 20px;
+  }
 
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .search-button {
+    background-color: #002d43;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .search-button:hover {
+    background-color: #001d2b;
+  }
+
+  .details-row {
+    display: flex;
+    justify-content: space
+  }  
+  /**Procedure Search End***/
     .leg-case-details-card {
       border-radius: 10px;
     background: rgb(9, 45, 54);
@@ -380,15 +412,27 @@ h6 {
       font-size: 1.2rem;
     }
   /* Procdure Search */
+  .search-text-header{
+  
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: bold;
+    background: #103a51;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ffc108;
+    margin-bottom: 10px;
+  }
   .search-label-text {
     font-family: 'Cairo', sans-serif;
     font-weight: bold;
     font-size: 1rem;
     color: #f3e6e6;
-    border: 1px solid #031738; /* Add a border value */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67)); /* Use 'background' property */
-    padding: 10px; /* Add padding to create space around the text */
+    border: 1px solid #082a5f; /* Add a border value */
+    background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
+    padding-top: 10px; /* Add padding to create space around the text */
   }
   .search-button {
     font-family: 'Cairo', sans-serif;
