@@ -1,10 +1,11 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import {useState } from "react";
 import PropTypes from 'prop-types';
+
 const LawyerAddEdit = ({ onSubmit, initialValues }) => {
     const [name, setName] = useState(initialValues ? initialValues.name : "");
     const [birthdate, setBirthdate] = useState(
-        initialValues ? initialValues.birthdate : ""
+      initialValues ? initialValues.birthdate : ""
     );
     const [identityNumber, setIdentityNumber] = useState(
         initialValues ? initialValues.identity_number : ""
@@ -27,12 +28,10 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
     const [gender, setGender] = useState(
         initialValues ? initialValues.gender : ""
     );
-
     const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const formData = {
-            name,
+      e.preventDefault();
+  
+      const formData = {
             birthdate,
             identity_number: identityNumber,
             law_reg_num: lawRegNumber,
@@ -47,7 +46,9 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Card>
+            <Card.Body> 
+           <Form onSubmit={handleSubmit}>
         <Form.Group controlId="name">
             <Form.Label>الاسم</Form.Label>
             <Form.Control
@@ -57,16 +58,15 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
                 required
             />
         </Form.Group>
-        <Form.Group controlId="birthdate">
-            <Form.Label>تاريخ الميلاد</Form.Label>
-            <Form.Control
-                type="date"
-                value={birthdate || ""}
-                onChange={(e) => setBirthdate(e.target.value)}
-                dateFormat="dd/MM/yyyy"
-                required
-            />
-        </Form.Group>
+   <Form.Group controlId="birthdate">
+        <Form.Label>تاريخ الميلاد</Form.Label>
+        <Form.Control
+          type="date"
+          value={birthdate || ""}
+          onChange={(e) => setBirthdate(e.target.value)}
+          required
+        />
+      </Form.Group>
         <Form.Group controlId="identityNumber">
             <Form.Label>رقم الهوية</Form.Label>
             <Form.Control
@@ -135,11 +135,15 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
                 onChange={(e) => setPhoneNumber(e.target.value)}
             />
         </Form.Group>
+    </Form>
+    </Card.Body>
+    <Card.Footer>
         <Button variant="primary" type="submit">
             حفظ
         </Button>
-    </Form>
+        </Card.Footer>
     
+        </Card>
     );
 };
 

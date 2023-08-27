@@ -9,7 +9,7 @@
   color: #fff;
 }
 .dropdown-menu {
-  background:#fff;
+  background:#ffffff;
   text-align: center;
 }
 .navbar-toggler {
@@ -110,7 +110,6 @@
   .navbar-toggler {
     margin-right: 0.5rem; /* Adjust margin for smaller screens */
   }
-
   .search-form {
     display: none;
   }
