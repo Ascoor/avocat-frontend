@@ -57,12 +57,12 @@ const Lawyers = () => {
             console.error(error);
         }
     };
-
     const handleShowEditModal = (lawyer) => {
-        setSelectedLawyer(lawyer);
+        const birthdateAsDate = new Date(lawyer.birthdate); // Convert to Date object
+        setSelectedLawyer({ ...lawyer, birthdate: birthdateAsDate });
         setShowEditModal(true);
     };
-
+    
     return (
         <Card>
             <Card.Header className="text-center">

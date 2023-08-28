@@ -1,4 +1,4 @@
-import  { useState, useEffect, useCallback } from "react";
+import  { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Card, Form, Row, Col, Alert, Button } from "react-bootstrap";
@@ -13,13 +13,14 @@ import {
     FaUserEdit,
     FaOrcid,
 } from "react-icons/fa";
+import moment from 'moment';
+import 'moment/locale/ar';
 import { BsArrowLeft, BsPersonPlus } from "react-icons/bs";
 import {ClientAddIcon} from "../../assets/icons/index";
 import API_CONFIG from "../../config";
 const AddEditClient = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-
     const [slug, setSlug] = useState("");
     const [name, setName] = useState("");
     const [gender, setGender] = useState("");
@@ -33,7 +34,7 @@ const AddEditClient = () => {
     const [emergencyNumber, setEmergencyNumber] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
     const [alertVariant, setAlertVariant] = useState("");
-
+    const datepickerRef = useRef(null);
     const fetchClient = useCallback(async () => {
         try {
             const response = await axios.get(
@@ -56,7 +57,7 @@ const AddEditClient = () => {
             console.error(error);
         }
     }, [id]);
-
+moment.locale('ar');
     useEffect(() => {
         const fetchData = async () => {
             if (id) {
@@ -75,7 +76,6 @@ const AddEditClient = () => {
             }, 3000);
         }
     }, [alertMessage, alertVariant]);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Form field validation
@@ -96,7 +96,7 @@ const AddEditClient = () => {
 
         const clientData = {
             slug,
-
+            setFormData,
             name,
             gender,
             date_of_birth: dateOfBirth.toISOString().split("T")[0],
@@ -261,18 +261,21 @@ const AddEditClient = () => {
                                 <Form.Label>
                                     <FaCalendarAlt /> تاريخ الميلاد
                                 </Form.Label>
-
                                 <DatePicker
-                                    selected={dateOfBirth}
-                                    onChange={(date) => setDateOfBirth(date)}
-                                    dateFormat="dd/MM/yyyy"
-                                    showYearDropdown
-                                    scrollableYearDropdown
-                                    yearDropdownItemNumber={100}
-                                    maxDate={new Date()}
-                                    className="form-control"
-                                    placeholderText="اختر تاريخ الميلاد"
-                                    isInvalid={!isValidDate(dateOfBirth)}
+                                selected={dateOfBirth}
+                                onChange={(date) => setDateOfBirth(date)}
+                                locale="ar"
+                                showYearDropdown
+                                scrollableYearDropdown
+                                yearDropdownItemNumber={100}
+                                maxDate={new Date()}
+                                dateFormat="yyyy/MM/dd" // Format the displayed date
+                                className="form-control"
+                                placeholderText="اختر تاريخ الميلاد"
+                                isInvalid={!isValidDate(dateOfBirth)}
+                                ref={(datepickerRef) => {
+                            
+                                }}
                                 />
                             </Form.Group>
                         </Col>
@@ -351,5 +354,4 @@ const AddEditClient = () => {
         </Card>
     );
 };
-
 export default AddEditClient;

@@ -44,7 +44,7 @@ const user = useAuth().user;
           <Link to="/">الصفحة الرئيسية</Link>
         </li>
         <li>
-          <Link to="/lawyer_setting">المحامون</Link>
+          <Link to="/lawyers">المحامون</Link>
         </li>
         <li>
           <Link to="/clients">الموكلين</Link>

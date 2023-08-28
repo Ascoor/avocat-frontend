@@ -21,10 +21,8 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 1000, // Adjust the limit as per your preference
+    chunkSizeWarningLimit: 1200,
   },
-
-  // Optimize dependencies for faster development
   optimizeDeps: {
     include: [
       'react',

@@ -1,28 +1,32 @@
-import  { useState } from 'react'
-import '../../assets/css/calender.css'
+import React from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
-const Calender = () => {
-const [date, setDate] = useState(new Date())
+const Calendar = () => {
+  const events = [
+    // Define your events here
+    { title: 'Event 1', start: '2023-08-01' },
+    { title: 'Event 2', start: '2023-08-10' },
+    // Add more events
+  ];
 
-return (
-<div className="calender">
-<div className="month-picker">
-<button onClick={() => setDate(new Date(date.getFullYear(), date.getMonth() - 1))}>{'<'}</button>
-{date.toLocaleString('default', { month: 'long' })} {date.getFullYear()}
-<button onClick={() => setDate(new Date(date.getFullYear(), date.getMonth() + 1))}>{'>'}</button>
-</div>
-<div className="weekdays">
-{['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-<div className="weekday" key={day}>
-{day}
-</div>
-))}
-</div>
-<div className="days">
-{/* Render days here */}
-</div>
-</div>
-)
-}
+  return (
+    <div>
+      <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth" // Set the initial view to month
+        events={events}
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay',
+        }}
+        locale="ar" // Set the locale to Arabic
+      />
+    </div>
+  );
+};
 
-export default Calender
+export default Calendar;

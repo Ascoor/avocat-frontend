@@ -206,6 +206,7 @@ const Home = () => {
                                     </Link>
                                 </Col>
                                 <Col sm={6} md={4} lg={2}>
+                                <Link to="/lawyers" style={{ textDecoration: 'none' }}>
                                     <EventCard
                                         lang="ar"
                                         title="المحامين"
@@ -213,6 +214,7 @@ const Home = () => {
                                         count={toArabicNumeral(lawyerCount)}
                                         icon={<FcBusinessman size={50} />}
                                     />
+                                </Link>
                                 </Col>
                                 <Col sm={6} md={4} lg={2}>
                                     <EventCard

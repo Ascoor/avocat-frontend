@@ -25,7 +25,7 @@ const AuthRoutes = () => {
       <Route path="/clients" element={<ClientsList  />} />
       <Route path="/courts" element={<CourtSetting />} />
       {/* <Route path="/court_search" element={<CourtSearch />} /> */}
-      <Route path="/lawyer_setting" element={<Lawyers />} />
+      <Route path="/lawyers" element={<Lawyers />} />
       <Route path="/cases_setting" element={<CaseTypeSet />} />
       <Route path="/client/create" element={<AddEditClient />} />
       <Route path="/client/edit/:id" element={<AddEditClient />} />
