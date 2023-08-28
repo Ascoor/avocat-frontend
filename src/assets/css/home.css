@@ -1,108 +1,84 @@
-
+/* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lateef&display=swap');
 
-
+/* Basic styling for event cards */
 .event-card {
-    display: flow-root;
-    flex-direction: row;
+    display: flex;
     align-items: center;
     background-color: #f8f9fa;
-    border: none;
     border-radius: 100px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    
-  }
-  
-  .event-card-icon {
-    font-size: 2.5rem;
-    color: #048023;
-    margin-right: 10px; /* تحريك الأيقونة إلى اليسار */
-  }
-  
-  .event-card-content {
-    flex-grow: 1;
-    text-align: inherit; /* محاذاة العناصر إلى اليمين */
-  }
-  
-  .event-card-title {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.event-card-body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.event-card-icon-container {
+    background-color: #0b3245c4;
+    border-radius: 50%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.event-card-title {
     font-size: 1.2rem;
     font-weight: bold;
     color: #ffffff;
     font-family: 'Cairo', sans-serif;
     margin-bottom: 5px;
-    text-align: inherit ;
-  }
-  
+    text-align: center;
+}
 
-  .event-card-icon-container {
-    background-color: #0b3245c4; /* تغيير لون خلفية الأيقونة */
-    border-radius: 50%; /* تغيير شكل حواف الأيقونة */
-    padding: 10px; /* تغيير حجم الأيقونة */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-  }
-  
-  .event-card:hover {
-    transform: translateY(-5px); /* تغيير حركة الكارت عند التحويم */
-    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1); /* تغيير ظل الكارت عند التحويم */
-  }
-  
-  .event-card-content {
-    position: relative;
-  }
-  
-  .event-card-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(94, 23, 49, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .home-text-center{
+.count {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Lateef', cursive;
+    color: rgb(255, 152, 0);
+}
+
+.home-text-center {
     background-color: #103a50;
     color: #ff9800;
     text-align: center;
-font-stretch: semi-condensed;
-    font-size: 1.8rem ;
+    font-stretch: semi-condensed;
+    font-size: 1.8rem;
     font-family: 'Cairo', sans-serif;
     font-weight: 700;
+}
 
-  }
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .event-card {
+        flex-direction: column;
+        align-items: center;
+    }
 
-  .event-card-overlay-text {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ffffff;
-  
- 
-  }
-  
-  .event-card-overlay-icon {
-    font-size: 2.8rem;
-    color: #ffffff;
-    margin-right: 10px;
-  }
-  
-  .card {
-    background-color: #f1f5f8;
-  }
-  .icon{
-    color: rgb(211, 0, 0);
+    .event-card-icon-container {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
 
-  }
-  .count {
-    color: rgb(255, 152, 0);
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-align: inherit;
-    font-family: 'Lateef', cursive;
-  }
-  
+    .event-card-title {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    .count {
+        font-size: 1.5rem;
+    }
+}

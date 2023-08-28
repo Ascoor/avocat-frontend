@@ -43,10 +43,10 @@ const TopNav = ({ onToggleSidebar, sidebarOpen,userId, logoutUser }) => {
         </animated.button>
         <ul className="dropdown-menu" aria-labelledby="userDropdown">
           <li>
-            <a href={`/profile/${userId}`}>Profile</a>
+            <a href={`/profile/${userId}`}>الملف الشخصي</a>
           </li>
           <li>
-            <button onClick={logoutUser}>Logout</button>
+            <a className="dropdown-item-logout" href="#" onClick={logoutUser}>نسجيل الخروج</a>
           </li>
         </ul>
       </div>

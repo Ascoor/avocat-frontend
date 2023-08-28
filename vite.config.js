@@ -1,4 +1,6 @@
-import { defineConfig } from 'vite';
+import {
+  defineConfig
+} from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
@@ -14,11 +16,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
+        manualChunks(filePath) {
+          if (filePath.includes('node_modules')) {
             return 'vendor';
           }
-        },
+        }
       },
     },
     chunkSizeWarningLimit: 1200,
