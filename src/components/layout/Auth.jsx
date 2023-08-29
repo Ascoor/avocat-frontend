@@ -34,7 +34,8 @@ function Auth() {
     <>
       <TopNav onToggleSidebar={onToggleSidebar} userId={userId} logoutUser={logoutUser} sidebarOpen={sidebarOpen} />
       <Sidebar handleLinkClick={handleLinkClick} sidebarOpen={sidebarOpen} onClose={handleCloseSidebar} onToggleSidebar={onToggleSidebar} />
-<MainContent sidebarOpen={sidebarOpen}   />
+        <MainContent sidebarOpen={sidebarOpen} />
+
     </>
   );
 }

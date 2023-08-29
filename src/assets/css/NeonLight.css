@@ -1,0 +1,30 @@
+/* NeonLight.css */
+
+/* Add a neon light effect with a baby blue color */
+.neon-light {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 10px; /* Adjust the height of the neon light */
+    background: linear-gradient(to right, #00bfff, #87ceeb); /* Neon light gradient colors */
+    animation: neon-glow 5s infinite linear, shadow-move 10s infinite linear; /* Animation for the neon glow and shadow movement */
+    box-shadow: 0 0 30px #87ceeb; /* Initial shadow */
+  }
+  
+  /* Neon glow animation */
+  @keyframes neon-glow {
+    0%, 100% {
+      box-shadow: 0 0 10px #87ceeb, 0 0 30px #87ceeb; /* Intensified glow */
+    }
+  }
+  
+  /* Shadow movement animation */
+  @keyframes shadow-move {
+    0%, 100% {
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.4); /* Initial shadow */
+    }
+    50% {
+      box-shadow: 0 0 70px rgba(0, 0, 0, 0.6); /* Max shadow size at the middle of the animation */
+    }
+  }
+  

@@ -1,6 +1,7 @@
 /* Use Cairo font */
 body {
   font-family: 'Cairo', sans-serif;
+  background-color: rgb(12, 16, 23);
 }
 .admin-dashboard {
   display: flex;

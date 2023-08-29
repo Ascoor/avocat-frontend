@@ -88,15 +88,20 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
           required
         />
       </Form.Group>
-      <Form.Group controlId="lawyerClass">
+        <Form.Group>
         <Form.Label>فئة المحامي</Form.Label>
         <Form.Control
-          type="text"
+          as="select"
           value={lawyerClass || ""}
           onChange={(e) => setLawyerClass(e.target.value)}
           required
-        />
-      </Form.Group>
+          >
+      <option value="نقض">نقض</option>
+        <option value="إستئناف">إستئناف</option>
+        <option value="إبتدائي">إبتدائي</option>
+        <option value="جدول عام">جدول عام</option>
+</Form.Control>
+          </Form.Group>
       <Form.Group controlId="email">
         <Form.Label>البريد الإلكتروني</Form.Label>
         <Form.Control

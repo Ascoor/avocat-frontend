@@ -15,10 +15,12 @@ import ProcedureSearch from '../reports/procedure_search.component';
 import LegCaseCreate from '../legcase/create.component';
 import ProfileUser from '../Auth/ProfileUser';
 
+import '../../assets/css/NeonLight.css';
 
 const AuthRoutes = () => {
   return (
-
+    <div className="neon-light"> {/* Use className instead of class */}
+  
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/procedures" element={<ProcedureSearch />} />
@@ -37,7 +39,7 @@ const AuthRoutes = () => {
       <Route path="/home" element={<Home />} />
        <Route path="/lawyers/form" element={<LawyersAddEdit />} />
     </Routes>
-
+    </div>
   );
 };
 

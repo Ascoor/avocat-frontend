@@ -1,14 +1,14 @@
-/* TopNav.css *//* TopNav.css */
+/* TopNav.css */
+
+/* تعديل لون الخلفية والنص */
 .top-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem; 
-
-
-  background: linear-gradient(to bottom, #004e7a, #5c1385); /* تدرج ألوان جميل وجذاب */
-  
+  padding: 1rem;
+  background-color: #282424; /* لون رصاصي */
   color: #fff;
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.1); /* إضافة ظل بارز */
   transition: transform 0.3s ease-in-out;
 }
 
@@ -50,7 +50,6 @@
   margin-right: 1rem;
 }
 
-
 .user-menu {
   display: flex;
   align-items: center;
@@ -70,7 +69,7 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  background-color: red;
+  background-color: #d9534f; /* لون سماوي غامق */
   color: #fff;
   border-radius: 50%;
   padding: 4px 6px;
@@ -91,22 +90,23 @@
 .notification-button:hover + .notification-alert {
   display: block;
 }
+
 .sidebar-open .top-nav {
-  margin-right: 170px; /* Adjust the value based on your sidebar width */
+  margin-right: 170px; /* تعديل الهوامش لاحتساب عرض الشريط الجانبي */
 }
 
 /* ... (other styles) */
 
-/* Responsive styles for smaller screens */
+/* أنماط استجابية للشاشات الصغيرة */
 @media (max-width: 768px) {
   .navbar-toggler {
-    margin-right: 0.5rem; /* Adjust margin for smaller screens */
+    margin-right: 0.5rem;
   }
   .search-form {
     display: none;
   }
 
   .user-profile {
-    margin-right: 0.5rem; /* Adjust margin for smaller screens */
+    margin-right: 0.5rem;
   }
 }
