@@ -35,11 +35,13 @@ const AddEditClient = () => {
     const [alertMessage, setAlertMessage] = useState("");
     const [alertVariant, setAlertVariant] = useState("");
     const datepickerRef = useRef(null);
+    
+    const isValidDate = (date) => {
+        return date instanceof Date && !isNaN(date);
+    };
     const fetchClient = useCallback(async () => {
         try {
-            const response = await axios.get(
-                `${API_CONFIG.baseURL}/api/clients/${id}`
-            );
+            const response = await axios.get(`${API_CONFIG.baseURL}/api/clients/${id}`);
             const { client } = response.data;
             setSlug(client.slug);
             setName(client.name);
@@ -58,16 +60,18 @@ const AddEditClient = () => {
         }
     }, [id]);
 moment.locale('ar');
-    useEffect(() => {
-        const fetchData = async () => {
-            if (id) {
-                await fetchClient();
-            }
-        };
+  
 
-        fetchData();
-    }, [id, fetchClient]);
 
+useEffect(() => {
+    const fetchData = async () => {
+        if (id) {
+            await fetchClient();
+        }
+    };
+
+    fetchData();
+}, [id, fetchClient]);
     useEffect(() => {
         if (alertMessage && alertVariant) {
             setTimeout(() => {
@@ -133,11 +137,6 @@ moment.locale('ar');
             setAlertMessage("حدث خطأ أثناء حفظ العميل.");
         }
     };
-
-    const isValidDate = (date) => {
-        return date instanceof Date && !isNaN(date);
-    };
-
     return (
         <Card className="p-2">
             <Card.Header>
@@ -257,11 +256,11 @@ moment.locale('ar');
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={6} lg={3}>
-                            <Form.Group controlId="dateOfBirth">
-                                <Form.Label>
-                                    <FaCalendarAlt /> تاريخ الميلاد
-                                </Form.Label>
-                                <DatePicker
+                        <Form.Group controlId="dateOfBirth">
+                            <Form.Label>
+                                <FaCalendarAlt /> تاريخ الميلاد
+                            </Form.Label>
+                            <DatePicker
                                 selected={dateOfBirth}
                                 onChange={(date) => setDateOfBirth(date)}
                                 locale="ar"
@@ -273,12 +272,11 @@ moment.locale('ar');
                                 className="form-control"
                                 placeholderText="اختر تاريخ الميلاد"
                                 isInvalid={!isValidDate(dateOfBirth)}
-                                ref={(datepickerRef) => {
-                            
-                                }}
-                                />
-                            </Form.Group>
-                        </Col>
+                                ref={datepickerRef}
+                            />
+                        </Form.Group>
+                    </Col>
+
 
                         <Col xs={12} md={6} lg={3}>
                             <Form.Group controlId="religion">

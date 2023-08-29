@@ -1,51 +1,43 @@
-
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import { FaCalendarAlt } from "react-icons/fa";
 import moment from "moment";
 import "moment/locale/ar";
+import "react-datepicker/dist/react-datepicker.css"; // Import the CSS for react-datepicker
 moment.locale("ar");
+
 const LawyerAddEdit = ({ onSubmit, initialValues }) => {
   const isValidDate = (date) => {
     return date !== null && date.toString() !== "Invalid Date";
-};
+  };
 
-    const [name, setName] = useState(initialValues ? initialValues.name : "");
-    const [birthdate, setBirthdate] = useState(
-        initialValues ? initialValues.birthdate : null
-    );
-    
+  const [name, setName] = useState(initialValues?.name || "");
+  const [birthdate, setBirthdate] = useState(initialValues?.birthdate || null);
   const [identityNumber, setIdentityNumber] = useState(
-    initialValues ? initialValues.identity_number : ""
+    initialValues?.identity_number || ""
   );
   const [lawRegNumber, setLawRegNumber] = useState(
-    initialValues ? initialValues.law_reg_num : ""
+    initialValues?.law_reg_num || ""
   );
   const [lawyerClass, setLawyerClass] = useState(
-      initialValues ? initialValues.lawyer_class : ""
+    initialValues?.lawyer_class || ""
   );
-  const [email, setEmail] = useState(initialValues ? initialValues.email : "");
+  const [email, setEmail] = useState(initialValues?.email || "");
   const [phoneNumber, setPhoneNumber] = useState(
-    initialValues ? initialValues.phone_number : ""
+    initialValues?.phone_number || ""
   );
-  const [religion, setReligion] = useState(
-    initialValues ? initialValues.religion : ""
-  );
-  const [gender, setGender] = useState(
-      initialValues ? initialValues.gender : ""
-      );
-        
-    const datepickerRef = useRef(null);
-    const formattedBirthdate = new Date(birthdate).toLocaleDateString();
-    const handleSubmit = (e) => {
-      e.preventDefault();
+  const [religion, setReligion] = useState(initialValues?.religion || "");
+  const [gender, setGender] = useState(initialValues?.gender || "");
 
-      const formData = {
-          name,
-          birthdate: birthdate ? birthdate.toISOString() : null, // Convert to ISO string format
-          identity_number: identityNumber,
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = {
+      name,
+      birthdate,
+      identity_number: identityNumber,
       law_reg_num: lawRegNumber,
       lawyer_class: lawyerClass,
       email,
@@ -63,7 +55,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Label>الاسم</Form.Label>
         <Form.Control
           type="text"
-          value={name || ""}
+          value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
@@ -74,26 +66,17 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
           <FaCalendarAlt /> تاريخ الميلاد
         </Form.Label>
         <DatePicker
-    selected={isValidDate(birthdate) ? birthdate : null}
-    onChange={(date) => setBirthdate(date)}
+          selected={isValidDate(birthdate) ? birthdate : null}
+          onChange={(date) => setBirthdate(date)}
           locale="ar"
           showYearDropdown
           scrollableYearDropdown
           yearDropdownItemNumber={100}
           maxDate={new Date()}
-          dateFormat="yyyy-MM-dd" // Format the displayed date without the time part
+          dateFormat="yyyy-MM-dd"
           className="form-control"
           placeholderText="اختر تاريخ الميلاد"
           isInvalid={!isValidDate(birthdate) || birthdate === null}
-        />
-      </Form.Group>
-      <Form.Group controlId="identityNumber">
-        <Form.Label>رقم الهوية</Form.Label>
-        <Form.Control
-          type="text"
-          value={identityNumber || ""}
-          onChange={(e) => setIdentityNumber(e.target.value)}
-          required
         />
       </Form.Group>
       <Form.Group controlId="lawRegNumber">
@@ -150,7 +133,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
       <Form.Group controlId="phoneNumber">
         <Form.Label>رقم الهاتف</Form.Label>
         <Form.Control
-          type="text"
+          type="tel"
           value={phoneNumber || ""}
           onChange={(e) => setPhoneNumber(e.target.value)}
         />

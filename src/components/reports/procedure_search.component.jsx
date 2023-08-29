@@ -73,48 +73,51 @@ const ProcedureSearch = () => {
   };
   return (
     <div className="search-container">
-    <div className="search-text-header">
-      <h2>بحث الإجراءات</h2>
-    </div><Form onSubmit={handleFormSubmit}>
-  <Row>
-    <Col xs={12} md={6} sm={6}>
-      <Form.Group controlId="procedureType">
-        <Form.Label className="search-label-text">نوع الإجراء</Form.Label>
-        <Form.Control
-          as="select"
-          value={selectedProcedureType}
-          onChange={(event) =>
-            setSelectedProcedureType(event.target.value)
-          }
-        >
-          <option value="">اختر نوع الإجراء</option>
+      <div className="search-text-header">
+        <h2>بحث الإجراءات</h2>
+      </div>
+      <Form onSubmit={handleFormSubmit}>
+        <Row>
+          <Col xs={12} md={6} sm={6}>
+            <Form.Group controlId="procedureType">
+              <Form.Label className="search-label-text">نوع الإجراء</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedProcedureType}
+                onChange={(event) =>
+                  setSelectedProcedureType(event.target.value)
+                }
+              >
+                <option value="">اختر نوع الإجراء</option>
                 {procedureTypes.map((type) => (
                   <option key={type.id} value={type.id}>
                     {type.name}
                   </option>
                 ))}
-        </Form.Control>
-      </Form.Group>
-      <Form.Group controlId="lawyer">
-        <Form.Label className="search-label-text">المحامي</Form.Label>
-        <Form.Control
-          as="select"
-          value={selectedLawyer}
-          onChange={(event) => setSelectedLawyer(event.target.value)}
-        >
-          <option value="">اختر المحامي</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="lawyer">
+              <Form.Label className="search-label-text">المحامي</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedLawyer}
+                onChange={(event) => setSelectedLawyer(event.target.value)}
+              >
+                <option value="">اختر المحامي</option>
                 {lawyers.map((lawyer) => (
                   <option key={lawyer.id} value={lawyer.id}>
                     {lawyer.name}
                   </option>
                 ))}
-        </Form.Control>
-      </Form.Group>
-    </Col>
-    <Col xs={12} md={6} sm={6}>
-      <Form.Group controlId="dateRange">
-        <Form.Label className="search-label-text">الفترة الزمنية</Form.Label>
-        <DatePicker
+              </Form.Control>
+            </Form.Group>
+          </Col>
+          <Col xs={12} md={6} sm={6}>
+            <Form.Group controlId="dateRange">
+              <Form.Label className="search-label-text">
+                الفترة الزمنية
+              </Form.Label>
+              <DatePicker
                 selected={selectedDateStart}
                 onChange={(date) => setSelectedDateStart(date)}
                 dateFormat="yyyy/MM/dd"
@@ -125,7 +128,7 @@ const ProcedureSearch = () => {
                 showYearDropdown
                 scrollableYearDropdown
               />
-                 <DatePicker
+              <DatePicker
                 selected={selectedDateEnd}
                 onChange={(date) => setSelectedDateEnd(date)}
                 dateFormat="yyyy/MM/dd"
@@ -136,15 +139,15 @@ const ProcedureSearch = () => {
                 showYearDropdown
                 scrollableYearDropdown
               />
-      </Form.Group>
-    </Col>
-  </Row>
-  <Row>
-    <Col xs={12} sm={6} md={6}>
-      <Form.Group controlId="court">
-        <Form.Label className="search-label-text">المحكمة</Form.Label>
- 
-        <Form.Control
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={6} md={6}>
+            <Form.Group controlId="court">
+              <Form.Label className="search-label-text">المحكمة</Form.Label>
+
+              <Form.Control
                 as="select"
                 value={selectedCourt}
                 onChange={(event) => setSelectedCourt(event.target.value)}
@@ -155,13 +158,15 @@ const ProcedureSearch = () => {
                     {court.name}
                   </option>
                 ))}
-        </Form.Control>
-      </Form.Group>
-    </Col>
-    <Col xs={12} sm={6} md={6}>
-      <Form.Group>
-        <Form.Label className="search-label-text" htmlFor="status">الحالة</Form.Label>
-        <Form.Control
+              </Form.Control>
+            </Form.Group>
+          </Col>
+          <Col xs={12} sm={6} md={6}>
+            <Form.Group>
+              <Form.Label className="search-label-text" htmlFor="status">
+                الحالة
+              </Form.Label>
+              <Form.Control
                 as="select"
                 id="status"
                 value={selectedStatus}
@@ -172,17 +177,17 @@ const ProcedureSearch = () => {
                 <option value="لم ينفذ">لم ينفذ</option>
                 <option value="قيد التنفيذ">قيد التنفيذ</option>
               </Form.Control>
-      </Form.Group>
-    </Col>
-  </Row>
-  <Row>
-    <Col>
-      <button type="submit" className="search-button">
-        <FaSearch /> بحث
-      </button>
-    </Col>
-  </Row>
-</Form>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <button type="submit" className="search-button">
+              <FaSearch /> بحث
+            </button>
+          </Col>
+        </Row>
+      </Form>
 
       {searchError && <p>{searchError}</p>}
       {filteredProcedures.length > 0 && (
@@ -201,18 +206,18 @@ const ProcedureSearch = () => {
             </tr>
           </thead>
           <tbody>
-        {filteredProcedures.map((result, index) => (
-        <tr key={`${result._id}-${index}`}>
-            <td>{result.procedure_type?.name}</td>
-            <td>{result.lawyer?.name}</td>
-            <td>{result.court?.name}</td>
-            <td>{result.date_start}</td>
-            <td>{result.date_end}</td>
-            <td className="col-4">{result.result}</td>
-            <td>{result.status}</td>
-            <td>{result.created_by?.name}</td>
-        </tr>
-        ))}
+            {filteredProcedures.map((result, index) => (
+              <tr key={`${result._id}-${index}`}>
+                <td>{result.procedure_type?.name}</td>
+                <td>{result.lawyer?.name}</td>
+                <td>{result.court?.name}</td>
+                <td>{result.date_start}</td>
+                <td>{result.date_end}</td>
+                <td className="col-4">{result.result}</td>
+                <td>{result.status}</td>
+                <td>{result.created_by?.name}</td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       )}

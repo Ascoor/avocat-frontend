@@ -1,19 +1,18 @@
 /* Sidebar.css */
 .sidebar {
-    position: fixed;
-    top: 0;
-    right: -250px; /* Adjust this value based on your sidebar width */
-    height: 100%;
-    width: 250px; 
-    background:linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
-    color: #fff;
-    padding-top: 20px;
-    overflow-x: hidden;
-    z-index: 1000;
- 
+  position: fixed;
+  top: 0;
+  right: -250px;
+  height: 100%;
+  width: 250px;
+  background: linear-gradient(to right bottom, #004e7a, #5c1385); /* تدرج ألوان جميل وجذاب */
+  
+  color: #fff;
+  padding-top: 20px;
+  overflow-x: hidden;
+  z-index: 1000;
   min-height: 100vh;
   transition: transform 0.3s ease-in-out;
-  z-index: 1000;
 }
 
   .sub-menu-items {
@@ -36,16 +35,16 @@
     font-size: 1.5rem;
     color: #fff;
   }
+  
   .user-profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Center vertically */
-  padding: 20px 15px;
-  border-bottom: 1px solid #444;
-  text-align: center; /* Center the text horizontally */
-}
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 15px;
+    border-bottom: 1px solid #444;
+    text-align: center;
+  }
 .user-profile-img {
   width: 85px;
   height: 100px;

@@ -11,16 +11,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/preset-react": "^7.22.5",
-    "@emotion/react": "11.11.1",
-    "@emotion/styled": "11.11.0",
     "@fullcalendar/core": "^6.1.5",
     "@fullcalendar/daygrid": "^6.1.5",
     "@fullcalendar/interaction": "^6.1.5",
     "@fullcalendar/react": "^6.1.5",
     "@fullcalendar/timegrid": "^6.1.5",
-    "@popperjs/core": "^2.11.8",
     "@react-spring/web": "^9.7.3",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
@@ -44,8 +39,8 @@
     "react-router-dom": "^6.2.1",
     "styled-components": "^6.0.7",
     "vite": "^4.4.5",
-    "web-vitals": "^3.3.1",
-    "yup": "^1.1.1"
+    "web-vitals": "^3.3.1"
+
   },
   "devDependencies": {
     "@types/react-dom": "^18.2.7",
