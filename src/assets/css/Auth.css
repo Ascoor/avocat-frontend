@@ -2,6 +2,7 @@
 body {
   font-family: 'Cairo', sans-serif;
   background-color: rgb(255, 255, 255);
+
 }
 .admin-dashboard {
   display: flex;

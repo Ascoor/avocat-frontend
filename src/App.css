@@ -122,9 +122,8 @@ h6 {
 }
 /* Lawyer Section */
 .modal-header {
-
-  background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
-
+  background: linear-gradient(135deg, #1a5dca, #745114); /* Same gradient as topnav */
+  
   font-size: 21px;
 }
 .modal-title {
@@ -148,12 +147,13 @@ h6 {
 
   /*Court Setting*/
   .court-setting-card-header {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    background: linear-gradient(135deg, #1a5dca, #745114); /* Same gradient as topnav */
+  
+    border-radius: 80px;
     padding: 10px;
     font-family: 'Cairo', sans-serif;
     font-weight: bold;
-    background: #282424;
+   
     text-align: center;
     font-size: 1.5rem;
     color: #ffc108;
@@ -310,7 +310,8 @@ h6 {
         padding: 20px;
         font-family: 'Cairo', sans-serif;
       font-weight: bold;
-        background : #282424;
+        background: linear-gradient(135deg, #1a5dca, #745114); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
+  
         text-align: center;
 
         color: #FFC108;
@@ -435,7 +436,8 @@ h6 {
     padding: 10px;
     font-family: 'Cairo', sans-serif;
     font-weight: bold;
-    background: #282424;
+      background: linear-gradient(135deg, #1a5dca, #745114); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
+  
     text-align: center;
     font-size: 1.5rem;
     color: #ffc108;
@@ -446,7 +448,8 @@ h6 {
     font-weight: bold;
     font-size: 1rem;
     color: #f3e6e6;
-    border: 1px solid #282424; /* Add a border value */
+    border: 1px solid   linear-gradient(to top, #1d0367, #3c0381, #330250); /* تدرج ألوان جميل وجذاب */
+  
     background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
     padding-top: 10px; /* Add padding to create space around the text */
   }

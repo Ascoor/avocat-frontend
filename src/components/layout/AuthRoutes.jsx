@@ -16,8 +16,6 @@ import ProcedureSearch from '../reports/procedure_search.component';
 import LegCaseCreate from '../legcase/create.component';
 import ProfileUser from '../Auth/ProfileUser';
 
-import '../../assets/css/NeonLight.css';
-
 const AuthRoutes = () => {
   return (
     <div className="neon-light"> {/* Use className instead of class */}

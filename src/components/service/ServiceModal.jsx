@@ -3,30 +3,31 @@ import { Modal, Button, Form, Alert } from "react-bootstrap";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-import useAuth from "../Auth/AuthUser";
-import API_CONFIG from "../../config";
+import useAuth from "../Auth/AuthUser"; // Provide the correct path to AuthUser
+import API_CONFIG from "../../config"; // Provide the correct path to API_CONFIG
 
 const ServiceModal = ({ show, handleClose, service, isEditing }) => {
   const { getUser } = useAuth();
   const [formData, setFormData] = useState({
+    client_choice: service ? (service.client_id ? "select_client" : "new_client") : "select_client",
     client_id: service ? service.client_id : "",
     unclient_name: service ? service.unclient_name : "",
     unclient_phone: service ? service.unclient_phone : "",
-    service_place:service ? service.service_description :  "",
-    service_description: service ? service.service_description : "", // تحديث الوصف إذا كان هناك خدمة محددة
-    status:  service ? service.status : "",
+    service_place: service ? service.service_place : "",
+    service_description: service ? service.service_description : "",
+    status: service ? service.status : "قيد التجهيز",
     created_by: getUser().id,
-    client_choice: "select_client",
   });
 
   const [clients, setClients] = useState([]);
   const [errors, setErrors] = useState({});
   const [showValidationAlert, setShowValidationAlert] = useState(false);
+
   useEffect(() => {
-    if (show) {
-      fetchClients(clients);
+    if (show && !isEditing) {
+      fetchClients();
     }
-  }, [show, clients]);
+  }, [show]);
 
   const fetchClients = async () => {
     try {
@@ -85,6 +86,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
       }
     }
   };
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -100,33 +102,34 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
             من فضلك قم بملء الحقول المطلوبة.
           </Alert>
         )}
-  {!isEditing && (
-                <Form.Group controlId="client_choice">
-                    <Form.Label>اختر عميلًا أو أدخل بيانات العميل</Form.Label>
-                    <Form.Check
-                        type="radio"
-                        name="client_choice"
-                        label="اختر عميلًا"
-                        value="select_client"
-                        checked={formData.client_choice === "select_client"}
-                        onChange={() => handleRadioChange("select_client")}
-                    />
-                    <Form.Check
-                        type="radio"
-                        name="client_choice"
-                        label="أدخل بيانات العميل"
-                        value="new_client"
-                        checked={formData.client_choice === "new_client"}
-                        onChange={() => handleRadioChange("new_client")}
-                    />
-                </Form.Group>
-            )}
-        {formData.client_choice === "select_client" ? (
+
+        <Form.Group controlId="client_choice">
+          <Form.Label>اختر عميلًا أو أدخل بيانات العميل</Form.Label>
+          <Form.Check
+            type="radio"
+            name="client_choice"
+            label="اختر عميلًا"
+            value="select_client"
+            checked={formData.client_choice === "select_client"}
+            onChange={() => handleRadioChange("select_client")}
+          />
+          <Form.Check
+            type="radio"
+            name="client_choice"
+            label="أدخل بيانات العميل"
+            value="new_client"
+            checked={formData.client_choice === "new_client"}
+            onChange={() => handleRadioChange("new_client")}
+          />
+        </Form.Group>
+
+        {formData.client_choice === "select_client" && (
           <Form.Group controlId="client_id">
+            <Form.Label>اختر العميل</Form.Label>
             <Form.Control
               as="select"
               name="client_id"
-              value={formData.client_id}
+              value={formData.client_id || ""}
               onChange={handleChange}
             >
               <option value="">اختر العميل</option>
@@ -140,9 +143,12 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
               <Form.Text className="text-danger">{errors.client_id}</Form.Text>
             )}
           </Form.Group>
-        ) : (
+        )}
+
+        {formData.client_choice === "new_client" && (
           <>
             <Form.Group controlId="unclient_name">
+              <Form.Label>اسم العميل</Form.Label>
               <Form.Control
                 type="text"
                 name="unclient_name"
@@ -151,6 +157,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
               />
             </Form.Group>
             <Form.Group controlId="unclient_phone">
+              <Form.Label>رقم العميل</Form.Label>
               <Form.Control
                 type="text"
                 name="unclient_phone"
@@ -163,7 +170,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
 
         {isEditing && (
           <Form.Group controlId="status">
-            <Form.Label>Status</Form.Label>
+            <Form.Label>حالة الخدمة</Form.Label>
             <Form.Control
               as="select"
               name="status"
@@ -177,8 +184,9 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
             </Form.Control>
           </Form.Group>
         )}
+
         <Form.Group controlId="service_place">
-          <Form.Label>Service Place</Form.Label>
+          <Form.Label>مكان الخدمة</Form.Label>
           <Form.Control
             type="text"
             name="service_place"
@@ -187,9 +195,9 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
           />
         </Form.Group>
         <Form.Group controlId="service_description">
-          <Form.Label>Service Description</Form.Label>
+          <Form.Label>وصف الخدمة</Form.Label>
           <Form.Control
-            type="textaria"
+            as="textarea"
             name="service_description"
             value={formData.service_description}
             onChange={handleChange}
@@ -207,6 +215,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
     </Modal>
   );
 };
+
 ServiceModal.propTypes = {
   show: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,

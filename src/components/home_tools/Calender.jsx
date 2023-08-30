@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { Col } from 'react-bootstrap'; // Import the Col component
 
 const Calendar = () => {
   const events = [
@@ -14,17 +15,20 @@ const Calendar = () => {
 
   return (
     <div>
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth" // Set the initial view to month
-        events={events}
-        headerToolbar={{
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay',
-        }}
-        locale="ar" // Set the locale to Arabic
-      />
+      {/* Use responsive classes for different screen sizes */}
+      <Col sm={12} md={8} lg={6} className="mx-auto">
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          events={events}
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay',
+          }}
+          locale="ar"
+        />
+      </Col>
     </div>
   );
 };

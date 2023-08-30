@@ -42,7 +42,7 @@ const useIconCardAnimation = () => {
 
     return { cardSpringStyles, handleHover, handleHoverEnd, handleTouchStart, handleTouchEnd };
 };
-const EventCard = ({ title, color, count, icon }) => { // تعديل هنا
+const EventCard = ({ title, color, count, icon }) => {
     const { cardSpringStyles, handleHover, handleHoverEnd } = useIconCardAnimation();
 
     return (
@@ -53,7 +53,7 @@ const EventCard = ({ title, color, count, icon }) => { // تعديل هنا
             onTouchStart={handleHover}
             onTouchEnd={handleHoverEnd}
         >
-            <Card className="text-center event-card" style={{ backgroundColor: color }}>
+            <Card className="text-center event-card" style={{ background: 'linear-gradient(35deg, #0e3370,#6e4703)' }}>
                 <Card.Body className="event-card-body">
                     <div className="event-card-content p-1">
                         <span className="icon">{icon}</span>
@@ -166,7 +166,7 @@ const Home = () => {
 
             <Row>
                 <Col>
-                    <Card>
+                    <Card className="home-card">
                         <Card.Header className="home-text-center">
                             لوحة التحكم
                             <div className="court-setting-card-header">
@@ -179,7 +179,7 @@ const Home = () => {
                                     <Link to="/clients" style={{ textDecoration: 'none' }}>
                                         <EventCard
                                             title="العملاء"
-                                            color="#282424"
+                                            color="#002d76"
                                             count={toArabicNumeral(clientCount)}
                                             icon={<img src={ClientIcon} alt="Icon" className="client-icon" />}
                                         />
@@ -189,7 +189,7 @@ const Home = () => {
                                     <Link to="/legcases" style={{ textDecoration: 'none' }}>
                                         <EventCard
                                             title="القضايا"
-                                            color="#282424"
+                                            color="#002d76"
                                             count={toArabicNumeral(legCaseCount)}
                                             icon={<FcBriefcase size={50} />}
                                         />
@@ -199,7 +199,7 @@ const Home = () => {
                                     <Link to="/procedures" style={{ textDecoration: 'none' }}>
                                         <EventCard
                                             title="الإجراءات"
-                                            color="#282424"
+                                            color="#002d76"
                                             count={toArabicNumeral(procedureCount)}
                                             icon={<FcOvertime size={50} />}
                                         />
@@ -210,7 +210,7 @@ const Home = () => {
                                     <EventCard
                                         lang="ar"
                                         title="المحامين"
-                                        color="#282424"
+                                        color="#002d76"
                                         count={toArabicNumeral(lawyerCount)}
                                         icon={<FcBusinessman size={50} />}
                                     />
@@ -219,7 +219,7 @@ const Home = () => {
                                 <Col sm={6} md={4} lg={2}>
                                     <EventCard
                                         title="الجلسات"
-                                        color="#282424"
+                                        color="#002d76"
                                         count={toArabicNumeral(legalSessionCount)}
                                         icon={<FcLibrary size={50} />}
                                     />
@@ -263,7 +263,7 @@ const Home = () => {
                                     <Form.Control type="text" value={searchText} onChange={handleSearchInputChange} />
                                 </Form.Group>
                                 <div className="text-center">
-                                    <Button variant="primary" type="submit">
+                                    <Button className='btn btn-home-search' type="submit">
                                         بحث
                                     </Button>
                                 </div>

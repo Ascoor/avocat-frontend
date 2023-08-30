@@ -1,29 +1,15 @@
 /* MainContent.css */
 
-/* Neon light effect at the background */
-.main-content::before {
-  content: "";
-  position: absolute;
-  top: -10px; /* Adjust positioning to display around the main content */
-  left: -10px; /* Adjust positioning to display around the main content */
-  width: calc(100% + 20px); /* Adjust width to cover the main content and more */
-  height: calc(100% + 20px); /* Adjust height to cover the main content and more */
-  background: linear-gradient(to right, #d3248a, #87ceeb,#0d0238); /* Neon light gradient colors */
-  opacity: 0.2; /* Adjust the opacity for a lighter glow */
-  z-index: -1; /* Place behind the main content */
-  pointer-events: none; /* Allow clicks to pass through */
-  animation: neon-glow 5s infinite linear; /* Apply neon glow animation */
-}
+
 .main-content {
   margin-right: 50px; /* Adjust this value based on your sidebar width */
   margin-left: 20px; /* Adjust this value based on your sidebar width */
   padding-top: 60px; /* Adjust this value based on your top navigation height */
   transition: margin-right 0.3s ease-in-out;
   text-align: center; /* Center align the content */
-}
-/* Optional: Apply a box-shadow to the main content area */
-.main-content {
-  box-shadow: 0 0 10px rgba(63, 32, 32, 0.1);
+
+    padding: 20px;
+  
 }
 .main-content.sidebar-open {
   margin-right: 270px; /* Adjust this value based on your sidebar width */
@@ -41,13 +27,7 @@
     right: 0;
   }
 
-  .main-content {
-    margin-right:3px;
-    margin-left: 3px; /* Reset left margin for small screens */
-    text-align: center; /* Reset text alignment for small screens */
-    padding-top: 20px; /* Adjust padding for small screens */
-    transition: none; /* Remove transition for small screens */
-  }
+
 
   .main-content.sidebar-open {
     margin-right: 0;

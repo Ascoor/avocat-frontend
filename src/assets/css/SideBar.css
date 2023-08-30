@@ -1,50 +1,51 @@
-/* Sidebar.css */
+/* General Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Cairo', sans-serif;
+}
+
+/* Sidebar Styles */
 .sidebar {
   position: fixed;
   top: 0;
   right: -250px;
-  height: 100%;
   width: 250px;
-  background: linear-gradient(to left ,#332a2a,#282424,#353d3f); /* تدرج ألوان جميل وجذاب */
-  
+  height: 100vh;
+  background: linear-gradient(135deg, #3b82f6, #d28704);
   color: #fff;
   padding-top: 20px;
   overflow-x: hidden;
   z-index: 1000;
-  min-height: 100vh;
   transition: transform 0.3s ease-in-out;
 }
 
-  .sub-menu-items {
-    /* ... existing styles ... */
-  
-    /* Adjust submenu position when sidebar is open */
-    .sidebar.open & {
-      transform: translateX(0);
-      transition: transform 0.3s ease-in-out;
-    }
-  }
-  
-  .close-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: #fff;
-  }
-  
-  .user-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 15px;
-    border-bottom: 1px solid #444;
-    text-align: center;
-  }
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* Sidebar Header Styles */
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 15px;
+  border-bottom: 1px solid #444;
+  text-align: center;
+}
+
 .user-profile-img {
   width: 85px;
   height: 100px;
@@ -53,68 +54,22 @@
 }
 
 .user-name {
-  font-family: 'Cairo', sans-serif;
   font-weight: bold;
   font-size: 1rem;
-  color: #fff;
 }
 
-
-  .sidebar-nav {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar-nav li {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .sidebar-nav a {
-    display: block;
-    padding: 10px 15px;
-    color: #fff;
-    text-decoration: none;
-    transition: background-color 0.2s;
-  }
-  
-  .sidebar-nav a:hover {
-    background-color: #333;
-  }
-  
-  .sub-menu {
-    position: relative;
-  }
-  
-  .sub-menu-items {
-    list-style: none;
-    padding-left: 0;
-    background-color: #333;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    width: 250px;
-    transform: translateX(0);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s, transform 0.2s;
-  }
-  
-  .sub-menu:hover .sub-menu-items {
-    transform: translateX(-100%);
-    opacity: 1;
-    pointer-events: auto;
-  }
+/* Sidebar Navigation Styles */
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+}
 
 .sidebar-nav li {
-  margin: 10px 0; /* أضف فراغ بين قوالب القائمة */
+  margin: 10px 0;
   padding: 0;
-  /* Add styles for the clickable box */
-  display: block;
-  position: relative;
 }
 
-.sidebar-nav li a {
+.sidebar-nav a {
   display: block;
   padding: 10px 15px;
   color: #fff;
@@ -122,51 +77,38 @@
   transition: background-color 0.2s;
 }
 
-/* Add styles for the overlay effect */
-.sidebar-nav li:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0);
-  opacity: 0;
-  transition: opacity 0.2s;
-  pointer-events: none;
-}
-
-/* Add styles for centered text */
-.sidebar-nav li a,
-.sidebar-nav li:after {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Add styles for the hover and active state */
-.sidebar-nav li:hover a,
-.sidebar-nav li.active a,
-.sidebar-nav li.active:after {
+.sidebar-nav a:hover,
+.sidebar-nav li.active a {
   background-color: #eca406;
 }
 
-.sidebar-nav li:hover:after,
-.sidebar-nav li.active:after {
-  opacity: 0.5;
+/* Sub-menu Styles */
+.sub-menu {
+  position: relative;
 }
 
+.sub-menu-items {
+  list-style: none;
+  padding-left: 0;
+  background-color: #333;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 250px;
+  transform: translateX(-100%);
+  opacity: 1;
+  pointer-events: auto;
+  transition: transform 0.2s;
+}
+
+.sub-menu:hover .sub-menu-items {
+  transform: translateX(0);
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
-
-
   .sidebar.open {
     right: 0;
-  }
-
-  .sub-menu-items {
-    transform: translateX(-100%);
-    opacity: 1;
-    pointer-events: auto;
   }
 
   .close-icon {
@@ -174,11 +116,11 @@
     right: 15px;
   }
 
-  .search-form {
-    display: none;
-  }
-
   .user-profile {
     margin-right: 1rem;
   }
+
+  .search-form {
+    display: none;
   }
+}
