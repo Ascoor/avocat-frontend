@@ -31,6 +31,7 @@ export default defineConfig({
       'react-dom',
       'axios',
       'bootstrap',
+      'react-bootstrap',
     ],
   },
 });
