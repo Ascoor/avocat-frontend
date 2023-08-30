@@ -5,6 +5,11 @@ body {
   margin: 0; /* Reset default margin */
   padding: 0; /* Reset default padding */
 }
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --button-bg: #007bff;
+}
 
 a {
   color: #149ddd;
@@ -148,7 +153,7 @@ h6 {
     padding: 10px;
     font-family: 'Cairo', sans-serif;
     font-weight: bold;
-    background: #103a51;
+    background: #282424;
     text-align: center;
     font-size: 1.5rem;
     color: #ffc108;
@@ -305,7 +310,7 @@ h6 {
         padding: 20px;
         font-family: 'Cairo', sans-serif;
       font-weight: bold;
-        background : #103A51;
+        background : #282424;
         text-align: center;
 
         color: #FFC108;
@@ -430,7 +435,7 @@ h6 {
     padding: 10px;
     font-family: 'Cairo', sans-serif;
     font-weight: bold;
-    background: #103a51;
+    background: #282424;
     text-align: center;
     font-size: 1.5rem;
     color: #ffc108;
@@ -441,7 +446,7 @@ h6 {
     font-weight: bold;
     font-size: 1rem;
     color: #f3e6e6;
-    border: 1px solid #082a5f; /* Add a border value */
+    border: 1px solid #282424; /* Add a border value */
     background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
     padding-top: 10px; /* Add padding to create space around the text */
   }

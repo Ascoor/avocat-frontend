@@ -52,9 +52,9 @@ const user = useAuth().user;
             <li onClick={handleLinkClick}>
               <Link to="/legcases">القضايا</Link>
             </li>
-            {/* <li onClick={handleLinkClick}>
-              <Link to="/sessions">الجلسات</Link>
-            </li> */}
+            <li onClick={handleLinkClick}>
+              <Link to="/services">الخدمات</Link>
+            </li>
             <li onClick={handleLinkClick}>
               <Link to="/procedures">الإجراءات</Link>
             </li>

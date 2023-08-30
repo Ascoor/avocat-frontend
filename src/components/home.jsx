@@ -179,7 +179,7 @@ const Home = () => {
                                     <Link to="/clients" style={{ textDecoration: 'none' }}>
                                         <EventCard
                                             title="العملاء"
-                                            color="#002d43ed"
+                                            color="#282424"
                                             count={toArabicNumeral(clientCount)}
                                             icon={<img src={ClientIcon} alt="Icon" className="client-icon" />}
                                         />
@@ -189,7 +189,7 @@ const Home = () => {
                                     <Link to="/legcases" style={{ textDecoration: 'none' }}>
                                         <EventCard
                                             title="القضايا"
-                                            color="#002d43ed"
+                                            color="#282424"
                                             count={toArabicNumeral(legCaseCount)}
                                             icon={<FcBriefcase size={50} />}
                                         />
@@ -199,7 +199,7 @@ const Home = () => {
                                     <Link to="/procedures" style={{ textDecoration: 'none' }}>
                                         <EventCard
                                             title="الإجراءات"
-                                            color="#002d43ed"
+                                            color="#282424"
                                             count={toArabicNumeral(procedureCount)}
                                             icon={<FcOvertime size={50} />}
                                         />
@@ -210,7 +210,7 @@ const Home = () => {
                                     <EventCard
                                         lang="ar"
                                         title="المحامين"
-                                        color="#002d43ed"
+                                        color="#282424"
                                         count={toArabicNumeral(lawyerCount)}
                                         icon={<FcBusinessman size={50} />}
                                     />
@@ -219,7 +219,7 @@ const Home = () => {
                                 <Col sm={6} md={4} lg={2}>
                                     <EventCard
                                         title="الجلسات"
-                                        color="#002d43ed"
+                                        color="#282424"
                                         count={toArabicNumeral(legalSessionCount)}
                                         icon={<FcLibrary size={50} />}
                                     />

@@ -8,8 +8,9 @@ import CourtSetting from '../setting/court_index.component';
 import CaseTypeSet from '../setting/case_index.component';
 import AddEditClient from '../client/add_edit_client.component';
 import ClientsList from '../client/ClientsList';
-import LegCaseDetail from '../legcase/leg_case_detail.component';
 import LegcaseList from '../legcase/list.component';
+import LegCaseDetail from '../legcase/leg_case_detail.component';
+import Services from '../service/index';
 import LegalSession from '../legcase/tools/Legal_session.component';
 import ProcedureSearch from '../reports/procedure_search.component';
 import LegCaseCreate from '../legcase/create.component';
@@ -26,6 +27,7 @@ const AuthRoutes = () => {
       <Route path="/procedures" element={<ProcedureSearch />} />
       <Route path="/clients" element={<ClientsList  />} />
       <Route path="/courts" element={<CourtSetting />} />
+      <Route path="/services" element={<Services />} />
       {/* <Route path="/court_search" element={<CourtSearch />} /> */}
       <Route path="/lawyers" element={<Lawyers />} />
       <Route path="/cases_setting" element={<CaseTypeSet />} />

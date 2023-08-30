@@ -8,7 +8,7 @@
   left: -10px; /* Adjust positioning to display around the main content */
   width: calc(100% + 20px); /* Adjust width to cover the main content and more */
   height: calc(100% + 20px); /* Adjust height to cover the main content and more */
-  background: linear-gradient(to right, #00bfff, #87ceeb); /* Neon light gradient colors */
+  background: linear-gradient(to right, #d3248a, #87ceeb,#0d0238); /* Neon light gradient colors */
   opacity: 0.2; /* Adjust the opacity for a lighter glow */
   z-index: -1; /* Place behind the main content */
   pointer-events: none; /* Allow clicks to pass through */
