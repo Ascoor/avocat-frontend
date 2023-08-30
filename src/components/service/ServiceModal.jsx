@@ -3,19 +3,19 @@ import { Modal, Button, Form, Alert } from "react-bootstrap";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-import useAuth from "../Auth/AuthUser"; // Provide the correct path to AuthUser
-import API_CONFIG from "../../config"; // Provide the correct path to API_CONFIG
+import useAuth from "../Auth/AuthUser";
+import API_CONFIG from "../../config";
 
 const ServiceModal = ({ show, handleClose, service, isEditing }) => {
   const { getUser } = useAuth();
   const [formData, setFormData] = useState({
-    client_choice: service ? (service.client_id ? "select_client" : "new_client") : "select_client",
-    client_id: service ? service.client_id : "",
-    unclient_name: service ? service.unclient_name : "",
-    unclient_phone: service ? service.unclient_phone : "",
-    service_place: service ? service.service_place : "",
-    service_description: service ? service.service_description : "",
-    status: service ? service.status : "قيد التجهيز",
+    client_choice: "",
+    client_id: "",
+    unclient_name: "",
+    unclient_phone: "",
+    service_place: "",
+    service_description: "",
+    status: "قيد التجهيز",
     created_by: getUser().id,
   });
 
@@ -24,10 +24,23 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
   const [showValidationAlert, setShowValidationAlert] = useState(false);
 
   useEffect(() => {
-    if (show && !isEditing) {
+    if (isEditing) {
+      if (service) {
+        setFormData({
+          client_choice: service.client_id ? "select_client" : "new_client",
+          client_id: service.client_id || "",
+          unclient_name: service.unclient_name || "",
+          unclient_phone: service.unclient_phone || "",
+          service_place: service.service_place || "",
+          service_description: service.service_description || "",
+          status: service.status || "قيد التجهيز",
+          created_by: service.created_by || getUser().id,
+        });
+      }
+    } else if (show) {
       fetchClients();
     }
-  }, [show]);
+  }, [show, isEditing, service]);
 
   const fetchClients = async () => {
     try {
@@ -54,7 +67,6 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
       ...prevData,
       [name]: value,
     }));
-    // Clear errors for the changed input
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
@@ -64,7 +76,6 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate required fields
     if (!formData.service_description || !formData.created_by) {
       setShowValidationAlert(true);
       return;
@@ -72,10 +83,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
 
     try {
       if (isEditing) {
-        await axios.put(
-          `${API_CONFIG.baseURL}/api/services/${service.id}`,
-          formData
-        );
+        await axios.put(`${API_CONFIG.baseURL}/api/services/${service.id}`, formData);
       } else {
         await axios.post(`${API_CONFIG.baseURL}/api/services`, formData);
       }
@@ -94,11 +102,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
       </Modal.Header>
       <Modal.Body>
         {showValidationAlert && (
-          <Alert
-            variant="danger"
-            onClose={() => setShowValidationAlert(false)}
-            dismissible
-          >
+          <Alert variant="danger" onClose={() => setShowValidationAlert(false)} dismissible>
             من فضلك قم بملء الحقول المطلوبة.
           </Alert>
         )}
@@ -139,9 +143,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
                 </option>
               ))}
             </Form.Control>
-            {errors.client_id && (
-              <Form.Text className="text-danger">{errors.client_id}</Form.Text>
-            )}
+            {errors.client_id && <Form.Text className="text-danger">{errors.client_id}</Form.Text>}
           </Form.Group>
         )}
 
