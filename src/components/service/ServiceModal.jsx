@@ -9,7 +9,6 @@ import API_CONFIG from "../../config";
 const ServiceModal = ({ show, handleClose, service, isEditing }) => {
   const { getUser } = useAuth();
   const [formData, setFormData] = useState({
-    client_choice: "",
     client_id: "",
     unclient_name: "",
     unclient_phone: "",
@@ -27,7 +26,6 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
     if (isEditing) {
       if (service) {
         setFormData({
-          client_choice: service.client_id ? "select_client" : "new_client",
           client_id: service.client_id || "",
           unclient_name: service.unclient_name || "",
           unclient_phone: service.unclient_phone || "",
@@ -39,6 +37,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
       }
     } else if (show) {
       fetchClients();
+      resetFormData();
     }
   }, [show, isEditing, service]);
 
@@ -51,14 +50,16 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
     }
   };
 
-  const handleRadioChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      client_choice: value,
+  const resetFormData = () => {
+    setFormData({
       client_id: "",
       unclient_name: "",
       unclient_phone: "",
-    }));
+      service_place: "",
+      service_description: "",
+      status: "قيد التجهيز",
+      created_by: getUser().id,
+    });
   };
 
   const handleChange = (e) => {
@@ -96,7 +97,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} onExited={resetFormData}>
       <Modal.Header closeButton>
         <Modal.Title>{isEditing ? "تعديل الخدمة" : "إضافة خدمة"}</Modal.Title>
       </Modal.Header>
@@ -107,50 +108,54 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
           </Alert>
         )}
 
-        <Form.Group controlId="client_choice">
-          <Form.Label>اختر عميلًا أو أدخل بيانات العميل</Form.Label>
-          <Form.Check
-            type="radio"
-            name="client_choice"
-            label="اختر عميلًا"
-            value="select_client"
-            checked={formData.client_choice === "select_client"}
-            onChange={() => handleRadioChange("select_client")}
-          />
-          <Form.Check
-            type="radio"
-            name="client_choice"
-            label="أدخل بيانات العميل"
-            value="new_client"
-            checked={formData.client_choice === "new_client"}
-            onChange={() => handleRadioChange("new_client")}
-          />
-        </Form.Group>
+        {!isEditing && (
+          <Form.Group controlId="clientToggle">
+            <Form.Check
+              type="radio"
+              name="clientToggle"
+              value="client"
+              label="Client"
+              checked={formData.client_id !== ""}
+              onChange={() => {
+                setFormData((prevData) => ({
+                  ...prevData,
+                  client_id: "",
+                }));
+              }}
+            />
+            <Form.Check
+              type="radio"
+              name="clientToggle"
+              value="unclient"
+              label="Unclient"
+              checked={formData.unclient_name !== "" || formData.unclient_phone !== ""}
+              onChange={() => {
+                setFormData((prevData) => ({
+                  ...prevData,
+                  unclient_name: "",
+                  unclient_phone: "",
+                }));
+              }}
+            />
+          </Form.Group>
+        )}
 
-        {formData.client_choice === "select_client" && (
+        {formData.client_id !== "" ? (
           <Form.Group controlId="client_id">
-            <Form.Label>اختر العميل</Form.Label>
-            <Form.Control
-              as="select"
-              name="client_id"
-              value={formData.client_id || ""}
-              onChange={handleChange}
-            >
-              <option value="">اختر العميل</option>
+            <Form.Label>Select Client:</Form.Label>
+            <Form.Control as="select" name="client_id" value={formData.client_id} onChange={handleChange}>
+              <option value="">Select a client</option>
               {clients.map((client) => (
                 <option key={client.id} value={client.id}>
                   {client.name}
                 </option>
               ))}
             </Form.Control>
-            {errors.client_id && <Form.Text className="text-danger">{errors.client_id}</Form.Text>}
           </Form.Group>
-        )}
-
-        {formData.client_choice === "new_client" && (
+        ) : (
           <>
             <Form.Group controlId="unclient_name">
-              <Form.Label>اسم العميل</Form.Label>
+              <Form.Label>Unclient Name</Form.Label>
               <Form.Control
                 type="text"
                 name="unclient_name"
@@ -159,7 +164,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
               />
             </Form.Group>
             <Form.Group controlId="unclient_phone">
-              <Form.Label>رقم العميل</Form.Label>
+              <Form.Label>Unclient Phone</Form.Label>
               <Form.Control
                 type="text"
                 name="unclient_phone"
@@ -170,25 +175,8 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
           </>
         )}
 
-        {isEditing && (
-          <Form.Group controlId="status">
-            <Form.Label>حالة الخدمة</Form.Label>
-            <Form.Control
-              as="select"
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-            >
-              <option value="قيد التجهيز">قيد التجهيز</option>
-              <option value="قيد التنفيذ">قيد التنفيذ</option>
-              <option value="منتهية">منتهية</option>
-              <option value="معلقة">معلقة</option>
-            </Form.Control>
-          </Form.Group>
-        )}
-
         <Form.Group controlId="service_place">
-          <Form.Label>مكان الخدمة</Form.Label>
+          <Form.Label>Service Place</Form.Label>
           <Form.Control
             type="text"
             name="service_place"
@@ -197,7 +185,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
           />
         </Form.Group>
         <Form.Group controlId="service_description">
-          <Form.Label>وصف الخدمة</Form.Label>
+          <Form.Label>Service Description</Form.Label>
           <Form.Control
             as="textarea"
             name="service_description"
@@ -205,6 +193,18 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
             onChange={handleChange}
           />
         </Form.Group>
+
+        {isEditing && (
+          <Form.Group controlId="status">
+            <Form.Label>Status</Form.Label>
+            <Form.Control as="select" name="status" value={formData.status} onChange={handleChange}>
+              <option value="قيد التجهيز">قيد التجهيز</option>
+              <option value="قيد التنفيذ">قيد التنفيذ</option>
+              <option value="منتهية">منتهية</option>
+              <option value="معلقة">معلقة</option>
+            </Form.Control>
+          </Form.Group>
+        )}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
@@ -226,3 +226,6 @@ ServiceModal.propTypes = {
 };
 
 export default ServiceModal;
+
+
+

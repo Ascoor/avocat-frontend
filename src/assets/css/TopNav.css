@@ -6,9 +6,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background: linear-gradient(135deg, #3b82f6, #96630b);
+  background: linear-gradient(135deg, #3b82f6, #c37e06);
   color: #fff;
-  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 60px rgba(134, 99, 99, 0.1);
   transition: transform 0.3s ease-in-out;
 }
 
