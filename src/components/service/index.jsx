@@ -71,11 +71,13 @@ const Services = () => {
                 <td>{service.service_no}</td>
                 <td>{service.service_description}</td>
                 <td>
-                  {service.client_id ||
+                  {service.client?.name ||
                     service.unclient_name ||
                     service.unclient_phone}
                 </td>
-                {/* أضف المزيد من الأعمدة للحقول الأخرى */}
+                <td>{service.service_name}</td>
+                <td>{service.service_place}</td>
+                <td>{service.service_status}</td>
                 <td>
                   <Button
                     variant="primary"
