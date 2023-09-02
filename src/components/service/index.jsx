@@ -26,10 +26,12 @@ const Services = () => {
     setEditingService(null);
     setShowModal(true);
   };
+  
   const handleEditService = (service) => {
     setEditingService(service);
     setShowModal(true);
   };
+  
   const handleDeleteService = async (serviceId) => {
     try {
       await axios.delete(API_CONFIG.baseURL + `/api/services/${serviceId}`);
@@ -39,22 +41,16 @@ const Services = () => {
     }
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setEditingService(null);
-    fetchServices();
-  };
-
   return (
     <Card>
       <Card.Header className="text-center">
         <Row>
-          <div className="court-setting-card-header">إضافة</div>
+          <div className="court-setting-card-header">الخدمات</div>
         </Row>
       </Card.Header>
       <Card.Body>
-        <Button variant="primary" onClick={() => handleAddService()}>
-          اضافة محامى
+        <Button variant="primary" onClick={handleAddService}>
+          اضافة خدمة
         </Button>
         <Table striped bordered responsive className="rtl-table">
           <thead className="table-success">
@@ -62,6 +58,8 @@ const Services = () => {
               <th>رقم الخدمة</th>
               <th>وصف الخدمة</th>
               <th> العميل</th>
+              <th>الجهة</th>
+              <th>الحالة</th>
               <th>الإجراءات</th>
             </tr>
           </thead>
@@ -98,8 +96,9 @@ const Services = () => {
         </Table>
         <ServiceModal
           show={showModal}
-          handleClose={handleCloseModal}
+          handleClose={() => setShowModal(false)}
           service={editingService}
+          handleAddNonClient={handleAddService}
           isEditing={!!editingService}
         />
       </Card.Body>

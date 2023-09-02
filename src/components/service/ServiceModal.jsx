@@ -46,6 +46,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
     } else if (show) {
       // إذا كانت عملية إضافة جديدة، فقم بجلب العملاء
       fetchClients();
+      resetFormData();
     }
   }, [show, isEditing, service]);
   const resetForm = () => {
@@ -249,7 +250,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
           />
         </Form.Group>
         <Form.Group controlId="service_place">
-          <Form.Label>مكان الخدمة</Form.Label>
+          <Form.Label>Service Place</Form.Label>
           <Form.Control
             type="text"
             name="service_place"
@@ -258,7 +259,7 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
           />
         </Form.Group>
         <Form.Group controlId="service_description">
-          <Form.Label>وصف الخدمة</Form.Label>
+          <Form.Label>Service Description</Form.Label>
           <Form.Control
             as="textarea"
             name="service_description"
@@ -266,6 +267,18 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
             onChange={handleChange}
           />
         </Form.Group>
+
+        {isEditing && (
+          <Form.Group controlId="status">
+            <Form.Label>Status</Form.Label>
+            <Form.Control as="select" name="status" value={formData.status} onChange={handleChange}>
+              <option value="قيد التجهيز">قيد التجهيز</option>
+              <option value="قيد التنفيذ">قيد التنفيذ</option>
+              <option value="منتهية">منتهية</option>
+              <option value="معلقة">معلقة</option>
+            </Form.Control>
+          </Form.Group>
+        )}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
@@ -287,3 +300,6 @@ ServiceModal.propTypes = {
 };
 
 export default ServiceModal;
+
+
+
