@@ -1,6 +1,4 @@
-import {
-  defineConfig
-} from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
@@ -20,7 +18,7 @@ export default defineConfig({
           if (filePath.includes('node_modules')) {
             return 'vendor';
           }
-        }
+        },
       },
     },
     chunkSizeWarningLimit: 1200,
@@ -31,7 +29,6 @@ export default defineConfig({
       'react-dom',
       'axios',
       'bootstrap',
-
     ],
   },
 });

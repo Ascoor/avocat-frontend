@@ -25,17 +25,15 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
   const [clients, setClients] = useState([]);
   const [errors, setErrors] = useState({});
   const [showValidationAlert, setShowValidationAlert] = useState(false);
-
   useEffect(() => {
     if (isEditing) {
       if (service) {
-        const clientChoice = service.client_id ? 'client' : 'unclient';
         setFormData({
-          client_choice: clientChoice,
-          client_id: service.client_id || '',
+          ...initialFormData,
+          client_choice: service.client_id ? 'client' : 'unclient',
+          client_id: service.client_id || '', // '',
           unclient_name: service.unclient_name || '',
           unclient_phone: service.unclient_phone || '',
-          created_by: service.created_by || getUser().id,
           status: service.status || 'قيد التجهيز',
           service_name: service.service_name || '',
           service_place: service.service_place || '',
@@ -44,24 +42,24 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
         });
       }
     } else if (show) {
-      // إذا كانت عملية إضافة جديدة، فقم بجلب العملاء
       fetchClients();
-      resetFormData();
     }
   }, [show, isEditing, service]);
-  const resetForm = () => {
-    setFormData(initialFormData);
-    setErrors({});
-    setShowValidationAlert(false);
-  };
 
   const fetchClients = async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
       setClients(response.data);
+      resetForm();
     } catch (error) {
       console.log(error.response.data.message);
     }
+  };
+  
+  const resetForm = () => {
+    setFormData(initialFormData);
+    setErrors({});
+    setShowValidationAlert(false);
   };
   const handleRadioChange = (value) => {
     setFormData((prevData) => ({
@@ -83,15 +81,24 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
       [name]: '',
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Check if client_id or non-client info (unclient_name and unclient_phone) is provided
+    if (
+      (formData.client_choice === 'client' && !formData.client_id) ||
+      (formData.client_choice === 'unclient' && (!formData.unclient_name || !formData.unclient_phone))
+    ) {
+      // If not provided, show an error and return
+      setShowValidationAlert(true);
+      return;
+    }
+  
     if (!formData.service_description || !formData.created_by) {
       setShowValidationAlert(true);
       return;
     }
-
+  
     try {
       if (isEditing) {
         await axios.put(`${API_CONFIG.baseURL}/api/services/${service.id}`, formData);
@@ -99,13 +106,14 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
         await axios.post(`${API_CONFIG.baseURL}/api/services`, formData);
       }
       handleClose();
-      resetForm(); // Clear the form
+      
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);
       }
     }
   };
+  
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -119,99 +127,77 @@ const ServiceModal = ({ show, handleClose, service, isEditing }) => {
         </Alert>
       )}
 
-      <Form.Group controlId="client_choice">
-        <Form.Label>اختر عميلًا أو أدخل بيانات العميل</Form.Label>
-        {isEditing ? (
-          <>
-            <Form.Check
-              type="radio"
-              name="client_choice"
-              label="عميل"
-              value="client"
-              checked={formData.client_id !== ''}
-              onChange={() => handleRadioChange('client')}
-              disabled={formData.unclient_name !== '' || formData.unclient_phone !== ''}
-            />
-            <Form.Check
-              type="radio"
-              name="client_choice"
-              label="عميل غير مسجل"
-              value="unclient"
-              checked={formData.client_id === ''}
-              onChange={() => handleRadioChange('unclient')}
-            />
-          </>
-        ) : (
-          <>
-            <Form.Check
-              type="radio"
-              name="client_choice"
-              label="عميل"
-              value="client"
-              checked={formData.client_choice === 'client'}
-              onChange={() => handleRadioChange('client')}
-            />
-            <Form.Check
-              type="radio"
-              name="client_choice"
-              label="عميل غير مسجل"
-              value="unclient"
-              checked={formData.client_choice === 'unclient'}
-              onChange={() => handleRadioChange('unclient')}
-            />
-          </>
-        )}
-      </Form.Group>
+<Form.Group controlId="client_choice">
+  <Form.Label>اختر عميلًا أو أدخل بيانات العميل</Form.Label>
+  {isEditing ? null : (
+    <>
+      <Form.Check
+        type="radio"
+        name="client_choice"
+        label="عميل"
+        value="client"
+        checked={formData.client_choice === 'client'}
+        onChange={() => handleChange({ target: { name: 'client_choice', value: 'client' } })}
+      />
+      <Form.Check
+        type="radio"
+        name="client_choice"
+        label="عميل غير مسجل"
+        value="unclient"
+        checked={formData.client_choice === 'unclient'}
+        onChange={() => handleChange({ target: { name: 'client_choice', value: 'unclient' } })}
+      />
+    </>
+  )}
+</Form.Group>
 
-      {formData.client_choice === 'client' && !isEditing ? (
-        // عرض حقول العميل إذا تم اختياره
-        <>
-          <Form.Group controlId="client_id">
-            <Form.Label>اختر العميل</Form.Label>
-            <Form.Control
-              as="select"
-              name="client_id"
-              value={formData.client_id || ''}
-              onChange={handleChange}
-              readOnly={isEditing}
-            >
-              <option value="">اختر العميل</option>
-              {clients.map((client) => (
-                <option key={client.id} value={client.id}>
-                  {client.name}
-                </option>
-              ))}
-            </Form.Control>
-            {errors.client_id && (
-              <Form.Text className="text-danger">{errors.client_id}</Form.Text>
-            )}
-          </Form.Group>
-        </>
-      ) : formData.client_choice === 'unclient' ? (
-        // إذا تم اختيار "عميل غير مسجل"، عرض حقول العميل غير المسجل
-        <>
-          <Form.Group controlId="unclient_name">
-            <Form.Label>اسم العميل</Form.Label>
-            <Form.Control
-              type="text"
-              name="unclient_name"
-              value={formData.unclient_name || ''}
-              onChange={handleChange}
-              readOnly={isEditing}
-            />
-          </Form.Group>
-          <Form.Group controlId="unclient_phone">
-            <Form.Label>رقم العميل</Form.Label>
-            <Form.Control
-              type="text"
-              name="unclient_phone"
-              value={formData.unclient_phone || ''}
-              onChange={handleChange}
-              readOnly={isEditing}
-            />
-          </Form.Group>
-        </>
-      ) : null}
+{/* Display selected client or unclient fields based on client_choice */}
+{formData.client_choice === 'client' ? (
+  <Form.Group controlId="client_id">
+    <Form.Label>اختر العميل</Form.Label>
+    <Form.Control
+      as="select"
+      name="client_id"
+      value={formData.client_id || ''}
+      onChange={handleChange}
+      readOnly={isEditing}
+    >
+      <option value="">اختر العميل</option>
+      {clients.map((client) => (
+        <option key={client.id} value={client.id}>
+          {client.name}
+        </option>
+      ))}
+    </Form.Control>
+    {errors.client_id && (
+      <Form.Text className="text-danger">{errors.client_id}</Form.Text>
+    )}
+  </Form.Group>
+) : (
+  <>
+  <Form.Group controlId="unclient_name">
+    <Form.Label>اسم العميل</Form.Label>
+    <Form.Control
+      type="text"
+      name="unclient_name"
+      value={formData.client_id ? '' : formData.unclient_name}
+      onChange={handleChange}
+      readOnly={isEditing}
+    />
+  </Form.Group>
+  <Form.Group controlId="unclient_phone">
+    <Form.Label>رقم العميل</Form.Label>
+    <Form.Control
+      type="text"
+      name="unclient_phone"
+      value={formData.client_id ? '' : formData.unclient_phone}
+      onChange={handleChange}
+      readOnly={isEditing}
+    />
+  </Form.Group>
+</>
+
+)}
 
         {isEditing && (
           <>

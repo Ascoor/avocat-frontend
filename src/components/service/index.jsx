@@ -10,12 +10,13 @@ const Services = () => {
   const [editingService, setEditingService] = useState(null);
 
   useEffect(() => {
+    // Fetch services when the component mounts
     fetchServices();
   }, []);
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get(API_CONFIG.baseURL + "/api/services");
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/services`);
       setServices(response.data.services);
     } catch (error) {
       console.error("حدث خطأ أثناء جلب الخدمات:", error);
@@ -26,19 +27,27 @@ const Services = () => {
     setEditingService(null);
     setShowModal(true);
   };
-  
+
   const handleEditService = (service) => {
     setEditingService(service);
     setShowModal(true);
   };
-  
+
   const handleDeleteService = async (serviceId) => {
     try {
-      await axios.delete(API_CONFIG.baseURL + `/api/services/${serviceId}`);
+      await axios.delete(`${API_CONFIG.baseURL}/api/services/${serviceId}`);
+      // After deleting a service, fetch services again to update the list
       fetchServices();
     } catch (error) {
       console.error("حدث خطأ أثناء حذف الخدمة:", error);
     }
+  };
+
+  const handleServiceAddedOrEdited = () => {
+    // After adding or editing a service, fetch services again to update the list
+    fetchServices();
+    // Close the modal
+    setShowModal(false);
   };
 
   return (
@@ -57,15 +66,15 @@ const Services = () => {
             <tr>
               <th>رقم الخدمة</th>
               <th>وصف الخدمة</th>
-              <th> العميل</th>
+              <th>العميل</th>
               <th>الجهة</th>
               <th>الحالة</th>
               <th>الإجراءات</th>
             </tr>
           </thead>
           <tbody>
-            {services.map((service, index) => (
-              <tr key={index}>
+            {services.map((service) => (
+              <tr key={service.id}>
                 <td>{service.service_no}</td>
                 <td>{service.service_description}</td>
                 <td>
@@ -75,7 +84,6 @@ const Services = () => {
                 </td>
                 <td>{service.service_name}</td>
                 <td>{service.service_place}</td>
-                <td>{service.service_status}</td>
                 <td>
                   <Button
                     variant="primary"
@@ -98,7 +106,7 @@ const Services = () => {
           show={showModal}
           handleClose={() => setShowModal(false)}
           service={editingService}
-          handleAddNonClient={handleAddService}
+          handleServiceAddedOrEdited={handleServiceAddedOrEdited} // Pass the handler to the modal
           isEditing={!!editingService}
         />
       </Card.Body>
