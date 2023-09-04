@@ -3,11 +3,13 @@ import { Table, Button, Card, Row } from "react-bootstrap";
 import axios from "axios";
 import ServiceModal from "./ServiceModal";
 import API_CONFIG from "../../config";
+import ServiceDetailsModal from "./ServiceDetailsModal";
 
 const Services = () => {
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingService, setEditingService] = useState(null);
+  const [selectedService, setSelectedService] = useState(null);
 
   useEffect(() => {
     // Fetch services when the component mounts
@@ -46,8 +48,11 @@ const Services = () => {
   const handleServiceAddedOrEdited = () => {
     // After adding or editing a service, fetch services again to update the list
     fetchServices();
-    // Close the modal
-    setShowModal(false);
+  };
+
+  const handleReturn = () => {
+    // Show the table and reset the selected service when returning
+    setSelectedService(null);
   };
 
   return (
@@ -58,50 +63,67 @@ const Services = () => {
         </Row>
       </Card.Header>
       <Card.Body>
-        <Button variant="primary" onClick={handleAddService}>
-          اضافة خدمة
-        </Button>
-        <Table striped bordered responsive className="rtl-table">
-          <thead className="table-success">
-            <tr>
-              <th>رقم الخدمة</th>
-              <th>وصف الخدمة</th>
-              <th>العميل</th>
-              <th>الجهة</th>
-              <th>الحالة</th>
-              <th>الإجراءات</th>
-            </tr>
-          </thead>
-          <tbody>
-            {services.map((service) => (
-              <tr key={service.id}>
-                <td>{service.service_no}</td>
-                <td>{service.service_description}</td>
-                <td>
-                  {service.client?.name ||
-                    service.unclient_name ||
-                    service.unclient_phone}
-                </td>
-                <td>{service.service_name}</td>
-                <td>{service.service_place}</td>
-                <td>
-                  <Button
-                    variant="primary"
-                    onClick={() => handleEditService(service)}
-                  >
-                    تعديل
-                  </Button>
-                  <Button
-                    variant="danger"
-                    onClick={() => handleDeleteService(service.id)}
-                  >
-                    حذف
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        {selectedService ? ( // Display selected service details
+          <div>
+            <Button variant="secondary" onClick={handleReturn}>
+              رجوع
+            </Button>
+            <ServiceDetailsModal
+              service={selectedService}
+              handleClose={handleReturn}
+            />
+          </div>
+        ) : (
+          <>
+            <Button variant="primary" onClick={handleAddService}>
+              اضافة خدمة
+            </Button>
+            <Table striped bordered responsive className="rtl-table">
+              {/* Table header */}
+              <thead className="table-success">
+                <tr>
+                  <th className="col-1">رقم الخدمة</th>
+                  <th className="col-2">وصف الخدمة</th>
+                  <th className="col-3">العميل</th>
+                  <th className="col-2">الجهة</th>
+                  <th className="col-2">الحالة</th>
+                  <th className="col-2">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                {services.map((service) => (
+                  <tr key={service.id}>
+                    <td>{service.service_no}</td>
+                    <td>{service.service_name}</td>
+                    <td>{service.client?.name || service.unclient_name}</td>
+                    <td>{service.service_place}</td>
+                    <td>{service.service_status}</td>
+                    <td>
+                      <Button
+                        variant="primary"
+                        onClick={() => handleEditService(service)}
+                      >
+                        تعديل
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDeleteService(service.id)}
+                      >
+                        حذف
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        onClick={() => setSelectedService(service)}
+                      >
+                        عرض التفاصيل
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </>
+        )}
         <ServiceModal
           show={showModal}
           handleClose={() => setShowModal(false)}

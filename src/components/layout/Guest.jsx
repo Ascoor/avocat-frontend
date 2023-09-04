@@ -3,10 +3,7 @@ import { useTransition, useSpring, animated } from "@react-spring/web";
 import { Card, Button, Container, Spinner } from "react-bootstrap";
 import { RiLoginCircleLine, RiUserAddLine } from "react-icons/ri";
 import { Collapse } from "bootstrap/dist/js/bootstrap.bundle";
-
-import logo from "../../images/logo512.png";
-import patternLogo from "../../images/welcome.jpg";
-import patternLogoSmall from "../../images/logo2.png";
+import {LogoImage,WelcomePatren, WelcomeImage } from '../../images/index';
 import LawyerServices from "./LawyerService.component";
 
 const Login = React.lazy(() => import("../Auth/login"));
@@ -121,7 +118,7 @@ const Guest = () => {
       <header
         className="masthead"
         style={{
-          backgroundImage: `url(${patternLogo})`,
+          backgroundImage: `url(${WelcomeImage})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           height: "100vh",
@@ -129,7 +126,7 @@ const Guest = () => {
       >
         <div className="navbar navbar-light fixed-top" id="mainNav">
           <div className="container">
-            <img src={logo} width="118" height="54" alt="Logo" />
+            <img src={LogoImage} width="118" height="54" alt="Logo" />
             <button
               className="navbar-toggler navbar-toggler-right"
               type="button"
@@ -161,7 +158,7 @@ const Guest = () => {
           {showLogoAndButtons && (
             <animated.div style={logoAnimation} className="logo-container">
               <img
-                src={patternLogoSmall}
+                src={WelcomePatren}
                 alt="Pattern Logo"
                 className="logo img-fluid"
                 style={{ width: "200px", height: "auto" }}
