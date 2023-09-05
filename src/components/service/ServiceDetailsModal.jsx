@@ -1,73 +1,62 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, Badge, ListGroup, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useSpring, animated, config } from "@react-spring/web";
-import Procedures from "./service_procedure/Procedures"; // Import the Procedures component here
+import Procedures from "./service_procedure/Procedures";
 
 const ServiceDetailsModal = ({ service }) => {
   const cardAnimation = useSpring({
     from: { opacity: 0, transform: "translateY(30px)" },
     to: { opacity: 1, transform: "translateY(0)" },
-    config: config.gentle, // Adjust animation config as needed
+    config: config.gentle,
   });
 
-  const statusColors = {
-    Pending: "warning",
-    InProgress: "primary",
-    Completed: "success",
-  };
-
-  const statusColor = statusColors[service.service_status] || "info";
-
-
-
-  const renderField = (label, value) => {
-    if (value === undefined || value === null || value === "") {
-      return null;
-    }
-    return (
-      <ListGroup.Item className="list-item">
-        <strong>{label}:</strong> {value}
-      </ListGroup.Item>
-    );
+  const getStatusColor = () => {
+    const statusColors = {
+      Pending: "warning",
+      InProgress: "primary",
+      Completed: "success",
+    };
+    return statusColors[service.service_status] || "info";
   };
 
   return (
     <Row>
       <Col md={6} lg={12}>
         <animated.div
-          className={`service-card bg-${statusColor}`}
+          className={`service-card bg-${getStatusColor()}`}
           style={{ ...cardAnimation, marginBottom: "15px" }}
         >
-          <Card text="white">
+          <Card text="dark">
             <Card.Body>
               <Card.Title className="text-center">
                 {service.service_name}
               </Card.Title>
               <Card.Text>{service.service_description}</Card.Text>
               <ListGroup variant="flush">
-                {renderField("Status", (
-                  <Badge bg={statusColor} className="badge">
+                <ListGroup.Item>
+                  <strong>الحالة</strong>{" "}
+                  <Badge bg={getStatusColor()} className="badge">
                     {service.service_status}
                   </Badge>
-                ))}
-                {renderField(
-                  "Client",
-                  service.client_name || "Unregistered Client"
-                )}
-                {renderField(
-                  "Service Place",
-                  service.service_place || "N/A"
-                )}
-                {renderField("Field1", service.field1)} {/* Add your custom field */}
-                {renderField("Field2", service.field2)} {/* Add another custom field */}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>إسم العميل:</strong>{" "}
+                  {service.client_name || "Unregistered Client"}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>الجهه</strong>{" "}
+                  {service.service_place || "N/A"}
+                </ListGroup.Item>
+ 
+                <ListGroup.Item>
+                  <strong> رقم ملف الخدمة</strong> {service.service_no || "N/A"}
+                </ListGroup.Item>
               </ListGroup>
             </Card.Body>
           </Card>
         </animated.div>
-
-          <Procedures serviceId={service.id} />
- 
+<Procedures serviceId={service.id} />
       </Col>
     </Row>
   );
@@ -78,9 +67,9 @@ ServiceDetailsModal.propTypes = {
     service_name: PropTypes.string.isRequired,
     service_description: PropTypes.string.isRequired,
     service_status: PropTypes.string.isRequired,
-    client_name: PropTypes.string, // Add client_name PropTypes if available
-    service_place: PropTypes.string, // Add service_place PropTypes if available
-    field1: PropTypes.string, // Add PropTypes for custom fields
+    client_name: PropTypes.string,
+    service_place: PropTypes.string,
+    field1: PropTypes.string,
     field2: PropTypes.string,
   }).isRequired,
 };

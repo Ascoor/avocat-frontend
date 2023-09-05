@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Table, Button, Modal, Row, Form } from "react-bootstrap";
-import { Alert } from "react-bootstrap";
+import { Card, Table, Button, Alert } from "react-bootstrap";
 import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
 import PropTypes from "prop-types";
 import API_CONFIG from "../../../config";
-
+import ProcedureModal from "./ProcdureModal"; // Import the ProcedureEditModal component
+import useAuth from "../../Auth/AuthUser";
 const Procedures = ({ serviceId }) => {
   const [alert, setAlert] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
-
   const [serviceProcedures, setServiceProcedures] = useState([]);
-  const [selectedTitle, setSelectedTitle] = useState("");
-  const [selectedJob, setSelectedJob] = useState("");
-  const [selectedResult, setSelectedResult] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [showAddProcedureModal, setShowAddProcedureModal] = useState(false);
-
+  const [selectedProcedure, setSelectedProcedure] = useState(null);
+  const [showEditProcedureModal, setShowEditProcedureModal] = useState(false);
+  const [modalMode, setModalMode] = useState(""); // Define modalMode here
   useEffect(() => {
     const fetchServiceProcedures = async () => {
       try {
@@ -32,20 +28,15 @@ const Procedures = ({ serviceId }) => {
     fetchServiceProcedures();
   }, [serviceId]);
 
-  const handleEditProcedure = (procedure) => {
-    setSelectedTitle(procedure.title);
-    setSelectedJob(procedure.job);
-    setSelectedResult(procedure.result);
-    setSelectedStatus(procedure.status);
-    setShowAddProcedureModal(true);
-  };
-
   const handleDeleteProcedure = async (procedureId) => {
     try {
       await axios.delete(
         `${API_CONFIG.baseURL}/api/service-procedures/${procedureId}`
       );
-      fetchServiceProcedures();
+      // Remove the deleted procedure from the list
+      setServiceProcedures((prevProcedures) =>
+        prevProcedures.filter((procedure) => procedure.id !== procedureId)
+      );
       setAlert("Service procedure deleted successfully.");
       setShowAlert(true);
       setTimeout(() => {
@@ -56,53 +47,64 @@ const Procedures = ({ serviceId }) => {
     }
   };
 
-  const handleAddProcedure = async () => {
+  const handleEditOrAddProcedure = async (procedureData) => {
     try {
-      const newProcedure = {
-        title: selectedTitle,
-        job: selectedJob,
-        result: selectedResult,
-        status: selectedStatus,
-        service_id: serviceId,
-      };
+      if (selectedProcedure) {
+        // Editing an existing procedure
+        const response = await axios.put(
+          `${API_CONFIG.baseURL}/api/service-procedures/${selectedProcedure.id}`,
+          procedureData
+        );
+        console.log("Service procedure updated:", response.data);
+      } else {
+        // Adding a new procedure
+        const response = await axios.post(
+          `${API_CONFIG.baseURL}/api/service-procedures`,
+          procedureData
+        );
+        console.log("Service procedure added:", response.data);
+      }
 
-      // Make an API request to add the service procedure
-      // You can use axios.post here
-
-      setAlert("Service procedure added successfully.");
-      setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 3000);
-
-      // Fetch updated service procedures
+      setShowEditProcedureModal(false);
       fetchServiceProcedures();
-
-      // Clear form fields
-      setSelectedTitle("");
-      setSelectedJob("");
-      setSelectedResult("");
-      setSelectedStatus("");
-      setShowAddProcedureModal(false);
+      setSelectedProcedure(null);
+      setModalMode(""); // Clear modalMode when closing the modal
     } catch (error) {
-      console.log("Error adding service procedure:", error);
+      console.error(
+        `Error ${selectedProcedure ? "editing" : "adding"} service procedure:`,
+        error
+      );
     }
+  };
+
+  const handleEditProcedure = (procedure) => {
+    setSelectedProcedure(procedure);
+    setShowEditProcedureModal(true);
+    setModalMode("edit"); // Set modalMode to "edit" when editing a procedure
+  };
+
+  const handleCloseEditProcedureModal = () => {
+    setSelectedProcedure(null);
+    setShowEditProcedureModal(false);
+    setModalMode(""); // Clear modalMode when closing the modal
   };
 
   return (
     <>
-      <Row>
-        {showAlert && alert && <Alert variant="success">{alert}</Alert>}
-      </Row>
+      {showAlert && alert && <Alert variant="success">{alert}</Alert>}
 
       <Card.Header>
         <Button
           variant="success"
           className="btn-sm"
-          onClick={() => setShowAddProcedureModal(true)}
+          onClick={() => {
+            setSelectedProcedure(null);
+            setShowEditProcedureModal(true);
+            setModalMode("add"); // Set modalMode to "add" when adding a procedure
+          }}
         >
           <BiPlusCircle className="mr-1" />
-          Add Service Procedure
+          {modalMode === "edit" ? "Edit" : "Add"} Service Procedure
         </Button>
       </Card.Header>
 
@@ -112,7 +114,10 @@ const Procedures = ({ serviceId }) => {
             <tr>
               <th>Title</th>
               <th>Job</th>
+              <th>Date Start</th>
+              <th>Date End</th>
               <th>Result</th>
+              <th>Lawyer</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -122,7 +127,10 @@ const Procedures = ({ serviceId }) => {
               <tr key={procedure.id}>
                 <td>{procedure.title}</td>
                 <td>{procedure.job}</td>
+                <td>{procedure.date_start}</td>
+                <td>{procedure.date_end}</td>
                 <td>{procedure.result}</td>
+                <td>{procedure.lawyer?.name}</td>
                 <td>{procedure.status}</td>
                 <td>
                   <span>
@@ -147,69 +155,13 @@ const Procedures = ({ serviceId }) => {
           </tbody>
         </Table>
       </Card.Body>
-
-      <Modal
-        show={showAddProcedureModal}
-        onHide={() => setShowAddProcedureModal(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Add Service Procedure</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="procedureTitle">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter title"
-                value={selectedTitle}
-                onChange={(e) => setSelectedTitle(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="procedureJob">
-              <Form.Label>Job</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter job"
-                value={selectedJob}
-                onChange={(e) => setSelectedJob(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="procedureResult">
-              <Form.Label>Result</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter result"
-                value={selectedResult}
-                onChange={(e) => setSelectedResult(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="procedureStatus">
-              <Form.Label>Status</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter status"
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowAddProcedureModal(false)}
-          >
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleAddProcedure}>
-            Save
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ProcedureModal
+        show={showEditProcedureModal}
+        onHide={handleCloseEditProcedureModal}
+        procedure={selectedProcedure}
+        onSubmit={handleEditOrAddProcedure}
+        mode={modalMode} // Pass modalMode to ProcedureModal
+      />
     </>
   );
 };
