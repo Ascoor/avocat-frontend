@@ -1,29 +1,69 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
+import arEG from "date-fns/locale/ar-EG";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
 import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
 
-const ProcedureModal = ({ show, onHide, lawyers, procedure, newProcedure, onSave }) => {
+import useAuth from "../../Auth/AuthUser"; // Import the hook here
+
+const ProcedureModal = ({
+  show,
+  onHide,
+  lawyers,
+  procedure,
+  newProcedure,
+  serviceId,
+  onSave,
+}) => {
+  const { getUser } = useAuth();
+  const user = getUser();
+  registerLocale("ar_eg", arEG);
+  setDefaultLocale("ar_eg");
+
+  // Initialize formData with date_start and date_end as null dates
   const initialFormData = {
     title: procedure ? procedure.title : newProcedure.title,
     job: procedure ? procedure.job : newProcedure.job,
     lawyer_id: procedure ? procedure.lawyer_id : newProcedure.lawyer_id,
-    date_start: procedure ? new Date(procedure.date_start) : newProcedure.date_start,
-    date_end: procedure ? new Date(procedure.date_end) : newProcedure.date_end,
+    date_start: null,
+    date_end: null,
     cost: procedure ? procedure.cost : newProcedure.cost,
     cost2: procedure ? procedure.cost2 : newProcedure.cost2,
     result: procedure ? procedure.result : newProcedure.result,
-    procedure_type_id: procedure ? procedure.procedure_type_id : newProcedure.procedure_type_id,
+    procedure_type_id: procedure
+      ? procedure.procedure_type_id
+      : newProcedure.procedure_type_id,
     status: procedure ? procedure.status : newProcedure.status,
+    created_by: user.id,
+    service_id: serviceId,
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const isEditing = !!procedure;
 
-  const handleDateChange = (field, value) => {
-    setFormData({
-      ...formData,
-      [field]: value,
-    });
+  // When editing, set the initial values from 'procedure'
+  if (isEditing && procedure) {
+    initialFormData.date_start = procedure.date_start;
+    initialFormData.date_end = procedure.date_end;
+  }
+
+  const handleDateChange = (field, date) => {
+    // Check if date is not null
+    if (date) {
+      // Format the date as 'yyyy-MM-dd' and update formData
+      const formattedDate = date.toISOString().split("T")[0];
+      setFormData({
+        ...formData,
+        [field]: formattedDate,
+      });
+    } else {
+      // If date is null, set the field as null in formData
+      setFormData({
+        ...formData,
+        [field]: null,
+      });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -81,32 +121,27 @@ const ProcedureModal = ({ show, onHide, lawyers, procedure, newProcedure, onSave
                 </option>
               ))}
             </Form.Control>
-          </Form.Group>
+          </Form.Group> <Form.Group controlId="date_start">
+        <Form.Label>Date Start:</Form.Label>
+        <DatePicker
+          className="form-control"
+          dateFormat="yyyy-MM-dd"
+          selected={formData.date_start ? new Date(formData.date_start) : null}
+          onChange={(date) => handleDateChange("date_start", date)}
+          required
+        />
+      </Form.Group>
 
-          <Form.Group controlId="date_start">
-            <Form.Label>Date Start:</Form.Label>
-            <DatePicker
-              className="form-control"
-              dateFormat="yyyy-MM-dd"
-              placeholder="Select Date Start"
-              selected={formData.date_start}
-              onChange={(date) => handleDateChange("date_start", date)}
-              required
-            />
-          </Form.Group>
-
-          <Form.Group controlId="date_end">
-            <Form.Label>Date End:</Form.Label>
-            <DatePicker
-              className="form-control"
-              dateFormat="yyyy-MM-dd"
-              placeholder="Select Date End"
-              selected={formData.date_end}
-              onChange={(date) => handleDateChange("date_end", date)}
-              required
-            />
-          </Form.Group>
-
+      <Form.Group controlId="date_end">
+        <Form.Label>Date End:</Form.Label>
+        <DatePicker
+          className="form-control"
+          dateFormat="yyyy-MM-dd"
+          selected={formData.date_end ? new Date(formData.date_end) : null}
+          onChange={(date) => handleDateChange("date_end", date)}
+          required
+        />
+      </Form.Group>
           <Form.Group controlId="cost">
             <Form.Label>Cost:</Form.Label>
             <Form.Control
@@ -115,7 +150,6 @@ const ProcedureModal = ({ show, onHide, lawyers, procedure, newProcedure, onSave
               onChange={(e) =>
                 setFormData({ ...formData, cost: e.target.value })
               }
-              required
             />
           </Form.Group>
 
@@ -139,7 +173,6 @@ const ProcedureModal = ({ show, onHide, lawyers, procedure, newProcedure, onSave
               onChange={(e) =>
                 setFormData({ ...formData, result: e.target.value })
               }
-              required
             />
           </Form.Group>
 
@@ -172,7 +205,8 @@ ProcedureModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
   lawyers: PropTypes.array.isRequired,
-  procedure: PropTypes.object, 
+  procedure: PropTypes.object,
+  serviceId: PropTypes.number, // Expect serviceId as a number
   newProcedure: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired,
 };
