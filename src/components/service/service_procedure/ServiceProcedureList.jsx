@@ -1,11 +1,11 @@
-import  { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Table, Button, Modal } from "react-bootstrap";
+import { Card, Table, Button } from "react-bootstrap";
 import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
 import PropTypes from "prop-types";
 import ProcedureModal from "./ProcdureModal";
 import API_CONFIG from "../../../config";
-import useAuth from '../../Auth/AuthUser'; // Import the hook here
+import useAuth from "../../Auth/AuthUser";
 
 const ServiceProcedureList = ({ serviceId }) => {
   const { getUser } = useAuth();
@@ -13,8 +13,7 @@ const ServiceProcedureList = ({ serviceId }) => {
   const [lawyers, setLawyers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingProcedure, setEditingProcedure] = useState(null);
-  const user = getUser();
-  const [newProcedure, setNewProcedure] = useState({
+  const [newServiceProcedure, setNewProcedure] = useState({
     title: "",
     job: "",
     date_start: "",
@@ -23,8 +22,8 @@ const ServiceProcedureList = ({ serviceId }) => {
     cost2: 0,
     result: "",
     lawyer_id: "",
-  
   });
+  const user = getUser();
 
   useEffect(() => {
     fetchServiceProcedures();
@@ -52,7 +51,7 @@ const ServiceProcedureList = ({ serviceId }) => {
   };
 
   const handleEditServiceProcedure = (procedure) => {
-    setEditingProcedure(procedure);
+    setEditingProcedure(servicProcedure);
     setShowModal(true);
   };
 
@@ -76,7 +75,6 @@ const ServiceProcedureList = ({ serviceId }) => {
       cost2: "",
       result: "",
       lawyer_id: "",
-
     });
     setShowModal(true);
   };
@@ -84,21 +82,22 @@ const ServiceProcedureList = ({ serviceId }) => {
   const handleSaveProcedure = async (updatedProcedure) => {
     try {
       if (editingProcedure) {
-        // Handle updating an existing procedure
-        await axios.put(`${API_CONFIG.baseURL}/api/service-procedure/${editingProcedure.id}`, updatedProcedure);
+        await axios.put(
+          `${API_CONFIG.baseURL}/api/service-procedure/${editingProcedure.id}`,
+          updatedProcedure
+        );
       } else {
-        // Handle creating a new procedure
-        await axios.post(`${API_CONFIG.baseURL}/api/service-procedures`, updatedProcedure);
+        await axios.post(
+          `${API_CONFIG.baseURL}/api/service-procedures`,
+          updatedProcedure
+        );
       }
-  
-      // After a successful request, fetch the updated list of procedures
       fetchServiceProcedures();
       setShowModal(false);
     } catch (error) {
       console.error("Error saving/updating procedure:", error);
     }
   };
-  
 
   return (
     <>
@@ -109,51 +108,51 @@ const ServiceProcedureList = ({ serviceId }) => {
           onClick={openAddProcedureModal}
         >
           <BiPlusCircle className="mr-1" />
-          Add Procedure
+          إضافة إجراء
         </Button>
       </Card.Header>
       <Card.Body>
         <Table striped bordered hover responsive>
           <thead className="table-success text-center">
             <tr>
-              <th>Title</th>
-              <th>Job</th>
-              <th>Date Start</th>
-              <th>Date End</th>
-              <th>Result</th>
-              <th>Lawyer</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th className="col-1">نوع الإجراء</th>
+              <th className="col-2">تاريخ الإجراء</th>
+              <th className="col-2">المحامي</th>
+              <th className="col-2">الجهة</th>
+              <th className="col-2">النتيجة</th>
+              <th className="col-2">الحالة</th>
+              <th className="col-2">الإجراءات</th>
             </tr>
           </thead>
           <tbody>
-          {serviceProcedures.map((procedure) => (
-  <tr key={procedure.id}>
-    <td>{procedure.title}</td>
-    <td>{procedure.job}</td>
-    <td>{procedure.date_start ? new Date(procedure.date_start).toLocaleDateString() : ''}</td>
-    <td>{procedure.date_end ? new Date(procedure.date_end).toLocaleDateString() : ''}</td>
-    <td>{procedure.result}</td>
-    <td>{procedure.lawyer?.name}</td>
-    <td>{procedure.status}</td>
-    <td>
-      <Button
-        variant="info"
-        onClick={() => handleEditServiceProcedure(procedure)}
-      >
-        <BiPencil />
-      </Button>
-      <Button
-        variant="danger"
-        onClick={() => handleDeleteServiceProcedure(procedure.id)}
-      >
-        <BiTrash />
-      </Button>
-    </td>
-  </tr>
-))}
-
-
+            {serviceProcedures.map((procedure) => (
+              <tr key={procedure.id}>
+                <td>{procedure.title}</td>
+                <td>
+                  {procedure.date_start
+                    ? new Date(procedure.date_start).toLocaleDateString()
+                    : ""}
+                </td>
+                <td>{procedure.lawyer?.name || "N/A"}</td>
+                <td>{procedure.place || "N/A"}</td>
+                <td>{procedure.re || "N/A"}</td>
+                <td>{procedure.status || "N/A"}</td>
+                <td>
+                  <Button
+                    variant="info"
+                    onClick={() => handleEditServiceProcedure(procedure)}
+                  >
+                    <BiPencil />
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDeleteServiceProcedure(procedure.id)}
+                  >
+                    <BiTrash />
+                  </Button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Card.Body>
@@ -161,17 +160,15 @@ const ServiceProcedureList = ({ serviceId }) => {
       <ProcedureModal
         show={showModal}
         onHide={() => setShowModal(false)}
-        procedure={editingProcedure}
-        newProcedure={newProcedure}
+        servicProcedure={editingProcedure} // Pass the editingProcedure to the modal
+        newServiceProcedure={newServiceProcedure}
         lawyers={lawyers}
-        onSave={handleSaveProcedure} 
+        onSave={handleSaveProcedure}
         serviceId={parseInt(serviceId)} // Convert serviceId to a number
-
       />
     </>
   );
 };
-
 ServiceProcedureList.propTypes = {
   serviceId: PropTypes.number.isRequired,
 };

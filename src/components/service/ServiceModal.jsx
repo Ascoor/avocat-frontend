@@ -35,6 +35,7 @@ const ServiceModal = ({
 
   useEffect(() => {
     if (isEditing) {
+    
       if (service) {
         setFormData({
           ...initialFormData,
@@ -53,7 +54,7 @@ const ServiceModal = ({
     } else if (show) {
       fetchClients();
     }
-  }, [show, isEditing, service]);
+  }, [show, clients,isEditing, service]);
 
   const fetchClients = async () => {
     try {

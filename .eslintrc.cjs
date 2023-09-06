@@ -30,7 +30,7 @@ module.exports = {
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
     'react/jsx-props-no-spreading': 'off', // Allow spreading props
     'import/prefer-default-export': 'off', // Allow single exports
-    'react/prop-types': 'off', // You can remove this if using TypeScript
+    'react/prop-types': 'on', // You can remove this if using TypeScript
     'no-unused-vars': 'warn', // Show warnings for unused variables
     'no-shadow': 'off', // Allow shadowing of variables within functions
     'jsx-a11y/click-events-have-key-events': 'off', // Allow click events without key events

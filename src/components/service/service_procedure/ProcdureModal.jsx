@@ -11,8 +11,8 @@ const ProcedureModal = ({
   show,
   onHide,
   lawyers,
-  procedure,
-  newProcedure,
+  serviceProcedure,
+  newServiceProcedure,
   serviceId,
   onSave,
 }) => {
@@ -23,18 +23,16 @@ const ProcedureModal = ({
 
   // Initialize formData with date_start and date_end as null dates
   const initialFormData = {
-    title: procedure ? procedure.title : newProcedure.title,
-    job: procedure ? procedure.job : newProcedure.job,
-    lawyer_id: procedure ? procedure.lawyer_id : newProcedure.lawyer_id,
+    title: serviceProcedure ? serviceProcedure.title : newServiceProcedure.title,
+    job: serviceProcedure ? serviceProcedure.job : newServiceProcedure.job,
+    lawyer_id: serviceProcedure ? serviceProcedure.lawyer_id : newServiceProcedure.lawyer_id,
     date_start: null,
     date_end: null,
-    cost: procedure ? procedure.cost : newProcedure.cost,
-    cost2: procedure ? procedure.cost2 : newProcedure.cost2,
-    result: procedure ? procedure.result : newProcedure.result,
-    procedure_type_id: procedure
-      ? procedure.procedure_type_id
-      : newProcedure.procedure_type_id,
-    status: procedure ? procedure.status : newProcedure.status,
+    cost: serviceProcedure ? serviceProcedure.cost : newServiceProcedure.cost,
+    cost2: serviceProcedure ? serviceProcedure.cost2 : newServiceProcedure.cost2,
+    result: serviceProcedure ? serviceProcedure.result : newServiceProcedure.result,
+
+    status: serviceProcedure ? serviceProcedure.status : newServiceProcedure.status,
     created_by: user.id,
     service_id: serviceId,
   };
@@ -43,7 +41,7 @@ const ProcedureModal = ({
   const isEditing = !!procedure;
 
   // When editing, set the initial values from 'procedure'
-  if (isEditing && procedure) {
+  if (isEditing && serviceProcedure) {
     initialFormData.date_start = procedure.date_start;
     initialFormData.date_end = procedure.date_end;
   }
@@ -75,7 +73,7 @@ const ProcedureModal = ({
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title>
-          {procedure ? "Edit Procedure" : "Add New Procedure"}
+          {serviceProcedure ? "Edit serviceProcedure" : "Add New serviceProcedure"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -175,6 +173,16 @@ const ProcedureModal = ({
               }
             />
           </Form.Group>
+          <Form.Group controlId="result">
+            <Form.Label>place:</Form.Label>
+            <Form.Control
+              type="text"
+              value={formData.place}
+              onChange={(e) =>
+                setFormData({ ...formData, place: e.target.value })
+              }
+            />
+          </Form.Group>
 
           <Form.Group controlId="status">
             <Form.Label>Status:</Form.Label>
@@ -185,10 +193,11 @@ const ProcedureModal = ({
                 setFormData({ ...formData, status: e.target.value })
               }
             >
-              <option value="">Select Status</option>
-              <option value="Completed">Completed</option>
-              <option value="Not Executed">Not Executed</option>
-              <option value="In Progress">In Progress</option>
+              <option value="">Select Status</option> 
+               <option value="قيد التجهيز">قيد التجهيز</option>
+                <option value="">لم ينفذ</option>
+
+                <option value="منتهي">منتهي</option>
             </Form.Control>
           </Form.Group>
 
@@ -207,7 +216,7 @@ ProcedureModal.propTypes = {
   lawyers: PropTypes.array.isRequired,
   procedure: PropTypes.object,
   serviceId: PropTypes.number, // Expect serviceId as a number
-  newProcedure: PropTypes.object.isRequired,
+  newServiceProcedure: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired,
 };
 
