@@ -1,107 +1,180 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import React, { useState } from "react";
+import { Modal, Form, Button } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
-import axios from "axios";
-import API_CONFIG from "../../../config";
 
-const ProcedureModal = ({ procedure = {}, show, onHide, onSubmit, mode }) => {
-
-  const isEditMode = mode === "edit";
-  
-  const [formData, setFormData] = useState({ ...procedure });
-  const [lawyers, setLawyers] = useState([]);
-  const [selectedLawyer, setSelectedLawyer] = useState("");
-
-  useEffect(() => {
-    fetchLawyers();
-  }, []);
-
-  const fetchLawyers = async () => {
-    try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/lawyers`);
-      setLawyers(response.data);
-    } catch (error) {
-      console.error("Error fetching lawyers:", error);
-    }
+const ProcedureModal = ({ show, onHide, lawyers, procedure, newProcedure, onSave }) => {
+  const initialFormData = {
+    title: procedure ? procedure.title : newProcedure.title,
+    job: procedure ? procedure.job : newProcedure.job,
+    lawyer_id: procedure ? procedure.lawyer_id : newProcedure.lawyer_id,
+    date_start: procedure ? new Date(procedure.date_start) : newProcedure.date_start,
+    date_end: procedure ? new Date(procedure.date_end) : newProcedure.date_end,
+    cost: procedure ? procedure.cost : newProcedure.cost,
+    cost2: procedure ? procedure.cost2 : newProcedure.cost2,
+    result: procedure ? procedure.result : newProcedure.result,
+    procedure_type_id: procedure ? procedure.procedure_type_id : newProcedure.procedure_type_id,
+    status: procedure ? procedure.status : newProcedure.status,
   };
-  
-const handleInputChange = (e) => {
-  const { name, value } = e.target;
-  setFormData({ ...formData, [name]: value });
-};
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  // Handle form submission (e.g., send data to the server)
-  onSubmit(formData, mode); // Pass the mode to indicate add or edit
-  onHide(); // Close the modal after submission
-};
+  const [formData, setFormData] = useState(initialFormData);
 
+  const handleDateChange = (field, value) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave(formData);
+  };
 
   return (
     <Modal show={show} onHide={onHide} centered>
-    <Modal.Header closeButton>
- 
-      <Modal.Title>
-        {mode === "edit" ? "تعديل الإجراء" : "إضافة إجراء جديد"}
-      </Modal.Title>
-   
+      <Modal.Header closeButton>
+        <Modal.Title>
+          {procedure ? "Edit Procedure" : "Add New Procedure"}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="title">
-            <Form.Label>نوع الإجراء:</Form.Label>
+            <Form.Label>Title:</Form.Label>
             <Form.Control
               type="text"
-              name="title"
               value={formData.title}
-              onChange={handleInputChange}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
               required
             />
           </Form.Group>
+
           <Form.Group controlId="job">
-            <Form.Label>الوظيفة:</Form.Label>
+            <Form.Label>Job:</Form.Label>
             <Form.Control
               type="text"
-              name="job"
               value={formData.job}
-              onChange={handleInputChange}
+              onChange={(e) =>
+                setFormData({ ...formData, job: e.target.value })
+              }
               required
             />
           </Form.Group>
-          {/* Add more form fields here */}
-          {/* ... */}
-          {isEditMode && (
-            <Form.Group controlId="status">
-              <Form.Label>الحالة:</Form.Label>
-              <Form.Control
-                type="text"
-                name="status"
-                value={formData.status}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-          )}
+
+          <Form.Group controlId="lawyer">
+            <Form.Label>Lawyer:</Form.Label>
+            <Form.Control
+              as="select"
+              value={formData.lawyer_id}
+              onChange={(e) =>
+                setFormData({ ...formData, lawyer_id: e.target.value })
+              }
+              required
+            >
+              <option value="">Select Lawyer</option>
+              {lawyers.map((lawyer) => (
+                <option key={lawyer.id} value={lawyer.id}>
+                  {lawyer.name}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="date_start">
+            <Form.Label>Date Start:</Form.Label>
+            <DatePicker
+              className="form-control"
+              dateFormat="yyyy-MM-dd"
+              placeholder="Select Date Start"
+              selected={formData.date_start}
+              onChange={(date) => handleDateChange("date_start", date)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="date_end">
+            <Form.Label>Date End:</Form.Label>
+            <DatePicker
+              className="form-control"
+              dateFormat="yyyy-MM-dd"
+              placeholder="Select Date End"
+              selected={formData.date_end}
+              onChange={(date) => handleDateChange("date_end", date)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="cost">
+            <Form.Label>Cost:</Form.Label>
+            <Form.Control
+              type="number"
+              value={formData.cost}
+              onChange={(e) =>
+                setFormData({ ...formData, cost: e.target.value })
+              }
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="cost2">
+            <Form.Label>Cost 2:</Form.Label>
+            <Form.Control
+              type="number"
+              value={formData.cost2}
+              onChange={(e) =>
+                setFormData({ ...formData, cost2: e.target.value })
+              }
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="result">
+            <Form.Label>Result:</Form.Label>
+            <Form.Control
+              type="text"
+              value={formData.result}
+              onChange={(e) =>
+                setFormData({ ...formData, result: e.target.value })
+              }
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="status">
+            <Form.Label>Status:</Form.Label>
+            <Form.Control
+              as="select"
+              value={formData.status}
+              onChange={(e) =>
+                setFormData({ ...formData, status: e.target.value })
+              }
+            >
+              <option value="">Select Status</option>
+              <option value="Completed">Completed</option>
+              <option value="Not Executed">Not Executed</option>
+              <option value="In Progress">In Progress</option>
+            </Form.Control>
+          </Form.Group>
+
           <Button variant="primary" type="submit">
-            حفظ
+            {procedure ? "Update" : "Save"}
           </Button>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          إغلاق
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 };
 
 ProcedureModal.propTypes = {
-  procedure: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  mode: PropTypes.string.isRequired, // Pass "add" or "edit" as mode
+  lawyers: PropTypes.array.isRequired,
+  procedure: PropTypes.object, 
+  newProcedure: PropTypes.object.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 export default ProcedureModal;
