@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import arEG from "date-fns/locale/ar-EG";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
@@ -7,62 +7,49 @@ import PropTypes from "prop-types";
 
 import useAuth from "../../Auth/AuthUser"; // Import the hook here
 
-const ProcedureModal = ({
+const ServiceProcedureModal = ({
   show,
   onHide,
   lawyers,
-  serviceProcedure,
   newServiceProcedure,
   serviceId,
   onSave,
+  onSelectProcedure, // Add this prop
+  selectedProcedure, // Add this prop
 }) => {
-  const { getUser } = useAuth();
-  const user = getUser();
-  registerLocale("ar_eg", arEG);
-  setDefaultLocale("ar_eg");
-
-  // Initialize formData with date_start and date_end as null dates
-  const initialFormData = {
-    title: serviceProcedure ? serviceProcedure.title : newServiceProcedure.title,
-    job: serviceProcedure ? serviceProcedure.job : newServiceProcedure.job,
-    lawyer_id: serviceProcedure ? serviceProcedure.lawyer_id : newServiceProcedure.lawyer_id,
+  const [formData, setFormData] = useState({
+    title: "",
+    job: "",
+    lawyer_id: "",
     date_start: null,
     date_end: null,
-    cost: serviceProcedure ? serviceProcedure.cost : newServiceProcedure.cost,
-    cost2: serviceProcedure ? serviceProcedure.cost2 : newServiceProcedure.cost2,
-    result: serviceProcedure ? serviceProcedure.result : newServiceProcedure.result,
+    cost: "",
+    cost2: "",
+    result: "",
+    status: "",
+    place: "", // Add place field
+  });
 
-    status: serviceProcedure ? serviceProcedure.status : newServiceProcedure.status,
-    created_by: user.id,
-    service_id: serviceId,
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
-  const isEditing = !!procedure;
-
-  // When editing, set the initial values from 'procedure'
-  if (isEditing && serviceProcedure) {
-    initialFormData.date_start = procedure.date_start;
-    initialFormData.date_end = procedure.date_end;
-  }
-
-  const handleDateChange = (field, date) => {
-    // Check if date is not null
-    if (date) {
-      // Format the date as 'yyyy-MM-dd' and update formData
-      const formattedDate = date.toISOString().split("T")[0];
-      setFormData({
-        ...formData,
-        [field]: formattedDate,
-      });
+  useEffect(() => {
+    if (selectedProcedure) {
+      setFormData(selectedProcedure);
+    } else if (newServiceProcedure) {
+      setFormData(newServiceProcedure);
     } else {
-      // If date is null, set the field as null in formData
       setFormData({
-        ...formData,
-        [field]: null,
+        title: "",
+        job: "",
+        lawyer_id: "",
+        date_start: null,
+        date_end: null,
+        cost: "",
+        cost2: "",
+        result: "",
+        status: "",
+        place: "",
       });
     }
-  };
+  }, [selectedProcedure, newServiceProcedure]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,9 +59,7 @@ const ProcedureModal = ({
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
-        <Modal.Title>
-          {serviceProcedure ? "Edit serviceProcedure" : "Add New serviceProcedure"}
-        </Modal.Title>
+        <Modal.Title>{selectedProcedure ? "Edit Procedure" : "Add New Procedure"}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
@@ -83,13 +68,12 @@ const ProcedureModal = ({
             <Form.Control
               type="text"
               value={formData.title}
-              onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               required
             />
           </Form.Group>
 
+  
           <Form.Group controlId="job">
             <Form.Label>Job:</Form.Label>
             <Form.Control
@@ -173,14 +157,12 @@ const ProcedureModal = ({
               }
             />
           </Form.Group>
-          <Form.Group controlId="result">
-            <Form.Label>place:</Form.Label>
+          <Form.Group controlId="place">
+            <Form.Label>Place:</Form.Label>
             <Form.Control
               type="text"
               value={formData.place}
-              onChange={(e) =>
-                setFormData({ ...formData, place: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, place: e.target.value })}
             />
           </Form.Group>
 
@@ -202,7 +184,7 @@ const ProcedureModal = ({
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            {procedure ? "Update" : "Save"}
+            {isEditing ? "Update" : "Save"}
           </Button>
         </Form>
       </Modal.Body>
@@ -210,14 +192,15 @@ const ProcedureModal = ({
   );
 };
 
-ProcedureModal.propTypes = {
+ServiceProcedureModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
   lawyers: PropTypes.array.isRequired,
-  procedure: PropTypes.object,
-  serviceId: PropTypes.number, // Expect serviceId as a number
-  newServiceProcedure: PropTypes.object.isRequired,
-  onSave: PropTypes.func.isRequired,
+  SelectProcedure: PropTypes.object, // Change prop name to SelectProcedure
+
+  newServiceProcedure: PropTypes.object, // Add prop type for newServiceProcedure
+  serviceId: PropTypes.number,
+  onSave: PropTypes.func,
 };
 
-export default ProcedureModal;
+export default ServiceProcedureModal;

@@ -1,10 +1,10 @@
 import React from "react";
-import { Card, Badge, ListGroup, Col, Container, Row } from "react-bootstrap";
+import { Card, Badge, ListGroup, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useSpring, animated, config } from "@react-spring/web";
 import ServiceProcedureList from "./service_procedure/ServiceProcedureList";
 
-const ServiceCard = ({ service }) => {
+const ServiceDetailsModal = ({ service }) => {
   const cardAnimation = useSpring({
     from: { opacity: 0, transform: "translateY(30px)" },
     to: { opacity: 1, transform: "translateY(0)" },
@@ -21,87 +21,44 @@ const ServiceCard = ({ service }) => {
   };
 
   return (
-    <animated.div
-      className={`service-card bg-${getStatusColor()}`}
-      style={{ ...cardAnimation, marginBottom: "15px" }}
-    >
-      <Container fluid>
-        <Card text="dark">
-          <Card.Body>
-            <Card.Title className="text-center">
-              {service.service_name}
-            </Card.Title>
-            <Card.Text>{service.service_description}</Card.Text>
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                <strong>
-                  {service.client_id
-                    ? "إسم العميل"
-                    : "إسم العميل بدون وكالة"}
-                </strong>{" "}
-                {service.client_id ? service.client?.name : service.unclient_name}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <strong>الحالة</strong>{" "}
-                <Badge bg={getStatusColor()} className="badge">
-                  {service.service_status}
-                </Badge>
-              </ListGroup.Item>
-              {!service.client_id && (
-                <>
-                  <ListGroup.Item>
-                    <strong>رقم هاتف</strong>{" "}
-                    {service.unclient_phone}
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <strong>رقم بطاقة الرقم القومي</strong>{" "}
-                    {service.unclient_nid}
-                  </ListGroup.Item>
-                </>
-              )}
-              <ListGroup.Item>
-                <strong>الجهه</strong>{" "}
-                {service.service_place || "N/A"}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <strong>رقم ملف الخدمة</strong>{" "}
-                {service.service_no || "N/A"}
-              </ListGroup.Item>
-            </ListGroup>
-          </Card.Body>
-          <Card.Footer>
-            <ServiceProcedureList serviceId={service.id} />
-          </Card.Footer>
-        </Card>
-      </Container>
-    </animated.div>
-  );
-};
-
-ServiceCard.propTypes = {
-  service: PropTypes.shape({
-    service_name: PropTypes.string.isRequired,
-    service_description: PropTypes.string.isRequired,
-    service_status: PropTypes.string.isRequired,
-    client_name: PropTypes.string,
-    service_place: PropTypes.string,
-    field1: PropTypes.string,
-    field2: PropTypes.string,
-  }).isRequired,
-};
-
-const ServiceDetailsModal = ({ service }) => {
-  return (
-     <Container
-      className="d-flex align-items-center justify-content-center"
-      style={{ minHeight: "80vh" }}
-    >
-      <Row>
-        <Col>
-          <ServiceCard service={service} />
-        </Col>
-      </Row>
-    </Container>
+    <Row>
+      <Col md={6} lg={12}>
+        <animated.div
+          className={`service-card bg-${getStatusColor()}`}
+          style={{ ...cardAnimation, marginBottom: "15px" }}
+        >
+          <Card text="dark">
+            <Card.Body>
+              <Card.Title className="text-center">
+                {service.service_name}
+              </Card.Title>
+              <Card.Text>{service.service_description}</Card.Text>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <strong>الحالة</strong>{" "}
+                  <Badge bg={getStatusColor()} className="badge">
+                    {service.service_status}
+                  </Badge>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>إسم العميل:</strong>{" "}
+                  {service.client_name || "Unregistered Client"}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>الجهه</strong>{" "}
+                  {service.service_place || "N/A"}
+                </ListGroup.Item>
+ 
+                <ListGroup.Item>
+                  <strong> رقم ملف الخدمة</strong> {service.service_no || "N/A"}
+                </ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
+          </Card>
+        </animated.div>
+<ServiceProcedureList serviceId={service.id} />
+      </Col>
+    </Row>
   );
 };
 

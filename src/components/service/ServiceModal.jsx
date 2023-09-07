@@ -54,7 +54,7 @@ const ServiceModal = ({
     } else if (show) {
       fetchClients();
     }
-  }, [show, clients,isEditing, service]);
+  }, [show,isEditing, service]);
 
   const fetchClients = async () => {
     try {
@@ -272,7 +272,7 @@ const ServiceModal = ({
           />
         </Form.Group>
         <Form.Group controlId="service_place">
-          <Form.Label>Service Place</Form.Label>
+          <Form.Label>الجهة</Form.Label>
           <Form.Control
             type="text"
             name="service_place"
@@ -281,7 +281,7 @@ const ServiceModal = ({
           />
         </Form.Group>
         <Form.Group controlId="service_description">
-          <Form.Label>Service Description</Form.Label>
+          <Form.Label> وصف الخدمة</Form.Label>
           <Form.Control
             as="textarea"
             name="service_description"

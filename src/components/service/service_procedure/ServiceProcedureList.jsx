@@ -3,26 +3,18 @@ import axios from "axios";
 import { Card, Table, Button } from "react-bootstrap";
 import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
 import PropTypes from "prop-types";
-import ProcedureModal from "./ProcdureModal";
+import ServiceProcedureModal from "./ServiceProcdureModal"; // Assuming you have a separate modal component
 import API_CONFIG from "../../../config";
 import useAuth from "../../Auth/AuthUser";
 
 const ServiceProcedureList = ({ serviceId }) => {
   const { getUser } = useAuth();
+  const [selectedProcedure, setSelectedProcedure] = useState(null);
   const [serviceProcedures, setServiceProcedures] = useState([]);
   const [lawyers, setLawyers] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [editingProcedure, setEditingProcedure] = useState(null);
-  const [newServiceProcedure, setNewProcedure] = useState({
-    title: "",
-    job: "",
-    date_start: "",
-    date_end: "",
-    cost: 0,
-    cost2: 0,
-    result: "",
-    lawyer_id: "",
-  });
+  const [editingServiceProcedure, setEditingServiceProcedure] = useState(null);
+
   const user = getUser();
 
   useEffect(() => {
@@ -49,15 +41,15 @@ const ServiceProcedureList = ({ serviceId }) => {
       console.log("Error fetching procedures:", error);
     }
   };
+  const handleEditServiceProcedure = (serviceProcedure) => {
+  setSelectedProcedure(serviceProcedure); // Set the selected procedure
+  setShowModal(true);
+};
 
-  const handleEditServiceProcedure = (procedure) => {
-    setEditingProcedure(servicProcedure);
-    setShowModal(true);
-  };
 
-  const handleDeleteServiceProcedure = async (procedureId) => {
+  const handleDeleteServiceProcedure = async (serviceProcedureId) => {
     try {
-      await axios.delete(`${API_CONFIG.baseURL}/api/procedures/${procedureId}`);
+      await axios.delete(`${API_CONFIG.baseURL}/api/service-procedures/${serviceProcedureId}`);
       fetchServiceProcedures();
     } catch (error) {
       console.log("Error deleting procedure:", error);
@@ -65,38 +57,8 @@ const ServiceProcedureList = ({ serviceId }) => {
   };
 
   const openAddProcedureModal = () => {
-    setEditingProcedure(null);
-    setNewProcedure({
-      title: "",
-      job: "",
-      date_start: "",
-      date_end: "",
-      cost: "",
-      cost2: "",
-      result: "",
-      lawyer_id: "",
-    });
+    setEditingServiceProcedure(null);
     setShowModal(true);
-  };
-
-  const handleSaveProcedure = async (updatedProcedure) => {
-    try {
-      if (editingProcedure) {
-        await axios.put(
-          `${API_CONFIG.baseURL}/api/service-procedure/${editingProcedure.id}`,
-          updatedProcedure
-        );
-      } else {
-        await axios.post(
-          `${API_CONFIG.baseURL}/api/service-procedures`,
-          updatedProcedure
-        );
-      }
-      fetchServiceProcedures();
-      setShowModal(false);
-    } catch (error) {
-      console.error("Error saving/updating procedure:", error);
-    }
   };
 
   return (
@@ -125,22 +87,23 @@ const ServiceProcedureList = ({ serviceId }) => {
             </tr>
           </thead>
           <tbody>
-            {serviceProcedures.map((procedure) => (
-              <tr key={procedure.id}>
+          {serviceProcedures.map((procedure, index) => (
+  <tr key={procedure.id}>
+  
                 <td>{procedure.title}</td>
                 <td>
                   {procedure.date_start
                     ? new Date(procedure.date_start).toLocaleDateString()
                     : ""}
                 </td>
-                <td>{procedure.lawyer?.name || "N/A"}</td>
-                <td>{procedure.place || "N/A"}</td>
-                <td>{procedure.re || "N/A"}</td>
-                <td>{procedure.status || "N/A"}</td>
+                <td>{procedure.lawyer?.name }</td>
+                <td>{procedure.place || ""}</td>
+                <td>{procedure.result || ""}</td>
+                <td>{procedure.status || ""}</td>
                 <td>
                   <Button
                     variant="info"
-                    onClick={() => handleEditServiceProcedure(procedure)}
+                    onClick={() => handleEditServiceProcedure(selectedProcedure)}
                   >
                     <BiPencil />
                   </Button>
@@ -157,18 +120,20 @@ const ServiceProcedureList = ({ serviceId }) => {
         </Table>
       </Card.Body>
 
-      <ProcedureModal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        servicProcedure={editingProcedure} // Pass the editingProcedure to the modal
-        newServiceProcedure={newServiceProcedure}
-        lawyers={lawyers}
-        onSave={handleSaveProcedure}
-        serviceId={parseInt(serviceId)} // Convert serviceId to a number
-      />
+      <ServiceProcedureModal
+  show={showModal}
+  onHide={() => setShowModal(false)}
+  serviceProcedure={editingServiceProcedure}
+  lawyers={lawyers}
+  fetchServiceProcedures={fetchServiceProcedures}
+  onSelectProcedure={setSelectedProcedure}
+  selectedProcedure={selectedProcedure} // Pass the selected procedure
+/>
+
     </>
   );
 };
+
 ServiceProcedureList.propTypes = {
   serviceId: PropTypes.number.isRequired,
 };
