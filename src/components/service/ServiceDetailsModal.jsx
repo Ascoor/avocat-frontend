@@ -34,16 +34,32 @@ const ServiceDetailsModal = ({ service }) => {
               </Card.Title>
               <Card.Text>{service.service_description}</Card.Text>
               <ListGroup variant="flush">
+              <ListGroup.Item>
+                <strong>
+                  {service.client_id
+                    ? "إسم العميل"
+                    : "إسم العميل بدون وكالة"}
+                </strong>{" "}
+                {service.client_id ? service.client?.name : service.unclient_name}
+              </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>الحالة</strong>{" "}
                   <Badge bg={getStatusColor()} className="badge">
                     {service.service_status}
                   </Badge>
                 </ListGroup.Item>
-                <ListGroup.Item>
-                  <strong>إسم العميل:</strong>{" "}
-                  {service.client?.name || "Unregistered Client"}
-                </ListGroup.Item>
+                {!service.client_id && (
+                <>
+                  <ListGroup.Item>
+                    <strong>رقم هاتف</strong>{" "}
+                    {service.unclient_phone}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong>رقم بطاقة الرقم القومي</strong>{" "}
+                    {service.unclient_nid}
+                  </ListGroup.Item>
+                </>
+              )}
                 <ListGroup.Item>
                   <strong>الجهه</strong>{" "}
                   {service.service_place || "N/A"}
