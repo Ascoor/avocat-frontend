@@ -42,7 +42,7 @@ const ServiceDetailsModal = ({ service }) => {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>إسم العميل:</strong>{" "}
-                  {service.client_name || "Unregistered Client"}
+                  {service.client?.name || "Unregistered Client"}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>الجهه</strong>{" "}

@@ -70,7 +70,7 @@ const ServiceProcedureModal = ({
         cost: procedure.cost || 0, // Use an empty string if null
         cost2: procedure.cost2 || 0, // Use an empty string if null
         result: procedure.result || "", // Use an empty string if null
-        status: procedure.status , // Use an empty string if null
+        status: procedure.status || "", // Use an empty string if null
         place: procedure.place || "", // Use an empty string if null
 
 
@@ -207,21 +207,21 @@ const ServiceProcedureModal = ({
               onChange={(e) => handleFieldChange("place", e.target.value)}
             />
           </FormGroup>
-{isEditing  && 
- <FormGroup controlId="status" label="الحالة">
-            <FormControl
-              as="select"
-              name="status"
-              value={formData.status}
-              onChange={(e) => handleFieldChange("status", e.target.value)}
-            >
-              <option value="">اختر الحالة</option>
-              <option value="قيد التجهيز">قيد التجهيز</option>
-              <option value="لم ينفذ">لم ينفذ</option>
-              <option value="منتهي">منتهي</option>
-            </FormControl>
-          </FormGroup>
-}
+          {isEditing && (
+  <FormGroup controlId="status" label="الحالة">
+    <FormControl
+      as="select"
+      name="status"
+      value={formData.status} // Set the selected value to the current value
+      onChange={(e) => handleFieldChange("status", e.target.value)}
+    >
+      <option value="">اختر الحالة</option>
+      <option value="قيد التجهيز">قيد التجهيز</option>
+      <option value="لم ينفذ">لم ينفذ</option>
+      <option value="منتهي">منتهي</option>
+    </FormControl>
+  </FormGroup>
+)}
 
           <Button variant="primary" type="submit">
             {isEditing ? "تحديث" : "حفظ"}
