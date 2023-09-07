@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {favicon} from "../../assets/icons";
 import { Form, Button, Card, Alert, Row, Col } from "react-bootstrap";
 import axios from "axios";
-import useAuth from "../Auth/AuthUser";
+import useAuth from "../Auth/AuthUser"; 
 import API_CONFIG from "../../config";
 const LegCaseCreate = () => {
     const navigate = useNavigate();
