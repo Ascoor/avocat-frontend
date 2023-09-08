@@ -47,7 +47,7 @@
     const handleDeleteServiceProcedure = async (procedureId) => {
       try {
         await axios.delete(
-          API_CONFIG.baseURL + `/api/service-procedure/${procedureId}`
+          API_CONFIG.baseURL + `/api/service-procedure/delete/${procedureId}`
         );
         fetchServiceProcedures();
       } catch (error) {

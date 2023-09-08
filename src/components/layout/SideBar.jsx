@@ -60,6 +60,9 @@ const user = useAuth().user;
             </li>
         
             <li onClick={handleLinkClick}>
+              <Link to="/archives">الأرشيف </Link>
+            </li>
+            <li onClick={handleLinkClick}>
               <Link to="/courts">اعدادات المحاكم</Link>
             </li>
             <li onClick={handleLinkClick}>

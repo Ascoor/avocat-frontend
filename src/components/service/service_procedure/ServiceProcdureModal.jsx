@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import arEG from "date-fns/locale/ar-EG";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import DatePicker from "react-datepicker";
-
+import '../../../assets/css/Models.css'
 import useAuth from "../../Auth/AuthUser";
+
 const ServiceProcedureModal = ({
   show,
   onHide,
@@ -17,10 +18,10 @@ const ServiceProcedureModal = ({
   editServiceProcedure
 }) => {
   const user = useAuth();
-  
+
   registerLocale("ar_eg", arEG);
   setDefaultLocale("ar_eg");
-  
+
   const { getUser } = useAuth();
   const handleDateChange = (field, date) => {
     // Check if date is not null
@@ -49,12 +50,16 @@ const ServiceProcedureModal = ({
     cost: 0,
     cost2: 0,
     result: "",
-    status: "",
     place: "",
     created_by: getUser().id,
     updated_by: getUser().id,
     service_id: serviceId
   };
+
+  // Include status only when adding a new procedure
+  if (!isEditing) {
+    initialFormData.status = ""; // Default value for status
+  }
 
   const [formData, setFormData] = useState(initialFormData);
 
@@ -70,10 +75,7 @@ const ServiceProcedureModal = ({
         cost: procedure.cost || 0, // Use an empty string if null
         cost2: procedure.cost2 || 0, // Use an empty string if null
         result: procedure.result || "", // Use an empty string if null
-        status: procedure.status || "", // Use an empty string if null
         place: procedure.place || "", // Use an empty string if null
-
-
       });
     } else {
       setFormData(initialFormData);
@@ -83,12 +85,11 @@ const ServiceProcedureModal = ({
   const handleFieldChange = (fieldName, value) => {
     setFormData({ ...formData, [fieldName]: value });
   };
-  
-  
-  
+
   const resetForm = () => {
     setFormData(initialFormData);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -104,129 +105,131 @@ const ServiceProcedureModal = ({
       console.error("Error saving/updating procedure:", error);
     }
   };
-  
 
   return ( 
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} onHide={onHide} centered className="service-procedure-modal" style={{ maxWidth: "800px" }}>
       <Modal.Header closeButton>
         <Modal.Title>
           {isEditing ? "تعديل الإجراء" : "إضافة إجراء جديد"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={handleSubmit}>
-          <FormGroup controlId="title" label="نوع الإجراء">
-            <FormControl
-              type="text"
-              value={formData.title}
-              onChange={(e) => handleFieldChange("title", e.target.value)}
-              required
-            />
-          </FormGroup>
+        <Row className="mb-3">
+          <Col sm={12} md={12} lg={12} className="mb-3" style={{ textAlign: "right" }}>
+            <Form onSubmit={handleSubmit}>
+              <FormGroup controlId="title" label="نوع الإجراء">
+                <FormControl
+                  type="text"
+                  value={formData.title}
+                  onChange={(e) => handleFieldChange("title", e.target.value)}
+                  required
+                />
+              </FormGroup>
 
-          <FormGroup controlId="job" label="الوظيفة">
-            <FormControl
-              type="text"
-              value={formData.job}
-              onChange={(e) => handleFieldChange("job", e.target.value)}
-              required
-            />
-          </FormGroup>
+              <FormGroup controlId="job" label="الوظيفة">
+                <FormControl
+                  type="text"
+                  value={formData.job}
+                  onChange={(e) => handleFieldChange("job", e.target.value)}
+                  required
+                />
+              </FormGroup>
 
-          <FormGroup controlId="lawyer" label="المحامي">
-            <FormControl
-              as="select"
-              value={formData.lawyer_id}
-              onChange={(e) => handleFieldChange("lawyer_id", e.target.value)}
-              required
-            >
-              <option value="">اختر المحامي</option>
-              {lawyers.map((lawyer) => (
-                <option key={lawyer.id} value={lawyer.id}>
-                  {lawyer.name}
-                </option>
-              ))}
-            </FormControl>
-          </FormGroup>
+              <FormGroup controlId="lawyer" label="المحامي">
+                <FormControl
+                  as="select"
+                  value={formData.lawyer_id}
+                  onChange={(e) => handleFieldChange("lawyer_id", e.target.value)}
+                  required
+                >
+                  <option value="">اختر المحامي</option>
+                  {lawyers.map((lawyer) => (
+                    <option key={lawyer.id} value={lawyer.id}>
+                      {lawyer.name}
+                    </option>
+                  ))}
+                </FormControl>
+              </FormGroup>
 
-          <FormGroup controlId="date_start" label="تاريخ البداية">
-         
-            <Form.Label>Date Start:</Form.Label>
-          <DatePicker
-          className="form-control"
-          dateFormat="yyyy-MM-dd"
-          name="date_start"
-          selected={formData.date_start ? new Date(formData.date_start) : null}
-         
-          onChange={(date) => handleDateChange("date_start", date)}
-  
-          required
-        />
-          </FormGroup>
-      <Form.Group controlId="date_end">
-        <Form.Label>Date End:</Form.Label>
-        <DatePicker
-          className="form-control"
-          dateFormat="yyyy-MM-dd"
-          name="date_end"
-          selected={formData.date_end ? new Date(formData.date_end) : null}
-         
-          onChange={(date) => handleFieldChange("date_end", date)}
-          required
-        />
-      </Form.Group>
-          <FormGroup controlId="cost" label="التكلفة">
-            <FormControl
-              type="number"
-              value={formData.cost}
-              onChange={(e) => handleFieldChange("cost", e.target.value)}
-            />
-          </FormGroup>
+              <div className="mb-3">
+                <Form.Label>تاريخ البداية:</Form.Label>
+                <DatePicker
+                  className="form-control"
+                  dateFormat="yyyy-MM-dd"
+                  name="date_start"
+                  selected={formData.date_start ? new Date(formData.date_start) : null}
+                  onChange={(date) => handleDateChange("date_start", date)}
+                  required
+                />
+              </div>
 
-          <FormGroup controlId="cost2" label="التكلفة 2">
-            <FormControl
-              type="number"
-              value={formData.cost2}
-              onChange={(e) => handleFieldChange("cost2", e.target.value)}
-              required
-            />
-          </FormGroup>
+              <div className="mb-3">
+                <Form.Label>تاريخ الانتهاء:</Form.Label>
+                <DatePicker
+                  className="form-control"
+                  dateFormat="yyyy-MM-dd"
+                  name="date_end"
+                  selected={formData.date_end ? new Date(formData.date_end) : null}
+                  onChange={(date) => handleFieldChange("date_end", date)}
+                  required
+                />
+              </div>
 
-          <FormGroup controlId="result" label="النتيجة">
-            <FormControl
-              type="text"
-              value={formData.result}
-              onChange={(e) => handleFieldChange("result", e.target.value)}
-            />
-          </FormGroup>
+              <FormGroup controlId="cost" label="التكلفة">
+                <FormControl
+                  type="number"
+                  value={formData.cost}
+                  onChange={(e) => handleFieldChange("cost", e.target.value)}
+                />
+              </FormGroup>
 
-          <FormGroup controlId="place" label="الجهة">
-            <FormControl
-              type="text"
-              value={formData.place}
-              onChange={(e) => handleFieldChange("place", e.target.value)}
-            />
-          </FormGroup>
-          {isEditing && (
-  <FormGroup controlId="status" label="الحالة">
-    <FormControl
-      as="select"
-      name="status"
-      value={formData.status} // Set the selected value to the current value
-      onChange={(e) => handleFieldChange("status", e.target.value)}
-    >
-      <option value="">اختر الحالة</option>
-      <option value="قيد التجهيز">قيد التجهيز</option>
-      <option value="لم ينفذ">لم ينفذ</option>
-      <option value="منتهي">منتهي</option>
-    </FormControl>
-  </FormGroup>
-)}
+              <FormGroup controlId="cost2" label="التكلفة 2">
+                <FormControl
+                  type="number"
+                  value={formData.cost2}
+                  onChange={(e) => handleFieldChange("cost2", e.target.value)}
+                  required
+                />
+              </FormGroup>
 
-          <Button variant="primary" type="submit">
-            {isEditing ? "تحديث" : "حفظ"}
-          </Button>
-        </Form>
+              <FormGroup controlId="result" label="النتيجة">
+                <FormControl
+                  type="text"
+                  value={formData.result}
+                  onChange={(e) => handleFieldChange("result", e.target.value)}
+                />
+              </FormGroup>
+
+              <FormGroup controlId="place" label="الجهة">
+                <FormControl
+                  type="text"
+                  value={formData.place}
+                  onChange={(e) => handleFieldChange("place", e.target.value)}
+                />
+              </FormGroup>
+              
+              {/* Include status field only when adding a new procedure */}
+              {!isEditing && (
+                <FormGroup controlId="status" label="الحالة">
+                  <FormControl
+                    as="select"
+                    name="status"
+                    value={formData.status}
+                    onChange={(e) => handleFieldChange("status", e.target.value)}
+                  >
+                    <option value="قيد التجهيز">قيد التجهيز</option>
+                    <option value="لم ينفذ">لم ينفذ</option>
+                    <option value="منتهي">منتهي</option>
+                  </FormControl>
+                </FormGroup>
+              )}
+
+              <Button variant="primary" type="submit">
+                {isEditing ? "تحديث" : "حفظ"}
+              </Button>
+            </Form>
+          </Col>
+        </Row>
       </Modal.Body>
     </Modal>
   );

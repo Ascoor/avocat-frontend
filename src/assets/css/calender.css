@@ -1,15 +1,127 @@
 /* Calendar container */
 .calendar-container {
-    text-align: center;
-    padding: 20px;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Event cards */
+.fc-daygrid-event {
+  background-color: #007bff;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+/* Hover effect for event cards */
+.fc-daygrid-event:hover {
+  background-color: #0056b3;
+}
+
+/* Active (clicked) event cards */
+.fc-daygrid-event.active {
+  background-color: #9ed6e7;
+}
+
+/* Event card title */
+.fc-daygrid-event-title {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* Event card description */
+.fc-daygrid-event-description {
+  font-size: 0.8rem;
+}
+
+/* Custom CSS for the Calendar Component */
+.react-big-calendar {
+  /* Add padding to create space for buttons */
+  padding: 20px;
+}
+
+/* Position the buttons within the calendar area */
+.rbc-btn-group {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1; /* Ensure buttons appear above events */
+}
+
+/* Style the buttons */
+.rbc-btn-group .rbc-btn {
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style for hover effect */
+.rbc-btn-group .rbc-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  /* Adjust padding and font sizes for smaller screens */
+  .calendar-container {
+    padding: 10px;
   }
-  
-  /* Event cards */
+
   .fc-daygrid-event {
-    background-color: #007bff;
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
-    margin-bottom: 5px;
+    font-size: 0.9rem;
+    padding: 3px;
   }
-  
+
+  .fc-daygrid-event-title {
+    font-size: 0.9rem;
+  }
+
+  .fc-daygrid-event-description {
+    font-size: 0.7rem;
+  }
+
+  /* Adjust button positions for small screens */
+  .rbc-btn-group {
+    top: 5px;
+    right: 5px;
+  }
+}
+
+/* Calendar Container Styles */
+.calendar-container {
+  height: 600px; /* Set the desired height */
+  position: relative; /* Required for absolute positioning of buttons */
+}
+
+/* Calendar Plugin Buttons Styles */
+.calendar-buttons {
+  position: absolute;
+  top: 10px; /* Adjust the top position as needed */
+  right: 10px; /* Adjust the right position as needed */
+  z-index: 1; /* Ensure buttons overlay the calendar */
+  display: flex;
+  gap: 10px; /* Adjust the gap between buttons as needed */
+}
+
+/* Style for buttons */
+.calendar-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Responsive Styles for Small Screens */
+@media (max-width: 768px) {
+  /* Adjust button positions for small screens */
+  .calendar-buttons {
+    top: 5px;
+    right: 5px;
+  }
+}

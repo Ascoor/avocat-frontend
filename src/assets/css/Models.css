@@ -1,0 +1,62 @@
+/* custom-modal.css */
+.service-procedure-modal {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: 0 auto; /* Center the modal horizontally */
+    opacity: 0; /* Initially set opacity to 0 for fade-in effect */
+    transition: opacity 0.3s ease-in-out; /* Add a transition for opacity */
+    padding: 20px;
+  }
+  
+  .service-procedure-modal.show {
+    opacity: 1; /* Set opacity to 1 when modal is shown */
+  }
+  
+  .service-procedure-modal .modal-title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .service-procedure-modal .modal-body {
+    padding: 10px;
+  }
+  
+  .service-procedure-modal .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .service-procedure-modal label {
+    font-weight: bold;
+  }
+  
+  .service-procedure-modal input[type="text"],
+  .service-procedure-modal input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .service-procedure-modal select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .service-procedure-modal button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .service-procedure-modal button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
