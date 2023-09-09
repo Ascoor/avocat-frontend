@@ -41,9 +41,9 @@ const ServiceModal = ({
           ...initialFormData,
           client_choice: service.client_id ? "client" : "unclient",
           client_id: service.client_id || "",
-          unclient_name: service.unclient_name || "",
-          unclient_phone: service.unclient_phone || "",
-          unclient_nid: service.unclient_nid || "",
+          unclient_name: service.unclient?.name || "",
+          unclient_phone: service.unclient?.phone_number || "",
+          unclient_nid: service.unclient?.identity_number || "",
           service_status: service.service_status || "",
           service_name: service.service_name || "",
           service_place: service.service_place || "",
@@ -215,18 +215,18 @@ const ServiceModal = ({
               />
             </Form.Group>
             <Form.Group controlId="unclient_phone">
-              <Form.Label>رقم العميل</Form.Label>
+              <Form.Label>رقم  هاتف العميل</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 name="unclient_phone"
                 value={formData.unclient_phone}
                 onChange={handleChange}
               />
             </Form.Group>
             <Form.Group controlId="unclient_nid">
-              <Form.Label>رقم هاتف العميل</Form.Label>
+              <Form.Label>رقم هوية العميل</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 name="unclient_nid"
                 value={formData.unclient_nid}
                 onChange={handleChange}

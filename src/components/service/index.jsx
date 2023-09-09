@@ -95,7 +95,7 @@ const Services = () => {
                   <tr key={service.id}>
                     <td>{service.service_no}</td>
                     <td>{service.service_name}</td>
-                    <td>{service.client?.name || service.unclient_name}</td>
+                    <td>{service.client?.name || service.unclient?.name}</td>
                     <td>{service.service_place}</td>
                     <td>{service.service_status}</td>
                     <td>
