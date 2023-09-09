@@ -3,9 +3,11 @@ import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import arEG from "date-fns/locale/ar-EG";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { useSpring, animated } from '@react-spring/web';
 import DatePicker from "react-datepicker";
 import '../../../assets/css/Models.css'
 import useAuth from "../../Auth/AuthUser";
+import'../../../assets/css/Models.css'  
 
 const ServiceProcedureModal = ({
   show,
@@ -60,6 +62,11 @@ const ServiceProcedureModal = ({
   if (!isEditing) {
     initialFormData.status = ""; // Default value for status
   }
+  
+  const modalAnimation = useSpring({
+    opacity: show ? 1 : 0,
+    transform: show ? 'translateY(0%)' : 'translateY(-100%)',
+  })
 
   const [formData, setFormData] = useState(initialFormData);
 
@@ -82,13 +89,10 @@ const ServiceProcedureModal = ({
     }
   }, [isEditing, procedure]);
 
-  const handleFieldChange = (fieldName, value) => {
+const handleFieldChange = (fieldName, value) => {
     setFormData({ ...formData, [fieldName]: value });
   };
-
-  const resetForm = () => {
-    setFormData(initialFormData);
-  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,17 +110,29 @@ const ServiceProcedureModal = ({
     }
   };
 
+  const resetForm = () => {
+    setFormData(initialFormData);
+  };
+
+
   return ( 
-    <Modal show={show} onHide={onHide} centered className="service-procedure-modal" style={{ maxWidth: "800px" }}>
-      <Modal.Header closeButton>
-        <Modal.Title>
-          {isEditing ? "تعديل الإجراء" : "إضافة إجراء جديد"}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Row className="mb-3">
-          <Col sm={12} md={12} lg={12} className="mb-3" style={{ textAlign: "right" }}>
-            <Form onSubmit={handleSubmit}>
+    <animated.div style={modalAnimation}>
+      <Modal
+        show={show}
+        onHide={onHide}
+        centered
+        className="service-procedure-modal"
+
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {isEditing ? "تعديل الإجراء" : "إضافة إجراء جديد"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Row className="mb-3">
+            <Col sm={12} md={12} lg={12} className="mb-3" style={{ textAlign: "right" }}>
+              <Form onSubmit={handleSubmit}>
               <FormGroup controlId="title" label="نوع الإجراء">
                 <FormControl
                   type="text"
@@ -223,15 +239,17 @@ const ServiceProcedureModal = ({
                   </FormControl>
                 </FormGroup>
               )}
+    
+          <Button variant="primary" type="submit">
+                  {isEditing ? "تحديث" : "حفظ"}
+                </Button>
+              </Form>
+            </Col>
+          </Row>
+        </Modal.Body>
+      </Modal>
+    </animated.div>
 
-              <Button variant="primary" type="submit">
-                {isEditing ? "تحديث" : "حفظ"}
-              </Button>
-            </Form>
-          </Col>
-        </Row>
-      </Modal.Body>
-    </Modal>
   );
 };
 

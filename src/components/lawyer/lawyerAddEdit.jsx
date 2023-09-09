@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
@@ -30,6 +30,14 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
   );
   const [religion, setReligion] = useState(initialValues?.religion || "");
   const [gender, setGender] = useState(initialValues?.gender || "");
+  const [password, setPassword] = useState(""); // For creating a new password
+  
+  useEffect(() => {
+    // Set the password field during the "Edit" operation based on the initialValues
+    if (initialValues?.lawyer?.user?.password) {
+      setPassword(initialValues.lawyer.user.password);
+    }
+  }, [initialValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,8 +52,8 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
       phone_number: phoneNumber,
       religion,
       gender,
+      password, // Include the password when adding a new lawyer
     };
-
     onSubmit(formData);
   };
 
@@ -143,6 +151,19 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
       </Form.Group>
+          {/* Password input during "Add" */}
+          {!initialValues && (
+        <Form.Group controlId="password">
+          <Form.Label>كلمة المرور</Form.Label>
+          <Form.Control
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </Form.Group>
+      )}
+
       <Button variant="primary" type="submit">
         حفظ
       </Button>

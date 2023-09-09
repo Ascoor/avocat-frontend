@@ -5,6 +5,7 @@ import axios from "axios";
 import useAuth from "../Auth/AuthUser";
 import API_CONFIG from "../../config";
 
+import'../../assets/css/Models.css'  
 const ServiceModal = ({
   show,
   handleClose,
@@ -13,6 +14,7 @@ const ServiceModal = ({
   isEditing,
 }) => {
   const { getUser } = useAuth();
+  const [missingFieldsAlert, setMissingFieldsAlert] = useState(false);
 
   const initialFormData = {
     client_choice: "client",
@@ -41,6 +43,7 @@ const ServiceModal = ({
           ...initialFormData,
           client_choice: service.client_id ? "client" : "unclient",
           client_id: service.client_id || "",
+          unclient_id: service.unclient_id || "",
           unclient_name: service.unclient?.name || "",
           unclient_phone: service.unclient?.phone_number || "",
           unclient_nid: service.unclient?.identity_number || "",
@@ -94,10 +97,9 @@ const ServiceModal = ({
       [name]: "",
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Check if client_id or non-client info (unclient_name, unclient_phone, or unclient_nid) is provided
     if (
       (formData.client_choice === "client" && !formData.client_id) ||
@@ -110,12 +112,35 @@ const ServiceModal = ({
       setShowValidationAlert(true);
       return;
     }
-
-    if (!formData.service_description || !formData.created_by) {
+  
+    // Check for required fields based on the action (add or edit)
+    const requiredFields = isEditing
+      ? [
+          "service_name",
+          "service_description",
+          "service_place",
+          "updated_by",
+          "service_status",
+        ]
+      : [
+          "service_name",
+          "service_description",
+          "service_place",
+          "created_by",
+        ];
+  
+    // Check if all required fields are provided
+    const missingFields = requiredFields.filter(
+      (fieldName) => !formData[fieldName]
+    );
+  
+    if (missingFields.length > 0) {
+      // If any required field is missing, show an error and return
       setShowValidationAlert(true);
       return;
     }
-
+  
+    // If all validations pass, you can proceed with your API request to add or edit the service.
     try {
       if (isEditing) {
         await axios.put(
@@ -133,6 +158,7 @@ const ServiceModal = ({
       }
     }
   };
+  
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -140,18 +166,14 @@ const ServiceModal = ({
         <Modal.Title>{isEditing ? "تعديل الخدمة" : "إضافة خدمة"}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {showValidationAlert && (
-          <Alert
-            variant="danger"
-            onClose={() => setShowValidationAlert(false)}
-            dismissible
-          >
-            من فضلك قم بملء الحقول المطلوبة.
-          </Alert>
-        )}
+      {missingFieldsAlert && (
+  <Alert variant="danger" onClose={() => setMissingFieldsAlert(false)} dismissible>
+    من فضلك قم بملء الحقول المطلوبة.
+  </Alert>
+)}
 
         <Form.Group controlId="client_choice">
-          <Form.Label>اختر عميلًا أو أدخل بيانات العميل</Form.Label>
+          <Form.Label>بيانات الخدمة</Form.Label>
           {isEditing ? null : (
             <>
               <Form.Check
@@ -212,6 +234,8 @@ const ServiceModal = ({
                 name="unclient_name"
                 value={formData.unclient_name}
                 onChange={handleChange}
+                readOnly={isEditing} // Make it read-only in edit mode
+ 
               />
             </Form.Group>
             <Form.Group controlId="unclient_phone">
@@ -220,7 +244,11 @@ const ServiceModal = ({
                 type="number"
                 name="unclient_phone"
                 value={formData.unclient_phone}
-                onChange={handleChange}
+
+                readOnly={isEditing} // Make it read-only in edit mode
+ 
+                  onChange={handleChange}
+
               />
             </Form.Group>
             <Form.Group controlId="unclient_nid">
@@ -230,6 +258,8 @@ const ServiceModal = ({
                 name="unclient_nid"
                 value={formData.unclient_nid}
                 onChange={handleChange}
+                readOnly={isEditing} // Make it read-only in edit mode
+ 
               />
             </Form.Group>
           </>
@@ -237,6 +267,15 @@ const ServiceModal = ({
 
         {isEditing && (
           <>
+                <Form.Group controlId="service_no">
+              <Form.Label>رقم ملف الخدمة</Form.Label>
+              <Form.Control
+                type="text"
+                name="service_no"
+                value={service.service_no}
+                readOnly
+              />
+            </Form.Group>
             <Form.Group controlId="status">
               <Form.Label>حالة الخدمة</Form.Label>
               <Form.Control
@@ -251,15 +290,7 @@ const ServiceModal = ({
                 <option value="معلقة">معلقة</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="service_no">
-              <Form.Label>رقم ملف الخدمة</Form.Label>
-              <Form.Control
-                type="text"
-                name="service_no"
-                value={service.service_no}
-                readOnly
-              />
-            </Form.Group>
+      
           </> 
         )}
         <Form.Group controlId="service_name">

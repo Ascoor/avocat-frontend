@@ -14,8 +14,9 @@ import Services from '../service/index';
 import LegalSession from '../legcase/tools/Legal_session.component';
 import ProcedureSearch from '../reports/procedure_search.component';
 import LegCaseCreate from '../legcase/create.component';
-import ProfileUser from '../Auth/ProfileUser';
-
+import ProfileUser from'../Auth/ProfileUser';
+import Archives from '../Archives/ArchiveDashboard';
+import WordPadEditor from '../Archives/WordPadEditor/WordPadEditor';
 const AuthRoutes = () => {
   return (
     <div className="neon-light"> {/* Use className instead of class */}
@@ -38,6 +39,9 @@ const AuthRoutes = () => {
       <Route path="/legcases/create" element={<LegCaseCreate isEditing={false} />} />
       <Route path="/home" element={<Home />} />
        <Route path="/lawyers/form" element={<LawyersAddEdit />} />
+       <Route path="/archives" element={<Archives />} />
+       <Route path="/archives/wordpadeditor" element={<WordPadEditor />} />
+  
     </Routes>
     </div>
   );

@@ -304,36 +304,11 @@ const Home = () => {
           )}
         </Col>
       </Row>
-      <Row>      <Col md={12}  lg={12} xs={12} >
-          <Card>
-            <Card.Header className="home-text-center">
-              <h3>الأجندة</h3>
-            </Card.Header>
-            <Card.Body>
-              <div
-                className="calendar-container"
-                style={{ height: '600px', position: 'relative' }}
-              >
-                {/* Calendar Plugin Buttons */}
-                <div className="calendar-buttons">
-                  <button className="calendar-button">أسبوع</button>
-                  <button className="calendar-button">شهر</button>
-                  <button className="calendar-button">يوم</button>
-                </div>
-                <Calendar
-                  events={events}
-                  startAccessor="start_time"
-                  endAccessor="end_time"
-                  views={{
-                    week: true,
-                    month: true,
-                    day: true,
-                  }}
-                />
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
+      <Row>
+
+            <Calendar />
+  
+ 
       </Row>
     </>
   );

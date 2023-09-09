@@ -154,7 +154,7 @@ const ProfileUser = () => {
                                     >
                                         <option value="">اختر الدور</option>
                                         <option value="1">مدير</option>
-                                        <option value="2">مستخدم</option>
+                                        <option value="2">محامي</option>
                                         <option value="3">مساعد</option>
                                     </select>
                                 </div>

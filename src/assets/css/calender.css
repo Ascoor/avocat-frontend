@@ -1,13 +1,33 @@
-/* Calendar container */
-.calendar-container {
-  text-align: center;
-  padding: 20px;
+
+.calendar-container-display {
+  background: linear-gradient(45deg, #e0c3fc, #8ec5fc);
+  box-shadow: 0px 0px 10px rgba(188, 171, 247, 0.5);
+  font-size: 16px; /* Adjust the font size */
+  padding: 20px; /* Add padding for better spacing */
 }
 
-/* Event cards */
+/* Define the initial styles for the animation */
+.calendar-container-display-entering {
+  background: linear-gradient(45deg, #c2e2fc, #cfd3e6);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  transition: background 1s, box-shadow 1s;
+}
+
+/* Define the styles when the animation is active */
+.calendar-container-display-entered {
+  background: linear-gradient(45deg, #e0c3fc, #8ec5fc);
+  box-shadow: 0px 0px 10px rgba(188, 171, 247, 0.5);
+}
+
+/* Define the styles when the animation is exiting */
+.calendar-container-display-exiting {
+  background: linear-gradient(45deg, #c2e2fc, #cfd3e6);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  transition: background 1s, box-shadow 1s;
+}
 .fc-daygrid-event {
-  background-color: #007bff;
-  color: white;
+  background-color: #007bff; /* Background color */
+  color: white; /* Text color */
   padding: 5px;
   border-radius: 5px;
   margin-bottom: 5px;
@@ -18,26 +38,45 @@
   background-color: #0056b3;
 }
 
-/* Active (clicked) event cards */
+/* Custom styling for active event cards (clicked) */
 .fc-daygrid-event.active {
-  background-color: #9ed6e7;
+  background-color: #0b2873;
 }
 
-/* Event card title */
+/* Title of the event card */
 .fc-daygrid-event-title {
   font-weight: bold;
   font-size: 1rem;
 }
 
-/* Event card description */
+/* Description of the event card */
 .fc-daygrid-event-description {
   font-size: 0.8rem;
 }
 
-/* Custom CSS for the Calendar Component */
+/* CSS to change the color of day names and numbers to a lighter color */
+.fc-daygrid-day-number,
+.fc-day-header,
+.fc-widget-header {
+  color: rgb(133, 20, 0); /* Change this to your desired lighter color */
+}
+
+/* Additional CSS for day names in Arabic */
+.fc-ltr .fc-dayGrid-view .fc-day-top {
+  text-align: center;
+}
+.arabic-font{
+  color: tomato;
+}
+
+.fc-dayGrid-view .fc-day-top.fc-sun,
+.fc-dayGrid-view .fc-day-top.fc-sat {
+  color: #f00; /* Change this to your desired color for weekend day names */
+}
+
+/* General styling for the calendar component */
 .react-big-calendar {
-  /* Add padding to create space for buttons */
-  padding: 20px;
+  padding: 20px; /* Add padding for buttons */
 }
 
 /* Position the buttons within the calendar area */
@@ -48,7 +87,7 @@
   z-index: 1; /* Ensure buttons appear above events */
 }
 
-/* Style the buttons */
+/* Styling for the buttons */
 .rbc-btn-group .rbc-btn {
   margin: 5px;
   padding: 5px 10px;
@@ -59,12 +98,12 @@
   cursor: pointer;
 }
 
-/* Style for hover effect */
+/* Hover effect for buttons */
 .rbc-btn-group .rbc-btn:hover {
   background-color: #0056b3;
 }
 
-/* Responsive Styles */
+/* Responsive styles */
 @media (max-width: 768px) {
   /* Adjust padding and font sizes for smaller screens */
   .calendar-container {
@@ -84,44 +123,15 @@
     font-size: 0.7rem;
   }
 
-  /* Adjust button positions for small screens */
+  /* Adjust button position for smaller screens */
   .rbc-btn-group {
     top: 5px;
     right: 5px;
   }
 }
 
-/* Calendar Container Styles */
+/* Calendar container styling */
 .calendar-container {
   height: 600px; /* Set the desired height */
-  position: relative; /* Required for absolute positioning of buttons */
-}
-
-/* Calendar Plugin Buttons Styles */
-.calendar-buttons {
-  position: absolute;
-  top: 10px; /* Adjust the top position as needed */
-  right: 10px; /* Adjust the right position as needed */
-  z-index: 1; /* Ensure buttons overlay the calendar */
-  display: flex;
-  gap: 10px; /* Adjust the gap between buttons as needed */
-}
-
-/* Style for buttons */
-.calendar-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 5px 5px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* Responsive Styles for Small Screens */
-@media (max-width: 768px) {
-  /* Adjust button positions for small screens */
-  .calendar-buttons {
-    top: 5px;
-    right: 5px;
-  }
+  position: relative; /* Required for button positioning */
 }

@@ -88,14 +88,29 @@
     return (
       <>
         <Card.Header>
-          <Button
-            variant="success"
-            className="btn-sm"
-            onClick={openAddProcedureModal}
-          >
-            <BiPlusCircle className="mr-1" />
-            إضافة إجراء
-          </Button>
+        <Button
+  variant="success"
+  className="btn-sm"
+  onClick={openAddProcedureModal}
+>
+  <BiPlusCircle className="mr-1" />
+  إضافة إجراء
+</Button>
+
+
+<ServiceProcedureModal
+  show={showModal}
+  onHide={() => setShowModal(false)}
+  serviceId={serviceId}
+  procedure={editingServiceProcedure}
+  lawyers={lawyers}
+  fetchServiceProcedures={fetchServiceProcedures}
+  isEditing={isEditing} // تمرير حالة التحرير هنا
+  addServiceProcedure={addServiceProcedure} // Pass the add function
+  editServiceProcedure={editServiceProcedure} // Pass the edit function
+  
+/>
+
         </Card.Header>
         <Card.Body>
           <Table striped bordered hover responsive>
@@ -144,19 +159,6 @@
             </tbody>
           </Table>
         </Card.Body>
-
-        <ServiceProcedureModal
-  show={showModal}
-  onHide={() => setShowModal(false)}
-  serviceId={serviceId}
-  procedure={editingServiceProcedure}
-  lawyers={lawyers}
-  fetchServiceProcedures={fetchServiceProcedures}
-  isEditing={isEditing} // تمرير حالة التحرير هنا
-  addServiceProcedure={addServiceProcedure} // Pass the add function
-  editServiceProcedure={editServiceProcedure} // Pass the edit function
-
-/>
 
       </>
     );

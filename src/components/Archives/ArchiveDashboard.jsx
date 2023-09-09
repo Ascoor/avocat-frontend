@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../assets/css/Archives.css'; // استيراد ملف CSS لتنسيق الواجهة
 import { Card, Container, Row, Col } from 'react-bootstrap';
-
+import { Link } from 'react-router-dom';
 function ArchiveDashboard() {
   return (
     <div className="dashboard">
@@ -14,7 +14,7 @@ function ArchiveDashboard() {
               <Card.Body>
                 <h5>القسم الأول</h5>
                 <p>محتوى القسم الأول...</p>
-                <button className="btn btn-primary">استكشاف</button>
+                <Link to="/archives/wordpadeditor" className="btn btn-primary">استكشاف</Link>
               </Card.Body>
             </Card>
           </Col>
