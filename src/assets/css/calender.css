@@ -1,137 +1,100 @@
-
-.calendar-container-display {
-  background: linear-gradient(45deg, #e0c3fc, #8ec5fc);
-  box-shadow: 0px 0px 10px rgba(188, 171, 247, 0.5);
-  font-size: 16px; /* Adjust the font size */
-  padding: 20px; /* Add padding for better spacing */
-}
-
-/* Define the initial styles for the animation */
-.calendar-container-display-entering {
-  background: linear-gradient(45deg, #c2e2fc, #cfd3e6);
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-  transition: background 1s, box-shadow 1s;
-}
-
-/* Define the styles when the animation is active */
-.calendar-container-display-entered {
-  background: linear-gradient(45deg, #e0c3fc, #8ec5fc);
-  box-shadow: 0px 0px 10px rgba(188, 171, 247, 0.5);
-}
-
-/* Define the styles when the animation is exiting */
-.calendar-container-display-exiting {
-  background: linear-gradient(45deg, #c2e2fc, #cfd3e6);
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-  transition: background 1s, box-shadow 1s;
-}
-.fc-daygrid-event {
-  background-color: #007bff; /* Background color */
-  color: white; /* Text color */
-  padding: 5px;
-  border-radius: 5px;
-  margin-bottom: 5px;
-}
-
-/* Hover effect for event cards */
-.fc-daygrid-event:hover {
-  background-color: #0056b3;
-}
-
-/* Custom styling for active event cards (clicked) */
-.fc-daygrid-event.active {
-  background-color: #0b2873;
-}
-
-/* Title of the event card */
-.fc-daygrid-event-title {
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-/* Description of the event card */
-.fc-daygrid-event-description {
-  font-size: 0.8rem;
-}
-
-/* CSS to change the color of day names and numbers to a lighter color */
-.fc-daygrid-day-number,
-.fc-day-header,
-.fc-widget-header {
-  color: rgb(133, 20, 0); /* Change this to your desired lighter color */
-}
-
-/* Additional CSS for day names in Arabic */
-.fc-ltr .fc-dayGrid-view .fc-day-top {
-  text-align: center;
-}
-.arabic-font{
-  color: tomato;
-}
-
-.fc-dayGrid-view .fc-day-top.fc-sun,
-.fc-dayGrid-view .fc-day-top.fc-sat {
-  color: #f00; /* Change this to your desired color for weekend day names */
-}
-
-/* General styling for the calendar component */
-.react-big-calendar {
-  padding: 20px; /* Add padding for buttons */
-}
-
-/* Position the buttons within the calendar area */
-.rbc-btn-group {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1; /* Ensure buttons appear above events */
-}
-
-/* Styling for the buttons */
-.rbc-btn-group .rbc-btn {
-  margin: 5px;
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* Hover effect for buttons */
-.rbc-btn-group .rbc-btn:hover {
-  background-color: #0056b3;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  /* Adjust padding and font sizes for smaller screens */
-  .calendar-container {
-    padding: 10px;
-  }
-
-  .fc-daygrid-event {
-    font-size: 0.9rem;
-    padding: 3px;
-  }
-
-  .fc-daygrid-event-title {
-    font-size: 0.9rem;
-  }
-
-  .fc-daygrid-event-description {
-    font-size: 0.7rem;
-  }
-
-  /* Adjust button position for smaller screens */
-  .rbc-btn-group {
-    top: 5px;
-    right: 5px;
-  }
+/* Base styles */
+body {
+  font-family: Arial, sans-serif;
 }
 
 /* Calendar container styling */
 .calendar-container {
-  height: 600px; /* Set the desired height */
-  position: relative; /* Required for button positioning */
+  position: relative;
+  background-color: #f4f4f4; /* Background color */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  font-size: 16px;
+  overflow: hidden;
+  direction: rtl; /* Right-to-left direction */
+}
+
+/* Calendar header styles */
+.calendar-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Calendar component styles */
+.calendar {
+  background-color: #ffffff; /* Background color of the calendar */
+  border: 1px solid #e0e0e0; /* Border color */
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* Calendar event styles */
+.calendar-event {
+  background-color: #007bff; /* Background color of events */
+  color: white; /* Text color */
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.calendar-event:hover {
+  background-color: #0056b3; /* Hover background color */
+}
+
+/* Calendar event title */
+.event-title {
+  font-weight: bold;
+}
+
+/* Day names and numbers styles */
+.fc-daygrid-day-number,
+.fc-day-header,
+.fc-widget-header {
+  color: #333333; /* Day names and numbers color */
+}
+
+/* Day names in Arabic styles */
+.fc-rtl .fc-dayGrid-view .fc-day-top {
+  text-align: center; /* Center-align day names in RTL */
+}
+
+/* Weekend day names color */
+.fc-dayGrid-view .fc-day-top.fc-sun,
+.fc-dayGrid-view .fc-day-top.fc-sat {
+  color: #ff0000; /* Weekend day names color */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  /* Adjust padding and font sizes for smaller screens */
+  .calendar-container {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Reduce the size of calendar events */
+  .calendar-event {
+    padding: 3px;
+    font-size: 12px;
+  }
+}
+
+/* Animation for the calendar container */
+@keyframes slideIn {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Apply the animation to the calendar container */
+.calendar-container {
+  animation: slideIn 0.5s ease-in-out;
 }

@@ -1,14 +1,13 @@
-
-import lawyer1 from "../../images/lawyerr4.jpeg";
-import lawyer2 from "../../images/lawyer5.jpeg";
-import lawyer3 from "../../images/lawyer6.jpeg";
+import lawyer1 from '../../images/lawyerr4.jpeg';
+import lawyer2 from '../../images/lawyer5.jpeg';
+import lawyer3 from '../../images/lawyer6.jpeg';
 
 const slogans = [
-  "أفوكات - للحقوق والعدالة",
-  "تجربة قانونية استثنائية مع أفوكات",
-  "استشارة قانونية تغير مجرى قضيتك",
-  "أفوكات - تمثيل قانوني متميز",
-  "حلول قانونية مبتكرة مع أفوكات",
+  'أفوكات - للحقوق والعدالة',
+  'تجربة قانونية استثنائية مع أفوكات',
+  'استشارة قانونية تغير مجرى قضيتك',
+  'أفوكات - تمثيل قانوني متميز',
+  'حلول قانونية مبتكرة مع أفوكات',
 ];
 
 const images = [lawyer1, lawyer2, lawyer3];
@@ -24,10 +23,14 @@ const LawyerService = () => {
   ));
 
   return (
-    <div id="lawyerCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="false">
-      <div className="carousel-inner">
-        {carouselItems}
-      </div>
+    <div
+      id="lawyerCarousel"
+      className="carousel slide"
+      data-bs-ride="carousel"
+      data-bs-interval="3000"
+      data-bs-pause="false"
+    >
+      <div className="carousel-inner">{carouselItems}</div>
     </div>
   );
 };

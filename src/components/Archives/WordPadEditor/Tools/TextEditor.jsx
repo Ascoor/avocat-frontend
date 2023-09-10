@@ -25,8 +25,11 @@ export default function TextEditor(props) {
   };
 
   const handleSentanCaseClick = () => {
-    let removeWhitespace = document.getElementById('textArea').value.trimStart();
-    let newText = removeWhitespace.charAt(0).toUpperCase() + removeWhitespace.slice(1);
+    let removeWhitespace = document
+      .getElementById('textArea')
+      .value.trimStart();
+    let newText =
+      removeWhitespace.charAt(0).toUpperCase() + removeWhitespace.slice(1);
     setText(newText);
     props.showAlert('Converted to Sentence case!', 'success');
   };
@@ -49,7 +52,9 @@ export default function TextEditor(props) {
   };
 
   const handleCapitCaseClick = () => {
-    let removeWhitespace = document.getElementById('textArea').value.trimStart();
+    let removeWhitespace = document
+      .getElementById('textArea')
+      .value.trimStart();
     let splitText = [];
     splitText = removeWhitespace.split(' ');
 
@@ -72,7 +77,10 @@ export default function TextEditor(props) {
 
   return (
     <>
-      <div className="container" style={{ color: props.mode === 'dark' ? 'white' : '#00101C' }}>
+      <div
+        className="container"
+        style={{ color: props.mode === 'dark' ? 'white' : '#00101C' }}
+      >
         <h4>{props.label}</h4>
         <div className="mb-6 textwidth">
           <textarea
@@ -154,10 +162,24 @@ export default function TextEditor(props) {
           <div className="ib">
             <h4 className="align">Text Summary</h4>
             <p className="padding-left">
-              {text.split(/\s+/).filter((element) => element.length !== 0).length} words | {text.length} characters
+              {
+                text.split(/\s+/).filter((element) => element.length !== 0)
+                  .length
+              }{' '}
+              words | {text.length} characters
             </p>
-            <p className="padding-left">{0.008 * text.split(' ').filter((element) => element.length !== 0).length} minutes to read slow</p>
-            <p className="padding-left">{0.0022 * text.split(' ').filter((element) => element.length !== 0).length} minutes to read fast</p>
+            <p className="padding-left">
+              {0.008 *
+                text.split(' ').filter((element) => element.length !== 0)
+                  .length}{' '}
+              minutes to read slow
+            </p>
+            <p className="padding-left">
+              {0.0022 *
+                text.split(' ').filter((element) => element.length !== 0)
+                  .length}{' '}
+              minutes to read fast
+            </p>
           </div>
           <div className="ib">
             <h4 className="align">Preview</h4>

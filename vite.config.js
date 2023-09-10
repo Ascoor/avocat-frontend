@@ -24,11 +24,6 @@ export default defineConfig({
     chunkSizeWarningLimit: 1200,
   },
   optimizeDeps: {
-    include: [
-      'react',
-      'react-dom',
-      'axios',
-      'bootstrap',
-    ],
+    include: ['react', 'react-dom', 'axios', 'bootstrap'],
   },
 });

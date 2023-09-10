@@ -1,6 +1,6 @@
 /* App.css */
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: #272829;
   margin: 0; /* Reset default margin */
   padding: 0; /* Reset default padding */
@@ -27,7 +27,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 
 /* Back to top button */
@@ -90,7 +90,7 @@ h6 {
   padding: 0;
   font-weight: 600;
   text-align: center;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 #header .profile h1 a,
@@ -122,13 +122,17 @@ h6 {
 }
 /* Lawyer Section */
 .modal-header {
-  background: linear-gradient(135deg, #1a5dca, #745114); /* Same gradient as topnav */
-  
+  background: linear-gradient(
+    135deg,
+    #1a5dca,
+    #745114
+  ); /* Same gradient as topnav */
+
   font-size: 21px;
 }
 .modal-title {
   font-size: 1.2rem;
-  color: #FFC108;
+  color: #ffffff;
 }
 
 /* Container Padding */
@@ -138,336 +142,332 @@ h6 {
   padding-right: 15px; /* Adjust padding based on your design */
 }
 
-
-
-.card{
+.card {
   background-color: rgb(238, 244, 255);
-  
 }
 
-  /*Court Setting*/
-  .court-setting-card-header {
-    background: linear-gradient(135deg, #9b7e4b, #d6a145); /* Same gradient as topnav */
-  
-    border-radius: 80px;
-    padding: 10px;
-    font-family: 'Cairo', sans-serif;
-    font-weight: bold;
-   
-    text-align: center;
-    font-size: 1.5rem;
-    color: #ffc108;
-  }
-  .name {
-      color: #007bff;
-      font-size: 24px;
-      margin-bottom: 0;
-    }
-    
-    .label {
-      color: #6c757d;
-      font-size: 18px;
-    }
-    
-    .client-phone {
-      color: #28a745;
-    }
-    
-    .client-email {
-      color: #dc3545;
-    }
-    
-    .client-religion {
-      color: #ff9800;
-    }
-    
-    .client-address {
-      color: #795548;
-    }
-    
-    .client-emergency {
-      color: #9c27b0;
-    }
-    
-    .client-work {
-      color: #607d8b;
-    }
-  .client-link {
-      color: blue;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-  .client-add-icon {
-    width: 90px;
-    height: 60px;
-  }
-  .court-icon {
-    width: 60px;
-    height: 60px;
-  }
-  .animated-card {
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .animated-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-  }
-  /*btn Start*/
-  .btn-back{
-      font-family: 'Cairo', sans-serif;
-      font-weight: bold;
-      font-size: 1rem;
-  }
-  .btn-add{
-    text-align: center;
-      font-family: 'Cairo', sans-serif;
-      font-weight: bold;
-      font-size: 1rem;
-  
-  }
-  /*btn End*/
-  /*Icons Start*/
-  
-  .legCase-icon{
-    width: 75px;
-    height: 60px;
-  
-  }
-  .card-icon {
-      transition: all 0.3s ease-in-out;
-  }
-  
-  .animated-card:hover .card-icon {
-    transform: rotate(360deg);
-  }
-  
-  .dashboard-icon {
-  
-  
-  
-    width: 180px;
-    height: 100px;
-  
-  }
-  
-  .client-icon {
-    padding-bottom: 3px;
-    width: 70px;
-    height: 50px;
-  }
-  
-  .leg-case-icon {
-    padding-bottom: 3px;
-    width: 150px;
-    height: 75px;
-  }
-  /*Icons End*/
-  
-  /* legalCase Detaiis End*/
-  
-    /* Responsive styles */
-    @media screen and (max-width: 767px) {
+/*Court Setting*/
+.court-setting-card-header {
+  background: linear-gradient(
+    135deg,
+    #9b7e4b,
+    #d6a145
+  ); /* Same gradient as topnav */
 
-      .icon-card-title {
-        font-size: 20px;
-      }
+  border-radius: 80px;
+  padding: 10px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
 
-      .icon-card-text {
-        font-size: 18px;
-      }
+  text-align: center;
+  font-size: 1.5rem;
+  color: #f7f4ed;
+}
+.name {
+  color: #007bff;
+  font-size: 24px;
+  margin-bottom: 0;
+}
 
-      .event-card {
-        margin-bottom: 20px;
-      }
-    }
+.label {
+  color: #6c757d;
+  font-size: 18px;
+}
 
-    /* Tablet styles */
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
-      .section-title {
-        font-size: 28px;
-      }
+.client-phone {
+  color: #28a745;
+}
 
-      .button {
-        padding: 8px 16px;
-      }
-    }
+.client-email {
+  color: #dc3545;
+}
 
-    /* Mobile styles */
-    @media screen and (max-width: 767px) {
-      .section-title {
-        font-size: 24px;
-      }
+.client-religion {
+  color: #ff9800;
+}
 
-      .button {
-        padding: 6px 12px;
-      }
-    }
-    .custom-card-header{
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        border-radius : 8px;
-        padding: 20px;
-        font-family: 'Cairo', sans-serif;
-      font-weight: bold;
-        background: linear-gradient(135deg, #1a5dca, #745114); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
-  
-        text-align: center;
+.client-address {
+  color: #795548;
+}
 
-        color: #FFC108;
+.client-emergency {
+  color: #9c27b0;
+}
 
+.client-work {
+  color: #607d8b;
+}
+.client-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.client-add-icon {
+  width: 90px;
+  height: 60px;
+}
+.court-icon {
+  width: 60px;
+  height: 60px;
+}
+.animated-card {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
 
-    }
-    .add-link-client{
-      color: #0a1e3d;
-      font-size: medium;
-    font-family: "cairo",sans-serif;
-      font-weight: bold;
-    }
-    .leg-details-banner-image {
-      width: 250px;
-      height: 100px;
-    }
+.animated-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+/*btn Start*/
+.btn-back {
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.btn-add {
+  text-align: center;
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+}
+/*btn End*/
+/*Icons Start*/
 
-  /**Procedure Search Page ***/
-  .procedure-search {
-    padding: 20px;
+.legCase-icon {
+  width: 75px;
+  height: 60px;
+}
+.card-icon {
+  transition: all 0.3s ease-in-out;
+}
+
+.animated-card:hover .card-icon {
+  transform: rotate(360deg);
+}
+
+.dashboard-icon {
+  width: 180px;
+  height: 100px;
+}
+
+.client-icon {
+  padding-bottom: 3px;
+  width: 70px;
+  height: 50px;
+}
+
+.leg-case-icon {
+  padding-bottom: 3px;
+  width: 150px;
+  height: 75px;
+}
+/*Icons End*/
+
+/* legalCase Detaiis End*/
+
+/* Responsive styles */
+@media screen and (max-width: 767px) {
+  .icon-card-title {
+    font-size: 20px;
   }
 
-  .form-group {
+  .icon-card-text {
+    font-size: 18px;
+  }
+
+  .event-card {
     margin-bottom: 20px;
   }
+}
 
-  .form-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+/* Tablet styles */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .section-title {
+    font-size: 28px;
   }
 
-  .search-button {
-    background-color: #002d43;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+  .button {
+    padding: 8px 16px;
+  }
+}
+
+/* Mobile styles */
+@media screen and (max-width: 767px) {
+  .section-title {
+    font-size: 24px;
   }
 
-  .search-button:hover {
-    background-color: #001d2b;
+  .button {
+    padding: 6px 12px;
   }
+}
+.custom-card-header {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+  background: linear-gradient(
+    135deg,
+    #1a5dca,
+    #745114
+  ); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
 
-  .details-row {
-    display: flex;
-    justify-content: space
-  }  
-  /**Procedure Search End***/
-    .leg-case-details-card {
-      border-radius: 10px;
-    background: rgb(9, 45, 54);
-      padding: 20px;
-    }
-    .data-box {
-      position: relative;
-      overflow: hidden;
-    }
+  text-align: center;
 
-    .data-box:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        to right,
-        transparent 0%,
-        rgba(255, 215, 0, 0.8) 50%,
-        transparent 100%
-      );
-      transform: translateX(-100%);
-      transition: transform 0.3s ease-in-out;
-    }
+  color: #fffcf3;
+}
+.add-link-client {
+  color: #0a1e3d;
+  font-size: medium;
+  font-family: 'cairo', sans-serif;
+  font-weight: bold;
+}
+.leg-details-banner-image {
+  width: 250px;
+  height: 100px;
+}
 
-    .data-box:hover:before,
-    .data-box:focus:before {
-      transform: translateX(0%);
-    }
+/**Procedure Search Page ***/
+.procedure-search {
+  padding: 20px;
+}
 
-    .data-label,
-    .data-value {
-      position: relative;
-      z-index: 1;
-    }
+.form-group {
+  margin-bottom: 20px;
+}
 
+.form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
-    .data-row {
-      margin-bottom: 20px;
-    }
+.search-button {
+  background-color: #002d43;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .data-box {
-      border-radius: 5px;
-      padding: 20px;
-      transition: transform 0.3s;
-    }
+.search-button:hover {
+  background-color: #001d2b;
+}
 
-    .data-box:hover {
-      transform: scale(1.05);
-    }
+.details-row {
+  display: flex;
+  justify-content: space;
+}
+/**Procedure Search End***/
+.leg-case-details-card {
+  border-radius: 10px;
+  background: rgb(9, 45, 54);
+  padding: 20px;
+}
+.data-box {
+  position: relative;
+  overflow: hidden;
+}
 
-    .data-label {
-      color: #FFFFFF;
-      font-weight: bold;
-      font-family: "cairo",sans-serif;
-      font-size: 1.7rem;
-    }
+.data-box:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 215, 0, 0.8) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
 
-    .data-value {
-      color: #031738;
-      font-weight: bold;
-      font-family: "cairo",sans-serif;
-      font-size: 1.2rem;
-    }
-  /* Procdure Search */
-  .search-text-header{
-  
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 10px;
-    font-family: 'Cairo', sans-serif;
-    font-weight: bold;
-      background: linear-gradient(135deg, #1a5dca, #745114); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
-  
-    text-align: center;
-    font-size: 1.5rem;
-    color: #ffc108;
-    margin-bottom: 10px;
+.data-box:hover:before,
+.data-box:focus:before {
+  transform: translateX(0%);
+}
+
+.data-label,
+.data-value {
+  position: relative;
+  z-index: 1;
+}
+
+.data-row {
+  margin-bottom: 20px;
+}
+
+.data-box {
+  border-radius: 5px;
+  padding: 20px;
+  transition: transform 0.3s;
+}
+
+.data-box:hover {
+  transform: scale(1.05);
+}
+
+.data-label {
+  color: #ffffff;
+  font-weight: bold;
+  font-family: 'cairo', sans-serif;
+  font-size: 1.7rem;
+}
+
+.data-value {
+  color: #031738;
+  font-weight: bold;
+  font-family: 'cairo', sans-serif;
+  font-size: 1.2rem;
+}
+/* Procdure Search */
+.search-text-header {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+  background: linear-gradient(
+    135deg,
+    #1a5dca,
+    #745114
+  ); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
+
+  text-align: center;
+  font-size: 1.5rem;
+  color: #ffc108;
+  margin-bottom: 10px;
+}
+.search-label-text {
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #f3e6e6;
+  border: 1px solid linear-gradient(to top, #1d0367, #3c0381, #330250); /* تدرج ألوان جميل وجذاب */
+
+  background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
+  padding-top: 10px; /* Add padding to create space around the text */
+}
+.search-button {
+  font-family: 'Cairo', sans-serif;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #b14141;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 10px; /* Add border-radius for a cute rounded look */
+
+  /* Add a cute hover effect */
+  &:hover {
+    background-color: #ff7f7f;
   }
-  .search-label-text {
-    font-family: 'Cairo', sans-serif;
-    font-weight: bold;
-    font-size: 1rem;
-    color: #f3e6e6;
-    border: 1px solid   linear-gradient(to top, #1d0367, #3c0381, #330250); /* تدرج ألوان جميل وجذاب */
-  
-    background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
-    padding-top: 10px; /* Add padding to create space around the text */
-  }
-  .search-button {
-    font-family: 'Cairo', sans-serif;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #b14141;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    border-radius: 10px; /* Add border-radius for a cute rounded look */
-  
-    /* Add a cute hover effect */
-    &:hover {
-      background-color: #ff7f7f;
-    }
-  }
-  
-  
+}

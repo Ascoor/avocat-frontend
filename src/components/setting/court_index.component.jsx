@@ -1,9 +1,6 @@
-import { CourtIcon } from "../../assets/icons";
+import { CourtIcon } from '../../assets/icons';
 import React, { Suspense } from 'react';
-import {
-  Row,
-  Col
-} from "react-bootstrap";
+import { Row, Col } from 'react-bootstrap';
 
 const CourtLevel = React.lazy(() => import('./courtTools/CourtLevel'));
 const CourtType = React.lazy(() => import('./courtTools/CourtType'));

@@ -4,7 +4,16 @@ import '../../assets/css/MainContent.css';
 
 const MainContent = ({ sidebarOpen }) => {
   return (
-    <div className={`main-content ${sidebarOpen ? 'sidebar-open' : ''}`} style={{ paddingBottom: "16px", minHeight: "calc(100vh - 152px)" }}>
+    <div
+      className={`main-content ${sidebarOpen ? 'sidebar-open' : ''}`}
+      style={{
+        padding: '16px',
+        minHeight: 'calc(100vh - 152px)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <AuthRoutes />
     </div>
   );

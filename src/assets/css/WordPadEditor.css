@@ -17,7 +17,7 @@
 }
 
 .wordpad-toolbar select,
-.wordpad-toolbar input[type="color"],
+.wordpad-toolbar input[type='color'],
 .wordpad-toolbar button {
   margin-right: 10px;
   margin-bottom: 5px;
@@ -30,7 +30,7 @@
 }
 
 .wordpad-toolbar select:focus,
-.wordpad-toolbar input[type="color"]:focus,
+.wordpad-toolbar input[type='color']:focus,
 .wordpad-toolbar button:focus {
   outline: none;
 }
@@ -63,7 +63,7 @@
   color: white;
 }
 
-.toolbar input[type="color"] {
+.toolbar input[type='color'] {
   padding: 0;
   width: 24px;
   height: 24px;

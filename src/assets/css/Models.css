@@ -2,7 +2,6 @@
 
 /* Container styles */
 
-
 /* Show the modal */
 .service-procedure-modal.show {
   opacity: 1;
@@ -17,8 +16,8 @@
 }
 
 /* Form input styles */
-.service-procedure-modal input[type="text"],
-.service-procedure-modal input[type="number"],
+.service-procedure-modal input[type='text'],
+.service-procedure-modal input[type='number'],
 .service-procedure-modal select {
   width: 100%;
   padding: 10px;
@@ -30,7 +29,7 @@
 }
 
 /* Submit button styles */
-.service-procedure-modal button[type="submit"] {
+.service-procedure-modal button[type='submit'] {
   background-color: #2052d1; /* Cute pink background */
   color: #fff; /* White text color */
   border: none;
@@ -41,7 +40,7 @@
 }
 
 /* Hover effect for the submit button */
-.service-procedure-modal button[type="submit"]:hover {
+.service-procedure-modal button[type='submit']:hover {
   background-color: hsl(229, 77%, 55%); /* Darker pink on hover */
 }
 

@@ -22,9 +22,15 @@
   width: 300px;
   margin: 10px;
   padding: 20px;
-  background: linear-gradient(135deg, #03132e, #150f38); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
+  background: linear-gradient(
+    135deg,
+    #03132e,
+    #150f38
+  ); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 }
 
 .control-card:hover {

@@ -12,7 +12,7 @@ body {
   right: -250px;
   width: 250px;
   height: 100vh;
-  background: linear-gradient(135deg, #012E4F, #926922, #aa823d);
+  background: linear-gradient(135deg, #012e4f, #926922, #aa823d);
   color: #fff;
   padding-top: 20px;
   overflow-x: hidden;
@@ -57,7 +57,6 @@ body {
   font-weight: bold;
   font-size: 1rem;
 }
-
 /* Sidebar Navigation Styles */
 .sidebar-nav {
   list-style: none;
@@ -74,6 +73,7 @@ body {
   padding: 10px 15px;
   color: #fff;
   text-decoration: none;
+  text-align: center; /* Add this line to center-align the text */
   transition: background-color 0.2s;
 }
 

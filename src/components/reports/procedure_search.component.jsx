@@ -1,36 +1,36 @@
-import { useState, useEffect } from "react";
-import { Form, Table, Row, Col } from "react-bootstrap";
-import { FaSearch } from "react-icons/fa";
-import API_CONFIG from "../../config";
-import DatePicker from "react-datepicker";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import { Form, Table, Row, Col } from 'react-bootstrap';
+import { FaSearch } from 'react-icons/fa';
+import API_CONFIG from '../../config';
+import DatePicker from 'react-datepicker';
+import axios from 'axios';
 const ProcedureSearch = () => {
   const [procedureTypes, setProcedureTypes] = useState([]);
-  const [searchError, setSearchError] = useState("");
+  const [searchError, setSearchError] = useState('');
   const [lawyers, setLawyers] = useState([]);
   const [courts, setCourts] = useState([]);
-  const [selectedProcedureType, setSelectedProcedureType] = useState("");
-  const [selectedLawyer, setSelectedLawyer] = useState("");
+  const [selectedProcedureType, setSelectedProcedureType] = useState('');
+  const [selectedLawyer, setSelectedLawyer] = useState('');
   const [selectedDateStart, setSelectedDateStart] = useState(null);
   const [selectedDateEnd, setSelectedDateEnd] = useState(null);
-  const [selectedCourt, setSelectedCourt] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedCourt, setSelectedCourt] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
   const [filteredProcedures, setFilteredProcedures] = useState([]);
   useEffect(() => {
     fetch(`${API_CONFIG.baseURL}/api/procedure_types`)
       .then((response) => response.json())
       .then((data) => setProcedureTypes(data))
       .catch((error) =>
-        console.error("Error fetching procedure types:", error)
+        console.error('Error fetching procedure types:', error)
       );
     fetch(`${API_CONFIG.baseURL}/api/lawyers`)
       .then((response) => response.json())
       .then((data) => setLawyers(data))
-      .catch((error) => console.error("Error fetching lawyers:", error));
+      .catch((error) => console.error('Error fetching lawyers:', error));
     fetch(`${API_CONFIG.baseURL}/api/courts`)
       .then((response) => response.json())
       .then((data) => setCourts(data))
-      .catch((error) => console.error("Error fetching courts:", error));
+      .catch((error) => console.error('Error fetching courts:', error));
   }, []);
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -43,7 +43,7 @@ const ProcedureSearch = () => {
       !selectedProcedureType &&
       !selectedStatus
     ) {
-      setSearchError("لابد من اختيار أحد العناصر للبحث");
+      setSearchError('لابد من اختيار أحد العناصر للبحث');
       setFilteredProcedures([]);
       return;
     }
@@ -193,7 +193,7 @@ const ProcedureSearch = () => {
       {filteredProcedures.length > 0 && (
         <Table striped bordered hover responsive>
           <thead className="table-success text-center">
-            {" "}
+            {' '}
             <tr>
               <th>نوع اإجراء</th>
               <th>المحامى</th>

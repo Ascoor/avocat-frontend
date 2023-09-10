@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -14,6 +14,7 @@ const Calendar = () => {
     // Add more events here
   ];
 
+  const [currentTime, setCurrentTime] = useState(new Date());
   // Define animated styles for the calendar container
   const calendarSpringStyles = useSpring({
     background: 'linear-gradient(45deg, #e0c3fc, #8ec5fc)',
@@ -25,39 +26,73 @@ const Calendar = () => {
     config: { duration: 1000 },
   });
 
+  useEffect(() => {
+    // Update the current time every second
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(interval);
+  }, []);
+
+  // Helper function to convert Arabic numerals to Hindi numerals
+  const arabicToHindi = (num) => {
+    const arabicNumerals = '0123456789';
+    const hindiNumerals = '٠١٢٣٤٥٦٧٨٩';
+    const numeralMap = new Map(
+      [...arabicNumerals].map((d, i) => [d, hindiNumerals[i]])
+    );
+    return String(num).replace(/[0-9]/g, (match) => numeralMap.get(match));
+  };
   return (
     <Row>
       <Col md={12} lg={12} xs={12}>
         <Card>
           <Card.Header className="home-text-center">
             <h3>الأجندة</h3>
+            <div className="clock">{currentTime.toLocaleTimeString()}</div>
           </Card.Header>
           <Card.Body>
             <div className="calendar-container">
-             
               <animated.div style={calendarSpringStyles}>
-                <FullCalendar
-                  className="calendar-container-display"
-                  plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                  initialView="dayGridMonth"
-                  events={events}
-                  headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
-                  }}
-                  locale="ar"
-                  dayHeaderContent={({ date }) => {
-                    return (
-                      <span className="arabic-font">
-                        {date.toLocaleDateString('ar', { weekday: 'short' })}
-                      </span>
-                    );
-                  }}
-                  dayCellContent={({ date }) => {
-                    return <span className="arabic-font">{date.getDate()}</span>;
-                  }}
-                />
+                <div className="calendar-container-display">
+                  <FullCalendar
+                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                    initialView="dayGridMonth"
+                    events={events}
+                    headerToolbar={{
+                      left: 'next,prev today',
+                      center: 'title',
+                      right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                    }}
+                    locale="ar"
+                    dayHeaderContent={({ date }) => {
+                      const arabicWeekdays = [
+                        'أحد',
+                        'إثنين',
+                        'ثلاثاء',
+                        'أربعاء',
+                        'خميس',
+                        'جمعة',
+                        'سبت',
+                      ];
+                      return (
+                        <span className="arabic-font">
+                          {arabicWeekdays[date.getDay()]}
+                        </span>
+                      );
+                    }}
+                    dayCellContent={({ date }) => {
+                      // Render Arabic day numbers
+                      return (
+                        <span className="arabic-font">
+                          {arabicToHindi(date.getDate())}
+                        </span>
+                      );
+                    }}
+                  />
+                </div>
               </animated.div>
             </div>
           </Card.Body>

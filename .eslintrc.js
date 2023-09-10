@@ -21,6 +21,9 @@ module.exports = {
   },
   plugins: ['react', 'react-hooks'],
   rules: {
-    // يمكنك إضافة القواعد المحددة لمشروعك هنا
+    // Define ESLint rules here
+    'react/jsx-uses-react': 'off', // Disable the 'react/jsx-uses-react' rule
+    'react/react-in-jsx-scope': 'off', // Disable the 'react/react-in-jsx-scope' rule
+    'no-console': 'error', // Display console.log() as an error
   },
 };

@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import { FcFullTrash } from "react-icons/fc";
-import CustomPagination from "../../home_tools/Pagination";
-import { Row, Col, Button, Modal, Form, Card } from "react-bootstrap";
-import Table from "react-bootstrap/Table";
-import axios from "axios";
-import API_CONFIG from "../../../config";
+import { useState, useEffect } from 'react';
+import { FcFullTrash } from 'react-icons/fc';
+import CustomPagination from '../../home_tools/Pagination';
+import { Row, Col, Button, Modal, Form, Card } from 'react-bootstrap';
+import Table from 'react-bootstrap/Table';
+import axios from 'axios';
+import API_CONFIG from '../../../config';
 
 const CourtType = () => {
   // State variables
-  const [newCourtTypeName, setNewCourtTypeName] = useState("");
+  const [newCourtTypeName, setNewCourtTypeName] = useState('');
   const [courtTypes, setCourtTypes] = useState([]);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,16 +31,16 @@ const CourtType = () => {
       );
       setCourtTypes(response.data);
     } catch (error) {
-      setError("حدث خطأ في استرجاع أنواع المحاكم");
-      console.error("حدث خطأ في استرجاع أنواع المحاكم: ", error);
+      setError('حدث خطأ في استرجاع أنواع المحاكم');
+      console.error('حدث خطأ في استرجاع أنواع المحاكم: ', error);
     }
   };
 
   const handleAddCourtType = () => {
     fetch(`${API_CONFIG.baseURL}/api/court_types/`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name: newCourtTypeName,
@@ -50,7 +50,7 @@ const CourtType = () => {
       .then((data) => {
         fetchCourtTypes();
         setShowAddCourtTypeModal(false);
-        setNewCourtTypeName("");
+        setNewCourtTypeName('');
         setShowAlert(true);
         setAlertMessage(
           `تمت إضافة نوع المحكمة بنجاح. البيانات: ${JSON.stringify(data)}`
@@ -61,10 +61,10 @@ const CourtType = () => {
       })
 
       .catch((error) => {
-        setError("حدث خطأ في إضافة نوع المحكمة");
-        console.error("حدث خطأ في إضافة نوع المحكمة: ", error);
+        setError('حدث خطأ في إضافة نوع المحكمة');
+        console.error('حدث خطأ في إضافة نوع المحكمة: ', error);
         setShowAlert(true);
-        setAlertMessage("فشل في إضافة نوع المحكمة.");
+        setAlertMessage('فشل في إضافة نوع المحكمة.');
         setTimeout(() => {
           setShowAlert(false);
         }, 5000);
@@ -81,10 +81,10 @@ const CourtType = () => {
         <Row>
           <Col>
             <Card.Header
-              style={{ backgroundColor: "beige" }}
+              style={{ backgroundColor: 'beige' }}
               className="text-center"
             >
-              <h3 style={{ color: "#006e5d" }}>تصنيف المحاكم</h3>
+              <h3 style={{ color: '#006e5d' }}>تصنيف المحاكم</h3>
             </Card.Header>
             <Button
               variant="primary"
@@ -108,7 +108,7 @@ const CourtType = () => {
                     )
                     .map((courtType) => (
                       <tr
-                        style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}
+                        style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
                         key={courtType.id}
                       >
                         <td>{courtType.name}</td>
@@ -119,7 +119,7 @@ const CourtType = () => {
                               handleDelete(
                                 courtType.id,
                                 courtType.name,
-                                "court_types"
+                                'court_types'
                               )
                             }
                           >
@@ -135,13 +135,12 @@ const CourtType = () => {
           <Row>
             <Col>
               <Card.Footer>
-              <CustomPagination
-  items={items}
-  itemsPerPage={itemsPerPage}
-  currentPage={currentPage}
-  onPageChange={handlePageChange}
-/>
-
+                <CustomPagination
+                  items={items}
+                  itemsPerPage={itemsPerPage}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
               </Card.Footer>
             </Col>
           </Row>

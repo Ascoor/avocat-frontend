@@ -1,8 +1,15 @@
-export const presets = [
-  '@babel/preset-env',
-  '@babel/preset-react',
-];
-export const plugins = [
-  '@babel/plugin-transform-class-properties',
-  '@babel/plugin-transform-object-rest-spread',
-];
+module.exports = function (api) {
+  api.cache(true);
+
+  const presets = ['@babel/preset-env', '@babel/preset-react'];
+  const plugins = [
+    '@babel/plugin-transform-class-properties',
+    '@babel/plugin-transform-object-rest-spread',
+    // ... other plugins
+  ];
+
+  return {
+    presets,
+    plugins,
+  };
+};

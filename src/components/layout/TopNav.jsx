@@ -1,4 +1,4 @@
-import { useEffect , useState} from 'react';
+import { useEffect, useState } from 'react';
 import { FaBars, FaUser, FaBell, FaSearch } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import { Navbar } from 'react-bootstrap';
@@ -28,34 +28,33 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
         </Navbar.Brand>
       </div>
       <div className="user-menu">
-      <div className="user-dropdown">
-        <animated.button
-          className="dropdown-toggle"
-          id="userDropdown"
-          data-bs-toggle="dropdown"
-          style={userDropdownAnimation}
-        >
-          <FaUser />
-        </animated.button>
-        <ul className="dropdown-menu" aria-labelledby="userDropdown">
-          <li>
-            <a href={`/profile/${userId}`}>الملف الشخصي</a>
-          </li>
-          <li>
-            <a className="dropdown-item-logout" href="#" onClick={logoutUser}>نسجيل الخروج</a>
-          </li>
-        </ul>
-      </div>
+        <div className="user-dropdown">
+          <animated.button
+            className="dropdown-toggle"
+            id="userDropdown"
+            data-bs-toggle="dropdown"
+            style={userDropdownAnimation}
+          >
+            <FaUser />
+          </animated.button>
+          <ul className="dropdown-menu" aria-labelledby="userDropdown">
+            <li>
+              <a href={`/profile/${userId}`}>الملف الشخصي</a>
+            </li>
+            <li>
+              <a className="dropdown-item-logout" href="#" onClick={logoutUser}>
+                نسجيل الخروج
+              </a>
+            </li>
+          </ul>
+        </div>
         <div className="notification-icon">
           <button className="notification-button">
             <FaBell />
             <span className="notification-badge">1</span>
           </button>
           <div className="notification-alert">
-        
-                    <p> welcome</p>
-   
-      
+            <p> welcome</p>
           </div>
         </div>
       </div>

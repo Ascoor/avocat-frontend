@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -67,8 +66,8 @@ const WordPadEditor = () => {
   const createDocx = () => {
     const options = {
       styleMap: [
-        'p[style-name=\'Heading 1\'] => h1:fresh',
-        'p[style-name=\'Heading 2\'] => h2:fresh',
+        "p[style-name='Heading 1'] => h1:fresh",
+        "p[style-name='Heading 2'] => h2:fresh",
       ],
     };
 
@@ -95,21 +94,38 @@ const WordPadEditor = () => {
       });
   };
 
-  const formats = ['bold', 'italic', 'underline', 'strike', 'color', 'background', 'align', 'line-height'];
+  const formats = [
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'color',
+    'background',
+    'align',
+    'line-height',
+  ];
 
   return (
     <div className="wordpad-editor">
       <div className="wordpad-toolbar">
         <div className="toolbar">
           {/* Font Family Selection */}
-          <select id="fontSelect" value={fontFamily} onChange={handleFontFamilyChange}>
+          <select
+            id="fontSelect"
+            value={fontFamily}
+            onChange={handleFontFamilyChange}
+          >
             <option value="Amiri">Amiri</option>
             <option value="Arial">Arial</option>
             {/* Add more Arabic font options here */}
           </select>
 
           {/* Font Size Selection */}
-          <select id="fontSizeSelect" value={fontSize} onChange={(e) => handleFontSizeChange(e.target.value)}>
+          <select
+            id="fontSizeSelect"
+            value={fontSize}
+            onChange={(e) => handleFontSizeChange(e.target.value)}
+          >
             <option value="12px">12px</option>
             <option value="16px">16px</option>
             <option value="20px">20px</option>
@@ -127,33 +143,60 @@ const WordPadEditor = () => {
           )}
 
           {/* Page Size Selection */}
-          <select id="pageSizeSelect" value={pageSize} onChange={handlePageSizeChange}>
+          <select
+            id="pageSizeSelect"
+            value={pageSize}
+            onChange={handlePageSizeChange}
+          >
             <option value="A4">A4</option>
             <option value="Letter">Letter</option>
             {/* Add more page size options here */}
           </select>
 
           {/* Alignment Selection */}
-          <select id="alignmentSelect" value={alignment} onChange={handleAlignmentChange}>
+          <select
+            id="alignmentSelect"
+            value={alignment}
+            onChange={handleAlignmentChange}
+          >
             <option value="left">Left</option>
             <option value="center">Center</option>
             <option value="right">Right</option>
           </select>
 
           {/* Text Direction Selection */}
-          <select id="textDirectionSelect" value={textDirection} onChange={handleTextDirectionChange}>
+          <select
+            id="textDirectionSelect"
+            value={textDirection}
+            onChange={handleTextDirectionChange}
+          >
             <option value="rtl">RTL (Right-to-Left)</option>
             <option value="ltr">LTR (Left-to-Right)</option>
           </select>
 
           {/* Text Color Selection */}
-          <input type="color" id="textColor" value={textColor} onChange={(e) => handleTextColorChange(e.target.value)} />
+          <input
+            type="color"
+            id="textColor"
+            value={textColor}
+            onChange={(e) => handleTextColorChange(e.target.value)}
+          />
 
           {/* Background Color Selection */}
-          <input type="color" id="bgColor" value={bgColor} onChange={(e) => handleBgColorChange(e.target.value)} />
+          <input
+            type="color"
+            id="bgColor"
+            value={bgColor}
+            onChange={(e) => handleBgColorChange(e.target.value)}
+          />
 
           {/* Line Height Input */}
-          <input type="number" id="lineHeight" value={lineHeight} onChange={handleLineHeightChange} />
+          <input
+            type="number"
+            id="lineHeight"
+            value={lineHeight}
+            onChange={handleLineHeightChange}
+          />
 
           {/* Toggle Formatting Options */}
           <button onClick={toggleBold}>Bold</button>

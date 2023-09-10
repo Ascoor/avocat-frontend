@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Card, Table, Button, Modal, Form, Alert } from "react-bootstrap";
-import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
-import DatePicker from "react-datepicker";
-import arEG from "date-fns/locale/ar-EG";
-import { registerLocale, setDefaultLocale } from "react-datepicker";
-import useAuth from "../../Auth/AuthUser";
-import API_CONFIG from "../../../config";
-import PropTypes from "prop-types";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Card, Table, Button, Modal, Form, Alert } from 'react-bootstrap';
+import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
+import DatePicker from 'react-datepicker';
+import arEG from 'date-fns/locale/ar-EG';
+import { registerLocale, setDefaultLocale } from 'react-datepicker';
+import useAuth from '../../Auth/AuthUser';
+import API_CONFIG from '../../../config';
+import PropTypes from 'prop-types';
 
-registerLocale("ar_eg", arEG);
-setDefaultLocale("ar_eg");
+registerLocale('ar_eg', arEG);
+setDefaultLocale('ar_eg');
 
 const LegalAd = ({ legCaseId }) => {
   LegalAd.propTypes = {
@@ -22,7 +22,7 @@ const LegalAd = ({ legCaseId }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alert, setAlert] = useState(null);
   const [showAddLegalAdModal, setShowAddLegalAdModal] = useState(false);
-  const [modalMode, setModalMode] = useState("");
+  const [modalMode, setModalMode] = useState('');
   const [legalAdId, setLegalAdId] = useState(null);
   const [legalAds, setLegalAds] = useState([]);
   const [courts, setCourts] = useState([]);
@@ -30,16 +30,16 @@ const LegalAd = ({ legCaseId }) => {
   const [legalAdTypes, setLegalAdTypes] = useState([]);
   const [selectedSendDate, setSelectedSendDate] = useState(null);
   const [selectedRecivedDate, setSelectedRecivedDate] = useState(null);
-  const [selectedSendLawyer, setSelectedSendLawyer] = useState("");
+  const [selectedSendLawyer, setSelectedSendLawyer] = useState('');
   const [selectedLegalAd, setSelectedLegalAd] = useState(null);
-  const [selectedRecivedLawyer, setSelectedRecivedLawyer] = useState("");
-  const [selectedResults, setSelectedResults] = useState("");
-  const [selectedDescription, setSelectedDescription] = useState("");
-  const [selectedCourt, setSelectedCourt] = useState("");
-  const [selectedLegalAdType, setSelectedLegalAdType] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedCost, setSelectedCost] = useState("");
-  const [selectedCost2, setSelectedCost2] = useState("");
+  const [selectedRecivedLawyer, setSelectedRecivedLawyer] = useState('');
+  const [selectedResults, setSelectedResults] = useState('');
+  const [selectedDescription, setSelectedDescription] = useState('');
+  const [selectedCourt, setSelectedCourt] = useState('');
+  const [selectedLegalAdType, setSelectedLegalAdType] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectedCost, setSelectedCost] = useState('');
+  const [selectedCost2, setSelectedCost2] = useState('');
   const user = getUser();
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const LegalAd = ({ legCaseId }) => {
       );
       setLegalAds(response.data);
     } catch (error) {
-      console.log("خطأ في جلب الاعلانات القانونية:", error);
+      console.log('خطأ في جلب الاعلانات القانونية:', error);
     }
   };
 
@@ -65,7 +65,7 @@ const LegalAd = ({ legCaseId }) => {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/courts`);
       setCourts(response.data);
     } catch (error) {
-      console.log("خطأ في جلب المحاكم:", error);
+      console.log('خطأ في جلب المحاكم:', error);
     }
   };
 
@@ -74,7 +74,7 @@ const LegalAd = ({ legCaseId }) => {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/lawyers`);
       setLawyers(response.data);
     } catch (error) {
-      console.log("خطأ في جلب المحامين:", error);
+      console.log('خطأ في جلب المحامين:', error);
     }
   };
 
@@ -85,16 +85,16 @@ const LegalAd = ({ legCaseId }) => {
       );
       setLegalAdTypes(response.data);
     } catch (error) {
-      console.log("خطأ في جلب أنواع الإعلانات القانونية:", error);
+      console.log('خطأ في جلب أنواع الإعلانات القانونية:', error);
     }
   };
 
   const handleAddLegalAd = () => {
-    setModalMode("add");
+    setModalMode('add');
     setShowAddLegalAdModal(true);
   };
   const handleEditLegalAd = (legalAd) => {
-    setModalMode("edit");
+    setModalMode('edit');
     setLegalAdId(legalAd.id);
     setSelectedSendDate(legalAd.sendDate ? new Date(legalAd.sendDate) : null);
     setSelectedRecivedDate(
@@ -117,9 +117,9 @@ const LegalAd = ({ legCaseId }) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/legal_ads/${legalAdId}`);
       fetchLegalAds(legCaseId);
-      showAlertMessage("تم حذف الاعلان القانوني بنجاح.", "success");
+      showAlertMessage('تم حذف الاعلان القانوني بنجاح.', 'success');
     } catch (error) {
-      console.log("خطأ في حذف الاعلان القانوني:", error);
+      console.log('خطأ في حذف الاعلان القانوني:', error);
     }
   };
 
@@ -128,21 +128,21 @@ const LegalAd = ({ legCaseId }) => {
     setLegalAdId(null);
     setSelectedSendDate(null);
     setSelectedRecivedDate(null);
-    setSelectedSendLawyer("");
+    setSelectedSendLawyer('');
     setSelectedLegalAd(null);
-    setSelectedRecivedLawyer("");
-    setSelectedResults("");
-    setSelectedDescription("");
-    setSelectedCourt("");
-    setSelectedLegalAdType("");
-    setSelectedStatus("");
+    setSelectedRecivedLawyer('');
+    setSelectedResults('');
+    setSelectedDescription('');
+    setSelectedCourt('');
+    setSelectedLegalAdType('');
+    setSelectedStatus('');
   };
 
   const handleModalSave = async () => {
-    if (modalMode === "add") {
+    if (modalMode === 'add') {
       try {
         const formattedSendDate = selectedSendDate
-          ? selectedSendDate.toISOString().split("T")[0]
+          ? selectedSendDate.toISOString().split('T')[0]
           : null;
 
         await axios.post(`${API_CONFIG.baseURL}/api/legal_ads`, {
@@ -160,14 +160,14 @@ const LegalAd = ({ legCaseId }) => {
         });
         fetchLegalAds(legCaseId);
         handleModalClose();
-        showAlertMessage("تمت إضافة الاعلان القانوني بنجاح.", "success");
+        showAlertMessage('تمت إضافة الاعلان القانوني بنجاح.', 'success');
       } catch (error) {
-        console.log("خطأ في إضافة الاعلان القانوني:", error);
+        console.log('خطأ في إضافة الاعلان القانوني:', error);
       }
-    } else if (modalMode === "edit") {
+    } else if (modalMode === 'edit') {
       try {
         const formattedRecivedDate = selectedRecivedDate
-          ? selectedRecivedDate.toISOString().split("T")[0]
+          ? selectedRecivedDate.toISOString().split('T')[0]
           : null;
 
         await axios.put(`${API_CONFIG.baseURL}/api/legal_ads/${legalAdId}`, {
@@ -184,9 +184,9 @@ const LegalAd = ({ legCaseId }) => {
         });
         fetchLegalAds(legCaseId);
         handleModalClose();
-        showAlertMessage("تم تعديل الاعلان القانوني بنجاح.", "success");
+        showAlertMessage('تم تعديل الاعلان القانوني بنجاح.', 'success');
       } catch (error) {
-        console.log("خطأ في تعديل الاعلان القانوني:", error);
+        console.log('خطأ في تعديل الاعلان القانوني:', error);
       }
     }
   };
@@ -266,14 +266,14 @@ const LegalAd = ({ legCaseId }) => {
       <Modal show={showAddLegalAdModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-            {modalMode === "add" && "إضافة إعلان قانوني"}
-            {modalMode === "edit" && "تعديل إعلان قانوني"}
+            {modalMode === 'add' && 'إضافة إعلان قانوني'}
+            {modalMode === 'edit' && 'تعديل إعلان قانوني'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             {/* حقول إضافة الإعلان القانوني */}
-            {modalMode === "add" && (
+            {modalMode === 'add' && (
               <>
                 <Form.Group controlId="legalAdType">
                   <Form.Label>نوع الإعلان</Form.Label>
@@ -353,7 +353,7 @@ const LegalAd = ({ legCaseId }) => {
               </>
             )}
 
-            {modalMode === "edit" && (
+            {modalMode === 'edit' && (
               <>
                 <Form.Group controlId="recivedDate">
                   <Form.Label>تاريخ الاستلام</Form.Label>
@@ -371,7 +371,7 @@ const LegalAd = ({ legCaseId }) => {
                   <Form.Control
                     type="number"
                     placeholder="ادخل التكلفة 2"
-                    value={selectedCost2 | ""}
+                    value={selectedCost2 | ''}
                     onChange={(e) => setSelectedCost2(e.target.value)}
                   />
                 </Form.Group>
@@ -423,7 +423,7 @@ const LegalAd = ({ legCaseId }) => {
               إلغاء
             </Button>
             <Button variant="primary" onClick={handleModalSave}>
-              {modalMode === "edit" ? "تعديل" : "حفظ"}
+              {modalMode === 'edit' ? 'تعديل' : 'حفظ'}
             </Button>
           </Modal.Footer>
         </Modal.Footer>

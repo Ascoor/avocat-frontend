@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { Card, Table, Row, Col, Button, Alert } from "react-bootstrap";
-import { FcPlus } from "react-icons/fc";
-import { TiArrowBackOutline } from "react-icons/ti";
-import API_CONFIG from "../../config";
-import { LegCaseIcon } from "../../assets/icons/index";
-import CustomPagination from "../home_tools/Pagination"; // Import your custom Pagination component here
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { Card, Table, Row, Col, Button, Alert } from 'react-bootstrap';
+import { FcPlus } from 'react-icons/fc';
+import { TiArrowBackOutline } from 'react-icons/ti';
+import API_CONFIG from '../../config';
+import { LegCaseIcon } from '../../assets/icons/index';
+import CustomPagination from '../home_tools/Pagination'; // Import your custom Pagination component here
 
 const LegCaseList = () => {
   const itemsPerPage = 10; // Set the number of items to display per page
   const [legCasesPage, setLegCasesPage] = useState(1); // Define legCasesPage and set its initial value to 1
   const [legCases, setLegCases] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
-  const [currentAlertMessage, setCurrentAlertMessage] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [currentAlertMessage, setCurrentAlertMessage] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [filteredLegCases, setFilteredLegCases] = useState([]);
   const data = Array.from({ length: 100 }, (_, index) => `Item ${index + 1}`);
 
@@ -38,7 +38,7 @@ const LegCaseList = () => {
       setLegCases(response.data);
       setFilteredLegCases(response.data);
     } catch (error) {
-      console.log("Failed to fetch leg cases");
+      console.log('Failed to fetch leg cases');
     }
   };
 
@@ -65,13 +65,13 @@ const LegCaseList = () => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/leg_cases/${id}`);
       setShowAlert(true);
-      setCurrentAlertMessage("تم حذف الحالة القانونية بنجاح");
+      setCurrentAlertMessage('تم حذف الحالة القانونية بنجاح');
       fetchLegCases();
       setFilteredLegCases(
         filteredLegCases.filter((legCase) => legCase.id !== id)
       );
     } catch (error) {
-      console.log("فشل في حذف الحالة القانونية");
+      console.log('فشل في حذف الحالة القانونية');
     }
   };
 
@@ -83,15 +83,11 @@ const LegCaseList = () => {
       </div>
 
       <Row className="add-case-row">
-        <Col
-          xs={12}
-          md={6}
-          lg={6}
-          className="text-center text-md-start mb-md-0"
-        >
+        <Col xs={12} md={6} lg={6} className="text-center mb-md-0">
+          {/* Adjust the grid classes */}
           <Link
             className="btn btn-lg btn-primary btn-add"
-            to={"/legcases/create"}
+            to={'/legcases/create'}
           >
             <FcPlus size={20} />
             إضافة قضية
@@ -99,13 +95,14 @@ const LegCaseList = () => {
         </Col>
 
         <Col xs={12} md={6} lg={6} className="text-center text-md-end">
+          {/* Adjust the grid classes */}
           <Button
             variant="warning"
             className="btn-back btn-lg"
             type="button"
             onClick={() => window.history.back()}
           >
-            <TiArrowBackOutline size={25} style={{ marginRight: "0.5rem" }} />
+            <TiArrowBackOutline size={25} style={{ marginRight: '0.5rem' }} />
             رجوع
           </Button>
         </Col>
@@ -118,9 +115,8 @@ const LegCaseList = () => {
       )}
       <div className="text-center">
         <Row className="justify-content-center">
-          {" "}
-          {/* Add justify-content-center class */}
-          <Col xs={6} md={6} lg={6} className="text-center text-md">
+          <Col xs={12} md={6} lg={6} className="text-center text-md">
+            {/* Adjust the grid classes */}
             <input
               type="text"
               className="form-control search-input"
@@ -128,7 +124,6 @@ const LegCaseList = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-
             <button
               className="btn btn-primary btn-search"
               onClick={handleSearch}
@@ -197,7 +192,7 @@ const LegCaseList = () => {
       </Card.Body>
       <Card.Footer>
         <CustomPagination
-          totalCount={filteredLegCases.length} // Use the filteredLegCases array's length
+          totalCount={filteredLegCases.length}
           itemsPerPage={itemsPerPage}
           currentPage={legCasesPage}
           onPageChange={handlePageChange}

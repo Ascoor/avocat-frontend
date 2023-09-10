@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useTransition, useSpring, animated } from "@react-spring/web";
-import { Card, Button, Container, Spinner } from "react-bootstrap";
-import { RiLoginCircleLine, RiUserAddLine } from "react-icons/ri";
-import { Collapse } from "bootstrap/dist/js/bootstrap.bundle";
-import {LogoImage,WelcomePatren, WelcomeImage } from '../../images/index';
-import LawyerServices from "./LawyerService.component";
+import React, { useState, useEffect } from 'react';
+import { useTransition, useSpring, animated } from '@react-spring/web';
+import { Card, Button, Container, Spinner } from 'react-bootstrap';
+import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
+import { Collapse } from 'bootstrap/dist/js/bootstrap.bundle';
+import { LogoImage, WelcomePatren, WelcomeImage } from '../../images/index';
+import LawyerServices from './LawyerService.component';
 
-const Login = React.lazy(() => import("../Auth/login"));
-const Register = React.lazy(() => import("../Auth/register"));
+const Login = React.lazy(() => import('../Auth/login'));
+const Register = React.lazy(() => import('../Auth/register'));
 
 const Guest = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -34,47 +34,47 @@ const Guest = () => {
   const formsTransition = useTransition(showLoginForm || showRegisterForm, {
     from: {
       opacity: 0,
-      transform: "translate(-50%, -50%) scale(0.8)",
-      position: "absolute",
-      top: "50%",
-      left: "50%",
+      transform: 'translate(-50%, -50%) scale(0.8)',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
       zIndex: 2,
     },
     enter: {
       opacity: 1,
-      transform: "translate(-50%, -50%) scale(1)",
-      position: "absolute",
-      top: "50%",
-      left: "50%",
+      transform: 'translate(-50%, -50%) scale(1)',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
       zIndex: 2,
     },
     leave: {
       opacity: 0,
-      transform: "translate(-50%, -50%) scale(0.8)",
-      position: "absolute",
-      top: "50%",
-      left: "50%",
+      transform: 'translate(-50%, -50%) scale(0.8)',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
       zIndex: 2,
     },
     config: { duration: 500 },
   });
 
   useEffect(() => {
-    const mainNav = document.querySelector("#mainNav");
+    const mainNav = document.querySelector('#mainNav');
 
     if (mainNav) {
-      const navbarCollapse = mainNav.querySelector(".navbar-collapse");
+      const navbarCollapse = mainNav.querySelector('.navbar-collapse');
 
       if (navbarCollapse) {
         const collapse = new Collapse(navbarCollapse, {
           toggle: false,
         });
 
-        const navbarItems = navbarCollapse.querySelectorAll("a");
+        const navbarItems = navbarCollapse.querySelectorAll('a');
 
         // Closes responsive menu when a scroll trigger link is clicked
         for (let item of navbarItems) {
-          item.addEventListener("click", function (event) {
+          item.addEventListener('click', function (event) {
             collapse.hide();
           });
         }
@@ -92,9 +92,9 @@ const Guest = () => {
               ).scrollTop;
 
         if (scrollTop > 100) {
-          mainNav.classList.add("navbar-shrink");
+          mainNav.classList.add('navbar-shrink');
         } else {
-          mainNav.classList.remove("navbar-shrink");
+          mainNav.classList.remove('navbar-shrink');
         }
       };
 
@@ -102,14 +102,14 @@ const Guest = () => {
       collapseNavbar();
 
       // Collapse the navbar when page is scrolled
-      document.addEventListener("scroll", collapseNavbar);
+      document.addEventListener('scroll', collapseNavbar);
     }
   }, []);
 
   const logoAnimation = useSpring({
     opacity: 1,
-    transform: "translateY(0)",
-    from: { opacity: 0, transform: "translateY(-100px)" },
+    transform: 'translateY(0)',
+    from: { opacity: 0, transform: 'translateY(-100px)' },
     delay: 500,
   });
 
@@ -119,9 +119,9 @@ const Guest = () => {
         className="masthead"
         style={{
           backgroundImage: `url(${WelcomeImage})`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          height: "100vh",
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          height: '100vh',
         }}
       >
         <div className="navbar navbar-light fixed-top" id="mainNav">
@@ -151,8 +151,8 @@ const Guest = () => {
         <div
           className="d-flex flex-column justify-content-center align-items-center"
           style={{
-            paddingLeft: "10px",
-            height: "100%",
+            paddingLeft: '10px',
+            height: '100%',
           }}
         >
           {showLogoAndButtons && (
@@ -161,7 +161,7 @@ const Guest = () => {
                 src={WelcomePatren}
                 alt="Pattern Logo"
                 className="logo img-fluid"
-                style={{ width: "200px", height: "auto" }}
+                style={{ width: '200px', height: 'auto' }}
               />
             </animated.div>
           )}
@@ -170,7 +170,7 @@ const Guest = () => {
               <Button
                 variant="success"
                 onClick={handleShowLoginForm}
-                style={{ marginRight: "10px" }}
+                style={{ marginRight: '10px' }}
               >
                 <RiLoginCircleLine className="mr-1" />
                 دخول
@@ -184,12 +184,12 @@ const Guest = () => {
           {showLogoAndButtons && (
             <div className="col-lg-8 mx-auto text-center mt-4">
               <strong>
-                <span style={{ color: "#ffffff" }}>
+                <span style={{ color: '#ffffff' }}>
                   <p>
-                    تعد أفوكات أول منظومة تغير قواعد العمل في مجال المحاماة، حيث تساهم
-                    أدواتها التكنولوجية المتقدمة في تبسيط سير العمل وإدارة القضايا بكفاءة
-                    وتقديم خدمات استثنائية للعملاء. اكتشف مستقبل ممارسة المحاماة مع
-                    الحل الرقمي الشامل المقدم من أفوكات.
+                    تعد أفوكات أول منظومة تغير قواعد العمل في مجال المحاماة، حيث
+                    تساهم أدواتها التكنولوجية المتقدمة في تبسيط سير العمل وإدارة
+                    القضايا بكفاءة وتقديم خدمات استثنائية للعملاء. اكتشف مستقبل
+                    ممارسة المحاماة مع الحل الرقمي الشامل المقدم من أفوكات.
                   </p>
                 </span>
               </strong>
@@ -197,19 +197,21 @@ const Guest = () => {
           )}
           {formsTransition((styles, item) =>
             item ? (
-              <animated.div style={{ ...styles, width: "100%", marginTop: "20px" }}>
+              <animated.div
+                style={{ ...styles, width: '100%', marginTop: '20px' }}
+              >
                 <div className="d-flex justify-content-center">
                   <Card style={{ zIndex: 2 }}>
                     <React.Suspense fallback={<Spinner animation="grow" />}>
                       {showLoginForm && (
                         <Login
-                          style={{ position: "relative", zIndex: 3 }}
+                          style={{ position: 'relative', zIndex: 3 }}
                           handleCloseForm={handleCloseForm}
                         />
                       )}
                       {showRegisterForm && (
                         <Register
-                          style={{ position: "relative", zIndex: 3 }}
+                          style={{ position: 'relative', zIndex: 3 }}
                           handleCloseForm={handleCloseForm}
                         />
                       )}
@@ -226,11 +228,12 @@ const Guest = () => {
 
       <footer
         style={{
-          background: "linear-gradient(rgb(11 22 26), rgb(14 48 66), rgb(10 18 24))",
-          direction: "rtl",
-          color: "#fff",
-          textAlign: "center",
-          padding: "10px 0",
+          background:
+            'linear-gradient(rgb(11 22 26), rgb(14 48 66), rgb(10 18 24))',
+          direction: 'rtl',
+          color: '#fff',
+          textAlign: 'center',
+          padding: '10px 0',
         }}
       >
         <Container>

@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { FcFullTrash } from "react-icons/fc";
-import { Row, Col, Button, Modal, Form, Card } from "react-bootstrap";
-import Table from "react-bootstrap/Table";
-import axios from "axios";
-import API_CONFIG from "../../../config";
-import CustomPagination from "../../home_tools/Pagination"; // Import your custom Pagination component here
+import { useState, useEffect } from 'react';
+import { FcFullTrash } from 'react-icons/fc';
+import { Row, Col, Button, Modal, Form, Card } from 'react-bootstrap';
+import Table from 'react-bootstrap/Table';
+import axios from 'axios';
+import API_CONFIG from '../../../config';
+import CustomPagination from '../../home_tools/Pagination'; // Import your custom Pagination component here
 
 const Court = () => {
   const [courtTypes, setCourtTypes] = useState([]);
@@ -12,12 +12,12 @@ const Court = () => {
   const [courtLevels, setCourtLevels] = useState([]);
   const [courts, setCourts] = useState([]);
 
-  const [courtTypeId, setCourtTypeId] = useState("");
-  const [newCourtTypeId, setNewCourtTypeId] = useState("");
-  const [newCourtSubTypeId, setNewCourtSubTypeId] = useState("");
-  const [newCourtLevelId, setNewCourtLevelId] = useState("");
-  const [newCourtName, setNewCourtName] = useState("");
-  const [newCourtAddress, setNewCourtAddress] = useState("");
+  const [courtTypeId, setCourtTypeId] = useState('');
+  const [newCourtTypeId, setNewCourtTypeId] = useState('');
+  const [newCourtSubTypeId, setNewCourtSubTypeId] = useState('');
+  const [newCourtLevelId, setNewCourtLevelId] = useState('');
+  const [newCourtName, setNewCourtName] = useState('');
+  const [newCourtAddress, setNewCourtAddress] = useState('');
   const [error, setError] = useState(null);
   const [showAddCourtModal, setShowAddCourtModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,8 +37,8 @@ const Court = () => {
       );
       setCourtTypes(response.data);
     } catch (error) {
-      setError("حدث خطأ في استرجاع أنواع المحاكم");
-      console.error("حدث خطأ في استرجاع أنواع المحاكم: ", error);
+      setError('حدث خطأ في استرجاع أنواع المحاكم');
+      console.error('حدث خطأ في استرجاع أنواع المحاكم: ', error);
     }
   };
 
@@ -49,8 +49,8 @@ const Court = () => {
       );
       setCourtLevels(response.data);
     } catch (error) {
-      setError("حدث خطأ في استرجاع مستويات المحاكم");
-      console.error("حدث خطأ في استرجاع مستويات المحاكم: ", error);
+      setError('حدث خطأ في استرجاع مستويات المحاكم');
+      console.error('حدث خطأ في استرجاع مستويات المحاكم: ', error);
     }
   };
 
@@ -59,8 +59,8 @@ const Court = () => {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/courts/`);
       setCourts(response.data);
     } catch (error) {
-      setError("حدث خطأ في استرجاع المحاكم");
-      console.error("حدث خطأ في استرجاع المحاكم: ", error);
+      setError('حدث خطأ في استرجاع المحاكم');
+      console.error('حدث خطأ في استرجاع المحاكم: ', error);
     }
   };
 
@@ -71,18 +71,18 @@ const Court = () => {
       );
       setCourtSubTypes(response.data);
     } catch (error) {
-      setError("حدث خطأ في استرجاع أنواع المحاكم الفرعية");
-      console.error("حدث خطأ في استرجاع أنواع المحاكم الفرعية: ", error);
+      setError('حدث خطأ في استرجاع أنواع المحاكم الفرعية');
+      console.error('حدث خطأ في استرجاع أنواع المحاكم الفرعية: ', error);
     }
   };
 
   const totalCourts = courts.length;
   const handleShowAddCourtModal = () => {
     // Reset the state for selected court type, subtype, and level
-    setCourtTypeId("");
-    setNewCourtTypeId("");
-    setNewCourtSubTypeId("");
-    setNewCourtLevelId("");
+    setCourtTypeId('');
+    setNewCourtTypeId('');
+    setNewCourtSubTypeId('');
+    setNewCourtLevelId('');
 
     // Fetch court types, subtypes, and levels
     fetchCourtTypes();
@@ -105,9 +105,9 @@ const Court = () => {
 
   const handleAddCourt = () => {
     fetch(`${API_CONFIG.baseURL}/api/courts/`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         courtTypeId: newCourtTypeId,
@@ -121,11 +121,11 @@ const Court = () => {
       .then((data) => {
         fetchCourts();
         setShowAddCourtModal(false);
-        setNewCourtName("");
-        setNewCourtTypeId("");
-        setNewCourtSubTypeId("");
-        setNewCourtLevelId("");
-        setNewCourtAddress("");
+        setNewCourtName('');
+        setNewCourtTypeId('');
+        setNewCourtSubTypeId('');
+        setNewCourtLevelId('');
+        setNewCourtAddress('');
         setShowAlert(true);
         setAlertMessage(
           `تمت إضافة المحكمة بنجاح. البيانات: ${JSON.stringify(data)}`
@@ -136,10 +136,10 @@ const Court = () => {
       })
 
       .catch((error) => {
-        setError("حدث خطأ في إضافة المحكمة");
-        console.error("حدث خطأ في إضافة المحكمة: ", error);
+        setError('حدث خطأ في إضافة المحكمة');
+        console.error('حدث خطأ في إضافة المحكمة: ', error);
         setShowAlert(true);
-        setAlertMessage("فشل في إضافة المحكمة.");
+        setAlertMessage('فشل في إضافة المحكمة.');
         setTimeout(() => {
           setShowAlert(false);
         }, 5000);
@@ -161,7 +161,7 @@ const Court = () => {
         <Row>
           <Col>
             <Card.Header className="court-setting-card-header">
-              <h3 style={{ color: "#006e5d" }}>المحاكم</h3>
+              <h3 style={{ color: '#006e5d' }}>المحاكم</h3>
             </Card.Header>
             <Button
               onClick={() => setShowAddCourtModal(true)}
@@ -176,7 +176,7 @@ const Court = () => {
                   <Table striped bordered hover responsive>
                     <thead className="table-success text-center">
                       <tr
-                        style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}
+                        style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
                       >
                         <th>الاسم</th>
                         <th>النوع</th>
@@ -195,8 +195,8 @@ const Court = () => {
                         .map((court) => (
                           <tr
                             style={{
-                              backgroundColor: "#D1ECF1",
-                              color: "#0C5460",
+                              backgroundColor: '#D1ECF1',
+                              color: '#0C5460',
                             }}
                             key={court.id}
                           >
@@ -209,7 +209,7 @@ const Court = () => {
                               <Button
                                 variant="danger"
                                 onClick={() =>
-                                  handleDelete(court.id, court.name, "courts")
+                                  handleDelete(court.id, court.name, 'courts')
                                 }
                               >
                                 <FcFullTrash />
@@ -224,12 +224,13 @@ const Court = () => {
             </Card.Body>
             <Card.Footer>
               <Row>
-                <Col><CustomPagination
-                totalCount={totalCourts}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-                />
+                <Col>
+                  <CustomPagination
+                    totalCount={totalCourts}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={currentPage}
+                    onPageChange={handlePageChange}
+                  />
                 </Col>
               </Row>
             </Card.Footer>

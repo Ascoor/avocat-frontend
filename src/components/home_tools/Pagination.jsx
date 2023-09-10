@@ -1,7 +1,12 @@
-import PropTypes from "prop-types";
-import { Pagination } from "react-bootstrap";
+import PropTypes from 'prop-types';
+import { Pagination } from 'react-bootstrap';
 
-const CustomPagination = ({ totalCount, itemsPerPage, currentPage, onPageChange }) => {
+const CustomPagination = ({
+  totalCount,
+  itemsPerPage,
+  currentPage,
+  onPageChange,
+}) => {
   const pageCount = Math.ceil(totalCount / itemsPerPage);
 
   return (

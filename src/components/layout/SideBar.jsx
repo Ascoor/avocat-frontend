@@ -1,16 +1,25 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaTimes } from 'react-icons/fa';
+import {
+  FaTimes,
+  FaHome,
+  FaUser,
+  FaBriefcase,
+  FaFileAlt,
+  FaTasks,
+  FaArchive,
+  FaCog,
+} from 'react-icons/fa';
 import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
 import '../../assets/css/SideBar.css';
 import useAuth from '../Auth/AuthUser';
 
-const Sidebar = ({ sidebarOpen, onClose ,handleLinkClick}) => {
+const Sidebar = ({ sidebarOpen, onClose }) => {
   const sidebarAnimation = useSpring({
     right: sidebarOpen ? 0 : -450, // Adjust the value based on your sidebar width
   });
-const user = useAuth().user;
+  const user = useAuth().user;
   const userDropdownAnimation = useSpring({
     opacity: 1,
     transform: 'scale(1)',
@@ -32,53 +41,74 @@ const user = useAuth().user;
         <FaTimes />
       </button>
       <div className="user-profile">
-    <img src="/log1.png" alt="صورة المستخدم" className="user-profile-img" />
-  <animated.span style={userDropdownAnimation}>
-    المستشار/{user.name}
-  </animated.span>
-</div>
+        <img src="/log1.png" alt="صورة المستخدم" className="user-profile-img" />
+        <animated.span style={userDropdownAnimation}>
+          المستشار/{user.name}
+        </animated.span>
+      </div>
 
       <ul className="sidebar-nav">
-        <li onClick={handleLinkClick}>
-          <Link to="/">الصفحة الرئيسية</Link>
+        <li >
+          <Link to="/">
+            <FaHome className="m-1" size={25} />
+            الصفحة الرئيسية
+          </Link>
         </li>
         <li>
-          <Link to="/lawyers">المحامون</Link>
+          <Link to="/lawyers">
+            <FaUser className="m-2" size={25} />
+            المحامون
+          </Link>
         </li>
-        <li onClick={handleLinkClick}>
-          <Link to="/clients">الموكلين</Link>
+        <li >
+          <Link to="/clients">
+            <FaUser className="m-2" size={25} />
+            الموكلين
+          </Link>
         </li>
 
-            <li onClick={handleLinkClick}>
-              <Link to="/legcases">القضايا</Link>
-            </li>
-            <li onClick={handleLinkClick}>
-              <Link to="/services">الخدمات</Link>
-            </li>
-            <li onClick={handleLinkClick}>
-              <Link to="/procedures">الإجراءات</Link>
-            </li>
-        
-            <li onClick={handleLinkClick}>
-              <Link to="/archives">الأرشيف </Link>
-            </li>
-            <li onClick={handleLinkClick}>
-              <Link to="/courts">اعدادات المحاكم</Link>
-            </li>
-            <li onClick={handleLinkClick}>
-              <Link to="/cases_setting">اعدادات القضايا</Link>
-            </li>
-     
+        <li >
+          <Link to="/legcases">
+            <FaFileAlt className="m-2" size={25} />
+            القضايا
+          </Link>
+        </li>
+        <li >
+          <Link to="/services">
+            <FaBriefcase className="m-2" size={25} /> الخدمات
+          </Link>
+        </li>
+        <li >
+          <Link to="/procedures">
+            <FaTasks className="m-2" size={25} /> الإجراءات
+          </Link>
+        </li>
+
+        <li >
+          <Link to="/archives">
+            <FaArchive className="m-2" size={25} />
+            الأرشيف{' '}
+          </Link>
+        </li>
+        <li >
+          <Link to="/courts">
+            <FaCog className="m-1" size={25} />
+            اعدادات المحاكم
+          </Link>
+        </li>
+        <li >
+          <Link to="/cases_setting">
+            <FaCog className="m-1" size={25} /> اعدادات القضايا
+          </Link>
+        </li>
       </ul>
     </animated.aside>
   );
 };
 
-
 Sidebar.propTypes = {
   sidebarOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  handleLinkClick: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

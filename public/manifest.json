@@ -25,7 +25,7 @@
   "splash_pages": [
     {
       "src": "splash-image.jpg",
-      "sizes": "1280x720", 
+      "sizes": "1280x720",
       "type": "image/jpeg"
     }
   ]

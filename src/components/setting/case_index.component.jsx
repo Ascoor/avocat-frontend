@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import API_CONFIG from "../../config";
-import { JudgeIcon } from "../../assets/icons";
+import { useEffect, useState } from 'react';
+import API_CONFIG from '../../config';
+import { JudgeIcon } from '../../assets/icons';
 import {
   Button,
   Row,
@@ -10,8 +10,8 @@ import {
   Modal,
   Alert,
   Card,
-} from "react-bootstrap";
-import axios from "axios";
+} from 'react-bootstrap';
+import axios from 'axios';
 
 const CaseType = () => {
   const [procedureTypes, setProcedureTypes] = useState([]);
@@ -24,13 +24,13 @@ const CaseType = () => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [legalAdTypes, setLegalAdTypes] = useState([]);
   const [showAddLegalAdModal, setShowAddLegalAdModal] = useState(false);
-  const [newAdType, setNewAdType] = useState("");
+  const [newAdType, setNewAdType] = useState('');
   const [showAddCaseTypeModal, setShowAddCaseTypeModal] = useState(false);
   const [showAddCaseSubTypeModal, setShowAddCaseSubTypeModal] = useState(false);
-  const [newProcedureTypeName, setNewProcedureTypeName] = useState("");
-  const [newCaseTypeName, setNewCaseTypeName] = useState("");
-  const [newCaseSubTypeName, setNewCaseSubTypeName] = useState("");
-  const [newCaseTypeId, setNewCaseTypeId] = useState("");
+  const [newProcedureTypeName, setNewProcedureTypeName] = useState('');
+  const [newCaseTypeName, setNewCaseTypeName] = useState('');
+  const [newCaseSubTypeName, setNewCaseSubTypeName] = useState('');
+  const [newCaseTypeId, setNewCaseTypeId] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -56,8 +56,8 @@ const CaseType = () => {
       setCaseSubTypes(caseSubTypesResponse.data);
       setLegalAdTypes(legalAdTypesResponse.data);
     } catch (error) {
-      setError("Error fetching data");
-      console.error("Error fetching data: ", error);
+      setError('Error fetching data');
+      console.error('Error fetching data: ', error);
     }
   };
 
@@ -68,12 +68,12 @@ const CaseType = () => {
       })
       .then(() => {
         setShowAddProcedureTypeModal(false);
-        setNewProcedureTypeName("");
+        setNewProcedureTypeName('');
         fetchData();
       })
       .catch((error) => {
-        setError("Error adding Procedure Type");
-        console.error("Error adding Procedure Type: ", error);
+        setError('Error adding Procedure Type');
+        console.error('Error adding Procedure Type: ', error);
       });
   };
 
@@ -84,12 +84,12 @@ const CaseType = () => {
       })
       .then(() => {
         setShowAddCaseTypeModal(false);
-        setNewCaseTypeName("");
+        setNewCaseTypeName('');
         fetchData();
       })
       .catch((error) => {
-        setError("Error adding Case Type");
-        console.error("Error adding Case Type: ", error);
+        setError('Error adding Case Type');
+        console.error('Error adding Case Type: ', error);
       });
   };
 
@@ -101,13 +101,13 @@ const CaseType = () => {
       })
       .then(() => {
         setShowAddCaseSubTypeModal(false);
-        setNewCaseSubTypeName("");
-        setNewCaseTypeId("");
+        setNewCaseSubTypeName('');
+        setNewCaseTypeId('');
         fetchData();
       })
       .catch((error) => {
-        setError("Error adding Case Sub Type");
-        console.error("Error adding Case Sub Type: ", error);
+        setError('Error adding Case Sub Type');
+        console.error('Error adding Case Sub Type: ', error);
       });
   };
   const handleAddAdType = () => {
@@ -117,33 +117,33 @@ const CaseType = () => {
       })
       .then(() => {
         setShowAddLegalAdModal(false);
-        setNewAdType("");
+        setNewAdType('');
         fetchData();
       })
       .catch((error) => {
-        setError("Error adding legal ad type");
-        console.error("Error adding legal ad type: ", error);
+        setError('Error adding legal ad type');
+        console.error('Error adding legal ad type: ', error);
       });
   };
 
   const handleDelete = (id, name, tableName) => {
-    let message = "";
+    let message = '';
 
     switch (tableName) {
-      case "case_types":
-        message = "Case Type";
+      case 'case_types':
+        message = 'Case Type';
         break;
-      case "case_sub_types":
-        message = "Case Sub Type";
+      case 'case_sub_types':
+        message = 'Case Sub Type';
         break;
-      case "procedure_types":
-        message = "Procedure Type";
+      case 'procedure_types':
+        message = 'Procedure Type';
         break;
-      case "legal_ad_types":
-        message = "Ad Type";
+      case 'legal_ad_types':
+        message = 'Ad Type';
         break;
       default:
-        throw new Error("Invalid table name");
+        throw new Error('Invalid table name');
     }
 
     const item = {
@@ -167,25 +167,25 @@ const CaseType = () => {
           alert(`${message} "${name}" deleted successfully`);
 
           // Fetch data after successful deletion
-          if (tableName === "case_types") {
+          if (tableName === 'case_types') {
             // Fetch case types and case subtypes after deleting a case type
             fetchData();
-          } else if (tableName === "case_sub_types") {
+          } else if (tableName === 'case_sub_types') {
             // Fetch only case subtypes after deleting a case subtype
             fetchData();
-          } else if (tableName === "procedure_types") {
+          } else if (tableName === 'procedure_types') {
             // Fetch only procedure types after deleting a procedure type
             fetchData();
-          } else if (tableName === "legal_ad_types") {
+          } else if (tableName === 'legal_ad_types') {
             // Fetch only procedure types after deleting a procedure type
             fetchData();
           }
         } else {
-          throw new Error("Failed to delete");
+          throw new Error('Failed to delete');
         }
       })
       .catch((error) => {
-        console.error("Failed to delete", error);
+        console.error('Failed to delete', error);
         alert(`Failed to delete ${message} "${name}". Please try again later.`);
       });
 
@@ -240,10 +240,10 @@ const CaseType = () => {
           <Row>
             <Col>
               <Card.Header
-                style={{ backgroundColor: "beige" }}
+                style={{ backgroundColor: 'beige' }}
                 className="text-center"
               >
-                <h3 style={{ color: "#006e5d" }}>أنواع القضايا</h3>
+                <h3 style={{ color: '#006e5d' }}>أنواع القضايا</h3>
               </Card.Header>
 
               <Table striped bordered hover responsive>
@@ -256,7 +256,7 @@ const CaseType = () => {
                 <tbody>
                   {caseTypes.map((caseType) => (
                     <tr
-                      style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}
+                      style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
                       key={caseType.id}
                     >
                       <td>{caseType.name}</td>
@@ -267,7 +267,7 @@ const CaseType = () => {
                             handleDelete(
                               caseType.id,
                               caseType.name,
-                              "case_types"
+                              'case_types'
                             )
                           }
                         >
@@ -281,10 +281,10 @@ const CaseType = () => {
             </Col>
             <Col>
               <Card.Header
-                style={{ backgroundColor: "beige" }}
+                style={{ backgroundColor: 'beige' }}
                 className="text-center"
               >
-                <h3 style={{ color: "#006e5d" }}>أنواع القضايا الفرعية</h3>
+                <h3 style={{ color: '#006e5d' }}>أنواع القضايا الفرعية</h3>
               </Card.Header>
               <Table striped bordered hover responsive>
                 <thead className="table-success text-center">
@@ -297,7 +297,7 @@ const CaseType = () => {
                 <tbody>
                   {caseSubTypes.map((caseSubType) => (
                     <tr
-                      style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}
+                      style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
                       key={caseSubType.id}
                     >
                       <td>{caseSubType.name}</td>
@@ -309,7 +309,7 @@ const CaseType = () => {
                             handleDelete(
                               caseSubType.id,
                               caseSubType.name,
-                              "case_sub_types"
+                              'case_sub_types'
                             )
                           }
                         >
@@ -325,10 +325,10 @@ const CaseType = () => {
           <Row>
             <Col>
               <Card.Header
-                style={{ backgroundColor: "beige" }}
+                style={{ backgroundColor: 'beige' }}
                 className="text-center"
               >
-                <h3 style={{ color: "#006e5d" }}>أنواع الإجراءات</h3>
+                <h3 style={{ color: '#006e5d' }}>أنواع الإجراءات</h3>
               </Card.Header>
               <Table striped bordered hover responsive>
                 <thead className="table-success text-center">
@@ -340,7 +340,7 @@ const CaseType = () => {
                 <tbody>
                   {procedureTypes.map((procedureType) => (
                     <tr
-                      style={{ backgroundColor: "#D1ECF1", color: "#0C5460" }}
+                      style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
                       key={procedureType.id}
                     >
                       <td>{procedureType.name}</td>
@@ -351,7 +351,7 @@ const CaseType = () => {
                             handleDelete(
                               procedureType.id,
                               procedureType.name,
-                              "procedure_types"
+                              'procedure_types'
                             )
                           }
                         >
@@ -365,10 +365,10 @@ const CaseType = () => {
             </Col>
             <Col>
               <Card.Header
-                style={{ backgroundColor: "beige" }}
+                style={{ backgroundColor: 'beige' }}
                 className="text-center"
               >
-                <h3 style={{ color: "#006e5d" }}>أنواع الإعلانات</h3>
+                <h3 style={{ color: '#006e5d' }}>أنواع الإعلانات</h3>
               </Card.Header>
               <Table striped bordered hover responsive>
                 <thead className="table-success text-center">
@@ -388,7 +388,7 @@ const CaseType = () => {
                             handleDelete(
                               adType.id,
                               adType.name,
-                              "legal_ad_types"
+                              'legal_ad_types'
                             )
                           }
                         >

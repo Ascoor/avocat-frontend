@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button, Form, Alert } from "react-bootstrap";
-import PropTypes from "prop-types";
-import axios from "axios";
-import useAuth from "../Auth/AuthUser";
-import API_CONFIG from "../../config";
+import React, { useState, useEffect } from 'react';
+import { Modal, Button, Form, Alert } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import useAuth from '../Auth/AuthUser';
+import API_CONFIG from '../../config';
 
-import'../../assets/css/Models.css'  
+import '../../assets/css/Models.css';
 const ServiceModal = ({
   show,
   handleClose,
@@ -17,16 +17,16 @@ const ServiceModal = ({
   const [missingFieldsAlert, setMissingFieldsAlert] = useState(false);
 
   const initialFormData = {
-    client_choice: "client",
-    client_id: "",
-    unclient_name: "",
-    unclient_phone: "",
-    unclient_nid: "",
+    client_choice: 'client',
+    client_id: '',
+    unclient_name: '',
+    unclient_phone: '',
+    unclient_nid: '',
     created_by: getUser().id,
-    service_status: "",
-    service_name: "",
-    service_place: "",
-    service_description: "",
+    service_status: '',
+    service_name: '',
+    service_place: '',
+    service_description: '',
     // Add other form fields with their initial values here
   };
 
@@ -37,27 +37,26 @@ const ServiceModal = ({
 
   useEffect(() => {
     if (isEditing) {
-    
       if (service) {
         setFormData({
           ...initialFormData,
-          client_choice: service.client_id ? "client" : "unclient",
-          client_id: service.client_id || "",
-          unclient_id: service.unclient_id || "",
-          unclient_name: service.unclient?.name || "",
-          unclient_phone: service.unclient?.phone_number || "",
-          unclient_nid: service.unclient?.identity_number || "",
-          service_status: service.service_status || "",
-          service_name: service.service_name || "",
-          service_place: service.service_place || "",
-          service_description: service.service_description || "",
+          client_choice: service.client_id ? 'client' : 'unclient',
+          client_id: service.client_id || '',
+          unclient_id: service.unclient_id || '',
+          unclient_name: service.unclient?.name || '',
+          unclient_phone: service.unclient?.phone_number || '',
+          unclient_nid: service.unclient?.identity_number || '',
+          service_status: service.service_status || '',
+          service_name: service.service_name || '',
+          service_place: service.service_place || '',
+          service_description: service.service_description || '',
           // Update other form fields as needed
         });
       }
     } else if (show) {
       fetchClients();
     }
-  }, [show,isEditing, service]);
+  }, [show, isEditing, service]);
 
   const fetchClients = async () => {
     try {
@@ -79,10 +78,10 @@ const ServiceModal = ({
     setFormData((prevData) => ({
       ...prevData,
       client_choice: value,
-      client_id: "",
-      unclient_name: "",
-      unclient_phone: "",
-      unclient_nid: "",
+      client_id: '',
+      unclient_name: '',
+      unclient_phone: '',
+      unclient_nid: '',
     }));
   };
 
@@ -94,16 +93,16 @@ const ServiceModal = ({
     }));
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: "",
+      [name]: '',
     }));
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Check if client_id or non-client info (unclient_name, unclient_phone, or unclient_nid) is provided
     if (
-      (formData.client_choice === "client" && !formData.client_id) ||
-      (formData.client_choice === "unclient" &&
+      (formData.client_choice === 'client' && !formData.client_id) ||
+      (formData.client_choice === 'unclient' &&
         (!formData.unclient_name ||
           !formData.unclient_phone ||
           !formData.unclient_nid))
@@ -112,34 +111,29 @@ const ServiceModal = ({
       setShowValidationAlert(true);
       return;
     }
-  
+
     // Check for required fields based on the action (add or edit)
     const requiredFields = isEditing
       ? [
-          "service_name",
-          "service_description",
-          "service_place",
-          "updated_by",
-          "service_status",
+          'service_name',
+          'service_description',
+          'service_place',
+          'updated_by',
+          'service_status',
         ]
-      : [
-          "service_name",
-          "service_description",
-          "service_place",
-          "created_by",
-        ];
-  
+      : ['service_name', 'service_description', 'service_place', 'created_by'];
+
     // Check if all required fields are provided
     const missingFields = requiredFields.filter(
       (fieldName) => !formData[fieldName]
     );
-  
+
     if (missingFields.length > 0) {
       // If any required field is missing, show an error and return
       setShowValidationAlert(true);
       return;
     }
-  
+
     // If all validations pass, you can proceed with your API request to add or edit the service.
     try {
       if (isEditing) {
@@ -158,19 +152,22 @@ const ServiceModal = ({
       }
     }
   };
-  
 
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{isEditing ? "تعديل الخدمة" : "إضافة خدمة"}</Modal.Title>
+        <Modal.Title>{isEditing ? 'تعديل الخدمة' : 'إضافة خدمة'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      {missingFieldsAlert && (
-  <Alert variant="danger" onClose={() => setMissingFieldsAlert(false)} dismissible>
-    من فضلك قم بملء الحقول المطلوبة.
-  </Alert>
-)}
+        {missingFieldsAlert && (
+          <Alert
+            variant="danger"
+            onClose={() => setMissingFieldsAlert(false)}
+            dismissible
+          >
+            من فضلك قم بملء الحقول المطلوبة.
+          </Alert>
+        )}
 
         <Form.Group controlId="client_choice">
           <Form.Label>بيانات الخدمة</Form.Label>
@@ -181,10 +178,10 @@ const ServiceModal = ({
                 name="client_choice"
                 label="عميل"
                 value="client"
-                checked={formData.client_choice === "client"}
+                checked={formData.client_choice === 'client'}
                 onChange={() =>
                   handleChange({
-                    target: { name: "client_choice", value: "client" },
+                    target: { name: 'client_choice', value: 'client' },
                   })
                 }
               />
@@ -193,10 +190,10 @@ const ServiceModal = ({
                 name="client_choice"
                 label="عميل غير مسجل"
                 value="unclient"
-                checked={formData.client_choice === "unclient"}
+                checked={formData.client_choice === 'unclient'}
                 onChange={() =>
                   handleChange({
-                    target: { name: "client_choice", value: "unclient" },
+                    target: { name: 'client_choice', value: 'unclient' },
                   })
                 }
               />
@@ -205,13 +202,13 @@ const ServiceModal = ({
         </Form.Group>
 
         {/* Display selected client or unclient fields based on client_choice */}
-        {formData.client_choice === "client" ? (
+        {formData.client_choice === 'client' ? (
           <Form.Group controlId="client_id">
             <Form.Label>اختر العميل</Form.Label>
             <Form.Control
               as="select"
               name="client_id"
-              value={formData.client_id || ""}
+              value={formData.client_id || ''}
               onChange={handleChange}
             >
               <option value="">اختر العميل</option>
@@ -235,20 +232,16 @@ const ServiceModal = ({
                 value={formData.unclient_name}
                 onChange={handleChange}
                 readOnly={isEditing} // Make it read-only in edit mode
- 
               />
             </Form.Group>
             <Form.Group controlId="unclient_phone">
-              <Form.Label>رقم  هاتف العميل</Form.Label>
+              <Form.Label>رقم هاتف العميل</Form.Label>
               <Form.Control
                 type="number"
                 name="unclient_phone"
                 value={formData.unclient_phone}
-
                 readOnly={isEditing} // Make it read-only in edit mode
- 
-                  onChange={handleChange}
-
+                onChange={handleChange}
               />
             </Form.Group>
             <Form.Group controlId="unclient_nid">
@@ -259,7 +252,6 @@ const ServiceModal = ({
                 value={formData.unclient_nid}
                 onChange={handleChange}
                 readOnly={isEditing} // Make it read-only in edit mode
- 
               />
             </Form.Group>
           </>
@@ -267,7 +259,7 @@ const ServiceModal = ({
 
         {isEditing && (
           <>
-                <Form.Group controlId="service_no">
+            <Form.Group controlId="service_no">
               <Form.Label>رقم ملف الخدمة</Form.Label>
               <Form.Control
                 type="text"
@@ -290,8 +282,7 @@ const ServiceModal = ({
                 <option value="معلقة">معلقة</option>
               </Form.Control>
             </Form.Group>
-      
-          </> 
+          </>
         )}
         <Form.Group controlId="service_name">
           <Form.Label>موضوع الخدمة</Form.Label>
@@ -323,10 +314,10 @@ const ServiceModal = ({
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          {isEditing ? "إلغاء" : "إغلاق"}
+          {isEditing ? 'إلغاء' : 'إغلاق'}
         </Button>
         <Button variant="primary" onClick={handleSubmit}>
-          {isEditing ? "تحديث" : "إضافة"} الخدمة
+          {isEditing ? 'تحديث' : 'إضافة'} الخدمة
         </Button>
       </Modal.Footer>
     </Modal>

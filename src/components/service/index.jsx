@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Table, Button, Card, Row } from "react-bootstrap";
-import axios from "axios";
-import ServiceModal from "./ServiceModal";
-import API_CONFIG from "../../config";
-import ServiceDetailsModal from "./ServiceDetailsModal";
+import React, { useState, useEffect } from 'react';
+import { Table, Button, Card, Row } from 'react-bootstrap';
+import axios from 'axios';
+import ServiceModal from './ServiceModal';
+import API_CONFIG from '../../config';
+import ServiceDetailsModal from './ServiceDetailsModal';
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -21,7 +21,7 @@ const Services = () => {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/services`);
       setServices(response.data.services);
     } catch (error) {
-      console.error("حدث خطأ أثناء جلب الخدمات:", error);
+      console.error('حدث خطأ أثناء جلب الخدمات:', error);
     }
   };
 
@@ -41,7 +41,7 @@ const Services = () => {
       // After deleting a service, fetch services again to update the list
       fetchServices();
     } catch (error) {
-      console.error("حدث خطأ أثناء حذف الخدمة:", error);
+      console.error('حدث خطأ أثناء حذف الخدمة:', error);
     }
   };
 

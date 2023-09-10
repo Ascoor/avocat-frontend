@@ -1,34 +1,34 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Card, Table, Button, Modal, Row, Form } from "react-bootstrap";
-import { Alert } from "react-bootstrap";
-import { BiPlusCircle } from "react-icons/bi";
-import useAuth from "../../Auth/AuthUser";
-import API_CONFIG from "../../../config";
-import { BiPencil, BiTrash } from "react-icons/bi";
-import PropTypes from "prop-types";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Card, Table, Button, Modal, Row, Form } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
+import { BiPlusCircle } from 'react-icons/bi';
+import useAuth from '../../Auth/AuthUser';
+import API_CONFIG from '../../../config';
+import { BiPencil, BiTrash } from 'react-icons/bi';
+import PropTypes from 'prop-types';
 const Procedure = ({ legCaseId }) => {
   const { getUser } = useAuth();
   const [alert, setAlert] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
 
   const [procedures, setProcedures] = useState([]);
-  const [selectedTitle, setSelectedTitle] = useState("");
-  const [selectedJob, setSelectedJob] = useState("");
-  const [selectedDateStart, setSelectedDateStart] = useState("");
-  const [selectedDateEnd, setSelectedDateEnd] = useState("");
-  const [selectedCost, setSelectedCost] = useState("");
-  const [selectedCost2, setSelectedCost2] = useState("");
-  const [selectedResult, setSelectedResult] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedTitle, setSelectedTitle] = useState('');
+  const [selectedJob, setSelectedJob] = useState('');
+  const [selectedDateStart, setSelectedDateStart] = useState('');
+  const [selectedDateEnd, setSelectedDateEnd] = useState('');
+  const [selectedCost, setSelectedCost] = useState('');
+  const [selectedCost2, setSelectedCost2] = useState('');
+  const [selectedResult, setSelectedResult] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
   const [showAddProcedureModal, setShowAddProcedureModal] = useState(false);
   const [procedureTypes, setProcedureTypes] = useState([]);
   const [lawyers, setLawyers] = useState([]);
   const [courts, setCourts] = useState([]);
-  const [selectedProcedureType, setSelectedProcedureType] = useState("");
-  const [selectedLawyer, setSelectedLawyer] = useState("");
-  const [selectedCourt, setSelectedCourt] = useState("");
-  const [modalMode, setModalMode] = useState("");
+  const [selectedProcedureType, setSelectedProcedureType] = useState('');
+  const [selectedLawyer, setSelectedLawyer] = useState('');
+  const [selectedCourt, setSelectedCourt] = useState('');
+  const [modalMode, setModalMode] = useState('');
   const [procedureId, setProcedureId] = useState(null);
   const user = getUser();
   useEffect(() => {
@@ -51,7 +51,7 @@ const Procedure = ({ legCaseId }) => {
         );
         setProcedures(response.data);
       } catch (error) {
-        console.log("خطأ في جلب إجراءات المحاكم:", error);
+        console.log('خطأ في جلب إجراءات المحاكم:', error);
       }
     };
 
@@ -66,7 +66,7 @@ const Procedure = ({ legCaseId }) => {
       );
       setProcedures(response.data);
     } catch (error) {
-      console.log("خطأ في جلب إجراءات المحاكم:", error);
+      console.log('خطأ في جلب إجراءات المحاكم:', error);
     }
   };
 
@@ -100,7 +100,7 @@ const Procedure = ({ legCaseId }) => {
   };
 
   const handleEditProcedure = (procedure) => {
-    setModalMode("edit");
+    setModalMode('edit');
     setProcedureId(procedure.id);
     setSelectedTitle(procedure.title);
     setSelectedJob(procedure.job);
@@ -121,13 +121,13 @@ const Procedure = ({ legCaseId }) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/procedures/${procedureId}`);
       fetchProcedures();
-      setAlert("تم حذف الإجراء بنجاح.");
+      setAlert('تم حذف الإجراء بنجاح.');
       setShowAlert(true);
       setTimeout(() => {
         setShowAlert(false);
       }, 3000);
     } catch (error) {
-      console.log("خطأ في حذف الإجراء:", error);
+      console.log('خطأ في حذف الإجراء:', error);
     }
   };
 
@@ -149,15 +149,15 @@ const Procedure = ({ legCaseId }) => {
         created_by: user.id,
       };
 
-      if (modalMode === "edit") {
+      if (modalMode === 'edit') {
         await axios.put(
           `${API_CONFIG.baseURL}/api/procedures/${procedureId}`,
           newProcedure
         );
-        setAlert("تم تحديث الإجراء بنجاح.");
+        setAlert('تم تحديث الإجراء بنجاح.');
       } else {
         await axios.post(`${API_CONFIG.baseURL}/api/procedures`, newProcedure);
-        setAlert("تم إضافة الإجراء بنجاح.");
+        setAlert('تم إضافة الإجراء بنجاح.');
       }
 
       setShowAlert(true);
@@ -169,21 +169,21 @@ const Procedure = ({ legCaseId }) => {
       setShowAddProcedureModal(false);
       clearFields();
     } catch (error) {
-      console.log("خطأ في إضافة/تحديث الإجراء:", error);
+      console.log('خطأ في إضافة/تحديث الإجراء:', error);
     }
   };
 
   const clearFields = () => {
-    setSelectedTitle("");
-    setSelectedJob("");
-    setSelectedDateStart("");
-    setSelectedDateEnd("");
-    setSelectedCost("");
-    setSelectedCost2("");
-    setSelectedResult("");
-    setSelectedProcedureType("");
-    setSelectedLawyer("");
-    setSelectedCourt("");
+    setSelectedTitle('');
+    setSelectedJob('');
+    setSelectedDateStart('');
+    setSelectedDateEnd('');
+    setSelectedCost('');
+    setSelectedCost2('');
+    setSelectedResult('');
+    setSelectedProcedureType('');
+    setSelectedLawyer('');
+    setSelectedCourt('');
   };
 
   return (
@@ -263,7 +263,7 @@ const Procedure = ({ legCaseId }) => {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {modalMode === "edit" ? "تعديل الإجراء" : "إضافة إجراء"}
+            {modalMode === 'edit' ? 'تعديل الإجراء' : 'إضافة إجراء'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -323,7 +323,7 @@ const Procedure = ({ legCaseId }) => {
               <Form.Control
                 type="number"
                 placeholder="ادخل التكلفة 2"
-                value={selectedCost2 | ""}
+                value={selectedCost2 | ''}
                 onChange={(e) => setSelectedCost2(e.target.value)}
               />
             </Form.Group>
@@ -332,7 +332,7 @@ const Procedure = ({ legCaseId }) => {
               <Form.Control
                 type="text"
                 placeholder="ادخل النتيجة"
-                value={selectedResult || ""}
+                value={selectedResult || ''}
                 onChange={(e) => setSelectedResult(e.target.value)}
               />
             </Form.Group>
@@ -386,7 +386,7 @@ const Procedure = ({ legCaseId }) => {
             </Form.Group>
             <Form.Group controlId="procedureStatus">
               <Form.Label>الحالة</Form.Label>
-              {modalMode === "edit" && ( // شرط للتحقق من وضع التعديل
+              {modalMode === 'edit' && ( // شرط للتحقق من وضع التعديل
                 <Form.Control
                   as="select"
                   value={selectedStatus}
@@ -398,7 +398,7 @@ const Procedure = ({ legCaseId }) => {
                   <option value="قيد التنفيذ">قيد التنفيذ</option>
                 </Form.Control>
               )}
-              {modalMode !== "edit" && ( // شرط للتحقق من وضع الإضافة
+              {modalMode !== 'edit' && ( // شرط للتحقق من وضع الإضافة
                 <Form.Control type="text" readOnly value="قيد التنفيذ" />
               )}
             </Form.Group>

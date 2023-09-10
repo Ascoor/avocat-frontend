@@ -1,39 +1,39 @@
-import { useState, useEffect, useCallback } from "react";
-import { Table, Button, Row, Modal, Card, Form, Alert } from "react-bootstrap";
-import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
-import axios from "axios";
-import PropTypes from "prop-types";
-import useAuth from "../../Auth/AuthUser";
-import API_CONFIG from "../../../config";
-import arEG from "date-fns/locale/ar-EG";
-import { registerLocale, setDefaultLocale } from "react-datepicker";
-import DatePicker from "react-datepicker";
+import { useState, useEffect, useCallback } from 'react';
+import { Table, Button, Row, Modal, Card, Form, Alert } from 'react-bootstrap';
+import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import useAuth from '../../Auth/AuthUser';
+import API_CONFIG from '../../../config';
+import arEG from 'date-fns/locale/ar-EG';
+import { registerLocale, setDefaultLocale } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 const LegalSession = ({ legCaseId }) => {
   LegalSession.propTypes = {
     legCaseId: PropTypes.string.isRequired,
   };
   const { getUser } = useAuth();
   const [alert, setAlert] = useState(null);
-  const [selectStatus, setSelectStatus] = useState("");
+  const [selectStatus, setSelectStatus] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const [selectedCost, setSelectedCost] = useState("");
-  const [selectedCost2, setSelectedCost2] = useState("");
+  const [selectedCost, setSelectedCost] = useState('');
+  const [selectedCost2, setSelectedCost2] = useState('');
   const [selectedSession, setSelectedSession] = useState({});
   const [legalSessions, setLegalSessions] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [rollNumber, setRollNumber] = useState("");
-  const [selectedLawyer, setSelectedLawyer] = useState("");
-  const [orders, setOrders] = useState("");
+  const [rollNumber, setRollNumber] = useState('');
+  const [selectedLawyer, setSelectedLawyer] = useState('');
+  const [orders, setOrders] = useState('');
   const [showAddLegalSessionModal, setShowAddLegalSessionModal] =
     useState(false);
   const [lawyers, setLawyers] = useState([]);
   const [courts, setCourts] = useState([]);
-  const [result, setResult] = useState("");
-  const [selectedCourt, setSelectedCourt] = useState("");
+  const [result, setResult] = useState('');
+  const [selectedCourt, setSelectedCourt] = useState('');
 
-  const [modalMode, setModalMode] = useState("");
-  registerLocale("ar_eg", arEG);
-  setDefaultLocale("ar_eg");
+  const [modalMode, setModalMode] = useState('');
+  registerLocale('ar_eg', arEG);
+  setDefaultLocale('ar_eg');
   const fetchData = useCallback(async () => {
     try {
       const [sessionsResponse, lawyersResponse, courtsResponse] =
@@ -48,7 +48,7 @@ const LegalSession = ({ legCaseId }) => {
       setLawyers(lawyersResponse.data);
       setCourts(courtsResponse.data);
     } catch (error) {
-      console.log("Error fetching data:", error);
+      console.log('Error fetching data:', error);
     }
   }, [legCaseId]);
 
@@ -67,7 +67,7 @@ const LegalSession = ({ legCaseId }) => {
         setLawyers(lawyersResponse.data);
         setCourts(courtsResponse.data);
       } catch (error) {
-        console.log("Error fetching data:", error);
+        console.log('Error fetching data:', error);
       }
     };
 
@@ -75,9 +75,9 @@ const LegalSession = ({ legCaseId }) => {
   }, [legCaseId]);
 
   const handleEditLegalSession = (legalSession) => {
-    setModalMode("edit");
+    setModalMode('edit');
     setSelectedSession(legalSession);
-    setSelectedDate(new Date(legalSession.date.split("T")[0])); // Parse the date string into a Date object
+    setSelectedDate(new Date(legalSession.date.split('T')[0])); // Parse the date string into a Date object
     setSelectStatus(legalSession.status);
     setSelectedLawyer(legalSession.lawyer_id);
     setRollNumber(legalSession.roll_number);
@@ -92,7 +92,7 @@ const LegalSession = ({ legCaseId }) => {
 
   const handleAddOrUpdateLegalSession = async () => {
     const dateOnly = selectedDate
-      ? selectedDate.toISOString().split("T")[0]
+      ? selectedDate.toISOString().split('T')[0]
       : null;
     const data = {
       date: dateOnly,
@@ -106,21 +106,21 @@ const LegalSession = ({ legCaseId }) => {
       leg_case_id: legCaseId,
       created_by: getUser().id,
     };
-    if (modalMode === "edit") {
+    if (modalMode === 'edit') {
       data.status = selectStatus;
     }
 
     try {
-      if (modalMode === "add") {
+      if (modalMode === 'add') {
         await axios.post(`${API_CONFIG.baseURL}/api/legal_sessions`, data);
         fetchData();
         setTimeout(() => {
           setShowAlert(false);
         }, 5000);
 
-        setAlert({ variant: "info", message: "تمت الإضافة بنجاح." });
+        setAlert({ variant: 'info', message: 'تمت الإضافة بنجاح.' });
         setShowAlert(true);
-      } else if (modalMode === "edit") {
+      } else if (modalMode === 'edit') {
         await axios.put(
           `${API_CONFIG.baseURL}/api/legal_sessions/${selectedSession.id}`,
           data
@@ -131,7 +131,7 @@ const LegalSession = ({ legCaseId }) => {
           setShowAlert(false);
         }, 5000);
 
-        setAlert({ variant: "info", message: "تم التعديل بنجاح." });
+        setAlert({ variant: 'info', message: 'تم التعديل بنجاح.' });
         setShowAlert(true);
       }
 
@@ -144,15 +144,15 @@ const LegalSession = ({ legCaseId }) => {
       }, 5000);
 
       setAlert({
-        variant: "danger",
-        message: "حدث خطأ أثناء عملية التعديل.",
+        variant: 'danger',
+        message: 'حدث خطأ أثناء عملية التعديل.',
       });
       setShowAlert(true);
     }
   };
 
   const handleAddLegalSession = () => {
-    setModalMode("add");
+    setModalMode('add');
     setShowAddLegalSessionModal(true);
   };
 
@@ -160,13 +160,13 @@ const LegalSession = ({ legCaseId }) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/legal_sessions/${id}`);
       fetchData();
-      setAlert({ variant: "success", message: "تم الحذف بنجاح" });
+      setAlert({ variant: 'success', message: 'تم الحذف بنجاح' });
       setShowAlert(true);
     } catch (error) {
-      console.log("خطأ في حذف الجلسة القانونية:", error);
+      console.log('خطأ في حذف الجلسة القانونية:', error);
       setAlert({
-        variant: "danger",
-        message: "حدث خطأ أثناء حذف الجلسة القانونية",
+        variant: 'danger',
+        message: 'حدث خطأ أثناء حذف الجلسة القانونية',
       });
       setShowAlert(true);
     }
@@ -174,15 +174,15 @@ const LegalSession = ({ legCaseId }) => {
 
   const handleCloseModal = () => {
     fetchData();
-    setModalMode("");
+    setModalMode('');
     setSelectedSession({});
-    setSelectedDate("");
-    setSelectStatus("");
-    setSelectedLawyer("");
-    setRollNumber("");
-    setOrders("");
-    setSelectedCourt("");
-    setResult("");
+    setSelectedDate('');
+    setSelectStatus('');
+    setSelectedLawyer('');
+    setRollNumber('');
+    setOrders('');
+    setSelectedCourt('');
+    setResult('');
     setShowAddLegalSessionModal(false);
   };
 
@@ -267,7 +267,7 @@ const LegalSession = ({ legCaseId }) => {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {modalMode === "add" ? "إضافة جلسة جديدة" : "تعديل جلسة"}
+            {modalMode === 'add' ? 'إضافة جلسة جديدة' : 'تعديل جلسة'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -283,7 +283,7 @@ const LegalSession = ({ legCaseId }) => {
               />
             </Form.Group>
 
-            {modalMode === "edit" && (
+            {modalMode === 'edit' && (
               <Form.Group controlId="status">
                 <Form.Label>حالة الجلسة</Form.Label>
                 <Form.Control
@@ -360,7 +360,7 @@ const LegalSession = ({ legCaseId }) => {
               <Form.Control
                 type="number"
                 placeholder="ادخل التكلفة 2"
-                value={selectedCost2 | ""}
+                value={selectedCost2 | ''}
                 onChange={(e) => setSelectedCost2(e.target.value)}
               />
             </Form.Group>
@@ -380,7 +380,7 @@ const LegalSession = ({ legCaseId }) => {
             إلغاء
           </Button>
           <Button variant="primary" onClick={handleAddOrUpdateLegalSession}>
-            {modalMode === "add" ? "إضافة" : "تعديل"}
+            {modalMode === 'add' ? 'إضافة' : 'تعديل'}
           </Button>
         </Modal.Footer>
       </Modal>

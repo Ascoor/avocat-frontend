@@ -10,4 +10,3 @@ export { default as LawyerIcon } from './lawyer.png';
 export { default as JudgeIcon } from './court_judge.png';
 export { default as BgFloat } from './bg-float.png';
 export { default as LogoNav } from './logo512.png';
- 

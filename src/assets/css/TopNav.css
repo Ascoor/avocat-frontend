@@ -6,16 +6,18 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background: linear-gradient(135deg, #03132c, #332203);
-  color: #fff;
+  background-color: #273746; /* Background color */
+  color: #ffffff; /* Text color */
   box-shadow: 0 4px 60px rgba(134, 99, 99, 0.1);
   transition: transform 0.3s ease-in-out;
 }
 
 .Brand-Logo {
-  color: #fff;
+  color: #ffffff;
   text-decoration: none;
   font-weight: bold;
+  font-size: 1.5rem;
+  font-family: 'Cairo', sans-serif;
 }
 
 .navbar-brand img {
@@ -29,18 +31,18 @@
   align-items: center;
 }
 
-.search-form input[type="text"] {
+.search-form input[type='text'] {
   padding: 0.5rem;
   border: none;
   border-radius: 5px;
 }
 
-.search-form button[type="submit"] {
-  background: none;
+.search-form button[type='submit'] {
+  background-color: #3a4f63; /* Background color */
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
-  color: #fff;
+  color: #ffffff; /* Text color */
   margin-left: 0.5rem;
 }
 
@@ -57,11 +59,11 @@
 }
 
 .notification-button {
-  background: none;
+  background-color: #3a4f63; /* Background color */
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
-  color: #fff;
+  color: #ffffff; /* Text color */
   position: relative;
 }
 
@@ -70,7 +72,7 @@
   top: -5px;
   right: -5px;
   background-color: #d9534f;
-  color: #fff;
+  color: #ffffff;
   border-radius: 50%;
   padding: 4px 6px;
   font-size: 0.8rem;
@@ -93,18 +95,4 @@
 
 .sidebar-open .top-nav {
   margin-right: 170px;
-}
-
-/* Responsive Styles for Small Screens */
-@media (max-width: 768px) {
-  .navbar-toggler {
-    margin-right: 0.5rem;
-  }
-  .search-form {
-    display: none;
-  }
-
-  .user-profile {
-    margin-right: 0.5rem;
-  }
 }

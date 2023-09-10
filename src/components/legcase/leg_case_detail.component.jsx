@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import API_CONFIG from "../../config";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import API_CONFIG from '../../config';
 import {
   Col,
   Row,
@@ -11,19 +11,19 @@ import {
   Table,
   Button,
   Form,
-} from "react-bootstrap";
-import { BiMinusCircle, BiPlusCircle } from "react-icons/bi";
-import { BsPersonFillX } from "react-icons/bs";
-import Procedure from "./tools/procedure.component";
-import LegalSession from "./tools/Legal_session.component";
-import LegCaseClients from "./tools/legal_clients.component";
+} from 'react-bootstrap';
+import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
+import { BsPersonFillX } from 'react-icons/bs';
+import Procedure from './tools/procedure.component';
+import LegalSession from './tools/Legal_session.component';
+import LegCaseClients from './tools/legal_clients.component';
 
-import { LegCaseDetailsIcon } from "../../assets/icons";
-import LegalAd from "./tools/legal_ad.component";
+import { LegCaseDetailsIcon } from '../../assets/icons';
+import LegalAd from './tools/legal_ad.component';
 export default function LegCaseDetail() {
   const { id } = useParams();
   const [legCase, setLegCase] = useState(null);
-  const [key, setKey] = useState("procedure");
+  const [key, setKey] = useState('procedure');
   const [courts, setCourts] = useState([]);
   const [legCaseCourts, setLegCaseCourts] = useState([]);
   const [legCaseNewCourts, setLegCaseNewCourts] = useState([]);
@@ -59,7 +59,7 @@ export default function LegCaseDetail() {
   const handleAddNewCourt = () => {
     setLegCaseNewCourts((prevCourts) => [
       ...prevCourts,
-      { case_number: "", case_year: "", court_id: "", judge_level: "" },
+      { case_number: '', case_year: '', court_id: '', judge_level: '' },
     ]);
   };
 
@@ -83,7 +83,7 @@ export default function LegCaseDetail() {
     <Card>
       <Card.Header>
         <div className="custom-card-header">
-          <h3 style={{ fontWeight: "bold" }}>بيانات القضية</h3>
+          <h3 style={{ fontWeight: 'bold' }}>بيانات القضية</h3>
           <img src={LegCaseDetailsIcon} alt="Icon" className="leg-case-icon" />
         </div>
       </Card.Header>
@@ -99,10 +99,10 @@ export default function LegCaseDetail() {
                   lg={12}
                   className="data-box bg-danger text-white"
                 >
-                  <div style={{ color: "#fdff00" }} className="data-label">
+                  <div style={{ color: '#fdff00' }} className="data-label">
                     موضوع القضية
                   </div>
-                  <div style={{ color: "#ffffff" }} className="data-value">
+                  <div style={{ color: '#ffffff' }} className="data-value">
                     {legCase.title}
                   </div>
                 </Col>
@@ -115,10 +115,10 @@ export default function LegCaseDetail() {
                   lg={12}
                   className="data-box bg-dark text-white"
                 >
-                  <div style={{ color: "#ff0000" }} className="data-label">
+                  <div style={{ color: '#ff0000' }} className="data-label">
                     تفاصيل القضية
                   </div>
-                  <div style={{ color: "#ffff" }} className="data-value">
+                  <div style={{ color: '#ffff' }} className="data-value">
                     {legCase.description}
                   </div>
                 </Col>
@@ -134,7 +134,7 @@ export default function LegCaseDetail() {
                   <div className="data-label text-center">
                     رقم الملف بالمكتب
                   </div>
-                  <div className="data-value" style={{ color: "white" }}>
+                  <div className="data-value" style={{ color: 'white' }}>
                     {legCase.slug}
                   </div>
                 </Col>
@@ -180,7 +180,7 @@ export default function LegCaseDetail() {
                   className="data-box bg-primary text-white"
                 >
                   <div className="data-label">تصنيف القضية</div>
-                  <div style={{ color: "#ffffff" }} className="data-value">
+                  <div style={{ color: '#ffffff' }} className="data-value">
                     {legCase.case_type?.name}
                   </div>
                 </Col>
@@ -208,7 +208,7 @@ export default function LegCaseDetail() {
 
       <Card.Header>
         <div className="custom-card-header">
-          <h3 style={{ fontWeight: "bold" }}>بيانات المحاكم</h3>
+          <h3 style={{ fontWeight: 'bold' }}>بيانات المحاكم</h3>
           <Button
             className="btn btn-sm btn-start"
             variant="warning"
@@ -253,7 +253,7 @@ export default function LegCaseDetail() {
                         onChange={(e) =>
                           handleNewCourtChange(
                             index,
-                            "case_number",
+                            'case_number',
                             e.target.value
                           )
                         }
@@ -269,7 +269,7 @@ export default function LegCaseDetail() {
                         onChange={(e) =>
                           handleNewCourtChange(
                             index,
-                            "case_year",
+                            'case_year',
                             e.target.value
                           )
                         }
@@ -292,7 +292,7 @@ export default function LegCaseDetail() {
                         onChange={(e) =>
                           handleNewCourtChange(
                             index,
-                            "court_id",
+                            'court_id',
                             e.target.value
                           )
                         }
@@ -315,7 +315,7 @@ export default function LegCaseDetail() {
                         onChange={(e) =>
                           handleNewCourtChange(
                             index,
-                            "judge_level",
+                            'judge_level',
                             e.target.value
                           )
                         }

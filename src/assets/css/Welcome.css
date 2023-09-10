@@ -1,73 +1,73 @@
-
 /**Welcome Page***/
 
-
-.welcome-card-body{
+.welcome-card-body {
   width: 350px;
   justify-content: center;
   height: 70%;
 }
-.welcome-card-title{
+.welcome-card-title {
   color: #dc3545;
 }
-.card-text-center{
+.card-text-center {
   text-align: center;
   justify-content: center;
 
   width: 800px;
   width: 800px;
-
-
 }
-  /* Add space at the bottom of the calendar container to prevent it from being covered by the footer */
-  .calendar-container {
-    padding-bottom: 100px; /* Adjust the value as needed */
+/* Add space at the bottom of the calendar container to prevent it from being covered by the footer */
+.calendar-container {
+  padding-bottom: 100px; /* Adjust the value as needed */
+}
+
+.navbar-hidden {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.welcome-container {
+  position: relative;
+  background-image: url('./images/welcome.jpg');
+  background-size: contain;
+}
+.masthead {
+  background-image: url('./images/welcome.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+.welcome-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('./images/bg-pattern.png');
+  background-size: cover-image;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .welcome-container {
+    padding: 20px;
   }
-  
-    .navbar-hidden {
-      transform: translateY(-100%);
-      transition: transform 0.3s ease;
-    }
-    
-    .welcome-container {
-      position: relative;
-      background-image: url('./images/welcome.jpg');
-      background-size: contain;
-    }
-    .masthead{
-          background-image: url('./images/welcome.jpg');
-          background-size: cover;
-          background-repeat: no-repeat;
-          height: 100%;
-        
-    }
-    .welcome-container::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: url('./images/bg-pattern.png');
-      background-size: cover-image;
-      opacity: 0.5;
-      z-index: 1;
-    }
-    
-    @media (max-width: 768px) {
-      .welcome-container {
-        padding: 20px;
-      }
-    }
+}
 /* Add this CSS to your external stylesheet or style module */
 
 .glass-card {
-  background-color: rgba(255, 255, 255, 0.15); /* Adjust the opacity as needed */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.15
+  ); /* Adjust the opacity as needed */
   backdrop-filter: blur(10px); /* Adjust the blur value as needed */
   border: none; /* Remove default card border */
   border-radius: 50px; /* Apply rounded corners */
   padding: 20px; /* Adjust padding as needed */
-  width: 1  8rem;
+  width: 1 8rem;
   margin: auto; /* Center the card */
   margin-top: 15px;
 }
@@ -86,83 +86,80 @@
   font-size: 16px; /* Adjust font size as needed */
 }
 
-    /*
+/*
     ----------------------------------------------
     # Footer Welcom
     --------------------------------------------------------------*/
-    .footer-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(rgb(11 22 26), rgb(14 48 66), rgb(10 18 24));
-      direction: rtl;
-      color: #fff;
-      padding: 10px 0;
-      text-align: center;
-    }
-    
-    /* Make the footer content responsive */
-    .footer-container p {
-      margin: 0;
-      font-size: 14px; /* Adjust as needed */
-    }
-    
-    /* Media query for small screens */
-    @media (max-width: 768px) {
-      .footer-container {
-        flex-direction: column;
-        padding: 20px 0;
-      }
-    
-      .footer-container p {
-        margin-bottom: 10px;
-      }
-    }
-    
-    /**Welcome Page End***/
-  
-    /**Login Page ***/
-    .login-btn{
-      background-color: #0da73b;
-      color: #FFFFFF  ;
-            padding: 10px;
-            border-radius: 20px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
-    }
-    .login-btn:hover{
-      background-color: #ffc108;
-    }
-    /**Guest Page ***/
-    
-  .guest_card__content {
-    display: flex;
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgb(11 22 26), rgb(14 48 66), rgb(10 18 24));
+  direction: rtl;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+/* Make the footer content responsive */
+.footer-container p {
+  margin: 0;
+  font-size: 14px; /* Adjust as needed */
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .footer-container {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    }
-    
-    .guest_card__title {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    }
-    
-    .guest_card__description {
-    font-size: 1rem;
-    text-align: center;
-    color: #999;
-    line-height: 1.5;
-    }
-    .change-btn {
-      margin-bottom: 12px;
-    background-color: #7f060e;
+    padding: 20px 0;
   }
-  
-  .change-btn:hover {
-    background-color: #ffc108;
+
+  .footer-container p {
+    margin-bottom: 10px;
   }
-  
-    /**Guest Page End***/
-  
-  
+}
+
+/**Welcome Page End***/
+
+/**Login Page ***/
+.login-btn {
+  background-color: #0da73b;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.login-btn:hover {
+  background-color: #ffc108;
+}
+/**Guest Page ***/
+
+.guest_card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.guest_card__title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.guest_card__description {
+  font-size: 1rem;
+  text-align: center;
+  color: #999;
+  line-height: 1.5;
+}
+.change-btn {
+  margin-bottom: 12px;
+  background-color: #7f060e;
+}
+
+.change-btn:hover {
+  background-color: #ffc108;
+}
+
+/**Guest Page End***/

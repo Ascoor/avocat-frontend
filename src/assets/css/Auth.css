@@ -1,9 +1,11 @@
+/* Auth App CSS */
+
 /* Use Cairo font */
 body {
   font-family: 'Cairo', sans-serif;
   background-color: rgb(255, 255, 255);
-
 }
+
 .admin-dashboard {
   display: flex;
   flex-direction: row-reverse; /* RTL layout */
@@ -13,8 +15,16 @@ body {
 .admin-dashboard.sidebar-open .sidebar {
   transform: translateX(0);
 }
+
 /* Reset default margin and padding */
-body, div, h1, h2, h3, p, ul, li {
+body,
+div,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
   margin: 0;
   padding: 0;
 }

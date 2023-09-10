@@ -305,10 +305,7 @@ const Home = () => {
         </Col>
       </Row>
       <Row>
-
-            <Calendar />
-  
- 
+        <Calendar />
       </Row>
     </>
   );

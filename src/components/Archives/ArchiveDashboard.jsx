@@ -14,7 +14,9 @@ function ArchiveDashboard() {
               <Card.Body>
                 <h5>القسم الأول</h5>
                 <p>محتوى القسم الأول...</p>
-                <Link to="/archives/wordpadeditor" className="btn btn-primary">استكشاف</Link>
+                <Link to="/archives/wordpadeditor" className="btn btn-primary">
+                  استكشاف
+                </Link>
               </Card.Body>
             </Card>
           </Col>

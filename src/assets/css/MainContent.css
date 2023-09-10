@@ -1,35 +1,26 @@
-/* MainContent.css */
-
-
+/* MainContent Styles */
 .main-content {
-  margin-right: 50px; /* Adjust this value based on your sidebar width */
-  margin-left: 20px; /* Adjust this value based on your sidebar width */
-  padding-top: 60px; /* Adjust this value based on your top navigation height */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
   transition: margin-right 0.3s ease-in-out;
-  text-align: center; /* Center align the content */
-
-    padding: 20px;
-  
+  height: 100%; /* Ensure the content fills the entire height */
 }
+
 .main-content.sidebar-open {
   margin-right: 270px; /* Adjust this value based on your sidebar width */
-  margin-left: 20px; /* Adjust this value based on your sidebar width */
 }
 
-/* Media Query for Small Screens */
+/* Center-align content for screens smaller than 768px */
 @media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    right: -100%;
-  }
-
-  .sidebar.open {
-    right: 0;
-  }
-
-
-
   .main-content.sidebar-open {
     margin-right: 0;
   }
+}
+
+/* Style the inner content */
+.content-inner {
+  padding: 20px; /* Adjust padding as needed */
+  max-width: 100%; /* Make it responsive */
+  text-align: center; /* Center align the content */
 }
