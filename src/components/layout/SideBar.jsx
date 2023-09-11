@@ -48,7 +48,7 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
       </div>
 
       <ul className="sidebar-nav">
-        <li >
+        <li>
           <Link to="/">
             <FaHome className="m-1" size={25} />
             الصفحة الرئيسية
@@ -60,43 +60,43 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
             المحامون
           </Link>
         </li>
-        <li >
+        <li>
           <Link to="/clients">
             <FaUser className="m-2" size={25} />
             الموكلين
           </Link>
         </li>
 
-        <li >
+        <li>
           <Link to="/legcases">
             <FaFileAlt className="m-2" size={25} />
             القضايا
           </Link>
         </li>
-        <li >
+        <li>
           <Link to="/services">
             <FaBriefcase className="m-2" size={25} /> الخدمات
           </Link>
         </li>
-        <li >
+        <li>
           <Link to="/procedures">
             <FaTasks className="m-2" size={25} /> الإجراءات
           </Link>
         </li>
 
-        <li >
+        <li>
           <Link to="/archives">
             <FaArchive className="m-2" size={25} />
             الأرشيف{' '}
           </Link>
         </li>
-        <li >
+        <li>
           <Link to="/courts">
             <FaCog className="m-1" size={25} />
             اعدادات المحاكم
           </Link>
         </li>
-        <li >
+        <li>
           <Link to="/cases_setting">
             <FaCog className="m-1" size={25} /> اعدادات القضايا
           </Link>

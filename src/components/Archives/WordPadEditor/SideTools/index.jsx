@@ -1,15 +1,26 @@
 import React from 'react';
-import './styles.css';
+import './SideTools.css';
 
 const Sidebar = ({ setStyle }) => {
+  const applyColor = (color) => {
+    setStyle('color', color);
+  };
+
+  const applyFontSize = (size) => {
+    setStyle('fontSize', size);
+  };
+
   return (
     <div className="sidebar">
-      <button onClick={() => setStyle('textAlign', 'left')}>Align Left</button>
-      <button onClick={() => setStyle('textAlign', 'center')}>Center</button>
-      <button onClick={() => setStyle('textAlign', 'right')}>Align Right</button>
-      <button onClick={() => setStyle('color', 'red')}>Red</button>
-      <button onClick={() => setStyle('color', 'green')}>Green</button>
-      <button onClick={() => setStyle('color', 'blue')}>Blue</button>
+      <button onClick={() => applyColor('red')}>Red</button>
+      <button onClick={() => applyColor('green')}>Green</button>
+      <button onClick={() => applyColor('blue')}>Blue</button>
+
+      <button onClick={() => applyFontSize('12px')}>Small</button>
+      <button onClick={() => applyFontSize('16px')}>Medium</button>
+      <button onClick={() => applyFontSize('20px')}>Large</button>
+
+      {/* Add more tools */}
     </div>
   );
 };

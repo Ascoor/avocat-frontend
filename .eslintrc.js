@@ -1,29 +1,18 @@
-module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    node: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:prettier/recommended',
-  ],
+export default {
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
   parserOptions: {
     ecmaVersion: 2021,
     sourceType: 'module',
-  },
-  settings: {
-    react: {
-      version: 'detect',
+    ecmaFeatures: {
+      jsx: true,
     },
   },
-  plugins: ['react', 'react-hooks'],
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  plugins: ['react'],
   rules: {
-    // Define ESLint rules here
-    'react/jsx-uses-react': 'off', // Disable the 'react/jsx-uses-react' rule
-    'react/react-in-jsx-scope': 'off', // Disable the 'react/react-in-jsx-scope' rule
-    'no-console': 'error', // Display console.log() as an error
+    // Your ESLint rules here
   },
 };

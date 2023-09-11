@@ -4,10 +4,7 @@ import '../../assets/css/MainContent.css';
 
 const MainContent = ({ sidebarOpen }) => {
   return (
-    <div
-      className={`main-content ${sidebarOpen ? 'sidebar-open' : ''}`}
-
-    >
+    <div className={`main-content ${sidebarOpen ? 'sidebar-open' : ''}`}>
       <AuthRoutes />
     </div>
   );

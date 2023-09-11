@@ -19,7 +19,7 @@ import WordPadEditor from '../Archives/WordPadEditor/WordPadEditor';
 const AuthRoutes = () => {
   return (
     <div>
-       <Routes>
+      <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/procedures" element={<ProcedureSearch />} />
         <Route path="/clients" element={<ClientsList />} />

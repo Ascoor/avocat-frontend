@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FcFullTrash } from 'react-icons/fc';
-import { Row, Col, Button, Modal, Form, Card } from 'react-bootstrap';
+import { Row, Col, Button, Modal, Alert, Form, Card } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
@@ -11,18 +11,27 @@ const Court = () => {
   const [courtSubTypes, setCourtSubTypes] = useState([]);
   const [courtLevels, setCourtLevels] = useState([]);
   const [courts, setCourts] = useState([]);
-
-  const [courtTypeId, setCourtTypeId] = useState('');
   const [newCourtTypeId, setNewCourtTypeId] = useState('');
   const [newCourtSubTypeId, setNewCourtSubTypeId] = useState('');
+  const [courtTypeId, setCourtTypeId] = useState('');
   const [newCourtLevelId, setNewCourtLevelId] = useState('');
   const [newCourtName, setNewCourtName] = useState('');
   const [newCourtAddress, setNewCourtAddress] = useState('');
   const [error, setError] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [alertVariant, setAlertVariant] = useState('success');
   const [showAddCourtModal, setShowAddCourtModal] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // You can change this value as needed
 
+  useEffect(() => {
+    if (error) {
+      setShowAlert(true);
+      setAlertMessage('An error has occurred.');
+    }
+  }, [error]);
   useEffect(() => {
     fetchCourts();
     fetchCourtTypes();
@@ -59,7 +68,7 @@ const Court = () => {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/courts/`);
       setCourts(response.data);
     } catch (error) {
-      setError('حدث خطأ في استرجاع المحاكم');
+      setAlertVariant('حدث خطأ في استرجاع المحاكم');
       console.error('حدث خطأ في استرجاع المحاكم: ', error);
     }
   };
@@ -145,9 +154,31 @@ const Court = () => {
         }, 5000);
       });
   };
-  const handleDelete = (id, name, endpoint) => {
-    // Your code to handle deleting a court
-    // ...
+  const handleDelete = (id) => {
+    // Your code to handle deletion
+    fetch(`${API_CONFIG.baseURL}/api/courts/${id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        fetchCourts();
+        setShowAlert(true);
+        setAlertMessage(
+          `تمت إزالة المحكمة بنجاح. البيانات: ${JSON.stringify(data)}`
+        );
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 5000);
+      })
+      .catch((error) => {
+        setError('حدث خطأ في إزالة المحكمة');
+        console.error('حدث خطأ في إزالة المحكمة: ', error);
+        setShowAlert(true);
+        setAlertMessage('فشل في إزالة المحكمة.');
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 5000);
+      });
   };
 
   const handlePageChange = (pageNumber) => {
@@ -159,84 +190,74 @@ const Court = () => {
     <>
       <Card>
         <Row>
-          <Col>
-            <Card.Header className="court-setting-card-header">
-              <h3 style={{ color: '#006e5d' }}>المحاكم</h3>
-            </Card.Header>
-            <Button
-              onClick={() => setShowAddCourtModal(true)}
-              variant="primary"
-            >
-              إضافة محكمة
-            </Button>
-
-            <Card.Body className="court-index">
-              <Row>
-                <Col>
-                  <Table striped bordered hover responsive>
-                    <thead className="table-success text-center">
-                      <tr
-                        style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
+          <Card.Header
+            style={{ backgroundColor: 'beige' }}
+            className="text-center"
+          >
+            <h3 style={{ color: '#006e5d' }}>المحاكم</h3>
+          </Card.Header>
+          <Card.Body>
+            <Table striped bordered hover>
+              <thead
+                style={{
+                  backgroundColor: '#D1ECF1',
+                  color: '#0C5460',
+                }}
+              >
+                <tr
+                  style={{
+                    backgroundColor: '#D1ECF1',
+                    color: '#0C5460',
+                  }}
+                >
+                  <th>الاسم</th>
+                  <th>النوع</th>
+                  <th>النوع الفرعي</th>
+                  <th>المستوى</th>
+                  <th>العنوان</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                {courts.map((court, index) => (
+                  <tr
+                    key={index}
+                    style={{
+                      backgroundColor: '#D1ECF1',
+                      color: '#0C5460',
+                    }}
+                  >
+                    <td>{court.name}</td>
+                    <td>{court.court_type.name}</td>
+                    <td>{court.court_sub_type.name}</td>
+                    <td>{court.court_level.name}</td>
+                    <td>{court.address}</td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        onClick={() =>
+                          handleDelete(court.id, court.name, 'courts')
+                        }
                       >
-                        <th>الاسم</th>
-                        <th>النوع</th>
-                        <th>النوع الفرعي</th>
-                        <th>المستوى</th>
-                        <th>العنوان</th>
-                        <th>الإجراءات</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {courts
-                        .slice(
-                          (currentPage - 1) * itemsPerPage,
-                          currentPage * itemsPerPage
-                        )
-                        .map((court) => (
-                          <tr
-                            style={{
-                              backgroundColor: '#D1ECF1',
-                              color: '#0C5460',
-                            }}
-                            key={court.id}
-                          >
-                            <td>{court.name}</td>
-                            <td>{court.court_type.name}</td>
-                            <td>{court.court_sub_type.name}</td>
-                            <td>{court.court_level.name}</td>
-                            <td>{court.address}</td>
-                            <td>
-                              <Button
-                                variant="danger"
-                                onClick={() =>
-                                  handleDelete(court.id, court.name, 'courts')
-                                }
-                              >
-                                <FcFullTrash />
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
-                    </tbody>
-                  </Table>
-                </Col>
-              </Row>
-            </Card.Body>
-            <Card.Footer>
-              <Row>
-                <Col>
-                  <CustomPagination
-                    totalCount={totalCourts}
-                    itemsPerPage={itemsPerPage}
-                    currentPage={currentPage}
-                    onPageChange={handlePageChange}
-                  />
-                </Col>
-              </Row>
-            </Card.Footer>
-          </Col>
+                        حذف
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Card.Body>
+          <Card.Footer>
+            <CustomPagination
+              totalCount={data.length}
+              itemsPerPage={5}
+              currentPage={1}
+              onPageChange={() => {}}
+            />
+          </Card.Footer>
         </Row>
       </Card>
+
       <Modal
         show={showAddCourtModal}
         onHide={() => setShowAddCourtModal(false)}
@@ -253,7 +274,7 @@ const Court = () => {
                 value={newCourtTypeId}
                 onChange={(e) => {
                   const selectedTypeId = e.target.value;
-                  setCourtTypeId(selectedTypeId);
+                  setSelectedCourtTypeId(selectedTypeId);
                   setNewCourtTypeId(selectedTypeId);
                 }}
               >
@@ -275,10 +296,13 @@ const Court = () => {
               >
                 <option value="">اختر نوع المحكمة الفرعي</option>
 
-                {courtSubTypes.length > 0 &&
-                  courtSubTypes.map((courtSubType) => (
-                    <option key={courtSubType.id} value={courtSubType.id}>
-                      {courtSubType.name}
+                {courtTypeSubTypes.length > 0 &&
+                  courtTypeSubTypes.map((courtTypeSubType) => (
+                    <option
+                      key={courtTypeSubType.id}
+                      value={courtTypeSubType.id}
+                    >
+                      {courtTypeSubType.name}
                     </option>
                   ))}
               </Form.Control>
