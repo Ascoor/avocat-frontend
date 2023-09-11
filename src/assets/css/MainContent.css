@@ -1,9 +1,9 @@
 /* MainContent Styles */
 .main-content {
-  display: flex;
+  display:grid;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
-  transition: margin-right 0.3s ease-in-out;
+  transition: margin-right 0.1s ease-in-out;
   height: 100%; /* Ensure the content fills the entire height */
 }
 

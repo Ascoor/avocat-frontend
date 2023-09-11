@@ -1,83 +1,16 @@
-/* WordPadEditor.css */
-
-/* Main WordPadEditor container */
-.wordpad-editor {
-  background-color: #f0f0f0;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Toolbar styles */
-.wordpad-toolbar {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  border-radius: 4px 4px 0 0;
-}
-
-.wordpad-toolbar select,
-.wordpad-toolbar input[type='color'],
-.wordpad-toolbar button {
-  margin-right: 10px;
-  margin-bottom: 5px;
-  padding: 5px;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  background-color: #555;
-  cursor: pointer;
-}
-
-.wordpad-toolbar select:focus,
-.wordpad-toolbar input[type='color']:focus,
-.wordpad-toolbar button:focus {
-  outline: none;
-}
-
-/* Content area styles */
-.react-quill {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-}
-
 .toolbar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  border-bottom: 1px solid #ccc;
+  background-color: #f1f1f1;
+  padding: 10px;
 }
 
 .toolbar select,
-.toolbar input,
 .toolbar button {
+  margin-right: 5px;
   padding: 5px;
-  border: none;
-  border-radius: 3px;
-  font-size: 14px;
-}
-
-.toolbar select {
-  background-color: #444;
-  color: white;
-}
-
-.toolbar input[type='color'] {
-  padding: 0;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
 }
 
 .toolbar button {
-  background-color: #007bff;
-  color: white;
   cursor: pointer;
 }
-
-.toolbar button:hover {
-  background-color: #0056b3;
-}
-
-/* Add more custom styles as needed */

@@ -18,10 +18,8 @@ import Archives from '../Archives/ArchiveDashboard';
 import WordPadEditor from '../Archives/WordPadEditor/WordPadEditor';
 const AuthRoutes = () => {
   return (
-    <div className="neon-light">
-      {' '}
-      {/* Use className instead of class */}
-      <Routes>
+    <div>
+       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/procedures" element={<ProcedureSearch />} />
         <Route path="/clients" element={<ClientsList />} />

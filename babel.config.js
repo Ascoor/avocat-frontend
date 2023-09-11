@@ -5,7 +5,7 @@ module.exports = function (api) {
   const plugins = [
     '@babel/plugin-transform-class-properties',
     '@babel/plugin-transform-object-rest-spread',
-    // ... other plugins
+    '@babel/plugin-syntax-class-properties',
   ];
 
   return {
