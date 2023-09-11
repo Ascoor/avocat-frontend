@@ -1,99 +1,72 @@
+// WordPadEditor.js
 import React, { useState, useEffect, useRef } from 'react';
 import TopTools from './TopTools/';
 import Sidebar from './SideTools/index';
 import EditorTools from './EditorTools/index';
+import { initialStyles, toggleStyle, setStyle } from './editorFunctions';
+import './WordPadEditor.css';
 
+import { saveAs } from 'file-saver';
 const WordPadEditor = () => {
+  // State Variables and Refs
   const [content, setContent] = useState('');
-  const [styles, setStyles] = useState({
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    textDecoration: 'none',
-    textAlign: 'left',
-    color: 'black',
-    fontFamily: 'Arial',
-    fontSize: '16px',
-  });
-  const [history, setHistory] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [styles, setStyles] = useState(initialStyles());
+
   const editorRef = useRef(null);
 
-  // Helper function to set the content and update the history
-  const updateContent = (newContent) => {
-    setContent(newContent);
-    setHistory((prevHistory) => {
-      const newHistory = prevHistory.slice(0, currentIndex + 1);
-      newHistory.push(newContent);
-      return newHistory;
-    });
-    setCurrentIndex((prevIndex) => prevIndex + 1);
+  const handleChange = (value) => {
+    setContent(value);
   };
 
-  // Debounce content updates
+  // If you plan on implementing history (undo/redo), consider this
+  const [history, setHistory] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      updateContent(content);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [content]);
+    setStyles(initialStyles());
+  }, []);
 
-  // Undo/Redo Logic
-  const undo = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prevIndex) => prevIndex - 1);
-      setContent(history[currentIndex - 1]);
-    }
+  const saveFile = () => {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    saveAs(blob, 'document.txt');
   };
 
-  const redo = () => {
-    if (currentIndex < history.length - 1) {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
-      setContent(history[currentIndex + 1]);
-    }
+  const createNew = () => {
+    setContent('');
   };
 
-  const handleSaveDocx = () => {
-    // Implement logic for saving the content as .docx
+  const importFile = async () => {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.txt';
+    fileInput.onchange = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsText(file, 'UTF-8');
+      reader.onload = (readerEvent) => {
+        setContent(readerEvent.target.result);
+      };
+    };
+    fileInput.click();
   };
 
-  const toggleStyle = (styleKey, activeValue, defaultValue) => {
-    setStyles((prevStyles) => ({
-      ...prevStyles,
-      [styleKey]: prevStyles[styleKey] === defaultValue ? activeValue : defaultValue,
-    }));
-  };
-
-  const setStyle = (styleKey, value) => {
-    setStyles((prevStyles) => ({
-      ...prevStyles,
-      [styleKey]: value,
-    }));
+  const exportFile = () => {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    saveAs(blob, 'exported-document.txt');
   };
 
   return (
-    <div className="App">
+    <div className="EditorWord" style={{ direction: 'rtl' }}>
       <TopTools
-        styles={styles}
-        toggleStyle={toggleStyle}
-        setStyle={setStyle}
-        handleSaveDocx={handleSaveDocx}
-        undo={undo}
-        redo={redo}
+        saveFile={saveFile}
+        createNew={createNew}
+        importFile={importFile}
+        exportFile={exportFile}
+        // ...existing props
       />
-      <Sidebar setStyle={setStyle} />
-          <EditorTools/>
-      <div className="workspace">
-        <div
-          ref={editorRef}
-          className="editor"
-          style={styles}
-          contentEditable
-          onInput={(e) => setContent(e.currentTarget.textContent)}
-        >
-          {content}
 
-        </div>
-      </div>
+      <Sidebar setStyle={(key, value) => setStyle(setStyles, key, value)} />
+      <EditorTools content={content} setContent={handleChange} />
     </div>
   );
 };

@@ -1,29 +1,25 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FcFullTrash } from 'react-icons/fc';
-import CustomPagination from '../../home_tools/Pagination';
-import { Row, Col, Button, Modal, Form, Card } from 'react-bootstrap';
-import Table from 'react-bootstrap/Table';
+import Pagination from '../../home_tools/Pagination';
+import { Row, Col, Button, Modal, Form, Card, Table } from 'react-bootstrap';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
 
-const CourtType = () => {
-  // State variables
+export default function CourtType() {
+  // State Variables
   const [newCourtTypeName, setNewCourtTypeName] = useState('');
   const [courtTypes, setCourtTypes] = useState([]);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Set the number of courtTypes to display per page
-  const [courtTypesPage, setCourtTypesPage] = useState(1);
+  const itemsPerPage = 10;
   const [showAddCourtTypeModal, setShowAddCourtTypeModal] = useState(false);
 
-  // Fetch court types on component mount
+  // Fetch court types initially
   useEffect(() => {
     fetchCourtTypes();
   }, []);
 
-  const items = courtTypes; // This array is used for pagination, assuming all data will be shown on one page
-
-  // Fetch court types function
+  // Fetching court types from API
   const fetchCourtTypes = async () => {
     try {
       const response = await axios.get(
@@ -31,50 +27,40 @@ const CourtType = () => {
       );
       setCourtTypes(response.data);
     } catch (error) {
-      setError('حدث خطأ في استرجاع أنواع المحاكم');
-      console.error('حدث خطأ في استرجاع أنواع المحاكم: ', error);
+      setError('An error occurred while fetching court types.');
+      console.error('An error occurred while fetching court types:', error);
     }
   };
 
-  const handleAddCourtType = () => {
-    fetch(`${API_CONFIG.baseURL}/api/court_types/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+  // Function to add a new court type
+  const handleAddCourtType = async () => {
+    try {
+      await axios.post(`${API_CONFIG.baseURL}/api/court_types/`, {
         name: newCourtTypeName,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        fetchCourtTypes();
-        setShowAddCourtTypeModal(false);
-        setNewCourtTypeName('');
-        setShowAlert(true);
-        setAlertMessage(
-          `تمت إضافة نوع المحكمة بنجاح. البيانات: ${JSON.stringify(data)}`
-        );
-        setTimeout(() => {
-          setShowAlert(false);
-        }, 5000);
-      })
-
-      .catch((error) => {
-        setError('حدث خطأ في إضافة نوع المحكمة');
-        console.error('حدث خطأ في إضافة نوع المحكمة: ', error);
-        setShowAlert(true);
-        setAlertMessage('فشل في إضافة نوع المحكمة.');
-        setTimeout(() => {
-          setShowAlert(false);
-        }, 5000);
       });
+      setShowAddCourtTypeModal(false);
+      fetchCourtTypes();
+    } catch (error) {
+      setError('An error occurred while adding a new court type.');
+      console.error('An error occurred while adding a new court type:', error);
+    }
   };
-  // Function to handle page change
+
+  // Function to delete a court type
+  const handleDeleteCourtType = async (id) => {
+    try {
+      await axios.delete(`${API_CONFIG.baseURL}/api/court_types/${id}`);
+      fetchCourtTypes();
+    } catch (error) {
+      setError('An error occurred while deleting a court type.');
+      console.error('An error occurred while deleting a court type:', error);
+    }
+  };
+
+  // Pagination handler
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-
   return (
     <>
       <Card>
@@ -86,67 +72,52 @@ const CourtType = () => {
             >
               <h3 style={{ color: '#006e5d' }}>تصنيف المحاكم</h3>
             </Card.Header>
-            <Button
-              variant="primary"
-              onClick={() => setShowAddCourtTypeModal(true)}
-            >
-              إضافة تصنيف محكمة
-            </Button>
-            <Card.Body className="court-index">
-              <Table striped bordered hover responsive>
-                <thead className="table-success text-center">
+            <Card.Body>
+              <Table striped bordered hover>
+                <thead style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}>
                   <tr>
                     <th>الاسم</th>
                     <th>الإجراءات</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {courtTypes
-                    .slice(
-                      (courtTypesPage - 1) * itemsPerPage,
-                      courtTypesPage * itemsPerPage
-                    )
-                    .map((courtType) => (
-                      <tr
-                        style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
-                        key={courtType.id}
-                      >
-                        <td>{courtType.name}</td>
-                        <td>
-                          <Button
-                            variant="danger"
-                            onClick={() =>
-                              handleDelete(
-                                courtType.id,
-                                courtType.name,
-                                'court_types'
-                              )
-                            }
-                          >
-                            <FcFullTrash />
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
+                  {courtTypes.map((courtType) => (
+                    <tr
+                      style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
+                      key={courtType.id}
+                    >
+                      <td>{courtType.name}</td>
+                      <td>
+                        <Button
+                          variant="danger"
+                          onClick={() =>
+                            handleDeleteCourtType(
+                              courtType.id,
+                              courtType.name,
+                              'court_types'
+                            )
+                          }
+                        >
+                          حذف
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </Card.Body>
           </Col>
-          <Row>
-            <Col>
-              <Card.Footer>
-                <CustomPagination
-                  items={items}
-                  itemsPerPage={itemsPerPage}
-                  currentPage={currentPage}
-                  onPageChange={handlePageChange}
-                />
-              </Card.Footer>
-            </Col>
-          </Row>
         </Row>
+        <Card.Footer>
+          {/* replace this line with your CustomPagination component if needed */}
+          <Pagination
+            items={courtTypes}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </Card.Footer>
       </Card>
-
       <Modal
         show={showAddCourtTypeModal}
         onHide={() => setShowAddCourtTypeModal(false)}
@@ -180,5 +151,4 @@ const CourtType = () => {
       </Modal>
     </>
   );
-};
-export default CourtType;
+}

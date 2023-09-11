@@ -10,13 +10,23 @@ const CourtSubType = () => {
   const [selectedCourtTypeId, setSelectedCourtTypeId] = useState('');
   const [newCourtSubTypeName, setNewCourtSubTypeName] = useState('');
   const [courtTypes, setCourtTypes] = useState([]);
+  const [courtLevels, setCourtLevels] = useState([]);
+  const [courts, setCourts] = useState([]);
+  const [newCourtTypeId, setNewCourtTypeId] = useState([]);
+  const [newCourtLevelId, setNewCourtLevelId] = useState([]);
+  const [newCourtName, setNewCourtName] = useState([]);
+  const [newCourtAddress, setNewCourtAddress] = useState([]);
   const [courtSubTypes, setCourtSubTypes] = useState([]);
   const [error, setError] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [alertVariant, setAlertVariant] = useState('success');
   const [showAddCourtSubTypeModal, setShowAddCourtSubTypeModal] =
     useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Set the number of courtSubTypes to display per page
   const [courtSubTypesPage, setCourtSubTypesPage] = useState(1);
+
   useEffect(() => {
     fetchCourtSubTypes();
     fetchCourtTypes();
