@@ -10,6 +10,12 @@ const CourtSubType = ({show, handleClose}) => {
   const [selectedCourtTypeId, setSelectedCourtTypeId] = useState('');
   const [newCourtSubTypeName, setNewCourtSubTypeName] = useState("");
   const [courtTypes, setCourtTypes] = useState([]);
+  const [courtLevels, setCourtLevels] = useState([]);
+  const [courts, setCourts] = useState([]);
+  const [newCourtTypeId, setNewCourtTypeId] = useState([]);
+  const [newCourtLevelId, setNewCourtLevelId] = useState([]);
+  const [newCourtName, setNewCourtName] = useState([]);
+  const [newCourtAddress, setNewCourtAddress] = useState([]);
   const [courtSubTypes, setCourtSubTypes] = useState([]);
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
