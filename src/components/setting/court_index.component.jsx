@@ -9,6 +9,7 @@ import {
 import CourtType from './courtTools/CourtType'
 import CourtSubType from './courtTools/CourtSubType'
 import CourtLevel from "./courtTools/CourtLevel";
+import Court from "./courtTools/Court";
 
 const CourtSetting = () => {
     // Court Type data (replace with actual data from API or state)
@@ -58,7 +59,7 @@ const CourtSetting = () => {
          <CourtType  show={showAddCourtTypeModal} handleClose={() => setShowAddCourtTypeModal(false)} />
 <CourtLevel  show={showAddCourtLevelModal} handleClose={() => setShowAddCourtLevelModal(false)} />
 <CourtSubType  show={showAddCourtSubTypeModal} handleClose={() => setShowAddCourtSubTypeModal(false)} />
-         
+         <Court  show={showAddCourtModal} handleClose={() => setShowAddCourtModal(false)} />
         </div>
     );
 };
