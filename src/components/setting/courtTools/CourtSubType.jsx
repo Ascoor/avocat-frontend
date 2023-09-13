@@ -130,11 +130,11 @@ const CourtSubType = ({ show, handleClose }) => {
   };
   return (
     <>
-      <Card>
-        <Card.Header
-          className="text-center"
-          style={{ backgroundColor: 'beige' }}
-        >
+        <Card>
+      <Row>
+            <Col>
+                <Card.Header className="card-header-courts text-center">
+      
           <h3 style={{ color: '#006e5d' }}>أنواع المحاكم الفرعية</h3>
         </Card.Header>
         <Card.Body>
@@ -145,10 +145,9 @@ const CourtSubType = ({ show, handleClose }) => {
           {courtSubTypesAlert && (
             <Alert variant="danger"> {alertMessage}</Alert>
           )}
-          <Table striped bordered hover responsive>
-            {/* Table Header */}
-            <thead className="table-success text-center">
-              <tr>
+         <Table striped bordered hover>       
+         <thead className="table-success text-center"> 
+                       <tr>
                 <th>الاسم</th>
                 <th>نوع المحكمة</th>
                 <th>الإجراءات</th>
@@ -156,7 +155,7 @@ const CourtSubType = ({ show, handleClose }) => {
             </thead>
             <tbody>
               {currentItems.map((courtSubType) => (
-                <tr key={courtSubType.id}>
+            <tr className="table-row-courts" key={courtSubType.id}>
                   <td>{courtSubType.name}</td>
                   <td>{courtSubType.court_type?.name}</td>
                   <td>
@@ -169,17 +168,20 @@ const CourtSubType = ({ show, handleClose }) => {
                   </td>
                 </tr>
               ))}
-            </tbody>
+          </tbody>
           </Table>
-        </Card.Body>
-        <Card.Footer>
+          <Card.Footer>
           <CustomPagination
             totalCount={courtSubTypes.length}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
             onPageChange={handlePageChange}
-          />
+            />
         </Card.Footer>
+            </Card.Body>
+          </Col>
+          </Row>
+                
       </Card>
 
       <Modal show={show} onHide={handleClose}>

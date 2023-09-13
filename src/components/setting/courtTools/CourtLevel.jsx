@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Button, Modal, Form, Card, Table ,  Alert} from 'react-bootstrap';
+import {
+  Row,
+  Col,
+  Button,
+  Modal,
+  Form,
+  Card,
+  Table,
+  Alert,
+} from 'react-bootstrap';
 import { FcFullTrash } from 'react-icons/fc';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
@@ -47,7 +56,9 @@ const CourtLevel = ({ show, handleClose }) => {
   }, [alertMessage]);
   const fetchCourtLevels = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/court_levels`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/court_levels`
+      );
       setCourtLevels(response.data);
     } catch (e) {
       setAlertMessage('حدث خطأ في استرجاع مستويات المحاكم', e);
@@ -56,42 +67,46 @@ const CourtLevel = ({ show, handleClose }) => {
 
   const handleAddCourtLevel = async () => {
     try {
-      const response = await axios.post(`${API_CONFIG.baseURL}/api/court_levels/`, {
-        name: newCourtLevelName,
-      });
+      const response = await axios.post(
+        `${API_CONFIG.baseURL}/api/court_levels/`,
+        {
+          name: newCourtLevelName,
+        }
+      );
       setCourtLevels([...courtLevels, response.data]);
-    setAlertMessage({ type: 'success', text: `تمت إضافة مستوى المحكمة بنجاح.`});
-    setNewCourtLevelName('');
-    setShowAddCourtLevelModal(false);
+      setAlertMessage({
+        type: 'success',
+        text: `تمت إضافة مستوى المحكمة بنجاح.`,
+      });
+      setNewCourtLevelName('');
+      setShowAddCourtLevelModal(false);
       fetchCourtLevels();
-        } catch (e) {
-          setAlertMessage('حدث خطأ في إضافة مستوى المحكمة', e);
+    } catch (e) {
+      setAlertMessage('حدث خطأ في إضافة مستوى المحكمة', e);
     }
   };
-const handleDeleteCourtLevel = async (id, name, type) => {
-  try {
-    await axios.delete(`${API_CONFIG.baseURL}/api/court_levels/${id}`);
-    setCourtLevels(courtLevels.filter((courtLevel) => courtLevel.id !== id));
-    setAlertMessage({ type: 'success', text: 'تم حذف مستوى المحكمة بنجاح' });
-  
-  } catch (error) {
-    setError(error);
-    setAlertMessage({
-      type: 'danger',
-      text: 'لا يمكن حذف مستوى المحكمة لارتباطة بمحاكم وتصنيفات فرعية اخري',
-    });
-  }
-};
+  const handleDeleteCourtLevel = async (id, name, type) => {
+    try {
+      await axios.delete(`${API_CONFIG.baseURL}/api/court_levels/${id}`);
+      setCourtLevels(courtLevels.filter((courtLevel) => courtLevel.id !== id));
+      setAlertMessage({ type: 'success', text: 'تم حذف مستوى المحكمة بنجاح' });
+    } catch (error) {
+      setError(error);
+      setAlertMessage({
+        type: 'danger',
+        text: 'لا يمكن حذف مستوى المحكمة لارتباطة بمحاكم وتصنيفات فرعية اخري',
+      });
+    }
+  };
 
-const indexOfLastItem = currentPage * itemsPerPage;
-const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-const currentItems = courtLevels.slice(indexOfFirstItem, indexOfLastItem);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = courtLevels.slice(indexOfFirstItem, indexOfLastItem);
 
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
-const handlePageChange = (newPage) => {
-  setCurrentPage(newPage);
-};
-  
   const handleCloseModal = () => {
     setModalMessage(null);
     setNewCourtLevelName('');
@@ -113,20 +128,14 @@ const handlePageChange = (newPage) => {
   return (
     <>
       <Card>
-        <Card>
-          <Row>
-            <Col>
-              <Card.Header
-                style={{ backgroundColor: 'beige' }}
-                className="text-center"
-              >
-                <h3 style={{ color: '#006e5d' }}>درجات المحاكم</h3>
-              </Card.Header>
-    
+        <Row>
+          <Col>
+            <Card.Header className="card-header-courts text-center">
+              <h3 style={{ color: '#006e5d' }}>درجات المحاكم</h3>
+            </Card.Header>
 
-              <Card.Body>
-
-                 {alertMessage && (
+            <Card.Body>
+              {alertMessage && (
                 <Alert variant={alertMessage.type}>{alertMessage.text}</Alert>
               )}
               {successMessage && (
@@ -135,60 +144,51 @@ const handlePageChange = (newPage) => {
               {courtLevelAlert && (
                 <Alert variant="danger"> {alertMessage}</Alert>
               )}
-                <Table striped bordered hover responsive>
-                  <thead className="table-success text-center">
-                    <tr
-                      style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
-                    >
-                      <th>الاسم</th>
-                      <th>الإجراءات</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+
+              <Table striped bordered hover>
+                <thead className="table-success text-center">
+                  <tr>
+                    <th>الاسم</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody>
                   {currentItems.map((courtLevel) => (
-                        <tr
-                          style={{
-                            backgroundColor: '#D1ECF1',
-                            color: '#0C5460',
-                          }}
-                          key={courtLevel.id}
+                    <tr className="table-row-courts" key={courtLevel.id}>
+                      <td>{courtLevel.name}</td>
+                      <td>
+                        <Button
+                          variant="danger"
+                          onClick={() =>
+                            handleDeleteCourtLevel(
+                              courtLevel.id,
+                              courtLevel.name,
+                              'court_levels'
+                            )
+                          }
                         >
-                          <td>{courtLevel.name}</td>
-                          <td>
-                            <Button
-                              variant="danger"
-                              onClick={() =>
-                                handleDeleteCourtLevel(
-                                  courtLevel.id,
-                                  courtLevel.name,
-                                  'court_levels'
-                                )
-                              }
-                            >
-                              <FcFullTrash />
-                            </Button>
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </Table>
-              </Card.Body>
-              <Row>
-                <Card.Footer>
-          <CustomPagination
-            totalCount={courtLevels.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
-          </Card.Footer>
-              </Row>
-            </Col>
-          </Row>
-        </Card>
+                          <FcFullTrash />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Card.Body>
+
+            <Card.Footer>
+              <CustomPagination
+                totalCount={courtLevels.length}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
+            </Card.Footer>
+          </Col>
+        </Row>
       </Card>
- 
- <Modal show={show} onHide={handleClose} size="lg">
+
+      <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton={handleClose}>
           <Modal.Title>إضافة مستوى المحكمة</Modal.Title>
         </Modal.Header>
@@ -201,17 +201,14 @@ const handlePageChange = (newPage) => {
                 value={newCourtLevelName}
                 onChange={(e) => setNewCourtLevelName(e.target.value)}
               />
-               {modalMessage && (
+              {modalMessage && (
                 <Alert variant={modalMessage.type}>{modalMessage.text}</Alert>
               )}
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={handleCloseModal}
-          >
+          <Button variant="secondary" onClick={handleCloseModal}>
             إغلاق
           </Button>
           <Button variant="primary" onClick={handleSubmit}>

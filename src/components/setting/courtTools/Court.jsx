@@ -1,6 +1,6 @@
   import { useState, useEffect } from 'react';
   import { FcFullTrash } from 'react-icons/fc';
-  import { Row, Col, Button, Modal, Alert, Form, Card } from 'react-bootstrap';
+  import { Row, Col, Button, Modal, Alert, Form, Card,Spinner  } from 'react-bootstrap';
   import Table from 'react-bootstrap/Table';
   import axios from 'axios';
   import API_CONFIG from '../../../config';
@@ -19,98 +19,40 @@
     const [newCourtAddress, setNewCourtAddress] = useState('');
     const [error, setError] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
-    const [alertMessage, setAlertMessage] = useState(null);
-    const [alertVariant, setAlertVariant] = useState('success');
+    const [alertMessage, setAlertMessage] = useState('success');
     const [showAddCourtModal, setShowAddCourtModal] = useState(false);
+    const [loading, setLoading] = useState(false);  // New state variable for loading indicator
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10; // You can change this value as needed
+    const itemsPerPage = 10;
+    const [modalMessage, setModalMessage] = useState(null);
+    const [courtTypesAlert, setCourtTypesAlert] = useState(null);
 
-    useEffect(() => {
-      if (error) {
-        setShowAlert(true);
-        setAlertMessage('An error has occurred.');
-      }
-    }, [error]);
-    useEffect(() => {
-      fetchCourts();
-      fetchCourtTypes();
 
-      fetchCourtLevels();
-    }, []);
+const fetchData = async (url, setState) => {
+  setLoading(true);
+  try {
+    const response = await axios.get(`${API_CONFIG.baseURL}${url}`);
+    setState(response.data);
+  } catch (error) {
+    setError(`An error occurred: ${error.message}`);
+  }
+  setLoading(false);
+};
 
-    const fetchCourtTypes = async () => {
-      try {
-        const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/court_types/`
-        );
-        setCourtTypes(response.data);
-      } catch (error) {
-        setError('حدث خطأ في استرجاع أنواع المحاكم');
-        console.error('حدث خطأ في استرجاع أنواع المحاكم: ', error);
-      }
-    };
+useEffect(() => {
+  // Fetch initial data
+  fetchData('/api/court_types/', setCourtTypes);
+  fetchData('/api/court_levels/', setCourtLevels);
+  fetchData('/api/courts/', setCourts);
+}, []);
 
-    const fetchCourtLevels = async () => {
-      try {
-        const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/court_levels/`
-        );
-        setCourtLevels(response.data);
-      } catch (error) {
-        setError('حدث خطأ في استرجاع مستويات المحاكم');
-        console.error('حدث خطأ في استرجاع مستويات المحاكم: ', error);
-      }
-    };
+useEffect(() => {
+  if (courtTypeId) {
+    fetchData(`/api/court-types/${courtTypeId}`, setCourtSubTypes);
+  }
+}, [courtTypeId]);
 
-    const fetchCourts = async () => {
-      try {
-        const response = await axios.get(`${API_CONFIG.baseURL}/api/courts/`);
-        setCourts(response.data);
-      } catch (error) {
-        setAlertVariant('حدث خطأ في استرجاع المحاكم');
-        console.error('حدث خطأ في استرجاع المحاكم: ', error);
-      }
-    };
-
-    const fetchCourtSubTypes = async (courtTypeId) => {
-      try {
-        const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/court-types/${courtTypeId}`
-        );
-        setCourtSubTypes(response.data);
-      } catch (error) {
-        setError('حدث خطأ في استرجاع أنواع المحاكم الفرعية');
-        console.error('حدث خطأ في استرجاع أنواع المحاكم الفرعية: ', error);
-      }
-    };
-
-    const totalCourts = courts.length;
-    const handleShowAddCourtModal = () => {
-      // Reset the state for selected court type, subtype, and level
-      setCourtTypeId('');
-      setNewCourtTypeId('');
-      setNewCourtSubTypeId('');
-      setNewCourtLevelId('');
-
-      // Fetch court types, subtypes, and levels
-      fetchCourtTypes();
-      fetchCourtLevels();
-      // Don't fetch court subtypes here
-
-      // Open the modal
-      setShowAddCourtModal(true);
-    };
-
-    useEffect(() => {
-      // Fetch court subtypes when courtTypeId changes
-      if (courtTypeId) {
-        fetchCourtSubTypes(courtTypeId);
-      } else {
-        // If no court type is selected, reset court subtypes
-        setCourtSubTypes([]);
-      }
-    }, [courtTypeId]);
 
     const handleAddCourt = () => {
       fetch(`${API_CONFIG.baseURL}/api/courts/`, {
@@ -181,79 +123,64 @@
         });
     };
 
-    const handlePageChange = (pageNumber) => {
-      setCurrentPage(pageNumber);
-    };
-    const items = courts; // This array is used for pagination, assuming all data will be shown on one page
 
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = courts.slice(indexOfFirstItem, indexOfLastItem);
+    
+    
+    const handlePageChange = (newPage) => {
+      setCurrentPage(newPage);
+    };
+      
     return (
       <>
-        <Card>
-          <Row>
-            <Card.Header
-              style={{ backgroundColor: 'beige' }}
-              className="text-center"
-            >
-              <h3 style={{ color: '#006e5d' }}>المحاكم</h3>
-            </Card.Header>
-            <Card.Body>
-              <Table striped bordered hover>
-                <thead
-                  style={{
-                    backgroundColor: '#D1ECF1',
-                    color: '#0C5460',
-                  }}
-                >
-                  <tr
-                    style={{
-                      backgroundColor: '#D1ECF1',
-                      color: '#0C5460',
-                    }}
-                  >
-                    <th>الاسم</th>
-                    <th>النوع</th>
-                    <th>النوع الفرعي</th>
-                    <th>المستوى</th>
-                    <th>العنوان</th>
-                    <th>الإجراءات</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {courts.map((court, index) => (
-                    <tr
-                      key={index}
-                      style={{
-                        backgroundColor: '#D1ECF1',
-                        color: '#0C5460',
-                      }}
-                    >
-                      <td>{court.name}</td>
-                      <td>{court.court_type.name}</td>
-                      <td>{court.court_sub_type.name}</td>
-                      <td>{court.court_level.name}</td>
-                      <td>{court.address}</td>
-                      <td>
-                        <Button
-                          variant="danger"
-                          onClick={() =>
-                            handleDelete(court.id, court.name, 'courts')
-                          }
-                        >
-                          حذف
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Card.Body>
-            <Card.Footer>
-              <CustomPagination
-                totalCount={data.length}
-                itemsPerPage={5}
-                currentPage={1}
-                onPageChange={() => {}}
-              />
+      {loading && <Spinner animation="border" />}
+      <Alert show={showAlert} variant="danger" onClose={() => setShowAlert(false)} dismissible>
+        {error}
+      </Alert>
+ 
+      <Card>
+      <Row>
+        <Card.Header className="card-header-courts">
+          <h3 className="header-text">المحاكم</h3>
+        </Card.Header>
+        <Card.Body>
+          <Table striped bordered hover>
+          <thead className="table-success text-center"> 
+              <tr>
+                <th>الاسم</th>
+                <th>النوع</th>
+                <th>النوع الفرعي</th>
+                <th>المستوى</th>
+                <th>العنوان</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              {courts.map((court, index) => (
+                <tr key={index} className="table-row-courts">
+                  <td>{court.name}</td>
+                  <td>{court.court_type.name}</td>
+                  <td>{court.court_sub_type.name}</td>
+                  <td>{court.court_level.name}</td>
+                  <td>{court.address}</td>
+                  <td>
+                    <Button variant="danger" onClick={() => handleDelete(court.id, court.name, 'courts')}>حذف</Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Card.Body>
+        <Card.Footer>
+             
+          <CustomPagination
+            totalCount={courts.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
             </Card.Footer>
           </Row>
         </Card>
@@ -298,13 +225,13 @@
                 >
                   <option value="">اختر نوع المحكمة الفرعي</option>
 
-                  {courtTypeSubTypes.length > 0 &&
-                    courtTypeSubTypes.map((courtTypeSubType) => (
+                  {courtSubTypes.length > 0 &&
+                    courtSubTypes.map((courtSubTypes) => (
                       <option
-                        key={courtTypeSubType.id}
-                        value={courtTypeSubType.id}
+                        key={courtSubTypes.id}
+                        value={courtSubTypes.id}
                       >
-                        {courtTypeSubType.name}
+                        {courtSubTypes.name}
                       </option>
                     ))}
                 </Form.Control>
