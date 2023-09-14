@@ -2,20 +2,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lateef&display=swap');
 
+
+
 /* Basic styling for event cards */
 .event-card {
   display: flex;
   align-items: center;
   background-color: #f8f9fa;
-  border-radius: 100px;
-  padding: 10px;
+  border: 2px solid var(--accent-color);
+  border-radius: 20px;
+  padding: 15px;
   transition:
-    transform 0.3s,
-    box-shadow 0.3s;
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .event-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 .event-card-body {
@@ -26,57 +31,50 @@
 
 .event-card-icon-container {
   border-radius: 50%;
-  padding: 10px;
+  padding: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
+  margin-right: 15px;
   background: linear-gradient(135deg, #615238, #ffd391);
 }
 
 .event-card-title {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  color: #ffffff;
+  color: var(--text-light);
   font-family: 'Cairo', sans-serif;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   text-align: center;
 }
 
-.home-card {
-  background: linear-gradient(135deg, #615238, #ffd391);
+.home-card .event-card-title {
+  color: var(--text-light);
 }
 
 .count {
-  font-size: 1.8rem;
-  font-weight: bold;
-  text-align: center;
-  font-family: 'Lateef', cursive;
-  color: #e2f064;
+  color: var(--accent-color);
+  font-size: 1.6rem;
 }
 
+/* Brand Button */
 .btn.btn-home-search {
-  background: linear-gradient(135deg, #2b4774, #4d3306);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
+  background-color: var(--accent-color);
+  color: var(--text-light);
+  border-radius: 20px;
   padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition:
-    background-color 0.2s,
-    color 0.2s;
+  font-size: 1.2rem;
 }
 
 .btn.btn-home-search:hover {
-  background: linear-gradient(15deg, #a58d5f2a, #5072a8);
-  color: #fff;
+  background: linear-gradient(15deg, #a58d5f2a, var(--accent-color));
 }
 
 .home-text-center {
   background: linear-gradient(135deg, #062c3d, #1a2435, #152238);
-  border-radius: 80px;
-  color: #fffbf5;
+  border-radius: 20px;
+  padding: 10px;
+  color: var(--text-light);
   text-align: center;
   font-size: 1.8rem;
   font-family: 'Cairo', sans-serif;
@@ -96,11 +94,11 @@
   }
 
   .event-card-title {
-    font-size: 1rem;
-    margin-bottom: 0;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
   }
 
   .count {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Card, Row } from 'react-bootstrap';
+import { Table, Button, Card, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import ServiceModal from './ServiceModal';
 import API_CONFIG from '../../config';
@@ -10,6 +10,7 @@ const Services = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingService, setEditingService] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
 
   useEffect(() => {
     // Fetch services when the component mounts
@@ -48,38 +49,33 @@ const Services = () => {
   const handleServiceAddedOrEdited = () => {
     // After adding or editing a service, fetch services again to update the list
     fetchServices();
-  };
 
+  };
   const handleReturn = () => {
     // Show the table and reset the selected service when returning
     setSelectedService(null);
+    setShowDetailsModal(false);  // Add this line to set showDetailsModal to false
   };
-
+  const handleCloseModal = () => {
+    handleClose();  // Call the passed handleClose prop function
+  };
+  
   return (
-    <Card>
-      <Card.Header className="text-center">
-        <Row>
-          <div className="court-setting-card-header">الخدمات</div>
-        </Row>
-      </Card.Header>
-      <Card.Body>
-        {selectedService ? ( // Display selected service details
-          <div>
-            <Button variant="secondary" onClick={handleReturn}>
-              رجوع
-            </Button>
-            <ServiceDetailsModal
-              service={selectedService}
-              handleClose={handleReturn}
-            />
-          </div>
-        ) : (
-          <>
-            <Button variant="primary" onClick={handleAddService}>
-              اضافة خدمة
-            </Button>
-            <Table striped bordered responsive className="rtl-table">
-              {/* Table header */}
+    <Card className="lawyer-card">
+    <Card.Header className="text-center">
+      <Row>
+        <Col className="court-setting-card-header">الخدمات</Col>
+      </Row>
+    </Card.Header>
+    <Row>
+      <Col>
+      <Button onClick={handleReturn}>رجوع</Button>
+        <Button variant="primary" onClick={handleAddService}>اضافة خدمة</Button>
+      </Col>
+    </Row>
+    <Card.Body className="table-responsive">
+      <Table striped bordered responsive className="rtl-table">
+      
               <thead className="table-success">
                 <tr>
                   <th className="col-1">رقم الخدمة</th>
@@ -112,26 +108,34 @@ const Services = () => {
                         حذف
                       </Button>
                       <Button
-                        variant="secondary"
-                        onClick={() => setSelectedService(service)}
-                      >
-                        عرض التفاصيل
-                      </Button>
+  variant="secondary"
+  onClick={() => {
+    setSelectedService(service);
+    setShowDetailsModal(true);  // Add this line to set showDetailsModal to true
+  }}
+>
+  عرض التفاصيل
+</Button>
+
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </Table>
-          </>
-        )}
-        <ServiceModal
-          show={showModal}
-          handleClose={() => setShowModal(false)}
-          service={editingService}
-          handleServiceAddedOrEdited={handleServiceAddedOrEdited} // Pass the handler to the modal
-          isEditing={!!editingService}
-        />
+              </Table>
       </Card.Body>
+      {showDetailsModal && (
+        <ServiceDetailsModal
+          service={selectedService}
+          handleClose={handleReturn}
+        />
+      )}
+      <ServiceModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        service={editingService}
+        handleServiceAddedOrEdited={handleServiceAddedOrEdited}
+        isEditing={!!editingService}
+      />
     </Card>
   );
 };

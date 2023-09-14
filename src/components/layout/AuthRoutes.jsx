@@ -16,9 +16,10 @@ import LegCaseCreate from '../legcase/create.component';
 import ProfileUser from '../Auth/ProfileUser';
 import Archives from '../Archives/ArchiveDashboard';
 import WordPadEditor from '../Archives/WordPadEditor/WordPadEditor';
+import { Container } from 'react-bootstrap';
 const AuthRoutes = () => {
   return (
-    <div>
+<Container>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/procedures" element={<ProcedureSearch />} />
@@ -46,7 +47,7 @@ const AuthRoutes = () => {
         <Route path="/archives" element={<Archives />} />
         <Route path="/archives/wordpadeditor" element={<WordPadEditor />} />
       </Routes>
-    </div>
+  </Container>
   );
 };
 

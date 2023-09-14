@@ -73,7 +73,7 @@ const Lawyers = () => {
         قائمة المحامين
         <img src={LawyerIcon} alt="Icon" className="court-icon" />
       </div>
-      <Row className="mb-3">
+      <Row >
         <Col>
           <Button variant="primary" onClick={() => setShowAddModal(true)}>
             اضافة محامي

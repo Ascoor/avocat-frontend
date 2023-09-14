@@ -1,31 +1,20 @@
-/* Auth App CSS */
 
-
-/* Use Cairo font */
-body {
-  font-family: 'Cairo', sans-serif;
-  background-color: rgb(255, 255, 255);
+/* Auth Styles */
+.auth-form {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Removed px from 0px */
 }
 
+/* Admin Dashboard Styles */
 .admin-dashboard {
   display: flex;
-  flex-direction: row-reverse; /* RTL layout */
+  flex-direction: row-reverse; /* For RTL */
   transition: margin-right 0.3s ease-in-out;
 }
 
 .admin-dashboard.sidebar-open .sidebar {
-  transform: translateX(0);
+  transform: translateX(0); /* Sidebar appears */
 }
 
-/* Reset default margin and padding */
-body,
-div,
-h1,
-h2,
-h3,
-p,
-ul,
-li {
-  margin: 0;
-  padding: 0;
-}

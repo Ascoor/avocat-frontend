@@ -304,7 +304,8 @@ const Home = () => {
           )}
         </Col>
       </Row>
-      <Row>
+     
+      <Row className="mt-5 justify-content-center">
         <Calendar />
       </Row>
     </>

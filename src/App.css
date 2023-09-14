@@ -8,10 +8,17 @@ body {
   padding: 0; /* Reset default padding */
 }
 :root {
-  --bg-color: #ffffff;
-  --text-color: #000000;
-  --button-bg: #007bff;
+  --secondary-color: #454545; /* Dark Gray */
+  --accent-color: #F39C12; /* Tech Gold */
+  --bg-color: #F4F6F9; /* Light Gray */
+  --text-light: #ffffff; /* White */
+
+    --primary-color: #2c3e50;
+    --shadow-color: rgba(134, 99, 99, 0.1);
+
+  --text-dark: #333333; /* Near Black */
 }
+
 
 a {
   color: #149ddd;
@@ -126,8 +133,8 @@ h6 {
 .modal-header {
   background: linear-gradient(
     135deg,
-    #1a5dca,
-    #745114
+    #9c6e1f,
+    #033150
   ); /* Same gradient as topnav */
 
   font-size: 21px;
