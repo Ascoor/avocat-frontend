@@ -6,8 +6,8 @@ import { Collapse } from 'bootstrap/dist/js/bootstrap.bundle';
 import { LogoImage, WelcomePatren, WelcomeImage } from '../../images/index';
 import LawyerServices from './LawyerService.component';
 
-const Login = React.lazy(() => import('../Auth/login'));
-const Register = React.lazy(() => import('../Auth/register'));
+const Login = React.lazy(() => import('../Auth/Login'));
+const Register = React.lazy(() => import('../Auth/Register'));
 
 const Guest = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
