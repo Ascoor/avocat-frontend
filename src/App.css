@@ -8,7 +8,7 @@ body {
   padding: 0; /* Reset default padding */
 }
 :root {
-  --secondary-color: #454545; /* Dark Gray */
+  --secondary-color: #e41e1e; /* Dark Gray */
   --accent-color: #F39C12; /* Tech Gold */
   --bg-color: #F4F6F9; /* Light Gray */
   --text-light: #ffffff; /* White */
