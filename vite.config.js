@@ -39,6 +39,6 @@ export default defineConfig({
     chunkSizeWarningLimit: 2000, // increases the chunk size warning limit
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'axios', 'bootstrap', 'docx4js'],
+    include: ['utils','path', 'react', 'react-dom', 'axios', 'bootstrap', 'docx4js'],
   },
 });
