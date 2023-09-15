@@ -1,29 +1,6 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  plugins: [react()],
-  publicDir: 'public',
-  server: {
-    host: '127.0.0.1',
-    port: 3000,
-  },
-  css: {
-    modules: true,
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(filePath) {
-          if (filePath.includes('node_modules')) {
-            return 'vendor';
-          }
-        },
-      },
-    },
-    chunkSizeWarningLimit: 1200,
-  },
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'axios', 'bootstrap','docx4js'],
-  },
-});
+  plugins: [react()]
+})
