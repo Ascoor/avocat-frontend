@@ -3,11 +3,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Cairo', sans-serif;
-  background-color: #f0f0f0;
 }
-:root{
-  --accent-color: #F39C12; /* Tech Gold */
-}
+
 /* Sidebar Styles */
 .sidebar {
   
@@ -16,7 +13,7 @@ body {
   right: -300px; /* Adjust this */
   width: 300px;  /* Adjust this */
   height: 100vh;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-color));
+  background: linear-gradient(335deg,#002D40  , #0c5e4c, #002D40);
   color: #fff;
   padding-top: 25px;
   overflow-x: hidden;
@@ -46,8 +43,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 25px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 20px 15px;
+  border-bottom: 1px solid #444;
   text-align: center;
 }
 
@@ -62,7 +59,6 @@ body {
   font-weight: bold;
   font-size: 1.1rem;
 }
-
 /* Sidebar Navigation Styles */
 .sidebar-nav {
   list-style: none;
@@ -85,7 +81,7 @@ body {
 
 .sidebar-nav a:hover,
 .sidebar-nav li.active a {
-  background-color: #F39C12;
+  background-color: #eca406;
 }
 
 /* Sub-menu Styles */
@@ -96,7 +92,7 @@ body {
 .sub-menu-items {
   list-style: none;
   padding-left: 0;
-  background-color: #444;
+  background-color: #333;
   position: absolute;
   top: 0;
   left: 100%;

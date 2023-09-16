@@ -15,17 +15,18 @@ li {
 body {
   font-family: 'Cairo', sans-serif;
   background-color: var(--bg-color);
+  color: var(--text-light); /* Text color */
 }
 
 /* Main Content Styles */
 .main-content {
-  background-color: #1a2435; /* Dark blue background color */
+  background-color: var(--dark-blue-bg); /* Dark blue background color */
   display: grid;
   padding: 15px;
   justify-content: center;
   transition: margin-right 0.2s ease-in-out;
   height: 100vh;
-  color: #fff; /* Text color */
+  color: var(--text-light); /* Text color */
 }
 
 .main-content.sidebar-open {
@@ -48,10 +49,11 @@ body {
 
 /* Auth Styles */
 .auth-form {
-  background-color: #fff;
+  background-color: var(--white); /* White background color */
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Removed px from 0px */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: var(--text-dark); /* Text color */
 }
 
 /* Admin Dashboard Styles */
@@ -64,4 +66,3 @@ body {
 .admin-dashboard.sidebar-open .sidebar {
   transform: translateX(0); /* Sidebar appears */
 }
-

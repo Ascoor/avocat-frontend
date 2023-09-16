@@ -6,6 +6,7 @@ import CourtSetting from '../setting/court_index.component';
 // import CourtSearch from "../reports/court_search.component";
 import CaseTypeSet from '../setting/case_index.component';
 import AddEditClient from '../client/add_edit_client.component';
+
 import ClientsList from '../client/ClientsList';
 import LegcaseList from '../legcase/list.component';
 import LegCaseDetail from '../legcase/leg_case_detail.component';
@@ -16,11 +17,11 @@ import LegCaseCreate from '../legcase/create.component';
 import ProfileUser from '../Auth/ProfileUser';
 import Archives from '../Archives/ArchiveDashboard';
 import WordPadEditor from '../Archives/WordPadEditor/WordPadEditor';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 const AuthRoutes = () => {
   return (
-<Container>
-      <Routes>
+    <Container fluid>
+        <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/procedures" element={<ProcedureSearch />} />
         <Route path="/clients" element={<ClientsList />} />
@@ -46,8 +47,9 @@ const AuthRoutes = () => {
         <Route path="/lawyers/form" element={<LawyersAddEdit />} />
         <Route path="/archives" element={<Archives />} />
         <Route path="/archives/wordpadeditor" element={<WordPadEditor />} />
-      </Routes>
-  </Container>
+        </Routes>
+
+    </Container>
   );
 };
 

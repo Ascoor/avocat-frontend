@@ -1,14 +1,11 @@
-
-/* Auth Styles */
-.auth-form {
-  background-color: #1a2435; /* Dark blue background color */
+/* Use Cairo font */
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: rgb(255, 255, 255);
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  color: #fff; /* Text color */
 }
 
-/* Admin Dashboard Styles */
 .admin-dashboard {
   display: flex;
   flex-direction: row-reverse; /* For RTL */
@@ -19,3 +16,33 @@
   transform: translateX(0); /* Sidebar appears */
 }
 
+/* Reset default margin and padding */
+body,
+div,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+/* Footer Styles */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+/* Responsive Handling for Footer */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}

@@ -1,42 +1,31 @@
-
-
-/* App.css */
-body {
-  font-family: 'Open Sans', sans-serif;
-  color: #272829;
-  margin: 0; /* Reset default margin */
-  padding: 0; /* Reset default padding */
-}
+/* Define breakpoints and other variables */
 :root {
-  --secondary-color: #e41e1e; /* Dark Gray */
-  --accent-color: #F39C12; /* Tech Gold */
-  --bg-color: #F4F6F9; /* Light Gray */
-  --text-light: #ffffff; /* White */
-
-    --primary-color: #2c3e50;
-    --shadow-color: rgba(134, 99, 99, 0.1);
-
-  --text-dark: #333333; /* Near Black */
+  --breakpoint-xs: 576px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 992px;
+  --breakpoint-lg: 1200px;
+  --primary-color: #01162b;
+  --secondary-color: #e41e1e;
+  --accent-color: #F39C12;
+  --bg-color: #F4F6F9;
+  --text-light: #ffffff;
+  --text-dark: #333333;
 }
 
-
-a {
-  color: #149ddd;
-  text-decoration: none;
+/* Global box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-a:hover {
-  color: #37b3ed;
-  text-decoration: none;
+/* Utility Classes */
+.text-center {
+  text-align: center;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Raleway', sans-serif;
+.mt-1 {
+  margin-top: 1rem;
 }
 
 /* Back to top button */
@@ -271,9 +260,9 @@ h6 {
   width: 150px;
   height: 75px;
 }
-/*Icons End*/
+  /*Icons End*/
 
-/* legalCase Detaiis End*/
+  /* legalCase Detaiis End*/
 
 /* Responsive styles */
 @media screen and (max-width: 767px) {
@@ -296,8 +285,14 @@ h6 {
     font-size: 28px;
   }
 
-  .button {
-    padding: 8px 16px;
+/* Responsive Handling */
+/* Responsive Handling */
+@media (max-width: var(--breakpoint-xs)) {
+  /* Your styles for extra small devices */
+  .court-setting-card-header {
+    font-size: 1.2rem;
+    padding: 8px;
+    border-radius: 50px;
   }
 }
 
@@ -311,31 +306,12 @@ h6 {
     padding: 6px 12px;
   }
 }
-.custom-card-header {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  padding: 20px;
-  font-family: 'Cairo', sans-serif;
-  font-weight: bold;
-  background: linear-gradient(
-    135deg,
-    #1a5dca,
-    #745114
-  ); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
 
-  text-align: center;
-
-  color: #fffcf3;
-}
-.add-link-client {
-  color: #0a1e3d;
-  font-size: medium;
-  font-family: 'cairo', sans-serif;
-  font-weight: bold;
-}
-.leg-details-banner-image {
-  width: 250px;
-  height: 100px;
+@media (min-width: var(--breakpoint-md)) {
+  /* Your styles for medium devices and up */
+  .court-setting-card-header {
+    font-size: 1.4rem;
+  }
 }
 
 /**Procedure Search Page ***/
@@ -479,4 +455,5 @@ h6 {
   &:hover {
     background-color: #ff7f7f;
   }
+}
 }
