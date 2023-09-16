@@ -7,19 +7,17 @@ body {
 
 /* Sidebar Styles */
 .sidebar {
-  
   position: fixed;
   top: 0;
-  right: -300px; /* Adjust this */
-  width: 300px;  /* Adjust this */
+  right: -250px;
+  width: 250px;
   height: 100vh;
   background: linear-gradient(335deg,#002D40  , #0c5e4c, #002D40);
   color: #fff;
-  padding-top: 25px;
+  padding-top: 20px;
   overflow-x: hidden;
   z-index: 1000;
-  transition: transform 0.4s ease-in-out;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
 }
 
 .sidebar.open {
@@ -29,12 +27,12 @@ body {
 /* Sidebar Header Styles */
 .close-icon {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 10px;
+  right: 10px;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: #fff;
 }
 
@@ -49,34 +47,34 @@ body {
 }
 
 .user-profile-img {
-  width: 90px;
-  height: 105px;
+  width: 85px;
+  height: 100px;
   border-radius: 50%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .user-name {
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
+
 /* Sidebar Navigation Styles */
 .sidebar-nav {
   list-style: none;
   padding: 0;
-  margin-top: 20px;
 }
 
 .sidebar-nav li {
-  margin: 12px 0;
+  margin: 10px 0;
+  padding: 0;
 }
 
 .sidebar-nav a {
   display: block;
-  padding: 12px 20px;
+  padding: 10px 15px;
   color: #fff;
   text-decoration: none;
-  text-align: center;
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color 0.2s;
 }
 
 .sidebar-nav a:hover,
@@ -96,17 +94,15 @@ body {
   position: absolute;
   top: 0;
   left: 100%;
-  width: 260px;
+  width: 250px;
   transform: translateX(-100%);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 0.3s, opacity 0.3s;
+  opacity: 1;
+  pointer-events: auto;
+  transition: transform 0.2s;
 }
 
 .sub-menu:hover .sub-menu-items {
   transform: translateX(0);
-  opacity: 1;
-  pointer-events: auto;
 }
 
 /* Responsive Styles */
@@ -116,12 +112,12 @@ body {
   }
 
   .close-icon {
-    top: 18px;
-    right: 18px;
+    top: 15px;
+    right: 15px;
   }
 
   .user-profile {
-    margin-right: 1.2rem;
+    margin-right: 1rem;
   }
 
   .search-form {

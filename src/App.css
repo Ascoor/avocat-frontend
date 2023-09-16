@@ -146,10 +146,8 @@
 
 /*Court Setting*/
 .court-setting-card-header {
-  background: linear-gradient(
-    135deg,
-    #9b7e4b,
-    #d6a145
+  background: linear-gradient( 
+    15deg, #004037, #002D40
   ); /* Same gradient as topnav */
 
   border-radius: 80px;

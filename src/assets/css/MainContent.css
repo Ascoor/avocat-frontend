@@ -1,68 +1,26 @@
-/* Reset default margin and padding */
-body,
-div,
-h1,
-h2,
-h3,
-p,
-ul,
-li {
-  margin: 0;
-  padding: 0;
-}
-
-/* Global Styles */
-body {
-  font-family: 'Cairo', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-light); /* Text color */
-}
-
-/* Main Content Styles */
+/* MainContent Styles */
 .main-content {
-  background-color: var(--dark-blue-bg); /* Dark blue background color */
-  display: grid;
-  padding: 15px;
-  justify-content: center;
-  transition: margin-right 0.2s ease-in-out;
-  height: 100vh;
-  color: var(--text-light); /* Text color */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  transition: margin-right 0.3s ease-in-out;
+  height: 100%; /* Ensure the content fills the entire height */
 }
 
 .main-content.sidebar-open {
-  margin-right: 300px; /* Matches the sidebar width */
+  margin-right: 270px; /* Adjust this value based on your sidebar width */
 }
 
-/* Responsive Handling */
+/* Center-align content for screens smaller than 768px */
 @media (max-width: 768px) {
   .main-content.sidebar-open {
-    margin-right: 0; /* Reset margin-right */
+    margin-right: 0;
   }
 }
 
-/* Inner Content Style */
+/* Style the inner content */
 .content-inner {
-  padding: 20px;
-  max-width: 100%;
-  text-align: center;
-}
-
-/* Auth Styles */
-.auth-form {
-  background-color: var(--white); /* White background color */
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  color: var(--text-dark); /* Text color */
-}
-
-/* Admin Dashboard Styles */
-.admin-dashboard {
-  display: flex;
-  flex-direction: row-reverse; /* For RTL */
-  transition: margin-right 0.3s ease-in-out;
-}
-
-.admin-dashboard.sidebar-open .sidebar {
-  transform: translateX(0); /* Sidebar appears */
+  padding: 20px; /* Adjust padding as needed */
+  max-width: 100%; /* Make it responsive */
+  text-align: center; /* Center align the content */
 }
