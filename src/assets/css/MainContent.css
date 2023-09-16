@@ -19,12 +19,13 @@ body {
 
 /* Main Content Styles */
 .main-content {
-  background-color: var(--bg-color);
+  background-color: #1a2435; /* Dark blue background color */
   display: grid;
   padding: 15px;
-  justify-content: center; /* Center horizontally */
-  transition: margin-right 0.2s ease-in-out; /* Adjusted transition time */
-  height: 100vh; /* Full viewport height */
+  justify-content: center;
+  transition: margin-right 0.2s ease-in-out;
+  height: 100vh;
+  color: #fff; /* Text color */
 }
 
 .main-content.sidebar-open {

@@ -9,11 +9,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1.5rem;
-  background-color: var(--primary-color);
-  color: var(--text-light);
-  box-shadow: 0 6px 15px var(--shadow-color);
+  background-color: #062c3d; /* Dark blue background color */
+  color: #fff; /* Text color */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease-in-out;
 }
+
 
 .Brand-Logo {
   color: var(--text-light);

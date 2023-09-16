@@ -1,10 +1,11 @@
 
 /* Auth Styles */
 .auth-form {
-  background-color: #fff;
+  background-color: #1a2435; /* Dark blue background color */
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Removed px from 0px */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #fff; /* Text color */
 }
 
 /* Admin Dashboard Styles */
