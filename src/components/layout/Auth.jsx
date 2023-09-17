@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import TopNav from './Tools/TopNav';
 import Sidebar from './Tools/SideBar';
-import useAuth from './AuthTool/Authuser';
+import useAuth from '../layout/AuthTool/AuthUser';
 import '../../App.css';
 import MainContent from './Tools/MainContent';
 import '../../assets/css/Auth.css';
