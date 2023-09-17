@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, Form, Button, Row, Col } from 'react-bootstrap';
 import { FaUser, FaEnvelope, FaKey, FaSignInAlt } from 'react-icons/fa';
 import AuthUser from './AuthUser';
-import API_CONFIG from '../../config';
+import API_CONFIG from '../../../config';
 import axios from 'axios';
 
 const Register = ({ handleCloseForm }) => {
