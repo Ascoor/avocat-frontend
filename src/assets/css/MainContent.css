@@ -1,16 +1,5 @@
 /* Reset default margin and padding */
-<<<<<<< HEAD
 body, div, h1, h2, h3, p, ul, li {
-=======
-body,
-div,
-h1,
-h2,
-h3,
-p,
-ul,
-li {
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   margin: 0;
   padding: 0;
 }
@@ -19,15 +8,11 @@ li {
 body {
   font-family: 'Cairo', sans-serif;
   background-color: var(--bg-color);
-<<<<<<< HEAD
   color: var(--text-light);
-=======
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 }
 
 /* Main Content Styles */
 .main-content {
-<<<<<<< HEAD
   background-color: var(--dark-blue-bg);
   display: flex;
   flex-wrap: wrap; /* Allows content to wrap onto next line */
@@ -39,29 +24,12 @@ body {
 
 .main-content.sidebar-open {
   margin-right: 300px; /* Or use % if more appropriate */
-=======
-  background-color: var(--bg-color);
-  display: grid;
-  padding: 15px;
-  justify-content: center; /* Center horizontally */
-  transition: margin-right 0.2s ease-in-out; /* Adjusted transition time */
-  height: 100vh; /* Full viewport height */
-}
-
-.main-content.sidebar-open {
-  margin-right: 300px; /* Matches the sidebar width */
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 }
 
 /* Responsive Handling */
 @media (max-width: 768px) {
-<<<<<<< HEAD
   .main-content {
     flex-direction: column; /* Stack content vertically */
-=======
-  .main-content.sidebar-open {
-    margin-right: 0; /* Reset margin-right */
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   }
   
   .main-content.sidebar-open {
@@ -74,7 +42,6 @@ body {
 /* Inner Content Style */
 .content-inner {
   padding: 20px;
-<<<<<<< HEAD
   width: 100%; /* Use percentage for flexible width */
   text-align: center;
 }
@@ -88,10 +55,6 @@ body {
 
 .admin-dashboard.sidebar-open .sidebar {
   transform: translateX(0); /* Sidebar appears */
-=======
-  max-width: 100%;
-  text-align: center;
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 }
 
 /* Auth Styles */

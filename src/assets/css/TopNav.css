@@ -9,15 +9,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1.5rem;
-<<<<<<< HEAD
   background: linear-gradient(335deg,#002D40  , #0d3346, #002D40);
   color: #ffffff; /* Text color */
   box-shadow: 0 4px 60px rgba(134, 99, 99, 0.1);
-=======
-  background-color: var(--primary-color);
-  color: var(--text-light);
-  box-shadow: 0 6px 15px var(--shadow-color);
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   transition: transform 0.3s ease-in-out;
 }
 
@@ -30,10 +24,6 @@
 }
 
 .navbar-brand img {
-<<<<<<< HEAD
-=======
-  filter: brightness(0) invert(1);  /* Make the logo white */
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   width: 85px;
   height: 45px;
   margin-right: 0.8rem;
@@ -52,12 +42,7 @@
 }
 
 .search-form button[type='submit'] {
-<<<<<<< HEAD
   background-color: #3a4f63; /* Background color */
-=======
-  background-color: var(--secondary-color);
-  color: var(--text-light);
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   border: none;
   cursor: pointer;
   font-size: 1.6rem;
@@ -77,11 +62,7 @@
 }
 
 .notification-button {
-<<<<<<< HEAD
   background-color: #3a4f63; /* Background color */
-=======
-  background-color: #3a4f63;  /* Background color */
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   border: none;
   cursor: pointer;
   font-size: 1.6rem;
@@ -118,13 +99,10 @@
 .sidebar-open .top-nav {
   margin-right: 300px;
   transition: margin-right 0.3s ease-in-out;
-<<<<<<< HEAD
   
 }
 @media (max-width: 768px) {
   .sidebar-open .top-nav {
     margin-right: 0;  /* Reset margin for small screens */
   }
-=======
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 }
