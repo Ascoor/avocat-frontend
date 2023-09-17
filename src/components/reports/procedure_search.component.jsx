@@ -3,7 +3,10 @@ import { Form, Table, Row, Col } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import API_CONFIG from '../../config';
 import DatePicker from 'react-datepicker';
+
 import axios from 'axios';
+
+import { SearchIcon } from '../../assets/icons/index';
 const ProcedureSearch = () => {
   const [procedureTypes, setProcedureTypes] = useState([]);
   const [searchError, setSearchError] = useState('');
@@ -72,9 +75,16 @@ const ProcedureSearch = () => {
       });
   };
   return (
-    <div className="search-container">
-      <div className="search-text-header">
-        <h2>بحث الإجراءات</h2>
+    <>
+      <div className="section-card-header">
+        <div className="title-row">
+          بحث الإجراءات
+          <img src={SearchIcon} alt="Icon" className="report-procedure-icon" />
+        </div>
+
+        <button className="back-btn" onClick={() => window.history.back()}>
+          رجوع
+        </button>
       </div>
       <Form onSubmit={handleFormSubmit}>
         <Row>
@@ -191,7 +201,9 @@ const ProcedureSearch = () => {
 
       {searchError && <p>{searchError}</p>}
       {filteredProcedures.length > 0 && (
-       <table className="table table-striped table-bordered table-hover table-responsive">          <thead className="table-success text-center">
+        <table className="table table-striped table-bordered table-hover table-responsive">
+          {' '}
+          <thead>
             {' '}
             <tr>
               <th>نوع اإجراء</th>
@@ -220,7 +232,7 @@ const ProcedureSearch = () => {
           </tbody>
         </table>
       )}
-    </div>
+    </>
   );
 };
 export default ProcedureSearch;

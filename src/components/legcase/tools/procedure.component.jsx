@@ -204,7 +204,9 @@ const Procedure = ({ legCaseId }) => {
       </Card.Header>
 
       <Card.Body>
-       <table className="table table-striped table-bordered table-hover table-responsive">          <thead className="table-success text-center">
+        <table className="table table-striped table-bordered table-hover table-responsive">
+          {' '}
+          <thead>
             <tr>
               <th className="col-2">نوع الإجراء</th>
               <th className="col-1">المحكمة</th>

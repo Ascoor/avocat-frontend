@@ -67,9 +67,7 @@ const EventCard = ({ title, color, count, icon }) => {
     >
       <Card
         className="text-center event-card"
-        style={{ background: 'linear-gradient(135deg, #14435a, #002D40)'
-                
-      }}
+        style={{ background: 'linear-gradient(135deg, #14435a, #002D40)' }}
       >
         <Card.Body className="event-card-body">
           <div className="event-card-content p-1">
@@ -306,7 +304,7 @@ const Home = () => {
           )}
         </Col>
       </Row>
-     
+
       <Row className="mt-5 justify-content-center">
         <Calendar />
       </Row>

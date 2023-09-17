@@ -18,8 +18,8 @@ body {
   --accent-color: #df9114;
   --accent-hover: #9c6000;
   --bg-color: #F4F6F9;
-  --text-light: #ffffff;
-  --text-dark: #333333;
+  --text-light: #000000;
+  --text-dark: #ffffff;
 }
 
 
@@ -99,13 +99,87 @@ a {
 }
 
 .btn-success-special
-special
-special {
+ {
   background-color: #28a745;
   color: #ffffff;
   padding: 10px 20px;
 }
 
+
+
+
+/* Report */
+
+.report-card-header {
+  background: linear-gradient(325deg, #1a485c, #0a2741);
+  color: #cdd401;
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.report-card-title {
+  font-size: 24px;
+}
+
+.report-card-body {
+  background-color: #f8e2e2;
+  padding: 20px;
+}
+
+.report-card-footer {
+  background: linear-gradient(325deg, #1a485c, #0a2741);
+  color: #cdd401;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.btn-success-report
+ {
+  background-color: #28a745;
+  color: #ffffff;
+  padding: 10px 20px;
+}
+.report-procedure-icon {
+  width: 95px;
+  height: 70px;
+}
+
+/* Table Special */
+.special-table {
+  margin: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  direction: rtl; /* Right-to-left for Arabic */
+}
+
+.special-table th, .special-table td {
+  border: 1px solid #c59700;
+  padding: 8px;
+  text-align: center;
+}
+
+.special-table th {
+  background-color: #d1e7dd;
+  color: #0b0a5a; /* Dark text on light background */
+  font-size: 21px; /* Increased font size for better readability */
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+}
+
+.special-table tr:nth-child(odd) td {
+  background-color: #daf3f8;
+  color: #333; /* Dark text on light background */
+}
+
+.special-table tr:nth-child(even) td {
+  background-color: #c7ecf7;
+  color: #333; /* Dark text on light background */
+}
+
+.special-table tr:hover td {
+  background-color: #fffd9d;
+  color: #fa0606; /* White text on hover */
+}
 
 
 .text-danger-special {
@@ -118,7 +192,18 @@ special {
   padding: 10px 20px;
 }
 
-
+/* Courte sEtting*/
+.card-header-courts{
+  
+  background: linear-gradient(325deg, #1a485c, #0a2741);
+  color: #ffe600;
+  padding: 20px;
+  border-bottom: 1px solid #ccc;  
+  
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;  
+} 
 /* Sections Headers */.section-card-header {
   
   background: linear-gradient(325deg, #1a485c, #0a2741);
@@ -452,7 +537,6 @@ special {
   }
 }
 
-/* Tablet styles */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .section-title {
     font-size: 28px;

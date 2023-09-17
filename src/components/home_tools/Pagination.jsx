@@ -8,23 +8,47 @@ const CustomPagination = ({
   onPageChange,
 }) => {
   const pageCount = Math.ceil(totalCount / itemsPerPage);
+  const maxPagesToShow = 6;
+
+  const startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+  const endPage = Math.min(pageCount, startPage + maxPagesToShow - 1);
+
+  const handleNext = () => {
+    if (currentPage < pageCount) {
+      onPageChange(Math.min(currentPage + 1, pageCount));
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      onPageChange(Math.max(currentPage - 1, 1));
+    }
+  };
+
+  const pages = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, i) => startPage + i
+  );
 
   return (
     <Pagination>
-      {Array.from({ length: pageCount }, (_, index) => (
+      <Pagination.Prev onClick={handlePrevious} />
+      {pages.map((page) => (
         <Pagination.Item
-          key={index + 1}
-          active={index + 1 === currentPage}
-          onClick={() => onPageChange(index + 1)}
+          key={page}
+          active={page === currentPage}
+          onClick={() => onPageChange(page)}
         >
-          {index + 1}
+          {page}
         </Pagination.Item>
       ))}
+      <Pagination.Next onClick={handleNext} />
     </Pagination>
   );
 };
 
 CustomPagination.propTypes = {
+  totalCount: PropTypes.number.isRequired,
   itemsPerPage: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,

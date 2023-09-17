@@ -62,7 +62,9 @@ export default function LegCaseClients({ legCaseId }) {
           </div>
         </Card.Header>
         <Card.Body>
-         <table className="table table-striped table-bordered table-hover table-responsive">            <thead className="table-success text-center">
+          <table className="table table-striped table-bordered table-hover table-responsive">
+            {' '}
+            <thead>
               <tr>
                 <th>رقم المكتب </th>
                 <th>اسم الموكل</th>

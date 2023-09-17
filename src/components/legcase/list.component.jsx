@@ -92,108 +92,116 @@ const LegCaseList = () => {
   };
 
   return (
-    <Card>
+    <>
+      <SectionHeader
+        setShowAddModal={handleAddClick}
+        listName="القضايا"
+        buttonName="قضية"
+        icon={LegCaseIcon}
+      />
+      <Card className="m-4">
+        <Card.Header>
+          <Row className="add-case-row">
+            {showModal && (
+              <LegCaseCreate isEditing={isEditing} onClose={handleCloseModal} />
+            )}
+          </Row>
 
-<SectionHeader setShowAddModal={handleAddClick} listName="القضايا" buttonName="قضية" icon={LegCaseIcon} />
-
-      <Row className="add-case-row">
-      {showModal && <LegCaseCreate isEditing={isEditing} onClose={handleCloseModal} />}
-  
-      
-      </Row>
-
-      {showAlert && (
-        <Alert variant="success" className="text-center">
-          {currentAlertMessage}
-        </Alert>
-      )}
-      <div className="text-center">
-        <Row className="justify-content-center">
-          <Col xs={12} md={6} lg={6} className="text-center text-md">
-            {/* Adjust the grid classes */}
-            <input
-              type="text"
-              className="form-control search-input"
-              placeholder="ابحث..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button
-              className="btn btn-primary btn-search"
-              onClick={handleSearch}
-            >
-              بحث
-            </button>
-          </Col>
-        </Row>
-      </div>
-      <Card.Body>
-       <table className="table table-striped table-bordered table-hover table-responsive">     
-        <thead className="table-success text-center">
-
-            <tr>
-              <th className="header-cell">رقم الملف</th>
-              <th className="header-cell"> الموكل</th>
-              <th className="header-cell">صفة</th>
-              <th className="header-cell">الموضوع </th>
-              <th className="header-cell">نوع القضية</th>
-              <th className="header-cell">المحكمة</th>
-              <th className="header-cell">الحالة</th>
-              <th className="header-cell">التحكم</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedLegCases.map((legCase, index) => (
-              <tr key={index}>
-                <td>{legCase.slug}</td>
-                <td>
-                  {legCase.clients.map((client, clientIndex) => (
-                    <div key={clientIndex}>
-                      <small>{client.name}</small>
-                    </div>
-                  ))}
-                </td>
-                <td>{legCase.client_capacity}</td>
-                <td>{legCase.title}</td>
-                <td>{legCase.case_sub_type.name}</td>
-                <td>
-                  {legCase.courts.map((court, courtIndex) => (
-                    <div key={courtIndex}>
-                      <small>{court.name}</small>
-                    </div>
-                  ))}
-                </td>
-                <td>{legCase.status}</td>
-                <td>
-                  <div className="button-container">
-                    <Link
-                      className="btn btn-secondary mb-2 float-end"
-                      to={`/legcases/show/${legCase.id}`}
-                    >
-                      عرض
-                    </Link>
-                    <Link
-                      className="btn btn-danger mb-2 float-end"
-                      onClick={() => deleteLegCase(legCase.id)}
-                    >
-                      حذف
-                    </Link>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </Card.Body>
-      <Card.Footer>
-        <CustomPagination
-          totalCount={filteredLegCases.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={legCasesPage}
-          onPageChange={handlePageChange}
-        />
-      </Card.Footer>
-    </Card>
+          {showAlert && (
+            <Alert variant="success" className="text-center">
+              {currentAlertMessage}
+            </Alert>
+          )}
+        </Card.Header>
+        <div className="text-center">
+          <Row className="justify-content-center">
+            <Col xs={12} md={6} lg={6} className="text-center text-md">
+              {/* Adjust the grid classes */}
+              <input
+                type="text"
+                className="form-control search-input"
+                placeholder="ابحث..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button
+                className="btn btn-primary btn-search"
+                onClick={handleSearch}
+              >
+                بحث
+              </button>
+            </Col>
+          </Row>
+        </div>
+        <Card.Body>
+          <div className="table-responsive">
+            <table className="special-table">
+              <thead>
+                <tr>
+                  <th className="header-cell">رقم الملف</th>
+                  <th className="header-cell"> الموكل</th>
+                  <th className="header-cell">صفة</th>
+                  <th className="header-cell">الموضوع </th>
+                  <th className="header-cell">نوع القضية</th>
+                  <th className="header-cell">المحكمة</th>
+                  <th className="header-cell">الحالة</th>
+                  <th className="header-cell">التحكم</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedLegCases.map((legCase, index) => (
+                  <tr key={index}>
+                    <td>{legCase.slug}</td>
+                    <td>
+                      {legCase.clients.map((client, clientIndex) => (
+                        <div key={clientIndex}>
+                          <small>{client.name}</small>
+                        </div>
+                      ))}
+                    </td>
+                    <td>{legCase.client_capacity}</td>
+                    <td>{legCase.title}</td>
+                    <td>{legCase.case_sub_type.name}</td>
+                    <td>
+                      {legCase.courts.map((court, courtIndex) => (
+                        <div key={courtIndex}>
+                          <small>{court.name}</small>
+                        </div>
+                      ))}
+                    </td>
+                    <td>{legCase.status}</td>
+                    <td>
+                      <div className="button-container">
+                        <Link
+                          className="btn btn-secondary mb-2 float-end"
+                          to={`/legcases/show/${legCase.id}`}
+                        >
+                          عرض
+                        </Link>
+                        <Link
+                          className="btn btn-danger mb-2 float-end"
+                          onClick={() => deleteLegCase(legCase.id)}
+                        >
+                          حذف
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card.Body>
+        <Card.Footer>
+          <CustomPagination
+            totalCount={filteredLegCases.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={legCasesPage}
+            onPageChange={handlePageChange}
+          />
+        </Card.Footer>
+      </Card>
+    </>
   );
 };
 

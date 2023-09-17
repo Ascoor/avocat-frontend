@@ -218,7 +218,9 @@ const LegalAd = ({ legCaseId }) => {
         </Button>
       </Card.Header>
       <Card.Body>
-       <table className="table table-striped table-bordered table-hover table-responsive">          <thead className="table-success text-center">
+        <table className="table table-striped table-bordered table-hover table-responsive">
+          {' '}
+          <thead>
             <tr>
               <th>نوع الإعلان القانوني</th>
               <th>تاريخ التسليم</th>

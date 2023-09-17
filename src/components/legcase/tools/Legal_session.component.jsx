@@ -212,7 +212,9 @@ const LegalSession = ({ legCaseId }) => {
       </Card.Header>
       <Card.Body>
         <Row>
-         <table className="table table-striped table-bordered table-hover table-responsive">            <thead className="table-success text-center">
+          <table className="table table-striped table-bordered table-hover table-responsive">
+            {' '}
+            <thead>
               <tr>
                 <th className="col-2">تاريخ الجلسة</th>
                 <th className="col-2">اسم المحامي</th>

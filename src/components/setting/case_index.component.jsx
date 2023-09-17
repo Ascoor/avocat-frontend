@@ -200,7 +200,7 @@ const CaseType = () => {
     <>
       <Card>
         <Row>
-          <div className="court-setting-card-header">
+          <div className="legalcase-card-header">
             <Card.Header className="text-center">
               إعدادات القضايا
               <img src={JudgeIcon} alt="Icon" className="court-icon" />
@@ -239,162 +239,162 @@ const CaseType = () => {
         <Card.Body>
           <Row>
             <Col>
-              <Card.Header
-                style={{ backgroundColor: 'beige' }}
-                className="text-center"
-              >
-                <h3 style={{ color: '#006e5d' }}>أنواع القضايا</h3>
+              <Card.Header className="card-header-courts text-center">
+                <h3>أنواع القضايا</h3>
               </Card.Header>
 
-             <table className="table table-striped table-bordered table-hover table-responsive">                <thead className="table-success text-center">
-                  <tr>
-                    <th>الاسم</th>
-                    <th>التحكم</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {caseTypes.map((caseType) => (
-                    <tr
-                      style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
-                      key={caseType.id}
-                    >
-                      <td>{caseType.name}</td>
-                      <td>
-                        <Button
-                          variant="danger"
-                          onClick={() =>
-                            handleDelete(
-                              caseType.id,
-                              caseType.name,
-                              'case_types'
-                            )
-                          }
-                        >
-                          حذف
-                        </Button>
-                      </td>
+              <div className="table-responsive">
+                <table className="special-table">
+                  <thead>
+                    <tr>
+                      <th>الاسم</th>
+                      <th>التحكم</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {caseTypes.map((caseType) => (
+                      <tr
+                        style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
+                        key={caseType.id}
+                      >
+                        <td>{caseType.name}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() =>
+                              handleDelete(
+                                caseType.id,
+                                caseType.name,
+                                'case_types'
+                              )
+                            }
+                          >
+                            حذف
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Col>
             <Col>
-              <Card.Header
-                style={{ backgroundColor: 'beige' }}
-                className="text-center"
-              >
-                <h3 style={{ color: '#006e5d' }}>أنواع القضايا الفرعية</h3>
+              <Card.Header className="card-header-courts text-center">
+                <h3>أنواع القضايا الفرعية</h3>
               </Card.Header>
-             <table className="table table-striped table-bordered table-hover table-responsive">                <thead className="table-success text-center">
-                  <tr>
-                    <th>النوع الفرعي</th>
-                    <th>اسم نوع القضية</th>
-                    <th>التحكم</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {caseSubTypes.map((caseSubType) => (
-                    <tr
-                      style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
-                      key={caseSubType.id}
-                    >
-                      <td>{caseSubType.name}</td>
-                      <td>{caseSubType.case_type.name}</td>
-                      <td>
-                        <Button
-                          variant="danger"
-                          onClick={() =>
-                            handleDelete(
-                              caseSubType.id,
-                              caseSubType.name,
-                              'case_sub_types'
-                            )
-                          }
-                        >
-                          حذف
-                        </Button>
-                      </td>
+              <div className="table-responsive">
+                <table className="special-table table-striped">
+                  <thead>
+                    <tr>
+                      <th>النوع الفرعي</th>
+                      <th>اسم نوع القضية</th>
+                      <th>التحكم</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {caseSubTypes.map((caseSubType) => (
+                      <tr
+                        style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
+                        key={caseSubType.id}
+                      >
+                        <td>{caseSubType.name}</td>
+                        <td>{caseSubType.case_type.name}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() =>
+                              handleDelete(
+                                caseSubType.id,
+                                caseSubType.name,
+                                'case_sub_types'
+                              )
+                            }
+                          >
+                            حذف
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Col>
           </Row>
           <Row>
             <Col>
-              <Card.Header
-                style={{ backgroundColor: 'beige' }}
-                className="text-center"
-              >
-                <h3 style={{ color: '#006e5d' }}>أنواع الإجراءات</h3>
+              <Card.Header className="card-header-courts text-center">
+                <h3>أنواع الإجراءات</h3>
               </Card.Header>
-             <table className="table table-striped table-bordered table-hover table-responsive">                <thead className="table-success text-center">
-                  <tr>
-                    <th>الاسم</th>
-                    <th>التحكم</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {procedureTypes.map((procedureType) => (
-                    <tr
-                      style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
-                      key={procedureType.id}
-                    >
-                      <td>{procedureType.name}</td>
-                      <td>
-                        <Button
-                          variant="danger"
-                          onClick={() =>
-                            handleDelete(
-                              procedureType.id,
-                              procedureType.name,
-                              'procedure_types'
-                            )
-                          }
-                        >
-                          حذف
-                        </Button>
-                      </td>
+              <div className="table-responsive">
+                <table className="special-table">
+                  <thead>
+                    <tr>
+                      <th>الاسم</th>
+                      <th>التحكم</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {procedureTypes.map((procedureType) => (
+                      <tr
+                        style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
+                        key={procedureType.id}
+                      >
+                        <td>{procedureType.name}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() =>
+                              handleDelete(
+                                procedureType.id,
+                                procedureType.name,
+                                'procedure_types'
+                              )
+                            }
+                          >
+                            حذف
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Col>
             <Col>
-              <Card.Header
-                style={{ backgroundColor: 'beige' }}
-                className="text-center"
-              >
-                <h3 style={{ color: '#006e5d' }}>أنواع الإعلانات</h3>
+              <Card.Header className="card-header-courts text-center">
+                <h3>أنواع الإعلانات</h3>
               </Card.Header>
-             <table className="table table-striped table-bordered table-hover table-responsive">                <thead className="table-success text-center">
-                  <tr>
-                    <th>الاسم</th>
-                    <th>التحكم</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {legalAdTypes.map((adType) => (
-                    <tr key={adType.id}>
-                      <td>{adType.name}</td>
-                      <td>
-                        <Button
-                          variant="danger"
-                          onClick={() =>
-                            handleDelete(
-                              adType.id,
-                              adType.name,
-                              'legal_ad_types'
-                            )
-                          }
-                        >
-                          حذف
-                        </Button>
-                      </td>
+              <div className="table-responsive">
+                <table className="special-table">
+                  <thead>
+                    <tr>
+                      <th>الاسم</th>
+                      <th>التحكم</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {legalAdTypes.map((adType) => (
+                      <tr key={adType.id}>
+                        <td>{adType.name}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() =>
+                              handleDelete(
+                                adType.id,
+                                adType.name,
+                                'legal_ad_types'
+                              )
+                            }
+                          >
+                            حذف
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Col>
           </Row>
           <Modal

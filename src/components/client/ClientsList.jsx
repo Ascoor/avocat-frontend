@@ -5,7 +5,6 @@ import { Table, Alert, Card, Button, Row, Modal, Col } from 'react-bootstrap';
 import { ClientIcon } from '../../assets/icons/index';
 import API_CONFIG from '../../config';
 import { FcPlus } from 'react-icons/fc';
-import { TiArrowBackOutline } from 'react-icons/ti';
 
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { BsFillPersonFill } from 'react-icons/bs';
@@ -129,15 +128,15 @@ export default function Clients() {
 
   return (
     <>
-      <Card>
-<SectionHeader buttonName="موكلين" listName="موكلين" icon={ClientIcon}/>
-
-        {showAlert && (
-          <Alert className="mt-4" variant="success">
-            {currentAlertMessage}
-          </Alert>
-        )}
-
+      <SectionHeader buttonName="موكلين" listName="موكلين" icon={ClientIcon} />
+      <Card className="m-4">
+        <Card.Header>
+          {showAlert && (
+            <Alert className="mt-4" variant="success">
+              {currentAlertMessage}
+            </Alert>
+          )}
+        </Card.Header>
         <div className="input-group w-50">
           <input
             type="text"
@@ -155,67 +154,70 @@ export default function Clients() {
           </button>
         </div>
 
-       <table className="table table-striped table-bordered table-hover table-responsive">          <thead className="table-success text-center">
-            <tr>
-              <th>رقم المكتب</th>
-              <th>اسم العميل</th>
-              <th>رقم القومى</th>
-              <th>العنوان</th>
-              <th>رقم الهاتف</th>
-              <th>الحالة</th>
-              <th>التحكم</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedClients.length === 0 ? (
+        <div className="table-responsive">
+          <table className="special-table">
+            <thead>
               <tr>
-                <td colSpan="5">
-                  <Alert variant="warning">لا يوجد موكلين لعرضهم.</Alert>
-                </td>
+                <th>رقم المكتب</th>
+                <th>اسم العميل</th>
+                <th>رقم القومى</th>
+                <th>العنوان</th>
+                <th>رقم الهاتف</th>
+                <th>الحالة</th>
+                <th>التحكم</th>
               </tr>
-            ) : (
-              filteredClients.map((client) => (
-                <tr key={client.id}>
-                  <td>{client.slug}</td>
-                  <td>{client.name}</td>
-                  <td>{client.identity_number}</td>
-                  <td>{client.address}</td>
-                  <td>{client.phone_number}</td>
-                  <td>
-                    {client.status === 'active' ? (
-                      <span className="text-success">نشط</span>
-                    ) : (
-                      <span className="text-danger">غير نشط</span>
-                    )}
-                  </td>
-
-                  <td>
-                    <Button
-                      variant={
-                        client.status === 'active' ? 'success' : 'warning'
-                      }
-                      onClick={() => handleToggleStatus(client.id)}
-                    >
-                      {client.status === 'active' ? 'إلغاء التنشيط' : 'تنشيط'}
-                    </Button>
-                    <Button
-                      variant="primary"
-                      onClick={() => handleEditClient(client.id)}
-                    >
-                      تعديل
-                    </Button>{' '}
-                    <Button
-                      variant="danger"
-                      onClick={() => deleteClient(client.id)}
-                    >
-                      حذف
-                    </Button>
+            </thead>
+            <tbody>
+              {paginatedClients.length === 0 ? (
+                <tr>
+                  <td colSpan="5">
+                    <Alert variant="warning">لا يوجد موكلين لعرضهم.</Alert>
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                filteredClients.map((client) => (
+                  <tr key={client.id}>
+                    <td>{client.slug}</td>
+                    <td>{client.name}</td>
+                    <td>{client.identity_number}</td>
+                    <td>{client.address}</td>
+                    <td>{client.phone_number}</td>
+                    <td>
+                      {client.status === 'active' ? (
+                        <span className="text-success">نشط</span>
+                      ) : (
+                        <span className="text-danger">غير نشط</span>
+                      )}
+                    </td>
+
+                    <td>
+                      <Button
+                        variant={
+                          client.status === 'active' ? 'success' : 'warning'
+                        }
+                        onClick={() => handleToggleStatus(client.id)}
+                      >
+                        {client.status === 'active' ? 'إلغاء التنشيط' : 'تنشيط'}
+                      </Button>
+                      <Button
+                        variant="primary"
+                        onClick={() => handleEditClient(client.id)}
+                      >
+                        تعديل
+                      </Button>{' '}
+                      <Button
+                        variant="danger"
+                        onClick={() => deleteClient(client.id)}
+                      >
+                        حذف
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
         <Card.Footer>
           {/* Render the CustomPagination component */}
           <CustomPagination

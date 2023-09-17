@@ -47,64 +47,68 @@ const Login = ({ handleCloseForm }) => {
 
   return (
     <>
-  <Card.Header>
-    <div className="special-card-header">
-      <Card.Title>
-        تسجيل الدخول
-        <FaSignInAlt style={{ marginRight: '5px' }} className="welcome-page-icon" />
-      </Card.Title>
-    </div>
-  </Card.Header>
-
-  <Card.Body>
-    <Form onSubmit={onSubmit}>
-      <Form.Group controlId="formBasicUsername">
-        <Form.Label>اسم المستخدم أو البريد الإلكتروني</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter your username or email"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="username-input" // Add the class here
-        />
-      </Form.Group>
-
-      <Form.Group controlId="formBasicPassword">
-        <Form.Label>كلمة المرور</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="password-input" // Add the class here
-        />
-      </Form.Group>
-      <Row className="mt-4 justify-content-center">
-        {loading ? (
-          <button type="button" disabled className="btn-loading">
-            ...جارى الدخول
-          </button>
-        ) : (
-          <button type="submit" className="btn-success-special">
+      <Card.Header>
+        <div className="special-card-header">
+          <Card.Title>
             تسجيل الدخول
-          </button>
-        )}
-      </Row>
-      {error && <p className="text-danger-special mt-3 text-center">{error}</p>}
-    </Form>
-  </Card.Body>
+            <FaSignInAlt
+              style={{ marginRight: '5px' }}
+              className="welcome-page-icon"
+            />
+          </Card.Title>
+        </div>
+      </Card.Header>
 
-  <Card.Footer className="special-card-footer">
-    <button
-      type="button"
-      onClick={handleCloseForm}
-      className="btn-danger login-back"
-    >
-      العودة للرئيسية
-    </button>
-  </Card.Footer>
-</>
+      <Card.Body>
+        <Form onSubmit={onSubmit}>
+          <Form.Group controlId="formBasicUsername">
+            <Form.Label>اسم المستخدم أو البريد الإلكتروني</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your username or email"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="username-input" // Add the class here
+            />
+          </Form.Group>
 
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>كلمة المرور</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="password-input" // Add the class here
+            />
+          </Form.Group>
+          <Row className="mt-4 justify-content-center">
+            {loading ? (
+              <button type="button" disabled className="btn-loading">
+                ...جارى الدخول
+              </button>
+            ) : (
+              <button type="submit" className="btn-success-special">
+                تسجيل الدخول
+              </button>
+            )}
+          </Row>
+          {error && (
+            <p className="text-danger-special mt-3 text-center">{error}</p>
+          )}
+        </Form>
+      </Card.Body>
+
+      <Card.Footer className="special-card-footer">
+        <button
+          type="button"
+          onClick={handleCloseForm}
+          className="btn-danger login-back"
+        >
+          العودة للرئيسية
+        </button>
+      </Card.Footer>
+    </>
   );
 };
 

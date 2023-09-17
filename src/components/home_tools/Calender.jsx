@@ -53,7 +53,7 @@ const Calendar = () => {
           <Card.Header className="home-text-center">
             <h3>الأجندة</h3>
             <div className="clock">
-              <AnalogClock/>
+              <AnalogClock />
             </div>
           </Card.Header>
           <Card.Body>

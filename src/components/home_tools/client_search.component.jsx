@@ -7,7 +7,9 @@ const ClientSearch = ({ searchResults }) => {
   }
   const clients = searchResults || [];
   return (
-   <table className="table table-striped table-bordered table-hover table-responsive">      <thead className="table-success text-center">
+    <table className="table table-striped table-bordered table-hover table-responsive">
+      {' '}
+      <thead>
         <tr>
           <th>#</th>
           <th>الاسم</th>
@@ -15,7 +17,6 @@ const ClientSearch = ({ searchResults }) => {
           <th>رقم الهاتف</th>
         </tr>
       </thead>
-
       {/* Table body */}
       <tbody>
         {clients.map((client, index) => (

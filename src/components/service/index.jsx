@@ -5,7 +5,7 @@ import ServiceModal from './ServiceModal';
 import API_CONFIG from '../../config';
 import ServiceDetailsModal from './ServiceDetailsModal';
 import SectionHeader from '../home_tools/SectionHeader';
-import {ServiceIcon} from '../../assets/icons/index'
+import { ServiceIcon } from '../../assets/icons/index';
 const Services = () => {
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -50,26 +50,30 @@ const Services = () => {
   const handleServiceAddedOrEdited = () => {
     // After adding or editing a service, fetch services again to update the list
     fetchServices();
-
   };
   const handleReturn = () => {
     // Show the table and reset the selected service when returning
     setSelectedService(null);
-    setShowDetailsModal(false);  // Add this line to set showDetailsModal to false
+    setShowDetailsModal(false); // Add this line to set showDetailsModal to false
   };
   const handleCloseModal = () => {
-    handleClose();  // Call the passed handleClose prop function
+    handleClose(); // Call the passed handleClose prop function
   };
-  
-  return (
-    <Card className="lawyer-card">
-   <SectionHeader listName="الخدمات" buttonName="خدمة" setShowAddModal={handleAddService} icon={ServiceIcon}/>
-    <Card.Body className="table-responsive">
-    <table className="table table-striped table-bordered table-hover table-responsive">
-     
-      
-          <thead className="table-success text-center">
 
+  return (
+    <>
+      <SectionHeader
+        listName="الخدمات"
+        buttonName="خدمة"
+        setShowAddModal={handleAddService}
+        icon={ServiceIcon}
+      />
+
+      <Card className="m-4">
+        <Card.Body>
+          <div className="table-responsive">
+            <table className="special-table">
+              <thead>
                 <tr>
                   <th className="col-1">رقم الخدمة</th>
                   <th className="col-2">وصف الخدمة</th>
@@ -101,35 +105,36 @@ const Services = () => {
                         حذف
                       </Button>
                       <Button
-  variant="secondary"
-  onClick={() => {
-    setSelectedService(service);
-    setShowDetailsModal(true);  // Add this line to set showDetailsModal to true
-  }}
->
-  عرض التفاصيل
-</Button>
-
+                        variant="secondary"
+                        onClick={() => {
+                          setSelectedService(service);
+                          setShowDetailsModal(true); // Add this line to set showDetailsModal to true
+                        }}
+                      >
+                        عرض التفاصيل
+                      </Button>
                     </td>
                   </tr>
                 ))}
               </tbody>
-              </table>
-      </Card.Body>
-      {showDetailsModal && (
-        <ServiceDetailsModal
-          service={selectedService}
-          handleClose={handleReturn}
+            </table>
+          </div>
+        </Card.Body>
+        {showDetailsModal && (
+          <ServiceDetailsModal
+            service={selectedService}
+            handleClose={handleReturn}
+          />
+        )}
+        <ServiceModal
+          show={showModal}
+          handleClose={() => setShowModal(false)}
+          service={editingService}
+          handleServiceAddedOrEdited={handleServiceAddedOrEdited}
+          isEditing={!!editingService}
         />
-      )}
-      <ServiceModal
-        show={showModal}
-        handleClose={() => setShowModal(false)}
-        service={editingService}
-        handleServiceAddedOrEdited={handleServiceAddedOrEdited}
-        isEditing={!!editingService}
-      />
-    </Card>
+      </Card>
+    </>
   );
 };
 

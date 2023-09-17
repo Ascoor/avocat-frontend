@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Form, Button } from 'react-bootstrap';
-import { useSpring, animated } from '@react-spring/web';
+import { Button } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import API_CONFIG from '../../config';
+import { SearchIcon } from '../../assets/icons';
 
 function CourtSearch() {
   const [degreeOptions, setDegreeOptions] = useState([]);
@@ -24,12 +23,6 @@ function CourtSearch() {
     const data = await response.json();
     setDegreeOptions(data.degrees);
   };
-
-  const formAnimation = useSpring({
-    opacity: 1,
-    marginTop: 0,
-    from: { opacity: 0, marginTop: -100 },
-  });
 
   const handleDegreeSelect = async (event) => {
     const selectedDegree = event.target.value;
@@ -91,85 +84,89 @@ function CourtSearch() {
       });
   };
   return (
-    <Container>
-      <h1>Court Search</h1>
-      <Link to="/">Back to Home</Link>
+    <div className="section-card-header">
+      <div className="title-row">
+        بحث القضايا
+        <img src={SearchIcon} alt="Icon" className="court-icon" />
+      </div>
 
-      <animated.div style={formAnimation}>
-        <Form onSubmit={handleSearchSubmit}>
-          <Form.Group controlId="degreeSelect">
-            <Form.Label>Select Degree:</Form.Label>
-            <Form.Control
-              as="select"
-              value={selectedDegree}
-              onChange={handleDegreeSelect}
-            >
-              <option value="">Select</option>
-              {degreeOptions.length > 0 &&
-                degreeOptions.map((degree) => (
-                  <option key={degree.value} value={degree.value}>
-                    {degree.label}
-                  </option>
-                ))}
-            </Form.Control>
-          </Form.Group>
+      <button className="back-btn" onClick={() => window.history.back()}>
+        رجوع
+      </button>
 
-          <Form.Group controlId="courtSelect">
-            <Form.Label>Select Court:</Form.Label>
-            <Form.Control
-              as="select"
-              value={selectedCourt}
-              onChange={handleCourtSelect}
-            >
-              <option value="">Select</option>
-              {courtOptions.map((court) => (
-                <option key={court.id} value={court.id}>
-                  {court.name}
+      <Form onSubmit={handleSearchSubmit}>
+        <Form.Group controlId="degreeSelect">
+          <Form.Label>Select Degree:</Form.Label>
+          <Form.Control
+            as="select"
+            value={selectedDegree}
+            onChange={handleDegreeSelect}
+          >
+            <option value="">Select</option>
+            {degreeOptions.length > 0 &&
+              degreeOptions.map((degree) => (
+                <option key={degree.value} value={degree.value}>
+                  {degree.label}
                 </option>
               ))}
-            </Form.Control>
-          </Form.Group>
+          </Form.Control>
+        </Form.Group>
 
-          <Form.Group controlId="caseTypeSelect">
-            <Form.Label>Select Case Type:</Form.Label>
-            <Form.Control
-              as="select"
-              value={selectedCaseType}
-              onChange={handleCaseTypeSelect}
-            >
-              <option value="">Select</option>
-              {caseTypeOptions.map((caseType) => (
-                <option key={caseType.id} value={caseType.id}>
-                  {caseType.name}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
+        <Form.Group controlId="courtSelect">
+          <Form.Label>Select Court:</Form.Label>
+          <Form.Control
+            as="select"
+            value={selectedCourt}
+            onChange={handleCourtSelect}
+          >
+            <option value="">Select</option>
+            {courtOptions.map((court) => (
+              <option key={court.id} value={court.id}>
+                {court.name}
+              </option>
+            ))}
+          </Form.Control>
+        </Form.Group>
 
-          <Form.Group controlId="caseYearInput">
-            <Form.Label>Case Year:</Form.Label>
-            <Form.Control
-              type="text"
-              value={caseYear}
-              onChange={handleCaseYearInput}
-            />
-          </Form.Group>
+        <Form.Group controlId="caseTypeSelect">
+          <Form.Label>Select Case Type:</Form.Label>
+          <Form.Control
+            as="select"
+            value={selectedCaseType}
+            onChange={handleCaseTypeSelect}
+          >
+            <option value="">Select</option>
+            {caseTypeOptions.map((caseType) => (
+              <option key={caseType.id} value={caseType.id}>
+                {caseType.name}
+              </option>
+            ))}
+          </Form.Control>
+        </Form.Group>
 
-          <Form.Group controlId="caseNumberInput">
-            <Form.Label>Case Number:</Form.Label>
-            <Form.Control
-              type="text"
-              value={caseNumber}
-              onChange={handleCaseNumberInput}
-            />
-          </Form.Group>
+        <Form.Group controlId="caseYearInput">
+          <Form.Label>Case Year:</Form.Label>
+          <Form.Control
+            type="text"
+            value={caseYear}
+            onChange={handleCaseYearInput}
+          />
+        </Form.Group>
 
-          <Button variant="primary" type="submit">
-            <FaSearch /> Search
-          </Button>
-        </Form>
-      </animated.div>
-    </Container>
+        <Form.Group controlId="caseNumberInput">
+          <Form.Label>Case Number:</Form.Label>
+          <Form.Control
+            type="text"
+            value={caseNumber}
+            onChange={handleCaseNumberInput}
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          <FaSearch /> Search
+        </Button>
+      </Form>
+    </div>
   );
 }
 

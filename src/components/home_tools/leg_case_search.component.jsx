@@ -58,7 +58,9 @@ const LegCaseSearch = ({
             <>
               {/* Display search results */}
 
-             <table className="table table-striped table-bordered table-hover table-responsive">                <thead className="table-success text-center">
+              <table className="table table-striped table-bordered table-hover table-responsive">
+                {' '}
+                <thead>
                   {' '}
                   <tr>
                     <th scope="col">رقم القضية</th>

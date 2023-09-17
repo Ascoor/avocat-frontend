@@ -124,48 +124,55 @@ export default function CourtType({ show, handleClose }) {
   return (
     <>
       <Card>
-      <Row>
-            <Col>
-                <Card.Header className="card-header-courts text-center">
-                    <h3 className="header-text">تصنيف المحاكم</h3>
-                </Card.Header>
-                <Card.Body>
-                    {alertMessage && (
-                        <Alert variant={alertMessage.type}>{alertMessage.text}</Alert>
-                    )}
-                    {successMessage && (
-                        <Alert variant="success">{successMessage}</Alert>
-                    )}
-                    {courtTypeAlert && (
-                        <Alert variant="danger"> {alertMessage}</Alert>
-                    )}
+        <Row>
+          <Col>
+            <Card.Header className="card-header-courts text-center">
+              <h3>تصنيف المحاكم</h3>
+            </Card.Header>
+            <Card.Body>
+              {alertMessage && (
+                <Alert variant={alertMessage.type}>{alertMessage.text}</Alert>
+              )}
+              {successMessage && (
+                <Alert variant="success">{successMessage}</Alert>
+              )}
+              {courtTypeAlert && (
+                <Alert variant="danger"> {alertMessage}</Alert>
+              )}
 
-                       <table className="table table-striped table-bordered table-hover table-responsive">
-     
-                    <thead className="table-success text-center"> 
-                            <tr>
-                                <th>الاسم</th>
-                                <th>الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentItems.map((courtType) => (
-                                <tr className="table-row-courts" key={courtType.id}>
-                                    <td>{courtType.name}</td>
-                                    <td>
-                                        <Button
-                                            variant="danger"
-                                            onClick={() => handleDeleteCourtType(courtType.id, courtType.name, 'court_types')}
-                                        >
-                                            حذف
-                                        </Button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </Card.Body>
-            </Col>
+              <div className="table-responsive">
+                <table className="special-table">
+                  <thead>
+                    <tr>
+                      <th>الاسم</th>
+                      <th>الإجراءات</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentItems.map((courtType) => (
+                      <tr className="table-row-courts" key={courtType.id}>
+                        <td>{courtType.name}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() =>
+                              handleDeleteCourtType(
+                                courtType.id,
+                                courtType.name,
+                                'court_types'
+                              )
+                            }
+                          >
+                            حذف
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Card.Body>
+          </Col>
         </Row>
         <Card.Footer>
           <CustomPagination

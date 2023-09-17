@@ -69,79 +69,82 @@ const Lawyers = () => {
   };
 
   return (
-    <Card>
-        <SectionHeader 
-        listName="المحامين" 
-        buttonName="محامي" 
+    <>
+      <SectionHeader
+        listName="المحامين"
+        buttonName="محامي"
         setShowAddModal={setShowAddModal} // pass setShowAddModal function
         icon={LawyerIcon}
       />
-      <div className="table-responsive">
-           <table className="table table-striped table-bordered table-hover table-responsive">
-     
-          <thead className="table-success">
-            <tr>
-              <th>الاسم</th>
-              <th>تاريخ الميلاد</th>
-              <th>رقم الهوية</th>
-              <th>رقم تسجيل المحاماة</th>
-              <th>فئة المحامي</th>
-              <th>البريد الإلكتروني</th>
-              <th>رقم الهاتف</th>
-              <th>التحكم</th>
-            </tr>
-          </thead>
-          <tbody>
-            {lawyers.map((lawyer) => (
-              <tr key={lawyer.id}>
-                <td>{lawyer.name}</td>
-                <td>{lawyer.birthdate}</td>
-                <td>{lawyer.identity_number}</td>
-                <td>{lawyer.law_reg_num}</td>
-                <td>{lawyer.lawyer_class}</td>
-                <td>{lawyer.email}</td>
-                <td>{lawyer.phone_number}</td>
-                <td>
-                  <Button
-                    variant="primary"
-                    onClick={() => handleShowEditModal(lawyer)}
-                  >
-                    <FaEdit />
-                  </Button>
-                  <Button
-                    variant="danger"
-                    onClick={() => handleDeleteLawyer(lawyer.id)}
-                  >
-                    <FaTrash />
-                  </Button>
-                </td>
+
+      <Card className="m-4">
+        <Card.Header></Card.Header>
+        <div className="table-responsive">
+          <table className="special-table">
+            <thead className="table-info">
+              <tr>
+                <th>الاسم</th>
+                <th>تاريخ الميلاد</th>
+                <th>رقم الهوية</th>
+                <th>رقم تسجيل المحاماة</th>
+                <th>فئة المحامي</th>
+                <th>البريد الإلكتروني</th>
+                <th>رقم الهاتف</th>
+                <th>التحكم</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {lawyers.map((lawyer) => (
+                <tr key={lawyer.id}>
+                  <td>{lawyer.name}</td>
+                  <td>{lawyer.birthdate}</td>
+                  <td>{lawyer.identity_number}</td>
+                  <td>{lawyer.law_reg_num}</td>
+                  <td>{lawyer.lawyer_class}</td>
+                  <td>{lawyer.email}</td>
+                  <td>{lawyer.phone_number}</td>
+                  <td>
+                    <Button
+                      variant="primary"
+                      onClick={() => handleShowEditModal(lawyer)}
+                    >
+                      <FaEdit />
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDeleteLawyer(lawyer.id)}
+                    >
+                      <FaTrash />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>إضافة محامي</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <LawyerAddEdit onSubmit={handleAddLawyer} />
-        </Modal.Body>
-      </Modal>
+        <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>إضافة محامي</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <LawyerAddEdit onSubmit={handleAddLawyer} />
+          </Modal.Body>
+        </Modal>
 
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>تعديل محامي</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <LawyerAddEdit
-            onSubmit={handleEditLawyer}
-            initialValues={selectedLawyer}
-          />
-        </Modal.Body>
-      </Modal>
-    </Card>
+        <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>تعديل محامي</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <LawyerAddEdit
+              onSubmit={handleEditLawyer}
+              initialValues={selectedLawyer}
+            />
+          </Modal.Body>
+        </Modal>
+      </Card>
+    </>
   );
 };
 

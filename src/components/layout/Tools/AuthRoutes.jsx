@@ -21,30 +21,29 @@ import { Container } from 'react-bootstrap';
 const AuthRoutes = () => {
   return (
     <Container>
-    <Suspense fallback={<LoadingFallback/>}>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/procedures" element={<ProcedureSearch />} />
+          <Route path="/clients" element={<ClientsList />} />
+          <Route path="/courts" element={<CourtSetting />} />
+          <Route path="/services" element={<Services />} />
+          {/* <Route path="/court_search" element={<CourtSearch />} /> */}
+          <Route path="/lawyers" element={<Lawyers />} />
+          <Route path="/cases_setting" element={<CaseTypeSet />} />
+          <Route path="/client/create" element={<AddEditClient />} />
+          <Route path="/client/edit/:id" element={<AddEditClient />} />
+          <Route path="/legcases/show/:id" element={<LegCaseDetail />} />
+          <Route path="/profile/:userId" element={<ProfileUser />} />
+          <Route path="/legcases" element={<LegcaseList />} />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/procedures" element={<ProcedureSearch />} />
-        <Route path="/clients" element={<ClientsList />} />
-        <Route path="/courts" element={<CourtSetting />} />
-        <Route path="/services" element={<Services />} />
-        {/* <Route path="/court_search" element={<CourtSearch />} /> */}
-        <Route path="/lawyers" element={<Lawyers />} />
-        <Route path="/cases_setting" element={<CaseTypeSet />} />
-        <Route path="/client/create" element={<AddEditClient />} />
-        <Route path="/client/edit/:id" element={<AddEditClient />} />
-        <Route path="/legcases/show/:id" element={<LegCaseDetail />} />
-        <Route path="/profile/:userId" element={<ProfileUser />} />
-        <Route path="/legcases" element={<LegcaseList />} />
- 
-        <Route path="/home" element={<Home />} />
-        <Route path="/lawyers/form" element={<LawyersAddEdit />} />
-        <Route path="/archives" element={<Archives />} />
-        <Route path="/archives/wordpadeditor" element={<WordPadEditor />} />
-      </Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/lawyers/form" element={<LawyersAddEdit />} />
+          <Route path="/archives" element={<Archives />} />
+          <Route path="/archives/wordpadeditor" element={<WordPadEditor />} />
+        </Routes>
       </Suspense>
-  </Container>
+    </Container>
   );
 };
 

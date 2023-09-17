@@ -131,7 +131,7 @@ const CourtLevel = ({ show, handleClose }) => {
         <Row>
           <Col>
             <Card.Header className="card-header-courts text-center">
-              <h3 style={{ color: '#006e5d' }}>درجات المحاكم</h3>
+              <h3>درجات المحاكم</h3>
             </Card.Header>
 
             <Card.Body>
@@ -145,36 +145,37 @@ const CourtLevel = ({ show, handleClose }) => {
                 <Alert variant="danger"> {alertMessage}</Alert>
               )}
 
-                 <table className="table table-striped table-bordered table-hover table-responsive">
-     
-                <thead className="table-success text-center">
-                  <tr>
-                    <th>الاسم</th>
-                    <th>الإجراءات</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentItems.map((courtLevel) => (
-                    <tr className="table-row-courts" key={courtLevel.id}>
-                      <td>{courtLevel.name}</td>
-                      <td>
-                        <Button
-                          variant="danger"
-                          onClick={() =>
-                            handleDeleteCourtLevel(
-                              courtLevel.id,
-                              courtLevel.name,
-                              'court_levels'
-                            )
-                          }
-                        >
-                          <FcFullTrash />
-                        </Button>
-                      </td>
+              <div className="table-responsive">
+                <table className="special-table">
+                  <thead>
+                    <tr>
+                      <th>الاسم</th>
+                      <th>الإجراءات</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {currentItems.map((courtLevel) => (
+                      <tr className="table-row-courts" key={courtLevel.id}>
+                        <td>{courtLevel.name}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() =>
+                              handleDeleteCourtLevel(
+                                courtLevel.id,
+                                courtLevel.name,
+                                'court_levels'
+                              )
+                            }
+                          >
+                            <FcFullTrash />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Card.Body>
 
             <Card.Footer>

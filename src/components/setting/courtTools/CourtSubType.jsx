@@ -82,8 +82,11 @@ const CourtSubType = ({ show, handleClose }) => {
       .post(`${API_CONFIG.baseURL}/api/court_sub_types`, newCourtSubType)
       .then((response) => {
         setCourtSubTypes([...courtSubTypes, response.data]);
-        setAlertMessage({ type: 'success', text: `تمت إضافة مستوى المحكمة بنجاح.`});
-   
+        setAlertMessage({
+          type: 'success',
+          text: `تمت إضافة مستوى المحكمة بنجاح.`,
+        });
+
         handleClose(); // Close modal
         clearModalFields();
         fetchCourtSubTypes();
@@ -130,59 +133,63 @@ const CourtSubType = ({ show, handleClose }) => {
   };
   return (
     <>
-        <Card>
-      <Row>
-            <Col>
-                <Card.Header className="card-header-courts text-center">
-      
-          <h3 style={{ color: '#006e5d' }}>أنواع المحاكم الفرعية</h3>
-        </Card.Header>
-        <Card.Body>
-          {alertMessage && (
-            <Alert variant={alertMessage.type}>{alertMessage.text}</Alert>
-          )}
-          {successMessage && <Alert variant="success">{successMessage}</Alert>}
-          {courtSubTypesAlert && (
-            <Alert variant="danger"> {alertMessage}</Alert>
-          )}
-            <table className="table table-striped table-bordered table-hover table-responsive">
-            
-         <thead className="table-success text-center"> 
-                       <tr>
-                <th>الاسم</th>
-                <th>نوع المحكمة</th>
-                <th>الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentItems.map((courtSubType) => (
-            <tr className="table-row-courts" key={courtSubType.id}>
-                  <td>{courtSubType.name}</td>
-                  <td>{courtSubType.court_type?.name}</td>
-                  <td>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteCourtSubType(courtSubType.id)}
-                    >
-                      <FcFullTrash />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-          </table>
-          <Card.Footer>
-          <CustomPagination
-            totalCount={courtSubTypes.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-            />
-        </Card.Footer>
+      <Card>
+        <Row>
+          <Col>
+            <Card.Header className="card-header-courts text-center">
+              <h3>أنواع المحاكم الفرعية</h3>
+            </Card.Header>
+            <Card.Body>
+              {alertMessage && (
+                <Alert variant={alertMessage.type}>{alertMessage.text}</Alert>
+              )}
+              {successMessage && (
+                <Alert variant="success">{successMessage}</Alert>
+              )}
+              {courtSubTypesAlert && (
+                <Alert variant="danger"> {alertMessage}</Alert>
+              )}
+
+              <div className="table-responsive">
+                <table className="special-table">
+                  <thead>
+                    <tr>
+                      <th>الاسم</th>
+                      <th>نوع المحكمة</th>
+                      <th>الإجراءات</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentItems.map((courtSubType) => (
+                      <tr className="table-row-courts" key={courtSubType.id}>
+                        <td>{courtSubType.name}</td>
+                        <td>{courtSubType.court_type?.name}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() =>
+                              handleDeleteCourtSubType(courtSubType.id)
+                            }
+                          >
+                            <FcFullTrash />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <Card.Footer>
+                <CustomPagination
+                  totalCount={courtSubTypes.length}
+                  itemsPerPage={itemsPerPage}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
+              </Card.Footer>
             </Card.Body>
           </Col>
-          </Row>
-                
+        </Row>
       </Card>
 
       <Modal show={show} onHide={handleClose}>
