@@ -1,5 +1,14 @@
-/* Define breakpoints and other variables */
+
+
+/* App.css */
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #272829;
+  margin: 0; /* Reset default margin */
+  padding: 0; /* Reset default padding */
+}
 :root {
+<<<<<<< HEAD
   --breakpoint-xs: 576px;
   --breakpoint-sm: 768px;
   --breakpoint-md: 992px;
@@ -12,15 +21,26 @@
   --bg-color: #F4F6F9;
   --text-light: #ffffff;
   --text-dark: #333333;
+=======
+  --secondary-color: #454545; /* Dark Gray */
+  --accent-color: #F39C12; /* Tech Gold */
+  --bg-color: #F4F6F9; /* Light Gray */
+  --text-light: #ffffff; /* White */
+
+    --primary-color: #2c3e50;
+    --shadow-color: rgba(134, 99, 99, 0.1);
+
+  --text-dark: #333333; /* Near Black */
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 }
 
-/* Global box-sizing */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+
+a {
+  color: #149ddd;
+  text-decoration: none;
 }
 
+<<<<<<< HEAD
 
 
 /* Sections Headers */.section-card-header {
@@ -125,6 +145,22 @@
   text-align: center;
 }
 
+=======
+a:hover {
+  color: #37b3ed;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Raleway', sans-serif;
+}
+
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 /* Back to top button */
 .back-to-top {
   position: fixed;
@@ -242,6 +278,25 @@
 }
 
 /*Court Setting*/
+<<<<<<< HEAD
+=======
+.court-setting-card-header {
+  background: linear-gradient(
+    135deg,
+    #9b7e4b,
+    #d6a145
+  ); /* Same gradient as topnav */
+
+  border-radius: 80px;
+  padding: 10px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+
+  text-align: center;
+  font-size: 1.5rem;
+  color: #f7f4ed;
+}
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 .name {
   color: #007bff;
   font-size: 24px;
@@ -336,10 +391,19 @@
   height: 50px;
 }
 
+<<<<<<< HEAD
 
   /*Icons End*/
+=======
+.leg-case-icon {
+  padding-bottom: 3px;
+  width: 150px;
+  height: 75px;
+}
+/*Icons End*/
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 
-  /* legalCase Detaiis End*/
+/* legalCase Detaiis End*/
 
 /* Responsive styles */
 @media screen and (max-width: 767px) {
@@ -369,10 +433,16 @@
   font-weight: bold;
 }
 
+<<<<<<< HEAD
 /* Banner and Icons */
 .leg-details-banner-image {
   width: 250px;
   height: 100px;
+=======
+  .button {
+    padding: 8px 16px;
+  }
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 }
 
 /* Mobile styles */
@@ -385,9 +455,37 @@
     padding: 6px 12px;
   }
 }
+.custom-card-header {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+  background: linear-gradient(
+    135deg,
+    #1a5dca,
+    #745114
+  ); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
 
+<<<<<<< HEAD
 @media (min-width: var(--breakpoint-md)) {
   /* Your styles for medium devices and up */
+=======
+  text-align: center;
+
+  color: #fffcf3;
+}
+.add-link-client {
+  color: #0a1e3d;
+  font-size: medium;
+  font-family: 'cairo', sans-serif;
+  font-weight: bold;
+}
+.leg-details-banner-image {
+  width: 250px;
+  height: 100px;
+}
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 
 /**Procedure Search Page ***/
 .procedure-search {
@@ -531,5 +629,8 @@
     background-color: #ff7f7f;
   }
 }
+<<<<<<< HEAD
 } 
 }
+=======
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c

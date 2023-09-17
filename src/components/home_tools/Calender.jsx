@@ -5,7 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Card, Col, Row } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
-import '../../assets/css/calender.css';
+import '../../assets/css/Calender.css';
 
 const Calendar = () => {
   const events = [

@@ -2,18 +2,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lateef&display=swap');
 
+
+
 /* Basic styling for event cards */
 .event-card {
+<<<<<<< HEAD
   display:flow-root;
   align-items: center;
   background-color: #f8f9fa; /* Background color of the card */
   border: 5px solid var(--accent-color); /* Border color of the card */
   border-radius: 150px;
+=======
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  border: 2px solid var(--accent-color);
+  border-radius: 20px;
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   padding: 15px;
   transition:
     transform 0.3s ease-in-out,
     box-shadow 0.3s ease-in-out;
+<<<<<<< HEAD
   box-shadow: 0 10px 6px rgba(0,0,0,0.1);
+=======
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 }
 
 .event-card:hover {
@@ -34,37 +48,55 @@
   align-items: center;
   justify-content: center;
   margin-right: 15px;
+<<<<<<< HEAD
   background: linear-gradient(135deg, #4a3511, #91902f); /* Background color of the icon */
+=======
+  background: linear-gradient(135deg, #615238, #ffd391);
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 }
 
 .event-card-title {
   font-size: 1.4rem;
   font-weight: bold;
+<<<<<<< HEAD
   color: #333; /* Color of the title */
+=======
+  color: var(--text-light);
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   font-family: 'Cairo', sans-serif;
   margin-bottom: 8px;
   text-align: center;
 }
 
 .home-card .event-card-title {
-  color: #fff7ac; /* Color of the title on the home page */
+  color: var(--text-light);
 }
 
 .count {
+<<<<<<< HEAD
   color: var(--accent-color); /* Color of the count */
+=======
+  color: var(--accent-color);
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   font-size: 1.6rem;
 }
 
 /* Brand Button */
 .btn.btn-home-search {
+<<<<<<< HEAD
   background-color: #14435a; /* Background color of the button */
   color: #fff7ac; /* Text color on the button */
+=======
+  background-color: var(--accent-color);
+  color: var(--text-light);
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   border-radius: 20px;
   padding: 10px 20px;
   font-size: 1.2rem;
-} 
+}
 
 .btn.btn-home-search:hover {
+<<<<<<< HEAD
   background: linear-gradient(15deg, #a87b2d, #d8d50a); /* Background color of the button on hover */
 }
 
@@ -74,6 +106,16 @@
   border-radius: 20px;
   padding: 10px;
   color: #fff7ac; /* Text color */
+=======
+  background: linear-gradient(15deg, #a58d5f2a, var(--accent-color));
+}
+
+.home-text-center {
+  background: linear-gradient(135deg, #062c3d, #1a2435, #152238);
+  border-radius: 20px;
+  padding: 10px;
+  color: var(--text-light);
+>>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
   text-align: center;
   font-size: 1.8rem;
   font-family: 'Cairo', sans-serif;

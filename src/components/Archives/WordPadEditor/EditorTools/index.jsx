@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
-import Quill from 'quill';
-import JSZip from 'jszip'; // It seems like you imported it but did not use it.
-import { saveAs } from 'file-saver';
-import mammoth from 'mammoth';
 import 'react-quill/dist/quill.snow.css';
 import './EditorTools.css';
+import Quill from 'quill';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
-// Quill configuration
-const Align = Quill.import('attributors/style/align');
+import mammoth from 'mammoth'; // Import for DOCX
+
+// Add custom RTL button
+var Align = Quill.import('attributors/style/align');
 Quill.register(Align, true);
-
 const modules = {
   toolbar: [
     [{ header: '1' }, { header: '2' }, { font: [] }],
@@ -30,27 +30,30 @@ const modules = {
 const EditorTools = ({ content, setContent }) => {
   const [editorContent, setEditorContent] = useState('');
 
-  // Synchronize external content with internal state
   useEffect(() => {
     setEditorContent(content);
   }, [content]);
 
-  // Handle editor content change
   const handleChange = (value) => {
     setEditorContent(value);
     setContent(value);
   };
 
-  // Export content as DOCX
   const exportAsDocx = () => {
+    // DOCX Export logic using mammoth.js
+    // You may need to process editorContent into the format mammoth expects
     mammoth.convertToRaw(editorContent).then((result) => {
-      // You'll need to implement the actual DOCX export logic here
+      // Further processing to convert result to .docx
     });
   };
 
   return (
     <div className="editor-area">
-      <ReactQuill value={editorContent} onChange={handleChange} modules={modules} />
+      <ReactQuill
+        value={editorContent}
+        onChange={handleChange}
+        modules={modules}
+      />
       <button onClick={exportAsDocx}>Export as DOCX</button>
     </div>
   );

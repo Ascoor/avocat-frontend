@@ -4,9 +4,10 @@ import { Card, Button, Container, Spinner } from 'react-bootstrap';
 import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
 import { Collapse } from 'bootstrap/dist/js/bootstrap.bundle';
 import { LogoImage, WelcomePatren, WelcomeImage } from '../../images/index';
+import LawyerServices from './LawyerService.component';
 
-const Login = React.lazy(() => import('../Auth/Login'));
-const Register = React.lazy(() => import('../Auth/Register'));
+const Login = React.lazy(() => import('../Auth/login'));
+const Register = React.lazy(() => import('../Auth/register'));
 
 const Guest = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -223,7 +224,7 @@ const Guest = () => {
         </div>
       </header>
 
-
+      <LawyerServices />
 
       <footer
         style={{
