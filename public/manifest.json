@@ -24,8 +24,8 @@
   "start_url": ".",   
   "display": "standalone",   
   "orientation": "portrait",  
-  "theme_color": "#000000",   
-  "background_color": "#002D40",  
+  "theme_color": "#0d3346",   
+  "background_color": "#0d3346",  
   "splash_pages": [
     {
       "src": "splash-image.png",
