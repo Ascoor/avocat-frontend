@@ -55,7 +55,7 @@
     background: linear-gradient(
       to right,
       transparent 0%,
-      rgba(255, 215, 0, 0.8) 50%,
+      rgba(30, 79, 134, 0.8) 50%,
       transparent 100%
     );
     transform: translateX(-100%);
@@ -91,14 +91,18 @@
   }
   
   .data-label {
-    color: #1a1a1a;  /* Dark text for better readability */
+    
+    color: #e3c25e;  /* Slightly lighter but still dark for readability */
     font-weight: bold;
     font-family: "cairo", sans-serif;
     font-size: 1.7rem;
+    text-align: center;
   }
   
   .data-value {
-    color: #333333;  /* Slightly lighter but still dark for readability */
+    text-align: center;
+    margin: 10px 0;
+    color: #ffffff;  /* Slightly lighter but still dark for readability */
     font-weight: bold;
     font-family: "cairo", sans-serif;
     font-size: 1.2rem;

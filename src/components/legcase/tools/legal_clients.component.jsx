@@ -50,7 +50,7 @@ export default function LegCaseClients({ legCaseId }) {
     <>
       <Card>
         <Card.Header>
-          <div className="custom-card-header">
+          <div className="legalcase-card-header">
             <h3>بيانات الموكلين بالدعوى</h3>
             <Button
               className="btn btn-sm mb-end"
