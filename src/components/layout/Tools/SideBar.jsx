@@ -12,8 +12,8 @@ import {
 } from 'react-icons/fa';
 import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
-import '../../assets/css/SideBar.css';
-import useAuth from '../Auth/AuthUser';
+import '../../../assets/css/SideBar.css';
+import useAuth from '../AuthTool/AuthUser';
 
 const Sidebar = ({ sidebarOpen, onClose }) => {
   const sidebarAnimation = useSpring({

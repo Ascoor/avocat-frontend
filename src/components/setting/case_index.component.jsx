@@ -246,8 +246,7 @@ const CaseType = () => {
                 <h3 style={{ color: '#006e5d' }}>أنواع القضايا</h3>
               </Card.Header>
 
-              <Table striped bordered hover responsive>
-                <thead className="table-success text-center">
+             <table className="table table-striped table-bordered table-hover table-responsive">                <thead className="table-success text-center">
                   <tr>
                     <th>الاسم</th>
                     <th>التحكم</th>
@@ -277,7 +276,7 @@ const CaseType = () => {
                     </tr>
                   ))}
                 </tbody>
-              </Table>
+              </table>
             </Col>
             <Col>
               <Card.Header
@@ -286,8 +285,7 @@ const CaseType = () => {
               >
                 <h3 style={{ color: '#006e5d' }}>أنواع القضايا الفرعية</h3>
               </Card.Header>
-              <Table striped bordered hover responsive>
-                <thead className="table-success text-center">
+             <table className="table table-striped table-bordered table-hover table-responsive">                <thead className="table-success text-center">
                   <tr>
                     <th>النوع الفرعي</th>
                     <th>اسم نوع القضية</th>
@@ -319,7 +317,7 @@ const CaseType = () => {
                     </tr>
                   ))}
                 </tbody>
-              </Table>
+              </table>
             </Col>
           </Row>
           <Row>
@@ -330,8 +328,7 @@ const CaseType = () => {
               >
                 <h3 style={{ color: '#006e5d' }}>أنواع الإجراءات</h3>
               </Card.Header>
-              <Table striped bordered hover responsive>
-                <thead className="table-success text-center">
+             <table className="table table-striped table-bordered table-hover table-responsive">                <thead className="table-success text-center">
                   <tr>
                     <th>الاسم</th>
                     <th>التحكم</th>
@@ -361,7 +358,7 @@ const CaseType = () => {
                     </tr>
                   ))}
                 </tbody>
-              </Table>
+              </table>
             </Col>
             <Col>
               <Card.Header
@@ -370,8 +367,7 @@ const CaseType = () => {
               >
                 <h3 style={{ color: '#006e5d' }}>أنواع الإعلانات</h3>
               </Card.Header>
-              <Table striped bordered hover responsive>
-                <thead className="table-success text-center">
+             <table className="table table-striped table-bordered table-hover table-responsive">                <thead className="table-success text-center">
                   <tr>
                     <th>الاسم</th>
                     <th>التحكم</th>
@@ -398,7 +394,7 @@ const CaseType = () => {
                     </tr>
                   ))}
                 </tbody>
-              </Table>
+              </table>
             </Col>
           </Row>
           <Modal

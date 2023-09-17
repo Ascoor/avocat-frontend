@@ -146,7 +146,8 @@ useEffect(() => {
           <h3 className="header-text">المحاكم</h3>
         </Card.Header>
         <Card.Body>
-          <Table striped bordered hover>
+             <table className="table table-striped table-bordered table-hover table-responsive">
+     
           <thead className="table-success text-center"> 
               <tr>
                 <th>الاسم</th>
@@ -171,7 +172,7 @@ useEffect(() => {
                 </tr>
               ))}
             </tbody>
-          </Table>
+          </table>
         </Card.Body>
         <Card.Footer>
              

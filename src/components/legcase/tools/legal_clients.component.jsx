@@ -62,8 +62,7 @@ export default function LegCaseClients({ legCaseId }) {
           </div>
         </Card.Header>
         <Card.Body>
-          <Table striped bordered hover responsive>
-            <thead className="table-success text-center">
+         <table className="table table-striped table-bordered table-hover table-responsive">            <thead className="table-success text-center">
               <tr>
                 <th>رقم المكتب </th>
                 <th>اسم الموكل</th>
@@ -91,7 +90,7 @@ export default function LegCaseClients({ legCaseId }) {
                   </tr>
                 ))}
             </tbody>
-          </Table>
+          </table>
           <div className="mt-3">
             {legCaseNewClients.map((client, index) => (
               <div key={index} className="mb-3">

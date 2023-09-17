@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Alert } from 'react-bootstrap';
 import axios from 'axios';
-import API_CONFIG from '../../config';
+import API_CONFIG from '../../../config';
 import { useParams } from 'react-router-dom';
 
 const ProfileUser = () => {

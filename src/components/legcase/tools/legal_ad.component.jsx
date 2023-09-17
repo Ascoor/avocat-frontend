@@ -5,7 +5,7 @@ import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import DatePicker from 'react-datepicker';
 import arEG from 'date-fns/locale/ar-EG';
 import { registerLocale, setDefaultLocale } from 'react-datepicker';
-import useAuth from '../../Auth/AuthUser';
+import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';
 import PropTypes from 'prop-types';
 
@@ -218,8 +218,7 @@ const LegalAd = ({ legCaseId }) => {
         </Button>
       </Card.Header>
       <Card.Body>
-        <Table striped bordered hover responsive>
-          <thead className="table-success text-center">
+       <table className="table table-striped table-bordered table-hover table-responsive">          <thead className="table-success text-center">
             <tr>
               <th>نوع الإعلان القانوني</th>
               <th>تاريخ التسليم</th>
@@ -260,7 +259,7 @@ const LegalAd = ({ legCaseId }) => {
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       </Card.Body>
 
       <Modal show={showAddLegalAdModal} onHide={handleModalClose}>

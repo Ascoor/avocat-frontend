@@ -117,22 +117,18 @@ const Register = ({ handleCloseForm }) => {
             </Col>
           </Row>
 
-          {loading ? (
-            <Button type="button" disabled className="btn btn-primary mt-4">
-              جاري التحميل...
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              onClick={submitForm}
-              className="btn login-btn"
-            >
-              تسجيل اشتراك
-            </Button>
-          )}
-
-          {error && <p className="text-danger mt-3">{error}</p>}
-        </Form>
+          
+    {loading ? (
+      <Button type="button" disabled className="btn-loading">
+        جاري التحميل...
+      </Button>
+    ) : (
+      <Button type="button" onClick={submitForm} className="btn-danger-guest">
+        تسجيل اشتراك
+      </Button>
+    )}
+    {error && <p className="text-danger-guest mt-3">{error}</p>}
+  </Form>
       </Card.Body>
 
       <Card.Footer>

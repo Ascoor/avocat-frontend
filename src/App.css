@@ -28,6 +28,95 @@ a {
   text-decoration: none;
 }
 
+/* CSS for masthead */
+.masthead {
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+}
+
+/* CSS for navbar */
+.fixed-top-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* CSS for form */
+.form-section {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.card-style {
+  z-index: 2;
+}
+
+.form-icon {
+  margin-right: 5px;
+}
+
+.btn-loading {
+  background-color: rgb(225, 225, 2);
+  color: black;
+}
+
+.btn-success-special {
+  background-color: green;
+  color: white;
+}
+
+.btn-danger-special {
+  background-color: red;
+  color: white;
+}
+
+.text-danger-special {
+  color: red;
+}
+.special-card-header {
+  background: linear-gradient(325deg, #1a485c, #0a2741);
+  color: #cdd401;
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.special-card-title {
+  font-size: 24px;
+}
+
+.special-card-body {
+  background-color: #f8e2e2;
+  padding: 20px;
+}
+
+.special-card-footer {
+  background: linear-gradient(325deg, #1a485c, #0a2741);
+  color: #cdd401;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.btn-success-special
+special
+special {
+  background-color: #28a745;
+  color: #ffffff;
+  padding: 10px 20px;
+}
+
+
+
+.text-danger-special {
+  color: #dc3545;
+}
+
+.login-back {
+  background-color: #dc3545;
+  color: #ffffff;
+  padding: 10px 20px;
+}
 
 
 /* Sections Headers */.section-card-header {

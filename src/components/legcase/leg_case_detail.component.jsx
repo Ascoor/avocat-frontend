@@ -233,8 +233,8 @@ useEffect(() => {
         <Card.Body>
           <Row>
             <Col>
-              <Table striped bordered hover responsive>
-                <thead className="table-success">
+             <table className="table table-striped table-bordered table-hover table-responsive">            <thead className="table-success text-center">
+
                   <tr>
                     <th>رقم القضية</th>
                     <th>سنة القضية</th>
@@ -253,7 +253,7 @@ useEffect(() => {
                     </tr>
                   ))}
                 </tbody>
-              </Table>
+              </table>
               {legCaseNewCourts.map((court, index) => (
                 <div key={index} className="mb-3">
                   <Row className="align-items-center mt-3">

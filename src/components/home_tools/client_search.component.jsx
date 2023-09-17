@@ -7,8 +7,7 @@ const ClientSearch = ({ searchResults }) => {
   }
   const clients = searchResults || [];
   return (
-    <Table striped bordered hover responsive>
-      <thead className="table-success text-center">
+   <table className="table table-striped table-bordered table-hover table-responsive">      <thead className="table-success text-center">
         <tr>
           <th>#</th>
           <th>الاسم</th>
@@ -28,7 +27,7 @@ const ClientSearch = ({ searchResults }) => {
           </tr>
         ))}
       </tbody>
-    </Table>
+    </table>
   );
 };
 ClientSearch.propTypes = {

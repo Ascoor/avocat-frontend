@@ -3,8 +3,8 @@ import { FaBars, FaUser, FaBell, FaSearch } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import { Navbar } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
-import '../../assets/css/TopNav.css';
-import { LogoImage } from '../../images/index';
+import '../../../assets/css/TopNav.css';
+import { LogoImage } from '../../../images/index';
 
 const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
   const userDropdownAnimation = useSpring({

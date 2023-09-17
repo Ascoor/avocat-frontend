@@ -6,9 +6,7 @@ import { registerLocale, setDefaultLocale } from 'react-datepicker';
 import { useSpring, animated } from '@react-spring/web';
 import DatePicker from 'react-datepicker';
 import '../../../assets/css/Models.css';
-import useAuth from '../../Auth/AuthUser';
-import '../../../assets/css/Models.css';
-
+import useAuth from '../../layout/AuthTool/AuthUser';
 const ServiceProcedureModal = ({
   show,
   onHide,

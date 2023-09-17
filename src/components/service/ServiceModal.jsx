@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import useAuth from '../Auth/AuthUser';
+import useAuth from '../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../config';
 
 import '../../assets/css/Models.css';

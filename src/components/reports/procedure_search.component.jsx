@@ -191,8 +191,7 @@ const ProcedureSearch = () => {
 
       {searchError && <p>{searchError}</p>}
       {filteredProcedures.length > 0 && (
-        <Table striped bordered hover responsive>
-          <thead className="table-success text-center">
+       <table className="table table-striped table-bordered table-hover table-responsive">          <thead className="table-success text-center">
             {' '}
             <tr>
               <th>نوع اإجراء</th>
@@ -219,7 +218,7 @@ const ProcedureSearch = () => {
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       )}
     </div>
   );

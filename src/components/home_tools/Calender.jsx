@@ -6,6 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { Card, Col, Row } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
 import '../../assets/css/calender.css';
+import AnalogClock from './AnalogClock';
 
 const Calendar = () => {
   const events = [
@@ -51,7 +52,9 @@ const Calendar = () => {
         <Card>
           <Card.Header className="home-text-center">
             <h3>الأجندة</h3>
-            <div className="clock">{currentTime.toLocaleTimeString()}</div>
+            <div className="clock">
+              <AnalogClock/>
+            </div>
           </Card.Header>
           <Card.Body>
             <div className="calendar-container">

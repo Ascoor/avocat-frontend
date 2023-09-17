@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import AuthRoutes from './AuthRoutes';
-import '../../assets/css/MainContent.css';
+import '../../../assets/css/MainContent.css';
 
 const MainContent = ({ sidebarOpen }) => {
   return (

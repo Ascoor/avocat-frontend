@@ -7,7 +7,7 @@ import { LegCaseIcon } from '../../assets/icons/index';
 import CustomPagination from '../home_tools/Pagination'; // Import your custom Pagination component here
 import LegCaseCreate from './LegCaseCreate';
 
-import SectionHeader from '../layout/SectionHeader';
+import SectionHeader from '../home_tools/SectionHeader';
 const LegCaseList = () => {
   const itemsPerPage = 10; // Set the number of items to display per page
   const [legCasesPage, setLegCasesPage] = useState(1); // Define legCasesPage and set its initial value to 1
@@ -128,8 +128,9 @@ const LegCaseList = () => {
         </Row>
       </div>
       <Card.Body>
-        <Table striped bordered hover responsive>
-          <thead className="table-success">
+       <table className="table table-striped table-bordered table-hover table-responsive">     
+        <thead className="table-success text-center">
+
             <tr>
               <th className="header-cell">رقم الملف</th>
               <th className="header-cell"> الموكل</th>
@@ -182,7 +183,7 @@ const LegCaseList = () => {
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       </Card.Body>
       <Card.Footer>
         <CustomPagination

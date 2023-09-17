@@ -4,7 +4,8 @@ import axios from 'axios';
 import ServiceModal from './ServiceModal';
 import API_CONFIG from '../../config';
 import ServiceDetailsModal from './ServiceDetailsModal';
-
+import SectionHeader from '../home_tools/SectionHeader';
+import {ServiceIcon} from '../../assets/icons/index'
 const Services = () => {
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -62,21 +63,13 @@ const Services = () => {
   
   return (
     <Card className="lawyer-card">
-    <Card.Header className="text-center">
-      <Row>
-        <Col className="court-setting-card-header">الخدمات</Col>
-      </Row>
-    </Card.Header>
-    <Row>
-      <Col>
-      <Button onClick={handleReturn}>رجوع</Button>
-        <Button variant="primary" onClick={handleAddService}>اضافة خدمة</Button>
-      </Col>
-    </Row>
+   <SectionHeader listName="الخدمات" buttonName="خدمة" setShowAddModal={handleAddService} icon={ServiceIcon}/>
     <Card.Body className="table-responsive">
-      <Table striped bordered responsive className="rtl-table">
+    <table className="table table-striped table-bordered table-hover table-responsive">
+     
       
-              <thead className="table-success">
+          <thead className="table-success text-center">
+
                 <tr>
                   <th className="col-1">رقم الخدمة</th>
                   <th className="col-2">وصف الخدمة</th>
@@ -121,7 +114,7 @@ const Services = () => {
                   </tr>
                 ))}
               </tbody>
-              </Table>
+              </table>
       </Card.Body>
       {showDetailsModal && (
         <ServiceDetailsModal

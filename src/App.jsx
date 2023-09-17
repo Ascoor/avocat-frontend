@@ -1,4 +1,4 @@
-import AuthUser from './components/Auth/AuthUser';
+import AuthUser from './components/layout/AuthTool/AuthUser';
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 import './App.css';
 import 'react-datepicker/dist/react-datepicker.css';

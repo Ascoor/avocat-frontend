@@ -3,7 +3,7 @@ import { Table, Button, Row, Modal, Card, Form, Alert } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import useAuth from '../../Auth/AuthUser';
+import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';
 import arEG from 'date-fns/locale/ar-EG';
 import { registerLocale, setDefaultLocale } from 'react-datepicker';
@@ -212,8 +212,7 @@ const LegalSession = ({ legCaseId }) => {
       </Card.Header>
       <Card.Body>
         <Row>
-          <Table striped bordered hover responsive>
-            <thead className="table-success text-center">
+         <table className="table table-striped table-bordered table-hover table-responsive">            <thead className="table-success text-center">
               <tr>
                 <th className="col-2">تاريخ الجلسة</th>
                 <th className="col-2">اسم المحامي</th>
@@ -255,7 +254,7 @@ const LegalSession = ({ legCaseId }) => {
                 </tr>
               ))}
             </tbody>
-          </Table>
+          </table>
         </Row>
       </Card.Body>
 

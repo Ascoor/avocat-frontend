@@ -58,8 +58,7 @@ const LegCaseSearch = ({
             <>
               {/* Display search results */}
 
-              <Table striped bordered hover responsive>
-                <thead className="table-success text-center">
+             <table className="table table-striped table-bordered table-hover table-responsive">                <thead className="table-success text-center">
                   {' '}
                   <tr>
                     <th scope="col">رقم القضية</th>
@@ -84,7 +83,7 @@ const LegCaseSearch = ({
                     </tr>
                   )}
                 </tbody>
-              </Table>
+              </table>
               {/* Pagination */}
               <Pagination
                 casesPerPage={casesPerPage}

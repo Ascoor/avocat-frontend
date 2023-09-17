@@ -109,8 +109,7 @@ const ServiceProcedureList = ({ serviceId }) => {
         />
       </Card.Header>
       <Card.Body>
-        <Table striped bordered hover responsive>
-          <thead className="table-success text-center">
+       <table className="table table-striped table-bordered table-hover table-responsive">          <thead className="table-success text-center">
             <tr>
               <th className="col-1">نوع الإجراء</th>
               <th className="col-2">تاريخ الإجراء</th>
@@ -151,7 +150,7 @@ const ServiceProcedureList = ({ serviceId }) => {
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       </Card.Body>
     </>
   );

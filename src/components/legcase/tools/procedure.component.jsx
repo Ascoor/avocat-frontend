@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Card, Table, Button, Modal, Row, Form } from 'react-bootstrap';
 import { Alert } from 'react-bootstrap';
 import { BiPlusCircle } from 'react-icons/bi';
-import useAuth from '../../Auth/AuthUser';
+import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';
 import { BiPencil, BiTrash } from 'react-icons/bi';
 import PropTypes from 'prop-types';
@@ -204,8 +204,7 @@ const Procedure = ({ legCaseId }) => {
       </Card.Header>
 
       <Card.Body>
-        <Table striped bordered hover responsive>
-          <thead className="table-success text-center">
+       <table className="table table-striped table-bordered table-hover table-responsive">          <thead className="table-success text-center">
             <tr>
               <th className="col-2">نوع الإجراء</th>
               <th className="col-1">المحكمة</th>
@@ -254,7 +253,7 @@ const Procedure = ({ legCaseId }) => {
               )
             )}
           </tbody>
-        </Table>
+        </table>
       </Card.Body>
 
       <Modal

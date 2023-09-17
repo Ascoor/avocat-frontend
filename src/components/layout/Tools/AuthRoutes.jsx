@@ -1,24 +1,28 @@
+import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from '../Home';
-import Lawyers from '../lawyer/lawyer_index.component';
-import LawyersAddEdit from '../lawyer/lawyer_index.component';
-import CourtSetting from '../setting/court_index.component';
+import Home from '../../Home';
+import Lawyers from '../../lawyer/lawyer_index.component';
+import LawyersAddEdit from '../../lawyer/lawyer_index.component';
+import CourtSetting from '../../setting/court_index.component';
 // import CourtSearch from "../reports/court_search.component";
-import CaseTypeSet from '../setting/case_index.component';
-import AddEditClient from '../client/add_edit_client.component';
-import ClientsList from '../client/ClientsList';
-import LegcaseList from '../legcase/list.component';
-import LegCaseDetail from '../legcase/leg_case_detail.component';
-import Services from '../service/index';
-import LegalSession from '../legcase/tools/Legal_session.component';
-import ProcedureSearch from '../reports/procedure_search.component';
-import ProfileUser from '../Auth/ProfileUser';
-import Archives from '../Archives/ArchiveDashboard';
-import WordPadEditor from '../Archives/WordPadEditor/WordPadEditor';
+import CaseTypeSet from '../../setting/case_index.component';
+import AddEditClient from '../../client/add_edit_client.component';
+import ClientsList from '../../client/ClientsList';
+import LegcaseList from '../../legcase/list.component';
+import LegCaseDetail from '../../legcase/leg_case_detail.component';
+import Services from '../../service/index';
+import LegalSession from '../../legcase/tools/Legal_session.component';
+import ProcedureSearch from '../../reports/procedure_search.component';
+import ProfileUser from '../../layout/AuthTool/ProfileUser';
+import Archives from '../../Archives/ArchiveDashboard';
+import WordPadEditor from '../../Archives/WordPadEditor/WordPadEditor';
+import LoadingFallback from './LoadingFallback';
 import { Container } from 'react-bootstrap';
 const AuthRoutes = () => {
   return (
-<Container>
+    <Container>
+    <Suspense fallback={<LoadingFallback/>}>
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/procedures" element={<ProcedureSearch />} />
@@ -39,6 +43,7 @@ const AuthRoutes = () => {
         <Route path="/archives" element={<Archives />} />
         <Route path="/archives/wordpadeditor" element={<WordPadEditor />} />
       </Routes>
+      </Suspense>
   </Container>
   );
 };

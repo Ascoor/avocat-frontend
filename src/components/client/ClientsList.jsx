@@ -14,7 +14,7 @@ import { RiGenderlessFill } from 'react-icons/ri';
 import { GiPrayer } from 'react-icons/gi';
 import { MdWork } from 'react-icons/md';
 import CustomPagination from '../home_tools/Pagination';
-import SectionHeader from '../layout/SectionHeader';
+import SectionHeader from '../home_tools/SectionHeader';
 export default function Clients() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -155,8 +155,7 @@ export default function Clients() {
           </button>
         </div>
 
-        <Table striped bordered hover responsive>
-          <thead className="table-success text-center">
+       <table className="table table-striped table-bordered table-hover table-responsive">          <thead className="table-success text-center">
             <tr>
               <th>رقم المكتب</th>
               <th>اسم العميل</th>
@@ -216,7 +215,7 @@ export default function Clients() {
               ))
             )}
           </tbody>
-        </Table>
+        </table>
         <Card.Footer>
           {/* Render the CustomPagination component */}
           <CustomPagination

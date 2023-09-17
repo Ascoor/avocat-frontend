@@ -140,7 +140,8 @@ export default function CourtType({ show, handleClose }) {
                         <Alert variant="danger"> {alertMessage}</Alert>
                     )}
 
-                    <Table striped bordered hover>
+                       <table className="table table-striped table-bordered table-hover table-responsive">
+     
                     <thead className="table-success text-center"> 
                             <tr>
                                 <th>الاسم</th>
@@ -162,7 +163,7 @@ export default function CourtType({ show, handleClose }) {
                                 </tr>
                             ))}
                         </tbody>
-                    </Table>
+                    </table>
                 </Card.Body>
             </Col>
         </Row>

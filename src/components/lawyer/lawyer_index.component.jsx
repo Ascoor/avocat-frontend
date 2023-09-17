@@ -5,7 +5,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { LawyerIcon } from '../../assets/icons';
 import LawyerAddEdit from './lawyerAddEdit';
 import API_CONFIG from '../../config';
-import SectionHeader from '../layout/SectionHeader';
+import SectionHeader from '../home_tools/SectionHeader';
 
 const Lawyers = () => {
   const [lawyers, setLawyers] = useState([]);
@@ -77,7 +77,8 @@ const Lawyers = () => {
         icon={LawyerIcon}
       />
       <div className="table-responsive">
-        <Table striped bordered responsive className="rtl-table">
+           <table className="table table-striped table-bordered table-hover table-responsive">
+     
           <thead className="table-success">
             <tr>
               <th>الاسم</th>
@@ -117,7 +118,7 @@ const Lawyers = () => {
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       </div>
 
       <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>

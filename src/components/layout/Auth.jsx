@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
-import TopNav from './TopNav';
-import Sidebar from './SideBar';
-import useAuth from '../Auth/AuthUser';
+import TopNav from './Tools/TopNav';
+import Sidebar from './Tools/SideBar';
+import useAuth from './AuthTool/Authuser';
 import '../../App.css';
-import MainContent from './MainContent';
+import MainContent from './Tools/MainContent';
 import '../../assets/css/Auth.css';
 import { useSpring, animated } from '@react-spring/web';
 
