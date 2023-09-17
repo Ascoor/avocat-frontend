@@ -148,24 +148,19 @@ const LegCaseCreate = () => {
   };
 
   return (
-    <>
-      <Card className="shadow py-4">
+    <Modal show={true} onHide={handleCancel}>
+      <Modal.Header closeButton>
+        <Modal.Title>{isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          <Card.Header>
-            <div className="custom-card-header">
-              <h2>{isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}</h2>
-
-              <img src={favicon} alt="Icon" className="legCase-icon" />
-            </div>
-          </Card.Header>
           {showMessage && (
             <Alert variant={message.includes('success') ? 'success' : 'danger'}>
               {message}
             </Alert>
           )}
-          <Card.Body>
-            <Row className="mt-3">
-              <Col xs={12} md={6}>
+          <Row className="mt-3">
+            <Col xs={12} md={6}>
                 <Form.Group>
                   <Form.Label>رقم ملف المكتب</Form.Label>
                   <Form.Control
@@ -260,8 +255,7 @@ const LegCaseCreate = () => {
                 </Form.Group>
               </Col>
             </Row>
-          </Card.Body>
-          <Card.Body>
+  
             <Row>
               <Form.Label>الموكلين</Form.Label>{' '}
               <Row className="mt-3">
@@ -495,22 +489,23 @@ const LegCaseCreate = () => {
                   />
                 </Form.Group>
               </Col>
+            
             </Row>
-
+            
             <Row className="mt-5">
-              <Col xs={12} md={6}>
-                <Button variant="primary" type="submit">
-                  {isEditing ? 'تحديث' : 'حفظ'}
-                </Button>
-                <Button variant="secondary" onClick={handleCancel}>
-                  إلغاء
-                </Button>
-              </Col>
-            </Row>
-          </Card.Body>
-        </Form>
-      </Card>
-    </>
+            <Col xs={12} md={6}>
+              <Button variant="primary" type="submit">
+                {isEditing ? 'تحديث' : 'حفظ'}
+              </Button>
+              <Button variant="secondary" onClick={handleCancel}>
+                إلغاء
+              </Button>
+            </Col>
+          </Row>
+          </Form>
+      
+      </Modal.Body>
+    </Modal>
   );
 };
 LegCaseCreate.propTypes = {

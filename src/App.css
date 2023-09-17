@@ -4,9 +4,11 @@
   --breakpoint-sm: 768px;
   --breakpoint-md: 992px;
   --breakpoint-lg: 1200px;
-  --primary-color: #01162b;
+  --primary-color: #0041e6;
+  --primary-hover: #26428b;
   --secondary-color: #e41e1e;
-  --accent-color: #F39C12;
+  --accent-color: #df9114;
+  --accent-hover: #9c6000;
   --bg-color: #F4F6F9;
   --text-light: #ffffff;
   --text-dark: #333333;
@@ -19,13 +21,108 @@
   box-sizing: border-box;
 }
 
+
+
+/* Sections Headers */.section-card-header {
+  
+  background: linear-gradient(325deg, #1a485c, #0a2741);
+  border-radius: 80px;
+  padding: 10px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #e3bd65;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Align items horizontally */
+}
+
+.title-row {
+  width: 100%;
+  text-align: center; /* Center the text */
+}
+
+.button-row {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start; 
+  /* Push button to the right */
+}
+
+.add-btn {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 5px 14px;
+  font-size: 1rem;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+  margin-right: 34px;
+}
+
+.add-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.back-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 5px 14px;
+  font-size: 1rem;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+
+}
+
+.back-btn:hover {
+  background-color: var(--primary-hover);
+}
+/* Responsive styles */
+@media (max-width: 768px) { 
+  .section-card-header {
+    font-size: 1.2rem;
+    padding: 8px;
+    border-radius: 50px;
+  }
+  .add-btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    border-radius: 20px;
+  }
+  .back-btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-card-header {
+    font-size: 1rem;
+    padding: 6px;
+    border-radius: 40px;
+  }
+  .add-btn {
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    border-radius: 16px;
+  }
+  .back-btn {
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    border-radius: 16px;
+  }
+}
+
+
 /* Utility Classes */
 .text-center {
   text-align: center;
-}
-
-.mt-1 {
-  margin-top: 1rem;
 }
 
 /* Back to top button */
@@ -145,20 +242,6 @@
 }
 
 /*Court Setting*/
-.court-setting-card-header {
-  background: linear-gradient( 
-    15deg, #004037, #002D40
-  ); /* Same gradient as topnav */
-
-  border-radius: 80px;
-  padding: 10px;
-  font-family: 'Cairo', sans-serif;
-  font-weight: bold;
-
-  text-align: center;
-  font-size: 1.5rem;
-  color: #f7f4ed;
-}
 .name {
   color: #007bff;
   font-size: 24px;
@@ -253,11 +336,7 @@
   height: 50px;
 }
 
-.leg-case-icon {
-  padding-bottom: 3px;
-  width: 150px;
-  height: 75px;
-}
+
   /*Icons End*/
 
   /* legalCase Detaiis End*/
@@ -282,16 +361,18 @@
   .section-title {
     font-size: 28px;
   }
+/* Cards and headers */
+.add-link-client {
+  color: #0a1e3d;
+  font-size: medium;
+  font-family: 'cairo', sans-serif;
+  font-weight: bold;
+}
 
-/* Responsive Handling */
-/* Responsive Handling */
-@media (max-width: var(--breakpoint-xs)) {
-  /* Your styles for extra small devices */
-  .court-setting-card-header {
-    font-size: 1.2rem;
-    padding: 8px;
-    border-radius: 50px;
-  }
+/* Banner and Icons */
+.leg-details-banner-image {
+  width: 250px;
+  height: 100px;
 }
 
 /* Mobile styles */
@@ -307,10 +388,6 @@
 
 @media (min-width: var(--breakpoint-md)) {
   /* Your styles for medium devices and up */
-  .court-setting-card-header {
-    font-size: 1.4rem;
-  }
-}
 
 /**Procedure Search Page ***/
 .procedure-search {
@@ -454,4 +531,5 @@
     background-color: #ff7f7f;
   }
 }
+} 
 }

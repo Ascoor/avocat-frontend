@@ -5,6 +5,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { LawyerIcon } from '../../assets/icons';
 import LawyerAddEdit from './lawyerAddEdit';
 import API_CONFIG from '../../config';
+import SectionHeader from '../layout/SectionHeader';
 
 const Lawyers = () => {
   const [lawyers, setLawyers] = useState([]);
@@ -69,17 +70,11 @@ const Lawyers = () => {
 
   return (
     <Card>
-      <div className="court-setting-card-header">
-        قائمة المحامين
-        <img src={LawyerIcon} alt="Icon" className="court-icon" />
-      </div>
-      <Row >
-        <Col>
-          <Button variant="primary" onClick={() => setShowAddModal(true)}>
-            اضافة محامي
-          </Button>
-        </Col>
-      </Row>
+        <SectionHeader 
+        listName="المحامين" 
+        buttonName="محامي" 
+        setShowAddModal={setShowAddModal} // pass setShowAddModal function
+      />
       <div className="table-responsive">
         <Table striped bordered responsive className="rtl-table">
           <thead className="table-success">

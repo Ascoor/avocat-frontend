@@ -67,7 +67,7 @@ const EventCard = ({ title, color, count, icon }) => {
     >
       <Card
         className="text-center event-card"
-        style={{ background: 'linear-gradient(135deg, #1c6456, #09241e)'
+        style={{ background: 'linear-gradient(135deg, #14435a, #002D40)'
                 
       }}
       >

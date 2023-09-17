@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import '../../assets/css/legcase.css';
 import API_CONFIG from '../../config';
 import {
   Col,
@@ -78,36 +79,35 @@ export default function LegCaseDetail() {
   if (!legCase) {
     return <div>Loading...</div>;
   }
+  const CaseHeader = () => (
+    <div className="legalcase-card-header">
+      <h3>بيانات القضية</h3>
+      <img src={LegCaseDetailsIcon} alt="Icon" className="leg-case-icon" />
+    </div>
+  );
 
-  return (
-    <Card>
-      <Card.Header>
-        <div className="custom-card-header">
-          <h3 style={{ fontWeight: 'bold' }}>بيانات القضية</h3>
-          <img src={LegCaseDetailsIcon} alt="Icon" className="leg-case-icon" />
-        </div>
-      </Card.Header>
-      <Card.Body>
-        {legCase && (
+  const CaseBody = () => (
+    <Card.Body>
+    {legCase && (
           <>
             <div className="leg-case-details-card m-4">
-              <Row className="data-row text-center">
+              <Row className="data-row">
                 <Col
                   xs={12}
                   sm={12}
                   md={12}
                   lg={12}
-                  className="data-box bg-danger text-white"
+                  className="data-box"
                 >
-                  <div style={{ color: '#fdff00' }} className="data-label">
+                  <div  className="data-label">
                     موضوع القضية
                   </div>
-                  <div style={{ color: '#ffffff' }} className="data-value">
+                  <div className="data-value">
                     {legCase.title}
                   </div>
                 </Col>
               </Row>
-              <Row className="data-row text-center">
+              <Row className="data-row">
                 <Col
                   xs={12}
                   sm={12}
@@ -115,26 +115,26 @@ export default function LegCaseDetail() {
                   lg={12}
                   className="data-box bg-dark text-white"
                 >
-                  <div style={{ color: '#ff0000' }} className="data-label">
+                  <div  className="data-label">
                     تفاصيل القضية
                   </div>
-                  <div style={{ color: '#ffff' }} className="data-value">
+                  <div  className="data-value">
                     {legCase.description}
                   </div>
                 </Col>
               </Row>
-              <Row className="data-row text-center align-items-center">
+              <Row className="data-row align-items-center">
                 <Col
                   xs={12}
                   sm={6}
                   md={6}
                   lg={6}
-                  className="data-box bg-primary text-white"
+                  className="data-box"
                 >
-                  <div className="data-label text-center">
+                  <div className="data-label">
                     رقم الملف بالمكتب
                   </div>
-                  <div className="data-value" style={{ color: 'white' }}>
+                  <div className="data-value">
                     {legCase.slug}
                   </div>
                 </Col>
@@ -143,7 +143,7 @@ export default function LegCaseDetail() {
                   sm={6}
                   md={6}
                   lg={6}
-                  className="data-box bg-primary text-white"
+                  className="data-box"
                 >
                   <div className="data-label">حالة الدعوى</div>
                   <div className="data-value">{legCase.status}</div>
@@ -153,7 +153,7 @@ export default function LegCaseDetail() {
                   sm={6}
                   md={6}
                   lg={6}
-                  className="data-box bg-success text-white"
+                  className="data-box"
                 >
                   <div className="data-label">صفة الموكل</div>
                   <div className="data-value">{legCase.client_capacity}</div>
@@ -163,11 +163,11 @@ export default function LegCaseDetail() {
                   sm={6}
                   md={6}
                   lg={6}
-                  className="data-box bg-success text-white"
+                  className="data-box"
                 >
                   <div className="data-label">اسم الخصم</div>
                   <div className="data-value">
-                    <BsPersonFillX size={25} color="yellow" />
+                    <BsPersonFillX size={25}  />
                     {legCase.litigants_name}
                   </div>
                 </Col>
@@ -177,10 +177,10 @@ export default function LegCaseDetail() {
                   sm={6}
                   md={6}
                   lg={6}
-                  className="data-box bg-primary text-white"
+                  className="data-box"
                 >
                   <div className="data-label">تصنيف القضية</div>
-                  <div style={{ color: '#ffffff' }} className="data-value">
+                  <div className="data-value">
                     {legCase.case_type?.name}
                   </div>
                 </Col>
@@ -189,7 +189,7 @@ export default function LegCaseDetail() {
                   sm={6}
                   md={6}
                   lg={6}
-                  className="data-box bg-primary text-white"
+                  className="data-box"
                 >
                   <div className="data-label">التصنيف الفرعي</div>
                   <div className="data-value">
@@ -200,29 +200,38 @@ export default function LegCaseDetail() {
             </div>
           </>
         )}
-      </Card.Body>
+    </Card.Body>
+  );
+
+  const CourtsHeader = () => (
+    <Card.Header>
+      <div className="legalcase-card-header">
+        <h3 style={{ fontWeight: 'bold' }}>بيانات المحاكم</h3>
+        <Button
+          className="btn btn-sm btn-start"
+          variant="warning"
+          onClick={handleAddNewCourt}
+        >
+          إضافة محكمة <BiPlusCircle />
+        </Button>
+      </div>
+    </Card.Header>
+  );
+  return (
+    <Card>
+   <CaseHeader />
+   <CaseBody />
 
       <Card.Body>
         <LegCaseClients legCaseId={id} />
       </Card.Body>
 
-      <Card.Header>
-        <div className="custom-card-header">
-          <h3 style={{ fontWeight: 'bold' }}>بيانات المحاكم</h3>
-          <Button
-            className="btn btn-sm btn-start"
-            variant="warning"
-            onClick={handleAddNewCourt}
-          >
-            إضافة محكمة <BiPlusCircle />
-          </Button>
-        </div>
-      </Card.Header>
+  <CourtsHeader/>
       <Card.Body>
         <Row>
           <Col>
             <Table striped bordered hover responsive>
-              <thead className="table-success text-center">
+              <thead className="table-success">
                 <tr>
                   <th>رقم القضية</th>
                   <th>سنة القضية</th>

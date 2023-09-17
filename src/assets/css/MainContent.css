@@ -1,26 +1,58 @@
-/* MainContent Styles */
+/* Reset default margin and padding */
+body, div, h1, h2, h3, p, ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+/* Global Styles */
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-light);
+}
+
+/* Main Content Styles */
 .main-content {
+  background-color: var(--dark-blue-bg);
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  transition: margin-right 0.3s ease-in-out;
-  height: 100%; /* Ensure the content fills the entire height */
+  flex-wrap: wrap; /* Allows content to wrap onto next line */
+  padding: 15px;
+  transition: margin-right 0.2s ease-in-out;
+  height: 100vh;
+  color: var(--text-light);
 }
 
 .main-content.sidebar-open {
-  margin-right: 270px; /* Adjust this value based on your sidebar width */
+  margin-right: 300px; /* Or use % if more appropriate */
 }
 
-/* Center-align content for screens smaller than 768px */
+/* Responsive Handling */
 @media (max-width: 768px) {
-  .main-content.sidebar-open {
-    margin-right: 0;
+  .main-content {
+    flex-direction: column; /* Stack content vertically */
   }
+  
+  .main-content.sidebar-open {
+    margin-right: 0; /* Reset margin-right for smaller screens */
+  }
+
+  /* Optional: Adjust padding or other styles for smaller screens */
 }
 
-/* Style the inner content */
+/* Inner Content Style */
 .content-inner {
-  padding: 20px; /* Adjust padding as needed */
-  max-width: 100%; /* Make it responsive */
-  text-align: center; /* Center align the content */
+  padding: 20px;
+  width: 100%; /* Use percentage for flexible width */
+  text-align: center;
+}
+
+/* Admin Dashboard Styles */
+.admin-dashboard {
+  display: flex;
+  flex-direction: row-reverse; /* For RTL */
+  transition: margin-right 0.3s ease-in-out;
+}
+
+.admin-dashboard.sidebar-open .sidebar {
+  transform: translateX(0); /* Sidebar appears */
 }

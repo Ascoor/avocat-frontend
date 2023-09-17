@@ -4,24 +4,27 @@
 
 /* Basic styling for event cards */
 .event-card {
-    display: flex;
-    align-items: center;
-    background-color: #f8f9fa;
-    border-radius: 100px;
-
-    padding: 10px;
-    transition: transform 0.3s, box-shadow 0.3s;
+  display:flow-root;
+  align-items: center;
+  background-color: #f8f9fa; /* Background color of the card */
+  border: 5px solid var(--accent-color); /* Border color of the card */
+  border-radius: 150px;
+  padding: 15px;
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+  box-shadow: 0 10px 6px rgba(0,0,0,0.1);
 }
 
 .event-card:hover {
-    transform: translateY(-5px);
-
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 .event-card-body {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .event-card-icon-container {
@@ -31,30 +34,30 @@
   align-items: center;
   justify-content: center;
   margin-right: 15px;
-  background: linear-gradient(135deg, #a87b2d, #d8d50a); /* Background color of the icon */
+  background: linear-gradient(135deg, #4a3511, #91902f); /* Background color of the icon */
 }
 
 .event-card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ffffff;
-    font-family: 'Cairo', sans-serif;
-    margin-bottom: 5px;
-    text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #333; /* Color of the title */
+  font-family: 'Cairo', sans-serif;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
 .home-card .event-card-title {
   color: #fff7ac; /* Color of the title on the home page */
 }
+
 .count {
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-align: center;
-    font-family: 'Lateef', cursive;
-    color: rgb(255, 152, 0);
+  color: var(--accent-color); /* Color of the count */
+  font-size: 1.6rem;
 }
+
+/* Brand Button */
 .btn.btn-home-search {
-  background-color: #18584c; /* Background color of the button */
+  background-color: #14435a; /* Background color of the button */
   color: #fff7ac; /* Text color on the button */
   border-radius: 20px;
   padding: 10px 20px;
@@ -62,37 +65,39 @@
 } 
 
 .btn.btn-home-search:hover {
-  background: linear-gradient(15deg, #002D40, #18584c); /* Background color of the button on hover */
+  background: linear-gradient(15deg, #a87b2d, #d8d50a); /* Background color of the button on hover */
 }
 
 .home-text-center {
-  background: linear-gradient(135deg,#002D40  , #18584c, #0d3242);
-    border-radius: 80px;
-    color: #fffbf5;
-    text-align: center;
-    font-size: 1.8rem;
-    font-family: 'Cairo', sans-serif;
-    font-weight: 700;
-  }
-  
+
+  background: linear-gradient(135deg,#002D40  , #14435a, #0d3242);
+  border-radius: 20px;
+  padding: 10px;
+  color: #fff7ac; /* Text color */
+  text-align: center;
+  font-size: 1.8rem;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+}
+
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
-    .event-card {
-        flex-direction: column;
-        align-items: center;
-    }
+  .event-card {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .event-card-icon-container {
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
+  .event-card-icon-container {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 
-    .event-card-title {
-        font-size: 1rem;
-        margin-bottom: 0;
-    }
+  .event-card-title {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
 
-    .count {
-        font-size: 1.5rem;
-    }
+  .count {
+    font-size: 1.4rem;
+  }
 }

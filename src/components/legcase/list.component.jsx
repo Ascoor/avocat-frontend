@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Card, Table, Row, Col, Button, Alert } from 'react-bootstrap';
-import { FcPlus } from 'react-icons/fc';
-import { TiArrowBackOutline } from 'react-icons/ti';
 import API_CONFIG from '../../config';
 import { LegCaseIcon } from '../../assets/icons/index';
 import CustomPagination from '../home_tools/Pagination'; // Import your custom Pagination component here
+import LegCaseCreate from './LegCaseCreate';
 
+import SectionHeader from '../layout/SectionHeader';
 const LegCaseList = () => {
   const itemsPerPage = 10; // Set the number of items to display per page
   const [legCasesPage, setLegCasesPage] = useState(1); // Define legCasesPage and set its initial value to 1
@@ -27,6 +27,8 @@ const LegCaseList = () => {
   const startIndex = (legCasesPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedLegCases = filteredLegCases.slice(startIndex, endIndex);
+  const [showModal, setShowModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     fetchLegCases();
@@ -75,37 +77,29 @@ const LegCaseList = () => {
     }
   };
 
+  const handleAddClick = () => {
+    setIsEditing(false);
+    setShowModal(true);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <Card>
-      <div className="court-setting-card-header">
-        قائمة القضايا
-        <img src={LegCaseIcon} alt="Icon" className="leg-case-icon" />
-      </div>
+
+<SectionHeader setShowAddModal={handleAddClick} listName="القضايا" buttonName="قضية" />
 
       <Row className="add-case-row">
-        <Col xs={12} md={6} lg={6} className="text-center mb-md-0">
-          {/* Adjust the grid classes */}
-          <Link
-            className="btn btn-lg btn-primary btn-add"
-            to={'/legcases/create'}
-          >
-            <FcPlus size={20} />
-            إضافة قضية
-          </Link>
-        </Col>
-
-        <Col xs={12} md={6} lg={6} className="text-center text-md-end">
-          {/* Adjust the grid classes */}
-          <Button
-            variant="warning"
-            className="btn-back btn-lg"
-            type="button"
-            onClick={() => window.history.back()}
-          >
-            <TiArrowBackOutline size={25} style={{ marginRight: '0.5rem' }} />
-            رجوع
-          </Button>
-        </Col>
+      {showModal && <LegCaseCreate isEditing={isEditing} onClose={handleCloseModal} />}
+  
+      
       </Row>
 
       {showAlert && (

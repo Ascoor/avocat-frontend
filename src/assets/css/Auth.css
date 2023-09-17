@@ -1,19 +1,19 @@
-/* Auth App CSS */
-
 /* Use Cairo font */
 body {
   font-family: 'Cairo', sans-serif;
   background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 20px;
 }
 
 .admin-dashboard {
   display: flex;
-  flex-direction: row-reverse; /* RTL layout */
+  flex-direction: row-reverse; /* For RTL */
   transition: margin-right 0.3s ease-in-out;
 }
 
 .admin-dashboard.sidebar-open .sidebar {
-  transform: translateX(0);
+  transform: translateX(0); /* Sidebar appears */
 }
 
 /* Reset default margin and padding */
@@ -27,4 +27,22 @@ ul,
 li {
   margin: 0;
   padding: 0;
+}
+
+/* Footer Styles */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+/* Responsive Handling for Footer */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 }

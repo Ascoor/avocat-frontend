@@ -13,7 +13,6 @@ import LegCaseDetail from '../legcase/leg_case_detail.component';
 import Services from '../service/index';
 import LegalSession from '../legcase/tools/Legal_session.component';
 import ProcedureSearch from '../reports/procedure_search.component';
-import LegCaseCreate from '../legcase/create.component';
 import ProfileUser from '../Auth/ProfileUser';
 import Archives from '../Archives/ArchiveDashboard';
 import WordPadEditor from '../Archives/WordPadEditor/WordPadEditor';
@@ -35,14 +34,7 @@ const AuthRoutes = () => {
         <Route path="/legcases/show/:id" element={<LegCaseDetail />} />
         <Route path="/profile/:userId" element={<ProfileUser />} />
         <Route path="/legcases" element={<LegcaseList />} />
-        <Route
-          path="/legcases/edit/:id"
-          element={<LegCaseCreate isEditing={true} />}
-        />
-        <Route
-          path="/legcases/create"
-          element={<LegCaseCreate isEditing={false} />}
-        />
+ 
         <Route path="/home" element={<Home />} />
         <Route path="/lawyers/form" element={<LawyersAddEdit />} />
         <Route path="/archives" element={<Archives />} />
