@@ -14,6 +14,7 @@ import { RiGenderlessFill } from 'react-icons/ri';
 import { GiPrayer } from 'react-icons/gi';
 import { MdWork } from 'react-icons/md';
 import CustomPagination from '../home_tools/Pagination';
+import SectionHeader from '../layout/SectionHeader';
 export default function Clients() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -129,33 +130,8 @@ export default function Clients() {
   return (
     <>
       <Card>
-        <div className="court-setting-card-header">
-          قائمة العملاء
-          <img src={ClientIcon} alt="Icon" className="court-icon" />
-        </div>
-        <Row className="mb-3">
-          <Col md={6} className="text-start mb-3">
-            <Link
-              className="btn btn-lg btn-primary btn-add"
-              to={'/client/create'}
-            >
-              <FcPlus size={20} />
-              إضافة موكل
-            </Link>
-          </Col>
-          <Col md={6} className="text-md-end mb-3">
-            <Button
-              variant="warning"
-              className="btn-back btn-lg"
-              type="button"
-              onClick={() => window.history.back()}
-            >
-              <TiArrowBackOutline size={25} style={{ marginRight: '0.5rem' }} />
-              رجوع
-            </Button>
-          </Col>
-        </Row>
-        <hr />
+<SectionHeader buttonName="موكلين" listName="موكلين" icon={ClientIcon}/>
+
         {showAlert && (
           <Alert className="mt-4" variant="success">
             {currentAlertMessage}

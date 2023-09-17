@@ -94,7 +94,7 @@ const LegCaseList = () => {
   return (
     <Card>
 
-<SectionHeader setShowAddModal={handleAddClick} listName="القضايا" buttonName="قضية" />
+<SectionHeader setShowAddModal={handleAddClick} listName="القضايا" buttonName="قضية" icon={LegCaseIcon} />
 
       <Row className="add-case-row">
       {showModal && <LegCaseCreate isEditing={isEditing} onClose={handleCloseModal} />}

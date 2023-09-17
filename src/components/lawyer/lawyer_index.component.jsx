@@ -74,6 +74,7 @@ const Lawyers = () => {
         listName="المحامين" 
         buttonName="محامي" 
         setShowAddModal={setShowAddModal} // pass setShowAddModal function
+        icon={LawyerIcon}
       />
       <div className="table-responsive">
         <Table striped bordered responsive className="rtl-table">
