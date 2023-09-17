@@ -1,19 +1,9 @@
-<<<<<<< HEAD
 /* Use Cairo font */
 body {
   font-family: 'Cairo', sans-serif;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   padding: 20px;
-=======
-
-/* Auth Styles */
-.auth-form {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Removed px from 0px */
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
 }
 
 /* Admin Dashboard Styles */
@@ -27,7 +17,6 @@ body {
   transform: translateX(0); /* Sidebar appears */
 }
 
-<<<<<<< HEAD
 /* Reset default margin and padding */
 body,
 div,
@@ -58,5 +47,3 @@ li {
     text-align: center;
   }
 }
-=======
->>>>>>> 6d43be313a44f1b0c5315d242720e3fa2ab1754c
