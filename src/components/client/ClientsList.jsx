@@ -18,7 +18,7 @@ import AddEditClient from './AddEditClient';
 export default function Clients() {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [clients, setClients] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
@@ -130,16 +130,20 @@ export default function Clients() {
   };
 
   return (
-    
     <>
-    <SectionHeader 
-      buttonName="موكلين" 
-      listName="موكلين" 
-      icon={ClientIcon} 
-      setShowAddModal={setModalOpen}
-    />
-    {isModalOpen && <AddEditClient isOpen={isModalOpen} onClose={() => setModalOpen(false)} />}
-    
+      <SectionHeader
+        buttonName="موكلين"
+        listName="موكلين"
+        icon={ClientIcon}
+        setShowAddModal={setModalOpen}
+      />
+      {isModalOpen && (
+        <AddEditClient
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
+
       <Card className="m-4">
         <Card.Header>
           {showAlert && (
