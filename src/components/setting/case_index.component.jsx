@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import API_CONFIG from '../../config';
 import { JudgeIcon } from '../../assets/icons';
 import {
   Button,
   Row,
   Col,
-  Table,
   ButtonGroup,
   Modal,
   Alert,

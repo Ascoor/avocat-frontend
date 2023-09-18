@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Table, Alert, Card, Button, Row, Modal, Col } from 'react-bootstrap';
@@ -14,9 +14,12 @@ import { GiPrayer } from 'react-icons/gi';
 import { MdWork } from 'react-icons/md';
 import CustomPagination from '../home_tools/Pagination';
 import SectionHeader from '../home_tools/SectionHeader';
+import AddEditClient from './AddEditClient';
 export default function Clients() {
   const navigate = useNavigate();
   const location = useLocation();
+  
+  const [isModalOpen, setModalOpen] = useState(false);
   const [clients, setClients] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [currentAlertMessage, setCurrentAlertMessage] = useState('');
@@ -127,8 +130,16 @@ export default function Clients() {
   };
 
   return (
+    
     <>
-      <SectionHeader buttonName="موكلين" listName="موكلين" icon={ClientIcon} />
+    <SectionHeader 
+      buttonName="موكلين" 
+      listName="موكلين" 
+      icon={ClientIcon} 
+      setShowAddModal={setModalOpen}
+    />
+    {isModalOpen && <AddEditClient isOpen={isModalOpen} onClose={() => setModalOpen(false)} />}
+    
       <Card className="m-4">
         <Card.Header>
           {showAlert && (

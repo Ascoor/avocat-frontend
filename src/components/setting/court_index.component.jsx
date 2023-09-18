@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { JudgeIcon } from '../../assets/icons/index';
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import CourtType from './courtTools/CourtType';

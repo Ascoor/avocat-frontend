@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './EditorTools.css';
@@ -9,7 +9,7 @@ import { saveAs } from 'file-saver';
 import mammoth from 'mammoth'; // Import for DOCX
 
 // Add custom RTL button
-var Align = Quill.import('attributors/style/align');
+const Align = Quill.import('attributors/style/align');
 Quill.register(Align, true);
 const modules = {
   toolbar: [

@@ -1,6 +1,4 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
-
 const SectionHeader = ({ buttonName, listName, setShowAddModal, icon }) => {
   return (
     <div className="section-card-header">

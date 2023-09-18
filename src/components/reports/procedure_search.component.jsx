@@ -56,8 +56,9 @@ const ProcedureSearch = () => {
     if (selectedDateEnd) queryParams.date_end = selectedDateEnd;
     if (selectedLawyer) queryParams.lawyer_id = selectedLawyer;
     if (selectedCourt) queryParams.court_id = selectedCourt;
-    if (selectedProcedureType)
+    if (selectedProcedureType) {
       queryParams.procedure_type_id = selectedProcedureType;
+    }
     if (selectedStatus) queryParams.status = selectedStatus;
     // Send the GET request with query parameters to the API
     axios

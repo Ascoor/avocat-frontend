@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import arEG from 'date-fns/locale/ar-EG';
-import { registerLocale, setDefaultLocale } from 'react-datepicker';
+import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import { useSpring, animated } from '@react-spring/web';
-import DatePicker from 'react-datepicker';
 import '../../../assets/css/Models.css';
 import useAuth from '../../layout/AuthTool/AuthUser';
 const ServiceProcedureModal = ({

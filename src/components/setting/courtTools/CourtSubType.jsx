@@ -1,14 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Modal,
-  Form,
-  Card,
-  Table,
-  Alert,
-} from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Row, Col, Button, Modal, Form, Card, Alert } from 'react-bootstrap';
 import { FcFullTrash } from 'react-icons/fc';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
@@ -84,7 +75,7 @@ const CourtSubType = ({ show, handleClose }) => {
         setCourtSubTypes([...courtSubTypes, response.data]);
         setAlertMessage({
           type: 'success',
-          text: `تمت إضافة مستوى المحكمة بنجاح.`,
+          text: 'تمت إضافة مستوى المحكمة بنجاح.',
         });
 
         handleClose(); // Close modal

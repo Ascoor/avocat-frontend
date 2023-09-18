@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Row,
   Col,
@@ -76,7 +76,7 @@ const CourtLevel = ({ show, handleClose }) => {
       setCourtLevels([...courtLevels, response.data]);
       setAlertMessage({
         type: 'success',
-        text: `تمت إضافة مستوى المحكمة بنجاح.`,
+        text: 'تمت إضافة مستوى المحكمة بنجاح.',
       });
       setNewCourtLevelName('');
       setShowAddCourtLevelModal(false);

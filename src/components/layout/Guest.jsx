@@ -72,7 +72,7 @@ const Guest = () => {
         const navbarItems = navbarCollapse.querySelectorAll('a');
 
         // Closes responsive menu when a scroll trigger link is clicked
-        for (let item of navbarItems) {
+        for (const item of navbarItems) {
           item.addEventListener('click', function (event) {
             collapse.hide();
           });

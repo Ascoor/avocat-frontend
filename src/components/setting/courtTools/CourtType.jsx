@@ -1,68 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Modal,
-  Form,
-  Card,
-  Table,
-  Alert,
-} from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Row, Col, Button, Modal, Form, Card, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
 import CustomPagination from '../../home_tools/Pagination';
 
+/**
+ * CourtType component
+ * @param {Object} props - The props object
+ * @param {boolean} props.show - Show modal
+ * @param {Function} props.handleClose - Close modal
+ */
 export default function CourtType({ show, handleClose }) {
   const [newCourtTypeName, setNewCourtTypeName] = useState('');
   const [courtTypes, setCourtTypes] = useState([]);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [modalMessage, setModalMessage] = useState(null);
   const itemsPerPage = 10;
-  const [courtTypeAlert, setCourtTypeAlert] = useState(null);
-  const [alertMessage, setAlertMessage] = useState(null); // For table alerts
-  const [successMessage, setSuccessMessage] = useState(null); // For table success
-  const [message, setMessage] = useState(null); // For table success
-  const [modalMessage, setModalMessage] = useState(null); // For modal alerts
-  const valueIsValid = !!newCourtTypeName.trim(); // true if newCourtTypeName is not empty
 
   useEffect(() => {
     fetchCourtTypes();
   }, []);
+
   useEffect(() => {
-    if (successMessage) {
+    if (successMessage || alertMessage) {
       const timer = setTimeout(() => {
         setSuccessMessage(null);
-      }, 3000);
-
-      return () => {
-        clearTimeout(timer);
-      };
-    }
-  }, [successMessage]);
-
-  useEffect(() => {
-    if (alertMessage) {
-      const timer = setTimeout(() => {
         setAlertMessage(null);
       }, 3000);
-
-      return () => {
-        clearTimeout(timer);
-      };
+      return () => clearTimeout(timer);
     }
-  }, [alertMessage]);
-
-  // Rest of your code...
-
+  }, [successMessage, alertMessage]);
   const fetchCourtTypes = async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/court_types`);
       setCourtTypes(response.data);
-    } catch (error) {
-      setMessage({ type: 'danger', text: 'Failed to fetch data' });
+    } catch (err) {
+      setError(err);
+      setAlertMessage({ type: 'danger', text: 'Failed to fetch data' });
     }
   };
+
   const handleAddCourtType = async () => {
     try {
       const response = await axios.post(
@@ -73,8 +53,8 @@ export default function CourtType({ show, handleClose }) {
       setAlertMessage({ type: 'success', text: 'تم اضافة نوع المحكمة بنجاح' });
       setNewCourtTypeName('');
       handleClose();
-    } catch (error) {
-      setError(error);
+    } catch (err) {
+      setError(err);
       setAlertMessage({
         type: 'danger',
         text: 'تأكد من البيان الذى يتم إدخاله',

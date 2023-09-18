@@ -1,5 +1,5 @@
 // @ts-ignore
-/// <reference path="../path/to/images.d.ts" />
+// / <reference path="../path/to/images.d.ts" />
 
 export { default as LogoImage } from './logo512.png';
 export { default as WelcomeImage } from '../images/welcome.jpg';

@@ -6,7 +6,6 @@ import LawyersAddEdit from '../../lawyer/lawyer_index.component';
 import CourtSetting from '../../setting/court_index.component';
 // import CourtSearch from "../reports/court_search.component";
 import CaseTypeSet from '../../setting/case_index.component';
-import AddEditClient from '../../client/add_edit_client.component';
 import ClientsList from '../../client/ClientsList';
 import LegcaseList from '../../legcase/list.component';
 import LegCaseDetail from '../../legcase/leg_case_detail.component';
@@ -31,8 +30,7 @@ const AuthRoutes = () => {
           {/* <Route path="/court_search" element={<CourtSearch />} /> */}
           <Route path="/lawyers" element={<Lawyers />} />
           <Route path="/cases_setting" element={<CaseTypeSet />} />
-          <Route path="/client/create" element={<AddEditClient />} />
-          <Route path="/client/edit/:id" element={<AddEditClient />} />
+
           <Route path="/legcases/show/:id" element={<LegCaseDetail />} />
           <Route path="/profile/:userId" element={<ProfileUser />} />
           <Route path="/legcases" element={<LegcaseList />} />

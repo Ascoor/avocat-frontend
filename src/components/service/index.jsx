@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Table, Button, Card, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import ServiceModal from './ServiceModal';

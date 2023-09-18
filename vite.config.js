@@ -6,24 +6,24 @@ export default defineConfig({
   publicDir: 'public',
   server: {
     host: '127.0.0.1',
-    port: 3000,
+    port: 3000
   },
   css: {
-    modules: true,
+    modules: true
   },
   build: {
     rollupOptions: {
       output: {
-        manualChunks(filePath) {
+        manualChunks (filePath) {
           if (filePath.includes('node_modules')) {
             return 'vendor';
           }
-        },
-      },
+        }
+      }
     },
-    chunkSizeWarningLimit: 1200,
+    chunkSizeWarningLimit: 1200
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'axios', 'bootstrap','docx4js'],
-  },
+    include: ['react', 'react-dom', 'axios', 'bootstrap', 'docx4js']
+  }
 });

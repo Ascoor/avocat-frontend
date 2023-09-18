@@ -1,5 +1,5 @@
 // WordPadEditor.js
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import TopTools from './TopTools/';
 import Sidebar from './SideTools/index';
 import EditorTools from './EditorTools/index';

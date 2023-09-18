@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';
 import arEG from 'date-fns/locale/ar-EG';
-import { registerLocale, setDefaultLocale } from 'react-datepicker';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 const LegalSession = ({ legCaseId }) => {
   LegalSession.propTypes = {
     legCaseId: PropTypes.string.isRequired,
@@ -98,9 +97,9 @@ const LegalSession = ({ legCaseId }) => {
       date: dateOnly,
       lawyer_id: selectedLawyer,
       roll_number: rollNumber,
-      orders: orders,
+      orders,
       court_id: selectedCourt,
-      result: result,
+      result,
       cost: selectedCost,
       cost2: selectedCost2,
       leg_case_id: legCaseId,
