@@ -22,14 +22,12 @@ const ServiceDetailsModal = ({ service }) => {
 
   return (
     <Row>
-      <Col md={6} lg={12}>
-        <animated.div
-          className={`service-card bg-${getStatusColor()}`}
-          style={{ ...cardAnimation, marginBottom: '15px' }}
-        >
-          <Card text="dark">
-            <Card.Body>
-              <Card.Title className="text-center">
+    <Col>
+      <animated.div>
+      
+        <Card>
+          <Card.Body>
+          <Card.Title className="text-center">
                 {service.service_name}
               </Card.Title>
               <Card.Text>{service.service_description}</Card.Text>
@@ -67,12 +65,13 @@ const ServiceDetailsModal = ({ service }) => {
                   <strong> رقم ملف الخدمة</strong> {service.service_no || 'N/A'}
                 </ListGroup.Item>
               </ListGroup>
-            </Card.Body>
-          </Card>
-        </animated.div>
-        <ServiceProcedureList serviceId={service.id} />
-      </Col>
-    </Row>
+          </Card.Body>
+        </Card>
+      </animated.div>
+{service && service.id && <ServiceProcedureList serviceId={service.id} />}
+    </Col>
+  </Row>
+  
   );
 };
 

@@ -53,7 +53,7 @@ const useIconCardAnimation = () => {
     handleTouchEnd,
   };
 };
-const EventCard = ({ title, color, count, icon }) => {
+const EventCard = ({ title, count, icon }) => {
   const { cardSpringStyles, handleHover, handleHoverEnd } =
     useIconCardAnimation();
 
@@ -97,7 +97,7 @@ const Home = () => {
   const [searchResults, setSearchResults] = useState([]); // State to store the search results
   const [showResults, setShowResults] = useState(false); // State to determine whether search results should be displayed or not
   const [searchType, setSearchType] = useState('clients'); // State to store the selected search type
-  const [events, setEvents] = useState([]);
+  const [ setEvents] = useState([]);
   useEffect(() => {
     axios
       .get(`${API_CONFIG.baseURL}/api/agenda-events`)

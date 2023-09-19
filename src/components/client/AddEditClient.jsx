@@ -100,7 +100,7 @@ const AddEditClient = () => {
 
     const clientData = {
       slug,
-      setFormData,
+
       name,
       gender,
       date_of_birth: dateOfBirth.toISOString().split('T')[0],

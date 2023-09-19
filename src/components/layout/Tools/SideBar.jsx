@@ -7,7 +7,7 @@ import {
   FaBriefcase,
   FaFileAlt,
   FaTasks,
-  FaArchive,
+  // FaArchive,
   FaCog,
 } from 'react-icons/fa';
 import { useSpring, animated } from '@react-spring/web';
@@ -84,12 +84,12 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
           </Link>
         </li>
 
-        <li>
+        {/* <li>
           <Link to="/archives">
             <FaArchive className="m-2" size={25} />
             الأرشيف{' '}
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/courts">
             <FaCog className="m-1" size={25} />

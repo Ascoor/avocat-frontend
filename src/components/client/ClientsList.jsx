@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Table, Alert, Card, Button, Row, Modal, Col } from 'react-bootstrap';
+import {  useNavigate, useLocation } from 'react-router-dom';
+import { Card, Button, Modal,Alert } from 'react-bootstrap';
 import { ClientIcon } from '../../assets/icons/index';
 import API_CONFIG from '../../config';
-import { FcPlus } from 'react-icons/fc';
 
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { BsFillPersonFill } from 'react-icons/bs';
@@ -27,6 +26,7 @@ export default function Clients() {
   const [filteredClients, setFilteredClients] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null); // تعريف العميل المحدد
+  const [hideTimeout, setHideTimeout] = useState(null);
 
   const itemsPerPage = 5;
   const [clientsPage, setClientsPage] = useState(1);
@@ -128,123 +128,28 @@ export default function Clients() {
     });
     setFilteredClients(filteredClients);
   };
+  const handleSlugClick = (slug) => {
+    const client = clients.find((client) => client.slug === slug);
+    setSelectedClient(client);
+    setShowModal(true);
+  };
 
+  
   return (
     <>
-      <SectionHeader
-        buttonName="موكلين"
-        listName="موكلين"
-        icon={ClientIcon}
-        setShowAddModal={setModalOpen}
-      />
-      {isModalOpen && (
-        <AddEditClient
-          isOpen={isModalOpen}
-          onClose={() => setModalOpen(false)}
-        />
-      )}
-
-      <Card className="m-4">
-        <Card.Header>
-          {showAlert && (
-            <Alert className="mt-4" variant="success">
-              {currentAlertMessage}
-            </Alert>
-          )}
-        </Card.Header>
-        <div className="input-group w-50">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="البحث عن موكلين"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button
-            className="btn btn-primary"
-            type="button"
-            onClick={handleSearch}
-          >
-            بحث
-          </button>
-        </div>
-
-        <div className="table-responsive">
-          <table className="special-table">
-            <thead>
-              <tr>
-                <th>رقم المكتب</th>
-                <th>اسم العميل</th>
-                <th>رقم القومى</th>
-                <th>العنوان</th>
-                <th>رقم الهاتف</th>
-                <th>الحالة</th>
-                <th>التحكم</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedClients.length === 0 ? (
-                <tr>
-                  <td colSpan="5">
-                    <Alert variant="warning">لا يوجد موكلين لعرضهم.</Alert>
-                  </td>
-                </tr>
-              ) : (
-                filteredClients.map((client) => (
-                  <tr key={client.id}>
-                    <td>{client.slug}</td>
-                    <td>{client.name}</td>
-                    <td>{client.identity_number}</td>
-                    <td>{client.address}</td>
-                    <td>{client.phone_number}</td>
-                    <td>
-                      {client.status === 'active' ? (
-                        <span className="text-success">نشط</span>
-                      ) : (
-                        <span className="text-danger">غير نشط</span>
-                      )}
-                    </td>
-
-                    <td>
-                      <Button
-                        variant={
-                          client.status === 'active' ? 'success' : 'warning'
-                        }
-                        onClick={() => handleToggleStatus(client.id)}
-                      >
-                        {client.status === 'active' ? 'إلغاء التنشيط' : 'تنشيط'}
-                      </Button>
-                      <Button
-                        variant="primary"
-                        onClick={() => handleEditClient(client.id)}
-                      >
-                        تعديل
-                      </Button>{' '}
-                      <Button
-                        variant="danger"
-                        onClick={() => deleteClient(client.id)}
-                      >
-                        حذف
-                      </Button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-        <Card.Footer>
-          {/* Render the CustomPagination component */}
-          <CustomPagination
-            totalCount={filteredClients.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={clientsPage}
-            onPageChange={handlePageChange}
-          />
-        </Card.Footer>
-      </Card>
-
-      <Modal show={showModal} onHide={() => setShowModal(false)} dir="rtl">
+    
+    <Modal
+  show={showModal}
+  onHide={() => {
+    // Clear any existing timeout to hide the hover card
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      setHideTimeout(null);
+    }
+    setShowModal(false);
+  }}
+  dir="rtl"
+>
         <div className="court-setting-card-header">
           <Modal.Header closeButton>
             <Modal.Title>تفاصيل العميل</Modal.Title>
@@ -310,6 +215,124 @@ export default function Clients() {
           </div>
         </Modal.Body>
       </Modal>
+      <SectionHeader
+        buttonName="موكل"
+        listName="موكلين"
+        icon={ClientIcon}
+        setShowAddModal={setModalOpen}
+      />
+      {isModalOpen && (
+        <AddEditClient
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
+
+      <Card className="m-4">
+        <Card.Header>
+          {showAlert && (
+            <Alert className="mt-4" variant="success">
+              {currentAlertMessage}
+            </Alert>
+          )}
+        </Card.Header>
+        <div className="input-group w-50">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="البحث عن موكلين"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button
+            className="btn btn-primary"
+            type="button"
+            onClick={handleSearch}
+          >
+            بحث
+          </button>
+        </div>
+
+        <div className="table-responsive">
+          <table className="special-table">
+            <thead>
+              <tr>
+                <th>رقم المكتب</th>
+                <th>اسم العميل</th>
+                <th>رقم القومى</th>
+                <th>العنوان</th>
+                <th>رقم الهاتف</th>
+                <th>الحالة</th>
+                <th>التحكم</th>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedClients.length === 0 ? (
+                <tr>
+                  <td colSpan="5">
+                    <Alert variant="warning">لا يوجد موكلين لعرضهم.</Alert>
+                  </td>
+                </tr>
+              ) : (
+                filteredClients.map((client) => (
+                  <tr key={client.id}>
+                  <td onClick={() => handleSlugClick(client.slug)}>
+  {client.slug}
+</td>
+
+
+
+                    <td>{client.name}</td>
+                    <td>{client.identity_number}</td>
+                    <td>{client.address}</td>
+                    <td>{client.phone_number}</td>
+                    <td>
+                      {client.status === 'active' ? (
+                        <span className="text-success">نشط</span>
+                      ) : (
+                        <span className="text-danger">غير نشط</span>
+                      )}
+                    </td>
+
+                    <td>
+                      <Button
+                        variant={
+                          client.status === 'active' ? 'success' : 'warning'
+                        }
+                        onClick={() => handleToggleStatus(client.id)}
+                      >
+                        {client.status === 'active' ? 'إلغاء التنشيط' : 'تنشيط'}
+                      </Button>
+                      <Button
+                        variant="primary"
+                        onClick={() => handleEditClient(client.id)}
+                      >
+                        تعديل
+                      </Button>{' '}
+                      <Button
+                        variant="danger"
+                        onClick={() => deleteClient(client.id)}
+                      >
+                        حذف
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        <Card.Footer>
+          {/* Render the CustomPagination component */}
+          <CustomPagination
+            totalCount={filteredClients.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={clientsPage}
+            onPageChange={handlePageChange}
+          />
+        </Card.Footer>
+      </Card>
+      
     </>
   );
 }

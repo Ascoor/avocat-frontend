@@ -109,8 +109,9 @@ const ServiceProcedureList = ({ serviceId }) => {
         />
       </Card.Header>
       <Card.Body>
-        <table className="table table-striped table-bordered table-hover table-responsive">
-          {' '}
+
+      <div className="table-responsive">
+          <table className="special-table">
           <thead>
             <tr>
               <th className="col-1">نوع الإجراء</th>
@@ -153,6 +154,7 @@ const ServiceProcedureList = ({ serviceId }) => {
             ))}
           </tbody>
         </table>
+        </div>
       </Card.Body>
     </>
   );
