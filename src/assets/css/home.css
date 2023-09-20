@@ -49,7 +49,7 @@
 }
 
 .home-card .event-card-title {
-  color: #fdfb88;
+  color: #F6CD59;
 }
 
 .count {
@@ -60,7 +60,7 @@
 /* Brand Button */
 .btn.btn-home-search {
   background-color: #14435a; /* Background color of the button */
-  color: #fff7ac; /* Text color on the button */
+  color: #F6CD59; /* Text color on the button */
   border-radius: 20px;
   padding: 10px 20px;
   font-size: 1.2rem;
@@ -69,17 +69,16 @@
 .btn.btn-home-search:hover {
   background: linear-gradient(15deg, #a87b2d, #d8d50a); /* Background color of the button on hover */
 }
-
 .home-text-center {
-
-  background: linear-gradient(135deg,#002D40  , #14435a, #0d3242);
-  border-radius: 20px;
-  padding: 10px;
-  color: #d8d50a; /* Text color */
+  background: linear-gradient(135deg, #1f485d, #264754, #063851);
+  border-radius: 40px;
+  padding: 20px;
+  color: #F6CD59; /* Text color */
   text-align: center;
   font-size: 1.8rem;
   font-family: 'Cairo', sans-serif;
   font-weight: 700;
+  box-shadow: 0 20px 15px #4c7286; /* Add shadow here */
 }
 
 /* Media queries for responsiveness */

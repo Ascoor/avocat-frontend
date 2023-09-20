@@ -5,9 +5,9 @@ import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
 import API_CONFIG from '../../../config';
 import PropTypes from 'prop-types';
 
-export default function LegCaseClients({ legCaseId }) {
+export default function LegCaseClients ({ legCaseId }) {
   LegCaseClients.propTypes = {
-    legCaseId: PropTypes.string.isRequired,
+    legCaseId: PropTypes.string.isRequired
   };
 
   const [clients, setClients] = useState([]);
@@ -62,37 +62,38 @@ export default function LegCaseClients({ legCaseId }) {
           </div>
         </Card.Header>
         <Card.Body>
-          <table className="table table-striped table-bordered table-hover table-responsive">
-            {' '}
-            <thead>
-              <tr>
-                <th>رقم المكتب </th>
-                <th>اسم الموكل</th>
-                <th>رقم الهاتف</th>
+          <div className="table-responsive">
+            <table className="special-table">
+              <thead>
+                <tr>
+                  <th>رقم المكتب </th>
+                  <th>اسم الموكل</th>
+                  <th>رقم الهاتف</th>
 
-                <th>الحالة</th>
-              </tr>
-            </thead>
-            <tbody>
-              {legCaseClients &&
-                legCaseClients.map((client) => (
-                  <tr key={client.id}>
-                    <td>{client.slug}</td>
-                    <td>{client.name}</td>
-                    <td>{client.phone_number}</td>
-                    <td
-                      className={`${
-                        client.status === 'active'
-                          ? 'text-success'
-                          : 'text-danger'
-                      }`}
-                    >
-                      {client.status === 'active' ? 'Active' : 'Inactive'}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+                  <th>الحالة</th>
+                </tr>
+              </thead>
+              <tbody>
+                {legCaseClients &&
+                  legCaseClients.map((client) => (
+                    <tr key={client.id}>
+                      <td>{client.slug}</td>
+                      <td>{client.name}</td>
+                      <td>{client.phone_number}</td>
+                      <td
+                        className={`${
+                          client.status === 'active'
+                            ? 'text-success'
+                            : 'text-danger'
+                        }`}
+                      >
+                        {client.status === 'active' ? 'Active' : 'Inactive'}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
           <div className="mt-3">
             {legCaseNewClients.map((client, index) => (
               <div key={index} className="mb-3">

@@ -30,7 +30,7 @@ const Register = ({ handleCloseForm }) => {
       await axios.post(`${API_CONFIG.baseURL}/api/register`, {
         name,
         email,
-        password,
+        password
       });
 
       // Registration successful
@@ -117,19 +117,21 @@ const Register = ({ handleCloseForm }) => {
             </Col>
           </Row>
 
-          {loading ? (
-            <Button type="button" disabled className="btn-loading">
+          {loading
+            ? (
+              <Button type="button" disabled className="btn-loading">
               جاري التحميل...
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              onClick={submitForm}
-              className="btn-danger-guest"
-            >
+              </Button>
+            )
+            : (
+              <Button
+                type="button"
+                onClick={submitForm}
+                className="btn-danger-guest"
+              >
               تسجيل اشتراك
-            </Button>
-          )}
+              </Button>
+            )}
           {error && <p className="text-danger-guest mt-3">{error}</p>}
         </Form>
       </Card.Body>

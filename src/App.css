@@ -118,7 +118,7 @@ a {
 }
 
 .report-card-title {
-  font-size: 24px;
+  font-size: 21px;
 }
 
 .report-card-body {
@@ -146,38 +146,38 @@ a {
 
 /* Table Special */
 .special-table {
-  margin: 20px;
-  width: 100%;
+  margin: auto;
+  width:auto;
   border-collapse: collapse;
   direction: rtl; /* Right-to-left for Arabic */
 }
 
 .special-table th, .special-table td {
-  border: 1px solid #c59700;
-  padding: 8px;
+  border: .1px solid #c59700;
+
   text-align: center;
 }
 
 .special-table th {
-  background-color: #d1e7dd;
+  background-color: #EFE7BC  ;
   color: #0b0a5a; /* Dark text on light background */
-  font-size: 21px; /* Increased font size for better readability */
+  font-size: 1.2rem; /* Increased font size for better readability */
   font-family: 'Cairo', sans-serif;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .special-table tr:nth-child(odd) td {
-  background-color: #daf3f8;
+  background-color: #f1fdff;
   color: #333; /* Dark text on light background */
 }
 
 .special-table tr:nth-child(even) td {
-  background-color: #c7ecf7;
+  background-color: #dbffe8;
   color: #333; /* Dark text on light background */
 }
 
 .special-table tr:hover td {
-  background-color: #fffd9d;
+  background-color: #fffedd;
   color: #fa0606; /* White text on hover */
 }
 
@@ -196,16 +196,18 @@ a {
 .card-header-courts{
   
   background: linear-gradient(325deg, #1a485c, #0a2741);
-  color: #ffe600;
+  color: #ffface;
   padding: 20px;
   border-bottom: 1px solid #ccc;  
   
   font-family: 'Cairo', sans-serif;
   font-weight: bold;
-  font-size: 1.5rem;  
+  font-size: 1.2rem;  
 } 
-/* Sections Headers */.section-card-header {
-  
+/* Sections Headers */
+.section-card-header {
+
+  box-shadow: 0 20px 15px #4c7286; /* Add shadow here */
   background: linear-gradient(325deg, #1a485c, #0a2741);
   border-radius: 80px;
   padding: 10px;
@@ -269,6 +271,8 @@ a {
     font-size: 1.2rem;
     padding: 8px;
     border-radius: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow here */
+  }
   }
   .add-btn {
     padding: 8px 16px;
@@ -280,10 +284,11 @@ a {
     font-size: 0.8rem;
     border-radius: 20px;
   }
-}
 
 @media (max-width: 480px) {
   .section-card-header {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow here */
+
     font-size: 1rem;
     padding: 6px;
     border-radius: 40px;

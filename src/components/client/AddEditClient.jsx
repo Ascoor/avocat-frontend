@@ -11,7 +11,7 @@ import {
   FaMapMarkerAlt,
   FaCalendarAlt,
   FaUserEdit,
-  FaOrcid,
+  FaOrcid
 } from 'react-icons/fa';
 import moment from 'moment';
 import 'moment/locale/ar';
@@ -110,7 +110,7 @@ const AddEditClient = () => {
       email: email || null,
       phone_number: phoneNumber,
       emergency_number: emergencyNumber || null,
-      work: work || null,
+      work: work || null
     };
 
     try {
@@ -119,16 +119,16 @@ const AddEditClient = () => {
         navigate('/clients', {
           state: {
             alertMessage: 'تم تحديث بيانات العميل بنجاح.',
-            alertVariant: 'success',
-          },
+            alertVariant: 'success'
+          }
         });
       } else {
         await axios.post(`${API_CONFIG.baseURL}/api/clients`, clientData);
         navigate('/clients', {
           state: {
             alertMessage: 'تم إضافة العميل بنجاح.',
-            alertVariant: 'success',
-          },
+            alertVariant: 'success'
+          }
         });
       }
     } catch (error) {

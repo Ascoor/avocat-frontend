@@ -8,26 +8,25 @@ const ServiceDetailsModal = ({ service }) => {
   const cardAnimation = useSpring({
     from: { opacity: 0, transform: 'translateY(30px)' },
     to: { opacity: 1, transform: 'translateY(0)' },
-    config: config.gentle,
+    config: config.gentle
   });
 
   const getStatusColor = () => {
     const statusColors = {
       Pending: 'warning',
       InProgress: 'primary',
-      Completed: 'success',
+      Completed: 'success'
     };
     return statusColors[service.service_status] || 'info';
   };
 
   return (
     <Row>
-    <Col>
-      <animated.div>
-      
-        <Card>
-          <Card.Body>
-          <Card.Title className="text-center">
+      <Col>
+        <animated.div>
+          <Card>
+            <Card.Body>
+              <Card.Title className="text-center">
                 {service.service_name}
               </Card.Title>
               <Card.Text>{service.service_description}</Card.Text>
@@ -65,13 +64,14 @@ const ServiceDetailsModal = ({ service }) => {
                   <strong> رقم ملف الخدمة</strong> {service.service_no || 'N/A'}
                 </ListGroup.Item>
               </ListGroup>
-          </Card.Body>
-        </Card>
-      </animated.div>
-{service && service.id && <ServiceProcedureList serviceId={service.id} />}
-    </Col>
-  </Row>
-  
+            </Card.Body>
+          </Card>
+        </animated.div>
+        {service && service.id && (
+          <ServiceProcedureList serviceId={service.id} />
+        )}
+      </Col>
+    </Row>
   );
 };
 
@@ -83,8 +83,8 @@ ServiceDetailsModal.propTypes = {
     client_name: PropTypes.string,
     service_place: PropTypes.string,
     field1: PropTypes.string,
-    field2: PropTypes.string,
-  }).isRequired,
+    field2: PropTypes.string
+  }).isRequired
 };
 
 export default ServiceDetailsModal;

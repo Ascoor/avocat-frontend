@@ -11,7 +11,7 @@ import AnalogClock from './AnalogClock';
 const Calendar = () => {
   const events = [
     { title: 'فعالية 1', start: '2023-08-01' },
-    { title: 'فعالية 2', start: '2023-08-10' },
+    { title: 'فعالية 2', start: '2023-08-10' }
     // Add more events here
   ];
 
@@ -22,9 +22,9 @@ const Calendar = () => {
     boxShadow: '0px 0px 10px rgba(188, 171, 247, 0.5)',
     from: {
       background: 'linear-gradient(45deg, #c2e2fc, #cfd3e6)',
-      boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)',
+      boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)'
     },
-    config: { duration: 1000 },
+    config: { duration: 1000 }
   });
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const Calendar = () => {
                     headerToolbar={{
                       left: 'next,prev today',
                       center: 'title',
-                      right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                      right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     }}
                     locale="ar"
                     dayHeaderContent={({ date }) => {
@@ -78,7 +78,7 @@ const Calendar = () => {
                         'أربعاء',
                         'خميس',
                         'جمعة',
-                        'سبت',
+                        'سبت'
                       ];
                       return (
                         <span className="arabic-font">

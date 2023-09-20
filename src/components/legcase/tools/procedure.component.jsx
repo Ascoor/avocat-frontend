@@ -35,7 +35,7 @@ const Procedure = ({ legCaseId }) => {
         await Promise.all([
           fetchCourts(),
           fetchLawyers(),
-          fetchProcedureTypes(),
+          fetchProcedureTypes()
         ]);
       } catch (error) {
         console.log(error);
@@ -144,7 +144,7 @@ const Procedure = ({ legCaseId }) => {
         court_id: selectedCourt,
         leg_case_id: legCaseId,
 
-        created_by: user.id,
+        created_by: user.id
       };
 
       if (modalMode === 'edit') {
@@ -202,58 +202,59 @@ const Procedure = ({ legCaseId }) => {
       </Card.Header>
 
       <Card.Body>
-        <table className="table table-striped table-bordered table-hover table-responsive">
-          {' '}
-          <thead>
-            <tr>
-              <th className="col-2">نوع الإجراء</th>
-              <th className="col-1">المحكمة</th>
-              <th className="col-2">الوظيفة</th>
-              <th className="col-2">تاريخ البدء</th>
-              <th className="col-2">تاريخ الانتهاء</th>
-              <th className="col-1">المحامي</th>
-              <th className="col-3">النتيجة</th>
-              <th className="col-1">الحالة</th>
-              <th className="col-2">التحكم</th>
-            </tr>
-          </thead>
-          <tbody>
-            {procedures.map(
-              (
-                procedure // Removed the unused 'index' variable
-              ) => (
-                <tr key={procedure.id}>
-                  <td>{procedure.procedure_type?.name}</td>
-                  <td>{procedure.court?.name}</td>
-                  <td>{procedure.job}</td>
-                  <td>{procedure.date_start}</td>
-                  <td>{procedure.date_end}</td>
-                  <td>{procedure.lawyer?.name}</td>
-                  <td>{procedure.result}</td>
-                  <td>{procedure.status}</td>
-                  <td>
-                    <span>
-                      <Button
-                        variant="info"
-                        onClick={() => handleEditProcedure(procedure)}
-                      >
-                        <BiPencil />
-                      </Button>
-                    </span>
-                    <span>
-                      <Button
-                        variant="danger"
-                        onClick={() => handleDeleteProcedure(procedure.id)}
-                      >
-                        <BiTrash />
-                      </Button>
-                    </span>
-                  </td>
-                </tr>
-              )
-            )}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="special-table">
+            <thead>
+              <tr>
+                <th className="col-2">نوع الإجراء</th>
+                <th className="col-1">المحكمة</th>
+                <th className="col-2">الوظيفة</th>
+                <th className="col-2">تاريخ البدء</th>
+                <th className="col-2">تاريخ الانتهاء</th>
+                <th className="col-1">المحامي</th>
+                <th className="col-3">النتيجة</th>
+                <th className="col-1">الحالة</th>
+                <th className="col-2">التحكم</th>
+              </tr>
+            </thead>
+            <tbody>
+              {procedures.map(
+                (
+                  procedure // Removed the unused 'index' variable
+                ) => (
+                  <tr key={procedure.id}>
+                    <td>{procedure.procedure_type?.name}</td>
+                    <td>{procedure.court?.name}</td>
+                    <td>{procedure.job}</td>
+                    <td>{procedure.date_start}</td>
+                    <td>{procedure.date_end}</td>
+                    <td>{procedure.lawyer?.name}</td>
+                    <td>{procedure.result}</td>
+                    <td>{procedure.status}</td>
+                    <td>
+                      <span>
+                        <Button
+                          variant="info"
+                          onClick={() => handleEditProcedure(procedure)}
+                        >
+                          <BiPencil />
+                        </Button>
+                      </span>
+                      <span>
+                        <Button
+                          variant="danger"
+                          onClick={() => handleDeleteProcedure(procedure.id)}
+                        >
+                          <BiTrash />
+                        </Button>
+                      </span>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        </div>
       </Card.Body>
 
       <Modal
@@ -419,7 +420,7 @@ const Procedure = ({ legCaseId }) => {
   );
 };
 Procedure.propTypes = {
-  legCaseId: PropTypes.string.isRequired,
+  legCaseId: PropTypes.string.isRequired
 };
 
 export default Procedure;

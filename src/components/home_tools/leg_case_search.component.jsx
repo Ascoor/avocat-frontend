@@ -7,14 +7,14 @@ const LegCaseSearch = ({
   searchResults,
   casesPerPage,
   currentPage,
-  paginate,
+  paginate
 }) => {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleSpringProps = useSpring({
     from: { rotation: 0 },
     to: { rotation: showAlert ? 180 : 0 },
-    config: { tension: 200, friction: 10 },
+    config: { tension: 200, friction: 10 }
   });
 
   const indexOfLastCase = currentPage * casesPerPage;
@@ -33,7 +33,7 @@ const LegCaseSearch = ({
                   (rotation) => `rotate(${rotation}deg)`
                 ),
                 display: 'inline-block',
-                cursor: 'pointer',
+                cursor: 'pointer'
               }}
               onClick={() => setShowAlert(!showAlert)}
             >
@@ -70,20 +70,22 @@ const LegCaseSearch = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {currentCases.length > 0 ? (
-                    currentCases.map((caseItem) => (
-                      <tr key={caseItem.id}>
-                        <td>{caseItem.slug}</td>
-                        <td>{caseItem.name}</td>
-                        <td>{caseItem.email}</td>
-                        <td>{caseItem.phone_number}</td>
+                  {currentCases.length > 0
+                    ? (
+                      currentCases.map((caseItem) => (
+                        <tr key={caseItem.id}>
+                          <td>{caseItem.slug}</td>
+                          <td>{caseItem.name}</td>
+                          <td>{caseItem.email}</td>
+                          <td>{caseItem.phone_number}</td>
+                        </tr>
+                      ))
+                    )
+                    : (
+                      <tr>
+                        <td colSpan="4">لا توجد بيانات متاحة</td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="4">لا توجد بيانات متاحة</td>
-                    </tr>
-                  )}
+                    )}
                 </tbody>
               </table>
               {/* Pagination */}
@@ -106,7 +108,7 @@ LegCaseSearch.propTypes = {
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   casesPerPage: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
-  paginate: PropTypes.func.isRequired,
+  paginate: PropTypes.func.isRequired
 };
 
 export default LegCaseSearch;

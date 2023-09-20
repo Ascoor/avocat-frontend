@@ -10,7 +10,7 @@ import CustomPagination from '../../home_tools/Pagination';
  * @param {boolean} props.show - Show modal
  * @param {Function} props.handleClose - Close modal
  */
-export default function CourtType({ show, handleClose }) {
+export default function CourtType ({ show, handleClose }) {
   const [newCourtTypeName, setNewCourtTypeName] = useState('');
   const [courtTypes, setCourtTypes] = useState([]);
   const [error, setError] = useState(null);
@@ -57,7 +57,7 @@ export default function CourtType({ show, handleClose }) {
       setError(err);
       setAlertMessage({
         type: 'danger',
-        text: 'تأكد من البيان الذى يتم إدخاله',
+        text: 'تأكد من البيان الذى يتم إدخاله'
       });
     }
   };
@@ -71,7 +71,7 @@ export default function CourtType({ show, handleClose }) {
       setError(error);
       setAlertMessage({
         type: 'danger',
-        text: 'لا يمكن حذف نوع المحكمة لارتباطة بمحاكم وتصنيفات فرعية اخري',
+        text: 'لا يمكن حذف نوع المحكمة لارتباطة بمحاكم وتصنيفات فرعية اخري'
       });
     }
   };
@@ -93,7 +93,7 @@ export default function CourtType({ show, handleClose }) {
     if (!newCourtTypeName.trim()) {
       setModalMessage({
         type: 'danger',
-        text: 'برجاء إدخال نوع المحكمة المراد إضافته.',
+        text: 'برجاء إدخال نوع المحكمة المراد إضافته.'
       });
     } else {
       handleAddCourtType();

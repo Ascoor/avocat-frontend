@@ -48,7 +48,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
       phone_number: phoneNumber,
       religion,
       gender,
-      password,
+      password
     };
     onSubmit(formData);
   };
@@ -187,10 +187,10 @@ LawyerAddEdit.propTypes = {
     gender: PropTypes.string,
     lawyer: PropTypes.shape({
       user: PropTypes.shape({
-        password: PropTypes.string,
-      }),
-    }),
-  }),
+        password: PropTypes.string
+      })
+    })
+  })
 };
 
 export default LawyerAddEdit;

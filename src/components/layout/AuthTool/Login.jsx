@@ -26,12 +26,12 @@ const Login = ({ handleCloseForm }) => {
       if (username.includes('@')) {
         response = await axios.post(`${API_CONFIG.baseURL}/api/login`, {
           email: username,
-          password,
+          password
         });
       } else {
         response = await axios.post(`${API_CONFIG.baseURL}/api/lawyer/login`, {
           username,
-          password,
+          password
         });
       }
 
@@ -83,15 +83,17 @@ const Login = ({ handleCloseForm }) => {
             />
           </Form.Group>
           <Row className="mt-4 justify-content-center">
-            {loading ? (
-              <button type="button" disabled className="btn-loading">
+            {loading
+              ? (
+                <button type="button" disabled className="btn-loading">
                 ...جارى الدخول
-              </button>
-            ) : (
-              <button type="submit" className="btn-success-special">
+                </button>
+              )
+              : (
+                <button type="submit" className="btn-success-special">
                 تسجيل الدخول
-              </button>
-            )}
+                </button>
+              )}
           </Row>
           {error && (
             <p className="text-danger-special mt-3 text-center">{error}</p>

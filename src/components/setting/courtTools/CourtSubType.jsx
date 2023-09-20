@@ -8,7 +8,7 @@ import CustomPagination from '../../home_tools/Pagination';
 const CourtSubType = ({ show, handleClose }) => {
   const [newCourtSubType, setNewCourtSubType] = useState({
     name: '',
-    court_type_id: '',
+    court_type_id: ''
   });
   const [newCourtTypeId, setNewCourtTypeId] = useState('');
   const [selectedCourtTypeId, setSelectedCourtTypeId] = useState('');
@@ -26,7 +26,7 @@ const CourtSubType = ({ show, handleClose }) => {
   const [alert, setAlert] = useState({
     show: false,
     message: '',
-    variant: 'success',
+    variant: 'success'
   });
   const fetchCourtData = async (apiPath, setData) => {
     try {
@@ -36,7 +36,7 @@ const CourtSubType = ({ show, handleClose }) => {
       setAlert({
         show: true,
         message: `Error fetching ${apiPath}`,
-        variant: 'danger',
+        variant: 'danger'
       });
     }
   };
@@ -75,7 +75,7 @@ const CourtSubType = ({ show, handleClose }) => {
         setCourtSubTypes([...courtSubTypes, response.data]);
         setAlertMessage({
           type: 'success',
-          text: 'تمت إضافة مستوى المحكمة بنجاح.',
+          text: 'تمت إضافة مستوى المحكمة بنجاح.'
         });
 
         handleClose(); // Close modal
@@ -86,7 +86,7 @@ const CourtSubType = ({ show, handleClose }) => {
         setModalMessage({
           show: true,
           message: 'Error adding court sub-type',
-          variant: 'danger',
+          variant: 'danger'
         });
       });
   };
@@ -101,7 +101,7 @@ const CourtSubType = ({ show, handleClose }) => {
     if (!newCourtSubType.name.trim() || !newCourtSubType.court_type_id) {
       setModalMessage({
         type: 'danger',
-        text: 'برجاء إدخال مستوى المحكمة المراد إضافته.',
+        text: 'برجاء إدخال مستوى المحكمة المراد إضافته.'
       });
       return;
     }
@@ -118,7 +118,7 @@ const CourtSubType = ({ show, handleClose }) => {
       setAlert({
         show: true,
         message: 'Error deleting court sub-type',
-        variant: 'danger',
+        variant: 'danger'
       });
     }
   };
@@ -213,7 +213,7 @@ const CourtSubType = ({ show, handleClose }) => {
                 onChange={(e) =>
                   setNewCourtSubType({
                     ...newCourtSubType,
-                    name: e.target.value,
+                    name: e.target.value
                   })
                 }
               />

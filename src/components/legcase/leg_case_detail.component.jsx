@@ -9,9 +9,8 @@ import {
   Tab,
   Tabs,
   Card,
-  Table,
   Button,
-  Form,
+  Form
 } from 'react-bootstrap';
 import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
 import { BsPersonFillX } from 'react-icons/bs';
@@ -21,7 +20,7 @@ import LegalSession from './tools/Legal_session.component';
 import LegCaseClients from './tools/legal_clients.component';
 import { LegCaseDetailsIcon } from '../../assets/icons';
 import LegalAd from './tools/legal_ad.component';
-export default function LegCaseDetail() {
+export default function LegCaseDetail () {
   const { id } = useParams();
   const [legCase, setLegCase] = useState(null);
   const [key, setKey] = useState('procedure');
@@ -60,7 +59,7 @@ export default function LegCaseDetail() {
   const handleAddNewCourt = (index, field, value) => {
     setLegCaseNewCourts((prevCourts) => [
       ...prevCourts,
-      { case_number: '', case_year: '', court_id: '', judge_level: '' },
+      { case_number: '', case_year: '', court_id: '', judge_level: '' }
     ]);
   };
 
@@ -155,9 +154,6 @@ export default function LegCaseDetail() {
   );
   return (
     <Card>
-      <CaseHeader />
-      <CaseBody />
-
       <Card.Body>
         <LegCaseClients legCaseId={id} />
       </Card.Body>
@@ -166,27 +162,28 @@ export default function LegCaseDetail() {
       <Card.Body>
         <Row>
           <Col>
-            <table className="table table-striped table-bordered table-hover table-responsive">
-              {' '}
-              <thead>
-                <tr>
-                  <th>رقم القضية</th>
-                  <th>سنة القضية</th>
-                  <th>المحكمة</th>
-                  <th>مستوى القاضي</th>
-                </tr>
-              </thead>
-              <tbody>
-                {legCaseCourts.map((court, index) => (
-                  <tr key={`legCaseCourt-${index}`}>
-                    <td>{court.pivot.case_number}</td>
-                    <td>{court.pivot.case_year}</td>
-                    <td>{court.name}</td>
-                    <td>{court.pivot.judge_level}</td>
+            <div className="table-responsive">
+              <table className="special-table">
+                <thead>
+                  <tr>
+                    <th>رقم القضية</th>
+                    <th>سنة القضية</th>
+                    <th>المحكمة</th>
+                    <th>مستوى القاضي</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {legCaseCourts.map((court, index) => (
+                    <tr key={`legCaseCourt-${index}`}>
+                      <td>{court.pivot.case_number}</td>
+                      <td>{court.pivot.case_year}</td>
+                      <td>{court.name}</td>
+                      <td>{court.pivot.judge_level}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             {legCaseNewCourts.map((court, index) => (
               <div key={index} className="mb-3">
                 <Row className="align-items-center mt-3">

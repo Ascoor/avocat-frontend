@@ -109,51 +109,52 @@ const ServiceProcedureList = ({ serviceId }) => {
         />
       </Card.Header>
       <Card.Body>
-
-      <div className="table-responsive">
+        <div className="table-responsive">
           <table className="special-table">
-          <thead>
-            <tr>
-              <th className="col-1">نوع الإجراء</th>
-              <th className="col-2">تاريخ الإجراء</th>
-              <th className="col-2">المحامي</th>
-              <th className="col-2">الجهة</th>
-              <th className="col-2">النتيجة</th>
-              <th className="col-2">الحالة</th>
-              <th className="col-2">الإجراءات</th>
-            </tr>
-          </thead>
-          <tbody>
-            {serviceProcedures.map((procedure) => (
-              <tr key={procedure.id}>
-                <td>{procedure.title}</td>
-                <td>
-                  {procedure.date_start
-                    ? new Date(procedure.date_start).toLocaleDateString('ar-EG')
-                    : ''}
-                </td>
-                <td>{procedure.lawyer?.name}</td>
-                <td>{procedure.place || ''}</td>
-                <td>{procedure.result || ''}</td>
-                <td>{procedure.status || ''}</td>
-                <td>
-                  <Button
-                    variant="info"
-                    onClick={() => handleEditServiceProcedure(procedure)}
-                  >
-                    <BiPencil />
-                  </Button>
-                  <Button
-                    variant="danger"
-                    onClick={() => handleDeleteServiceProcedure(procedure.id)}
-                  >
-                    <BiTrash />
-                  </Button>
-                </td>
+            <thead>
+              <tr>
+                <th className="col-1">نوع الإجراء</th>
+                <th className="col-2">تاريخ الإجراء</th>
+                <th className="col-2">المحامي</th>
+                <th className="col-2">الجهة</th>
+                <th className="col-2">النتيجة</th>
+                <th className="col-2">الحالة</th>
+                <th className="col-2">الإجراءات</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {serviceProcedures.map((procedure) => (
+                <tr key={procedure.id}>
+                  <td>{procedure.title}</td>
+                  <td>
+                    {procedure.date_start
+                      ? new Date(procedure.date_start).toLocaleDateString(
+                        'ar-EG'
+                      )
+                      : ''}
+                  </td>
+                  <td>{procedure.lawyer?.name}</td>
+                  <td>{procedure.place || ''}</td>
+                  <td>{procedure.result || ''}</td>
+                  <td>{procedure.status || ''}</td>
+                  <td>
+                    <Button
+                      variant="info"
+                      onClick={() => handleEditServiceProcedure(procedure)}
+                    >
+                      <BiPencil />
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDeleteServiceProcedure(procedure.id)}
+                    >
+                      <BiTrash />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </Card.Body>
     </>
@@ -161,7 +162,7 @@ const ServiceProcedureList = ({ serviceId }) => {
 };
 
 ServiceProcedureList.propTypes = {
-  serviceId: PropTypes.number.isRequired,
+  serviceId: PropTypes.number.isRequired
 };
 
 export default ServiceProcedureList;

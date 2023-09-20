@@ -37,7 +37,7 @@
   }
   .leg-case-details-card {
     border-radius: 10px;
-  background: rgb(9, 45, 54);
+  background:#145DA0;
     padding: 20px;
   }
   .data-box {
@@ -55,7 +55,7 @@
     background: linear-gradient(
       to right,
       transparent 0%,
-      rgba(30, 79, 134, 0.8) 50%,
+      rgba(0, 116, 205, 0.8) 50%,
       transparent 100%
     );
     transform: translateX(-100%);
@@ -80,9 +80,9 @@
     border-radius: 5px;
     padding: 20px;
     transition: transform 0.3s;
-    background: linear-gradient(335deg,#01142a  , #0d3346, #04112a);
+    background: linear-gradient(335deg,#09315f  , #124574, #04112a);
 
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+    box-shadow: 0px 4px 8px #107292;  /* Subtle shadow for depth */
   }
   
   .data-box:hover {

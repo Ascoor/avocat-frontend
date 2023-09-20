@@ -14,7 +14,7 @@ setDefaultLocale('ar_eg');
 const LegalAd = ({ legCaseId }) => {
   LegalAd.propTypes = {
     legCaseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-      .isRequired,
+      .isRequired
   };
 
   const { getUser } = useAuth();
@@ -155,7 +155,7 @@ const LegalAd = ({ legCaseId }) => {
           legal_ad_type_id: selectedLegalAdType,
           status: selectedStatus,
           leg_case_id: legCaseId,
-          created_by: user.id,
+          created_by: user.id
         });
         fetchLegalAds(legCaseId);
         handleModalClose();
@@ -179,7 +179,7 @@ const LegalAd = ({ legCaseId }) => {
           cost2: selectedCost2,
           status: selectedStatus,
           leg_case_id: legCaseId,
-          updated_by: user.id,
+          updated_by: user.id
         });
         fetchLegalAds(legCaseId);
         handleModalClose();
@@ -217,50 +217,51 @@ const LegalAd = ({ legCaseId }) => {
         </Button>
       </Card.Header>
       <Card.Body>
-        <table className="table table-striped table-bordered table-hover table-responsive">
-          {' '}
-          <thead>
-            <tr>
-              <th>نوع الإعلان القانوني</th>
-              <th>تاريخ التسليم</th>
-              <th>تاريخ الإستلام</th>
-              <th>المحامي المسلم</th>
-              <th>المحامي المستلم</th>
-              <th>الحالة</th>
-              <th className="text-center">ألتحكم</th>
-            </tr>
-          </thead>
-          <tbody>
-            {legalAds.map((legalAd) => (
-              <tr key={legalAd.id}>
-                <td>{legalAd.legal_ad_type?.name}</td>
-                <td>{legalAd.send_date}</td>
-                <td>{legalAd.receive_date}</td>
-                <td>{legalAd.lawyer_send?.name}</td>
-                <td>{legalAd.lawyer_receive?.name}</td>
-                <td>{legalAd.status}</td>
-
-                <td className="text-center">
-                  <Button
-                    variant="info"
-                    className="btn-sm"
-                    onClick={() => handleEditLegalAd(legalAd)}
-                  >
-                    <BiPencil />
-                  </Button>
-
-                  <Button
-                    variant="danger"
-                    className="btn-sm"
-                    onClick={() => handleDeleteLegalAd(legalAd.id)}
-                  >
-                    <BiTrash />
-                  </Button>
-                </td>
+        <div className="table-responsive">
+          <table className="special-table">
+            <thead>
+              <tr>
+                <th>نوع الإعلان القانوني</th>
+                <th>تاريخ التسليم</th>
+                <th>تاريخ الإستلام</th>
+                <th>المحامي المسلم</th>
+                <th>المحامي المستلم</th>
+                <th>الحالة</th>
+                <th className="text-center">ألتحكم</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {legalAds.map((legalAd) => (
+                <tr key={legalAd.id}>
+                  <td>{legalAd.legal_ad_type?.name}</td>
+                  <td>{legalAd.send_date}</td>
+                  <td>{legalAd.receive_date}</td>
+                  <td>{legalAd.lawyer_send?.name}</td>
+                  <td>{legalAd.lawyer_receive?.name}</td>
+                  <td>{legalAd.status}</td>
+
+                  <td className="text-center">
+                    <Button
+                      variant="info"
+                      className="btn-sm"
+                      onClick={() => handleEditLegalAd(legalAd)}
+                    >
+                      <BiPencil />
+                    </Button>
+
+                    <Button
+                      variant="danger"
+                      className="btn-sm"
+                      onClick={() => handleDeleteLegalAd(legalAd.id)}
+                    >
+                      <BiTrash />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </Card.Body>
 
       <Modal show={showAddLegalAdModal} onHide={handleModalClose}>

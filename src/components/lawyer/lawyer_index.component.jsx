@@ -63,7 +63,7 @@ const Lawyers = () => {
       ...selectedLawyer,
       birthdate: selectedLawyer.birthdate
         ? new Date(selectedLawyer.birthdate)
-        : null,
+        : null
     });
     setShowEditModal(true);
   };

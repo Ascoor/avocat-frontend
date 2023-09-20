@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {  Button, Card,  } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import axios from 'axios';
 import ServiceModal from './ServiceModal';
 import API_CONFIG from '../../config';
@@ -56,7 +56,6 @@ const Services = () => {
     setSelectedService(null);
     setShowDetailsModal(false); // Add this line to set showDetailsModal to false
   };
-
 
   return (
     <>
@@ -118,21 +117,20 @@ const Services = () => {
             </table>
           </div>
         </Card.Body>
-    
       </Card>
       {showDetailsModal && (
-          <ServiceDetailsModal
-            service={selectedService}
-            handleClose={handleReturn}
-          />
-        )}
-        <ServiceModal
-          show={showModal}
-          handleClose={() => setShowModal(false)}
-          service={editingService}
-          handleServiceAddedOrEdited={handleServiceAddedOrEdited}
-          isEditing={!!editingService}
+        <ServiceDetailsModal
+          service={selectedService}
+          handleClose={handleReturn}
         />
+      )}
+      <ServiceModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        service={editingService}
+        handleServiceAddedOrEdited={handleServiceAddedOrEdited}
+        isEditing={!!editingService}
+      />
     </>
   );
 };

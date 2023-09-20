@@ -26,7 +26,7 @@ const LegCaseCreate = () => {
   const [description, setDescription] = useState('');
   const [title, setTitle] = useState('');
   const [legCaseCourts, setLegCaseCourts] = useState([
-    { case_number: '', case_year: '', court_id: '', judge_level: '' },
+    { case_number: '', case_year: '', court_id: '', judge_level: '' }
   ]);
   const [legCaseClients, setLegCaseClients] = useState([{ client_id: '' }]);
   const [courtOptions, setCourtOptions] = useState([]);
@@ -90,7 +90,7 @@ const LegCaseCreate = () => {
   const handleAddCourt = () => {
     setLegCaseCourts([
       ...legCaseCourts,
-      { case_number: '', case_year: '', court_id: '', judge_level: '' },
+      { case_number: '', case_year: '', court_id: '', judge_level: '' }
     ]);
   };
 
@@ -123,7 +123,7 @@ const LegCaseCreate = () => {
         courts: legCaseCourts,
         clients: legCaseClients,
         client_capacity,
-        created_by: getUser().id,
+        created_by: getUser().id
       };
       try {
         const response = await axios.post(
@@ -502,6 +502,6 @@ const LegCaseCreate = () => {
 };
 LegCaseCreate.propTypes = {
   legCaseId: PropTypes.string,
-  isEditing: PropTypes.bool.isRequired,
+  isEditing: PropTypes.bool.isRequired
 };
 export default LegCaseCreate;

@@ -8,7 +8,7 @@ import {
   ButtonGroup,
   Modal,
   Alert,
-  Card,
+  Card
 } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -63,7 +63,7 @@ const CaseType = () => {
   const handleAddProcedureType = () => {
     axios
       .post(`${API_CONFIG.baseURL}/api/procedure_types/`, {
-        name: newProcedureTypeName,
+        name: newProcedureTypeName
       })
       .then(() => {
         setShowAddProcedureTypeModal(false);
@@ -79,7 +79,7 @@ const CaseType = () => {
   const handleAddCaseType = () => {
     axios
       .post(`${API_CONFIG.baseURL}/api/case_types/`, {
-        name: newCaseTypeName,
+        name: newCaseTypeName
       })
       .then(() => {
         setShowAddCaseTypeModal(false);
@@ -96,7 +96,7 @@ const CaseType = () => {
     axios
       .post(`${API_CONFIG.baseURL}/api/case_sub_types/`, {
         case_type_id: newCaseTypeId,
-        name: newCaseSubTypeName,
+        name: newCaseSubTypeName
       })
       .then(() => {
         setShowAddCaseSubTypeModal(false);
@@ -112,7 +112,7 @@ const CaseType = () => {
   const handleAddAdType = () => {
     axios
       .post(`${API_CONFIG.baseURL}/api/legal_ad_types`, {
-        name: newAdType,
+        name: newAdType
       })
       .then(() => {
         setShowAddLegalAdModal(false);
@@ -129,27 +129,27 @@ const CaseType = () => {
     let message = '';
 
     switch (tableName) {
-      case 'case_types':
-        message = 'Case Type';
-        break;
-      case 'case_sub_types':
-        message = 'Case Sub Type';
-        break;
-      case 'procedure_types':
-        message = 'Procedure Type';
-        break;
-      case 'legal_ad_types':
-        message = 'Ad Type';
-        break;
-      default:
-        throw new Error('Invalid table name');
+    case 'case_types':
+      message = 'Case Type';
+      break;
+    case 'case_sub_types':
+      message = 'Case Sub Type';
+      break;
+    case 'procedure_types':
+      message = 'Procedure Type';
+      break;
+    case 'legal_ad_types':
+      message = 'Ad Type';
+      break;
+    default:
+      throw new Error('Invalid table name');
     }
 
     const item = {
       id,
       name,
       tableName,
-      message,
+      message
     };
 
     setDeleteItem(item);

@@ -4,7 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 import API_CONFIG from '../../config';
 import { SearchIcon } from '../../assets/icons';
 
-function CourtSearch() {
+function CourtSearch () {
   const [degreeOptions, setDegreeOptions] = useState([]);
   const [selectedDegree, setSelectedDegree] = useState([]);
   const [courtOptions, setCourtOptions] = useState([]);
@@ -66,15 +66,15 @@ function CourtSearch() {
       selectedCourt,
       selectedCaseType,
       caseYear,
-      caseNumber,
+      caseNumber
     };
 
     fetch(`${API_CONFIG.baseURL}/search/perform-search`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(searchParams),
+      body: JSON.stringify(searchParams)
     })
       .then((response) => {
         // Handle response

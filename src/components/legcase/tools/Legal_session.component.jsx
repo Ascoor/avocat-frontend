@@ -9,7 +9,7 @@ import arEG from 'date-fns/locale/ar-EG';
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 const LegalSession = ({ legCaseId }) => {
   LegalSession.propTypes = {
-    legCaseId: PropTypes.string.isRequired,
+    legCaseId: PropTypes.string.isRequired
   };
   const { getUser } = useAuth();
   const [alert, setAlert] = useState(null);
@@ -41,7 +41,7 @@ const LegalSession = ({ legCaseId }) => {
             `${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`
           ),
           axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
-          axios.get(`${API_CONFIG.baseURL}/api/courts`),
+          axios.get(`${API_CONFIG.baseURL}/api/courts`)
         ]);
       setLegalSessions(sessionsResponse.data);
       setLawyers(lawyersResponse.data);
@@ -60,7 +60,7 @@ const LegalSession = ({ legCaseId }) => {
               `${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`
             ),
             axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
-            axios.get(`${API_CONFIG.baseURL}/api/courts`),
+            axios.get(`${API_CONFIG.baseURL}/api/courts`)
           ]);
         setLegalSessions(sessionsResponse.data);
         setLawyers(lawyersResponse.data);
@@ -103,7 +103,7 @@ const LegalSession = ({ legCaseId }) => {
       cost: selectedCost,
       cost2: selectedCost2,
       leg_case_id: legCaseId,
-      created_by: getUser().id,
+      created_by: getUser().id
     };
     if (modalMode === 'edit') {
       data.status = selectStatus;
@@ -144,7 +144,7 @@ const LegalSession = ({ legCaseId }) => {
 
       setAlert({
         variant: 'danger',
-        message: 'حدث خطأ أثناء عملية التعديل.',
+        message: 'حدث خطأ أثناء عملية التعديل.'
       });
       setShowAlert(true);
     }
@@ -165,7 +165,7 @@ const LegalSession = ({ legCaseId }) => {
       console.log('خطأ في حذف الجلسة القانونية:', error);
       setAlert({
         variant: 'danger',
-        message: 'حدث خطأ أثناء حذف الجلسة القانونية',
+        message: 'حدث خطأ أثناء حذف الجلسة القانونية'
       });
       setShowAlert(true);
     }
@@ -211,51 +211,54 @@ const LegalSession = ({ legCaseId }) => {
       </Card.Header>
       <Card.Body>
         <Row>
-          <table className="table table-striped table-bordered table-hover table-responsive">
-            {' '}
-            <thead>
-              <tr>
-                <th className="col-2">تاريخ الجلسة</th>
-                <th className="col-2">اسم المحامي</th>
-                <th className="col-1">الرول</th>
-                <th className="col-2">المحكمة</th>
-                <th className="col-3">الطلبات</th>
-                <th className="col-3">النتيجة</th>
-                <th className="col-1">الحالة</th>
-                <th>تعديل</th>
-                <th>حذف</th>
-              </tr>
-            </thead>
-            <tbody>
-              {legalSessions.map((legalSession) => (
-                <tr key={legalSession.id}>
-                  <td>{legalSession.date}</td>
-                  <td>{legalSession.lawyer.name}</td>
-                  <td>{legalSession.roll_number}</td>
-                  <td>{legalSession.court.name}</td>
-                  <td>{legalSession.orders}</td>
-                  <td>{legalSession.result}</td>
-                  <td>{legalSession.status}</td>
-                  <td>
-                    <Button
-                      variant="info"
-                      onClick={() => handleEditLegalSession(legalSession)}
-                    >
-                      <BiPencil />
-                    </Button>
-                  </td>
-                  <td>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteLegalSession(legalSession.id)}
-                    >
-                      <BiTrash />
-                    </Button>
-                  </td>
+          <div className="table-responsive">
+            <table className="special-table">
+              <thead>
+                <tr>
+                  <th className="col-2">تاريخ الجلسة</th>
+                  <th className="col-2">اسم المحامي</th>
+                  <th className="col-1">الرول</th>
+                  <th className="col-2">المحكمة</th>
+                  <th className="col-3">الطلبات</th>
+                  <th className="col-3">النتيجة</th>
+                  <th className="col-1">الحالة</th>
+                  <th>تعديل</th>
+                  <th>حذف</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {legalSessions.map((legalSession) => (
+                  <tr key={legalSession.id}>
+                    <td>{legalSession.date}</td>
+                    <td>{legalSession.lawyer.name}</td>
+                    <td>{legalSession.roll_number}</td>
+                    <td>{legalSession.court.name}</td>
+                    <td>{legalSession.orders}</td>
+                    <td>{legalSession.result}</td>
+                    <td>{legalSession.status}</td>
+                    <td>
+                      <Button
+                        variant="info"
+                        onClick={() => handleEditLegalSession(legalSession)}
+                      >
+                        <BiPencil />
+                      </Button>
+                    </td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        onClick={() =>
+                          handleDeleteLegalSession(legalSession.id)
+                        }
+                      >
+                        <BiTrash />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </Row>
       </Card.Body>
 

@@ -5,7 +5,7 @@ import {
   FcBusinessman,
   FcLibrary,
   FcOvertime,
-  FcBriefcase,
+  FcBriefcase
 } from 'react-icons/fc';
 import { ClientIcon, DashBoard } from '../assets/icons/index';
 import { Card, Row, Col, Button, Form } from 'react-bootstrap';
@@ -27,7 +27,7 @@ const useIconCardAnimation = () => {
   const [touched, setTouched] = useState(false);
   const cardSpringStyles = useSpring({
     scale: hovered || touched ? 1.1 : 1,
-    y: touched ? -5 : 0,
+    y: touched ? -5 : 0
   });
   const handleHover = () => {
     setHovered(true);
@@ -50,7 +50,7 @@ const useIconCardAnimation = () => {
     handleHover,
     handleHoverEnd,
     handleTouchStart,
-    handleTouchEnd,
+    handleTouchEnd
   };
 };
 const EventCard = ({ title, count, icon }) => {
@@ -67,7 +67,7 @@ const EventCard = ({ title, count, icon }) => {
     >
       <Card
         className="text-center event-card"
-        style={{ background: 'linear-gradient(135deg, #14435a, #002D40)' }}
+        style={{ background: 'linear-gradient(135deg, #365F73, #244C66)' }}
       >
         <Card.Body className="event-card-body">
           <div className="event-card-content p-1">
@@ -80,7 +80,7 @@ const EventCard = ({ title, count, icon }) => {
     </animated.div>
   );
 };
-function toArabicNumeral(en) {
+function toArabicNumeral (en) {
   return ('' + en).replace(/[0-9]/g, function (t) {
     return '٠١٢٣٤٥٦٧٨٩'.slice(+t, +t + 1);
   });
@@ -97,7 +97,7 @@ const Home = () => {
   const [searchResults, setSearchResults] = useState([]); // State to store the search results
   const [showResults, setShowResults] = useState(false); // State to determine whether search results should be displayed or not
   const [searchType, setSearchType] = useState('clients'); // State to store the selected search type
-  const [ setEvents] = useState([]);
+  const [setEvents] = useState([]);
   useEffect(() => {
     axios
       .get(`${API_CONFIG.baseURL}/api/agenda-events`)
@@ -146,8 +146,8 @@ const Home = () => {
 
       const response = await axios.get(endpoint, {
         params: {
-          query: searchText,
-        },
+          query: searchText
+        }
       });
 
       setSearchResults(response.data);
@@ -294,11 +294,13 @@ const Home = () => {
                 <h3>نتائج البحث</h3>
               </Card.Header>
               <Card.Body>
-                {searchType === 'clients' ? (
-                  <ClientSearch searchResults={searchResults} />
-                ) : (
-                  <LegCaseSearch searchResults={searchResults} />
-                )}
+                {searchType === 'clients'
+                  ? (
+                    <ClientSearch searchResults={searchResults} />
+                  )
+                  : (
+                    <LegCaseSearch searchResults={searchResults} />
+                  )}
               </Card.Body>
             </Card>
           )}
@@ -316,7 +318,7 @@ EventCard.propTypes = {
   count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired, // تعديل هنا
   icon: PropTypes.element.isRequired, // تعديل هنا
   title: PropTypes.string, // تعديل النوع هنا
-  color: PropTypes.string, // تعديل النوع هنا
+  color: PropTypes.string // تعديل النوع هنا
 };
 
 export default Home;
