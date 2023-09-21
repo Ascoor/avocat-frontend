@@ -29,7 +29,7 @@
     "@fullcalendar/timegrid": "^6.1.8",
     "@popperjs/core": "^2.11.8",
     "@react-spring/web": "^9.7.3",
-    "@syncfusion/ej2-react-documenteditor": "^22.2.12",
+    "@syncfusion/ej2-react-documenteditor": "^23.1.36",
     "@vitejs/plugin-react": "^4.0.4",
     "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
