@@ -8,7 +8,7 @@ import {
   Alert,
   Form,
   Card,
-  Spinner
+  Spinner,
 } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
@@ -65,15 +65,15 @@ const Court = ({ show, handleClose }) => {
     fetch(`${API_CONFIG.baseURL}/api/courts/`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         courtTypeId: newCourtTypeId,
         courtSubTypeId: newCourtSubTypeId,
         courtLevelId: newCourtLevelId,
         name: newCourtName,
-        address: newCourtAddress
-      })
+        address: newCourtAddress,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -106,7 +106,7 @@ const Court = ({ show, handleClose }) => {
   const handleDelete = (id) => {
     // Your code to handle deletion
     fetch(`${API_CONFIG.baseURL}/api/courts/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
     })
       .then((response) => response.json())
       .then((data) => {

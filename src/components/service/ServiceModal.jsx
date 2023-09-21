@@ -11,7 +11,7 @@ const ServiceModal = ({
   handleClose,
   service,
   handleServiceAddedOrEdited,
-  isEditing
+  isEditing,
 }) => {
   const { getUser } = useAuth();
   const [missingFieldsAlert, setMissingFieldsAlert] = useState(false);
@@ -26,7 +26,7 @@ const ServiceModal = ({
     service_status: '',
     service_name: '',
     service_place: '',
-    service_description: ''
+    service_description: '',
     // Add other form fields with their initial values here
   };
 
@@ -49,7 +49,7 @@ const ServiceModal = ({
           service_status: service.service_status || '',
           service_name: service.service_name || '',
           service_place: service.service_place || '',
-          service_description: service.service_description || ''
+          service_description: service.service_description || '',
           // Update other form fields as needed
         });
       }
@@ -81,7 +81,7 @@ const ServiceModal = ({
       client_id: '',
       unclient_name: '',
       unclient_phone: '',
-      unclient_nid: ''
+      unclient_nid: '',
     }));
   };
 
@@ -89,11 +89,11 @@ const ServiceModal = ({
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: ''
+      [name]: '',
     }));
   };
   const handleSubmit = async (e) => {
@@ -115,12 +115,12 @@ const ServiceModal = ({
     // Check for required fields based on the action (add or edit)
     const requiredFields = isEditing
       ? [
-        'service_name',
-        'service_description',
-        'service_place',
-        'updated_by',
-        'service_status'
-      ]
+          'service_name',
+          'service_description',
+          'service_place',
+          'updated_by',
+          'service_status',
+        ]
       : ['service_name', 'service_description', 'service_place', 'created_by'];
 
     // Check if all required fields are provided
@@ -171,36 +171,34 @@ const ServiceModal = ({
 
         <Form.Group controlId="client_choice">
           <Form.Label>بيانات الخدمة</Form.Label>
-          {isEditing
-            ? null
-            : (
-              <>
-                <Form.Check
-                  type="radio"
-                  name="client_choice"
-                  label="عميل"
-                  value="client"
-                  checked={formData.client_choice === 'client'}
-                  onChange={() =>
-                    handleChange({
-                      target: { name: 'client_choice', value: 'client' }
-                    })
-                  }
-                />
-                <Form.Check
-                  type="radio"
-                  name="client_choice"
-                  label="عميل غير مسجل"
-                  value="unclient"
-                  checked={formData.client_choice === 'unclient'}
-                  onChange={() =>
-                    handleChange({
-                      target: { name: 'client_choice', value: 'unclient' }
-                    })
-                  }
-                />
-              </>
-            )}
+          {isEditing ? null : (
+            <>
+              <Form.Check
+                type="radio"
+                name="client_choice"
+                label="عميل"
+                value="client"
+                checked={formData.client_choice === 'client'}
+                onChange={() =>
+                  handleChange({
+                    target: { name: 'client_choice', value: 'client' },
+                  })
+                }
+              />
+              <Form.Check
+                type="radio"
+                name="client_choice"
+                label="عميل غير مسجل"
+                value="unclient"
+                checked={formData.client_choice === 'unclient'}
+                onChange={() =>
+                  handleChange({
+                    target: { name: 'client_choice', value: 'unclient' },
+                  })
+                }
+              />
+            </>
+          )}
         </Form.Group>
 
         {/* Display selected client or unclient fields based on client_choice */}
@@ -331,7 +329,7 @@ ServiceModal.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleServiceAddedOrEdited: PropTypes.func.isRequired,
   service: PropTypes.object,
-  isEditing: PropTypes.bool.isRequired
+  isEditing: PropTypes.bool.isRequired,
 };
 
 export default ServiceModal;

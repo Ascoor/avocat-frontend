@@ -14,7 +14,7 @@ setDefaultLocale('ar_eg');
 const LegalAd = ({ legCaseId }) => {
   LegalAd.propTypes = {
     legCaseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-      .isRequired
+      .isRequired,
   };
 
   const { getUser } = useAuth();
@@ -155,7 +155,7 @@ const LegalAd = ({ legCaseId }) => {
           legal_ad_type_id: selectedLegalAdType,
           status: selectedStatus,
           leg_case_id: legCaseId,
-          created_by: user.id
+          created_by: user.id,
         });
         fetchLegalAds(legCaseId);
         handleModalClose();
@@ -179,7 +179,7 @@ const LegalAd = ({ legCaseId }) => {
           cost2: selectedCost2,
           status: selectedStatus,
           leg_case_id: legCaseId,
-          updated_by: user.id
+          updated_by: user.id,
         });
         fetchLegalAds(legCaseId);
         handleModalClose();

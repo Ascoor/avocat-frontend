@@ -8,11 +8,9 @@ import {
   FaFileAlt,
   FaTasks,
   // FaArchive,
-  FaCog
+  FaCog,
 } from 'react-icons/fa';
-import{
-  MdOutlinePriceChange
-} from 'react-icons/md';
+import { MdOutlinePriceChange } from 'react-icons/md';
 import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
 import '../../../assets/css/SideBar.css';
@@ -20,7 +18,7 @@ import useAuth from '../AuthTool/AuthUser';
 
 const Sidebar = ({ sidebarOpen, onClose }) => {
   const sidebarAnimation = useSpring({
-    right: sidebarOpen ? 0 : -450 // Adjust the value based on your sidebar width
+    right: sidebarOpen ? 0 : -450, // Adjust the value based on your sidebar width
   });
   const user = useAuth().user;
   const userDropdownAnimation = useSpring({
@@ -28,7 +26,7 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
     transform: 'scale(1)',
     from: { opacity: 0, transform: 'scale(0.8)' },
     fontSize: '.9rem',
-    fontFamily: 'inherit'
+    fontFamily: 'inherit',
   });
 
   useEffect(() => {
@@ -90,7 +88,7 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
         <li>
           <Link to="/financial">
             <MdOutlinePriceChange className="m-2" size={25} />
-          الحسابات
+            الحسابات
           </Link>
         </li>
 
@@ -118,7 +116,7 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
 
 Sidebar.propTypes = {
   sidebarOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

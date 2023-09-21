@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import PropTypes from 'prop-types'; // تعديل هنا
 import { Link } from 'react-router-dom';
 import {
   FcBusinessman,
   FcLibrary,
   FcOvertime,
-  FcBriefcase
+  FcBriefcase,
 } from 'react-icons/fc';
 import { ClientIcon, DashBoard } from '../assets/icons/index';
 import { Card, Row, Col, Button, Form } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
 import axios from 'axios';
 import Calendar from './home_tools/Calender';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import API_CONFIG from '../config';
 import ClientSearch from './home_tools/client_search.component';
 import LegCaseSearch from './home_tools/leg_case_search.component';
@@ -27,7 +27,7 @@ const useIconCardAnimation = () => {
   const [touched, setTouched] = useState(false);
   const cardSpringStyles = useSpring({
     scale: hovered || touched ? 1.1 : 1,
-    y: touched ? -5 : 0
+    y: touched ? -5 : 0,
   });
   const handleHover = () => {
     setHovered(true);
@@ -50,7 +50,7 @@ const useIconCardAnimation = () => {
     handleHover,
     handleHoverEnd,
     handleTouchStart,
-    handleTouchEnd
+    handleTouchEnd,
   };
 };
 const EventCard = ({ title, count, icon }) => {
@@ -80,7 +80,7 @@ const EventCard = ({ title, count, icon }) => {
     </animated.div>
   );
 };
-function toArabicNumeral (en) {
+function toArabicNumeral(en) {
   return ('' + en).replace(/[0-9]/g, function (t) {
     return '٠١٢٣٤٥٦٧٨٩'.slice(+t, +t + 1);
   });
@@ -99,14 +99,7 @@ const Home = () => {
   const [searchType, setSearchType] = useState('clients'); // State to store the selected search type
   const [setEvents] = useState([]);
   useEffect(() => {
-    axios
-      .get(`${API_CONFIG.baseURL}/api/agenda-events`)
-      .then((response) => {
-        setEvents(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  
   }, []);
   useEffect(() => {
     fetchOfficeCount();
@@ -146,8 +139,8 @@ const Home = () => {
 
       const response = await axios.get(endpoint, {
         params: {
-          query: searchText
-        }
+          query: searchText,
+        },
       });
 
       setSearchResults(response.data);
@@ -294,21 +287,21 @@ const Home = () => {
                 <h3>نتائج البحث</h3>
               </Card.Header>
               <Card.Body>
-                {searchType === 'clients'
-                  ? (
-                    <ClientSearch searchResults={searchResults} />
-                  )
-                  : (
-                    <LegCaseSearch searchResults={searchResults} />
-                  )}
+                {searchType === 'clients' ? (
+                  <ClientSearch searchResults={searchResults} />
+                ) : (
+                  <LegCaseSearch searchResults={searchResults} />
+                )}
               </Card.Body>
             </Card>
           )}
         </Col>
       </Row>
 
-      <Row className="mt-5 justify-content-center">
-        <Calendar />
+      <Row className="mt-12">
+        <Col md={12}>
+          <Calendar events={setEvents} />
+        </Col>
       </Row>
     </>
   );
@@ -318,7 +311,7 @@ EventCard.propTypes = {
   count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired, // تعديل هنا
   icon: PropTypes.element.isRequired, // تعديل هنا
   title: PropTypes.string, // تعديل النوع هنا
-  color: PropTypes.string // تعديل النوع هنا
+  color: PropTypes.string, // تعديل النوع هنا
 };
 
 export default Home;

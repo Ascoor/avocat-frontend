@@ -63,7 +63,7 @@ const ProcedureSearch = () => {
     // Send the GET request with query parameters to the API
     axios
       .get(`${API_CONFIG.baseURL}/api/procedures-search`, {
-        params: queryParams
+        params: queryParams,
       })
       .then((response) => {
         // Handle the API response here (e.g., update state with search results)

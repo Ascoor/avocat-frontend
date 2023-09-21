@@ -37,7 +37,7 @@ const Guest = () => {
       position: 'absolute',
       top: '50%',
       left: '50%',
-      zIndex: 2
+      zIndex: 2,
     },
     enter: {
       opacity: 1,
@@ -45,7 +45,7 @@ const Guest = () => {
       position: 'absolute',
       top: '50%',
       left: '50%',
-      zIndex: 2
+      zIndex: 2,
     },
     leave: {
       opacity: 0,
@@ -53,9 +53,9 @@ const Guest = () => {
       position: 'absolute',
       top: '50%',
       left: '50%',
-      zIndex: 2
+      zIndex: 2,
     },
-    config: { duration: 500 }
+    config: { duration: 500 },
   });
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const Guest = () => {
 
       if (navbarCollapse) {
         const collapse = new Collapse(navbarCollapse, {
-          toggle: false
+          toggle: false,
         });
 
         const navbarItems = navbarCollapse.querySelectorAll('a');
@@ -85,10 +85,10 @@ const Guest = () => {
           window.pageYOffset !== undefined
             ? window.pageYOffset
             : (
-              document.documentElement ||
+                document.documentElement ||
                 document.body.parentNode ||
                 document.body
-            ).scrollTop;
+              ).scrollTop;
 
         if (scrollTop > 100) {
           mainNav.classList.add('navbar-shrink');
@@ -109,7 +109,7 @@ const Guest = () => {
     opacity: 1,
     transform: 'translateY(0)',
     from: { opacity: 0, transform: 'translateY(-100px)' },
-    delay: 500
+    delay: 500,
   });
 
   return (
@@ -120,7 +120,7 @@ const Guest = () => {
           backgroundImage: `url(${WelcomeImage})`,
           backgroundPosition: 'center',
           backgroundSize: 'cover',
-          height: '100vh'
+          height: '100vh',
         }}
       >
         <div className="navbar navbar-light fixed-top" id="mainNav">
@@ -151,7 +151,7 @@ const Guest = () => {
           className="d-flex flex-column justify-content-center align-items-center"
           style={{
             paddingLeft: '10px',
-            height: '100%'
+            height: '100%',
           }}
         >
           {showLogoAndButtons && (
@@ -195,32 +195,30 @@ const Guest = () => {
             </div>
           )}
           {formsTransition((styles, item) =>
-            item
-              ? (
-                <animated.div
-                  style={{ ...styles, width: '100%', marginTop: '20px' }}
-                >
-                  <div className="d-flex justify-content-center">
-                    <Card style={{ zIndex: 2 }}>
-                      <React.Suspense fallback={<Spinner animation="grow" />}>
-                        {showLoginForm && (
-                          <Login
-                            style={{ position: 'relative', zIndex: 3 }}
-                            handleCloseForm={handleCloseForm}
-                          />
-                        )}
-                        {showRegisterForm && (
-                          <Register
-                            style={{ position: 'relative', zIndex: 3 }}
-                            handleCloseForm={handleCloseForm}
-                          />
-                        )}
-                      </React.Suspense>
-                    </Card>
-                  </div>
-                </animated.div>
-              )
-              : null
+            item ? (
+              <animated.div
+                style={{ ...styles, width: '100%', marginTop: '20px' }}
+              >
+                <div className="d-flex justify-content-center">
+                  <Card style={{ zIndex: 2 }}>
+                    <React.Suspense fallback={<Spinner animation="grow" />}>
+                      {showLoginForm && (
+                        <Login
+                          style={{ position: 'relative', zIndex: 3 }}
+                          handleCloseForm={handleCloseForm}
+                        />
+                      )}
+                      {showRegisterForm && (
+                        <Register
+                          style={{ position: 'relative', zIndex: 3 }}
+                          handleCloseForm={handleCloseForm}
+                        />
+                      )}
+                    </React.Suspense>
+                  </Card>
+                </div>
+              </animated.div>
+            ) : null
           )}
         </div>
       </header>
@@ -232,7 +230,7 @@ const Guest = () => {
           direction: 'rtl',
           color: '#fff',
           textAlign: 'center',
-          padding: '10px 0'
+          padding: '10px 0',
         }}
       >
         <Container>

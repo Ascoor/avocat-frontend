@@ -7,7 +7,7 @@ import {
   Form,
   Card,
   Table,
-  Alert
+  Alert,
 } from 'react-bootstrap';
 import { FcFullTrash } from 'react-icons/fc';
 import axios from 'axios';
@@ -70,13 +70,13 @@ const CourtLevel = ({ show, handleClose }) => {
       const response = await axios.post(
         `${API_CONFIG.baseURL}/api/court_levels/`,
         {
-          name: newCourtLevelName
+          name: newCourtLevelName,
         }
       );
       setCourtLevels([...courtLevels, response.data]);
       setAlertMessage({
         type: 'success',
-        text: 'تمت إضافة مستوى المحكمة بنجاح.'
+        text: 'تمت إضافة مستوى المحكمة بنجاح.',
       });
       setNewCourtLevelName('');
       setShowAddCourtLevelModal(false);
@@ -94,7 +94,7 @@ const CourtLevel = ({ show, handleClose }) => {
       setError(error);
       setAlertMessage({
         type: 'danger',
-        text: 'لا يمكن حذف مستوى المحكمة لارتباطة بمحاكم وتصنيفات فرعية اخري'
+        text: 'لا يمكن حذف مستوى المحكمة لارتباطة بمحاكم وتصنيفات فرعية اخري',
       });
     }
   };
@@ -117,7 +117,7 @@ const CourtLevel = ({ show, handleClose }) => {
     if (!newCourtLevelName.trim()) {
       setModalMessage({
         type: 'danger',
-        text: 'برجاء إدخال مستوى المحكمة المراد إضافته.'
+        text: 'برجاء إدخال مستوى المحكمة المراد إضافته.',
       });
     } else {
       handleAddCourtLevel();

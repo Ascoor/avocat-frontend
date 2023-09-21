@@ -8,14 +8,14 @@ const ServiceDetailsModal = ({ service }) => {
   const cardAnimation = useSpring({
     from: { opacity: 0, transform: 'translateY(30px)' },
     to: { opacity: 1, transform: 'translateY(0)' },
-    config: config.gentle
+    config: config.gentle,
   });
 
   const getStatusColor = () => {
     const statusColors = {
       Pending: 'warning',
       InProgress: 'primary',
-      Completed: 'success'
+      Completed: 'success',
     };
     return statusColors[service.service_status] || 'info';
   };
@@ -83,8 +83,8 @@ ServiceDetailsModal.propTypes = {
     client_name: PropTypes.string,
     service_place: PropTypes.string,
     field1: PropTypes.string,
-    field2: PropTypes.string
-  }).isRequired
+    field2: PropTypes.string,
+  }).isRequired,
 };
 
 export default ServiceDetailsModal;

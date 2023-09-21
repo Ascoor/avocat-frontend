@@ -5,7 +5,7 @@ const CustomPagination = ({
   totalCount,
   itemsPerPage,
   currentPage,
-  onPageChange
+  onPageChange,
 }) => {
   const pageCount = Math.ceil(totalCount / itemsPerPage);
   const maxPagesToShow = 6;
@@ -51,7 +51,7 @@ CustomPagination.propTypes = {
   totalCount: PropTypes.number.isRequired,
   itemsPerPage: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
-  onPageChange: PropTypes.func.isRequired
+  onPageChange: PropTypes.func.isRequired,
 };
 
 export default CustomPagination;

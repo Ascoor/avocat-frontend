@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Form, Button, Row } from 'react-bootstrap';
+import { Card, Form, Row } from 'react-bootstrap';
 import { FaSignInAlt } from 'react-icons/fa';
 import AuthUser from './AuthUser';
 import API_CONFIG from '../../../config';
@@ -21,22 +21,33 @@ const Login = ({ handleCloseForm }) => {
 
     try {
       let response;
+      let routeToNavigate = '/';
 
-      // Determine if the input is an email or username
       if (username.includes('@')) {
         response = await axios.post(`${API_CONFIG.baseURL}/api/login`, {
           email: username,
-          password
+          password,
         });
       } else {
         response = await axios.post(`${API_CONFIG.baseURL}/api/lawyer/login`, {
           username,
-          password
+          password,
         });
       }
 
       setToken(response.data.user, response.data.access_token);
-      navigate('/'); // Replace "/" with the desired route after successful login
+
+      // Role-based routing
+      if (response.data.role === '1') {
+        routeToNavigate = '/user-dashboard';
+      } else if (response.data.role === '2') {
+        routeToNavigate = '/lawyer-dashboard';
+      } else {
+        // Default to root if role is not determined
+        routeToNavigate = '/';
+      }
+
+      navigate(routeToNavigate); // Navigate to respective dashboard based on role
     } catch (error) {
       setError('فشل تسجيل الدخول. يرجى المحاولة مرة أخرى لاحقًا.');
       console.log(error);
@@ -83,17 +94,15 @@ const Login = ({ handleCloseForm }) => {
             />
           </Form.Group>
           <Row className="mt-4 justify-content-center">
-            {loading
-              ? (
-                <button type="button" disabled className="btn-loading">
+            {loading ? (
+              <button type="button" disabled className="btn-loading">
                 ...جارى الدخول
-                </button>
-              )
-              : (
-                <button type="submit" className="btn-success-special">
+              </button>
+            ) : (
+              <button type="submit" className="btn-success-special">
                 تسجيل الدخول
-                </button>
-              )}
+              </button>
+            )}
           </Row>
           {error && (
             <p className="text-danger-special mt-3 text-center">{error}</p>

@@ -3,15 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../../assets/css/legcase.css';
 import API_CONFIG from '../../config';
-import {
-  Col,
-  Row,
-  Tab,
-  Tabs,
-  Card,
-  Button,
-  Form
-} from 'react-bootstrap';
+import { Col, Row, Tab, Tabs, Card, Button, Form } from 'react-bootstrap';
 import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
 import { BsPersonFillX } from 'react-icons/bs';
 
@@ -20,7 +12,7 @@ import LegalSession from './tools/Legal_session.component';
 import LegCaseClients from './tools/legal_clients.component';
 import { LegCaseDetailsIcon } from '../../assets/icons';
 import LegalAd from './tools/legal_ad.component';
-export default function LegCaseDetail () {
+export default function LegCaseDetail() {
   const { id } = useParams();
   const [legCase, setLegCase] = useState(null);
   const [key, setKey] = useState('procedure');
@@ -59,7 +51,7 @@ export default function LegCaseDetail () {
   const handleAddNewCourt = (index, field, value) => {
     setLegCaseNewCourts((prevCourts) => [
       ...prevCourts,
-      { case_number: '', case_year: '', court_id: '', judge_level: '' }
+      { case_number: '', case_year: '', court_id: '', judge_level: '' },
     ]);
   };
 
@@ -154,9 +146,9 @@ export default function LegCaseDetail () {
   );
   return (
     <Card>
-    <CaseHeader/>
+      <CaseHeader />
       <Card.Body>
-      <CaseBody/>
+        <CaseBody />
       </Card.Body>
       <Card.Body>
         <LegCaseClients legCaseId={id} />

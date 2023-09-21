@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
@@ -12,8 +12,8 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
   const isValidDate = (date) => {
     return date !== null && date.toString() !== 'Invalid Date';
   };
-
   const [name, setName] = useState(initialValues?.name || '');
+
   const [birthdate, setBirthdate] = useState(initialValues?.birthdate || null);
   const [identityNumber, setIdentityNumber] = useState(
     initialValues?.identity_number || ''
@@ -30,9 +30,10 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
   );
   const [religion, setReligion] = useState(initialValues?.religion || '');
   const [gender, setGender] = useState(initialValues?.gender || '');
-  const [password, setPassword] = useState(
-    initialValues?.lawyer?.user?.password || ''
-  );
+  const [showPasswordInput, setShowPasswordInput] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState('');
+
   const [showPassword, setShowPassword] = useState(false); // Define showPassword state
 
   const handleSubmit = (e) => {
@@ -48,8 +49,16 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
       phone_number: phoneNumber,
       religion,
       gender,
-      password
     };
+
+    if (showPasswordInput) {
+      if (password !== confirmPassword) {
+        // show some error
+        return;
+      }
+      formData.password = password;
+    }
+
     onSubmit(formData);
   };
 
@@ -147,24 +156,49 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
       </Form.Group>
-
-      <Form.Group controlId="password">
-        <Form.Label>كلمة المرور</Form.Label>
-        <div className="d-flex">
-          <Form.Control
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+      <Form.Group controlId="identityNumber">
+        <Form.Label>رقم الهوية</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="أدخل رقم الهوية"
+          value={identityNumber}
+          onChange={(e) => setIdentityNumber(e.target.value)}
+          maxLength={14}
+        />
+      </Form.Group>
+      {showPasswordInput && (
+        <>
           <Form.Check
             type="checkbox"
-            label="إظهار كلمة المرور"
-            className="ml-2"
-            checked={showPassword}
+            label="Show Password"
             onChange={() => setShowPassword(!showPassword)}
           />
-        </div>
-      </Form.Group>
+
+          {/* Add this button to toggle the appearance of the password input */}
+          <Button onClick={() => setShowPasswordInput(!showPasswordInput)}>
+            Toggle Password Input
+          </Button>
+          <Form.Group controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="confirmPassword">
+            <Form.Label>Re-type Password</Form.Label>
+            <Form.Control
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </Form.Group>
+        </>
+      )}
 
       <Button variant="primary" type="submit">
         حفظ
@@ -187,10 +221,10 @@ LawyerAddEdit.propTypes = {
     gender: PropTypes.string,
     lawyer: PropTypes.shape({
       user: PropTypes.shape({
-        password: PropTypes.string
-      })
-    })
-  })
+        password: PropTypes.string,
+      }),
+    }),
+  }),
 };
 
 export default LawyerAddEdit;

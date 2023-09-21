@@ -10,7 +10,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
   const userDropdownAnimation = useSpring({
     opacity: 1,
     transform: 'scale(1)',
-    from: { opacity: 0, transform: 'scale(0.8)' }
+    from: { opacity: 0, transform: 'scale(0.8)' },
   });
 
   useEffect(() => {
@@ -66,7 +66,7 @@ TopNav.propTypes = {
   onToggleSidebar: PropTypes.func.isRequired,
   sidebarOpen: PropTypes.bool.isRequired,
   userId: PropTypes.number.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
 };
 
 export default TopNav;

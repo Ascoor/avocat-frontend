@@ -19,20 +19,24 @@ const FinancialDashboard = () => {
         <div className="financial-card" onClick={() => setActiveTab('revenue')}>
           <p>الإيرادات</p>
         </div>
-        <div className="financial-card" onClick={() => setActiveTab('expenses')}>
+        <div
+          className="financial-card"
+          onClick={() => setActiveTab('expenses')}
+        >
           <p>المصروفات</p>
         </div>
         <div className="financial-card" onClick={() => setActiveTab('client')}>
           <p>العملاء</p>
         </div>
-        <div className="financial-card" onClick={() => setActiveTab('nonClient')}>
+        <div
+          className="financial-card"
+          onClick={() => setActiveTab('nonClient')}
+        >
           <p>غير العملاء</p>
         </div>
       </div>
       <Card className="content-card">
-        <Card.Body>
-          {renderContent()}
-        </Card.Body>
+        <Card.Body>{renderContent()}</Card.Body>
         <Card.Footer></Card.Footer>
       </Card>
     </div>
