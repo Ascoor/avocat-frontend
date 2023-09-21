@@ -161,7 +161,7 @@ a {
 .special-table th {
   background-color: #EFE7BC  ;
   color: #0b0a5a; /* Dark text on light background */
-  font-size: 1.2rem; /* Increased font size for better readability */
+  font-size: 1.0rem; /* Increased font size for better readability */
   font-family: 'Cairo', sans-serif;
   font-weight: 500;
 }
@@ -497,6 +497,25 @@ a {
   font-size: 1rem;
 }
 /*btn End*/
+
+
+/*Expenses Start*/
+
+.expenses-card-header
+{
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  color: rgb(255, 251, 0);
+  background: linear-gradient(325deg, #1a485c, #0a2741);
+  border: 6px solid #e4a802;
+  border-radius: 50%;  
+  box-shadow: 0 4px 8px rgba(5, 56, 97, 0.726);
+  transition: all 0.3s ease;
+}
+/*Expenses End*/
 /*Icons Start*/
 
 .legCase-icon {

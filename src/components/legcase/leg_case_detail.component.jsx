@@ -154,6 +154,10 @@ export default function LegCaseDetail () {
   );
   return (
     <Card>
+    <CaseHeader/>
+      <Card.Body>
+      <CaseBody/>
+      </Card.Body>
       <Card.Body>
         <LegCaseClients legCaseId={id} />
       </Card.Body>

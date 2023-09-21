@@ -10,6 +10,9 @@ import {
   // FaArchive,
   FaCog
 } from 'react-icons/fa';
+import{
+  MdOutlinePriceChange
+} from 'react-icons/md';
 import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
 import '../../../assets/css/SideBar.css';
@@ -81,6 +84,13 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
         <li>
           <Link to="/procedures">
             <FaTasks className="m-2" size={25} /> الإجراءات
+          </Link>
+        </li>
+
+        <li>
+          <Link to="/financial">
+            <MdOutlinePriceChange className="m-2" size={25} />
+          الحسابات
           </Link>
         </li>
 
