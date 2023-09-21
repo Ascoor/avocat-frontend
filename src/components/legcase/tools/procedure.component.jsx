@@ -35,7 +35,7 @@ const Procedure = ({ legCaseId }) => {
         await Promise.all([
           fetchCourts(),
           fetchLawyers(),
-          fetchProcedureTypes()
+          fetchProcedureTypes(),
         ]);
       } catch (error) {
         console.log(error);
@@ -144,7 +144,7 @@ const Procedure = ({ legCaseId }) => {
         court_id: selectedCourt,
         leg_case_id: legCaseId,
 
-        created_by: user.id
+        created_by: user.id,
       };
 
       if (modalMode === 'edit') {
@@ -420,7 +420,7 @@ const Procedure = ({ legCaseId }) => {
   );
 };
 Procedure.propTypes = {
-  legCaseId: PropTypes.string.isRequired
+  legCaseId: PropTypes.string.isRequired,
 };
 
 export default Procedure;

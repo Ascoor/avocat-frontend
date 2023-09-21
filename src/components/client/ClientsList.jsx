@@ -14,7 +14,7 @@ import { MdWork } from 'react-icons/md';
 import CustomPagination from '../home_tools/Pagination';
 import SectionHeader from '../home_tools/SectionHeader';
 import AddEditClient from './AddEditClient';
-export default function Clients () {
+export default function Clients() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -99,7 +99,7 @@ export default function Clients () {
         `${API_CONFIG.baseURL}/api/clients/${id}`,
         {
           ...client,
-          status: newStatus
+          status: newStatus,
         }
       );
 
@@ -188,62 +188,58 @@ export default function Clients () {
                 </tr>
               </thead>
               <tbody>
-                {paginatedClients.length === 0
-                  ? (
-                    <tr>
-                      <td colSpan="5">
-                        <Alert variant="warning">لا يوجد موكلين لعرضهم.</Alert>
+                {paginatedClients.length === 0 ? (
+                  <tr>
+                    <td colSpan="5">
+                      <Alert variant="warning">لا يوجد موكلين لعرضهم.</Alert>
+                    </td>
+                  </tr>
+                ) : (
+                  filteredClients.map((client) => (
+                    <tr key={client.id}>
+                      <td onClick={() => handleSlugClick(client.slug)}>
+                        {client.slug}
+                      </td>
+
+                      <td>{client.name}</td>
+                      <td>{client.identity_number}</td>
+                      <td>{client.address}</td>
+                      <td>{client.phone_number}</td>
+                      <td>
+                        {client.status === 'active' ? (
+                          <span className="text-success">نشط</span>
+                        ) : (
+                          <span className="text-danger">غير نشط</span>
+                        )}
+                      </td>
+
+                      <td>
+                        <Button
+                          variant={
+                            client.status === 'active' ? 'success' : 'warning'
+                          }
+                          onClick={() => handleToggleStatus(client.id)}
+                        >
+                          {client.status === 'active'
+                            ? 'إلغاء التنشيط'
+                            : 'تنشيط'}
+                        </Button>
+                        <Button
+                          variant="primary"
+                          onClick={() => handleEditClient(client.id)}
+                        >
+                          تعديل
+                        </Button>{' '}
+                        <Button
+                          variant="danger"
+                          onClick={() => deleteClient(client.id)}
+                        >
+                          حذف
+                        </Button>
                       </td>
                     </tr>
-                  )
-                  : (
-                    filteredClients.map((client) => (
-                      <tr key={client.id}>
-                        <td onClick={() => handleSlugClick(client.slug)}>
-                          {client.slug}
-                        </td>
-
-                        <td>{client.name}</td>
-                        <td>{client.identity_number}</td>
-                        <td>{client.address}</td>
-                        <td>{client.phone_number}</td>
-                        <td>
-                          {client.status === 'active'
-                            ? (
-                              <span className="text-success">نشط</span>
-                            )
-                            : (
-                              <span className="text-danger">غير نشط</span>
-                            )}
-                        </td>
-
-                        <td>
-                          <Button
-                            variant={
-                              client.status === 'active' ? 'success' : 'warning'
-                            }
-                            onClick={() => handleToggleStatus(client.id)}
-                          >
-                            {client.status === 'active'
-                              ? 'إلغاء التنشيط'
-                              : 'تنشيط'}
-                          </Button>
-                          <Button
-                            variant="primary"
-                            onClick={() => handleEditClient(client.id)}
-                          >
-                          تعديل
-                          </Button>{' '}
-                          <Button
-                            variant="danger"
-                            onClick={() => deleteClient(client.id)}
-                          >
-                          حذف
-                          </Button>
-                        </td>
-                      </tr>
-                    ))
-                  )}
+                  ))
+                )}
               </tbody>
             </table>
           </div>

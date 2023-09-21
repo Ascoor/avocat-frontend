@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API_CONFIG from '../../../config';
 
-export default function useAuth () {
+export default function useAuth() {
   const navigate = useNavigate();
 
   // Fetch CSRF token from the document's meta tag
@@ -49,8 +49,8 @@ export default function useAuth () {
     withCredentials: true,
     headers: {
       Accept: 'application/json',
-      'X-CSRF-Token': csrfTokenValue
-    }
+      'X-CSRF-Token': csrfTokenValue,
+    },
   });
 
   // Set up an interceptor to attach the token to requests
@@ -72,6 +72,6 @@ export default function useAuth () {
     getUser,
     logout,
     getCsrfToken: csrfTokenValue, // Expose the CSRF token
-    apiURL: '/api' // Expose the API URL
+    apiURL: '/api', // Expose the API URL
   };
 }

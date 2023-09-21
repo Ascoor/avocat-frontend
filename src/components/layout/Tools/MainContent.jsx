@@ -11,7 +11,7 @@ const MainContent = ({ sidebarOpen }) => {
 };
 
 MainContent.propTypes = {
-  sidebarOpen: PropTypes.bool.isRequired
+  sidebarOpen: PropTypes.bool.isRequired,
 };
 
 export default MainContent;

@@ -32,6 +32,6 @@ const ClientSearch = ({ searchResults }) => {
   );
 };
 ClientSearch.propTypes = {
-  searchResults: PropTypes.array.isRequired
+  searchResults: PropTypes.array.isRequired,
 };
 export default ClientSearch;

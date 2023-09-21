@@ -5,9 +5,9 @@ import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
 import API_CONFIG from '../../../config';
 import PropTypes from 'prop-types';
 
-export default function LegCaseClients ({ legCaseId }) {
+export default function LegCaseClients({ legCaseId }) {
   LegCaseClients.propTypes = {
-    legCaseId: PropTypes.string.isRequired
+    legCaseId: PropTypes.string.isRequired,
   };
 
   const [clients, setClients] = useState([]);

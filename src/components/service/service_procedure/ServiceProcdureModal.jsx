@@ -14,7 +14,7 @@ const ServiceProcedureModal = ({
   isEditing,
   serviceId,
   addServiceProcedure,
-  editServiceProcedure
+  editServiceProcedure,
 }) => {
   const user = useAuth();
 
@@ -29,13 +29,13 @@ const ServiceProcedureModal = ({
       const formattedDate = date.toISOString().split('T')[0];
       setFormData({
         ...formData,
-        [field]: formattedDate
+        [field]: formattedDate,
       });
     } else {
       // If date is null, set the field as null in formData
       setFormData({
         ...formData,
-        [field]: null
+        [field]: null,
       });
     }
   };
@@ -52,7 +52,7 @@ const ServiceProcedureModal = ({
     place: '',
     created_by: getUser().id,
     updated_by: getUser().id,
-    service_id: serviceId
+    service_id: serviceId,
   };
 
   // Include status only when adding a new procedure
@@ -62,7 +62,7 @@ const ServiceProcedureModal = ({
 
   const modalAnimation = useSpring({
     opacity: show ? 1 : 0,
-    transform: show ? 'translateY(0%)' : 'translateY(-100%)'
+    transform: show ? 'translateY(0%)' : 'translateY(-100%)',
   });
 
   const [formData, setFormData] = useState(initialFormData);
@@ -79,7 +79,7 @@ const ServiceProcedureModal = ({
         cost: procedure.cost || 0, // Use an empty string if null
         cost2: procedure.cost2 || 0, // Use an empty string if null
         result: procedure.result || '', // Use an empty string if null
-        place: procedure.place || '' // Use an empty string if null
+        place: procedure.place || '', // Use an empty string if null
       });
     } else {
       setFormData(initialFormData);
@@ -280,7 +280,7 @@ ServiceProcedureModal.propTypes = {
   isEditing: PropTypes.bool.isRequired,
   fetchServiceProcedures: PropTypes.func,
   addServiceProcedure: PropTypes.func,
-  editServiceProcedure: PropTypes.func
+  editServiceProcedure: PropTypes.func,
 };
 
 export default ServiceProcedureModal;

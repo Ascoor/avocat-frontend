@@ -9,7 +9,7 @@ import arEG from 'date-fns/locale/ar-EG';
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 const LegalSession = ({ legCaseId }) => {
   LegalSession.propTypes = {
-    legCaseId: PropTypes.string.isRequired
+    legCaseId: PropTypes.string.isRequired,
   };
   const { getUser } = useAuth();
   const [alert, setAlert] = useState(null);
@@ -41,7 +41,7 @@ const LegalSession = ({ legCaseId }) => {
             `${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`
           ),
           axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
-          axios.get(`${API_CONFIG.baseURL}/api/courts`)
+          axios.get(`${API_CONFIG.baseURL}/api/courts`),
         ]);
       setLegalSessions(sessionsResponse.data);
       setLawyers(lawyersResponse.data);
@@ -60,7 +60,7 @@ const LegalSession = ({ legCaseId }) => {
               `${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`
             ),
             axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
-            axios.get(`${API_CONFIG.baseURL}/api/courts`)
+            axios.get(`${API_CONFIG.baseURL}/api/courts`),
           ]);
         setLegalSessions(sessionsResponse.data);
         setLawyers(lawyersResponse.data);
@@ -103,7 +103,7 @@ const LegalSession = ({ legCaseId }) => {
       cost: selectedCost,
       cost2: selectedCost2,
       leg_case_id: legCaseId,
-      created_by: getUser().id
+      created_by: getUser().id,
     };
     if (modalMode === 'edit') {
       data.status = selectStatus;
@@ -144,7 +144,7 @@ const LegalSession = ({ legCaseId }) => {
 
       setAlert({
         variant: 'danger',
-        message: 'حدث خطأ أثناء عملية التعديل.'
+        message: 'حدث خطأ أثناء عملية التعديل.',
       });
       setShowAlert(true);
     }
@@ -165,7 +165,7 @@ const LegalSession = ({ legCaseId }) => {
       console.log('خطأ في حذف الجلسة القانونية:', error);
       setAlert({
         variant: 'danger',
-        message: 'حدث خطأ أثناء حذف الجلسة القانونية'
+        message: 'حدث خطأ أثناء حذف الجلسة القانونية',
       });
       setShowAlert(true);
     }

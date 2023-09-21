@@ -15,7 +15,7 @@ const DateInput = ({ selected, onChange, required }) => (
 DateInput.propTypes = {
   selected: PropTypes.instanceOf(Date),
   onChange: PropTypes.func.isRequired,
-  required: PropTypes.bool
+  required: PropTypes.bool,
 };
 
 export default DateInput;

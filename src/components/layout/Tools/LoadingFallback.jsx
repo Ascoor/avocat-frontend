@@ -10,7 +10,7 @@ const LoadingFallback = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f3f4f6'
+        backgroundColor: '#f3f4f6',
       }}
     >
       <div style={{ color: '#3a3b3c', fontSize: '24px' }}>Loading...</div>

@@ -22,11 +22,11 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@fullcalendar/core": "^6.1.8",
-    "@fullcalendar/daygrid": "^6.1.8",
-    "@fullcalendar/interaction": "^6.1.8",
-    "@fullcalendar/react": "^6.1.8",
-    "@fullcalendar/timegrid": "^6.1.8",
+    "@fullcalendar/core": "^6.1.9",
+    "@fullcalendar/daygrid": "^6.1.9",
+    "@fullcalendar/interaction": "^6.1.9",
+    "@fullcalendar/react": "^6.1.9",
+    "@fullcalendar/timegrid": "^6.1.9",
     "@popperjs/core": "^2.11.8",
     "@react-spring/web": "^9.7.3",
     "@syncfusion/ej2-react-documenteditor": "^23.1.36",

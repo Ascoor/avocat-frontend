@@ -1,100 +1,128 @@
-/* Base styles */
-body {
-  font-family: Arial, sans-serif;
+/* General Styles for FullCalendar */
+.fc {
+  font-family: 'Arial', sans-serif;
+  color: #333;
 }
 
-/* Calendar container styling */
+.fc-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.fc-button:hover {
+  background-color: #0056b3;
+}
+
+/* Card Style for Events */
+.calendar-event-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  transition: transform .2s;
+  margin-bottom: 16px;
+}
+
+.calendar-event-card .card-header {
+  background-color: #007bff;
+  color: white;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.calendar-event-card .card-body {
+  padding: 16px;
+}
+
+.calendar-event-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 12px 24px 0px rgba(0,0,0,0.2);
+}
+
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+  .calendar-event-card {
+    margin-bottom: 12px;
+    padding: 12px;
+  }
+}
+
+/* Styles for Arabic Font */
+.arabic-font {
+  font-family: 'Arial', sans-serif; /* Replace with your preferred Arabic font */
+}
+
+/* Styles for Clock and Header */
+.clock {
+  margin-top: 15px;
+}
+
+.home-text-center {
+  text-align: center;
+}
+
+/* Styles for animated background */
 .calendar-container {
   position: relative;
-  background-color: #f4f4f4; /* Background color */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  font-size: 16px;
-  overflow: hidden;
-  direction: rtl; /* Right-to-left direction */
+  z-index: 1;
 }
 
-/* Calendar header styles */
-.calendar-header {
+.calendar-container-display {
+  z-index: 2;
+}
+
+
+/* Enhanced styling for event cards */
+.calendar-event-card {
+  background-color: #fff;  /* White background to allow for better text readability */
+  border-radius: 12px;  /* Rounded corners */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);  /* Box shadow for 3D effect */
+  transition: transform .2s;  /* Animation for hover effect */
+  margin-bottom: 16px;  /* Margin at the bottom to separate multiple cards */
+  overflow: hidden; /* Add this line to prevent overflow */
+}
+
+.calendar-event-card .card-body {
+  /* Existing styles */
+  text-align: center; /* Center align the text */
+  overflow-wrap: break-word; /* Break words to prevent overflow */
+  word-wrap: break-word; /* For older browsers */
+  margin: 0 auto; /* Center the content */
+}
+
+.calendar-event-card strong {
+  /* Existing styles */
+  display: block; /* Make it a block element */
+  max-width: 100%; /* Maximum width */
+  overflow-wrap: break-word; /* Break words to prevent overflow */
+  word-wrap: break-word; /* For older browsers */
+}
+
+
+/* Card Header Styling */
+.calendar-event-card .card-header {
+  background-color: #007bff;  /* Background color for header */
+  color: white;  /* Text color for header */
+  border-top-left-radius: 12px;  /* Top left rounded corner for header */
+  border-top-right-radius: 12px;  /* Top right rounded corner for header */
   text-align: center;
-  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
+
 }
 
-/* Calendar component styles */
-.calendar {
-  background-color: #ffffff; /* Background color of the calendar */
-  border: 1px solid #e0e0e0; /* Border color */
-  border-radius: 5px;
-  overflow: hidden;
+/* Hover Effect */
+.calendar-event-card:hover {
+  transform: scale(1.02);  /* Slightly enlarge the card */
+  box-shadow: 0px 12px 24px 0px rgba(0,0,0,0.2);  /* Enhanced box shadow on hover */
 }
 
-/* Calendar event styles */
-.calendar-event {
-  background-color: #007bff; /* Background color of events */
-  color: white; /* Text color */
-  padding: 5px;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.calendar-event:hover {
-  background-color: #0056b3; /* Hover background color */
-}
-
-/* Calendar event title */
-.event-title {
-  font-weight: bold;
-}
-
-/* Day names and numbers styles */
-.fc-daygrid-day-number,
-.fc-day-header,
-.fc-widget-header {
-  color: #333333; /* Day names and numbers color */
-}
-
-/* Day names in Arabic styles */
-.fc-rtl .fc-dayGrid-view .fc-day-top {
-  text-align: center; /* Center-align day names in RTL */
-}
-
-/* Weekend day names color */
-.fc-dayGrid-view .fc-day-top.fc-sun,
-.fc-dayGrid-view .fc-day-top.fc-sat {
-  color: #ff0000; /* Weekend day names color */
-}
-
-/* Responsive styles for smaller screens */
+/* Media Query for Responsive Design */
 @media (max-width: 768px) {
-  /* Adjust padding and font sizes for smaller screens */
-  .calendar-container {
-    padding: 10px;
-    font-size: 14px;
+  .calendar-event-card {
+    margin-bottom: 12px;
+    padding: 12px;
   }
-
-  /* Reduce the size of calendar events */
-  .calendar-event {
-    padding: 3px;
-    font-size: 12px;
-  }
-}
-
-/* Animation for the calendar container */
-@keyframes slideIn {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Apply the animation to the calendar container */
-.calendar-container {
-  animation: slideIn 0.5s ease-in-out;
 }

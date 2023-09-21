@@ -129,8 +129,8 @@ const ServiceProcedureList = ({ serviceId }) => {
                   <td>
                     {procedure.date_start
                       ? new Date(procedure.date_start).toLocaleDateString(
-                        'ar-EG'
-                      )
+                          'ar-EG'
+                        )
                       : ''}
                   </td>
                   <td>{procedure.lawyer?.name}</td>
@@ -162,7 +162,7 @@ const ServiceProcedureList = ({ serviceId }) => {
 };
 
 ServiceProcedureList.propTypes = {
-  serviceId: PropTypes.number.isRequired
+  serviceId: PropTypes.number.isRequired,
 };
 
 export default ServiceProcedureList;

@@ -7,7 +7,7 @@ import MainContent from './Tools/MainContent';
 import '../../assets/css/Auth.css';
 import { useSpring, animated } from '@react-spring/web';
 
-function Auth () {
+function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { token, logout } = useAuth();
   const userId = useAuth().user.id;
@@ -38,7 +38,7 @@ function Auth () {
   // Use the useSpring hook to control the animation duration
   const sidebarAnimation = useSpring({
     right: sidebarOpen ? 0 : -450,
-    config: { duration: sidebarOpen ? 500 : 300 } // Adjust duration as needed
+    config: { duration: sidebarOpen ? 500 : 300 }, // Adjust duration as needed
   });
 
   return (
