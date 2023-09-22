@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-config.js
+
 
 # Editor directories and files
 .vscode/*
@@ -23,3 +23,5 @@ config.js
 *.njsproj
 *.sln
 *.sw?
+# Ignore config.js
+config.js
