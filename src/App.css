@@ -60,12 +60,12 @@ a {
 .btn-loading {
   background-color: rgb(225, 225, 2);
   color: black;
+  border-radius: 60px;
+  padding: 11px 4px;
+  margin: auto;
 }
 
-.btn-success-special {
-  background-color: green;
-  color: white;
-}
+
 
 .btn-danger-special {
   background-color: red;
@@ -100,9 +100,11 @@ a {
 
 .btn-success-special
  {
-  background-color: #28a745;
+  background-color: #0f9211de;
+  border-radius: 60px;
   color: #ffffff;
-  padding: 10px 20px;
+  padding: 11px 4px;
+  margin: auto;
 }
 
 

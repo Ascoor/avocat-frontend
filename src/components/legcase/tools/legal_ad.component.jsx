@@ -150,6 +150,7 @@ const LegalAd = ({ legCaseId }) => {
           lawyer_send_id: selectedSendLawyer,
 
           cost: selectedCost,
+          cost2: selectedCost2,
           description: selectedDescription,
           court_id: selectedCourt,
           legal_ad_type_id: selectedLegalAdType,
@@ -325,16 +326,7 @@ const LegalAd = ({ legCaseId }) => {
                     onChange={date => setSelectedSendDate(date)}
                   />
                 </Form.Group>
-                <Form.Group controlId="legalAdCost">
-                  <Form.Label>التكلفة</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="ادخل التكلفة"
-                    value={selectedCost}
-                    onChange={e => setSelectedCost(e.target.value)}
-                  />
-                </Form.Group>
-
+             
                 <Form.Group controlId="sendLawyer">
                   <Form.Label>المحامي المرسل</Form.Label>
                   <Form.Control
@@ -367,12 +359,21 @@ const LegalAd = ({ legCaseId }) => {
                   />
                 </Form.Group>
 
-                <Form.Group controlId="legalAdCost2">
-                  <Form.Label>التكلفة 2</Form.Label>
+                <Form.Group controlId="legalAdCost">
+                  <Form.Label>رسوم بإيصال</Form.Label>
                   <Form.Control
                     type="number"
-                    placeholder="ادخل التكلفة 2"
-                    value={selectedCost2 | ''}
+                    placeholder="ادخل القيمة"
+                    value={selectedCost}
+                    onChange={e => setSelectedCost(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group controlId="legalAdCost2">
+                  <Form.Label>رسوم أخرى</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="ادخل القيمة"
+                    value={selectedCost2}
                     onChange={e => setSelectedCost2(e.target.value)}
                   />
                 </Form.Group>
@@ -391,20 +392,21 @@ const LegalAd = ({ legCaseId }) => {
                   </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="recivedLawyer">
-                  <Form.Label>المحامي المستلم</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={selectedRecivedLawyer}
-                    onChange={e => setSelectedRecivedLawyer(e.target.value)}
-                  >
-                    <option value="">اختر المحامي</option>
-                    {lawyers.map(lawyer => (
-                      <option key={lawyer.id} value={lawyer.id}>
-                        {lawyer.name}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
+  <Form.Label>المحامي المستلم</Form.Label>
+  <Form.Control
+    as="select"
+    value={selectedRecivedLawyer}
+    onChange={e => setSelectedRecivedLawyer(e.target.value)}
+  >
+    <option value="">اختر المحامي</option>
+    {lawyers.map(lawyer => (
+      <option key={lawyer.id} value={lawyer.id}>
+        {lawyer.name}
+      </option>
+    ))}
+  </Form.Control>
+</Form.Group>
+
                 <Form.Group>
                   <Form.Label>النتيجة</Form.Label>
                   <Form.Control
