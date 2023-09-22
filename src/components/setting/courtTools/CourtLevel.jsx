@@ -57,7 +57,7 @@ const CourtLevel = ({ show, handleClose }) => {
   const fetchCourtLevels = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/court_levels`
+        `${API_CONFIG.baseURL}/api/court_levels`,
       );
       setCourtLevels(response.data);
     } catch (e) {
@@ -71,7 +71,7 @@ const CourtLevel = ({ show, handleClose }) => {
         `${API_CONFIG.baseURL}/api/court_levels/`,
         {
           name: newCourtLevelName,
-        }
+        },
       );
       setCourtLevels([...courtLevels, response.data]);
       setAlertMessage({
@@ -88,7 +88,7 @@ const CourtLevel = ({ show, handleClose }) => {
   const handleDeleteCourtLevel = async (id, name, type) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/court_levels/${id}`);
-      setCourtLevels(courtLevels.filter((courtLevel) => courtLevel.id !== id));
+      setCourtLevels(courtLevels.filter(courtLevel => courtLevel.id !== id));
       setAlertMessage({ type: 'success', text: 'تم حذف مستوى المحكمة بنجاح' });
     } catch (error) {
       setError(error);
@@ -103,7 +103,7 @@ const CourtLevel = ({ show, handleClose }) => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = courtLevels.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
 
@@ -154,7 +154,7 @@ const CourtLevel = ({ show, handleClose }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {currentItems.map((courtLevel) => (
+                    {currentItems.map(courtLevel => (
                       <tr className="table-row-courts" key={courtLevel.id}>
                         <td>{courtLevel.name}</td>
                         <td>
@@ -164,7 +164,7 @@ const CourtLevel = ({ show, handleClose }) => {
                               handleDeleteCourtLevel(
                                 courtLevel.id,
                                 courtLevel.name,
-                                'court_levels'
+                                'court_levels',
                               )
                             }
                           >
@@ -201,7 +201,7 @@ const CourtLevel = ({ show, handleClose }) => {
               <Form.Control
                 type="text"
                 value={newCourtLevelName}
-                onChange={(e) => setNewCourtLevelName(e.target.value)}
+                onChange={e => setNewCourtLevelName(e.target.value)}
               />
               {modalMessage && (
                 <Alert variant={modalMessage.type}>{modalMessage.text}</Alert>

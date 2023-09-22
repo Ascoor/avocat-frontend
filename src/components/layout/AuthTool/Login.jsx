@@ -15,7 +15,7 @@ const Login = ({ handleCloseForm }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
     setLoading(true);
 
@@ -78,7 +78,7 @@ const Login = ({ handleCloseForm }) => {
               type="text"
               placeholder="Enter your username or email"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={e => setUsername(e.target.value)}
               className="username-input" // Add the class here
             />
           </Form.Group>
@@ -89,7 +89,7 @@ const Login = ({ handleCloseForm }) => {
               type="password"
               placeholder="Enter your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               className="password-input" // Add the class here
             />
           </Form.Group>

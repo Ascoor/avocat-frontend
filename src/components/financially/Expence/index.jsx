@@ -18,12 +18,12 @@ const ExpenseIndex = () => {
   useEffect(() => {
     axios
       .get(`${API_CONFIG.baseURL}/api/expense_categories`)
-      .then((response) => {
+      .then(response => {
         // Your data seems to be an array within an array. Destructuring it here.
         const [categories] = response.data;
         setExpenseCategories(categories || []);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error fetching expense categories:', error);
       });
   }, []);
@@ -34,7 +34,7 @@ const ExpenseIndex = () => {
       // ...
 
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/expenses/${identifier}`
+        `${API_CONFIG.baseURL}/api/expenses/${identifier}`,
       );
       setExpenses(response.data.expenses_by_leg_case || []);
     } catch (error) {
@@ -55,13 +55,13 @@ const ExpenseIndex = () => {
               <FormControl
                 type="text"
                 placeholder="إبحث برقم ملف القضية أو الخدمة"
-                onChange={(e) => setIdentifier(e.target.value)}
+                onChange={e => setIdentifier(e.target.value)}
               />
             </Col>
             <Col xs={12} md={6} lg={6} className="text-center text-md">
-              <Form.Select onChange={(e) => setCategory(e.target.value)}>
+              <Form.Select onChange={e => setCategory(e.target.value)}>
                 <option>اختر نوع المصروف</option>
-                {expenseCategories.map((cat) => (
+                {expenseCategories.map(cat => (
                   <option key={cat.id} value={cat.id}>
                     {cat.name}
                   </option>
@@ -75,7 +75,7 @@ const ExpenseIndex = () => {
               {/* Added DatePicker for date range filter */}
               <DatePicker
                 selected={startDate}
-                onChange={(date) => setStartDate(date)}
+                onChange={date => setStartDate(date)}
                 placeholderText="بدأ من تاريخ"
                 dateFormat="yyyy-MM-dd"
                 isClearable
@@ -85,7 +85,7 @@ const ExpenseIndex = () => {
             <Col xs={12} md={6} lg={6} className="text-center text-md p-4">
               <DatePicker
                 selected={endDate}
-                onChange={(date) => setEndDate(date)}
+                onChange={date => setEndDate(date)}
                 placeholderText="حتى تاريخ"
                 dateFormat="yyyy-MM-dd"
                 isClearable
@@ -118,7 +118,7 @@ const ExpenseIndex = () => {
                 </tr>
               </thead>
               <tbody>
-                {expenses.map((expense) => {
+                {expenses.map(expense => {
                   const amountObj = JSON.parse(expense.amount || '{}'); // Parse JSON, provide empty object as fallback
                   return (
                     <tr key={expense.id}>

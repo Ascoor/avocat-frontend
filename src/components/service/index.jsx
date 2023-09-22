@@ -32,12 +32,12 @@ const Services = () => {
     setShowModal(true);
   };
 
-  const handleEditService = (service) => {
+  const handleEditService = service => {
     setEditingService(service);
     setShowModal(true);
   };
 
-  const handleDeleteService = async (serviceId) => {
+  const handleDeleteService = async serviceId => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/services/${serviceId}`);
       // After deleting a service, fetch services again to update the list
@@ -81,7 +81,7 @@ const Services = () => {
                 </tr>
               </thead>
               <tbody>
-                {services.map((service) => (
+                {services.map(service => (
                   <tr key={service.id}>
                     <td>{service.service_no}</td>
                     <td>{service.service_name}</td>

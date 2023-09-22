@@ -48,10 +48,10 @@ const LegalAd = ({ legCaseId }) => {
     fetchLegalAdTypes();
   }, [legCaseId]);
 
-  const fetchLegalAds = async (legCaseId) => {
+  const fetchLegalAds = async legCaseId => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal_ads?legCaseId=${legCaseId}`
+        `${API_CONFIG.baseURL}/api/legal_ads?legCaseId=${legCaseId}`,
       );
       setLegalAds(response.data);
     } catch (error) {
@@ -80,7 +80,7 @@ const LegalAd = ({ legCaseId }) => {
   const fetchLegalAdTypes = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal_ad_types`
+        `${API_CONFIG.baseURL}/api/legal_ad_types`,
       );
       setLegalAdTypes(response.data);
     } catch (error) {
@@ -92,12 +92,12 @@ const LegalAd = ({ legCaseId }) => {
     setModalMode('add');
     setShowAddLegalAdModal(true);
   };
-  const handleEditLegalAd = (legalAd) => {
+  const handleEditLegalAd = legalAd => {
     setModalMode('edit');
     setLegalAdId(legalAd.id);
     setSelectedSendDate(legalAd.sendDate ? new Date(legalAd.sendDate) : null);
     setSelectedRecivedDate(
-      legalAd.receive_date ? new Date(legalAd.receive_date) : null
+      legalAd.receive_date ? new Date(legalAd.receive_date) : null,
     );
     setSelectedSendLawyer(legalAd.sendLawyer);
     setSelectedLegalAd(legalAd.legalAd);
@@ -112,7 +112,7 @@ const LegalAd = ({ legCaseId }) => {
     setShowAddLegalAdModal(true);
   };
 
-  const handleDeleteLegalAd = async (legalAdId) => {
+  const handleDeleteLegalAd = async legalAdId => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/legal_ads/${legalAdId}`);
       fetchLegalAds(legCaseId);
@@ -231,7 +231,7 @@ const LegalAd = ({ legCaseId }) => {
               </tr>
             </thead>
             <tbody>
-              {legalAds.map((legalAd) => (
+              {legalAds.map(legalAd => (
                 <tr key={legalAd.id}>
                   <td>{legalAd.legal_ad_type?.name}</td>
                   <td>{legalAd.send_date}</td>
@@ -281,10 +281,10 @@ const LegalAd = ({ legCaseId }) => {
                   <Form.Control
                     as="select"
                     value={selectedLegalAdType}
-                    onChange={(e) => setSelectedLegalAdType(e.target.value)}
+                    onChange={e => setSelectedLegalAdType(e.target.value)}
                   >
                     <option value="">اختر نوع الإعلان</option>
-                    {legalAdTypes.map((adType) => (
+                    {legalAdTypes.map(adType => (
                       <option key={adType.id} value={adType.id}>
                         {adType.name}
                       </option>
@@ -296,10 +296,10 @@ const LegalAd = ({ legCaseId }) => {
                   <Form.Control
                     as="select"
                     value={selectedCourt}
-                    onChange={(e) => setSelectedCourt(e.target.value)}
+                    onChange={e => setSelectedCourt(e.target.value)}
                   >
                     <option value="">اختر المحكمة</option>
-                    {courts.map((court) => (
+                    {courts.map(court => (
                       <option key={court.id} value={court.id}>
                         {court.name}
                       </option>
@@ -312,7 +312,7 @@ const LegalAd = ({ legCaseId }) => {
                     as="textarea"
                     rows={3}
                     value={selectedDescription}
-                    onChange={(e) => setSelectedDescription(e.target.value)}
+                    onChange={e => setSelectedDescription(e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group controlId="sendDate">
@@ -322,7 +322,7 @@ const LegalAd = ({ legCaseId }) => {
                     className="form-control"
                     dateFormat="yyyy-MM-dd"
                     selected={selectedSendDate}
-                    onChange={(date) => setSelectedSendDate(date)}
+                    onChange={date => setSelectedSendDate(date)}
                   />
                 </Form.Group>
                 <Form.Group controlId="legalAdCost">
@@ -331,7 +331,7 @@ const LegalAd = ({ legCaseId }) => {
                     type="number"
                     placeholder="ادخل التكلفة"
                     value={selectedCost}
-                    onChange={(e) => setSelectedCost(e.target.value)}
+                    onChange={e => setSelectedCost(e.target.value)}
                   />
                 </Form.Group>
 
@@ -340,11 +340,11 @@ const LegalAd = ({ legCaseId }) => {
                   <Form.Control
                     as="select"
                     value={selectedSendLawyer}
-                    onChange={(e) => setSelectedSendLawyer(e.target.value)}
+                    onChange={e => setSelectedSendLawyer(e.target.value)}
                     required
                   >
                     <option value="">اختر المحامي</option>
-                    {lawyers.map((lawyer) => (
+                    {lawyers.map(lawyer => (
                       <option key={lawyer.id} value={lawyer.id}>
                         {lawyer.name}
                       </option>
@@ -363,7 +363,7 @@ const LegalAd = ({ legCaseId }) => {
                     className="form-control"
                     dateFormat="yyyy-MM-dd"
                     selected={selectedRecivedDate}
-                    onChange={(date) => setSelectedRecivedDate(date)}
+                    onChange={date => setSelectedRecivedDate(date)}
                   />
                 </Form.Group>
 
@@ -373,7 +373,7 @@ const LegalAd = ({ legCaseId }) => {
                     type="number"
                     placeholder="ادخل التكلفة 2"
                     value={selectedCost2 | ''}
-                    onChange={(e) => setSelectedCost2(e.target.value)}
+                    onChange={e => setSelectedCost2(e.target.value)}
                   />
                 </Form.Group>
 
@@ -382,7 +382,7 @@ const LegalAd = ({ legCaseId }) => {
                   <Form.Control
                     as="select"
                     value={selectedStatus}
-                    onChange={(e) => setSelectedStatus(e.target.value)}
+                    onChange={e => setSelectedStatus(e.target.value)}
                   >
                     <option value="">اختر الحالة</option>
                     <option value="قيد التجهيز">قيد التجهيز</option>
@@ -395,10 +395,10 @@ const LegalAd = ({ legCaseId }) => {
                   <Form.Control
                     as="select"
                     value={selectedRecivedLawyer}
-                    onChange={(e) => setSelectedRecivedLawyer(e.target.value)}
+                    onChange={e => setSelectedRecivedLawyer(e.target.value)}
                   >
                     <option value="">اختر المحامي</option>
-                    {lawyers.map((lawyer) => (
+                    {lawyers.map(lawyer => (
                       <option key={lawyer.id} value={lawyer.id}>
                         {lawyer.name}
                       </option>
@@ -410,7 +410,7 @@ const LegalAd = ({ legCaseId }) => {
                   <Form.Control
                     type="text"
                     value={selectedResults}
-                    onChange={(e) => setSelectedResults(e.target.value)}
+                    onChange={e => setSelectedResults(e.target.value)}
                   />
                 </Form.Group>
               </>

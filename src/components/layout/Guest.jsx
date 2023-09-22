@@ -218,7 +218,7 @@ const Guest = () => {
                   </Card>
                 </div>
               </animated.div>
-            ) : null
+            ) : null,
           )}
         </div>
       </header>

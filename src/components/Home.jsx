@@ -98,9 +98,7 @@ const Home = () => {
   const [showResults, setShowResults] = useState(false); // State to determine whether search results should be displayed or not
   const [searchType, setSearchType] = useState('clients'); // State to store the selected search type
   const [setEvents] = useState([]);
-  useEffect(() => {
-  
-  }, []);
+  useEffect(() => {}, []);
   useEffect(() => {
     fetchOfficeCount();
   }, []);
@@ -108,7 +106,7 @@ const Home = () => {
   const fetchOfficeCount = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/all_count_office`
+        `${API_CONFIG.baseURL}/api/all_count_office`,
       );
       setClientCount(response.data.client_count);
       setLegCaseCount(response.data.leg_case_count);
@@ -120,7 +118,7 @@ const Home = () => {
     }
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async e => {
     e.preventDefault();
     handleSearch();
   };
@@ -149,7 +147,7 @@ const Home = () => {
     }
   };
 
-  const handleSearchInputChange = (e) => {
+  const handleSearchInputChange = e => {
     setSearchText(e.target.value);
   };
 
@@ -252,7 +250,7 @@ const Home = () => {
                     name="searchType"
                     value="clients"
                     checked={searchType === 'clients'}
-                    onChange={(e) => setSearchType(e.target.value)}
+                    onChange={e => setSearchType(e.target.value)}
                   />
                   <Form.Check
                     type="radio"
@@ -260,7 +258,7 @@ const Home = () => {
                     name="searchType"
                     value="legCases"
                     checked={searchType === 'legCases'}
-                    onChange={(e) => setSearchType(e.target.value)}
+                    onChange={e => setSearchType(e.target.value)}
                   />
                 </Form.Group>
 

@@ -76,7 +76,7 @@ const Register = ({ handleCloseForm }) => {
                 type="text"
                 placeholder="ادخل الاسم"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={e => setName(e.target.value)}
               />
             </Col>
             <Col xs={12} md={6} className="mb-3">
@@ -87,7 +87,7 @@ const Register = ({ handleCloseForm }) => {
                 type="email"
                 placeholder="ادخل البريد الإلكتروني"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
               />
             </Col>
           </Row>
@@ -101,7 +101,7 @@ const Register = ({ handleCloseForm }) => {
                 type="password"
                 placeholder="ادخل كلمة المرور"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
               />
             </Col>
             <Col xs={12} md={6} className="mb-3">
@@ -112,7 +112,7 @@ const Register = ({ handleCloseForm }) => {
                 type="password"
                 placeholder="إعادة إدخال كلمة المرور"
                 value={rePassword}
-                onChange={(e) => setRePassword(e.target.value)}
+                onChange={e => setRePassword(e.target.value)}
               />
             </Col>
           </Row>

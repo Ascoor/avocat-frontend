@@ -36,13 +36,13 @@ const AddEditClient = () => {
   const [alertVariant, setAlertVariant] = useState('');
   const datepickerRef = useRef(null);
 
-  const isValidDate = (date) => {
+  const isValidDate = date => {
     return date instanceof Date && !isNaN(date);
   };
   const fetchClient = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/clients/${id}`
+        `${API_CONFIG.baseURL}/api/clients/${id}`,
       );
       const { client } = response.data;
       setSlug(client.slug);
@@ -80,7 +80,7 @@ const AddEditClient = () => {
       }, 3000);
     }
   }, [alertMessage, alertVariant]);
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     // Form field validation
     if (
@@ -179,7 +179,7 @@ const AddEditClient = () => {
                   type="text"
                   placeholder="أدخل الرمز"
                   value={slug}
-                  onChange={(e) => setSlug(e.target.value)}
+                  onChange={e => setSlug(e.target.value)}
                 />
               </Form.Group>
             </Col>
@@ -194,7 +194,7 @@ const AddEditClient = () => {
                   type="text"
                   placeholder="أدخل الاسم"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                 />
               </Form.Group>
             </Col>
@@ -208,7 +208,7 @@ const AddEditClient = () => {
                   type="text"
                   placeholder="أدخل رقم الهوية"
                   value={identityNumber}
-                  onChange={(e) => setIdentityNumber(e.target.value)}
+                  onChange={e => setIdentityNumber(e.target.value)}
                   maxLength={14}
                 />
               </Form.Group>
@@ -222,7 +222,7 @@ const AddEditClient = () => {
                   type="text"
                   placeholder="أدخل العنوان"
                   value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  onChange={e => setAddress(e.target.value)}
                 />
               </Form.Group>
             </Col>
@@ -237,7 +237,7 @@ const AddEditClient = () => {
                   type="tel"
                   placeholder="أدخل رقم الهاتف"
                   value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  onChange={e => setPhoneNumber(e.target.value)}
                 />
               </Form.Group>
             </Col>
@@ -248,7 +248,7 @@ const AddEditClient = () => {
                 <Form.Control
                   as="select"
                   value={gender}
-                  onChange={(e) => setGender(e.target.value)}
+                  onChange={e => setGender(e.target.value)}
                 >
                   <option value="ذكر">ذكر</option>
                   <option value="أنثى">أنثى</option>
@@ -262,7 +262,7 @@ const AddEditClient = () => {
                 </Form.Label>
                 <DatePicker
                   selected={dateOfBirth}
-                  onChange={(date) => setDateOfBirth(date)}
+                  onChange={date => setDateOfBirth(date)}
                   locale="ar"
                   showYearDropdown
                   scrollableYearDropdown
@@ -284,7 +284,7 @@ const AddEditClient = () => {
                   as="select"
                   placeholder="أدخل الديانة"
                   value={religion}
-                  onChange={(e) => setReligion(e.target.value)}
+                  onChange={e => setReligion(e.target.value)}
                 >
                   <option value="">اختر الديانة</option>
                   <option value="مسلم">مسلم</option>
@@ -303,7 +303,7 @@ const AddEditClient = () => {
                   type="email"
                   placeholder="أدخل البريد الإلكتروني"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                 />
               </Form.Group>
             </Col>
@@ -317,7 +317,7 @@ const AddEditClient = () => {
                   type="text"
                   placeholder="أدخل العمل"
                   value={work}
-                  onChange={(e) => setWork(e.target.value)}
+                  onChange={e => setWork(e.target.value)}
                 />
               </Form.Group>
             </Col>
@@ -331,7 +331,7 @@ const AddEditClient = () => {
                   type="tel"
                   placeholder="أدخل رقم الطوارئ"
                   value={emergencyNumber}
-                  onChange={(e) => setEmergencyNumber(e.target.value)}
+                  onChange={e => setEmergencyNumber(e.target.value)}
                 />
               </Form.Group>
             </Col>

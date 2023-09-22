@@ -48,7 +48,7 @@ export default function CourtType({ show, handleClose }) {
     try {
       const response = await axios.post(
         `${API_CONFIG.baseURL}/api/court_types`,
-        { name: newCourtTypeName }
+        { name: newCourtTypeName },
       );
       setCourtTypes([...courtTypes, response.data]);
       setAlertMessage({ type: 'success', text: 'تم اضافة نوع المحكمة بنجاح' });
@@ -66,7 +66,7 @@ export default function CourtType({ show, handleClose }) {
   const handleDeleteCourtType = async (id, name, type) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/court_types/${id}`);
-      setCourtTypes(courtTypes.filter((courtType) => courtType.id !== id));
+      setCourtTypes(courtTypes.filter(courtType => courtType.id !== id));
       setAlertMessage({ type: 'success', text: 'تم حذف نوع المحكمة بنجاح' });
     } catch (error) {
       setError(error);
@@ -81,7 +81,7 @@ export default function CourtType({ show, handleClose }) {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = courtTypes.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
   const handleCloseModal = () => {
@@ -130,7 +130,7 @@ export default function CourtType({ show, handleClose }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {currentItems.map((courtType) => (
+                    {currentItems.map(courtType => (
                       <tr className="table-row-courts" key={courtType.id}>
                         <td>{courtType.name}</td>
                         <td>
@@ -140,7 +140,7 @@ export default function CourtType({ show, handleClose }) {
                               handleDeleteCourtType(
                                 courtType.id,
                                 courtType.name,
-                                'court_types'
+                                'court_types',
                               )
                             }
                           >
@@ -176,7 +176,7 @@ export default function CourtType({ show, handleClose }) {
               <Form.Control
                 type="text"
                 value={newCourtTypeName}
-                onChange={(e) => {
+                onChange={e => {
                   setNewCourtTypeName(e.target.value);
                   setCourtTypeAlert(null); // Clear the alert message when the user types
                 }}

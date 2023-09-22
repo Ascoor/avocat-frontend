@@ -30,23 +30,23 @@ const ServiceProcedureList = ({ serviceId }) => {
   const fetchServiceProcedures = async () => {
     try {
       const response = await axios.get(
-        API_CONFIG.baseURL + `/api/service-procedures/${serviceId}`
+        API_CONFIG.baseURL + `/api/service-procedures/${serviceId}`,
       );
       setServiceProcedures(response.data);
     } catch (error) {
       console.error('Error fetching procedures:', error);
     }
   };
-  const handleEditServiceProcedure = (procedure) => {
+  const handleEditServiceProcedure = procedure => {
     setIsEditing(true);
     setEditingServiceProcedure(procedure);
     setShowModal(true);
   };
 
-  const handleDeleteServiceProcedure = async (procedureId) => {
+  const handleDeleteServiceProcedure = async procedureId => {
     try {
       await axios.delete(
-        API_CONFIG.baseURL + `/api/service-procedure/delete/${procedureId}`
+        API_CONFIG.baseURL + `/api/service-procedure/delete/${procedureId}`,
       );
       fetchServiceProcedures();
     } catch (error) {
@@ -58,11 +58,11 @@ const ServiceProcedureList = ({ serviceId }) => {
     setEditingServiceProcedure(null);
     setShowModal(true);
   };
-  const addServiceProcedure = async (data) => {
+  const addServiceProcedure = async data => {
     try {
       const response = await axios.post(
         API_CONFIG.baseURL + '/api/service-procedures',
-        data
+        data,
       );
       fetchServiceProcedures(); // Reload the list of service procedures
       setShowModal(false); // Close the modal
@@ -75,7 +75,7 @@ const ServiceProcedureList = ({ serviceId }) => {
     try {
       const response = await axios.put(
         API_CONFIG.baseURL + `/api/service-procedure/${procedureId}`,
-        data
+        data,
       );
       fetchServiceProcedures(); // Reload the list of service procedures
       setShowModal(false); // Close the modal
@@ -123,13 +123,13 @@ const ServiceProcedureList = ({ serviceId }) => {
               </tr>
             </thead>
             <tbody>
-              {serviceProcedures.map((procedure) => (
+              {serviceProcedures.map(procedure => (
                 <tr key={procedure.id}>
                   <td>{procedure.title}</td>
                   <td>
                     {procedure.date_start
                       ? new Date(procedure.date_start).toLocaleDateString(
-                          'ar-EG'
+                          'ar-EG',
                         )
                       : ''}
                   </td>

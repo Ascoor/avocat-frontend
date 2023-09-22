@@ -29,7 +29,7 @@ function Auth() {
   };
 
   // Add a click event listener to the sidebar to close it
-  const handleSidebarClick = (e) => {
+  const handleSidebarClick = e => {
     // Prevent the click event from propagating to the parent elements
     e.stopPropagation();
     setSidebarOpen(false);

@@ -41,7 +41,7 @@ const LegCaseCreate = () => {
     const fetchFormData = async () => {
       try {
         const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/leg-cases/create`
+          `${API_CONFIG.baseURL}/api/leg-cases/create`,
         );
         setCaseTypes(response.data.caseTypes);
         setCaseSubTypes(response.data.caseSubTypes);
@@ -54,20 +54,20 @@ const LegCaseCreate = () => {
     fetchFormData();
   }, []);
 
-  const handleCaseTypeChange = (event) => {
+  const handleCaseTypeChange = event => {
     const caseTypeId = event.target.value;
     setSelectedCaseType(caseTypeId);
 
     // Fetch case sub types based on selected case type
     axios
       .get(`${API_CONFIG.baseURL}/api/case-types/${caseTypeId}/sub-types`)
-      .then((response) => {
+      .then(response => {
         setCaseSubTypes(response.data);
       })
-      .catch((error) => console.log(error));
+      .catch(error => console.log(error));
   };
 
-  const handleCaseSubTypeChange = (event) => {
+  const handleCaseSubTypeChange = event => {
     const caseSubTypeId = event.target.value;
     setSelectedCaseSubType(caseSubTypeId);
   };
@@ -76,10 +76,8 @@ const LegCaseCreate = () => {
     setLegCaseClients([...legCaseClients, { client_id: '' }]);
   };
 
-  const handleRemoveClient = (index) => {
-    setLegCaseClients((prevClients) =>
-      prevClients.filter((_, i) => i !== index)
-    );
+  const handleRemoveClient = index => {
+    setLegCaseClients(prevClients => prevClients.filter((_, i) => i !== index));
   };
 
   const handleClientChange = (index, key, value) => {
@@ -94,8 +92,8 @@ const LegCaseCreate = () => {
     ]);
   };
 
-  const handleRemoveCourt = (index) => {
-    setLegCaseCourts((prevCourts) => prevCourts.filter((_, i) => i !== index));
+  const handleRemoveCourt = index => {
+    setLegCaseCourts(prevCourts => prevCourts.filter((_, i) => i !== index));
   };
 
   const handleCourtChange = (index, key, value) => {
@@ -104,7 +102,7 @@ const LegCaseCreate = () => {
     setLegCaseCourts(updatedCourts);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -128,7 +126,7 @@ const LegCaseCreate = () => {
       try {
         const response = await axios.post(
           `${API_CONFIG.baseURL}/api/leg_cases`,
-          caseData
+          caseData,
         );
         if (response.status === 201) {
           setMessage('Case created successfully!');
@@ -168,7 +166,7 @@ const LegCaseCreate = () => {
                 <Form.Control
                   value={slug}
                   type="text"
-                  onChange={(e) => setSlug(e.target.value)}
+                  onChange={e => setSlug(e.target.value)}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
@@ -185,7 +183,7 @@ const LegCaseCreate = () => {
                   required
                 >
                   <option value="">اختر نوع القضية</option>
-                  {caseTypes.map((caseType) => (
+                  {caseTypes.map(caseType => (
                     <option key={caseType.id} value={caseType.id}>
                       {caseType.name}
                     </option>
@@ -207,7 +205,7 @@ const LegCaseCreate = () => {
                   required
                 >
                   <option value="">اختر نوع القضية الفرعي</option>
-                  {caseSubTypes.map((caseSubType) => (
+                  {caseSubTypes.map(caseSubType => (
                     <option key={caseSubType.id} value={caseSubType.id}>
                       {decodeURIComponent(caseSubType.name)}
                     </option>
@@ -221,7 +219,7 @@ const LegCaseCreate = () => {
                 <Form.Control
                   as="select"
                   value={status[0]}
-                  onChange={(e) => setStatus([e.target.value])} // Wrap the selected value in an array
+                  onChange={e => setStatus([e.target.value])} // Wrap the selected value in an array
                   required
                 >
                   <option value="">حالة القضية</option>
@@ -242,7 +240,7 @@ const LegCaseCreate = () => {
                 <Form.Control
                   as="select"
                   value={client_capacity}
-                  onChange={(e) => setClientCapacity(e.target.value)}
+                  onChange={e => setClientCapacity(e.target.value)}
                   required
                 >
                   <option value="">اختر الصفة</option>
@@ -279,13 +277,13 @@ const LegCaseCreate = () => {
                       <Form.Control
                         as="select"
                         value={client.client_id}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleClientChange(index, 'client_id', e.target.value)
                         }
                         required
                       >
                         <option value="">اختر العميل</option>
-                        {clientOptions.map((option) => (
+                        {clientOptions.map(option => (
                           <option key={option.id} value={option.id}>
                             {option.name}
                           </option>
@@ -330,11 +328,11 @@ const LegCaseCreate = () => {
                       <Form.Control
                         type="text"
                         value={court.case_number}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleCourtChange(
                             index,
                             'case_number',
-                            e.target.value
+                            e.target.value,
                           )
                         }
                         required
@@ -350,7 +348,7 @@ const LegCaseCreate = () => {
                       <Form.Control
                         as="select"
                         value={court.case_year || ''}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleCourtChange(index, 'case_year', e.target.value)
                         }
                         required
@@ -376,13 +374,13 @@ const LegCaseCreate = () => {
                       <Form.Control
                         as="select"
                         value={court.court_id}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleCourtChange(index, 'court_id', e.target.value)
                         }
                         required
                       >
                         <option value="">اختر المحكمة</option>
-                        {courtOptions.map((option) => (
+                        {courtOptions.map(option => (
                           <option key={option.id} value={option.id}>
                             {option.name}
                           </option>
@@ -397,11 +395,11 @@ const LegCaseCreate = () => {
                       <Form.Control
                         as="select"
                         value={court.judge_level}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleCourtChange(
                             index,
                             'judge_level',
-                            e.target.value
+                            e.target.value,
                           )
                         }
                         required
@@ -437,7 +435,7 @@ const LegCaseCreate = () => {
                 <Form.Control
                   type="text"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={e => setTitle(e.target.value)}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
@@ -452,7 +450,7 @@ const LegCaseCreate = () => {
                   as="textarea"
                   rows={3}
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={e => setDescription(e.target.value)}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
@@ -469,7 +467,7 @@ const LegCaseCreate = () => {
                 <Form.Control
                   type="text"
                   value={litigants_name}
-                  onChange={(e) => setLitigantsName(e.target.value)}
+                  onChange={e => setLitigantsName(e.target.value)}
                 />
               </Form.Group>
             </Col>
@@ -479,7 +477,7 @@ const LegCaseCreate = () => {
                 <Form.Control
                   type="text"
                   value={litigants_phone}
-                  onChange={(e) => setLitigantsPhone(e.target.value)}
+                  onChange={e => setLitigantsPhone(e.target.value)}
                 />
               </Form.Group>
             </Col>

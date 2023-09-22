@@ -27,13 +27,13 @@ const CustomPagination = ({
 
   const pages = Array.from(
     { length: endPage - startPage + 1 },
-    (_, i) => startPage + i
+    (_, i) => startPage + i,
   );
 
   return (
     <Pagination>
       <Pagination.Prev onClick={handlePrevious} />
-      {pages.map((page) => (
+      {pages.map(page => (
         <Pagination.Item
           key={page}
           active={page === currentPage}

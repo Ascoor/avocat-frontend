@@ -18,13 +18,13 @@ const ProfileUser = () => {
   useEffect(() => {
     axios
       .get(`${API_CONFIG.baseURL}/api/user/${userId}`)
-      .then((response) => {
+      .then(response => {
         const userData = response.data;
         setName(userData.name);
         setEmail(userData.email);
         setRole(userData.role);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error.response.data);
       });
   }, [userId]);
@@ -50,13 +50,13 @@ const ProfileUser = () => {
 
     axios
       .put(`${API_CONFIG.baseURL}/api/user/${userId}`, updatedData)
-      .then((response) => {
+      .then(response => {
         console.log(response.data);
         setAlertMessage('تم التحديث بنجاح');
         setAlertVariant('success');
         setShowAlert(true);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error.response.data);
         setAlertMessage('لم يتم تحديث البيانات');
         setAlertVariant('danger');
@@ -64,7 +64,7 @@ const ProfileUser = () => {
       });
   };
 
-  const generateUniqueId = (fieldName) => `${fieldName}-${userId}`;
+  const generateUniqueId = fieldName => `${fieldName}-${userId}`;
   useEffect(() => {
     let timer;
     if (showAlert) {
@@ -101,7 +101,7 @@ const ProfileUser = () => {
                     className="form-control"
                     id={generateUniqueId('name')}
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={e => setName(e.target.value)}
                   />
                 </div>
               </Col>
@@ -117,7 +117,7 @@ const ProfileUser = () => {
                     className="form-control"
                     id={generateUniqueId('email')}
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                   />
                 </div>
               </Col>
@@ -133,7 +133,7 @@ const ProfileUser = () => {
                     className="form-control"
                     id={generateUniqueId('password')}
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value)}
                   />
                 </div>
               </Col>
@@ -147,7 +147,7 @@ const ProfileUser = () => {
                     className="form-control"
                     id={generateUniqueId('confirmPassword')}
                     value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onChange={e => setConfirmPassword(e.target.value)}
                   />
                 </div>
               </Col>
@@ -160,7 +160,7 @@ const ProfileUser = () => {
                     className="form-control"
                     id={generateUniqueId('role')}
                     value={role}
-                    onChange={(e) => setRole(e.target.value)}
+                    onChange={e => setRole(e.target.value)}
                   >
                     <option value="">اختر الدور</option>
                     <option value="1">مدير</option>

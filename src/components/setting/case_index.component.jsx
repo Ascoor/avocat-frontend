@@ -38,16 +38,16 @@ const CaseType = () => {
   const fetchData = async () => {
     try {
       const procedureTypesResponse = await axios.get(
-        `${API_CONFIG.baseURL}/api/procedure_types/`
+        `${API_CONFIG.baseURL}/api/procedure_types/`,
       );
       const caseTypesResponse = await axios.get(
-        `${API_CONFIG.baseURL}/api/case_types/`
+        `${API_CONFIG.baseURL}/api/case_types/`,
       );
       const caseSubTypesResponse = await axios.get(
-        `${API_CONFIG.baseURL}/api/case_sub_types/`
+        `${API_CONFIG.baseURL}/api/case_sub_types/`,
       );
       const legalAdTypesResponse = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal_ad_types/`
+        `${API_CONFIG.baseURL}/api/legal_ad_types/`,
       );
 
       setProcedureTypes(procedureTypesResponse.data);
@@ -70,7 +70,7 @@ const CaseType = () => {
         setNewProcedureTypeName('');
         fetchData();
       })
-      .catch((error) => {
+      .catch(error => {
         setError('Error adding Procedure Type');
         console.error('Error adding Procedure Type: ', error);
       });
@@ -86,7 +86,7 @@ const CaseType = () => {
         setNewCaseTypeName('');
         fetchData();
       })
-      .catch((error) => {
+      .catch(error => {
         setError('Error adding Case Type');
         console.error('Error adding Case Type: ', error);
       });
@@ -104,7 +104,7 @@ const CaseType = () => {
         setNewCaseTypeId('');
         fetchData();
       })
-      .catch((error) => {
+      .catch(error => {
         setError('Error adding Case Sub Type');
         console.error('Error adding Case Sub Type: ', error);
       });
@@ -119,7 +119,7 @@ const CaseType = () => {
         setNewAdType('');
         fetchData();
       })
-      .catch((error) => {
+      .catch(error => {
         setError('Error adding legal ad type');
         console.error('Error adding legal ad type: ', error);
       });
@@ -161,7 +161,7 @@ const CaseType = () => {
 
     axios
       .delete(`${API_CONFIG.baseURL}/api/${tableName}/${id}`)
-      .then((response) => {
+      .then(response => {
         if (response.status === 204) {
           alert(`${message} "${name}" deleted successfully`);
 
@@ -183,7 +183,7 @@ const CaseType = () => {
           throw new Error('Failed to delete');
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Failed to delete', error);
         alert(`Failed to delete ${message} "${name}". Please try again later.`);
       });
@@ -251,7 +251,7 @@ const CaseType = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {caseTypes.map((caseType) => (
+                    {caseTypes.map(caseType => (
                       <tr
                         style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
                         key={caseType.id}
@@ -264,7 +264,7 @@ const CaseType = () => {
                               handleDelete(
                                 caseType.id,
                                 caseType.name,
-                                'case_types'
+                                'case_types',
                               )
                             }
                           >
@@ -291,7 +291,7 @@ const CaseType = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {caseSubTypes.map((caseSubType) => (
+                    {caseSubTypes.map(caseSubType => (
                       <tr
                         style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
                         key={caseSubType.id}
@@ -305,7 +305,7 @@ const CaseType = () => {
                               handleDelete(
                                 caseSubType.id,
                                 caseSubType.name,
-                                'case_sub_types'
+                                'case_sub_types',
                               )
                             }
                           >
@@ -333,7 +333,7 @@ const CaseType = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {procedureTypes.map((procedureType) => (
+                    {procedureTypes.map(procedureType => (
                       <tr
                         style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
                         key={procedureType.id}
@@ -346,7 +346,7 @@ const CaseType = () => {
                               handleDelete(
                                 procedureType.id,
                                 procedureType.name,
-                                'procedure_types'
+                                'procedure_types',
                               )
                             }
                           >
@@ -372,7 +372,7 @@ const CaseType = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {legalAdTypes.map((adType) => (
+                    {legalAdTypes.map(adType => (
                       <tr key={adType.id}>
                         <td>{adType.name}</td>
                         <td>
@@ -382,7 +382,7 @@ const CaseType = () => {
                               handleDelete(
                                 adType.id,
                                 adType.name,
-                                'legal_ad_types'
+                                'legal_ad_types',
                               )
                             }
                           >
@@ -410,7 +410,7 @@ const CaseType = () => {
                   type="text"
                   id="CaseTypeName"
                   value={newCaseTypeName}
-                  onChange={(e) => setNewCaseTypeName(e.target.value)}
+                  onChange={e => setNewCaseTypeName(e.target.value)}
                 />
               </form>
             </Modal.Body>
@@ -439,10 +439,10 @@ const CaseType = () => {
                 <select
                   id="CaseTypeId"
                   value={newCaseTypeId}
-                  onChange={(e) => setNewCaseTypeId(e.target.value)}
+                  onChange={e => setNewCaseTypeId(e.target.value)}
                 >
                   <option value="">اختر نوع الحالة</option>
-                  {caseTypes.map((caseType) => (
+                  {caseTypes.map(caseType => (
                     <option key={caseType.id} value={caseType.id}>
                       {caseType.name}
                     </option>
@@ -454,7 +454,7 @@ const CaseType = () => {
                   type="text"
                   id="CaseSubTypeName"
                   value={newCaseSubTypeName}
-                  onChange={(e) => setNewCaseSubTypeName(e.target.value)}
+                  onChange={e => setNewCaseSubTypeName(e.target.value)}
                 />
               </form>
             </Modal.Body>
@@ -485,7 +485,7 @@ const CaseType = () => {
                   type="text"
                   id="ProcedureTypeName"
                   value={newProcedureTypeName}
-                  onChange={(e) => setNewProcedureTypeName(e.target.value)}
+                  onChange={e => setNewProcedureTypeName(e.target.value)}
                 />
               </form>
             </Modal.Body>
@@ -540,7 +540,7 @@ const CaseType = () => {
                     type="text"
                     id="LegalAdTypeName"
                     value={newAdType}
-                    onChange={(e) => setNewAdType(e.target.value)}
+                    onChange={e => setNewAdType(e.target.value)}
                   />
                 </form>
               </Modal.Body>

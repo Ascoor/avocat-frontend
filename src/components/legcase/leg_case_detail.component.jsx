@@ -23,7 +23,7 @@ export default function LegCaseDetail() {
     const fetchLegCase = async () => {
       try {
         const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/leg_cases/${id}`
+          `${API_CONFIG.baseURL}/api/leg_cases/${id}`,
         );
         setLegCase(response.data.leg_case);
         setLegCaseCourts(response.data.leg_case.courts);
@@ -35,7 +35,7 @@ export default function LegCaseDetail() {
     const fetchFormData = async () => {
       try {
         const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/leg-cases/create`
+          `${API_CONFIG.baseURL}/api/leg-cases/create`,
         );
 
         setCourts(response.data.courts);
@@ -49,16 +49,14 @@ export default function LegCaseDetail() {
   }, [id]);
 
   const handleAddNewCourt = (index, field, value) => {
-    setLegCaseNewCourts((prevCourts) => [
+    setLegCaseNewCourts(prevCourts => [
       ...prevCourts,
       { case_number: '', case_year: '', court_id: '', judge_level: '' },
     ]);
   };
 
-  const handleRemoveNewCourt = (index) => {
-    setLegCaseNewCourts((prevCourts) =>
-      prevCourts.filter((_, i) => i !== index)
-    );
+  const handleRemoveNewCourt = index => {
+    setLegCaseNewCourts(prevCourts => prevCourts.filter((_, i) => i !== index));
   };
 
   const handleNewCourtChange = (index, field, value) => {
@@ -189,11 +187,11 @@ export default function LegCaseDetail() {
                       <Form.Control
                         type="text"
                         value={court.case_number}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleNewCourtChange(
                             index,
                             'case_number',
-                            e.target.value
+                            e.target.value,
                           )
                         }
                       />
@@ -205,11 +203,11 @@ export default function LegCaseDetail() {
                       <Form.Control
                         as="select"
                         value={court.case_year}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleNewCourtChange(
                             index,
                             'case_year',
-                            e.target.value
+                            e.target.value,
                           )
                         }
                       >
@@ -228,16 +226,16 @@ export default function LegCaseDetail() {
                       <Form.Control
                         as="select"
                         value={court.court_id}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleNewCourtChange(
                             index,
                             'court_id',
-                            e.target.value
+                            e.target.value,
                           )
                         }
                       >
                         <option defaultValue={null}>اختر المحكمة</option>
-                        {courts.map((option) => (
+                        {courts.map(option => (
                           <option key={`court-${option.id}`} value={option.id}>
                             {option.name}
                           </option>
@@ -251,11 +249,11 @@ export default function LegCaseDetail() {
                       <Form.Control
                         as="select"
                         value={court.judge_level}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleNewCourtChange(
                             index,
                             'judge_level',
-                            e.target.value
+                            e.target.value,
                           )
                         }
                       >
@@ -286,7 +284,7 @@ export default function LegCaseDetail() {
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
-          onSelect={(k) => setKey(k)}
+          onSelect={k => setKey(k)}
         >
           <Tab eventKey="procedure" title="الإجراءات">
             <Procedure legCaseId={String(id)} />

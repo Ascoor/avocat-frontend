@@ -9,24 +9,25 @@ import 'react-datepicker/dist/react-datepicker.css';
 moment.locale('ar');
 
 const LawyerAddEdit = ({ onSubmit, initialValues }) => {
-  const isValidDate = (date) => {
+  const isValidDate = date => {
     return date !== null && date.toString() !== 'Invalid Date';
   };
   const [name, setName] = useState(initialValues?.name || '');
-
+  const [isUser, setIsUser] = useState(initialValues?.user_id != null); // set initial value based on user_id
+  
   const [birthdate, setBirthdate] = useState(initialValues?.birthdate || null);
   const [identityNumber, setIdentityNumber] = useState(
-    initialValues?.identity_number || ''
+    initialValues?.identity_number || '',
   );
   const [lawRegNumber, setLawRegNumber] = useState(
-    initialValues?.law_reg_num || ''
+    initialValues?.law_reg_num || '',
   );
   const [lawyerClass, setLawyerClass] = useState(
-    initialValues?.lawyer_class || ''
+    initialValues?.lawyer_class || '',
   );
   const [email, setEmail] = useState(initialValues?.email || '');
   const [phoneNumber, setPhoneNumber] = useState(
-    initialValues?.phone_number || ''
+    initialValues?.phone_number || '',
   );
   const [religion, setReligion] = useState(initialValues?.religion || '');
   const [gender, setGender] = useState(initialValues?.gender || '');
@@ -36,7 +37,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
 
   const [showPassword, setShowPassword] = useState(false); // Define showPassword state
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     const formData = {
@@ -49,6 +50,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
       phone_number: phoneNumber,
       religion,
       gender,
+      password,
     };
 
     if (showPasswordInput) {
@@ -62,14 +64,50 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
     onSubmit(formData);
   };
 
-  return (
-    <Form onSubmit={handleSubmit}>
+  return ( <Form onSubmit={handleSubmit}>
+    <Form.Check 
+      type="radio" 
+      label="User" 
+      checked={isUser} 
+      onChange={() => setIsUser(true)}
+    />
+    <Form.Check 
+      type="radio" 
+      label="Not User" 
+      checked={!isUser} 
+      onChange={() => setIsUser(false)}
+    />
+    
+    {isUser && (
+      <>
+        {/* The rest of your code for password fields */}
+        <Form.Group controlId="password">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group controlId="confirmPassword">
+          <Form.Label>Re-type Password</Form.Label>
+          <Form.Control
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </Form.Group>
+      </>
+    )}
       <Form.Group controlId="name">
         <Form.Label>الاسم</Form.Label>
         <Form.Control
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={e => setName(e.target.value)}
           required
         />
       </Form.Group>
@@ -80,7 +118,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         </Form.Label>
         <DatePicker
           selected={isValidDate(birthdate) ? birthdate : null}
-          onChange={(date) => setBirthdate(date)}
+          onChange={date => setBirthdate(date)}
           locale="ar"
           showYearDropdown
           scrollableYearDropdown
@@ -97,7 +135,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           type="text"
           value={lawRegNumber || ''}
-          onChange={(e) => setLawRegNumber(e.target.value)}
+          onChange={e => setLawRegNumber(e.target.value)}
           required
         />
       </Form.Group>
@@ -106,7 +144,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           as="select"
           value={lawyerClass || ''}
-          onChange={(e) => setLawyerClass(e.target.value)}
+          onChange={e => setLawyerClass(e.target.value)}
           required
         >
           <option value="نقض">نقض</option>
@@ -120,7 +158,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           type="email"
           value={email || ''}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
           required
         />
       </Form.Group>
@@ -129,7 +167,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           as="select"
           value={gender || ''}
-          onChange={(e) => setGender(e.target.value)}
+          onChange={e => setGender(e.target.value)}
         >
           <option value="">اختر</option>
           <option value="ذكر">ذكر</option>
@@ -141,7 +179,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           as="select"
           value={religion || ''}
-          onChange={(e) => setReligion(e.target.value)}
+          onChange={e => setReligion(e.target.value)}
         >
           <option value="">اختر</option>
           <option value="مسلم">مسلم</option>
@@ -153,7 +191,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           type="tel"
           value={phoneNumber || ''}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          onChange={e => setPhoneNumber(e.target.value)}
         />
       </Form.Group>
       <Form.Group controlId="identityNumber">
@@ -162,43 +200,10 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
           type="text"
           placeholder="أدخل رقم الهوية"
           value={identityNumber}
-          onChange={(e) => setIdentityNumber(e.target.value)}
+          onChange={e => setIdentityNumber(e.target.value)}
           maxLength={14}
         />
       </Form.Group>
-      {showPasswordInput && (
-        <>
-          <Form.Check
-            type="checkbox"
-            label="Show Password"
-            onChange={() => setShowPassword(!showPassword)}
-          />
-
-          {/* Add this button to toggle the appearance of the password input */}
-          <Button onClick={() => setShowPasswordInput(!showPasswordInput)}>
-            Toggle Password Input
-          </Button>
-          <Form.Group controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type={showPassword ? 'text' : 'password'}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </Form.Group>
-
-          <Form.Group controlId="confirmPassword">
-            <Form.Label>Re-type Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </Form.Group>
-        </>
-      )}
 
       <Button variant="primary" type="submit">
         حفظ
