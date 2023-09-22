@@ -15,7 +15,7 @@ const CourtSubType = ({ show, handleClose }) => {
   const [modalMessage, setModalMessage] = useState(null);
   const [courtTypes, setCourtTypes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [error] = useState(null);
+  const [error] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [alertMessage, setAlertMessage] = useState(null);
   const itemsPerPage = 10;
@@ -73,7 +73,7 @@ const CourtSubType = ({ show, handleClose }) => {
       .post(`${API_CONFIG.baseURL}/api/court_sub_types`, newCourtSubType)
       .then(response => {
         setCourtSubTypes([...courtSubTypes, response.data]);
-        setAlertMessage({
+        setSuccessMessage({
           type: 'success',
           text: 'تمت إضافة مستوى المحكمة بنجاح.',
         });
@@ -81,14 +81,14 @@ const CourtSubType = ({ show, handleClose }) => {
         handleClose(); // Close modal
         clearModalFields();
         fetchCourtSubTypes();
-      })
-      .catch(error => {
-        setModalMessage({
-          show: true,
-          message: 'Error adding court sub-type',
-          variant: 'danger',
-        });
+      }).catch;
+    setAlertMessage(error => {
+      setModalMessage({
+        show: true,
+        message: 'Error adding court sub-type',
+        variant: 'danger',
       });
+    });
   };
 
   const handleCourtTypeChange = e => {

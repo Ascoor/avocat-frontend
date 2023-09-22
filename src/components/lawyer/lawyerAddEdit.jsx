@@ -14,7 +14,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
   };
   const [name, setName] = useState(initialValues?.name || '');
   const [isUser, setIsUser] = useState(initialValues?.user_id != null); // set initial value based on user_id
-  
+
   const [birthdate, setBirthdate] = useState(initialValues?.birthdate || null);
   const [identityNumber, setIdentityNumber] = useState(
     initialValues?.identity_number || '',
@@ -64,44 +64,45 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
     onSubmit(formData);
   };
 
-  return ( <Form onSubmit={handleSubmit}>
-    <Form.Check 
-      type="radio" 
-      label="User" 
-      checked={isUser} 
-      onChange={() => setIsUser(true)}
-    />
-    <Form.Check 
-      type="radio" 
-      label="Not User" 
-      checked={!isUser} 
-      onChange={() => setIsUser(false)}
-    />
-    
-    {isUser && (
-      <>
-        {/* The rest of your code for password fields */}
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </Form.Group>
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Form.Check
+        type="radio"
+        label="User"
+        checked={isUser}
+        onChange={() => setIsUser(true)}
+      />
+      <Form.Check
+        type="radio"
+        label="Not User"
+        checked={!isUser}
+        onChange={() => setIsUser(false)}
+      />
 
-        <Form.Group controlId="confirmPassword">
-          <Form.Label>Re-type Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </Form.Group>
-      </>
-    )}
+      {isUser && (
+        <>
+          {/* The rest of your code for password fields */}
+          <Form.Group controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group controlId="confirmPassword">
+            <Form.Label>Re-type Password</Form.Label>
+            <Form.Control
+              type="password"
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
+              required
+            />
+          </Form.Group>
+        </>
+      )}
       <Form.Group controlId="name">
         <Form.Label>الاسم</Form.Label>
         <Form.Control

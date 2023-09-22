@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
-import {RiNotification2Line} from 'react-icons/ri'
+import { RiNotification2Line } from 'react-icons/ri';
 
 const Notification = ({ notifications, fetchNotifications }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -9,7 +9,7 @@ const Notification = ({ notifications, fetchNotifications }) => {
 
   const toggleDropdown = () => setShowDropdown(!showDropdown);
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setShowDropdown(false);
     }
@@ -22,9 +22,11 @@ const Notification = ({ notifications, fetchNotifications }) => {
     };
   }, []);
 
-  const markAsRead = async (notificationId) => {
+  const markAsRead = async notificationId => {
     try {
-      await axios.post(`${API_CONFIG.baseURL}/api/notifications/${notificationId}/read`);
+      await axios.post(
+        `${API_CONFIG.baseURL}/api/notifications/${notificationId}/read`,
+      );
       fetchNotifications();
     } catch (error) {
       console.error('Could not mark notification as read:', error);
@@ -34,12 +36,21 @@ const Notification = ({ notifications, fetchNotifications }) => {
   return (
     <div className="notification-icon" ref={dropdownRef}>
       <button className="notification-button" onClick={toggleDropdown}>
-        <RiNotification2Line/> <span className="notification-badge">{notifications.filter(n => !n.read).length}</span>
+        <RiNotification2Line />{' '}
+        <span className="notification-badge">
+          {notifications.filter(n => !n.read).length}
+        </span>
       </button>
       {showDropdown && (
         <div className="notification-alert">
           {notifications.map((notification, index) => (
-            <div key={index} className={`notification-item ${notification.read ? '' : 'notification-unread'}`} onClick={() => markAsRead(notification.id)}>
+            <div
+              key={index}
+              className={`notification-item ${
+                notification.read ? '' : 'notification-unread'
+              }`}
+              onClick={() => markAsRead(notification.id)}
+            >
               {notification.message}
             </div>
           ))}

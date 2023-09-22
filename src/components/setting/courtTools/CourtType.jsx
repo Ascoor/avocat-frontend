@@ -63,7 +63,7 @@ export default function CourtType({ show, handleClose }) {
     }
   };
 
-  const handleDeleteCourtType = async (id, name, type) => {
+  const handleDeleteCourtType = async id => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/court_types/${id}`);
       setCourtTypes(courtTypes.filter(courtType => courtType.id !== id));

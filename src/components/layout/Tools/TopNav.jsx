@@ -13,19 +13,19 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
   const [notifications, setNotifications] = useState([]);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
 
-
   const userDropdownAnimation = useSpring({
     opacity: 1,
     transform: 'scale(1)',
     from: { opacity: 0, transform: 'scale(0.8)' },
   });
 
-
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/notifications/${userId}`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/notifications/${userId}`,
+      );
       setNotifications(response.data);
-      const unreadCount = response.data.filter((n) => !n.read).length;
+      const unreadCount = response.data.filter(n => !n.read).length;
       setUnreadNotifications(unreadCount);
     } catch (error) {
       console.error('Could not fetch notifications:', error);
@@ -38,7 +38,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
   }, [sidebarOpen, userId]);
 
   return (
-       <animated.nav className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}>
+    <animated.nav className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}>
       <div className="d-flex align-items-center justify-content-start">
         <button onClick={onToggleSidebar} className="navbar-toggler">
           <FaBars />
@@ -49,19 +49,40 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
       </div>
 
       <div className="user-menu">
-          <Notification notifications={notifications} unreadNotifications={unreadNotifications} fetchNotifications={fetchNotifications} />
+        <Notification
+          notifications={notifications}
+          unreadNotifications={unreadNotifications}
+          fetchNotifications={fetchNotifications}
+        />
         <div className="user-dropdown">
-          <animated.button className="dropdown-toggle beautiful-dropdown" id="userDropdown" data-bs-toggle="dropdown" style={userDropdownAnimation}>
+          <animated.button
+            className="dropdown-toggle beautiful-dropdown"
+            id="userDropdown"
+            data-bs-toggle="dropdown"
+            style={userDropdownAnimation}
+          >
             <FaUser />
           </animated.button>
-          <ul className="dropdown-menu beautiful-dropdown-menu" aria-labelledby="userDropdown">
-            <li><a href={`/profile/${userId}`}>الملف الشخصي</a></li>
-            <li><a className="dropdown-item-logout beautiful-logout-item" href="#" onClick={logoutUser}>نسجيل الخروج</a></li>
+          <ul
+            className="dropdown-menu beautiful-dropdown-menu"
+            aria-labelledby="userDropdown"
+          >
+            <li>
+              <a href={`/profile/${userId}`}>الملف الشخصي</a>
+            </li>
+            <li>
+              <a
+                className="dropdown-item-logout beautiful-logout-item"
+                href="#"
+                onClick={logoutUser}
+              >
+                نسجيل الخروج
+              </a>
+            </li>
           </ul>
         </div>
 
-        <div className="notification-icon beautiful-notification">
-        </div>
+        <div className="notification-icon beautiful-notification"></div>
       </div>
     </animated.nav>
   );
