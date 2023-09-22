@@ -70,46 +70,39 @@ const ExpenseIndex = () => {
   };
 
   return (
+    
     <Card>
       <Card.Header className="expenses-card-header">
         <Row>
-          <Col xs={12} md={6} lg={6} className="text-center text-md">
+          <Col xs={12} lg={6} className="text-center text-lg">
             <FormControl
               type="search"
               placeholder="إبحث برقم ملف القضية أو الخدمة"
               value={identifier}
-              onChange={e => setIdentifier(e.target.value)}
+              onChange={(e) => setIdentifier(e.target.value)}
               required
             />
           </Col>
-          <Col xs={12} md={6} lg={6} className="text-center text-md">
-            <Form.Select
-              value={category}
-              onChange={e => setCategory(e.target.value)}
-            >
+          <Col xs={12} lg={6} className="text-center text-lg">
+            <Form.Select value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">اختر نوع المصروف</option>
-              {expenseCategories.map(cat => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
-                </option>
-              ))}
+              {/* Map your expenseCategories here */}
             </Form.Select>
           </Col>
-        </Row>
-        <Row>
-          <Col xs={12} md={6} lg={6} className="text-center text-md p-4">
+      
+          <Col xs={12} lg={6} className="text-center text-lg p-4">
             <DatePicker
               selected={startDate}
-              onChange={date => setStartDate(date)}
+              onChange={(date) => setStartDate(date)}
               placeholderText="بدأ من تاريخ"
               dateFormat="yyyy-MM-dd"
               isClearable
             />
           </Col>
-          <Col xs={12} md={6} lg={6} className="text-center text-md p-4">
+          <Col xs={12} lg={6} className="text-center text-lg p-4">
             <DatePicker
               selected={endDate}
-              onChange={date => setEndDate(date)}
+              onChange={(date) => setEndDate(date)}
               placeholderText="حتى تاريخ"
               dateFormat="yyyy-MM-dd"
               isClearable
@@ -117,16 +110,17 @@ const ExpenseIndex = () => {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={12} lg={12} className="text-center text-md p-4">
+          <Col xs={12} className="text-center p-4">
             <Button onClick={handleSearch}>
-              <BiSearchAlt /> بحث
+              بحث
+              <BiSearchAlt/>
             </Button>
           </Col>
         </Row>
       </Card.Header>
       {error && (
         <Row>
-          <Col xs={12} md={12} lg={12} className="text-center text-md">
+          <Col xs={12} className="text-center">
             <Alert variant="danger">{error}</Alert>
           </Col>
         </Row>
@@ -134,8 +128,8 @@ const ExpenseIndex = () => {
       <Card.Body>
         <div className="table-responsive">
           <table className="special-table">
-            <thead>
-              <tr>
+          <thead>
+          <tr>
                 <th className="col-1">م</th>
                 <th className="col-2">رقم ملف الخدمة أو القضية</th>
                 <th className="col-2">نوع المصروف</th>
@@ -146,9 +140,11 @@ const ExpenseIndex = () => {
                 <th className="col-1">تكاليف اخرى</th>
                 <th className="col-2">أنشئ بواسطة</th>
               </tr>
+
+           
             </thead>
             <tbody>
-              {expenses.map(expense => {
+            {expenses.map(expense => {
                 const amountObj = JSON.parse(expense.amount || '{}');
                 return (
                   <tr key={expense.id}>
@@ -170,6 +166,7 @@ const ExpenseIndex = () => {
                   </tr>
                 );
               })}
+
             </tbody>
           </table>
         </div>
