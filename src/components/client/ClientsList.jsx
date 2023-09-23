@@ -4,7 +4,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, Button, Modal, Alert } from 'react-bootstrap';
 import { ClientIcon } from '../../assets/icons/index';
 import API_CONFIG from '../../config';
-
+import {
+  AiFillCheckCircle,
+  AiFillCloseCircle,
+  AiFillEdit,
+  AiFillDelete,
+} from 'react-icons/ai';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { AiFillIdcard, AiFillCalendar, AiFillPhone } from 'react-icons/ai';
@@ -89,12 +94,16 @@ export default function Clients() {
   const handleEditClient = (id) => {
     navigate(`/client/edit/${id}`);
   };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 91cf019124685baa1f7b8b46fbb401a01f1ebbfe
   const handleToggleStatus = async (id) => {
     try {
       const client = clients.find((client) => client.id === id);
       const newStatus = client.status === 'active' ? 'inactive' : 'active';
 
+      // Updating status and other client data
       const response = await axios.put(
         `${API_CONFIG.baseURL}/api/clients/${id}`,
         {
@@ -103,9 +112,12 @@ export default function Clients() {
         },
       );
 
+      // Refresh client list and display alert
       fetchClients();
       setCurrentAlertMessage(response.data.message);
       setShowAlert(true);
+
+      // Hide alert after 3 seconds
       setTimeout(() => {
         setShowAlert(false);
         setCurrentAlertMessage('');
@@ -214,28 +226,28 @@ export default function Clients() {
                       </td>
 
                       <td>
-                        <Button
-                          variant={
-                            client.status === 'active' ? 'success' : 'warning'
-                          }
-                          onClick={() => handleToggleStatus(client.id)}
-                        >
-                          {client.status === 'active'
-                            ? 'إلغاء التنشيط'
-                            : 'تنشيط'}
-                        </Button>
-                        <Button
-                          variant="primary"
+                        {client.status === 'active' ? (
+                          <AiFillCheckCircle
+                            color="green"
+                            onClick={() => handleToggleStatus(client.id)}
+                          />
+                        ) : (
+                          <AiFillCloseCircle
+                            color="red"
+                            onClick={() => handleToggleStatus(client.id)}
+                          />
+                        )}
+                        {client.status === 'active' ? 'On' : 'Off'}
+
+                        <AiFillEdit
+                          color="blue"
                           onClick={() => handleEditClient(client.id)}
-                        >
-                          تعديل
-                        </Button>{' '}
-                        <Button
-                          variant="danger"
+                        />
+
+                        <AiFillDelete
+                          color="red"
                           onClick={() => deleteClient(client.id)}
-                        >
-                          حذف
-                        </Button>
+                        />
                       </td>
                     </tr>
                   ))
