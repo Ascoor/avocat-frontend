@@ -94,10 +94,6 @@ export default function Clients() {
   const handleEditClient = (id) => {
     navigate(`/client/edit/${id}`);
   };
-<<<<<<< HEAD
-
-=======
->>>>>>> 91cf019124685baa1f7b8b46fbb401a01f1ebbfe
   const handleToggleStatus = async (id) => {
     try {
       const client = clients.find((client) => client.id === id);
