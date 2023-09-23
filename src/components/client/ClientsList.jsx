@@ -65,11 +65,11 @@ export default function Clients() {
     }
   };
 
-  const handlePageChange = newPage => {
+  const handlePageChange = (newPage) => {
     setClientsPage(newPage);
   };
 
-  const deleteClient = async id => {
+  const deleteClient = async (id) => {
     try {
       const response = await axios.delete(
         `${API_CONFIG.baseURL}/api/clients/${id}`,
@@ -86,13 +86,13 @@ export default function Clients() {
     }
   };
 
-  const handleEditClient = id => {
+  const handleEditClient = (id) => {
     navigate(`/client/edit/${id}`);
   };
 
-  const handleToggleStatus = async id => {
+  const handleToggleStatus = async (id) => {
     try {
-      const client = clients.find(client => client.id === id);
+      const client = clients.find((client) => client.id === id);
       const newStatus = client.status === 'active' ? 'inactive' : 'active';
 
       const response = await axios.put(
@@ -116,7 +116,7 @@ export default function Clients() {
   };
 
   const handleSearch = () => {
-    const filteredClients = clients.filter(client => {
+    const filteredClients = clients.filter((client) => {
       return (
         client.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
         client.identity_number
@@ -128,8 +128,8 @@ export default function Clients() {
     });
     setFilteredClients(filteredClients);
   };
-  const handleSlugClick = slug => {
-    const client = clients.find(client => client.slug === slug);
+  const handleSlugClick = (slug) => {
+    const client = clients.find((client) => client.slug === slug);
     setSelectedClient(client);
     setShowModal(true);
   };
@@ -163,7 +163,7 @@ export default function Clients() {
             className="form-control"
             placeholder="البحث عن موكلين"
             value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button
             className="btn btn-primary"
@@ -195,7 +195,7 @@ export default function Clients() {
                     </td>
                   </tr>
                 ) : (
-                  filteredClients.map(client => (
+                  filteredClients.map((client) => (
                     <tr key={client.id}>
                       <td onClick={() => handleSlugClick(client.slug)}>
                         {client.slug}

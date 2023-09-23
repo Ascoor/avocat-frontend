@@ -20,7 +20,7 @@ const LegCaseList = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = newPage => {
+  const handlePageChange = (newPage) => {
     setLegCasesPage(newPage);
   };
 
@@ -45,17 +45,17 @@ const LegCaseList = () => {
   };
 
   const handleSearch = () => {
-    const filteredCases = legCases.filter(legCase => {
+    const filteredCases = legCases.filter((legCase) => {
       return (
         legCase.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
         legCase.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         legCase.case_sub_type.name
           .toLowerCase()
           .includes(searchQuery.toLowerCase()) ||
-        legCase.clients.some(client =>
+        legCase.clients.some((client) =>
           client.name.toLowerCase().includes(searchQuery.toLowerCase()),
         ) ||
-        legCase.courts.some(court =>
+        legCase.courts.some((court) =>
           court.name.toLowerCase().includes(searchQuery.toLowerCase()),
         )
       );
@@ -63,14 +63,14 @@ const LegCaseList = () => {
     setFilteredLegCases(filteredCases);
   };
 
-  const deleteLegCase = async id => {
+  const deleteLegCase = async (id) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/leg_cases/${id}`);
       setShowAlert(true);
       setCurrentAlertMessage('تم حذف الحالة القانونية بنجاح');
       fetchLegCases();
       setFilteredLegCases(
-        filteredLegCases.filter(legCase => legCase.id !== id),
+        filteredLegCases.filter((legCase) => legCase.id !== id),
       );
     } catch (error) {
       console.log('فشل في حذف الحالة القانونية');
@@ -122,7 +122,7 @@ const LegCaseList = () => {
                 className="form-control search-input"
                 placeholder="ابحث..."
                 value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <button
                 className="btn btn-primary btn-search"

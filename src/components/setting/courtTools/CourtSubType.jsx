@@ -58,7 +58,7 @@ const CourtSubType = ({ show, handleClose }) => {
     }
   }, [alert, modalMessage]);
 
-  const handlePageChange = newPage => setCurrentPage(newPage);
+  const handlePageChange = (newPage) => setCurrentPage(newPage);
 
   const currentItems = courtSubTypes.slice(
     (currentPage - 1) * itemsPerPage,
@@ -71,7 +71,7 @@ const CourtSubType = ({ show, handleClose }) => {
   const handleAddCourtSubType = () => {
     axios
       .post(`${API_CONFIG.baseURL}/api/court_sub_types`, newCourtSubType)
-      .then(response => {
+      .then((response) => {
         setCourtSubTypes([...courtSubTypes, response.data]);
         setSuccessMessage({
           type: 'success',
@@ -82,7 +82,7 @@ const CourtSubType = ({ show, handleClose }) => {
         clearModalFields();
         fetchCourtSubTypes();
       }).catch;
-    setAlertMessage(error => {
+    setAlertMessage((error) => {
       setModalMessage({
         show: true,
         message: 'Error adding court sub-type',
@@ -91,7 +91,7 @@ const CourtSubType = ({ show, handleClose }) => {
     });
   };
 
-  const handleCourtTypeChange = e => {
+  const handleCourtTypeChange = (e) => {
     const selectedTypeId = e.target.value;
     setSelectedCourtTypeId(selectedTypeId); // Fixed this to use the selectedTypeId
     setNewCourtSubType({ ...newCourtSubType, court_type_id: selectedTypeId }); // And this too
@@ -108,11 +108,11 @@ const CourtSubType = ({ show, handleClose }) => {
     handleAddCourtSubType();
   };
 
-  const handleDeleteCourtSubType = async id => {
+  const handleDeleteCourtSubType = async (id) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/court_sub_types/${id}`);
       setCourtSubTypes(
-        courtSubTypes.filter(courtSubType => courtSubType.id !== id),
+        courtSubTypes.filter((courtSubType) => courtSubType.id !== id),
       );
     } catch (error) {
       setAlert({
@@ -148,7 +148,7 @@ const CourtSubType = ({ show, handleClose }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {currentItems.map(courtSubType => (
+                    {currentItems.map((courtSubType) => (
                       <tr className="table-row-courts" key={courtSubType.id}>
                         <td>{courtSubType.name}</td>
                         <td>{courtSubType.court_type?.name}</td>
@@ -195,7 +195,7 @@ const CourtSubType = ({ show, handleClose }) => {
                 onChange={handleCourtTypeChange}
               >
                 <option value="">اختر نوع المحكمة</option>
-                {courtTypes.map(courtType => (
+                {courtTypes.map((courtType) => (
                   <option key={courtType.id} value={courtType.id}>
                     {courtType.name}
                   </option>
@@ -207,7 +207,7 @@ const CourtSubType = ({ show, handleClose }) => {
               <Form.Control
                 type="text"
                 value={newCourtSubType.name}
-                onChange={e =>
+                onChange={(e) =>
                   setNewCourtSubType({
                     ...newCourtSubType,
                     name: e.target.value,

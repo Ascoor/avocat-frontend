@@ -74,8 +74,8 @@ const ServiceModal = ({
     setShowValidationAlert(false);
   };
 
-  const handleRadioChange = value => {
-    setFormData(prevData => ({
+  const handleRadioChange = (value) => {
+    setFormData((prevData) => ({
       ...prevData,
       client_choice: value,
       client_id: '',
@@ -85,18 +85,18 @@ const ServiceModal = ({
     }));
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    setErrors(prevErrors => ({
+    setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: '',
     }));
   };
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check if client_id or non-client info (unclient_name, unclient_phone, or unclient_nid) is provided
@@ -125,7 +125,7 @@ const ServiceModal = ({
 
     // Check if all required fields are provided
     const missingFields = requiredFields.filter(
-      fieldName => !formData[fieldName],
+      (fieldName) => !formData[fieldName],
     );
 
     if (missingFields.length > 0) {
@@ -212,7 +212,7 @@ const ServiceModal = ({
               onChange={handleChange}
             >
               <option value="">اختر العميل</option>
-              {clients.map(client => (
+              {clients.map((client) => (
                 <option key={client.id} value={client.id}>
                   {client.name}
                 </option>

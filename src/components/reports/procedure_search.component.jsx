@@ -21,19 +21,21 @@ const ProcedureSearch = () => {
   const [filteredProcedures, setFilteredProcedures] = useState([]);
   useEffect(() => {
     fetch(`${API_CONFIG.baseURL}/api/procedure_types`)
-      .then(response => response.json())
-      .then(data => setProcedureTypes(data))
-      .catch(error => console.error('Error fetching procedure types:', error));
+      .then((response) => response.json())
+      .then((data) => setProcedureTypes(data))
+      .catch((error) =>
+        console.error('Error fetching procedure types:', error),
+      );
     fetch(`${API_CONFIG.baseURL}/api/lawyers`)
-      .then(response => response.json())
-      .then(data => setLawyers(data))
-      .catch(error => console.error('Error fetching lawyers:', error));
+      .then((response) => response.json())
+      .then((data) => setLawyers(data))
+      .catch((error) => console.error('Error fetching lawyers:', error));
     fetch(`${API_CONFIG.baseURL}/api/courts`)
-      .then(response => response.json())
-      .then(data => setCourts(data))
-      .catch(error => console.error('Error fetching courts:', error));
+      .then((response) => response.json())
+      .then((data) => setCourts(data))
+      .catch((error) => console.error('Error fetching courts:', error));
   }, []);
-  const handleFormSubmit = event => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
     // Check if any of the search parameters is empty
     if (
@@ -63,12 +65,12 @@ const ProcedureSearch = () => {
       .get(`${API_CONFIG.baseURL}/api/procedures-search`, {
         params: queryParams,
       })
-      .then(response => {
+      .then((response) => {
         // Handle the API response here (e.g., update state with search results)
         setFilteredProcedures(response.data); // Update the state with the received data
         console.log(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         // Handle errors here if necessary
         console.error(error);
       });
@@ -96,12 +98,12 @@ const ProcedureSearch = () => {
                   <Form.Control
                     as="select"
                     value={selectedProcedureType}
-                    onChange={event =>
+                    onChange={(event) =>
                       setSelectedProcedureType(event.target.value)
                     }
                   >
                     <option value="">اختر نوع الإجراء</option>
-                    {procedureTypes.map(type => (
+                    {procedureTypes.map((type) => (
                       <option key={type.id} value={type.id}>
                         {type.name}
                       </option>
@@ -113,10 +115,10 @@ const ProcedureSearch = () => {
                   <Form.Control
                     as="select"
                     value={selectedLawyer}
-                    onChange={event => setSelectedLawyer(event.target.value)}
+                    onChange={(event) => setSelectedLawyer(event.target.value)}
                   >
                     <option value="">اختر المحامي</option>
-                    {lawyers.map(lawyer => (
+                    {lawyers.map((lawyer) => (
                       <option key={lawyer.id} value={lawyer.id}>
                         {lawyer.name}
                       </option>
@@ -131,7 +133,7 @@ const ProcedureSearch = () => {
                   </Form.Label>
                   <DatePicker
                     selected={selectedDateStart}
-                    onChange={date => setSelectedDateStart(date)}
+                    onChange={(date) => setSelectedDateStart(date)}
                     dateFormat="yyyy/MM/dd"
                     placeholderText="تاريخ البدء"
                     className="form-control"
@@ -142,7 +144,7 @@ const ProcedureSearch = () => {
                   />
                   <DatePicker
                     selected={selectedDateEnd}
-                    onChange={date => setSelectedDateEnd(date)}
+                    onChange={(date) => setSelectedDateEnd(date)}
                     dateFormat="yyyy/MM/dd"
                     placeholderText="تاريخ الانتهاء"
                     className="form-control"
@@ -162,10 +164,10 @@ const ProcedureSearch = () => {
                   <Form.Control
                     as="select"
                     value={selectedCourt}
-                    onChange={event => setSelectedCourt(event.target.value)}
+                    onChange={(event) => setSelectedCourt(event.target.value)}
                   >
                     <option value="">اختر المحكمة</option>
-                    {courts.map(court => (
+                    {courts.map((court) => (
                       <option key={court.id} value={court.id}>
                         {court.name}
                       </option>
@@ -182,7 +184,7 @@ const ProcedureSearch = () => {
                     as="select"
                     id="status"
                     value={selectedStatus}
-                    onChange={event => setSelectedStatus(event.target.value)}
+                    onChange={(event) => setSelectedStatus(event.target.value)}
                   >
                     <option value="">All</option>
                     <option value="منتهي">منتهي</option>

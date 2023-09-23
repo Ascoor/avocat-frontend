@@ -33,7 +33,7 @@ const CustomPagination = ({
   return (
     <Pagination>
       <Pagination.Prev onClick={handlePrevious} />
-      {pages.map(page => (
+      {pages.map((page) => (
         <Pagination.Item
           key={page}
           active={page === currentPage}

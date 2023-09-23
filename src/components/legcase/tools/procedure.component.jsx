@@ -97,7 +97,7 @@ const Procedure = ({ legCaseId }) => {
     }
   };
 
-  const handleEditProcedure = procedure => {
+  const handleEditProcedure = (procedure) => {
     setModalMode('edit');
     setProcedureId(procedure.id);
     setSelectedTitle(procedure.title);
@@ -115,7 +115,7 @@ const Procedure = ({ legCaseId }) => {
     setShowAddProcedureModal(true);
   };
 
-  const handleDeleteProcedure = async procedureId => {
+  const handleDeleteProcedure = async (procedureId) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/procedures/${procedureId}`);
       fetchProcedures();
@@ -274,7 +274,7 @@ const Procedure = ({ legCaseId }) => {
                 type="text"
                 placeholder="ادخل العنوان"
                 value={selectedTitle}
-                onChange={e => setSelectedTitle(e.target.value)}
+                onChange={(e) => setSelectedTitle(e.target.value)}
               />
             </Form.Group>
 
@@ -284,7 +284,7 @@ const Procedure = ({ legCaseId }) => {
                 type="text"
                 placeholder="ادخل الوظيفة"
                 value={selectedJob}
-                onChange={e => setSelectedJob(e.target.value)}
+                onChange={(e) => setSelectedJob(e.target.value)}
               />
             </Form.Group>
 
@@ -294,7 +294,7 @@ const Procedure = ({ legCaseId }) => {
                 type="date"
                 placeholder="ادخل تاريخ البدء"
                 value={selectedDateStart}
-                onChange={e => setSelectedDateStart(e.target.value)}
+                onChange={(e) => setSelectedDateStart(e.target.value)}
               />
             </Form.Group>
 
@@ -304,7 +304,7 @@ const Procedure = ({ legCaseId }) => {
                 type="date"
                 placeholder="ادخل تاريخ الانتهاء"
                 value={selectedDateEnd}
-                onChange={e => setSelectedDateEnd(e.target.value)}
+                onChange={(e) => setSelectedDateEnd(e.target.value)}
               />
             </Form.Group>
 
@@ -314,7 +314,7 @@ const Procedure = ({ legCaseId }) => {
                 type="number"
                 placeholder="ادخل التكلفة"
                 value={selectedCost}
-                onChange={e => setSelectedCost(e.target.value)}
+                onChange={(e) => setSelectedCost(e.target.value)}
               />
             </Form.Group>
 
@@ -324,7 +324,7 @@ const Procedure = ({ legCaseId }) => {
                 type="number"
                 placeholder="ادخل التكلفة 2"
                 value={selectedCost2 | ''}
-                onChange={e => setSelectedCost2(e.target.value)}
+                onChange={(e) => setSelectedCost2(e.target.value)}
               />
             </Form.Group>
             <Form.Group controlId="procedureResult">
@@ -333,7 +333,7 @@ const Procedure = ({ legCaseId }) => {
                 type="text"
                 placeholder="ادخل النتيجة"
                 value={selectedResult || ''}
-                onChange={e => setSelectedResult(e.target.value)}
+                onChange={(e) => setSelectedResult(e.target.value)}
               />
             </Form.Group>
 
@@ -342,10 +342,10 @@ const Procedure = ({ legCaseId }) => {
               <Form.Control
                 as="select"
                 value={selectedProcedureType}
-                onChange={e => setSelectedProcedureType(e.target.value)}
+                onChange={(e) => setSelectedProcedureType(e.target.value)}
               >
                 <option value="">اختر نوع الإجراء</option>
-                {procedureTypes.map(type => (
+                {procedureTypes.map((type) => (
                   <option key={type.id} value={type.id}>
                     {type.name}
                   </option>
@@ -358,10 +358,10 @@ const Procedure = ({ legCaseId }) => {
               <Form.Control
                 as="select"
                 value={selectedLawyer}
-                onChange={e => setSelectedLawyer(e.target.value)}
+                onChange={(e) => setSelectedLawyer(e.target.value)}
               >
                 <option value="">اختر المحامي</option>
-                {lawyers.map(lawyer => (
+                {lawyers.map((lawyer) => (
                   <option key={lawyer.id} value={lawyer.id}>
                     {lawyer.name}
                   </option>
@@ -374,10 +374,10 @@ const Procedure = ({ legCaseId }) => {
               <Form.Control
                 as="select"
                 value={selectedCourt}
-                onChange={e => setSelectedCourt(e.target.value)}
+                onChange={(e) => setSelectedCourt(e.target.value)}
               >
                 <option value="">اختر المحكمة</option>
-                {courts.map(court => (
+                {courts.map((court) => (
                   <option key={court.id} value={court.id}>
                     {court.name}
                   </option>
@@ -390,7 +390,7 @@ const Procedure = ({ legCaseId }) => {
                 <Form.Control
                   as="select"
                   value={selectedStatus}
-                  onChange={e => setSelectedStatus(e.target.value)}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
                 >
                   <option value="">اختر الحالة</option>
                   <option value="منتهي">منتهي</option>

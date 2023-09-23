@@ -26,7 +26,7 @@ const Lawyers = () => {
     }
   };
 
-  const handleAddLawyer = async formData => {
+  const handleAddLawyer = async (formData) => {
     try {
       await axios.post(`${API_CONFIG.baseURL}/api/lawyers`, formData);
       await fetchLawyers();
@@ -36,7 +36,7 @@ const Lawyers = () => {
     }
   };
 
-  const handleEditLawyer = async formData => {
+  const handleEditLawyer = async (formData) => {
     try {
       await axios.put(
         `${API_CONFIG.baseURL}/api/lawyers/${selectedLawyer.id}`,
@@ -49,7 +49,7 @@ const Lawyers = () => {
     }
   };
 
-  const handleDeleteLawyer = async lawyerId => {
+  const handleDeleteLawyer = async (lawyerId) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/lawyers/${lawyerId}`);
       await fetchLawyers();
@@ -58,7 +58,7 @@ const Lawyers = () => {
     }
   };
 
-  const handleShowEditModal = selectedLawyer => {
+  const handleShowEditModal = (selectedLawyer) => {
     setSelectedLawyer({
       ...selectedLawyer,
       birthdate: selectedLawyer.birthdate
@@ -94,7 +94,7 @@ const Lawyers = () => {
               </tr>
             </thead>
             <tbody>
-              {lawyers.map(lawyer => (
+              {lawyers.map((lawyer) => (
                 <tr key={lawyer.id}>
                   <td>{lawyer.name}</td>
                   <td>{lawyer.birthdate}</td>

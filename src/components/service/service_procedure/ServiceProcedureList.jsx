@@ -37,13 +37,13 @@ const ServiceProcedureList = ({ serviceId }) => {
       console.error('Error fetching procedures:', error);
     }
   };
-  const handleEditServiceProcedure = procedure => {
+  const handleEditServiceProcedure = (procedure) => {
     setIsEditing(true);
     setEditingServiceProcedure(procedure);
     setShowModal(true);
   };
 
-  const handleDeleteServiceProcedure = async procedureId => {
+  const handleDeleteServiceProcedure = async (procedureId) => {
     try {
       await axios.delete(
         API_CONFIG.baseURL + `/api/service-procedure/delete/${procedureId}`,
@@ -58,7 +58,7 @@ const ServiceProcedureList = ({ serviceId }) => {
     setEditingServiceProcedure(null);
     setShowModal(true);
   };
-  const addServiceProcedure = async data => {
+  const addServiceProcedure = async (data) => {
     try {
       const response = await axios.post(
         API_CONFIG.baseURL + '/api/service-procedures',
@@ -123,7 +123,7 @@ const ServiceProcedureList = ({ serviceId }) => {
               </tr>
             </thead>
             <tbody>
-              {serviceProcedures.map(procedure => (
+              {serviceProcedures.map((procedure) => (
                 <tr key={procedure.id}>
                   <td>{procedure.title}</td>
                   <td>

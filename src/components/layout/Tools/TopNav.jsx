@@ -25,7 +25,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
         `${API_CONFIG.baseURL}/api/notifications/${userId}`,
       );
       setNotifications(response.data);
-      const unreadCount = response.data.filter(n => !n.read).length;
+      const unreadCount = response.data.filter((n) => !n.read).length;
       setUnreadNotifications(unreadCount);
     } catch (error) {
       console.error('Could not fetch notifications:', error);

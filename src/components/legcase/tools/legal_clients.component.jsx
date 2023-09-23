@@ -31,11 +31,11 @@ export default function LegCaseClients({ legCaseId }) {
   }, [legCaseId]);
 
   const handleAddNewClient = () => {
-    setLegCaseNewClients(prevClients => [...prevClients, { client_id: '' }]);
+    setLegCaseNewClients((prevClients) => [...prevClients, { client_id: '' }]);
   };
 
-  const handleRemoveNewClient = index => {
-    setLegCaseNewClients(prevClients =>
+  const handleRemoveNewClient = (index) => {
+    setLegCaseNewClients((prevClients) =>
       prevClients.filter((_, i) => i !== index),
     );
   };
@@ -75,7 +75,7 @@ export default function LegCaseClients({ legCaseId }) {
               </thead>
               <tbody>
                 {legCaseClients &&
-                  legCaseClients.map(client => (
+                  legCaseClients.map((client) => (
                     <tr key={client.id}>
                       <td>{client.slug}</td>
                       <td>{client.name}</td>
@@ -104,13 +104,13 @@ export default function LegCaseClients({ legCaseId }) {
                       <Form.Control
                         as="select"
                         value={client.name}
-                        onChange={e =>
+                        onChange={(e) =>
                           handleNewClientChange(index, 'name', e.target.value)
                         }
                       >
                         <option value="null">اختر اسم العميل</option>
                         {clients &&
-                          clients.map(clientOption => (
+                          clients.map((clientOption) => (
                             <option
                               key={clientOption.id}
                               value={clientOption.id}

@@ -73,7 +73,7 @@ const LegalSession = ({ legCaseId }) => {
     fetchData();
   }, [legCaseId]);
 
-  const handleEditLegalSession = legalSession => {
+  const handleEditLegalSession = (legalSession) => {
     setModalMode('edit');
     setSelectedSession(legalSession);
     setSelectedDate(new Date(legalSession.date.split('T')[0])); // Parse the date string into a Date object
@@ -155,7 +155,7 @@ const LegalSession = ({ legCaseId }) => {
     setShowAddLegalSessionModal(true);
   };
 
-  const handleDeleteLegalSession = async id => {
+  const handleDeleteLegalSession = async (id) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/legal_sessions/${id}`);
       fetchData();
@@ -227,7 +227,7 @@ const LegalSession = ({ legCaseId }) => {
                 </tr>
               </thead>
               <tbody>
-                {legalSessions.map(legalSession => (
+                {legalSessions.map((legalSession) => (
                   <tr key={legalSession.id}>
                     <td>{legalSession.date}</td>
                     <td>{legalSession.lawyer.name}</td>
@@ -282,7 +282,7 @@ const LegalSession = ({ legCaseId }) => {
                 className="form-control"
                 dateFormat="yyyy-MM-dd"
                 selected={selectedDate}
-                onChange={date => setSelectedDate(date)}
+                onChange={(date) => setSelectedDate(date)}
               />
             </Form.Group>
 
@@ -292,7 +292,7 @@ const LegalSession = ({ legCaseId }) => {
                 <Form.Control
                   as="select"
                   value={selectStatus}
-                  onChange={e => setSelectStatus(e.target.value)}
+                  onChange={(e) => setSelectStatus(e.target.value)}
                 >
                   <option value="">اختر حالة الجلسة</option>
                   <option value="منتهي">منتهي</option>
@@ -306,10 +306,10 @@ const LegalSession = ({ legCaseId }) => {
               <Form.Control
                 as="select"
                 value={selectedLawyer}
-                onChange={e => setSelectedLawyer(e.target.value)}
+                onChange={(e) => setSelectedLawyer(e.target.value)}
               >
                 <option value="">اختر المحامي</option>
-                {lawyers.map(lawyer => (
+                {lawyers.map((lawyer) => (
                   <option key={lawyer.id} value={lawyer.id}>
                     {lawyer.name}
                   </option>
@@ -321,7 +321,7 @@ const LegalSession = ({ legCaseId }) => {
               <Form.Control
                 type="text"
                 value={rollNumber}
-                onChange={e => setRollNumber(e.target.value)}
+                onChange={(e) => setRollNumber(e.target.value)}
               />
             </Form.Group>
             <Form.Group controlId="formOrders">
@@ -330,7 +330,7 @@ const LegalSession = ({ legCaseId }) => {
                 as="textarea"
                 rows={3}
                 value={orders}
-                onChange={e => setOrders(e.target.value)}
+                onChange={(e) => setOrders(e.target.value)}
               />
             </Form.Group>
             <Form.Group controlId="formCourt">
@@ -338,10 +338,10 @@ const LegalSession = ({ legCaseId }) => {
               <Form.Control
                 as="select"
                 value={selectedCourt}
-                onChange={e => setSelectedCourt(e.target.value)}
+                onChange={(e) => setSelectedCourt(e.target.value)}
               >
                 <option value="">اختر المحكمة</option>
-                {courts.map(court => (
+                {courts.map((court) => (
                   <option key={court.id} value={court.id}>
                     {court.name}
                   </option>
@@ -354,7 +354,7 @@ const LegalSession = ({ legCaseId }) => {
                 type="number"
                 placeholder="ادخل التكلفة"
                 value={selectedCost}
-                onChange={e => setSelectedCost(e.target.value)}
+                onChange={(e) => setSelectedCost(e.target.value)}
               />
             </Form.Group>
 
@@ -364,7 +364,7 @@ const LegalSession = ({ legCaseId }) => {
                 type="number"
                 placeholder="ادخل التكلفة 2"
                 value={selectedCost2 | ''}
-                onChange={e => setSelectedCost2(e.target.value)}
+                onChange={(e) => setSelectedCost2(e.target.value)}
               />
             </Form.Group>
             <Form.Group controlId="formResult">
@@ -373,7 +373,7 @@ const LegalSession = ({ legCaseId }) => {
                 as="textarea"
                 rows={3}
                 value={result}
-                onChange={e => setResult(e.target.value)}
+                onChange={(e) => setResult(e.target.value)}
               />
             </Form.Group>
           </Form>

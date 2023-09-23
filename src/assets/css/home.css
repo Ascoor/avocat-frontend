@@ -68,18 +68,18 @@
 
 .btn.btn-home-search:hover {
   background: linear-gradient(15deg, #a87b2d, #d8d50a); /* Background color of the button on hover */
-}
-.home-text-center {
-  background: linear-gradient(135deg, #1f485d, #264754, #063851);
-  border-radius: 40px;
+}.home-text-center {
+  background: linear-gradient(135deg, #1f485d, #264754, #00224b);
+  border-radius: 10px; /* Reduced border-radius for a more subtle effect */
   padding: 20px;
   color: #F6CD59; /* Text color */
   text-align: center;
   font-size: 1.8rem;
   font-family: 'Cairo', sans-serif;
   font-weight: 700;
-  box-shadow: 0 20px 15px #4c7286; /* Add shadow here */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adjusted box shadow */
 }
+
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {

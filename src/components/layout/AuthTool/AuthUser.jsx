@@ -54,7 +54,7 @@ export default function useAuth() {
   });
 
   // Set up an interceptor to attach the token to requests
-  http.interceptors.request.use(config => {
+  http.interceptors.request.use((config) => {
     const token = getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

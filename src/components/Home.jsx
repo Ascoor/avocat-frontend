@@ -67,7 +67,7 @@ const EventCard = ({ title, count, icon }) => {
     >
       <Card
         className="text-center event-card"
-        style={{ background: 'linear-gradient(135deg, #365F73, #244C66)' }}
+        style={{ background: 'linear-gradient(35deg, #1f485d, #264754, #00224b)' }}
       >
         <Card.Body className="event-card-body">
           <div className="event-card-content p-1">
@@ -118,7 +118,7 @@ const Home = () => {
     }
   };
 
-  const handleFormSubmit = async e => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     handleSearch();
   };
@@ -147,7 +147,7 @@ const Home = () => {
     }
   };
 
-  const handleSearchInputChange = e => {
+  const handleSearchInputChange = (e) => {
     setSearchText(e.target.value);
   };
 
@@ -250,7 +250,7 @@ const Home = () => {
                     name="searchType"
                     value="clients"
                     checked={searchType === 'clients'}
-                    onChange={e => setSearchType(e.target.value)}
+                    onChange={(e) => setSearchType(e.target.value)}
                   />
                   <Form.Check
                     type="radio"
@@ -258,7 +258,7 @@ const Home = () => {
                     name="searchType"
                     value="legCases"
                     checked={searchType === 'legCases'}
-                    onChange={e => setSearchType(e.target.value)}
+                    onChange={(e) => setSearchType(e.target.value)}
                   />
                 </Form.Group>
 

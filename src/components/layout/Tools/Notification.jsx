@@ -9,7 +9,7 @@ const Notification = ({ notifications, fetchNotifications }) => {
 
   const toggleDropdown = () => setShowDropdown(!showDropdown);
 
-  const handleClickOutside = event => {
+  const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setShowDropdown(false);
     }
@@ -22,7 +22,7 @@ const Notification = ({ notifications, fetchNotifications }) => {
     };
   }, []);
 
-  const markAsRead = async notificationId => {
+  const markAsRead = async (notificationId) => {
     try {
       await axios.post(
         `${API_CONFIG.baseURL}/api/notifications/${notificationId}/read`,
@@ -38,7 +38,7 @@ const Notification = ({ notifications, fetchNotifications }) => {
       <button className="notification-button" onClick={toggleDropdown}>
         <RiNotification2Line />{' '}
         <span className="notification-badge">
-          {notifications.filter(n => !n.read).length}
+          {notifications.filter((n) => !n.read).length}
         </span>
       </button>
       {showDropdown && (
