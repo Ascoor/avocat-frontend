@@ -2,17 +2,26 @@ import React, { useState } from 'react';
 import '../../assets/css/FinancialDashboard.css';
 import { Card } from 'react-bootstrap';
 import ExpenseIndex from './Expence/index';
+import ClientAccounttIndex from './ClientAccount/index';
 
 const FinancialDashboard = () => {
   const [activeTab, setActiveTab] = useState('');
 
   const renderContent = () => {
-    if (activeTab === 'expenses') {
-      return <ExpenseIndex />;
+    switch (activeTab) {
+      case 'revenue':
+        return <div>الإيرادات - Add your revenue content here</div>;
+      case 'expenses':
+        return <ExpenseIndex />;
+      case 'client': // Corrected to 'client' with a lowercase 'c'
+        return <ClientAccounttIndex />;
+      case 'nonClient':
+        return <div>العملاء - Add your client content here</div>;
+      default:
+        return null; // Default content when no tab is selected
     }
-    // Add more conditions here for other types of content
   };
-
+  
   return (
     <div className="financial-dashboard">
       <div className="card-container">

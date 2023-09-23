@@ -90,7 +90,7 @@ const ServiceProcedureModal = ({
     setFormData({ ...formData, [fieldName]: value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isEditing) {
@@ -137,7 +137,7 @@ const ServiceProcedureModal = ({
                   <FormControl
                     type="text"
                     value={formData.title}
-                    onChange={e => handleFieldChange('title', e.target.value)}
+                    onChange={(e) => handleFieldChange('title', e.target.value)}
                     required
                   />
                 </FormGroup>
@@ -146,7 +146,7 @@ const ServiceProcedureModal = ({
                   <FormControl
                     type="text"
                     value={formData.job}
-                    onChange={e => handleFieldChange('job', e.target.value)}
+                    onChange={(e) => handleFieldChange('job', e.target.value)}
                     required
                   />
                 </FormGroup>
@@ -155,13 +155,13 @@ const ServiceProcedureModal = ({
                   <FormControl
                     as="select"
                     value={formData.lawyer_id}
-                    onChange={e =>
+                    onChange={(e) =>
                       handleFieldChange('lawyer_id', e.target.value)
                     }
                     required
                   >
                     <option value="">اختر المحامي</option>
-                    {lawyers.map(lawyer => (
+                    {lawyers.map((lawyer) => (
                       <option key={lawyer.id} value={lawyer.id}>
                         {lawyer.name}
                       </option>
@@ -178,7 +178,7 @@ const ServiceProcedureModal = ({
                     selected={
                       formData.date_start ? new Date(formData.date_start) : null
                     }
-                    onChange={date => handleDateChange('date_start', date)}
+                    onChange={(date) => handleDateChange('date_start', date)}
                     required
                   />
                 </div>
@@ -192,7 +192,7 @@ const ServiceProcedureModal = ({
                     selected={
                       formData.date_end ? new Date(formData.date_end) : null
                     }
-                    onChange={date => handleFieldChange('date_end', date)}
+                    onChange={(date) => handleFieldChange('date_end', date)}
                     required
                   />
                 </div>
@@ -201,7 +201,7 @@ const ServiceProcedureModal = ({
                   <FormControl
                     type="number"
                     value={formData.cost}
-                    onChange={e => handleFieldChange('cost', e.target.value)}
+                    onChange={(e) => handleFieldChange('cost', e.target.value)}
                   />
                 </FormGroup>
 
@@ -209,7 +209,7 @@ const ServiceProcedureModal = ({
                   <FormControl
                     type="number"
                     value={formData.cost2}
-                    onChange={e => handleFieldChange('cost2', e.target.value)}
+                    onChange={(e) => handleFieldChange('cost2', e.target.value)}
                     required
                   />
                 </FormGroup>
@@ -218,7 +218,9 @@ const ServiceProcedureModal = ({
                   <FormControl
                     type="text"
                     value={formData.result}
-                    onChange={e => handleFieldChange('result', e.target.value)}
+                    onChange={(e) =>
+                      handleFieldChange('result', e.target.value)
+                    }
                   />
                 </FormGroup>
 
@@ -226,7 +228,7 @@ const ServiceProcedureModal = ({
                   <FormControl
                     type="text"
                     value={formData.place}
-                    onChange={e => handleFieldChange('place', e.target.value)}
+                    onChange={(e) => handleFieldChange('place', e.target.value)}
                   />
                 </FormGroup>
 
@@ -237,7 +239,7 @@ const ServiceProcedureModal = ({
                       as="select"
                       name="status"
                       value={formData.status}
-                      onChange={e =>
+                      onChange={(e) =>
                         handleFieldChange('status', e.target.value)
                       }
                     >

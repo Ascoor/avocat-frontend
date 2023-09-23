@@ -70,10 +70,10 @@
   background: linear-gradient(15deg, #a87b2d, #d8d50a); /* Background color of the button on hover */
 }
 .home-text-center {
-  background: linear-gradient(135deg, #1f485d, #264754, #063851);
+  background: linear-gradient(235deg,#092342  , #004852, #10325a);
   border-radius: 40px;
   padding: 20px;
-  color: #F6CD59; /* Text color */
+  color: #ff9800; /* Text color */
   text-align: center;
   font-size: 1.8rem;
   font-family: 'Cairo', sans-serif;

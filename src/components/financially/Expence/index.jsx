@@ -32,11 +32,11 @@ const ExpenseIndex = () => {
   useEffect(() => {
     axios
       .get(`${API_CONFIG.baseURL}/api/expense_categories`)
-      .then(response => {
+      .then((response) => {
         const [categories] = response.data;
         setExpenseCategories(categories || []);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching expense categories:', error);
       });
   }, []);
@@ -78,17 +78,17 @@ const ExpenseIndex = () => {
               type="search"
               placeholder="إبحث برقم ملف القضية أو الخدمة"
               value={identifier}
-              onChange={e => setIdentifier(e.target.value)}
+              onChange={(e) => setIdentifier(e.target.value)}
               required
             />
           </Col>
           <Col xs={12} md={6} lg={3} className="text-center text-md">
             <Form.Select
               value={category}
-              onChange={e => setCategory(e.target.value)}
+              onChange={(e) => setCategory(e.target.value)}
             >
               <option value="">اختر نوع المصروف</option>
-              {expenseCategories.map(cat => (
+              {expenseCategories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
                 </option>
@@ -98,7 +98,7 @@ const ExpenseIndex = () => {
           <Col xs={12} md={6} lg={3} className="text-center text-md p-4">
             <DatePicker
               selected={startDate}
-              onChange={date => setStartDate(date)}
+              onChange={(date) => setStartDate(date)}
               placeholderText="بدأ من تاريخ"
               dateFormat="yyyy-MM-dd"
               isClearable
@@ -107,7 +107,7 @@ const ExpenseIndex = () => {
           <Col xs={12} md={6} lg={3} className="text-center text-md p-4">
             <DatePicker
               selected={endDate}
-              onChange={date => setEndDate(date)}
+              onChange={(date) => setEndDate(date)}
               placeholderText="حتى تاريخ"
               dateFormat="yyyy-MM-dd"
               isClearable
@@ -144,7 +144,7 @@ const ExpenseIndex = () => {
               </tr>
             </thead>
             <tbody>
-              {expenses.map(expense => {
+              {expenses.map((expense) => {
                 const amountObj = JSON.parse(expense.amount || '{}');
                 return (
                   <tr key={expense.id}>

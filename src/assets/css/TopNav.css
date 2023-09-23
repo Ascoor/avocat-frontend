@@ -1,19 +1,6 @@
 /* TopNav.css */
 
-/* Add some root variables */
 
-
-/* Top Navigation Styles */
-.top-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 1.5rem;
-  background: linear-gradient(335deg,#002D40  , #0d3346, #002D40);
-  color: #ffffff; /* Text color */
-  box-shadow: 0 4px 60px rgba(134, 99, 99, 0.1);
-  transition: transform 0.3s ease-in-out;
-}
 
 .Brand-Logo {
   color: var(--text-light);
@@ -71,7 +58,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1.5rem;
-  background: linear-gradient(335deg,#002D40  , #0d3346, #002D40);
+  background: linear-gradient(235deg,#092342  , #004852, #10325a);
   color: #ffffff; /* Text color */
   box-shadow: 0 4px 60px rgba(134, 99, 99, 0.1);
   transition: transform 0.3s ease-in-out;
@@ -128,12 +115,10 @@
   background-color: #3a4f63; /* Background color */
   border: none;
   cursor: pointer;
-
-  font-size: .9rem;
+  font-size: 1.6rem;
   color: #ffffff;  /* Text color */
   position: relative;
-  border-radius: 45px;
-  padding: .4rem 0.8rem; /* Add some padding */
+  padding: 0.6rem 0.8rem; /* Add some padding */
 }
 
 /* This will show the notification badge only when there are unread notifications */
@@ -155,7 +140,7 @@
   top: 100%;
   right: 0;
   background-color: #333;
-  padding: 0.6rem 0.2rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1; /* Add this to ensure it appears above other elements */
@@ -167,7 +152,6 @@
 .user-menu:hover + .notification-alert {
   display: block;
 }
-
 
 .sidebar-open .top-nav {
   margin-right: 300px;

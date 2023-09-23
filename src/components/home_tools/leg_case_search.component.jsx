@@ -30,7 +30,7 @@ const LegCaseSearch = ({
             <animated.div
               style={{
                 transform: handleSpringProps.rotation.interpolate(
-                  rotation => `rotate(${rotation}deg)`,
+                  (rotation) => `rotate(${rotation}deg)`,
                 ),
                 display: 'inline-block',
                 cursor: 'pointer',
@@ -71,7 +71,7 @@ const LegCaseSearch = ({
                 </thead>
                 <tbody>
                   {currentCases.length > 0 ? (
-                    currentCases.map(caseItem => (
+                    currentCases.map((caseItem) => (
                       <tr key={caseItem.id}>
                         <td>{caseItem.slug}</td>
                         <td>{caseItem.name}</td>

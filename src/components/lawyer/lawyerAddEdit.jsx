@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 moment.locale('ar');
 
 const LawyerAddEdit = ({ onSubmit, initialValues }) => {
-  const isValidDate = date => {
+  const isValidDate = (date) => {
     return date !== null && date.toString() !== 'Invalid Date';
   };
   const [name, setName] = useState(initialValues?.name || '');
@@ -37,7 +37,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
 
   const [showPassword, setShowPassword] = useState(false); // Define showPassword state
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = {
@@ -87,7 +87,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
             <Form.Control
               type={showPassword ? 'text' : 'password'}
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </Form.Group>
@@ -97,7 +97,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
             <Form.Control
               type="password"
               value={confirmPassword}
-              onChange={e => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           </Form.Group>
@@ -108,7 +108,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           type="text"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           required
         />
       </Form.Group>
@@ -119,7 +119,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         </Form.Label>
         <DatePicker
           selected={isValidDate(birthdate) ? birthdate : null}
-          onChange={date => setBirthdate(date)}
+          onChange={(date) => setBirthdate(date)}
           locale="ar"
           showYearDropdown
           scrollableYearDropdown
@@ -136,7 +136,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           type="text"
           value={lawRegNumber || ''}
-          onChange={e => setLawRegNumber(e.target.value)}
+          onChange={(e) => setLawRegNumber(e.target.value)}
           required
         />
       </Form.Group>
@@ -145,7 +145,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           as="select"
           value={lawyerClass || ''}
-          onChange={e => setLawyerClass(e.target.value)}
+          onChange={(e) => setLawyerClass(e.target.value)}
           required
         >
           <option value="نقض">نقض</option>
@@ -159,7 +159,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           type="email"
           value={email || ''}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
       </Form.Group>
@@ -168,7 +168,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           as="select"
           value={gender || ''}
-          onChange={e => setGender(e.target.value)}
+          onChange={(e) => setGender(e.target.value)}
         >
           <option value="">اختر</option>
           <option value="ذكر">ذكر</option>
@@ -180,7 +180,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           as="select"
           value={religion || ''}
-          onChange={e => setReligion(e.target.value)}
+          onChange={(e) => setReligion(e.target.value)}
         >
           <option value="">اختر</option>
           <option value="مسلم">مسلم</option>
@@ -192,7 +192,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         <Form.Control
           type="tel"
           value={phoneNumber || ''}
-          onChange={e => setPhoneNumber(e.target.value)}
+          onChange={(e) => setPhoneNumber(e.target.value)}
         />
       </Form.Group>
       <Form.Group controlId="identityNumber">
@@ -201,7 +201,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
           type="text"
           placeholder="أدخل رقم الهوية"
           value={identityNumber}
-          onChange={e => setIdentityNumber(e.target.value)}
+          onChange={(e) => setIdentityNumber(e.target.value)}
           maxLength={14}
         />
       </Form.Group>

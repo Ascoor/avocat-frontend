@@ -75,8 +75,8 @@ const Court = ({ show, handleClose }) => {
         address: newCourtAddress,
       }),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         fetchCourts();
         setShowAddCourtModal(false);
         setNewCourtName('');
@@ -93,7 +93,7 @@ const Court = ({ show, handleClose }) => {
         }, 5000);
       })
 
-      .catch(error => {
+      .catch((error) => {
         setError('حدث خطأ في إضافة المحكمة');
         console.error('حدث خطأ في إضافة المحكمة: ', error);
         setShowAlert(true);
@@ -103,13 +103,13 @@ const Court = ({ show, handleClose }) => {
         }, 5000);
       });
   };
-  const handleDelete = id => {
+  const handleDelete = (id) => {
     // Your code to handle deletion
     fetch(`${API_CONFIG.baseURL}/api/courts/${id}`, {
       method: 'DELETE',
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         fetchCourts();
         setShowAlert(true);
         setAlertMessage(
@@ -119,7 +119,7 @@ const Court = ({ show, handleClose }) => {
           setShowAlert(false);
         }, 5000);
       })
-      .catch(error => {
+      .catch((error) => {
         setError('حدث خطأ في إزالة المحكمة');
         console.error('حدث خطأ في إزالة المحكمة: ', error);
         setShowAlert(true);
@@ -134,7 +134,7 @@ const Court = ({ show, handleClose }) => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = courts.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handlePageChange = newPage => {
+  const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
@@ -219,14 +219,14 @@ const Court = ({ show, handleClose }) => {
               <Form.Control
                 as="select"
                 value={newCourtTypeId}
-                onChange={e => {
+                onChange={(e) => {
                   const selectedTypeId = e.target.value;
                   setSelectedCourtTypeId(selectedTypeId);
                   setNewCourtTypeId(selectedTypeId);
                 }}
               >
                 <option value="">اختر نوع المحكمة</option>
-                {courtTypes.map(courtType => (
+                {courtTypes.map((courtType) => (
                   <option key={courtType.id} value={courtType.id}>
                     {courtType.name}
                   </option>
@@ -239,12 +239,12 @@ const Court = ({ show, handleClose }) => {
               <Form.Control
                 as="select"
                 value={newCourtSubTypeId}
-                onChange={e => setNewCourtSubTypeId(e.target.value)}
+                onChange={(e) => setNewCourtSubTypeId(e.target.value)}
               >
                 <option value="">اختر نوع المحكمة الفرعي</option>
 
                 {courtSubTypes.length > 0 &&
-                  courtSubTypes.map(courtSubTypes => (
+                  courtSubTypes.map((courtSubTypes) => (
                     <option key={courtSubTypes.id} value={courtSubTypes.id}>
                       {courtSubTypes.name}
                     </option>
@@ -257,10 +257,10 @@ const Court = ({ show, handleClose }) => {
               <Form.Control
                 as="select"
                 value={newCourtLevelId}
-                onChange={e => setNewCourtLevelId(e.target.value)}
+                onChange={(e) => setNewCourtLevelId(e.target.value)}
               >
                 <option value="">اختر مستوى المحكمة</option>
-                {courtLevels.map(courtLevel => (
+                {courtLevels.map((courtLevel) => (
                   <option key={courtLevel.id} value={courtLevel.id}>
                     {courtLevel.name}
                   </option>
@@ -272,7 +272,7 @@ const Court = ({ show, handleClose }) => {
               <Form.Control
                 type="text"
                 value={newCourtName}
-                onChange={e => setNewCourtName(e.target.value)}
+                onChange={(e) => setNewCourtName(e.target.value)}
               />
             </Form.Group>
             <Form.Group controlId="courtAddress">
@@ -280,7 +280,7 @@ const Court = ({ show, handleClose }) => {
               <Form.Control
                 type="text"
                 value={newCourtAddress}
-                onChange={e => setNewCourtAddress(e.target.value)}
+                onChange={(e) => setNewCourtAddress(e.target.value)}
               />
             </Form.Group>
           </Form>

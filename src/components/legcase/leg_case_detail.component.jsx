@@ -49,14 +49,16 @@ export default function LegCaseDetail() {
   }, [id]);
 
   const handleAddNewCourt = (index, field, value) => {
-    setLegCaseNewCourts(prevCourts => [
+    setLegCaseNewCourts((prevCourts) => [
       ...prevCourts,
       { case_number: '', case_year: '', court_id: '', judge_level: '' },
     ]);
   };
 
-  const handleRemoveNewCourt = index => {
-    setLegCaseNewCourts(prevCourts => prevCourts.filter((_, i) => i !== index));
+  const handleRemoveNewCourt = (index) => {
+    setLegCaseNewCourts((prevCourts) =>
+      prevCourts.filter((_, i) => i !== index),
+    );
   };
 
   const handleNewCourtChange = (index, field, value) => {
@@ -187,7 +189,7 @@ export default function LegCaseDetail() {
                       <Form.Control
                         type="text"
                         value={court.case_number}
-                        onChange={e =>
+                        onChange={(e) =>
                           handleNewCourtChange(
                             index,
                             'case_number',
@@ -203,7 +205,7 @@ export default function LegCaseDetail() {
                       <Form.Control
                         as="select"
                         value={court.case_year}
-                        onChange={e =>
+                        onChange={(e) =>
                           handleNewCourtChange(
                             index,
                             'case_year',
@@ -226,7 +228,7 @@ export default function LegCaseDetail() {
                       <Form.Control
                         as="select"
                         value={court.court_id}
-                        onChange={e =>
+                        onChange={(e) =>
                           handleNewCourtChange(
                             index,
                             'court_id',
@@ -235,7 +237,7 @@ export default function LegCaseDetail() {
                         }
                       >
                         <option defaultValue={null}>اختر المحكمة</option>
-                        {courts.map(option => (
+                        {courts.map((option) => (
                           <option key={`court-${option.id}`} value={option.id}>
                             {option.name}
                           </option>
@@ -249,7 +251,7 @@ export default function LegCaseDetail() {
                       <Form.Control
                         as="select"
                         value={court.judge_level}
-                        onChange={e =>
+                        onChange={(e) =>
                           handleNewCourtChange(
                             index,
                             'judge_level',
@@ -284,7 +286,7 @@ export default function LegCaseDetail() {
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
-          onSelect={k => setKey(k)}
+          onSelect={(k) => setKey(k)}
         >
           <Tab eventKey="procedure" title="الإجراءات">
             <Procedure legCaseId={String(id)} />

@@ -15,7 +15,7 @@ const Calendar = () => {
   // Function to determine the title based on the event type
   const [events, setEvents] = useState([]);
 
-  const determineTitle = event => {
+  const determineTitle = (event) => {
     if (event.title === 'legal session') {
       return 'جلسة';
     } else if (event.title === 'legal Ads') {
@@ -30,9 +30,9 @@ const Calendar = () => {
   useEffect(() => {
     axios
       .get(`${API_CONFIG.baseURL}/api/events`)
-      .then(response => {
+      .then((response) => {
         setEvents(
-          response.data.map(event => ({
+          response.data.map((event) => ({
             title: determineTitle(event),
             extendedProps: {
               description: event.description,
@@ -41,7 +41,7 @@ const Calendar = () => {
           })),
         );
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching events:', error);
       });
   }, []);
@@ -75,15 +75,15 @@ const Calendar = () => {
   }, []);
 
   // Helper function to convert Arabic numerals to Hindi numerals
-  const arabicToHindi = num => {
+  const arabicToHindi = (num) => {
     const arabicNumerals = '0123456789';
     const hindiNumerals = '٠١٢٣٤٥٦٧٨٩';
     const numeralMap = new Map(
       [...arabicNumerals].map((d, i) => [d, hindiNumerals[i]]),
     );
-    return String(num).replace(/[0-9]/g, match => numeralMap.get(match));
+    return String(num).replace(/[0-9]/g, (match) => numeralMap.get(match));
   };
-  const formatDate = date => {
+  const formatDate = (date) => {
     const yyyy = date.getFullYear();
     const mm = String(date.getMonth() + 1).padStart(2, '0');
     const dd = String(date.getDate()).padStart(2, '0');
