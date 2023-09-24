@@ -8,10 +8,15 @@ import '../../../assets/css/TopNav.css';
 import { LogoImage } from '../../../images/index';
 import API_CONFIG from '../../../config';
 import Notification from './Notification';
+import useAuth from '../../layout/AuthTool/AuthUser'; // Import the useAuth hook
 
-const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
+const TopNav = ({ onToggleSidebar, sidebarOpen, logoutUser }) => {
   const [notifications, setNotifications] = useState([]);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const { getUser } = useAuth(); // Use the useAuth hook
+  
+  // Retrieve the user object
+  const user = getUser();
 
   const userDropdownAnimation = useSpring({
     opacity: 1,
@@ -22,7 +27,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
   const fetchNotifications = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/notifications/${userId}`,
+        `${API_CONFIG.baseURL}/api/notifications/${user.id}`,
       );
       setNotifications(response.data);
       const unreadCount = response.data.filter((n) => !n.read).length;
@@ -35,7 +40,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
   useEffect(() => {
     document.body.classList.toggle('sidebar-open', sidebarOpen);
     fetchNotifications();
-  }, [sidebarOpen, userId]);
+  }, [sidebarOpen, user.id]);
 
   return (
     <animated.nav className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}>
@@ -68,7 +73,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
             aria-labelledby="userDropdown"
           >
             <li>
-              <a href={`/profile/${userId}`}>الملف الشخصي</a>
+              <a href={`/profile/${user.id}`}>الملف الشخصي</a>
             </li>
             <li>
               <a
@@ -91,7 +96,6 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
 TopNav.propTypes = {
   onToggleSidebar: PropTypes.func.isRequired,
   sidebarOpen: PropTypes.bool.isRequired,
-  userId: PropTypes.number.isRequired,
   logoutUser: PropTypes.func.isRequired,
 };
 

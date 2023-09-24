@@ -49,7 +49,7 @@ const Register = ({ handleCloseForm }) => {
     try {
       const response = await http.post('/api/login', { email, password });
       setToken(response.data.user, response.data.access_token);
-      navigate('/');
+      navigate('/home');
     } catch (error) {
       setError('Failed to login. Please try again later.');
       console.log(error);

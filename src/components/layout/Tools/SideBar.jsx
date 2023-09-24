@@ -17,10 +17,11 @@ import '../../../assets/css/SideBar.css';
 import useAuth from '../AuthTool/AuthUser';
 
 const Sidebar = ({ sidebarOpen, onClose }) => {
+  const { getUser } = useAuth(); // Use the useAuth hook
   const sidebarAnimation = useSpring({
     right: sidebarOpen ? 0 : -450, // Adjust the value based on your sidebar width
   });
-  const user = useAuth().user;
+  const user = getUser();
   const userDropdownAnimation = useSpring({
     opacity: 1,
     transform: 'scale(1)',

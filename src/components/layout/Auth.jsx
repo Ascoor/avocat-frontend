@@ -10,7 +10,8 @@ import { useSpring, animated } from '@react-spring/web';
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { token, logout } = useAuth();
-  const userId = useAuth().user.id;
+
+
 
   const logoutUser = () => {
     if (token !== undefined) {
@@ -45,7 +46,6 @@ function Auth() {
     <>
       <TopNav
         onToggleSidebar={onToggleSidebar}
-        userId={userId}
         logoutUser={logoutUser}
         sidebarOpen={sidebarOpen}
       />
