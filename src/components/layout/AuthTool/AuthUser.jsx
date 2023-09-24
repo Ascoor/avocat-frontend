@@ -34,7 +34,7 @@ export default function useAuth() {
 
         setToken(token);
         setUser(user);
-        navigate('/home');
+        navigate('/');
     };
 
     // Clear session storage and navigate to the login page
