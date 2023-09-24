@@ -9,7 +9,7 @@
   display:flow-root;
   align-items: center;
   background-color: #f8f9fa; /* Background color of the card */
-  border: 5px solid var(--accent-color); /* Border color of the card */
+  border: 5px solid rgb(255, 155, 5);
   border-radius: 150px;
   padding: 15px;
   transition:
@@ -49,11 +49,11 @@
 }
 
 .home-card .event-card-title {
-  color: #F6CD59;
+  color: #f6ff72;
 }
 
 .count {
-  color: var(--accent-color); /* Color of the count */
+  color: #f5c541; /* Text color on the button */
   font-size: 1.6rem;
 }
 
@@ -68,18 +68,12 @@
 
 .btn.btn-home-search:hover {
   background: linear-gradient(15deg, #a87b2d, #d8d50a); /* Background color of the button on hover */
-<<<<<<< HEAD
-}.home-text-center {
-  background: linear-gradient(135deg, #1f485d, #264754, #00224b);
-  border-radius: 10px; /* Reduced border-radius for a more subtle effect */
-=======
 }
 .home-text-center {
-  background: linear-gradient(235deg,#092342  , #004852, #10325a);
+  background: linear-gradient(235deg,#092342  , #014155, #10325a);;
   border-radius: 40px;
->>>>>>> 91cf019124685baa1f7b8b46fbb401a01f1ebbfe
   padding: 20px;
-  color: #ff9800; /* Text color */
+  color: #fff787; /* Text color */
   text-align: center;
   font-size: 1.8rem;
   font-family: 'Cairo', sans-serif;
@@ -105,7 +99,4 @@
     margin-bottom: 5px;
   }
 
-  .count {
-    font-size: 1.4rem;
-  }
 }

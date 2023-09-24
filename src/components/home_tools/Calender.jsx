@@ -18,10 +18,10 @@ const Calendar = () => {
   const determineTitle = (event) => {
     if (event.title === 'legal session') {
       return 'جلسة';
-    } else if (event.title === 'legal Ads') {
-      return 'إعلانات';
-    } else if (event.title === 'legal') {
-      return 'إجراء قانوني';
+    } else if (event.title === 'Legal Ads') {
+      return 'إعلان';
+    } else if (event.title === 'legal Procedure') {
+      return 'إجراء';
     } else {
       return event.title;
     }

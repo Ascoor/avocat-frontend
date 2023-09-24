@@ -96,7 +96,12 @@ const Procedure = ({ legCaseId }) => {
       console.log(error);
     }
   };
-
+  const handleOpenAddProcedureModal = () => {
+    clearFields();  // Clearing all the input fields
+    setModalMode('add');
+    setShowAddProcedureModal(true);
+  };
+  
   const handleEditProcedure = (procedure) => {
     setModalMode('edit');
     setProcedureId(procedure.id);
@@ -191,11 +196,8 @@ const Procedure = ({ legCaseId }) => {
       </Row>
 
       <Card.Header>
-        <Button
-          variant="success"
-          className="btn-sm"
-          onClick={setShowAddProcedureModal}
-        >
+      <Button onClick={handleOpenAddProcedureModal}>
+
           <BiPlusCircle className="mr-1" />
           إإضافة إجراء
         </Button>
