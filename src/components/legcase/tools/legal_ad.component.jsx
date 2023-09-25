@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Table, Button, Modal, Form, Alert } from 'react-bootstrap';
+import { Card, Button, Modal, Form, Alert } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import arEG from 'date-fns/locale/ar-EG';
 import useAuth from '../../layout/AuthTool/AuthUser';
-import API_CONFIG from '../../../config';
-import PropTypes from 'prop-types';
-
+import API_CONFIG from '../../../config'; 
 registerLocale('ar_eg', arEG);
 setDefaultLocale('ar_eg');
 
 const LegalAd = ({ legCaseId }) => {
-  LegalAd.propTypes = {
-    legCaseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-      .isRequired,
-  };
 
   const { getUser } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
@@ -39,6 +33,7 @@ const LegalAd = ({ legCaseId }) => {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedCost, setSelectedCost] = useState('');
   const [selectedCost2, setSelectedCost2] = useState('');
+  
   const user = getUser();
 
   useEffect(() => {
@@ -98,7 +93,7 @@ const LegalAd = ({ legCaseId }) => {
     setSelectedSendDate(legalAd.sendDate ? new Date(legalAd.sendDate) : null);
     setSelectedRecivedDate(
       legalAd.receive_date ? new Date(legalAd.receive_date) : null,
-    );
+    );    
     setSelectedSendLawyer(legalAd.sendLawyer);
     setSelectedLegalAd(legalAd.legalAd);
     setSelectedRecivedLawyer(legalAd.lawyer_receive_id);
@@ -143,12 +138,9 @@ const LegalAd = ({ legCaseId }) => {
         const formattedSendDate = selectedSendDate
           ? selectedSendDate.toISOString().split('T')[0]
           : null;
-
         await axios.post(`${API_CONFIG.baseURL}/api/legal_ads`, {
           send_date: formattedSendDate,
-
           lawyer_send_id: selectedSendLawyer,
-
           cost: selectedCost,
           cost2: selectedCost2,
           description: selectedDescription,
@@ -166,22 +158,21 @@ const LegalAd = ({ legCaseId }) => {
       }
     } else if (modalMode === 'edit') {
       try {
-        const formattedRecivedDate = selectedRecivedDate
-          ? selectedRecivedDate.toISOString().split('T')[0]
-          : null;
 
-        await axios.put(`${API_CONFIG.baseURL}/api/legal_ads/${legalAdId}`, {
-          receive_date: formattedRecivedDate,
-
-          legal_ad_id: selectedLegalAd,
-          lawyer_receive_id: selectedRecivedLawyer,
-          results: selectedResults,
-          cost: selectedCost,
-          cost2: selectedCost2,
-          status: selectedStatus,
-          leg_case_id: legCaseId,
-          updated_by: user.id,
-        });
+      const formattedRecivedDate = selectedRecivedDate
+      ? selectedRecivedDate.toISOString().split('T')[0]
+      : null;
+      await axios.put(`${API_CONFIG.baseURL}/api/legal_ads/${legalAdId}`, {
+        receive_date: formattedRecivedDate,
+      legal_ad_id: selectedLegalAd,
+      lawyer_receive_id: selectedRecivedLawyer,
+      results: selectedResults,
+      cost: selectedCost,
+      cost2: selectedCost2,
+      status: selectedStatus,
+        leg_case_id: legCaseId,
+        updated_by: user.id,
+      });
         fetchLegalAds(legCaseId);
         handleModalClose();
         showAlertMessage('تم تعديل الاعلان القانوني بنجاح.', 'success');
@@ -190,7 +181,6 @@ const LegalAd = ({ legCaseId }) => {
       }
     }
   };
-
   const showAlertMessage = (message, type) => {
     setAlert({ message, type });
     setShowAlert(true);
@@ -198,7 +188,6 @@ const LegalAd = ({ legCaseId }) => {
       setShowAlert(false);
     }, 5000);
   };
-
   return (
     <>
       {showAlert && (
@@ -210,7 +199,6 @@ const LegalAd = ({ legCaseId }) => {
           {alert.message}
         </Alert>
       )}
-
       <Card.Header>
         <Button variant="success" className="btn-sm" onClick={handleAddLegalAd}>
           <BiPlusCircle className="mr-1" />
@@ -240,7 +228,6 @@ const LegalAd = ({ legCaseId }) => {
                   <td>{legalAd.lawyer_send?.name}</td>
                   <td>{legalAd.lawyer_receive?.name}</td>
                   <td>{legalAd.status}</td>
-
                   <td className="text-center">
                     <Button
                       variant="info"
@@ -249,7 +236,6 @@ const LegalAd = ({ legCaseId }) => {
                     >
                       <BiPencil />
                     </Button>
-
                     <Button
                       variant="danger"
                       className="btn-sm"
@@ -264,7 +250,6 @@ const LegalAd = ({ legCaseId }) => {
           </table>
         </div>
       </Card.Body>
-
       <Modal show={showAddLegalAdModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -348,16 +333,16 @@ const LegalAd = ({ legCaseId }) => {
 
             {modalMode === 'edit' && (
               <>
-                <Form.Group controlId="recivedDate">
-                  <Form.Label>تاريخ الاستلام</Form.Label>
-                  <br />
-                  <DatePicker
-                    className="form-control"
-                    dateFormat="yyyy-MM-dd"
-                    selected={selectedRecivedDate}
-                    onChange={(date) => setSelectedRecivedDate(date)}
-                  />
-                </Form.Group>
+              <Form.Group controlId="recivedDate">
+  <Form.Label>تاريخ الاستلام</Form.Label>
+  <br />
+  <DatePicker
+    className="form-control"
+    dateFormat="yyyy-MM-dd"
+    selected={selectedRecivedDate}
+    onChange={(date) => setSelectedRecivedDate(date)}
+  />
+</Form.Group>
 
                 <Form.Group controlId="legalAdCost">
                   <Form.Label>رسوم بإيصال</Form.Label>

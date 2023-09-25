@@ -1,6 +1,7 @@
 {
   "name": "avocat-frontend",
   "version": "1.0.0",
+  "homepage": "https://avocat.live", 
   "description": "Lawyer office manager",
   "license": "MIT",
   "keywords": [

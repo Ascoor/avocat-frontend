@@ -44,7 +44,6 @@ const AuthRoutes = () => {
           <Route path="/client/create" element={<AddEditClient />} />
           <Route path="/client/edit/:id" element={<AddEditClient />} />
 
-          <Route path="/home" element={<Home />} />
           <Route path="/lawyers/form" element={<LawyersAddEdit />} />
           {/* <Route path="/archives" element={<Archives />} /> */}
           {/* <Route path="/archives/wordpadeditor" element={<WordPadEditor />} /> */}

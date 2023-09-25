@@ -12,6 +12,7 @@ const LegalSession = ({ legCaseId }) => {
     legCaseId: PropTypes.string.isRequired,
   };
   const { getUser } = useAuth();
+   const user = getUser(); 
   const [alert, setAlert] = useState(null);
   const [selectStatus, setSelectStatus] = useState('');
   const [showAlert, setShowAlert] = useState(false);
@@ -103,7 +104,7 @@ const LegalSession = ({ legCaseId }) => {
       cost: selectedCost,
       cost2: selectedCost2,
       leg_case_id: legCaseId,
-      created_by: getUser().id,
+      created_by: user.id,
     };
     if (modalMode === 'edit') {
       data.status = selectStatus;
