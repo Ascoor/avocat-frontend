@@ -68,16 +68,10 @@
 
 .btn.btn-home-search:hover {
   background: linear-gradient(15deg, #a87b2d, #d8d50a); /* Background color of the button on hover */
-<<<<<<< HEAD
-}.home-text-center {
-  background: linear-gradient(135deg, #1f485d, #264754, #00224b);
-  border-radius: 10px; /* Reduced border-radius for a more subtle effect */
-=======
 }
 .home-text-center {
   background: linear-gradient(235deg,#092342  , #004852, #10325a);
   border-radius: 40px;
->>>>>>> 91cf019124685baa1f7b8b46fbb401a01f1ebbfe
   padding: 20px;
   color: #ff9800; /* Text color */
   text-align: center;
