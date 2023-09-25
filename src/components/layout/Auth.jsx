@@ -9,9 +9,10 @@ import { useSpring, animated } from '@react-spring/web';
 
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { token, logout } = useAuth();
-
-
+  const { token, logout, getUser } = useAuth();
+  const user = getUser()
+  const userId = user.id;
+  const userName = user.name; // Access the user's name
 
   const logoutUser = () => {
     if (token !== undefined) {
@@ -46,6 +47,8 @@ function Auth() {
     <>
       <TopNav
         onToggleSidebar={onToggleSidebar}
+        userId={userId} // Display user's ID
+        userName={userName} // Display user's name
         logoutUser={logoutUser}
         sidebarOpen={sidebarOpen}
       />
@@ -56,6 +59,7 @@ function Auth() {
         onClick={handleSidebarClick} // Add click event handler to close sidebar
       >
         <Sidebar
+          userName={userName}
           sidebarOpen={sidebarOpen}
           onClose={handleCloseSidebar}
           onToggleSidebar={onToggleSidebar}

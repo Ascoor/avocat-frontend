@@ -14,14 +14,12 @@ import { MdOutlinePriceChange } from 'react-icons/md';
 import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
 import '../../../assets/css/SideBar.css';
-import useAuth from '../AuthTool/AuthUser';
 
-const Sidebar = ({ sidebarOpen, onClose }) => {
-  const { getUser } = useAuth(); // Use the useAuth hook
+const Sidebar = ({ sidebarOpen, onClose ,userName}) => {
   const sidebarAnimation = useSpring({
     right: sidebarOpen ? 0 : -450, // Adjust the value based on your sidebar width
   });
-  const user = getUser();
+
   const userDropdownAnimation = useSpring({
     opacity: 1,
     transform: 'scale(1)',
@@ -45,7 +43,7 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
       <div className="user-profile">
         <img src="/log1.png" alt="صورة المستخدم" className="user-profile-img" />
         <animated.span style={userDropdownAnimation}>
-          المستشار/{user.name}
+          المستشار/{userName}
         </animated.span>
       </div>
 

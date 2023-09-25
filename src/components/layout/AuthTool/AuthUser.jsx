@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API_CONFIG from '../../../config';
 
-export default function useAuth() {
+export default function useAuth () {
     const navigate = useNavigate();
 
     // Fetch CSRF token from the document's meta tag
@@ -19,8 +19,8 @@ export default function useAuth() {
 
     const getUser = () => {
         const userString = sessionStorage.getItem('user');
-        const userDetail = JSON.parse(userString);
-        return userDetail;
+        const user_detail = JSON.parse(userString);
+        return user_detail;
     };
 
     // Set up state for token and user
@@ -34,7 +34,7 @@ export default function useAuth() {
 
         setToken(token);
         setUser(user);
-        navigate('/');
+        navigate('/home');
     };
 
     // Clear session storage and navigate to the login page
@@ -61,7 +61,6 @@ export default function useAuth() {
         }
         return config;
     });
-
 
     // Return the necessary functions and data from the hook
     return {

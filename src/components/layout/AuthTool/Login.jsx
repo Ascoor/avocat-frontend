@@ -13,6 +13,7 @@ const Login = ({ handleCloseForm }) => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [user, setUser] = useState(null); // State to store user details
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -23,7 +24,9 @@ const Login = ({ handleCloseForm }) => {
                 email,
                 password,
             });
-            setToken(response.data, response.data);
+            setToken(response.data.token, response.data.token);
+                  // Set the user state with user details
+                  setUser(user);
             navigate("/"); // Replace "/" with the desired route after successful login
         } catch (error) {
             setError(

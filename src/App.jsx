@@ -1,16 +1,22 @@
-import AuthUser from './components/layout/AuthTool/AuthUser';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 import './App.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import Guest from './components/layout/Guest';
 import Auth from './components/layout/Auth';
+import useAuth from './components/layout/AuthTool/AuthUser';
+
 const App = () => {
-  const { getToken } = AuthUser();
-
-  if (!getToken()) {
-    return <Guest />;
-  }
-
-  return <Auth />;
+  const { getToken } = useAuth();
+  return (
+    <div>
+      {getToken() ? (
+        <Auth />
+      ) : (
+        <Guest />
+      )}
+    </div>
+  );
 };
+
 export default App;

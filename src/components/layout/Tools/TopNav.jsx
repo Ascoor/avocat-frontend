@@ -8,15 +8,10 @@ import '../../../assets/css/TopNav.css';
 import { LogoImage } from '../../../images/index';
 import API_CONFIG from '../../../config';
 import Notification from './Notification';
-import useAuth from '../../layout/AuthTool/AuthUser'; // Import the useAuth hook
 
-const TopNav = ({ onToggleSidebar, sidebarOpen, logoutUser }) => {
+const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
   const [notifications, setNotifications] = useState([]);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
-  const { getUser } = useAuth(); // Use the useAuth hook
-  
-  // Retrieve the user object
-  const user = getUser();
 
   const userDropdownAnimation = useSpring({
     opacity: 1,
@@ -27,7 +22,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, logoutUser }) => {
   const fetchNotifications = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/notifications/${user.id}`,
+        `${API_CONFIG.baseURL}/api/notifications/${userId}`,
       );
       setNotifications(response.data);
       const unreadCount = response.data.filter((n) => !n.read).length;
@@ -40,7 +35,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, logoutUser }) => {
   useEffect(() => {
     document.body.classList.toggle('sidebar-open', sidebarOpen);
     fetchNotifications();
-  }, [sidebarOpen, user.id]);
+  }, [sidebarOpen, userId]);
 
   return (
     <animated.nav className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}>
@@ -73,7 +68,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, logoutUser }) => {
             aria-labelledby="userDropdown"
           >
             <li>
-              <a href={`/profile/${user.id}`}>الملف الشخصي</a>
+              <a href={`/profile/${userId}`}>الملف الشخصي</a>
             </li>
             <li>
               <a
@@ -96,6 +91,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, logoutUser }) => {
 TopNav.propTypes = {
   onToggleSidebar: PropTypes.func.isRequired,
   sidebarOpen: PropTypes.bool.isRequired,
+  userId: PropTypes.number.isRequired,
   logoutUser: PropTypes.func.isRequired,
 };
 
