@@ -153,11 +153,14 @@ export default function LegCaseDetail() {
       <Card.Body>
         <LegCaseClients legCaseId={id} />
       </Card.Body>
-
+        <Col xs={12} lg={6}> {/* Display the second table on extra small and large screens */}
+      </Col>
+     
       <CourtsHeader />
       <Card.Body>
-        <Row>
-          <Col>
+      <Row>
+        <Col xs={12} md={6} lg={6}> {/* Display one table on extra small and large screens */}
+      
             <div className="table-responsive">
               <table className="special-table">
                 <thead>
@@ -180,6 +183,9 @@ export default function LegCaseDetail() {
                 </tbody>
               </table>
             </div>
+            </Col>
+        <Col xs={12} lg={6}> {/* Display the second table on extra small and large screens */}
+     
             {legCaseNewCourts.map((court, index) => (
               <div key={index} className="mb-3">
                 <Row className="align-items-center mt-3">
@@ -221,8 +227,11 @@ export default function LegCaseDetail() {
                         ))}
                       </Form.Control>
                     </Form.Group>
-                  </Col>
-                  <Col>
+                    </Col>
+                    </Row>
+                    <Row>
+        <Col xs={12} lg={6}> {/* Display the second table on extra small and large screens */}
+     
                     <Form.Group className="mb-0">
                       <Form.Label>المحكمة</Form.Label>
                       <Form.Control
@@ -244,8 +253,9 @@ export default function LegCaseDetail() {
                         ))}
                       </Form.Control>
                     </Form.Group>
-                  </Col>
-                  <Col>
+                    </Col>
+        <Col xs={12} lg={6}> {/* Display the second table on extra small and large screens */}
+     
                     <Form.Group>
                       <Form.Label>مستوى القاضي</Form.Label>
                       <Form.Control

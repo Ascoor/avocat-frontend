@@ -2,32 +2,35 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Form, Button, Row } from "react-bootstrap";
 import { FaSignInAlt } from "react-icons/fa";
-import AuthUser from "./AuthUser";
+import useAuth from "./AuthUser";
 import API_CONFIG from '../../../config';
 import axios from "axios";
 const Login = ({ handleCloseForm }) => {
     const navigate = useNavigate();
-    const { setToken } = AuthUser();
+    const {setToken } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [user, setUser] = useState(null); // State to store user details
-
     const onSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-
+    
         try {
             const response = await axios.post(`${API_CONFIG.baseURL}/api/login`, {
                 email,
                 password,
             });
-            setToken(response.data.token, response.data.token);
-                  // Set the user state with user details
-                  setUser(user);
-            navigate("/"); // Replace "/" with the desired route after successful login
+    
+            // Assuming response.data contains the login data
+            const { access_token, user } = response.data;
+    
+            // Call saveToken with the access_token and user data
+            setToken(access_token, user);
+    
+            // Navigate to the desired route after successful login
+            navigate("/");
         } catch (error) {
             setError(
                 "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى لاحقًا."
@@ -37,6 +40,7 @@ const Login = ({ handleCloseForm }) => {
             setLoading(false);
         }
     };
+    
 
     return (
 

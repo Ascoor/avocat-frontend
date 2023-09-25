@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Table, Button, Row, Modal, Card, Form, Alert } from 'react-bootstrap';
+import { Button, Row, Modal, Card, Form, Alert } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -18,8 +18,8 @@ const userId = user.id;
   const [alert, setAlert] = useState(null);
   const [selectStatus, setSelectStatus] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const [selectedCost, setSelectedCost] = useState('');
-  const [selectedCost2, setSelectedCost2] = useState('');
+  const [selectedCost, setSelectedCost] = useState(0);
+  const [selectedCost2, setSelectedCost2] = useState(0);
   const [selectedSession, setSelectedSession] = useState({});
   const [legalSessions, setLegalSessions] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
