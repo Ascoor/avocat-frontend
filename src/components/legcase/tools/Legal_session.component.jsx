@@ -12,9 +12,9 @@ const LegalSession = ({ legCaseId }) => {
     legCaseId: PropTypes.string.isRequired,
   };
   const { getUser } = useAuth();
-   const user = getUser(); 
-   
-const userId = user.id;
+  const user = getUser();
+
+  const userId = user.id;
   const [alert, setAlert] = useState(null);
   const [selectStatus, setSelectStatus] = useState('');
   const [showAlert, setShowAlert] = useState(false);
@@ -90,8 +90,11 @@ const userId = user.id;
     setResult(legalSession.result);
 
     setShowAddLegalSessionModal(true);
-  };const handleAddOrUpdateLegalSession = async () => {
-    const dateOnly = selectedDate ? selectedDate.toISOString().split('T')[0] : null;
+  };
+  const handleAddOrUpdateLegalSession = async () => {
+    const dateOnly = selectedDate
+      ? selectedDate.toISOString().split('T')[0]
+      : null;
     const data = {
       date: dateOnly,
       lawyer_id: selectedLawyer,
@@ -102,19 +105,18 @@ const userId = user.id;
       cost: selectedCost,
       cost2: selectedCost2,
       leg_case_id: legCaseId,
-      created_by:userId
+      created_by: userId,
     };
-  
+
     if (modalMode === 'edit') {
       data.status = selectStatus;
     }
-  
+
     // Include created_by only when creating a new record
     if (modalMode === 'add') {
-      data.created_by =userId; // Include created_by when creating a new record
+      data.created_by = userId; // Include created_by when creating a new record
     }
-    
-  
+
     try {
       if (modalMode === 'add') {
         await axios.post(`${API_CONFIG.baseURL}/api/legal_sessions`, data);
@@ -122,7 +124,7 @@ const userId = user.id;
         setTimeout(() => {
           setShowAlert(false);
         }, 5000);
-  
+
         setAlert({ variant: 'info', message: 'تمت الإضافة بنجاح.' });
         setShowAlert(true);
       } else if (modalMode === 'edit') {
@@ -131,23 +133,23 @@ const userId = user.id;
           data,
         );
         fetchData();
-  
+
         setTimeout(() => {
           setShowAlert(false);
         }, 5000);
-  
+
         setAlert({ variant: 'info', message: 'تم التعديل بنجاح.' });
         setShowAlert(true);
       }
-  
+
       handleCloseModal();
     } catch (error) {
       console.log(error);
-  
+
       setTimeout(() => {
         setShowAlert(false);
       }, 5000);
-  
+
       setAlert({
         variant: 'danger',
         message: 'حدث خطأ أثناء عملية التعديل.',
@@ -155,7 +157,7 @@ const userId = user.id;
       setShowAlert(true);
     }
   };
-  
+
   const handleAddLegalSession = () => {
     setModalMode('add');
     setShowAddLegalSessionModal(true);

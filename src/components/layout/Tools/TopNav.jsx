@@ -8,7 +8,7 @@ import { LogoImage } from '../../../images/index';
 import API_CONFIG from '../../../config';
 import Notification from './Notification';
 
-const TopNav = ({ onToggleSidebar, sidebarOpen,user ,logoutUser}) => {
+const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
   const [notifications, setNotifications] = useState([]);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
 
@@ -88,6 +88,5 @@ const TopNav = ({ onToggleSidebar, sidebarOpen,user ,logoutUser}) => {
     </animated.nav>
   );
 };
-
 
 export default TopNav;

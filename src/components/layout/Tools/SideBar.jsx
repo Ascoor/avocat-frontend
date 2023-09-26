@@ -15,7 +15,7 @@ import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
 import '../../../assets/css/SideBar.css';
 
-const Sidebar = ({ sidebarOpen, onClose ,userName}) => {
+const Sidebar = ({ sidebarOpen, onClose, userName }) => {
   const sidebarAnimation = useSpring({
     right: sidebarOpen ? 0 : -450, // Adjust the value based on your sidebar width
   });

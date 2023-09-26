@@ -9,15 +9,7 @@ import useAuth from './components/layout/AuthTool/AuthUser'; // Import the useAu
 
 const App = () => {
   const { getToken } = useAuth();
-  return (
-    <div>
-      {getToken() ? (
-        <Auth />
-      ) : (
-        <Guest />
-      )}
-    </div>
-  );
+  return <div>{getToken() ? <Auth /> : <Guest />}</div>;
 };
 
 export default App;

@@ -10,7 +10,7 @@ import { useSpring, animated } from '@react-spring/web';
 
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { logout, user,token } = useAuth();
+  const { logout, user, token } = useAuth();
   const navigate = useNavigate(); // Use the useNavigate hook
 
   const sidebarRef = useRef(null);
@@ -28,7 +28,6 @@ function Auth() {
       logout();
     }
   };
-
 
   // Add a click event listener to the sidebar to close it
   const handleSidebarClick = (e) => {
@@ -56,11 +55,7 @@ function Auth() {
         style={sidebarAnimation}
         onClick={handleSidebarClick}
       >
-        <Sidebar
-          sidebarOpen={sidebarOpen}
-          onClose={handleCloseSidebar}
-
-        />
+        <Sidebar sidebarOpen={sidebarOpen} onClose={handleCloseSidebar} />
       </animated.aside>
       <MainContent sidebarOpen={sidebarOpen} />
     </>

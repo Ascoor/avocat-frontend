@@ -21,7 +21,7 @@ const FinancialDashboard = () => {
         return null; // Default content when no tab is selected
     }
   };
-  
+
   return (
     <div className="financial-dashboard">
       <div className="card-container">
