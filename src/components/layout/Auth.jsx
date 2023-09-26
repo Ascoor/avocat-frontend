@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import TopNav from './Tools/TopNav';
-import Sidebar from './Tools/Sidebar';
+import Sidebar from './Tools/SideBar';
 import useAuth from '../layout/AuthTool/AuthUser';
 import { useNavigate } from 'react-router-dom';
 import '../../App.css';
