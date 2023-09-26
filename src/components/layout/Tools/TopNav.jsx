@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import { FaBars, FaUser } from 'react-icons/fa';
 import { Navbar } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
@@ -9,9 +8,11 @@ import { LogoImage } from '../../../images/index';
 import API_CONFIG from '../../../config';
 import Notification from './Notification';
 
-const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
+const TopNav = ({ onToggleSidebar, sidebarOpen,user ,logoutUser}) => {
   const [notifications, setNotifications] = useState([]);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
+
+  const userId = user ? user.id : null; // Check if user exists before accessing its properties
 
   const userDropdownAnimation = useSpring({
     opacity: 1,
@@ -88,11 +89,5 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, userId, logoutUser }) => {
   );
 };
 
-TopNav.propTypes = {
-  onToggleSidebar: PropTypes.func.isRequired,
-  sidebarOpen: PropTypes.bool.isRequired,
-  userId: PropTypes.number.isRequired,
-  logoutUser: PropTypes.func.isRequired,
-};
 
 export default TopNav;

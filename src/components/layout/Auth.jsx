@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import TopNav from './Tools/TopNav';
-import Sidebar from './Tools/SideBar';
+import Sidebar from './Tools/Sidebar';
 import useAuth from '../layout/AuthTool/AuthUser';
+import { useNavigate } from 'react-router-dom';
 import '../../App.css';
 import MainContent from './Tools/MainContent';
 import '../../assets/css/Auth.css';
@@ -9,18 +10,10 @@ import { useSpring, animated } from '@react-spring/web';
 
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { token, logout, getUser } = useAuth();
-const user = getUser()
-  const userId = user.id;
-  const userName = user.name; // Access the user's name
+  const { logout, user,token } = useAuth();
+  const navigate = useNavigate(); // Use the useNavigate hook
 
-  const logoutUser = () => {
-    if (token !== undefined) {
-      logout();
-    }
-  };
-
-  const sidebarRef = useRef(null); // Ref to the sidebar element
+  const sidebarRef = useRef(null);
 
   const onToggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -29,6 +22,13 @@ const user = getUser()
   const handleCloseSidebar = () => {
     setSidebarOpen(false);
   };
+
+  const logoutUser = () => {
+    if (token !== undefined) {
+      logout();
+    }
+  };
+
 
   // Add a click event listener to the sidebar to close it
   const handleSidebarClick = (e) => {
@@ -47,22 +47,19 @@ const user = getUser()
     <>
       <TopNav
         onToggleSidebar={onToggleSidebar}
-        userId={userId} // Display user's ID
-        userName={userName} // Display user's name
-        logoutUser={logoutUser}
         sidebarOpen={sidebarOpen}
+        user={user}
+        logoutUser={logoutUser}
       />
       <animated.aside
         className={`sidebar ${sidebarOpen ? 'open' : ''}`}
         style={sidebarAnimation}
-        ref={sidebarRef}
-        onClick={handleSidebarClick} // Add click event handler to close sidebar
+        onClick={handleSidebarClick}
       >
         <Sidebar
-          userName={userName}
           sidebarOpen={sidebarOpen}
           onClose={handleCloseSidebar}
-          onToggleSidebar={onToggleSidebar}
+
         />
       </animated.aside>
       <MainContent sidebarOpen={sidebarOpen} />

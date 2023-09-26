@@ -10,56 +10,49 @@ export default function useAuth () {
     const csrfToken = document.querySelector('meta[name="csrf-token"]');
     const csrfTokenValue = csrfToken ? csrfToken.getAttribute('content') : null;
 
+    // Retrieve token and user data from session storage
     const getToken = () => {
         const tokenString = sessionStorage.getItem('token');
-        if (tokenString) {
-            try {
-                // Parse the token string as JSON
-                const userToken = JSON.parse(tokenString);
-                return userToken;
-            } catch (error) {
-                console.error('Error parsing token:', error);
-            }
-        }
-        return null; // Return null if tokenString is undefined or parsing fails
+        const userToken = JSON.parse(tokenString);
+        return userToken;
     };
-    
+
     const getUser = () => {
         const userString = sessionStorage.getItem('user');
-        if (userString) {
-            try {
-                // Parse the user string as JSON
-                const userDetail = JSON.parse(userString);
-                return userDetail;
-            } catch (error) {
-                console.error('Error parsing user data:', error);
-            }
-        }
-        return null; // Return null if userString is undefined or parsing fails
+        const user_detail = JSON.parse(userString);
+        return user_detail;
     };
-    
 
     // Set up state for token and user
     const [token, setToken] = useState(getToken());
     const [user, setUser] = useState(getUser());
-// Update the saveToken function to store the access token and user data
-const saveToken = (accessToken, user) => {
-    if (accessToken && user) {
-      const tokenObject = {
-        access_token: accessToken,
+
+    // Save token and user to session storage and update state
+    const saveToken = (user, token) => {
+        sessionStorage.setItem('token', JSON.stringify(token));
+        sessionStorage.setItem('user', JSON.stringify(user));
+
+        setToken(token);
+        setUser(user);
+        navigate('/home');
+    };
+
+    const login = async (email, password) => {
+        try {
+          const response = await axios.post(`${API_CONFIG.baseURL}/api/login`, { email, password });
+          if (response.data) {
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            setToken(response.data.token);
+            setUser(response.data.user);
+            
+            // Navigate to the home page after successful login
+            navigate('/home');
+          }
+        } catch (error) {
+          console.error("Error in login:", error);
+        }
       };
-  
-      sessionStorage.setItem('token', JSON.stringify(tokenObject));
-      sessionStorage.setItem('user', JSON.stringify(user));
-  
-      setToken(tokenObject);
-      setUser(user);
-      navigate('/home'); // Make sure '/home' is the correct route
-    }
-};
-
-  
-
     // Clear session storage and navigate to the login page
     const logout = () => {
         sessionStorage.clear();
@@ -91,6 +84,7 @@ const saveToken = (accessToken, user) => {
         token,
         user,
         getToken,
+        login,
         http,
         getUser,
         logout,
