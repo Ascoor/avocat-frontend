@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaBars, FaUser } from 'react-icons/fa';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, NavDropdown } from 'react-bootstrap'; // Import NavDropdown from react-bootstrap
 import { useSpring, animated } from '@react-spring/web';
 import '../../../assets/css/TopNav.css';
 import { LogoImage } from '../../../images/index';
@@ -39,7 +39,10 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
   }, [sidebarOpen, userId]);
 
   return (
-    <animated.nav className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}>
+    <animated.nav
+      dir="rtl" // Set text direction to left-to-right (LTR)
+      className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}
+    >
       <div className="d-flex align-items-center justify-content-start">
         <button onClick={onToggleSidebar} className="navbar-toggler">
           <FaBars />
@@ -55,33 +58,22 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
           unreadNotifications={unreadNotifications}
           fetchNotifications={fetchNotifications}
         />
-        <div className="user-dropdown">
-          <animated.button
-            className="dropdown-toggle beautiful-dropdown"
-            id="userDropdown"
-            data-bs-toggle="dropdown"
-            style={userDropdownAnimation}
+        {/* Use NavDropdown component for the user menu */}
+        <NavDropdown
+          title={<FaUser />}
+          id="userDropdown"
+          align="end" // Set alignment to right for RTL
+          drop="down" // Display the dropdown below the button
+        >
+          <NavDropdown.Item href={`/profile/${userId}`}>الملف الشخصي</NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item
+            className="dropdown-item-logout beautiful-logout-item"
+            onClick={logoutUser}
           >
-            <FaUser />
-          </animated.button>
-          <ul
-            className="dropdown-menu beautiful-dropdown-menu"
-            aria-labelledby="userDropdown"
-          >
-            <li>
-              <a href={`/profile/${userId}`}>الملف الشخصي</a>
-            </li>
-            <li>
-              <a
-                className="dropdown-item-logout beautiful-logout-item"
-                href="#"
-                onClick={logoutUser}
-              >
-                نسجيل الخروج
-              </a>
-            </li>
-          </ul>
-        </div>
+            نسجيل الخروج
+          </NavDropdown.Item>
+        </NavDropdown>
 
         <div className="notification-icon beautiful-notification"></div>
       </div>

@@ -67,7 +67,6 @@ const Login = ({ handleCloseForm }) => {
             />
           </Form.Group>
 
-     
         </Form>
 
         {error && <p className="text-danger mt-3 text-center">{error}</p>}
@@ -79,7 +78,7 @@ const Login = ({ handleCloseForm }) => {
                 ...جارى الدخول
               </Button>
             ) : (
-              <Button type="submit" className="btn-success login-btn">
+              <Button onClick={onSubmit} className="btn-success login-btn">
                 تسجيل الدخول
               </Button>
             )}
@@ -88,6 +87,8 @@ const Login = ({ handleCloseForm }) => {
           العودة للرئيسية
         </Button>
       </Card.Footer>
+      
+     
     </Card>
   
   );
