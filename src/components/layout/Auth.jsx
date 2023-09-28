@@ -11,6 +11,7 @@ import { useSpring, animated } from '@react-spring/web';
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { logout, user, token } = useAuth();
+  const navigate = useNavigate(); // Use the useNavigate hook
 
   const onToggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);

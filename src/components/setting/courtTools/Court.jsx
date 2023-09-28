@@ -36,6 +36,8 @@ const Court = ({ show, handleClose }) => {
   const itemsPerPage = 10;
   const [modalMessage, setModalMessage] = useState(null);
   const [courtTypesAlert, setCourtTypesAlert] = useState(null);
+  const [selectedCourtTypeId, setSelectedCourtTypeId] = useState(null);
+
 
   const fetchData = async (url, setState) => {
     setLoading(true);
@@ -77,7 +79,7 @@ const Court = ({ show, handleClose }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        fetchCourts();
+        fetchData();
         setShowAddCourtModal(false);
         setNewCourtName('');
         setNewCourtTypeId('');
@@ -110,7 +112,7 @@ const Court = ({ show, handleClose }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        fetchCourts();
+        fetchData();
         setShowAlert(true);
         setAlertMessage(
           `تمت إزالة المحكمة بنجاح. البيانات: ${JSON.stringify(data)}`,

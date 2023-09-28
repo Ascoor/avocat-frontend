@@ -20,11 +20,13 @@ module.exports = {
   ],
   rules: {
     'react/react-in-jsx-scope': 'off',
+    'react/jsx-closing-bracket-location': ['warn', 'line-aligned'],
+    'jsx-quotes': ['warn', 'prefer-double'],
     'no-unused-vars': 'warn',
-    
-    'react/prop-types': 'off',
-    // add more rules as needed
+    'react/prop-types': 'off'
+    // يمكنك إضافة المزيد من القواعد هنا حسب الحاجة
   },
+  
   settings: {
     react: {
       version: 'detect', // Automatically detect the react version

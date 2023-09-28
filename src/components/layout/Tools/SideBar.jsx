@@ -12,10 +12,10 @@ import {
 } from 'react-icons/fa';
 import { MdOutlinePriceChange } from 'react-icons/md';
 import { useSpring, animated } from '@react-spring/web';
-import PropTypes from 'prop-types';
 import '../../../assets/css/SideBar.css';
+import useAuth from '../AuthTool/AuthUser';
 
-const Sidebar = ({ sidebarOpen, onClose, userName }) => {
+const Sidebar = ({ sidebarOpen, onClose }) => {
   const sidebarAnimation = useSpring({
     right: sidebarOpen ? 0 : -450, // Adjust the value based on your sidebar width
   });
@@ -27,7 +27,7 @@ const Sidebar = ({ sidebarOpen, onClose, userName }) => {
     fontSize: '.9rem',
     fontFamily: 'inherit',
   });
-
+  const { user } = useAuth();
   useEffect(() => {
     document.body.classList.toggle('sidebar-open', sidebarOpen);
   }, [sidebarOpen]);
@@ -43,7 +43,7 @@ const Sidebar = ({ sidebarOpen, onClose, userName }) => {
       <div className="user-profile">
         <img src="/log1.png" alt="صورة المستخدم" className="user-profile-img" />
         <animated.span style={userDropdownAnimation}>
-          المستشار/{userName}
+          المستشار/{user?.name}
         </animated.span>
       </div>
 
@@ -113,9 +113,6 @@ const Sidebar = ({ sidebarOpen, onClose, userName }) => {
   );
 };
 
-Sidebar.propTypes = {
-  sidebarOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
+Sidebar.propTypes = {};
 
 export default Sidebar;

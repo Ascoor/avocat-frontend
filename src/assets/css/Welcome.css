@@ -1,61 +1,85 @@
-/**Welcome Page***/
-
-.welcome-card-body {
-  width: 350px;
-  justify-content: center;
-  height: 70%;
-}
-.welcome-card-title {
-  color: #dc3545;
-}
-.card-text-center {
-  text-align: center;
-  justify-content: center;
-
-  width: 800px;
-  width: 800px;
-}
-/* Add space at the bottom of the calendar container to prevent it from being covered by the footer */
-.calendar-container {
-  padding-bottom: 100px; /* Adjust the value as needed */
-}
-
-.navbar-hidden {
-  transform: translateY(-100%);
-  transition: transform 0.3s ease;
-}
-
-.welcome-container {
-  position: relative;
-  background-image: url('./images/welcome.jpg');
-  background-size: contain;
-}
-.masthead {
-  background-image: url('./images/welcome.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100%;
-}
-.welcome-container::before {
-  content: '';
-  position: absolute;
+/* CSS for the glass container */
+.glass-container {
+  background: rgba(255, 255, 255, 0.3); /* Semi-transparent white background */
+  backdrop-filter: blur(30px); /* Apply a blur effect to the background */
+  position: fixed;
   top: 0;
+  opacity: .9;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('./images/bg-pattern.png');
-  background-size: cover-image;
-  opacity: 0.5;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -1; /* Set a lower z-index for the mask */
 }
 
-@media (max-width: 768px) {
-  .welcome-container {
-    padding: 20px;
-  }
+/* Custom styles for the form container */
+.form-container {
+  background-image: url('path-to-your-watermark.png');
+  background-repeat: repeat; /* Repeat the watermark pattern */
+  opacity: 1.2;
+  background: linear-gradient(235deg, #092342, #014155, #10325a);
+  color: #f3e6e6; /* Semi-transparent white background */
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgb(7, 236, 244); /* Shadow effect */
+  padding: 20px;
+  text-align: right;
+  position: relative; /* Use relative positioning */
+  /* Set a higher z-index for the form */
 }
+
+/* Common styles for the card header */
+.auth-setting-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  background: linear-gradient(235deg, #092342, #073948, #10325a);
+  box-shadow: 0 0 10px rgba(164, 208, 255, 0.707), 0 0 20px #ffc720;
+  padding: 20px;
+}
+
+/* Common styles for the title */
+.auth-login-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #ffc108;
+  display: flex;
+  align-items: center;
+}
+
+/* Common styles for the welcome icon */
+.welcome-page-icon {
+  font-size: 24px;
+  color: #c69500;
+  margin-right: 5px; /* Add space between the icon and text */
+}
+
+/* Common styles for form inputs */
+.auth-login-form input[type="email"],
+.auth-login-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px;
+  background-color: #f9f9f9; /* Light gray background */
+}
+
+.form-control {
+  text-align: end;
+}
+
+.formBasicPassword {
+  text-align: end;
+}
+
 /* Add this CSS to your external stylesheet or style module */
 
+/* Additional styles for the glass card */
 .glass-card {
   background-color: rgba(
     255,
@@ -67,7 +91,7 @@
   border: none; /* Remove default card border */
   border-radius: 50px; /* Apply rounded corners */
   padding: 20px; /* Adjust padding as needed */
-  width: 1 8rem;
+  width: 18rem;
   margin: auto; /* Center the card */
   margin-top: 15px;
 }
@@ -76,6 +100,7 @@
   color: #ffffff;
   font-size: 24px; /* Adjust font size as needed */
 }
+
 .glass-card-title-small {
   color: #ff0000;
   font-size: 15px; /* Adjust font size as needed */
@@ -86,10 +111,7 @@
   font-size: 16px; /* Adjust font size as needed */
 }
 
-/*
-    ----------------------------------------------
-    # Footer Welcom
-    --------------------------------------------------------------*/
+/* Styles for the footer container */
 .footer-container {
   display: flex;
   justify-content: center;
@@ -119,21 +141,34 @@
   }
 }
 
-/**Welcome Page End***/
-
-/**Login Page ***/
+/* Styles for login buttons */
 .login-btn {
   background-color: #0da73b;
   color: #ffffff;
   padding: 10px;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
+
 .login-btn:hover {
   background-color: #ffc108;
 }
-/**Guest Page ***/
 
+.login-back {
+  z-index: 2;
+  background-color: #c60303;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-back:hover {
+  background-color: #822003;
+}
+
+/* Styles for guest page */
 .guest_card__content {
   display: flex;
   flex-direction: column;
@@ -153,6 +188,7 @@
   color: #999;
   line-height: 1.5;
 }
+
 .change-btn {
   margin-bottom: 12px;
   background-color: #7f060e;
@@ -161,5 +197,3 @@
 .change-btn:hover {
   background-color: #ffc108;
 }
-
-/**Guest Page End***/

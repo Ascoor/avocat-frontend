@@ -9,16 +9,21 @@ export default function useAuth() {
   // Fetch CSRF token from the document's meta tag
   const csrfToken = document.querySelector('meta[name="csrf-token"]');
   const csrfTokenValue = csrfToken ? csrfToken.getAttribute('content') : null;
-
-  // Retrieve token and user data from session storage
   const getToken = () => {
     const tokenString = sessionStorage.getItem('token');
+    if (!tokenString) {
+      return null; // Return null if the token is not found
+    }
     const userToken = JSON.parse(tokenString);
     return userToken;
   };
 
   const getUser = () => {
     const userString = sessionStorage.getItem('user');
+    // Check if userString is null or undefined
+    if (userString === null || userString === undefined) {
+      return null; // Return null or any other default value as needed
+    }
     const user_detail = JSON.parse(userString);
     return user_detail;
   };
@@ -34,28 +39,30 @@ export default function useAuth() {
 
     setToken(token);
     setUser(user);
-    navigate('/home');
+    navigate('/');
   };
-
+  // Inside useAuth
   const login = async (email, password) => {
     try {
       const response = await axios.post(`${API_CONFIG.baseURL}/api/login`, {
         email,
         password,
       });
-      if (response.data) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        setToken(response.data.token);
-        setUser(response.data.user);
+      if (response.data.access_token && response.data.user) {
+        // Store the token and user data in session storage
+        saveToken(response.data.user, response.data.access_token);
 
-        // Navigate to the home page after successful login
-        navigate('/home');
+        // Return true to indicate successful login
+        return true;
       }
     } catch (error) {
       console.error('Error in login:', error);
     }
+
+    // Return false to indicate login failure
+    return false;
   };
+
   // Clear session storage and navigate to the login page
   const logout = () => {
     sessionStorage.clear();
