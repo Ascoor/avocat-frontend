@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../../assets/css/Welcome.css"
+import '../../assets/css/Welcome.css';
 import { useTransition, useSpring, animated } from '@react-spring/web';
 import { Card, Button, Container, Spinner } from 'react-bootstrap';
 import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
