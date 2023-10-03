@@ -2,16 +2,13 @@ import { useState, c } from 'react';
 import TopNav from './Tools/TopNav';
 import Sidebar from './Tools/SideBar';
 import useAuth from '../layout/AuthTool/AuthUser';
-import { useNavigate } from 'react-router-dom';
 import '../../App.css';
 import MainContent from './Tools/MainContent';
 import '../../assets/css/Auth.css';
 import { useSpring, animated } from '@react-spring/web';
-
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { logout, user, token } = useAuth();
-  const navigate = useNavigate(); // Use the useNavigate hook
 
   const onToggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -55,7 +52,7 @@ function Auth() {
       >
         <Sidebar sidebarOpen={sidebarOpen} onClose={handleCloseSidebar} />
       </animated.aside>
-      <MainContent sidebarOpen={sidebarOpen} />
+      <MainContent sidebarOpen={sidebarOpen} />   
     </>
   );
 }

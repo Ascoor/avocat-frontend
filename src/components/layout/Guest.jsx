@@ -45,6 +45,13 @@ const Guest = () => {
     from: { opacity: 0, transform: 'translateY(-100px)' },
     delay: 500,
   });
+  const buttonAnimation = useSpring({
+    opacity: 1,
+    transform: 'translateY(0)', // Change from 'translateX' to 'translateY'
+    from: { opacity: 0, transform: 'translateY(100px)' }, // Adjust the Y-axis value
+    delay: 500,
+  });
+  
 
   return (
     <div className="splash-container">
@@ -72,6 +79,7 @@ const Guest = () => {
           </animated.div>
         )}
         {showLogoAndButtons && (
+              <animated.div style={buttonAnimation} className="logo-container">
   <div className="buttons-container" style={{ position: 'relative', zIndex: 2 }}>
     <Button
       variant="success"
@@ -86,6 +94,7 @@ const Guest = () => {
       تسجيل اشتراك
     </Button>
   </div>
+  </animated.div>
 )}
 
 
