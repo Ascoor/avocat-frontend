@@ -21,6 +21,12 @@ body {
   --text-light: #000000;
   --text-dark: #ffffff;
 }
+::placeholder   {
+  color: #000000;
+  opacity: 1;
+  direction: rtl;
+  text-align: right;
+}
 /* Style for the splash screen container */
 .splash-container {
   opacity: 1;
@@ -180,42 +186,36 @@ a {
   width: 95px;
   height: 70px;
 }
-
-/* Table Special */
+/* Special Table Styles */
 .special-table {
-  margin: auto;
-  width:auto;
-  border-collapse: collapse;
-  direction: rtl; /* Right-to-left for Arabic */
+
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .special-table th, .special-table td {
-  border: .1px solid #c59700;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
 
-  text-align: center;
+/* Zebra striping for rows */
+.special-table tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
+/* Hover effect for rows */
+.special-table tr:hover {
+    background-color: #ddd;
+}
+
+/* Header Styles */
 .special-table th {
-  background-color: #EFE7BC  ;
-  color: #0b0a5a; /* Dark text on light background */
-  font-size: 1.0rem; /* Increased font size for better readability */
-  font-family: 'Cairo', sans-serif;
-  font-weight: 500;
-}
-
-.special-table tr:nth-child(odd) td {
-  background-color: #f1fdff;
-  color: #333; /* Dark text on light background */
-}
-
-.special-table tr:nth-child(even) td {
-  background-color: #dbffe8;
-  color: #333; /* Dark text on light background */
-}
-
-.special-table tr:hover td {
-  background-color: #fffedd;
-  color: #fa0606; /* White text on hover */
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center; /* Aligning to the right for RTL */
+    background-color: #04AA6D;
+    color: white;
 }
 
 
