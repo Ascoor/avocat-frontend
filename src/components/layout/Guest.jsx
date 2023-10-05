@@ -3,7 +3,7 @@ import '../../assets/css/Welcome.css';
 import { useTransition, useSpring, animated } from '@react-spring/web';
 import { Card, Button, Container, Spinner } from 'react-bootstrap';
 import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
-import { WelcomePatren } from '../../images/index';
+import { LogoImage } from '../../images/index';
 
 const Login = React.lazy(() => import('./AuthTool/Login'));
 const Register = React.lazy(() => import('./AuthTool/Register'));
@@ -71,10 +71,10 @@ const Guest = () => {
         {showLogoAndButtons && (
           <animated.div style={logoAnimation} className="logo-container">
             <img
-              src={WelcomePatren}
+              src={LogoImage}
               alt="Pattern Logo"
               className="logo img-fluid"
-              style={{ width: '200px', height: 'auto' }}
+              style={{padding: '10px', width: '300px', height: 'auto' }}
             />
           </animated.div>
         )}

@@ -18,6 +18,8 @@ export default function LegCaseDetail() {
   const [key, setKey] = useState('procedure');
   const [courts, setCourts] = useState([]);
   const [legCaseCourts, setLegCaseCourts] = useState([]);
+  
+  const [legCaseNewClients, setLegCaseNewClients] = useState([]);
   const [legCaseNewCourts, setLegCaseNewCourts] = useState([]);
   useEffect(() => {
     const fetchLegCase = async () => {
@@ -48,6 +50,9 @@ export default function LegCaseDetail() {
     fetchFormData();
   }, [id]);
 
+  const handleAddNewClient = () => {
+    setLegCaseNewClients(prevClients => [...prevClients, { client_id: '' }]);
+};
   const handleAddNewCourt = (index, field, value) => {
     setLegCaseNewCourts((prevCourts) => [
       ...prevCourts,
@@ -70,6 +75,20 @@ export default function LegCaseDetail() {
   if (!legCase) {
     return <div>Loading...</div>;
   }
+
+
+const handleRemoveNewClient = (index) => {
+    setLegCaseNewClients(prevClients =>
+        prevClients.filter((_, i) => i !== index)
+    );
+};
+
+const handleNewClientChange = (index, field, value) => {
+    const updatedClients = [...legCaseNewClients];
+    updatedClients[index][field] = value;
+    setLegCaseNewClients(updatedClients);
+};
+
   const CaseHeader = () => (
     <div className="legalcase-card-header">
       <h3>بيانات القضية</h3>
@@ -129,41 +148,44 @@ export default function LegCaseDetail() {
       )}
     </Card.Body>
   );
+  
+
 
   const CourtsHeader = () => (
     <Card.Header>
-      <div className="legalcase-card-header">
+      <div className="legalcase-card-header d-flex justify-content-between align-items-center">
         <h3 style={{ fontWeight: 'bold' }}>بيانات المحاكم</h3>
-        <Button
-          className="btn btn-sm btn-start"
-          variant="warning"
-          onClick={handleAddNewCourt}
-        >
-          إضافة محكمة <BiPlusCircle />
-        </Button>
+        <div>
+          <Button
+            className="btn btn-sm btn-start mx-2"
+            variant="warning"
+            onClick={handleAddNewCourt}
+          >
+            إضافة محكمة <BiPlusCircle />
+          </Button>
+
+
+        </div>
       </div>
     </Card.Header>
   );
+  
   return (
     <Card>
       <CaseHeader />
       <Card.Body>
         <CaseBody />
+      <LegCaseClients 
+legCaseId={id} 
+onAddNewClient={handleAddNewClient} // This will add a new client in the LegCaseDetails state
+handleNewClientChange={handleNewClientChange} // Propagate changes in the client fields
+handleRemoveNewClient={handleRemoveNewClient} // Propagate removal of a new client
+/>
       </Card.Body>
-      <Card.Body>
-        <LegCaseClients legCaseId={id} />
-      </Card.Body>
-      <Col xs={12} lg={6}>
-        {' '}
-        {/* Display the second table on extra small and large screens */}
-      </Col>
-
       <CourtsHeader />
       <Card.Body>
         <Row>
-          <Col xs={12} md={6} lg={6}>
-            {' '}
-            {/* Display one table on extra small and large screens */}
+          
             <div className="table-responsive">
               <table className="special-table">
                 <thead>
@@ -186,10 +208,7 @@ export default function LegCaseDetail() {
                 </tbody>
               </table>
             </div>
-          </Col>
-          <Col xs={12} lg={6}>
-            {' '}
-            {/* Display the second table on extra small and large screens */}
+
             {legCaseNewCourts.map((court, index) => (
               <div key={index} className="mb-3">
                 <Row className="align-items-center mt-3">
@@ -208,6 +227,7 @@ export default function LegCaseDetail() {
                         }
                       />
                     </Form.Group>
+                 
                   </Col>
                   <Col>
                     <Form.Group className="mb-0">
@@ -235,9 +255,9 @@ export default function LegCaseDetail() {
                 </Row>
                 <Row>
                   <Col xs={12} lg={6}>
-                    {' '}
-                    {/* Display the second table on extra small and large screens */}
-                    <Form.Group className="mb-0">
+
+
+        <Form.Group className="mb-0">
                       <Form.Label>المحكمة</Form.Label>
                       <Form.Control
                         as="select"
@@ -294,7 +314,7 @@ export default function LegCaseDetail() {
                 </Row>
               </div>
             ))}
-          </Col>
+    
         </Row>
       </Card.Body>
 
