@@ -11,7 +11,7 @@ import '../../assets/css/calender.css';
 import AnalogClock from './AnalogClock';
 
 const Calendar = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [setCurrentTime] = useState(new Date());
   // Function to determine the title based on the event type
   const [events, setEvents] = useState([]);
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Card, Table, Row, Col, Button, Alert } from 'react-bootstrap';
+import { Card, Row, Col, Alert } from 'react-bootstrap';
 import API_CONFIG from '../../config';
 import { LegCaseIcon } from '../../assets/icons/index';
 import CustomPagination from '../home_tools/Pagination'; // Import your custom Pagination component here
@@ -16,9 +16,6 @@ const LegCaseList = () => {
   const [currentAlertMessage, setCurrentAlertMessage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredLegCases, setFilteredLegCases] = useState([]);
-  const data = Array.from({ length: 100 }, (_, index) => `Item ${index + 1}`);
-
-  const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = (newPage) => {
     setLegCasesPage(newPage);
@@ -81,12 +78,6 @@ const LegCaseList = () => {
     setIsEditing(false);
     setShowModal(true);
   };
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-    setShowModal(true);
-  };
-
   const handleCloseModal = () => {
     setShowModal(false);
   };

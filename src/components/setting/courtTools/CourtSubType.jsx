@@ -15,7 +15,7 @@ const CourtSubType = ({ show, handleClose }) => {
   const [modalMessage, setModalMessage] = useState(null);
   const [courtTypes, setCourtTypes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [error] = useState(null);
+
   const [successMessage, setSuccessMessage] = useState(null);
   const [alertMessage, setAlertMessage] = useState(null);
   const itemsPerPage = 10;
@@ -39,7 +39,10 @@ const CourtSubType = ({ show, handleClose }) => {
   };
   // Added a function definition for fetchCourtSubTypes
   const fetchCourtSubTypes = async () => {
-    fetchCourtData('/api/court_sub_types', setCourtSubTypes);
+    fetchCourtData(
+      API_CONFIG.baseURL + '/api/court_sub_types',
+      setCourtSubTypes,
+    );
   };
   useEffect(() => {
     if (show) {
@@ -82,12 +85,9 @@ const CourtSubType = ({ show, handleClose }) => {
         clearModalFields();
         fetchCourtSubTypes();
       }).catch;
-    setAlertMessage((error) => {
-      setModalMessage({
-        show: true,
-        message: 'Error adding court sub-type',
-        variant: 'danger',
-      });
+    setModalMessage({
+      type: 'danger',
+      text: 'تأكد من البيان الذى يتم إدخاله',
     });
   };
 
@@ -115,7 +115,7 @@ const CourtSubType = ({ show, handleClose }) => {
         courtSubTypes.filter((courtSubType) => courtSubType.id !== id),
       );
     } catch (error) {
-      setAlert({
+      setAlertMessage({
         show: true,
         message: 'Error deleting court sub-type',
         variant: 'danger',

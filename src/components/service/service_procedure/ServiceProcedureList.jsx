@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Table, Button, Modal } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import PropTypes from 'prop-types';
 import ServiceProcedureModal from './ServiceProcdureModal';
@@ -37,6 +37,7 @@ const ServiceProcedureList = ({ serviceId }) => {
       console.error('Error fetching procedures:', error);
     }
   };
+
   const handleEditServiceProcedure = (procedure) => {
     setIsEditing(true);
     setEditingServiceProcedure(procedure);
@@ -53,17 +54,16 @@ const ServiceProcedureList = ({ serviceId }) => {
       console.error('Error deleting procedure:', error);
     }
   };
+
   const openAddProcedureModal = () => {
     setIsEditing(false);
     setEditingServiceProcedure(null);
     setShowModal(true);
   };
+
   const addServiceProcedure = async (data) => {
     try {
-      const response = await axios.post(
-        API_CONFIG.baseURL + '/api/service-procedures',
-        data,
-      );
+      await axios.post(API_CONFIG.baseURL + '/api/service-procedures', data);
       fetchServiceProcedures(); // Reload the list of service procedures
       setShowModal(false); // Close the modal
     } catch (error) {
@@ -73,7 +73,7 @@ const ServiceProcedureList = ({ serviceId }) => {
 
   const editServiceProcedure = async (procedureId, data) => {
     try {
-      const response = await axios.put(
+      await axios.put(
         API_CONFIG.baseURL + `/api/service-procedure/${procedureId}`,
         data,
       );
@@ -103,9 +103,9 @@ const ServiceProcedureList = ({ serviceId }) => {
           procedure={editingServiceProcedure}
           lawyers={lawyers}
           fetchServiceProcedures={fetchServiceProcedures}
-          isEditing={isEditing} // تمرير حالة التحرير هنا
-          addServiceProcedure={addServiceProcedure} // Pass the add function
-          editServiceProcedure={editServiceProcedure} // Pass the edit function
+          isEditing={isEditing}
+          addServiceProcedure={addServiceProcedure}
+          editServiceProcedure={editServiceProcedure}
         />
       </Card.Header>
       <Card.Body>

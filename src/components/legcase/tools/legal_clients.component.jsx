@@ -3,18 +3,12 @@ import axios from 'axios';
 import { Col, Row, Card, Button, Form, Alert } from 'react-bootstrap';
 import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
 import API_CONFIG from '../../../config';
-import PropTypes from 'prop-types';
-
 export default function LegCaseClients({ legCaseId }) {
   // PropTypes
-  LegCaseClients.propTypes = {
-    legCaseId: PropTypes.string.isRequired,
-  };
 
+  const [deleteSuccessMsg, setDeleteSuccessMsg] = useState('');
+  const [deleteErrorMsg, setDeleteErrorMsg] = useState('');
 
-    const [deleteSuccessMsg, setDeleteSuccessMsg] = useState('');
-    const [deleteErrorMsg, setDeleteErrorMsg] = useState('');
-  
   // State variables
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -25,10 +19,12 @@ export default function LegCaseClients({ legCaseId }) {
   // Fetch leg case clients from the API
   const fetchLegCaseClients = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/leg_cases/${legCaseId}`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/leg_cases/${legCaseId}`,
+      );
       setLegCaseClients(response.data.leg_case.clients);
     } catch (error) {
-      console.error("Error fetching leg case clients:", error);
+      console.error('Error fetching leg case clients:', error);
     }
   };
 
@@ -43,7 +39,7 @@ export default function LegCaseClients({ legCaseId }) {
         const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
         setClients(response.data);
       } catch (error) {
-        console.error("Error fetching all clients:", error);
+        console.error('Error fetching all clients:', error);
       }
     };
 
@@ -64,95 +60,99 @@ export default function LegCaseClients({ legCaseId }) {
 
   // Handle the removal of a client from the leg case
   const handleRemoveClient = (index, listType) => {
-    if (listType === "existing") {
-      setLegCaseClients(prevClients =>
-        prevClients.filter((_, i) => i !== index)
-      );
-    } else {
-      setLegCaseNewClients(prevClients =>
-        prevClients.filter((_, i) => i !== index)
-      );
-    }
-  };
-
-  // Handle client change
-  const handleClientChange = (index, key, value, listType) => {
-    if (!value) {
-      setErrorMsg('لابد من اختيار عميل');
-      setTimeout(() => {
-        setErrorMsg('');
-      }, 5000);
-      return;
-    }
-
-    // Check if the client ID already exists in either legCaseClients or legCaseNewClients
-    const clientExistsInLegCase = legCaseClients.some(
-      (client) => client.client_id === value
-    );
-
-    const clientExistsInNew = legCaseNewClients.some(
-      (client) => client.client_id === value
-    );
-
-    if (clientExistsInLegCase || clientExistsInNew) {
-      setErrorMsg('لا يمكن إضافة عميل موجود بالفعل في القضية');
-      setTimeout(() => {
-        setErrorMsg('');
-      }, 5000);
-      return;
-    }
-
     if (listType === 'existing') {
-      setLegCaseClients((prevClients) => {
-        const updatedClients = [...prevClients];
-        updatedClients[index][key] = value;
-        return updatedClients;
-      });
+      setLegCaseClients((prevClients) =>
+        prevClients.filter((_, i) => i !== index),
+      );
     } else {
-      setLegCaseNewClients((prevClients) => {
-        const updatedClients = [...prevClients];
-        updatedClients[index][key] = value;
-        return updatedClients;
-      });
+      setLegCaseNewClients((prevClients) =>
+        prevClients.filter((_, i) => i !== index),
+      );
     }
   };
+
+  // Handle client change// Handle client change
+const handleClientChange = (index, key, value, listType) => {
+  if (!value) {
+    setErrorMsg('لابد من اختيار عميل');
+    setTimeout(() => {
+      setErrorMsg('');
+    }, 5000);
+    return;
+  }
+
+  // Check if the client ID already exists in either legCaseClients or legCaseNewClients
+  const clientExistsInLegCase = legCaseClients.some(
+    (client) => client.client_id === value,
+  );
+
+  const clientExistsInNew = legCaseNewClients.some(
+    (client) => client.client_id === value,
+  );
+
+  // Refactored condition to check if the client is already added
+  if (clientExistsInLegCase || (clientExistsInNew && listType === 'new')) {
+    setErrorMsg('لا يمكن إضافة عميل موجود بالفعل في القضية');
+    setTimeout(() => {
+      setErrorMsg('');
+    }, 5000);
+    return;
+  }
+
+  if (listType === 'existing') {
+    setLegCaseClients((prevClients) => {
+      const updatedClients = [...prevClients];
+      updatedClients[index][key] = value;
+      return updatedClients;
+    });
+  } else {
+    setLegCaseNewClients((prevClients) => {
+      const updatedClients = [...prevClients];
+      updatedClients[index][key] = value;
+      return updatedClients;
+    });
+  }
+};
 
   const handleDeleteClient = async (client) => {
     try {
       // Make a DELETE request to your API to delete the client
       const response = await axios.delete(
-        `${API_CONFIG.baseURL}/api/leg_cases/${legCaseId}/clients/${client.id}`
+        `${API_CONFIG.baseURL}/api/leg_cases/${legCaseId}/clients/${client.id}`,
       );
-  
+
       // Check if the deletion was successful
       if (response.status === 200) {
-        // Client deleted successfully, update the client list
-        setTimeout(() => {
-          setDeleteSuccessMsg(`تم حذف العميل ${client.name} بنجاح`);
-          setDeleteErrorMsg(''); // Clear any previous error message
-        }, 3000);
-          fetchLegCaseClients(); // Refresh the list of clients
-          
-        setDeleteErrorMsg(''); // Clear any previous error message
-        fetchLegCaseClients(); // Refresh the list of clients
-      } else {
-        setTimeout(() => {
+        // Refresh the list of clients since the client was deleted successfully
+        fetchLegCaseClients(); 
+    
+        // Set success message
+        setDeleteSuccessMsg(`تم حذف العميل ${client.name} بنجاح`);
+    } else {
+        // Set error message
         setDeleteErrorMsg(`فشل حذف العميل ${client.name}`);
-        setDeleteSuccessMsg(''); // Clear any previous success message
-      }, 3000);
-      }
+    }
+    
+    // Clear messages after a duration
+    setTimeout(() => {
+        setDeleteSuccessMsg(''); // Clear any success message
+        setDeleteErrorMsg('');  // Clear any error message
+    }, 3000);
     } catch (error) {
-      setDeleteErrorMsg(`خطأ أثناء حذف العميل ${client.name}: ${error.message}`);
-      setDeleteSuccessMsg(''); // Clear any previous success message
+        console.error('Error deleting client:', error);
     }
   };
+    
+
   // Handle form submission
   const handleSubmit = async () => {
+    // Extract only client_ids from legCaseClients for comparison
+
     // Check if there are new clients to add
     const clientsToSubmit = legCaseNewClients.filter(
-      (client) => client.client_id && client.client_id !== ''
+      client => client.client_id && client.client_id !== ''
     );
-
+  
     if (clientsToSubmit.length === 0) {
       setErrorMsg('لابد من اختيار عميل أولاً قبل إرسال الطلب');
       setTimeout(() => {
@@ -161,11 +161,12 @@ export default function LegCaseClients({ legCaseId }) {
       return;
     }
 
+  
     // Check for duplicate clients in legCaseClients
     const duplicateClients = clientsToSubmit.filter((newClient) =>
-      legCaseClients.some((legCaseClient) =>
-        legCaseClient.client_id === newClient.client_id
-      )
+      legCaseClients.some(
+        (legCaseClient) => legCaseClient.client_id === newClient.client_id,
+      ),
     );
 
     if (duplicateClients.length > 0) {
@@ -179,7 +180,7 @@ export default function LegCaseClients({ legCaseId }) {
     try {
       const response = await axios.post(
         `${API_CONFIG.baseURL}/api/leg_cases/${legCaseId}/add_clients`,
-        { clients: clientsToSubmit }
+        { clients: clientsToSubmit },
       );
 
       if (response.data) {
@@ -212,7 +213,7 @@ export default function LegCaseClients({ legCaseId }) {
           </div>
         </div>
       </Card.Header>
-      
+
       {deleteErrorMsg && (
         <div className="mb-3">
           <Alert variant="danger">{deleteErrorMsg}</Alert>
@@ -254,14 +255,15 @@ export default function LegCaseClients({ legCaseId }) {
                   <td>{client.phone_number}</td>
                   <td
                     className={`${
-                      client.status === 'active' ? 'text-success' : 'text-danger'
+                      client.status === 'active'
+                        ? 'text-success'
+                        : 'text-danger'
                     }`}
                   >
                     {client.status}
                   </td>
                   <td>
-
-                      <Button
+                    <Button
                       variant="danger"
                       onClick={() => handleDeleteClient(client)}
                     >
@@ -284,7 +286,12 @@ export default function LegCaseClients({ legCaseId }) {
                   as="select"
                   value={client.client_id}
                   onChange={(e) =>
-                    handleClientChange(index, 'client_id', e.target.value, 'new')
+                    handleClientChange(
+                      index,
+                      'client_id',
+                      e.target.value,
+                      'new',
+                    )
                   }
                 >
                   <option value="">اختر العميل</option>
@@ -294,7 +301,7 @@ export default function LegCaseClients({ legCaseId }) {
                     </option>
                   ))}
                 </Form.Control>
-                {client.client_id === "" && (
+                {client.client_id === '' && (
                   <div className="text-danger">لابد من اختيار عميل</div>
                 )}
               </Form.Group>
@@ -320,4 +327,3 @@ export default function LegCaseClients({ legCaseId }) {
     </>
   );
 }
- 

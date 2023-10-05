@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Form, Button, Row, Col, FormGroup } from 'react-bootstrap';
+import { Card, Form, Button, FormGroup } from 'react-bootstrap';
 import { FaUser, FaEnvelope, FaKey, FaSignInAlt } from 'react-icons/fa';
 import AuthUser from './AuthUser';
 import API_CONFIG from '../../../config';
@@ -56,94 +56,86 @@ const Register = ({ handleCloseForm }) => {
     }
   };
 
-  return (<Card className="form-container">
-  <Card.Header>
-    <div className="auth-setting-card-header">
-      <Card.Title className="auth-login-title">
-        <FaSignInAlt className="welcome-page-icon m-2" />
-        تسجيل إشتراك جديد
-      </Card.Title>
-    </div>
-  </Card.Header>
+  return (
+    <>
+      <Card.Header>
+        <div className="auth-setting-card-header">
+          <Card.Title className="auth-login-title">
+            <FaSignInAlt className="welcome-page-icon m-2" />
+            تسجيل إشتراك جديد
+          </Card.Title>
+        </div>
+      </Card.Header>
 
-  <Card.Body>
-    <Form>
-<FormGroup>
+      <Card.Body>
+        <Form>
+          <FormGroup>
+            <Form.Label className="form-label m-2">
+              <FaUser className="form-icon" /> الاسم:
+            </Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="ادخل الاسم"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Form.Label className="form-label m-2">
+              <FaEnvelope className="form-icon" /> البريد الإلكتروني:
+            </Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="ادخل البريد الإلكتروني"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Form.Label className="form-label m-2">
+              <FaKey className="form-icon" /> كلمة المرور:
+            </Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="ادخل كلمة المرور"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </FormGroup>
 
-           <Form.Label className="form-label m-2">
-            <FaUser className="form-icon" /> الاسم:
-          </Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="ادخل الاسم"
-            value={name}
-            onChange={(e) => setName(e.target.value)}/>
-            </FormGroup>
-            <FormGroup>
-     <Form.Label className="form-label m-2">
-            <FaEnvelope className="form-icon" /> البريد الإلكتروني:
-          </Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="ادخل البريد الإلكتروني"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-     </FormGroup>
-     <FormGroup>
-      
-           <Form.Label className="form-label m-2">
-            <FaKey className="form-icon" /> كلمة المرور:
-          </Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="ادخل كلمة المرور"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-      </FormGroup>
-      
-      <FormGroup>
-             <Form.Label className="form-label m-2">
-            <FaKey className="form-icon" /> إعادة إدخال كلمة المرور:
-          </Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="إعادة إدخال كلمة المرور"
-            value={rePassword}
-            onChange={(e) => setRePassword(e.target.value)}
-          />
-    </FormGroup>
-      
+          <FormGroup>
+            <Form.Label className="form-label m-2">
+              <FaKey className="form-icon" /> إعادة إدخال كلمة المرور:
+            </Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="إعادة إدخال كلمة المرور"
+              value={rePassword}
+              onChange={(e) => setRePassword(e.target.value)}
+            />
+          </FormGroup>
+        </Form>
+      </Card.Body>
 
-     
-    </Form>
-  </Card.Body>
-
-  <Card.Footer>
-  <Button
-        type="button"
-        onClick={submitForm}
-        className="btn-danger-guest"
-      >
-        تسجيل اشتراك
-      </Button>
-      {loading ? (
-        <Button type="button" disabled className="btn-loading">
-          جاري التحميل...
+      <Card.Footer>
+        <Button type="button" onClick={submitForm} className="btn-danger-guest">
+          تسجيل اشتراك
         </Button>
-      ) : null}
-      {error && <p className="text-danger-guest mt-1">{error}</p>}
-    <Button
-      type="button"
-      onClick={handleCloseForm}
-      className="btn-danger login-guest"
-    >
-      العودة للرئيسية
-    </Button>
-  </Card.Footer>
-</Card>
-
+        {loading ? (
+          <Button type="button" disabled className="btn-loading">
+            جاري التحميل...
+          </Button>
+        ) : null}
+        {error && <p className="text-danger-guest mt-1">{error}</p>}
+        <Button
+          type="button"
+          onClick={handleCloseForm}
+          className="btn-danger login-guest"
+        >
+          العودة للرئيسية
+        </Button>
+      </Card.Footer>
+    </>
   );
 };
 

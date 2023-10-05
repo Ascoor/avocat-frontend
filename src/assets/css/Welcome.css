@@ -1,53 +1,90 @@
 /* CSS for the glass container */
 .glass-container {
-  background: rgba(245, 245, 245, 0.1); 
-  backdrop-filter: blur(30px);
+  background: rgba(0, 0, 0, 0.6); /* Darker background with some transparency */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  display: -webkit-box;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+.form-container {
+  background: linear-gradient(135deg, #041454, #1e2a66, #0f2168);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: right;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+
+}
+.custom-loader {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: -1; 
+  height: 100vh;
 }
 
-.form-container {
-  background-image: url('/patren.png');
-  background-repeat: repeat; 
-  background: rgba(15, 32, 65, 0.8);  
-  color: #f3e6e6;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(7, 236, 244, 0.5);
-  padding: 20px;
-  text-align: right;
-  position: relative; 
+.loader {
+  border: 8px solid rgba(79, 169, 77, 0.2);
+  border-top: 8px solid #4fa94d; /* Loader color */
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .auth-setting-card-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
-  background: rgba(15, 32, 65, 0.85);
-  box-shadow: 0 0 10px rgba(164, 208, 255, 0.5), 0 0 20px #ffc720;
-  padding: 20px;
+  margin-bottom: 10px;
+  background: rgba(57, 53, 179, 0.931); /* Darker background with some transparency */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2), 0 0 10px #fffb0b; /* Neon-like light shadow effect */
+  padding: 10px;
 }
 
-.auth-login-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 10px;
-  color: #ffc108;
-  display: flex;
-  align-items: center;
+.auth-title {
+  font-size: 24px;
+  color: #ffc108; /* Gold color for title */
+  margin-bottom: 10px;
 }
+
+.auth-subtitle {
+  font-size: 16px;
+  color: #fff; /* White color for subtitle */
+}
+
+/* Neon text effect */
+.auth-title::after {
+  content: "";
+  width: 20px;
+  height: 2px;
+  background: #ffc108; /* Gold color */
+  margin-left: 10px;
+}
+
+/* Neon text effect */
+.auth-title::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffc108; /* Gold color */
+  margin-right: 10px;
+}
+
 
 .welcome-page-icon {
   font-size: 24px;
-  color: #c69500;
+  color: #ffe600; /* Dark gold color for icons */
   margin-right: 5px;
 }
 
@@ -56,7 +93,7 @@
   width: 100%;
   padding: 10px;
   margin: 5px 0;
-  border: 1px solid #c5c5c5;
+  border: 1px solid #ccc; /* Lighter border color */
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.1);
 }
@@ -67,28 +104,29 @@
 }
 
 .glass-card {
-  background-color: rgba(245, 245, 245, 0.1);
+  background-color: rgba(0, 0, 0, 0.6); /* Darker background with some transparency */
   backdrop-filter: blur(10px);
   border: none;
-  border-radius: 50px;
+  border-radius: 10px;
   padding: 20px;
   width: 18rem;
   margin: auto;
   margin-top: 15px;
+  color: #fff; /* White text color for better readability */
 }
 
 .glass-card-title {
-  color: #fff;
   font-size: 24px;
+  color: #ffc108; /* Gold color for title */
 }
 
 .glass-card-title-small {
-  color: #d44030;
+  color: #d44030; /* Red color for smaller titles */
   font-size: 15px;
 }
 
 .glass-card-text {
-  color: #eee;
+  color: #eee; /* Light gray text color */
   font-size: 16px;
 }
 
@@ -96,11 +134,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgb(11 22 26), rgb(14 48 66), rgb(10 18 24));
+  background: linear-gradient(rgb(11, 22, 26), rgb(14, 48, 66), rgb(10, 18, 24)); /* Gradient background */
   direction: rtl;
   color: #fff;
-  padding: 10px 0;
+  padding: 20px 0; /* Increase padding for better spacing */
   text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #fff; /* Add a top border for separation */
 }
 
 .footer-container p {
@@ -120,29 +162,32 @@
 }
 
 .login-btn {
-  background-color: #0d3a5b;
-  color: #ffffff;
+  background-color: #ffa600; /* Gold color for login button */
+  color: #fff;
+  font-size: .9rem;
   padding: 10px;
   border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px #ffa600;
   z-index: 1;
 }
 
 .login-btn:hover {
-  background-color: #ffc108;
+  background-color: #a3820c; /* Lighter gold on hover */
 }
 
 .login-back {
-  background-color: #701b1b;
-  color: #ffffff;
+  background-color: #c02514; /* Red color for back button */
+  color: #fff;
   padding: 10px;
+  
+  font-size: .9rem;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 2;
 }
 
 .login-back:hover {
-  background-color: #500e0e;
+  background-color: #ff7a6a; /* Lighter red on hover */
 }
 
 .guest_card__content {
@@ -156,20 +201,18 @@
 .guest_card__title {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
+  color: #fff; /* White color for title */
 }
 
 .guest_card__description {
   font-size: 1rem;
   text-align: center;
-  color: #aaa;
+  color: #aaa; /* Light gray text color */
   line-height: 1.5;
 }
 
 .change-btn {
   margin-bottom: 12px;
-  background-color: #701b1b;
-}
-
-.change-btn:hover {
-  background-color: #ffc108;
+  background-color: #ffc108; /* Gold color for change button */
+  color: #fff;
 }

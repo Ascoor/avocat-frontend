@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table, Button, Card, Row, Modal, Col, Alert } from 'react-bootstrap';
+import { Button, Card, Modal } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { LawyerIcon } from '../../assets/icons';
 import LawyerAddEdit from './lawyerAddEdit';

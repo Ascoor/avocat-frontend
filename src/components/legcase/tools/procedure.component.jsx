@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Table, Button, Modal, Row, Form, Alert } from 'react-bootstrap';
+import { Card, Button, Modal, Row, Form, Alert } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';

@@ -28,22 +28,5 @@ ul,
 li {
   margin: 0;
   padding: 0;
-}
 
-/* Footer Styles */
-.footer {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  background-color: #333;
-  color: #fff;
-}
-
-/* Responsive Handling for Footer */
-@media (max-width: 768px) {
-  .footer {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
 }

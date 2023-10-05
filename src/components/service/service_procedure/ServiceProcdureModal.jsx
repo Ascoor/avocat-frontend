@@ -16,8 +16,6 @@ const ServiceProcedureModal = ({
   addServiceProcedure,
   editServiceProcedure,
 }) => {
-  const user = useAuth();
-
   registerLocale('ar_eg', arEG);
   setDefaultLocale('ar_eg');
 

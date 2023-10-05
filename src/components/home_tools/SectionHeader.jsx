@@ -16,7 +16,7 @@ const SectionHeader = ({ buttonName, listName, setShowAddModal, icon }) => {
         رجوع
       </button>
     </div>
-  ); 
+  );
 };
 
 export default SectionHeader;

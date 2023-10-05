@@ -40,6 +40,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
 
   return (
     <animated.nav
+      style={userDropdownAnimation}
       dir="rtl" // Set text direction to left-to-right (LTR)
       className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}
     >
@@ -65,7 +66,9 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
           align="end" // Set alignment to right for RTL
           drop="down" // Display the dropdown below the button
         >
-          <NavDropdown.Item href={`/profile/${userId}`}>الملف الشخصي</NavDropdown.Item>
+          <NavDropdown.Item href={`/profile/${userId}`}>
+            الملف الشخصي
+          </NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item
             className="dropdown-item-logout beautiful-logout-item"

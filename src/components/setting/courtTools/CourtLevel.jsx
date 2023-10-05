@@ -1,36 +1,29 @@
-import { useState, useEffect } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Modal,
-  Form,
-  Card,
-  Table,
-  Alert,
-} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Card, Row, Col, Alert, Button, Modal, Form } from 'react-bootstrap';
 import { FcFullTrash } from 'react-icons/fc';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
 
 import CustomPagination from '../../home_tools/Pagination';
+
 const CourtLevel = ({ show, handleClose }) => {
   const [newCourtLevelName, setNewCourtLevelName] = useState('');
   const [courtLevels, setCourtLevels] = useState([]);
-  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+
   const itemsPerPage = 10;
-  const [showAddCourtLevelModal, setShowAddCourtLevelModal] = useState(false);
-  const [courtLevelAlert, setCourtLevelAlert] = useState(null);
+
   const [alertMessage, setAlertMessage] = useState(null); // For table alerts
+
   const [successMessage, setSuccessMessage] = useState(null); // For table success
-  const [message, setMessage] = useState(null); // For table success
   const [modalMessage, setModalMessage] = useState(null); // For modal alerts
-  const valueIsValid = !!newCourtLevelName.trim(); // true if newCourtLevelName is not empty
+
+  const [courtLevelAlert, setCourtLevelAlert] = useState('');
 
   useEffect(() => {
     fetchCourtLevels();
   }, []);
+
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => {
@@ -54,6 +47,7 @@ const CourtLevel = ({ show, handleClose }) => {
       };
     }
   }, [alertMessage]);
+
   const fetchCourtLevels = async () => {
     try {
       const response = await axios.get(
@@ -79,19 +73,18 @@ const CourtLevel = ({ show, handleClose }) => {
         text: 'تمت إضافة مستوى المحكمة بنجاح.',
       });
       setNewCourtLevelName('');
-      setShowAddCourtLevelModal(false);
       fetchCourtLevels();
     } catch (e) {
-      setAlertMessage('حدث خطأ في إضافة مستوى المحكمة', e);
+      setCourtLevelAlert('حدث خطأ في إضافة مستوى المحكمة', e);
     }
   };
-  const handleDeleteCourtLevel = async (id, name, type) => {
+
+  const handleDeleteCourtLevel = async (id) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/court_levels/${id}`);
       setCourtLevels(courtLevels.filter((courtLevel) => courtLevel.id !== id));
       setAlertMessage({ type: 'success', text: 'تم حذف مستوى المحكمة بنجاح' });
-    } catch (error) {
-      setError(error);
+    } catch (e) {
       setAlertMessage({
         type: 'danger',
         text: 'لا يمكن حذف مستوى المحكمة لارتباطة بمحاكم وتصنيفات فرعية اخري',
@@ -125,6 +118,7 @@ const CourtLevel = ({ show, handleClose }) => {
       handleClose();
     }
   };
+
   return (
     <>
       <Card>
@@ -161,11 +155,7 @@ const CourtLevel = ({ show, handleClose }) => {
                           <Button
                             variant="danger"
                             onClick={() =>
-                              handleDeleteCourtLevel(
-                                courtLevel.id,
-                                courtLevel.name,
-                                'court_levels',
-                              )
+                              handleDeleteCourtLevel(courtLevel.id)
                             }
                           >
                             <FcFullTrash />

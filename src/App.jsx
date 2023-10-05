@@ -10,11 +10,7 @@ const App = () => {
   const { getToken } = useAuth();
   const isAuthenticated = !!getToken(); // Check if the user is authenticated
 
-  return (
-    <>
-      {isAuthenticated ? <Auth /> : <Guest />}
-    </>
-  );
+  return <>{isAuthenticated ? <Auth /> : <Guest />}</>;
 };
 
 export default App;

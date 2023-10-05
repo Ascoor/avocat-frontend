@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { FcFullTrash } from 'react-icons/fc';
 import {
   Row,
-  Col,
   Button,
   Modal,
   Alert,
@@ -10,10 +8,9 @@ import {
   Card,
   Spinner,
 } from 'react-bootstrap';
-import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
-import CustomPagination from '../../home_tools/Pagination'; // Import your custom Pagination component here
+import CustomPagination from '../../home_tools/Pagination';
 
 const Court = ({ show, handleClose }) => {
   const [courtTypes, setCourtTypes] = useState([]);
@@ -34,10 +31,7 @@ const Court = ({ show, handleClose }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const [modalMessage, setModalMessage] = useState(null);
-  const [courtTypesAlert, setCourtTypesAlert] = useState(null);
   const [selectedCourtTypeId, setSelectedCourtTypeId] = useState(null);
-
 
   const fetchData = async (url, setState) => {
     setLoading(true);
@@ -51,7 +45,6 @@ const Court = ({ show, handleClose }) => {
   };
 
   useEffect(() => {
-    // Fetch initial data
     fetchData('/api/court_types/', setCourtTypes);
     fetchData('/api/court_levels/', setCourtLevels);
     fetchData('/api/courts/', setCourts);
@@ -78,23 +71,14 @@ const Court = ({ show, handleClose }) => {
       }),
     })
       .then((response) => response.json())
-      .then((data) => {
+      .then(() => {
         fetchData();
-        setShowAddCourtModal(false);
-        setNewCourtName('');
-        setNewCourtTypeId('');
-        setNewCourtSubTypeId('');
-        setNewCourtLevelId('');
-        setNewCourtAddress('');
         setShowAlert(true);
-        setAlertMessage(
-          `تمت إضافة المحكمة بنجاح. البيانات: ${JSON.stringify(data)}`,
-        );
+        setAlertMessage(`تمت إضافة المحكمة بنجاح.`);
         setTimeout(() => {
           setShowAlert(false);
         }, 5000);
       })
-
       .catch((error) => {
         setError('حدث خطأ في إضافة المحكمة');
         console.error('حدث خطأ في إضافة المحكمة: ', error);
@@ -105,18 +89,16 @@ const Court = ({ show, handleClose }) => {
         }, 5000);
       });
   };
+
   const handleDelete = (id) => {
-    // Your code to handle deletion
     fetch(`${API_CONFIG.baseURL}/api/courts/${id}`, {
       method: 'DELETE',
     })
       .then((response) => response.json())
-      .then((data) => {
+      .then(() => {
         fetchData();
         setShowAlert(true);
-        setAlertMessage(
-          `تمت إزالة المحكمة بنجاح. البيانات: ${JSON.stringify(data)}`,
-        );
+        setAlertMessage(`تمت إزالة المحكمة بنجاح.`);
         setTimeout(() => {
           setShowAlert(false);
         }, 5000);
@@ -171,7 +153,7 @@ const Court = ({ show, handleClose }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {courts.map((court, index) => (
+                  {currentItems.map((court, index) => (
                     <tr key={index} className="table-row-courts">
                       <td>{court.name}</td>
                       <td>{court.court_type.name}</td>

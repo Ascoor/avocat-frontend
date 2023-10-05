@@ -23,7 +23,7 @@ const ServiceDetailsModal = ({ service }) => {
   return (
     <Row>
       <Col>
-        <animated.div>
+        <animated.div Style={cardAnimation}>
           <Card>
             <Card.Body>
               <Card.Title className="text-center">

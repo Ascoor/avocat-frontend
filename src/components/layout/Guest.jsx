@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import '../../assets/css/Welcome.css';
 import { useTransition, useSpring, animated } from '@react-spring/web';
-import { Card, Button, Container, Spinner } from 'react-bootstrap';
+import { Card, Button, Container } from 'react-bootstrap';
 import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
 import { LogoImage } from '../../images/index';
+
+import WelcomeSuspense from './Tools/WelcomeSuspense';
 
 const Login = React.lazy(() => import('./AuthTool/Login'));
 const Register = React.lazy(() => import('./AuthTool/Register'));
@@ -12,54 +14,61 @@ const Guest = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showLogoAndButtons, setShowLogoAndButtons] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const handleCloseForm = () => {
-    setShowLoginForm(false);
-    setShowRegisterForm(false);
-    setShowLogoAndButtons(true);
+    setLoading(true);
+    setTimeout(() => {
+      setShowRegisterForm(false);
+      setShowLoginForm(false);
+      setLoading(false);
+      setShowLogoAndButtons(true);
+    }, 1000); // Simulate a loading delay
   };
 
   const handleShowLoginForm = () => {
-    setShowLoginForm(true);
-    setShowRegisterForm(false);
-    setShowLogoAndButtons(false);
+    setLoading(true);
+    setTimeout(() => {
+      setShowLoginForm(true);
+      setShowLogoAndButtons(false);
+      setLoading(false);
+    }, 1000); // Simulate a loading delay
   };
 
   const handleShowRegisterForm = () => {
-    setShowLoginForm(false);
-    setShowRegisterForm(true);
-    setShowLogoAndButtons(false);
+    setLoading(true);
+    setTimeout(() => {
+      setShowLogoAndButtons(false);
+      setShowRegisterForm(true);
+      setLoading(false);
+    }, 1000); // Simulate a loading delay
   };
 
-  const formsTransition = useTransition(
-    showLoginForm || showRegisterForm,
-    {
-      from: { opacity: 0 },
-      enter: { opacity: 1 },
-      leave: { opacity: 0 },
-    }
-  );
+  const formsTransition = useTransition(showLoginForm || showRegisterForm, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  });
 
   const logoAnimation = useSpring({
-    opacity: 1,
-    transform: 'translateY(0)',
+    opacity: showLogoAndButtons ? 1 : 0,
+    transform: showLogoAndButtons ? 'translateY(0)' : 'translateY(-100px)',
     from: { opacity: 0, transform: 'translateY(-100px)' },
     delay: 500,
   });
-  const buttonAnimation = useSpring({
-    opacity: 1,
-    transform: 'translateY(0)', // Change from 'translateX' to 'translateY'
-    from: { opacity: 0, transform: 'translateY(100px)' }, // Adjust the Y-axis value
-    delay: 500,
+
+  const buttonsAnimation = useSpring({
+    opacity: showLogoAndButtons ? 1 : 0,
+    transform: showLogoAndButtons ? 'translateY(0)' : 'translateY(100px)',
+    from: { opacity: 0, transform: 'translateY(100px)' },
+    delay: showLogoAndButtons ? 500 : 0, // Adjusted delay here
   });
-  
 
   return (
     <div className="splash-container">
       {/* Splash Mask */}
       <div className="splash-mask"></div>
-      <div className="navbar navbar-light fixed-top" id="mainNav">
-        {/* Navbar content */}
-      </div>
+
       <div
         className="d-flex flex-column justify-content-center align-items-center"
         style={{
@@ -67,69 +76,85 @@ const Guest = () => {
           height: 'calc(100% - 64px)', // Adjusted to exclude navbar height
         }}
       >
-        {/* Logo and Buttons */}
-        {showLogoAndButtons && (
-          <animated.div style={logoAnimation} className="logo-container">
-            <img
-              src={LogoImage}
-              alt="Pattern Logo"
-              className="logo img-fluid"
-              style={{padding: '10px', width: '300px', height: 'auto' }}
-            />
-          </animated.div>
+        {loading ? (
+          <WelcomeSuspense />
+        ) : (
+          <>
+            {showLogoAndButtons && (
+              <animated.div style={logoAnimation} className="logo-container">
+                <img
+                  src={LogoImage}
+                  alt="Pattern Logo"
+                  className="logo img-fluid"
+                  style={{ padding: '10px', width: '300px', height: 'auto' }}
+                />
+              </animated.div>
+            )}
+            {showLogoAndButtons && (
+              <animated.div style={buttonsAnimation} className="logo-container">
+                <div
+                  className="buttons-container"
+                  style={{ position: 'relative', zIndex: 2 }}
+                >
+                  <Button
+                    variant="success"
+                    onClick={handleShowLoginForm}
+                    style={{ marginRight: '10px' }}
+                  >
+                    <RiLoginCircleLine className="mr-1" />
+                    دخول
+                  </Button>
+                  <Button variant="danger" onClick={handleShowRegisterForm}>
+                    <RiUserAddLine className="mr-1" />
+                    تسجيل اشتراك
+                  </Button>
+                </div>
+              </animated.div>
+            )}
+
+            {/* Forms */}
+            <Suspense fallback={<div>Loading...</div>}>
+              {formsTransition((styles, item) =>
+                item ? (
+                  <animated.div style={styles}>
+                    {/* Glass effect container */}
+                    <div
+                      className="glass-container"
+                      style={{ position: 'relative', zIndex: 2 }}
+                    >
+                      <Card className="form-container">
+                        {showLoginForm && (
+                          <Login
+                            className="form-content"
+                            handleCloseForm={handleCloseForm}
+                          />
+                        )}
+                        {showRegisterForm && (
+                          <Register
+                            className="form-content"
+                            handleCloseForm={handleCloseForm}
+                          />
+                        )}
+                      </Card>
+                    </div>
+                  </animated.div>
+                ) : null,
+              )}
+            </Suspense>
+          </>
         )}
-        {showLogoAndButtons && (
-              <animated.div style={buttonAnimation} className="logo-container">
-  <div className="buttons-container" style={{ position: 'relative', zIndex: 2 }}>
-    <Button
-      variant="success"
-      onClick={handleShowLoginForm}
-      style={{ marginRight: '10px' }}
-    >
-      <RiLoginCircleLine className="mr-1" />
-      دخول
-    </Button>
-    <Button variant="danger" onClick={handleShowRegisterForm}>
-      <RiUserAddLine className="mr-1" />
-      تسجيل اشتراك
-    </Button>
-  </div>
-  </animated.div>
-)}
-
-
       </div>
-      {/* Forms */}{formsTransition((styles, item) =>
-  item ? (
-    <animated.div style={styles}>
-      {/* Glass effect container */}
-      <div className="glass-container" style={{ position: 'relative', zIndex: 2 }}>
-        <Card className="form-container">
-          <React.Suspense fallback={<Spinner animation="grow" />}>
-            {showLoginForm && (
-              <Login className="form-content" handleCloseForm={handleCloseForm} />
-            )}
-            {showRegisterForm && (
-              <Register className="form-content" handleCloseForm={handleCloseForm} />
-            )}
-          </React.Suspense>
-        </Card>
-      </div>
-    </animated.div>
-  ) : null
-)}
 
-      {/* Footer */}
       <footer
         style={{
-          background: 'linear-gradient(rgb(11 22 26), rgb(14 48 66), rgb(10 18 24))',
+          background: 'linear-gradient(35deg,#041454, #1e2a66, #041454)',
           direction: 'rtl',
           color: '#fff',
           textAlign: 'center',
           padding: '10px 0',
           position: 'absolute',
-          bottom: 0, // Place the footer at the bottom of the page
-          width: '100%', // Make the footer full width
+          bottom: 0,
+          width: '100%',
         }}
       >
         <Container>

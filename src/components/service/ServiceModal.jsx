@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import useAuth from '../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../config';
@@ -72,17 +71,6 @@ const ServiceModal = ({
     setFormData(initialFormData);
     setErrors({});
     setShowValidationAlert(false);
-  };
-
-  const handleRadioChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      client_choice: value,
-      client_id: '',
-      unclient_name: '',
-      unclient_phone: '',
-      unclient_nid: '',
-    }));
   };
 
   const handleChange = (e) => {
@@ -322,14 +310,6 @@ const ServiceModal = ({
       </Modal.Footer>
     </Modal>
   );
-};
-
-ServiceModal.propTypes = {
-  show: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleServiceAddedOrEdited: PropTypes.func.isRequired,
-  service: PropTypes.object,
-  isEditing: PropTypes.bool.isRequired,
 };
 
 export default ServiceModal;

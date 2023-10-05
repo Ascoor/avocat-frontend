@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Form, Button, Row } from 'react-bootstrap';
+import { Card, Form, Button } from 'react-bootstrap';
 import { FaSignInAlt } from 'react-icons/fa';
 import useAuth from './AuthUser';
 import { useNavigate } from 'react-router-dom';
@@ -33,22 +33,24 @@ const Login = ({ handleCloseForm }) => {
       setLoading(false);
     }
   };
-  
+
   return (
-    <Card className="form-container">
-    <Card.Header>
-  <div className="auth-setting-card-header">
-    <Card.Title className="auth-login-title">
-      <FaSignInAlt className="welcome-page-icon m-2" />
-      تسجيل الدخول
-    </Card.Title>
-  </div>
-</Card.Header>
+    <>
+      <Card.Header>
+        <div className="auth-setting-card-header">
+          <Card.Title className="auth-login-title">
+            <FaSignInAlt className="welcome-page-icon m-2" />
+            تسجيل الدخول
+          </Card.Title>
+        </div>
+      </Card.Header>
 
       <Card.Body>
         <Form onSubmit={onSubmit}>
           <Form.Group controlId="formBasicEmail">
-          <Form.Label className="form-label m-2">عنوان البريد الإلكتروني</Form.Label>
+            <Form.Label className="form-label m-2">
+              عنوان البريد الإلكتروني
+            </Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter an email address"
@@ -57,7 +59,7 @@ const Login = ({ handleCloseForm }) => {
             />
           </Form.Group>
 
-          <Form.Group >
+          <Form.Group>
             <Form.Label className="form-label m-2">كلمة المرور</Form.Label>
             <Form.Control
               type="password"
@@ -66,32 +68,32 @@ const Login = ({ handleCloseForm }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-
         </Form>
 
         {error && <p className="text-danger mt-3 text-center">{error}</p>}
       </Card.Body>
 
       <Card.Footer>
-      {loading ? (
-              <Button type="button" disabled className="btn-warning login-btn">
-                ...جارى الدخول
-              </Button>
-            ) : (
-              <Button onClick={onSubmit} className="btn-success login-btn">
-                تسجيل الدخول
-              </Button>
-            )}
-        
-        <Button type="button" onClick={handleCloseForm} className="btn-danger login-back">
+        {loading ? (
+          <Button type="button" disabled className="btn-warning login-btn">
+            ...جارى الدخول
+          </Button>
+        ) : (
+          <Button onClick={onSubmit} className="btn-success login-btn">
+            تسجيل الدخول
+          </Button>
+        )}
+
+        <Button
+          type="button"
+          onClick={handleCloseForm}
+          className="btn-danger login-back"
+        >
           العودة للرئيسية
         </Button>
       </Card.Footer>
-      
-     
-    </Card>
-  
+    </>
   );
-}
+};
 
 export default Login;

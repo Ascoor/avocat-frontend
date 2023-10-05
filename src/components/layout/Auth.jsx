@@ -1,4 +1,4 @@
-import { useState, c } from 'react';
+import { useState } from 'react';
 import TopNav from './Tools/TopNav';
 import Sidebar from './Tools/SideBar';
 import useAuth from '../layout/AuthTool/AuthUser';
@@ -52,7 +52,7 @@ function Auth() {
       >
         <Sidebar sidebarOpen={sidebarOpen} onClose={handleCloseSidebar} />
       </animated.aside>
-      <MainContent sidebarOpen={sidebarOpen} />   
+      <MainContent sidebarOpen={sidebarOpen} />
     </>
   );
 }

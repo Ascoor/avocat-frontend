@@ -18,7 +18,7 @@ export default function LegCaseDetail() {
   const [key, setKey] = useState('procedure');
   const [courts, setCourts] = useState([]);
   const [legCaseCourts, setLegCaseCourts] = useState([]);
-  
+
   const [legCaseNewClients, setLegCaseNewClients] = useState([]);
   const [legCaseNewCourts, setLegCaseNewCourts] = useState([]);
   useEffect(() => {
@@ -51,43 +51,65 @@ export default function LegCaseDetail() {
   }, [id]);
 
   const handleAddNewClient = () => {
-    setLegCaseNewClients(prevClients => [...prevClients, { client_id: '' }]);
-};
-  const handleAddNewCourt = (index, field, value) => {
+    setLegCaseNewClients((prevClients) => [...prevClients, { client_id: '' }]);
+  };
+  // Function to add a new court to the legCaseNewCourts state
+  const handleAddNewCourt = () => {
     setLegCaseNewCourts((prevCourts) => [
       ...prevCourts,
       { case_number: '', case_year: '', court_id: '', judge_level: '' },
     ]);
   };
 
+  // Function to remove a new court from the legCaseNewCourts state
   const handleRemoveNewCourt = (index) => {
     setLegCaseNewCourts((prevCourts) =>
       prevCourts.filter((_, i) => i !== index),
     );
   };
 
+  // Function to handle changes in the new court form fields
   const handleNewCourtChange = (index, field, value) => {
     const updatedCourts = [...legCaseNewCourts];
     updatedCourts[index][field] = value;
     setLegCaseNewCourts(updatedCourts);
   };
 
+  // Function to handle adding leg case courts
+  const handleAddLegCaseCourts = async () => {
+    try {
+      // Prepare the data to send in the request
+      const requestData = {
+        leg_case_id: id,
+        courts: legCaseNewCourts,
+      };
+
+      // Make a POST request to add leg case courts
+      const response = await axios.post('/leg-case/add_courts', requestData);
+
+      // Handle the response as needed (e.g., show a success message)
+      console.log('Leg case courts added successfully', response.data);
+    } catch (error) {
+      // Handle any errors (e.g., display an error message)
+      console.error('Error adding leg case courts', error);
+    }
+  };
+
   if (!legCase) {
     return <div>Loading...</div>;
   }
 
-
-const handleRemoveNewClient = (index) => {
-    setLegCaseNewClients(prevClients =>
-        prevClients.filter((_, i) => i !== index)
+  const handleRemoveNewClient = (index) => {
+    setLegCaseNewClients((prevClients) =>
+      prevClients.filter((_, i) => i !== index),
     );
-};
+  };
 
-const handleNewClientChange = (index, field, value) => {
+  const handleNewClientChange = (index, field, value) => {
     const updatedClients = [...legCaseNewClients];
     updatedClients[index][field] = value;
     setLegCaseNewClients(updatedClients);
-};
+  };
 
   const CaseHeader = () => (
     <div className="legalcase-card-header">
@@ -148,8 +170,6 @@ const handleNewClientChange = (index, field, value) => {
       )}
     </Card.Body>
   );
-  
-
 
   const CourtsHeader = () => (
     <Card.Header>
@@ -163,158 +183,154 @@ const handleNewClientChange = (index, field, value) => {
           >
             إضافة محكمة <BiPlusCircle />
           </Button>
-
-
         </div>
       </div>
     </Card.Header>
   );
-  
+
   return (
     <Card>
       <CaseHeader />
       <Card.Body>
         <CaseBody />
-      <LegCaseClients 
-legCaseId={id} 
-onAddNewClient={handleAddNewClient} // This will add a new client in the LegCaseDetails state
-handleNewClientChange={handleNewClientChange} // Propagate changes in the client fields
-handleRemoveNewClient={handleRemoveNewClient} // Propagate removal of a new client
-/>
+        <LegCaseClients
+          legCaseId={id}
+          onAddNewClient={handleAddNewClient} // This will add a new client in the LegCaseDetails state
+          handleNewClientChange={handleNewClientChange} // Propagate changes in the client fields
+          handleRemoveNewClient={handleRemoveNewClient} // Propagate removal of a new client
+        />
       </Card.Body>
       <CourtsHeader />
       <Card.Body>
         <Row>
-          
-            <div className="table-responsive">
-              <table className="special-table">
-                <thead>
-                  <tr>
-                    <th>رقم القضية</th>
-                    <th>سنة القضية</th>
-                    <th>المحكمة</th>
-                    <th>مستوى القاضي</th>
+          <div className="table-responsive">
+            <table className="special-table">
+              <thead>
+                <tr>
+                  <th>رقم القضية</th>
+                  <th>سنة القضية</th>
+                  <th>المحكمة</th>
+                  <th>مستوى القاضي</th>
+                </tr>
+              </thead>
+              <tbody>
+                {legCaseCourts.map((court, index) => (
+                  <tr key={`legCaseCourt-${index}`}>
+                    <td>{court.pivot.case_number}</td>
+                    <td>{court.pivot.case_year}</td>
+                    <td>{court.name}</td>
+                    <td>{court.pivot.judge_level}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {legCaseCourts.map((court, index) => (
-                    <tr key={`legCaseCourt-${index}`}>
-                      <td>{court.pivot.case_number}</td>
-                      <td>{court.pivot.case_year}</td>
-                      <td>{court.name}</td>
-                      <td>{court.pivot.judge_level}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-            {legCaseNewCourts.map((court, index) => (
-              <div key={index} className="mb-3">
-                <Row className="align-items-center mt-3">
-                  <Col>
-                    <Form.Group className="mb-0">
-                      <Form.Label>رقم القضية</Form.Label>
-                      <Form.Control
-                        type="text"
-                        value={court.case_number}
-                        onChange={(e) =>
-                          handleNewCourtChange(
-                            index,
-                            'case_number',
-                            e.target.value,
-                          )
-                        }
-                      />
-                    </Form.Group>
-                 
-                  </Col>
-                  <Col>
-                    <Form.Group className="mb-0">
-                      <Form.Label>سنة القضية</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={court.case_year}
-                        onChange={(e) =>
-                          handleNewCourtChange(
-                            index,
-                            'case_year',
-                            e.target.value,
-                          )
-                        }
-                      >
-                        <option defaultValue={null}>اختر السنة</option>
-                        {Array.from({ length: 51 }, (_, i) => (
-                          <option key={2000 + i} value={2000 + i}>
-                            {2000 + i}
-                          </option>
-                        ))}
-                      </Form.Control>
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={12} lg={6}>
-
-
-        <Form.Group className="mb-0">
-                      <Form.Label>المحكمة</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={court.court_id}
-                        onChange={(e) =>
-                          handleNewCourtChange(
-                            index,
-                            'court_id',
-                            e.target.value,
-                          )
-                        }
-                      >
-                        <option defaultValue={null}>اختر المحكمة</option>
-                        {courts.map((option) => (
-                          <option key={`court-${option.id}`} value={option.id}>
-                            {option.name}
-                          </option>
-                        ))}
-                      </Form.Control>
-                    </Form.Group>
-                  </Col>
-                  <Col xs={12} lg={6}>
-                    {' '}
-                    {/* Display the second table on extra small and large screens */}
-                    <Form.Group>
-                      <Form.Label>مستوى القاضي</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={court.judge_level}
-                        onChange={(e) =>
-                          handleNewCourtChange(
-                            index,
-                            'judge_level',
-                            e.target.value,
-                          )
-                        }
-                      >
-                        <option defaultValue={null}>اختر مستوى القاضي</option>
-                        <option value="نقض">نقض</option>
-                        <option value="ثانى درجة">ثانى درجة</option>
-                        <option value="أول درجة">أول درجة</option>
-                      </Form.Control>
-                    </Form.Group>
-                  </Col>
-                  <Col xs={1}>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleRemoveNewCourt(index)}
-                      className="align-middle"
+          {legCaseNewCourts.map((court, index) => (
+            <div key={index} className="mb-3">
+              <Row className="align-items-center mt-3">
+                <Col>
+                  <Form.Group className="mb-0">
+                    <Form.Label>رقم القضية</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={court.case_number}
+                      onChange={(e) =>
+                        handleNewCourtChange(
+                          index,
+                          'case_number',
+                          e.target.value,
+                        )
+                      }
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group className="mb-0">
+                    <Form.Label>سنة القضية</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={court.case_year}
+                      onChange={(e) =>
+                        handleNewCourtChange(index, 'case_year', e.target.value)
+                      }
                     >
-                      <BiMinusCircle />
-                    </Button>
-                  </Col>
-                </Row>
-              </div>
-            ))}
-    
+                      <option defaultValue={null}>اختر السنة</option>
+                      {Array.from({ length: 51 }, (_, i) => (
+                        <option key={2000 + i} value={2000 + i}>
+                          {2000 + i}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12} lg={6}>
+                  <Form.Group className="mb-0">
+                    <Form.Label>المحكمة</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={court.court_id}
+                      onChange={(e) =>
+                        handleNewCourtChange(index, 'court_id', e.target.value)
+                      }
+                    >
+                      <option defaultValue={null}>اختر المحكمة</option>
+                      {courts.map((option) => (
+                        <option key={`court-${option.id}`} value={option.id}>
+                          {option.name}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col xs={12} lg={6}>
+                  {' '}
+                  {/* Display the second table on extra small and large screens */}
+                  <Form.Group>
+                    <Form.Label>مستوى القاضي</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={court.judge_level}
+                      onChange={(e) =>
+                        handleNewCourtChange(
+                          index,
+                          'judge_level',
+                          e.target.value,
+                        )
+                      }
+                    >
+                      <option defaultValue={null}>اختر مستوى القاضي</option>
+                      <option value="نقض">نقض</option>
+                      <option value="ثانى درجة">ثانى درجة</option>
+                      <option value="أول درجة">أول درجة</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col xs={1}>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleRemoveNewCourt(index)}
+                    className="align-middle"
+                  >
+                    <BiMinusCircle />
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          ))}
+        </Row>
+        <Row>
+          <Col>
+            <Button
+              variant="success"
+              onClick={handleAddLegCaseCourts}
+              className="align-middle"
+            >
+              <BiPlusCircle />
+            </Button>
+          </Col>
         </Row>
       </Card.Body>
 

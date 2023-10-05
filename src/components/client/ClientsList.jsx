@@ -3,7 +3,12 @@ import axios from 'axios';
 import { Card, Alert } from 'react-bootstrap';
 import { ClientIcon } from '../../assets/icons/index';
 import API_CONFIG from '../../config';
-import { AiFillCheckCircle, AiFillCloseCircle, AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import {
+  AiFillCheckCircle,
+  AiFillCloseCircle,
+  AiFillEdit,
+  AiFillDelete,
+} from 'react-icons/ai';
 import CustomPagination from '../home_tools/Pagination';
 import SectionHeader from '../home_tools/SectionHeader';
 import AddEditClient from './AddEditClient';
@@ -11,7 +16,6 @@ import AddEditClient from './AddEditClient';
 function Clients() {
   const [clients, setClients] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
-  const [showModal, setShowModal] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,22 +28,25 @@ function Clients() {
   const endIndex = Math.min(startIndex + itemsPerPage, filteredClients.length);
 
   const paginatedClients = filteredClients.slice(startIndex, endIndex);
-// Fetching clients only once when the component mounts
-useEffect(() => {
-  fetchClients();
-}, []);
+  // Fetching clients only once when the component mounts
+  useEffect(() => {
+    fetchClients();
+  }, []);
 
-// Filtering and paginating clients based on searchQuery
-useEffect(() => {
-  const filtered = clients.filter(client => 
-    client.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    client.identity_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    client.phone_number.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filtering and paginating clients based on searchQuery
+  useEffect(() => {
+    const filtered = clients.filter(
+      (client) =>
+        client.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        client.identity_number
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        client.phone_number.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
 
-  setFilteredClients(filtered);
-}, [searchQuery, clients]);
+    setFilteredClients(filtered);
+  }, [searchQuery, clients]);
   const fetchClients = async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
@@ -52,7 +59,6 @@ useEffect(() => {
   const handlePageChange = (newPage) => {
     setClientsPage(newPage);
   };
-
 
   const handleSearch = () => {
     const filteredClients = clients.filter((client) => {
@@ -72,7 +78,7 @@ useEffect(() => {
       const response = await axios.delete(
         `${API_CONFIG.baseURL}/api/clients/${id}`,
       );
-    
+
       fetchClients();
       setCurrentAlertMessage(response.data.message);
       setShowAlert(true);
@@ -95,10 +101,13 @@ useEffect(() => {
       const client = clients.find((client) => client.id === id);
       const newStatus = client.status === 'active' ? 'inactive' : 'active';
 
-      const response = await axios.put(`${API_CONFIG.baseURL}/api/clients/${id}`, {
-        ...client,
-        status: newStatus,
-      });
+      const response = await axios.put(
+        `${API_CONFIG.baseURL}/api/clients/${id}`,
+        {
+          ...client,
+          status: newStatus,
+        },
+      );
 
       fetchClients();
       setAlertMessage(response.data.message);
@@ -113,38 +122,40 @@ useEffect(() => {
     }
   };
 
-
   const openAddEditModal = (client = null) => {
-    
     setSelectedClient(client);
     setModalOpen(true);
   };
 
   return (
     <>
-    <SectionHeader
+      <SectionHeader
         buttonName="موكل"
         listName="موكلين"
         icon={ClientIcon}
         setShowAddModal={() => openAddEditModal()}
-    />
-       <AddEditClient
+      />
+      <AddEditClient
         client={selectedClient}
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         onSaved={() => {
-            setModalOpen(false);
-            fetchClients();
+          setModalOpen(false);
+          fetchClients();
         }}
-    />
+      />
 
-    <Card className="mt-4">
+      <Card className="mt-4">
         <Card.Header>
-            {showAlert && (
-                <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
-                    {alertMessage}
-                </Alert>
-            )}
+          {showAlert && (
+            <Alert
+              variant="success"
+              onClose={() => setShowAlert(false)}
+              dismissible
+            >
+              {alertMessage}
+            </Alert>
+          )}
         </Card.Header>
         <div className="input-group w-50">
           <input
@@ -208,9 +219,7 @@ useEffect(() => {
                         )}
                       </td>
 
-
                       <td>
-
                         <AiFillEdit
                           color="blue"
                           onClick={() => openAddEditModal(client)}
@@ -229,7 +238,7 @@ useEffect(() => {
           </div>
         </Card.Body>
         <Card.Footer>
-        <CustomPagination
+          <CustomPagination
             totalCount={filteredClients.length}
             itemsPerPage={itemsPerPage}
             currentPage={clientsPage}
@@ -237,7 +246,6 @@ useEffect(() => {
           />
         </Card.Footer>
       </Card>
-     
     </>
   );
 }
