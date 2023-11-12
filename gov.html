@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معرض الصور</title>
+<style>
+  .header-image {
+    width: 100%;
+    height: 500px;
+    display: block;
+  }
+
+  .gallery-container {
+    width: 100%;
+    text-align: center;
+  }
+
+  .gallery-container img {
+    width: 60%;
+    height: auto;
+  }
+
+  .arrow {
+    cursor: pointer;
+    font-size: 24px;
+    user-select: none;
+  }
+
+  .arrow.left {
+    float: left;
+  }
+
+  .arrow.right {
+    float: right;
+  }
+
+  /* إضافة التنسيقات الخاصة بك هنا للتحكم في حجم الصور وما إلى ذلك */
+</style>
+</head>
+<body>
+
+<!-- Header with image -->
+<header>
+  <img src="head.png" alt="Header Image" class="header-image">
+</header>
+
+<!-- Image Gallery -->
+<div class="gallery-container">
+  <img src="image_to_display.jpg" alt="Gallery Image" class="gallery-img">
+  <button class="arrow left" onclick="moveSlide(-1)">&#10094;</button>
+  <button class="arrow right" onclick="moveSlide(1)">&#10095;</button>
+</div>
+
+<script>
+// JavaScript لإضافة وظيفة الأسهم
+var currentSlide = 0;
+var images = ["image1.jpg", "image2.jpg", "image3.jpg"]; // أضف مسارات الصور هنا
+
+function moveSlide(step) {
+  currentSlide += step;
+  if (currentSlide >= images.length) {
+    currentSlide = 0;
+  } else if (currentSlide < 0) {
+    currentSlide = images.length - 1;
+  }
+  document.querySelector('.gallery-img').src = images[currentSlide];
+}
+</script>
+
+</body>
+</html>
