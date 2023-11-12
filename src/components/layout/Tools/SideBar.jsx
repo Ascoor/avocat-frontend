@@ -7,7 +7,7 @@ import {
   FaBriefcase,
   FaFileAlt,
   FaTasks,
-  // FaArchive,
+  FaArchive,
   FaCog,
 } from 'react-icons/fa';
 import { MdOutlinePriceChange } from 'react-icons/md';
@@ -91,12 +91,12 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
           </Link>
         </li>
 
-        {/* <li>
-          <Link to="/archives">
+        <li>
+          <Link to="/court-search">
             <FaArchive className="m-2" size={25} />
-            الأرشيف{' '}
+            بحث القضايا
           </Link>
-        </li> */}
+        </li>
         <li>
           <Link to="/courts">
             <FaCog className="m-1" size={25} />

@@ -4,7 +4,7 @@ import Home from '../../Home';
 import Lawyers from '../../lawyer/lawyer_index.component';
 import LawyersAddEdit from '../../lawyer/lawyer_index.component';
 import CourtSetting from '../../setting/court_index.component';
-// import CourtSearch from "../reports/court_search.component";
+import CourtSearch from "../../reports/CourtSearch";
 import CaseTypeSet from '../../setting/case_index.component';
 /** FinancialDashboard**/
 import FinancialDashboard from '../../financially/index';
@@ -33,7 +33,7 @@ const AuthRoutes = () => {
           <Route path="/clients" element={<ClientsList />} />
           <Route path="/courts" element={<CourtSetting />} />
           <Route path="/services" element={<Services />} />
-          {/* <Route path="/court_search" element={<CourtSearch />} /> */}
+          <Route path="/court-search" element={<CourtSearch />} />
           <Route path="/lawyers" element={<Lawyers />} />
           <Route path="/cases_setting" element={<CaseTypeSet />} />
 
