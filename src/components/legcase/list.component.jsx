@@ -139,47 +139,49 @@ const LegCaseList = () => {
                   <th className="header-cell">التحكم</th>
                 </tr>
               </thead>
-              <tbody>
-                {paginatedLegCases.map((legCase, index) => (
-                  <tr key={index}>
-                    <td>{legCase.slug}</td>
-                    <td>
-                      {legCase.clients.map((client, clientIndex) => (
-                        <div key={clientIndex}>
-                          <small>{client.name}</small>
-                        </div>
-                      ))}
-                    </td>
-                    <td>{legCase.client_capacity}</td>
-                    <td>{legCase.title}</td>
-                    <td>{legCase.case_sub_type.name}</td>
-                    <td>
-                      {legCase.courts.map((court, courtIndex) => (
-                        <div key={courtIndex}>
-                          <small>{court.name}</small>
-                        </div>
-                      ))}
-                    </td>
-                    <td>{legCase.status}</td>
-                    <td>
-                      <div className="button-container">
-                        <Link
-                          className="btn btn-secondary mb-2 float-end"
-                          to={`/legcases/show/${legCase.id}`}
-                        >
-                          عرض
-                        </Link>
-                        <Link
-                          className="btn btn-danger mb-2 float-end"
-                          onClick={() => deleteLegCase(legCase.id)}
-                        >
-                          حذف
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+<tbody>
+  {paginatedLegCases.map((legCase, index) => (
+    <tr key={index}>
+      <td>{legCase.slug}</td>
+      <td>
+        {legCase.clients.map((client, clientIndex) => (
+          <span key={clientIndex}>
+            {client.name}
+            {clientIndex < legCase.clients.length - 1 && ", "}
+          </span>
+        ))}
+      </td>
+      <td>{legCase.client_capacity}</td>
+      <td>{legCase.title}</td>
+      <td>{legCase.case_sub_type.name}</td>
+      <td>
+        {legCase.courts.map((court, courtIndex) => (
+          <span key={courtIndex}>
+            {court.name}
+            {courtIndex < legCase.courts.length - 1 && ", "}
+          </span>
+        ))}
+      </td>
+      <td>{legCase.status}</td>
+      <td>
+        <div className="button-container">
+          <Link
+            className="btn btn-secondary mb-2 float-end"
+            to={`/legcases/show/${legCase.id}`}
+          >
+            عرض
+          </Link>
+          <Link
+            className="btn btn-danger mb-2 float-end"
+            onClick={() => deleteLegCase(legCase.id)}
+          >
+            حذف
+          </Link>
+        </div>
+      </td>
+    </tr>
+  ))}
+</tbody>
             </table>
           </div>
         </Card.Body>

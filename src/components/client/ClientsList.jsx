@@ -26,8 +26,11 @@ function Clients() {
   const [clientsPage, setClientsPage] = useState(1);
   const startIndex = (clientsPage - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, filteredClients.length);
+// Check if filteredClients is an array before calling slice
+const paginatedClients = Array.isArray(filteredClients)
+? filteredClients.slice(startIndex, endIndex)
+: [];
 
-  const paginatedClients = filteredClients.slice(startIndex, endIndex);
   // Fetching clients only once when the component mounts
   useEffect(() => {
     fetchClients();
@@ -238,13 +241,13 @@ function Clients() {
           </div>
         </Card.Body>
         <Card.Footer>
-          <CustomPagination
-            totalCount={filteredClients.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={clientsPage}
-            onPageChange={handlePageChange}
-          />
-        </Card.Footer>
+        <CustomPagination
+          totalCount={filteredClients.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={clientsPage}
+          onPageChange={handlePageChange}
+        />
+      </Card.Footer>
       </Card>
     </>
   );

@@ -87,7 +87,7 @@ const LegCaseCreate = () => {
   const handleAddCourt = () => {
     setLegCaseCourts([
       ...legCaseCourts,
-      { case_number: '', case_year: '', court_id: '', judge_level: '' },
+      { case_number: '', case_year: '', court_id: '' },
     ]);
   };
 
@@ -387,29 +387,6 @@ const LegCaseCreate = () => {
                       </Form.Control>
                       <Form.Control.Feedback type="invalid">
                         يجب اختيار المحكمة
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group>
-                      <Form.Label>درجة التقاضى</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={court.judge_level}
-                        onChange={(e) =>
-                          handleCourtChange(
-                            index,
-                            'judge_level',
-                            e.target.value,
-                          )
-                        }
-                        required
-                      >
-                        <option value="">درجة التقاضي</option>
-                        <option value="نقض">نقض</option>
-                        <option value="ثانى درجة">ثانى درجة</option>
-                        <option value="أول درجة">أول درجة</option>
-                      </Form.Control>
-                      <Form.Control.Feedback type="invalid">
-                        يجب اختيار درجة التقاضي
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>

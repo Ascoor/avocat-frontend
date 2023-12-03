@@ -7,6 +7,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Card, Col, Row } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
+
 import '../../assets/css/calender.css';
 import AnalogClock from './AnalogClock';
 
@@ -49,14 +50,14 @@ const Calendar = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTime(new Date());
+      setCurrentTime(new Date()); // هذا سيحدث الوقت كل ثانية
     }, 1000);
-
+  
     return () => clearInterval(interval);
   }, []);
   const calendarSpringStyles = useSpring({
     background: 'linear-gradient(45deg, #e0c3fc, #8ec5fc)',
-    boxShadow: '0px 0px 10px rgba(188, 171, 247, 0.5)',
+    boxShadow: '0px 0px 10px rgba(188,setC 171, 247, 0.5)',
     from: {
       background: 'linear-gradient(45deg, #c2e2fc, #cfd3e6)',
       boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)',
