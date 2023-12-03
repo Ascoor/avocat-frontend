@@ -11,7 +11,7 @@ import '../../assets/css/calender.css';
 import AnalogClock from './AnalogClock';
 
 const Calendar = () => {
-  const [setCurrentTime] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState(new Date());
   // Function to determine the title based on the event type
   const [events, setEvents] = useState([]);
 
@@ -46,6 +46,7 @@ const Calendar = () => {
       });
   }, []);
 
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
@@ -53,7 +54,6 @@ const Calendar = () => {
 
     return () => clearInterval(interval);
   }, []);
-
   const calendarSpringStyles = useSpring({
     background: 'linear-gradient(45deg, #e0c3fc, #8ec5fc)',
     boxShadow: '0px 0px 10px rgba(188, 171, 247, 0.5)',
