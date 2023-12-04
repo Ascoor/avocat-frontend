@@ -57,7 +57,7 @@ export default function LegCaseDetail() {
   const handleAddNewCourt = () => {
     setLegCaseNewCourts((prevCourts) => [
       ...prevCourts,
-      { case_number: '', case_year: '', court_id: '', judge_level: '' },
+      { case_number: '', case_year: '', court_id: '' },
     ]);
   };
 
@@ -210,7 +210,6 @@ export default function LegCaseDetail() {
                   <th>رقم القضية</th>
                   <th>سنة القضية</th>
                   <th>المحكمة</th>
-                  <th>مستوى القاضي</th>
                 </tr>
               </thead>
               <tbody>
@@ -219,7 +218,7 @@ export default function LegCaseDetail() {
                     <td>{court.pivot.case_number}</td>
                     <td>{court.pivot.case_year}</td>
                     <td>{court.name}</td>
-                    <td>{court.pivot.judge_level}</td>
+       
                   </tr>
                 ))}
               </tbody>
@@ -285,29 +284,7 @@ export default function LegCaseDetail() {
                     </Form.Control>
                   </Form.Group>
                 </Col>
-                <Col xs={12} lg={6}>
-                  {' '}
-                  {/* Display the second table on extra small and large screens */}
-                  <Form.Group>
-                    <Form.Label>مستوى القاضي</Form.Label>
-                    <Form.Control
-                      as="select"
-                      value={court.judge_level}
-                      onChange={(e) =>
-                        handleNewCourtChange(
-                          index,
-                          'judge_level',
-                          e.target.value,
-                        )
-                      }
-                    >
-                      <option defaultValue={null}>اختر مستوى القاضي</option>
-                      <option value="نقض">نقض</option>
-                      <option value="ثانى درجة">ثانى درجة</option>
-                      <option value="أول درجة">أول درجة</option>
-                    </Form.Control>
-                  </Form.Group>
-                </Col>
+             
                 <Col xs={1}>
                   <Button
                     variant="danger"

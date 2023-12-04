@@ -22,10 +22,11 @@ const Procedure = ({ legCaseId }) => {
   const [showAddProcedureModal, setShowAddProcedureModal] = useState(false);
   const [procedureTypes, setProcedureTypes] = useState([]);
   const [lawyers, setLawyers] = useState([]);
-  const [courts, setCourts] = useState([]);
+  const [procedurePlaceTypes,   setProcedurePlaceTypes] = useState([]);
   const [selectedProcedureType, setSelectedProcedureType] = useState('');
   const [selectedLawyer, setSelectedLawyer] = useState('');
-  const [selectedCourt, setSelectedCourt] = useState('');
+  const [selectedProcedurePlaceType, setSelectedProcedurePlaceType] = useState('');
+  const [selectedProcedurePlaceName, setSelectedProcedurePlaceName] = useState('');
   const [modalMode, setModalMode] = useState('');
   const [procedureId, setProcedureId] = useState(null);
   const user = getUser();
@@ -33,7 +34,7 @@ const Procedure = ({ legCaseId }) => {
     const fetchAllData = async () => {
       try {
         await Promise.all([
-          fetchCourts(),
+          fetchProcedurePlaceTypes(),
           fetchLawyers(),
           fetchProcedureTypes(),
         ]);
@@ -88,10 +89,10 @@ const Procedure = ({ legCaseId }) => {
     }
   };
 
-  const fetchCourts = async () => {
+  const fetchProcedurePlaceTypes = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/courts`);
-      setCourts(response.data);
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/procedure_place_types`);
+      setProcedurePlaceTypes(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -114,7 +115,8 @@ const Procedure = ({ legCaseId }) => {
     setSelectedResult(procedure.result);
     setSelectedProcedureType(procedure.procedure_type_id);
     setSelectedLawyer(procedure.lawyer_id);
-    setSelectedCourt(procedure.court_id);
+    setSelectedProcedurePlaceName(procedure.procedure_place_name);
+    setSelectedProcedurePlaceType(procedure.procedure_place_type_id);
     setSelectedStatus(procedure.status); // تمت إضافة تعيين الحالة هنا
 
     setShowAddProcedureModal(true);
@@ -146,7 +148,8 @@ const Procedure = ({ legCaseId }) => {
         result: selectedResult,
         procedure_type_id: selectedProcedureType,
         lawyer_id: selectedLawyer,
-        court_id: selectedCourt,
+        procedure_place_type_id_: selectedProcedurePlaceType,
+        procedure_place_name_: selectedProcedurePlaceName,
         leg_case_id: legCaseId,
 
         created_by: user.id,
@@ -186,7 +189,8 @@ const Procedure = ({ legCaseId }) => {
     setSelectedResult('');
     setSelectedProcedureType('');
     setSelectedLawyer('');
-    setSelectedCourt('');
+    setSelectedProcedurePlaceName('');
+    setSelectedProcedurePlaceType('');
   };
 
   return (
@@ -208,6 +212,7 @@ const Procedure = ({ legCaseId }) => {
             <thead>
               <tr>
                 <th className="col-2">نوع الإجراء</th>
+                <th className="col-1">نوع الجهة</th>
                 <th className="col-1">المحكمة</th>
                 <th className="col-2">الوظيفة</th>
                 <th className="col-2">تاريخ البدء</th>
@@ -225,7 +230,8 @@ const Procedure = ({ legCaseId }) => {
                 ) => (
                   <tr key={procedure.id}>
                     <td>{procedure.procedure_type?.name}</td>
-                    <td>{procedure.court?.name}</td>
+                    <td>{procedure.place_type?.name}</td>
+                    <td>{procedure.procedure_place_name}</td>
                     <td>{procedure.job}</td>
                     <td>{procedure.date_start}</td>
                     <td>{procedure.date_end}</td>
@@ -337,6 +343,15 @@ const Procedure = ({ legCaseId }) => {
                 onChange={(e) => setSelectedResult(e.target.value)}
               />
             </Form.Group>
+            <Form.Group controlId="procedurePlaceName">
+              <Form.Label>مكان الجهة</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="ادخل النتيجة"
+                value={selectedProcedurePlaceName || ''}
+                onChange={(e) => setSelectedProcedurePlaceName(e.target.value)}
+              />
+            </Form.Group>
 
             <Form.Group controlId="procedureType">
               <Form.Label>نوع الإجراء</Form.Label>
@@ -347,6 +362,21 @@ const Procedure = ({ legCaseId }) => {
               >
                 <option value="">اختر نوع الإجراء</option>
                 {procedureTypes.map((type) => (
+                  <option key={type.id} value={type.id}>
+                    {type.name}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="procedurePlaceType">
+              <Form.Label>نوع الجهة</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedProcedurePlaceType}
+                onChange={(e) => setSelectedProcedureType(e.target.value)}
+              >
+                <option value="">اختر نوع الإجراء</option>
+                {procedurePlaceTypes.map((type) => (
                   <option key={type.id} value={type.id}>
                     {type.name}
                   </option>
@@ -370,21 +400,7 @@ const Procedure = ({ legCaseId }) => {
               </Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="procedureCourt">
-              <Form.Label>المحكمة</Form.Label>
-              <Form.Control
-                as="select"
-                value={selectedCourt}
-                onChange={(e) => setSelectedCourt(e.target.value)}
-              >
-                <option value="">اختر المحكمة</option>
-                {courts.map((court) => (
-                  <option key={court.id} value={court.id}>
-                    {court.name}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+           
             <Form.Group controlId="procedureStatus">
               <Form.Label>الحالة</Form.Label>
               {modalMode === 'edit' && ( // شرط للتحقق من وضع التعديل
