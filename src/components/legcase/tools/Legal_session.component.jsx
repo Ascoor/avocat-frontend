@@ -237,9 +237,9 @@ const LegalSession = ({ legCaseId }) => {
               <tbody>
                 {legalSessions.map((legalSession) => (
                   <tr key={legalSession.id}>
-                    <td>{legalSession.date}</td>
+                    <td>{legalSession.session_date}</td>
                     <td>{legalSession.lawyer.name}</td>
-                    <td>{legalSession.roll_number}</td>
+      <td>{legalSession.legal_session_type?.name}</td>
                     <td>{legalSession.court.name}</td>
                     <td>{legalSession.orders}</td>
                     <td>{legalSession.result}</td>
