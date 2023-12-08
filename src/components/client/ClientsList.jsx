@@ -3,12 +3,7 @@ import axios from 'axios';
 import { Card, Alert } from 'react-bootstrap';
 import { ClientIcon } from '../../assets/icons/index';
 import API_CONFIG from '../../config';
-import {
-  AiFillCheckCircle,
-  AiFillCloseCircle,
-  AiFillEdit,
-  AiFillDelete,
-} from 'react-icons/ai';
+import { AiFillCheckCircle, AiFillCloseCircle, AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import CustomPagination from '../home_tools/Pagination';
 import SectionHeader from '../home_tools/SectionHeader';
 import AddEditClient from './AddEditClient';
@@ -24,64 +19,53 @@ function Clients() {
   const [currentAlertMessage, setCurrentAlertMessage] = useState('');
   const itemsPerPage = 5;
   const [clientsPage, setClientsPage] = useState(1);
-  const startIndex = (clientsPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, filteredClients.length);
-// Check if filteredClients is an array before calling slice
-const paginatedClients = Array.isArray(filteredClients)
-? filteredClients.slice(startIndex, endIndex)
-: [];
 
-  // Fetching clients only once when the component mounts
+  // Fetch and filter clients
   useEffect(() => {
     fetchClients();
   }, []);
 
-  // Filtering and paginating clients based on searchQuery
   useEffect(() => {
-    const filtered = clients.filter(
-      (client) =>
-        client.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        client.identity_number
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase()) ||
-        client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        client.phone_number.toLowerCase().includes(searchQuery.toLowerCase()),
+    const filtered = clients.filter(client => 
+      client.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      client.identity_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      client.phone_number.toLowerCase().includes(searchQuery.toLowerCase())
     );
-
     setFilteredClients(filtered);
   }, [searchQuery, clients]);
+
+  // Handlers
+  const handlePageChange = newPage => setClientsPage(newPage);
+
+  const handleSearch = () => {
+    setClientsPage(1); // Reset to first page on search
+    // Filter logic already handled in useEffect
+  };
+
+  const handleSlugClick = slug => {
+    const client = clients.find(client => client.slug === slug);
+    setSelectedClient(client);
+  };
+
+  // API Calls
   const fetchClients = async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
-      setClients(response.data);
-      setFilteredClients(response.data);
+      if (Array.isArray(response.data.clients)) {
+        setClients(response.data.clients);
+        setFilteredClients(response.data.clients);
+      } else {
+        console.error('Data fetched is not an array:', response.data.clients);
+      }
     } catch (error) {
       console.error('Failed to fetch clients', error);
     }
   };
-  const handlePageChange = (newPage) => {
-    setClientsPage(newPage);
-  };
 
-  const handleSearch = () => {
-    const filteredClients = clients.filter((client) => {
-      return (
-        client.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        client.identity_number
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase()) ||
-        client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        client.phone_number.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    });
-    setFilteredClients(filteredClients);
-  };
-  const deleteClient = async (id) => {
+  const deleteClient = async id => {
     try {
-      const response = await axios.delete(
-        `${API_CONFIG.baseURL}/api/clients/${id}`,
-      );
-
+      const response = await axios.delete(`${API_CONFIG.baseURL}/api/clients/${id}`);
       fetchClients();
       setCurrentAlertMessage(response.data.message);
       setShowAlert(true);
@@ -94,28 +78,14 @@ const paginatedClients = Array.isArray(filteredClients)
     }
   };
 
-  const handleSlugClick = (slug) => {
-    const client = clients.find((client) => client.slug === slug);
-    setSelectedClient(client);
-  };
-
-  const handleToggleStatus = async (id) => {
+  const handleToggleStatus = async id => {
     try {
-      const client = clients.find((client) => client.id === id);
+      const client = clients.find(client => client.id === id);
       const newStatus = client.status === 'active' ? 'inactive' : 'active';
-
-      const response = await axios.put(
-        `${API_CONFIG.baseURL}/api/clients/${id}`,
-        {
-          ...client,
-          status: newStatus,
-        },
-      );
-
+      const response = await axios.put(`${API_CONFIG.baseURL}/api/clients/${id}`, { ...client, status: newStatus });
       fetchClients();
       setAlertMessage(response.data.message);
       setShowAlert(true);
-
       setTimeout(() => {
         setShowAlert(false);
         setAlertMessage('');
@@ -129,6 +99,11 @@ const paginatedClients = Array.isArray(filteredClients)
     setSelectedClient(client);
     setModalOpen(true);
   };
+
+  // Render
+  const startIndex = (clientsPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, filteredClients.length);
+  const paginatedClients = filteredClients.slice(startIndex, endIndex);
 
   return (
     <>
@@ -242,12 +217,14 @@ const paginatedClients = Array.isArray(filteredClients)
         </Card.Body>
         <Card.Footer>
         <CustomPagination
-          totalCount={filteredClients.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={clientsPage}
-          onPageChange={handlePageChange}
-        />
-      </Card.Footer>
+  totalCount={filteredClients.length}
+  itemsPerPage={itemsPerPage}
+  currentPage={clientsPage}
+  onPageChange={handlePageChange}
+/>
+
+</Card.Footer>
+
       </Card>
     </>
   );

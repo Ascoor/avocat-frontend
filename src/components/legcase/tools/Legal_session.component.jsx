@@ -239,7 +239,7 @@ const LegalSession = ({ legCaseId }) => {
                   <tr key={legalSession.id}>
                     <td>{legalSession.session_date}</td>
                     <td>{legalSession.lawyer.name}</td>
-      <td>{legalSession.legal_session_type?.name}</td>
+      <td>{legalSession.legal_session_type.name}</td>
                     <td>{legalSession.court.name}</td>
                     <td>{legalSession.orders}</td>
                     <td>{legalSession.result}</td>
