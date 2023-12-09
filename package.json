@@ -4,26 +4,24 @@
   "homepage": "https://avocat.live",
   "description": "Lawyer office manager",
   "license": "MIT",
-  "keywords": [
-    "react",
-    "vite",
-    "bootstrap",
-    "fullcalendar",
-    "eslint"
-  ],
+  "keywords": ["react", "vite", "bootstrap", "fullcalendar", "eslint"],
+  "main": "main.js",
+  "repository": "https://github.com/ascoor/avocat-frontend",
+  "author": "Askar <mr.askar1984@gmail.com>",
   "scripts": {
     "lint": "eslint . --ext .js,.jsx",
     "lint:fix": "eslint . --ext .js,.jsx --fix",
     "format": "prettier --write \"src/**/*.+(js|jsx)\"",
     "dev": "vite",
-    "build": "vite build",
-    "start": "node server.js",
+    "build:dev": "vite build --mode development",
+    "build:prod": "vite build --mode production",
+    "start:dev": "vite --mode development",
+    "start:prod": "node server.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "serve": "vite preview"
   },
   "dependencies": {
-    "@babel/core": "^7.0.0-bridge.0",
     "@fullcalendar/core": "^6.1.9",
     "@fullcalendar/daygrid": "^6.1.9",
     "@fullcalendar/interaction": "^6.1.9",
@@ -35,7 +33,6 @@
     "axios": "^1.5.0",
     "bootstrap": "^5.3.2",
     "date-fns": "^2.30.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "moment": "^2.29.4",
@@ -56,16 +53,14 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.22.15",
+    "@babel/core": "^7.16.7",
+    "@babel/preset-react": "^7.16.5",
     "@testing-library/react": "^14.0.0",
-    "eslint": "^8.50.0",
-    "jest": "^29.7.0",
-    "prettier": "^3.0.3"
+    "eslint": "^8.4.1",
+    "jest": "^27.2.4",
+    "prettier": "^3.4.1"
   },
-  "main": "main.js",
-  "repository": "https://github.com/ascoor/avocat-frontend",
-  "author": "Askar <mr.askar1984@gmail.com>",
   "peerDependencies": {
-    "@babel/core": "^7.22.17"
+    "@babel/core": "^7.16.7"
   }
 }

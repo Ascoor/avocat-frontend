@@ -23,8 +23,19 @@ module.exports = {
     'react/jsx-closing-bracket-location': ['warn', 'line-aligned'],
     'jsx-quotes': ['warn', 'prefer-double'],
     'no-unused-vars': 'warn',
-    'react/prop-types': 'off'
-    // يمكنك إضافة المزيد من القواعد هنا حسب الحاجة
+    'react/prop-types': 'off',
+    // Add more rules as needed
+
+    // Additional Rules
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'no-alert': 'warn',
+    'no-shadow': 'warn',
+    'no-underscore-dangle': 'warn',
+    'comma-dangle': ['warn', 'always-multiline'],
+    'eol-last': ['warn', 'always'],
+    'no-multiple-empty-lines': ['warn', { max: 2, maxBOF: 1, maxEOF: 1 }],
+    'quotes': ['warn', 'single', { avoidEscape: true }],
+    'indent': ['warn', 2, { SwitchCase: 1 }],
   },
   
   settings: {
