@@ -3531,9 +3531,9 @@ prelude-ls@^1.2.1:
   resolved "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
-prettier@^3.4.1:
+prettier@4.0.0-alpha.3:
   version "4.0.0-alpha.3"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-4.0.0-alpha.3.tgz#56d00fd8fa3a5e91be11a190b192a13608cab03b"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-4.0.0-alpha.3.tgz#56d00fd8fa3a5e91be11a190b192a13608cab03b"
   integrity sha512-RsN0kg8rG+NJYl9NHZrWfQS6zmShwOLHqu3O5FDDZzaihAcYq0uRHI7QqX+EBWNBpGvmwQCs1rpNwWFXurvQHQ==
   dependencies:
     "@prettier/cli" "^0.1.5"
