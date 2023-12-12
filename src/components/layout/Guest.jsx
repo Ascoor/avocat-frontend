@@ -82,12 +82,13 @@ const Guest = () => {
           <>
             {showLogoAndButtons && (
               <animated.div style={logoAnimation} className="logo-container">
-                <img
-                  src={LogoImage}
-                  alt="Pattern Logo"
-                  className="logo img-fluid"
-                  style={{ padding: '10px', width: '300px', height: 'auto' }}
-                />
+            <img
+              src={LogoImage}
+              alt="Pattern Logo"
+              className="logo img-fluid"
+              style={{ paddingTop: '25px', paddingLeft: '50px', width: '150px', height: 'auto' }}
+            />
+
               </animated.div>
             )}
             {showLogoAndButtons && (
@@ -99,12 +100,13 @@ const Guest = () => {
                   <Button
                     variant="success"
                     onClick={handleShowLoginForm}
-                    style={{ marginRight: '10px' }}
+                    style={{ marginTop: '10px' }}
                   >
                     <RiLoginCircleLine className="mr-1" />
                     دخول
                   </Button>
-                  <Button variant="danger" onClick={handleShowRegisterForm}>
+                  <Button variant="danger" onClick={handleShowRegisterForm} 
+                    style={{ marginTop: '10px' }}>
                     <RiUserAddLine className="mr-1" />
                     تسجيل اشتراك
                   </Button>
@@ -120,7 +122,7 @@ const Guest = () => {
                     {/* Glass effect container */}
                     <div
                       className="glass-container"
-                      style={{ position: 'relative', zIndex: 2 }}
+                      style={{ position: 'relative', zIndex: 3 }}
                     >
                       <Card className="form-container">
                         {showLoginForm && (
