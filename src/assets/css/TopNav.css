@@ -52,7 +52,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1.5rem;
-  background: linear-gradient(235deg, #092342, #014155, #10325a);
+
+  background: radial-gradient(circle at center, #0b2440 0%, #1a466b 50%, #0a2b41 100%);
   color: #ffffff; /* Text color */
   box-shadow: 0 4px 60px rgba(134, 99, 99, 0.1);
   transition: transform 0.3s ease-in-out;

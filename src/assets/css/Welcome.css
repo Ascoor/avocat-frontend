@@ -1,24 +1,28 @@
 /* CSS for the glass container */
 .glass-container {
-  background: rgba(0, 0, 0, 0.6); /* Darker background with some transparency */
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: -webkit-box;
+  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1;
 }
+
 .form-container {
-  background: linear-gradient(135deg, #041454, #1e2a66, #0f2168);
+  background: linear-gradient(135deg, #051615, #064b5c, #012741);
   color: #fff;
   border-radius: 10px;
-  padding: 10px;
+  padding: 20px;
   text-align: right;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px); /* Key for glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+  width: auto; /* Adjust width as needed */
+  max-width: 400px; /* Maximum width */
 }
 .custom-loader {
   display: flex;
@@ -26,6 +30,7 @@
   align-items: center;
   height: 100vh;
 }
+
 
 .loader {
   border: 8px solid rgba(79, 169, 77, 0.2);
@@ -46,8 +51,8 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
-  background: rgba(57, 53, 179, 0.931); /* Darker background with some transparency */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2), 0 0 10px #fffb0b; /* Neon-like light shadow effect */
+  background: rgba(0, 38, 39, 0.931); /* Darker background with some transparency */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2), 0 0 10px #e4af00; /* Neon-like light shadow effect */
   padding: 10px;
 }
 
@@ -130,19 +135,14 @@
   font-size: 16px;
 }
 
-.footer-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(rgb(11, 22, 26), rgb(14, 48, 66), rgb(10, 18, 24)); /* Gradient background */
+.footer-container {    background: linear-gradient(35deg, rgb(13 52 62), rgb(129 5 17), rgb(0 87 120));
   direction: rtl;
-  color: #fff;
-  padding: 20px 0; /* Increase padding for better spacing */
+  color: rgb(255, 255, 255);
   text-align: center;
+  padding: 10px 0px;
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
   width: 100%;
-  border-top: 1px solid #fff; /* Add a top border for separation */
 }
 
 .footer-container p {

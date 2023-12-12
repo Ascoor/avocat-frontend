@@ -86,7 +86,7 @@ const Guest = () => {
               src={LogoImage}
               alt="Pattern Logo"
               className="logo img-fluid"
-              style={{ paddingTop: '25px', paddingLeft: '50px', width: '150px', height: 'auto' }}
+              style={{marginLeft: '80px',paddingRight: '15px', paddingLeft: '30px',  width: '250px',height: 'auto' }}
             />
 
               </animated.div>
@@ -149,7 +149,7 @@ const Guest = () => {
 
       <footer
         style={{
-          background: 'linear-gradient(35deg,#041454, #1e2a66, #041454)',
+          background: 'linear-gradient(35deg, rgb(7 51 56),#972c2c, rgb(8 36 60))',
           direction: 'rtl',
           color: '#fff',
           textAlign: 'center',

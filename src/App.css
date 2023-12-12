@@ -12,8 +12,8 @@
     --breakpoint-sm: 768px;
     --breakpoint-md: 992px;
     --breakpoint-lg: 1200px;
-    --primary-color: #0041e6;
-    --primary-hover: #26428b;
+    --primary-color: #020818;
+    --primary-hover: #034c52;
     --secondary-color: #e41e1e;
     --accent-color: #df9114;
     --accent-hover: #9c6000;
@@ -718,7 +718,7 @@
       position: relative; /* Create a stacking context */
       width: 100vw;
       height: 100vh;
-    background: linear-gradient(135deg, #041454, #1e2a66, #3d5acc);
+      background: radial-gradient(circle at center, #0b2440 0%, #1a466b 50%, #0a2b41 100%);
   
       display: flex;
       justify-content: center;
