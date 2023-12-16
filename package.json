@@ -21,6 +21,7 @@
     "dev": "vite",
     "build:dev": "vite build --mode development",
     "build:prod": "vite build --mode production",
+    "purgecss": "purgecss --css src/**/*.css --content src/**/*.{html,js,jsx} --output src/purified/",
     "start:dev": "vite --mode development",
     "start:prod": "node server.js",
     "test": "jest",
@@ -60,7 +61,8 @@
     "@testing-library/react": "^14.0.0",
     "eslint": "^8.4.1",
     "jest": "^27.2.4",
-    "prettier": "^3.1.1"
+    "prettier": "^3.1.1",
+    "purgecss": "^5.0.0"
   },
   "peerDependencies": {
     "@babel/core": "^7.16.7"

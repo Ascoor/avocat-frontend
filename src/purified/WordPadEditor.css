@@ -1,0 +1,25 @@
+.EditorWord {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.TopTools,
+.SideTools,
+.EditorTools {
+  margin-bottom: 1rem;
+}
+
+/* Custom styles for bold, italic, etc. */
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+}

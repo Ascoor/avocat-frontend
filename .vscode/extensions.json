@@ -9,6 +9,7 @@
     "naumovs.color-highlight", // لإبراز الألوان في الكود
     // "jpoissonnier.vscode-styled-components", // لدعم styled-components
     // "bradlc.vscode-tailwindcss", // لدعم Tailwind CSS إذا كنت تستخدمه
-    "coenraads.bracket-pair-colorizer" // لتلوين الأقواس المتطابقة
+    "coenraads.bracket-pair-colorizer",
+    "codeium.codeium" // لتلوين الأقواس المتطابقة
   ]
 }

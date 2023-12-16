@@ -16,10 +16,10 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
 
   const userDropdownAnimation = useSpring({
     opacity: 1,
-    transform: 'scale(1)',
-    from: { opacity: 0, transform: 'scale(0.8)' },
+    from: { opacity: 0 },
+    zIndex: 1000
   });
-
+  
   const fetchNotifications = async () => {
     try {
       const response = await axios.get(
@@ -78,7 +78,6 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
           </NavDropdown.Item>
         </NavDropdown>
 
-        <div className="notification-icon beautiful-notification"></div>
       </div>
     </animated.nav>
   );

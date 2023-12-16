@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TopNav from './Tools/TopNav';
 import Sidebar from './Tools/SideBar';
 import useAuth from '../layout/AuthTool/AuthUser';
@@ -6,6 +6,7 @@ import '../../App.css';
 import MainContent from './Tools/MainContent';
 import '../../assets/css/Auth.css';
 import { useSpring, animated } from '@react-spring/web';
+
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { logout, user, token } = useAuth();
@@ -24,17 +25,28 @@ function Auth() {
     }
   };
 
-  // Add a click event listener to the sidebar to close it
-  const handleSidebarClick = (e) => {
-    // Prevent the click event from propagating to the parent elements
-    e.stopPropagation();
-    setSidebarOpen(false);
-  };
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      // Show sidebar if mouse is within 50px of the right edge of the window
+      if (window.innerWidth - e.clientX < 50) {
+        setSidebarOpen(true);
+      } else {
+        setSidebarOpen(false);
+      }
+    };
 
-  // Use the useSpring hook to control the animation duration
+    // Add mouse move event listener
+    window.addEventListener('mousemove', handleMouseMove);
+
+    // Remove event listener on cleanup
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
   const sidebarAnimation = useSpring({
     right: sidebarOpen ? 0 : -450,
-    config: { duration: sidebarOpen ? 500 : 300 }, // Adjust duration as needed
+    config: { duration: 300 },
   });
 
   return (
@@ -45,14 +57,14 @@ function Auth() {
         user={user}
         logoutUser={logoutUser}
       />
+      <MainContent sidebarOpen={sidebarOpen} />
       <animated.aside
         className={`sidebar ${sidebarOpen ? 'open' : ''}`}
         style={sidebarAnimation}
-        onClick={handleSidebarClick}
+        onClick={handleCloseSidebar}
       >
         <Sidebar sidebarOpen={sidebarOpen} onClose={handleCloseSidebar} />
       </animated.aside>
-      <MainContent sidebarOpen={sidebarOpen} />
     </>
   );
 }

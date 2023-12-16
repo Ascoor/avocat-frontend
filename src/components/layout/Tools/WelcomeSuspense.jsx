@@ -5,8 +5,8 @@ const WelcomeSuspense = () => {
     <div className="custom-loader" style={{ marginLeft: '60px' }}>
       <div className="loader">
         <TailSpin
-          height={40} // تعديل الحجم حسب الحاجة
-          width={40} // تعديل الحجم حسب الحاجة
+          height={75} // تعديل الحجم حسب الحاجة
+          width={75} // تعديل الحجم حسب الحاجة
           color="#4fa94d"
           ariaLabel="tail-spin-loading"
           radius="1"

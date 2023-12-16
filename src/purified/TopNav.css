@@ -86,31 +86,3 @@
     margin-right: 0;  /* Reset margin for small screens */
   }
 }
-/* CSS للشعار والنص داخل Navbar.Brand */
-
-.navbar-brand {
-  display: flex;
-  align-items: center;
-}
-
-.navbar-brand img {
-  height: auto; /* يضمن الحفاظ على نسب الأبعاد */
-  width: 100px; /* العرض الافتراضي */
-}
-
-@media (max-width: 768px) {
-  .navbar-brand img {
-    width: 50px; /* عرض أصغر للشاشات الأصغر */
-  }
-}
-
-/* إذا كان هناك نص بجانب الشعار */
-.navbar-brand .brand-text {
-  font-size: 16px; /* الحجم الافتراضي للنص */
-}
-
-@media (max-width: 768px) {
-  .navbar-brand .brand-text {
-    font-size: 12px; /* حجم نص أصغر للشاشات الأصغر */
-  }
-}

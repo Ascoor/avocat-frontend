@@ -21,12 +21,11 @@ import ProcedureSearch from '../../reports/procedure_search.component';
 import ProfileUser from '../../layout/AuthTool/ProfileUser';
 // import Archives from '../../Archives/ArchiveDashboard';
 // import WordPadEditor from '../../Archives/WordPadEditor/WordPadEditor';
-import LoadingFallback from './LoadingFallback';
 import { Container } from 'react-bootstrap';
 const AuthRoutes = () => {
   return (
     <Container>
-      <Suspense fallback={<LoadingFallback />}>
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/procedures" element={<ProcedureSearch />} />
@@ -48,7 +47,7 @@ const AuthRoutes = () => {
           {/* <Route path="/archives" element={<Archives />} /> */}
           {/* <Route path="/archives/wordpadeditor" element={<WordPadEditor />} /> */}
         </Routes>
-      </Suspense>
+
     </Container>
   );
 };
