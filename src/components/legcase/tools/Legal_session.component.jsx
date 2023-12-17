@@ -8,13 +8,10 @@ import API_CONFIG from '../../../config';
 import arEG from 'date-fns/locale/ar-EG';
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 const LegalSession = ({ legCaseId }) => {
-  LegalSession.propTypes = {
-    legCaseId: PropTypes.string.isRequired,
-  };
   const { getUser } = useAuth();
   const user = getUser();
 
-  const userId = user.id;
+  // State variables
   const [alert, setAlert] = useState(null);
   const [selectStatus, setSelectStatus] = useState('');
   const [showAlert, setShowAlert] = useState(false);
@@ -26,26 +23,22 @@ const LegalSession = ({ legCaseId }) => {
   const [rollNumber, setRollNumber] = useState('');
   const [selectedLawyer, setSelectedLawyer] = useState('');
   const [orders, setOrders] = useState('');
-  const [showAddLegalSessionModal, setShowAddLegalSessionModal] =
-    useState(false);
+  const [showAddLegalSessionModal, setShowAddLegalSessionModal] = useState(false);
   const [lawyers, setLawyers] = useState([]);
   const [courts, setCourts] = useState([]);
   const [result, setResult] = useState('');
   const [selectedCourt, setSelectedCourt] = useState('');
-
   const [modalMode, setModalMode] = useState('');
-  registerLocale('ar_eg', arEG);
-  setDefaultLocale('ar_eg');
+  const userId = user.id;
+
+  // Fetch data function
   const fetchData = useCallback(async () => {
     try {
-      const [sessionsResponse, lawyersResponse, courtsResponse] =
-        await Promise.all([
-          axios.get(
-            `${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`,
-          ),
-          axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
-          axios.get(`${API_CONFIG.baseURL}/api/courts`),
-        ]);
+      const [sessionsResponse, lawyersResponse, courtsResponse] = await Promise.all([
+        axios.get(`${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`),
+        axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
+        axios.get(`${API_CONFIG.baseURL}/api/courts`),
+      ]);
       setLegalSessions(sessionsResponse.data);
       setLawyers(lawyersResponse.data);
       setCourts(courtsResponse.data);
@@ -54,27 +47,11 @@ const LegalSession = ({ legCaseId }) => {
     }
   }, [legCaseId]);
 
+  // UseEffect for initial data fetch
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [sessionsResponse, lawyersResponse, courtsResponse] =
-          await Promise.all([
-            axios.get(
-              `${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`,
-            ),
-            axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
-            axios.get(`${API_CONFIG.baseURL}/api/courts`),
-          ]);
-        setLegalSessions(sessionsResponse.data);
-        setLawyers(lawyersResponse.data);
-        setCourts(courtsResponse.data);
-      } catch (error) {
-        console.log('Error fetching data:', error);
-      }
-    };
-
     fetchData();
-  }, [legCaseId]);
+  }, [fetchData]);
+
 
   const handleEditLegalSession = (legalSession) => {
     setModalMode('edit');
