@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Card, Form, Row, Col, Alert, Button, Modal } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
+import moment from 'moment';
 import {
   FaBriefcase,
   FaEnvelope,
@@ -16,28 +17,17 @@ import 'moment/locale/ar';
 import API_CONFIG from '../../config';
 
 function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
-  // Initialize state using client prop
-  const [slug, setSlug] = useState(client ? client.slug : '');
-  const [name, setName] = useState(client ? client.name : '');
-  const [gender, setGender] = useState(client ? client.gender : '');
-  const [identityNumber, setIdentityNumber] = useState(
-    client ? client.identityNumber : '',
-  );
-  const [dateOfBirth, setDateOfBirth] = useState(
-    client ? client.dateOfBirth : null,
-  );
-  const [address, setAddress] = useState(client ? client.address : '');
-  const [religion, setReligion] = useState(client ? client.religion : '');
-  const [work, setWork] = useState(client ? client.work : '');
-  const [email, setEmail] = useState(client ? client.email : '');
-  const [phoneNumber, setPhoneNumber] = useState(
-    client ? client.phoneNumber : '',
-  );
-  const [emergencyNumber, setEmergencyNumber] = useState(
-    client ? client.emergencyNumber : '',
-  );
-
-  // ... same for other fields ...
+  const [slug, setSlug] = useState('');
+  const [name, setName] = useState('');
+  const [gender, setGender] = useState('');
+  const [identityNumber, setIdentityNumber] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState(null);
+  const [address, setAddress] = useState('');
+  const [religion, setReligion] = useState('');
+  const [work, setWork] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [emergencyNumber, setEmergencyNumber] = useState('');
 
   const datepickerRef = useRef(null);
 
@@ -46,17 +36,15 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
   const isValidDate = (date) => {
     return date instanceof Date && !isNaN(date);
   };
+  
   useEffect(() => {
-    // Check if the client has an ID or a specific property that indicates it's a real client
     if (client && client.slug) {
-      // Adjusted the condition
-      // Populate state variables with client data for editing
       setSlug(client.slug);
       setName(client.name);
       setAddress(client.address);
       setGender(client.gender);
       setIdentityNumber(client.identityNumber);
-      setDateOfBirth(new Date(client.dateOfBirth)); // If the dateOfBirth is a string, convert to Date object
+      setDateOfBirth(client.dateOfBirth ? moment(client.dateOfBirth).toDate() : null);
       setReligion(client.religion);
       setWork(client.work);
       setEmail(client.email);
@@ -64,54 +52,52 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
       setEmergencyNumber(client.emergencyNumber);
       // ... set other state variables ...
     } else {
-      // Reset state variables for adding
       setSlug('');
       setName('');
       setAddress('');
       setGender('');
       setIdentityNumber('');
-      setDateOfBirth(null); // Reset to null if you're using a date picker
+      setDateOfBirth(null);
       setReligion('');
       setWork('');
       setEmail('');
       setPhoneNumber('');
       setEmergencyNumber('');
-      // ... reset other state variables ...
-    }
-  }, [client]);
+  }
+}, [client]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const clientData = {
-      slug,
-      name,
-      dateOfBirth,
-      identityNumber,
-      address,
-      religion,
-      gender,
-      email,
-      phoneNumber,
-      work,
-      emergencyNumber,
-      // ... other fields ...
-    };
-    try {
-      if (client.id) {
-        // If a client has an ID, we're in edit mode.
-        await axios.put(
-          `${API_CONFIG.baseURL}/api/clients/${client.id}`,
-          clientData,
-        );
-      } else {
-        await axios.post(`${API_CONFIG.baseURL}/api/clients`, clientData);
-      }
-      onSaved(); // Notify parent that the data was saved successfully.
-      onClose(); // Close the modal.
-    } catch (error) {
-      console.error(error);
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const clientData = {
+    slug,
+    name,
+    dateOfBirth: dateOfBirth ? moment(dateOfBirth).format('YYYY-MM-DD') : null,
+    identityNumber,
+    address,
+    religion,
+    gender,
+    email,
+    phoneNumber,
+    work,
+    emergencyNumber,
+    // ... other fields ...
   };
+  try {
+    if (client.id) {
+      // If a client has an ID, we're in edit mode.
+      await axios.put(
+        `${API_CONFIG.baseURL}/api/clients/${client.id}`,
+        clientData,
+      );
+    } else {
+      await axios.post(`${API_CONFIG.baseURL}/api/clients`, clientData);
+    }
+    onSaved(); // Notify parent that the data was saved successfully.
+    onClose(); // Close the modal.
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   return (
     <Modal show={isOpen} onHide={onClose} centered dir="rtl">
@@ -220,27 +206,28 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
                 </Form.Group>
               </Col>
 
-              <Col>
-                <Form.Group controlId="dateOfBirth">
-                  <Form.Label>
-                    <FaCalendarAlt /> تاريخ الميلاد
-                  </Form.Label>
-                  <DatePicker
-                    selected={dateOfBirth}
-                    onChange={(date) => setDateOfBirth(date)}
-                    locale="ar"
-                    showYearDropdown
-                    scrollableYearDropdown
-                    yearDropdownItemNumber={100}
-                    maxDate={new Date()}
-                    dateFormat="yyyy/MM/dd" // Format the displayed date
-                    className="form-control"
-                    placeholderText="اختر تاريخ الميلاد"
-                    isInvalid={!isValidDate(dateOfBirth)}
-                    ref={datepickerRef}
-                  />
-                </Form.Group>
-              </Col>
+          
+<Col>
+  <Form.Group controlId="dateOfBirth">
+    <Form.Label>
+      <FaCalendarAlt /> تاريخ الميلاد
+    </Form.Label>
+    <DatePicker
+      selected={dateOfBirth}
+      onChange={(date) => setDateOfBirth(date)}
+      locale="ar"
+      showYearDropdown
+      scrollableYearDropdown
+      yearDropdownItemNumber={100}
+      maxDate={new Date()}
+      dateFormat="yyyy/MM/dd"
+      className="form-control"
+      placeholderText="اختر تاريخ الميلاد"
+      isInvalid={!isValidDate(dateOfBirth)}
+      ref={datepickerRef}
+    />
+  </Form.Group>
+</Col>
             </Row>
             <Row className="p-2">
               <Col xs={12} md={6} lg={6}>

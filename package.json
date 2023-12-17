@@ -11,7 +11,7 @@
     "fullcalendar",
     "eslint"
   ],
-  "main": "main.js",
+  "main": "index.js",
   "repository": "https://github.com/ascoor/avocat-frontend",
   "author": "Askar <mr.askar1984@gmail.com>",
   "scripts": {

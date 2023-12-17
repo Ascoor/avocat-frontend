@@ -24,29 +24,42 @@ function Auth() {
       logout();
     }
   };
+  const [timerId, setTimerId] = useState(null);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      // Show sidebar if mouse is within 50px of the right edge of the window
+      // إظهار الشريط الجانبي إذا كان الماوس على بعد 50px من الحافة اليمنى للنافذة
       if (window.innerWidth - e.clientX < 50) {
+        if (timerId) {
+          clearTimeout(timerId);
+          setTimerId(null);
+        }
         setSidebarOpen(true);
       } else {
-        setSidebarOpen(false);
+        if (!timerId) {
+          const id = setTimeout(() => {
+            setSidebarOpen(false);
+          }, 2000); // تأخير 2 ثانية قبل الإغلاق
+          setTimerId(id);
+        }
       }
     };
 
-    // Add mouse move event listener
+    // إضافة مستمع الحدث لحركة الماوس
     window.addEventListener('mousemove', handleMouseMove);
 
-    // Remove event listener on cleanup
+    // إزالة مستمع الحدث عند التنظيف
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      if (timerId) {
+        clearTimeout(timerId);
+      }
     };
-  }, []);
+  }, [timerId]);
 
   const sidebarAnimation = useSpring({
     right: sidebarOpen ? 0 : -450,
-    config: { duration: 300 },
+    config: { duration: 500 }, // زيادة مدة الحركة لجعلها أبطأ
   });
 
   return (
