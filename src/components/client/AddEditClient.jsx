@@ -1,299 +1,277 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import { Card, Form, Row, Col, Alert, Button, Modal } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Modal, Alert, Form, Row, Col, Button } from 'react-bootstrap';
+import {
+  FaOrcid, FaUserEdit, FaIdCard, FaMapMarkerAlt, FaCalendarAlt,
+  FaEnvelope, FaPhone, FaBriefcase, FaPray,
+} from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import {
-  FaBriefcase,
-  FaEnvelope,
-  FaPhone,
-  FaIdCard,
-  FaMapMarkerAlt,
-  FaCalendarAlt,
-  FaUserEdit,
-  FaOrcid,
-} from 'react-icons/fa';
-import 'moment/locale/ar';
-import API_CONFIG from '../../config';
+import axios from 'axios';
+import '../../assets/css/Models.css';
 
 function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
-  const [slug, setSlug] = useState('');
-  const [name, setName] = useState('');
-  const [gender, setGender] = useState('');
-  const [identityNumber, setIdentityNumber] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState(null);
-  const [address, setAddress] = useState('');
-  const [religion, setReligion] = useState('');
-  const [work, setWork] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [emergencyNumber, setEmergencyNumber] = useState('');
+  const [formData, setFormData] = useState({
+    slug: client?.slug ?? '',
+    name: client?.name ?? '',
+    gender: client?.gender ?? '',
+    identity_number: client?.identity_number ?? '',
+    date_of_birth: client?.date_of_birth ? moment(client.date_of_birth).toDate() : new Date(),
+    address: client?.address ?? '',
+    religion: client?.religion ?? '',
+    work: client?.work ?? '',
+    email: client?.email ?? '',
+    phone_number: client?.phone_number ?? '',
+    emergency_number: client?.emergency_number ?? '',
+  });
 
-  const datepickerRef = useRef(null);
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      slug: client?.slug ?? '',
+      name: client?.name ?? '',
+      gender: client?.gender ?? '',
+      identity_number: client?.identity_number ?? '',
+      date_of_birth: client?.date_of_birth ? moment(client.date_of_birth).toDate() : new Date(),
+      address: client?.address ?? '',
+      religion: client?.religion ?? '',
+      work: client?.work ?? '',
+      email: client?.email ?? '',
+      phone_number: client?.phone_number ?? '',
+      emergency_number: client?.emergency_number ?? '',
+    })
+  }, [client]);
+
 
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const isValidDate = (date) => {
-    return date instanceof Date && !isNaN(date);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  
-  useEffect(() => {
-    if (client && client.slug) {
-      setSlug(client.slug);
-      setName(client.name);
-      setAddress(client.address);
-      setGender(client.gender);
-      setIdentityNumber(client.identityNumber);
-      setDateOfBirth(client.dateOfBirth ? moment(client.dateOfBirth).toDate() : null);
-      setReligion(client.religion);
-      setWork(client.work);
-      setEmail(client.email);
-      setPhoneNumber(client.phoneNumber);
-      setEmergencyNumber(client.emergencyNumber);
-      // ... set other state variables ...
-    } else {
-      setSlug('');
-      setName('');
-      setAddress('');
-      setGender('');
-      setIdentityNumber('');
-      setDateOfBirth(null);
-      setReligion('');
-      setWork('');
-      setEmail('');
-      setPhoneNumber('');
-      setEmergencyNumber('');
-  }
-}, [client]);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const clientData = {
-    slug,
-    name,
-    dateOfBirth: dateOfBirth ? moment(dateOfBirth).format('YYYY-MM-DD') : null,
-    identityNumber,
-    address,
-    religion,
-    gender,
-    email,
-    phoneNumber,
-    work,
-    emergencyNumber,
-    // ... other fields ...
+  const handleDateChange = (date) => {
+    setFormData({ ...formData, date_of_birth: date });
   };
-  try {
-    if (client.id) {
-      // If a client has an ID, we're in edit mode.
-      await axios.put(
-        `${API_CONFIG.baseURL}/api/clients/${client.id}`,
-        clientData,
-      );
-    } else {
-      await axios.post(`${API_CONFIG.baseURL}/api/clients`, clientData);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const clientData = {
+        ...formData,
+        date_of_birth: formData.date_of_birth ? moment(formData.date_of_birth).format('YYYY-MM-DD') : null,
+      };
+
+      if (client.id) {
+        await axios.put(`${API_CONFIG.baseURL}/api/clients/${client.id}`, clientData);
+      } else {
+        await axios.post(`${API_CONFIG.baseURL}/api/clients`, clientData);
+      }
+      setIsSuccess(true);
+      onSaved();
+      onClose();
+    } catch (error) {
+      console.error(error);
+      // Handle the error here, e.g., display an error message to the user.
     }
-    onSaved(); // Notify parent that the data was saved successfully.
-    onClose(); // Close the modal.
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
 
   return (
     <Modal show={isOpen} onHide={onClose} centered dir="rtl">
       {isSuccess && (
-        <Alert
-          variant="success"
-          onClose={() => setIsSuccess(false)}
-          dismissible
-        ></Alert>
+        <Alert variant="success" onClose={() => setIsSuccess(false)} dismissible>
+          {/* Add a success message here */}
+        </Alert>
       )}
 
-      <Modal.Header closeButton>
-        {client ? 'تعديل بيانات العميل' : 'إضافة عميل جديد'}
+      <Modal.Header closeButton><Modal.Title>
+  {client?.id ? (
+    <><FaIdCard /> تعديل بيانات العميل</>
+  ) : (
+    <><FaIdCard /> إضافة عميل</>
+  )}
+</Modal.Title>
+
       </Modal.Header>
       <Modal.Body>
-        <Card className="p-2">
-          <Form onSubmit={handleSubmit}>
-            <Row className="p-2">
-              <Col xs={12} md={6}>
-                <Form.Group controlId="slug">
-                  <Form.Label>
-                    <FaOrcid /> رقم العميل بالمكتب
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="أدخل الرمز"
-                    value={slug}
-                    onChange={(e) => setSlug(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} md={6}>
-                <Form.Group controlId="name">
-                  <Form.Label>
-                    <FaUserEdit /> الاسم
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="أدخل الاسم"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputSlug">
+              <FaOrcid /> رقم العميل بالمكتب
+            </Form.Label>
+            <Col xs={12} md={6}>
+              <Form.Control
+                type="text"
+                placeholder="أدخل الرمز"
+                value={formData.slug}
+                onChange={handleChange}
+                name="slug"
+                id="inputSlug"
+              />
+            </Col>
+          </Form.Group>
 
-              <Col xs={12} md={6}>
-                <Form.Group controlId="identityNumber">
-                  <Form.Label>
-                    <FaIdCard /> رقم الهوية
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="أدخل رقم الهوية"
-                    value={identityNumber}
-                    onChange={(e) => setIdentityNumber(e.target.value)}
-                    maxLength={14}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="p-2">
-              <Col xs={12} md={6}>
-                <Form.Group controlId="address">
-                  <Form.Label>
-                    <FaMapMarkerAlt /> العنوان
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="أدخل العنوان"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col xs={12} md={6} lg={3}>
-                <Form.Group controlId="religion">
-                  <Form.Label>الديانة</Form.Label>
-                  <Form.Control
-                    as="select"
-                    placeholder="أدخل الديانة"
-                    value={religion}
-                    onChange={(e) => setReligion(e.target.value)}
-                  >
-                    <option value="">اختر الديانة</option>
-                    <option value="مسلم">مسلم</option>
-                    <option value="مسيحي">مسيحي</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="p-2">
-              <Col>
-                <Form.Group controlId="gender">
-                  <Form.Label>الجنس</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                  >
-                    <option value="ذكر">ذكر</option>
-                    <option value="أنثى">أنثى</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-
+          {/* Repeat similar structure for other fields */}
+                  <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputName">
+              <FaUserEdit /> الاسم
+            </Form.Label>
+            <Col xs={12} md={6}>
+              <Form.Control
+                type="text"
+                placeholder="أدخل الاسم"
+                value={formData.name}
+                onChange={handleChange}
+                name="name"
+                id="inputName"
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputGender">
+              <FaIdCard /> الجنس
+            </Form.Label>
+            <Col xs={12} md={6}>
+              <Form.Control
+                as="select"
+                value={formData.gender}
+                onChange={handleChange}
+                name="gender"
+                id="inputGender"  
+              >
+                <option value="">اختر الجنس</option>
+                <option value="ذكر">ذكر</option>
+                <option value="أنثى">أنثى</option>
+              </Form.Control>
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputIdentityNumber">  
+              <FaIdCard /> رقم الهوية
+            </Form.Label>
+            <Col xs={12} md={6}>
+              <Form.Control
+                type="text"
+                placeholder="أدخل رقم الهوية"
+                value={formData.identity_number}
+                onChange={handleChange}
+                name="identity_number"
+                id="inputIdentityNumber"
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputDateOfBirth">
+              <FaCalendarAlt /> تاريخ الميلاد
+            </Form.Label>
+            <Col xs={12} md={6}>
+              <DatePicker
+                selected={formData.date_of_birth ? new Date(formData.date_of_birth) : null}
+                onChange={handleDateChange}
+                name="date_of_birth"
+                id="inputDateOfBirth"
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputAddress">
+              <FaMapMarkerAlt /> العنوان
+            </Form.Label> 
+            <Col xs={12} md={6}>
+              <Form.Control
+                type="text"
+                placeholder="أدخل العنوان"
+                value={formData.address}
+                onChange={handleChange}
+                name="address"
+                id="inputAddress"
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputPhoneNumber">
+              <FaPhone /> رقم الهاتف
+            </Form.Label>
+            <Col xs={12} md={6}>
+              <Form.Control
+                type="text"
+                placeholder="أدخل رقم الهاتف" 
+                value={formData.phone_number}
+                onChange={handleChange}
+                name="phone_number"
+                id="inputPhoneNumber"
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputEmail">
+              <FaEnvelope /> البريد الالكتروني
+            </Form.Label> 
+            <Col xs={12} md={6}>
+              <Form.Control
+                type="email"
+                placeholder="أدخل البريد الالكتروني"
+                value={formData.email}
+                onChange={handleChange}
+                name="email"
+                id="inputEmail"
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputReligion">
+              <FaPray /> الديانة
+            </Form.Label>
+            <Col xs={12} md={6}>
+              <Form.Control
+                as="select"
+                value={formData.religion}
+                onChange={handleChange}
+                name="religion"
+                id="inputReligion"
+              >
+                <option value="">اختر الديانة</option>
+                <option value="مسلم">مسلم</option>
+                <option value="مسيحي">مسيحي</option>
+              </Form.Control>
+            </Col>  
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputWork">
+              <FaBriefcase /> الوظيفة
+            </Form.Label>
+            <Col xs={12} md={6}>
+              <Form.Control
+                type="text"
+                placeholder="أدخل الوظيفة"
+                value={formData.work}
+                onChange={handleChange}
+                name="work"
+                id="inputWork"
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column xs={12} md={6} htmlFor="inputEmergencyNumber">
+              <FaPhone /> رقم الطوارئ
+            </Form.Label>
+            <Col xs={12} md={6}>
+              <Form.Control
+                type="text"
+                placeholder="أدخل رقم الطوارئ"
+                value={formData.emergency_number}
+                onChange={handleChange}
+                name="emergency_number"
+                id="inputEmergencyNumber"
+              />
+            </Col>
+          </Form.Group>
           
-<Col>
-  <Form.Group controlId="dateOfBirth">
-    <Form.Label>
-      <FaCalendarAlt /> تاريخ الميلاد
-    </Form.Label>
-    <DatePicker
-      selected={dateOfBirth}
-      onChange={(date) => setDateOfBirth(date)}
-      locale="ar"
-      showYearDropdown
-      scrollableYearDropdown
-      yearDropdownItemNumber={100}
-      maxDate={new Date()}
-      dateFormat="yyyy/MM/dd"
-      className="form-control"
-      placeholderText="اختر تاريخ الميلاد"
-      isInvalid={!isValidDate(dateOfBirth)}
-      ref={datepickerRef}
-    />
-  </Form.Group>
-</Col>
-            </Row>
-            <Row className="p-2">
-              <Col xs={12} md={6} lg={6}>
-                <Form.Group controlId="email">
-                  <Form.Label>
-                    <FaEnvelope /> البريد الإلكتروني
-                  </Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="أدخل البريد الإلكتروني"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="phoneNumber">
-                  <Form.Label>
-                    <FaPhone /> رقم الهاتف
-                  </Form.Label>
-                  <Form.Control
-                    type="tel"
-                    placeholder="أدخل رقم الهاتف"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="p-2">
-              <Col xs={12} md={6} lg={6}>
-                <Form.Group controlId="work">
-                  <Form.Label>
-                    <FaBriefcase /> العمل
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="أدخل العمل"
-                    value={work}
-                    onChange={(e) => setWork(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col xs={12} md={6} lg={6}>
-                <Form.Group controlId="emergencyNumber">
-                  <Form.Label>
-                    <FaPhone /> رقم الطوارئ
-                  </Form.Label>
-                  <Form.Control
-                    type="tel"
-                    placeholder="أدخل رقم الطوارئ"
-                    value={emergencyNumber}
-                    onChange={(e) => setEmergencyNumber(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Card.Footer>
-              <Button variant="primary" type="submit">
-                {client ? 'تحديث' : 'إضافة'}
-                حفظ
-              </Button>
-            </Card.Footer>
-          </Form>
-        </Card>
+          <Button variant="secondary" onClick={onClose}>
+            الغاء
+          </Button>
+          <Button variant="primary" type="submit">
+            حفظ
+          </Button>
+        </Form>
       </Modal.Body>
     </Modal>
   );

@@ -6,3 +6,6 @@
 .top-tools .active {
   background-color: #ccc;
 }
+.brand-logo {
+  margin-left: 20px; /* تعديل حسب الحاجة لضبط المسافة */
+}

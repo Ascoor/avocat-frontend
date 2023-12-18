@@ -91,6 +91,7 @@
 .navbar-brand {
   display: flex;
   align-items: center;
+  padding: 1rem;
 }
 
 .navbar-brand img {
@@ -100,7 +101,7 @@
 
 @media (max-width: 768px) {
   .navbar-brand img {
-    width: 50px; /* عرض أصغر للشاشات الأصغر */
+    width: 70px; /* عرض أصغر للشاشات الأصغر */
   }
 }
 

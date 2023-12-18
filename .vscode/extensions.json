@@ -6,9 +6,6 @@
     "formulahendry.auto-rename-tag", // لإعادة تسمية العلامات تلقائياً
     "dsznajder.es7-react-js-snippets", // لتقديم شفرات جاهزة لـ React
     "mgmcdermott.vscode-language-babel", // لدعم لغة Babel
-    "naumovs.color-highlight", // لإبراز الألوان في الكود
-    // "jpoissonnier.vscode-styled-components", // لدعم styled-components
-    // "bradlc.vscode-tailwindcss", // لدعم Tailwind CSS إذا كنت تستخدمه
     "coenraads.bracket-pair-colorizer",
     "codeium.codeium" // لتلوين الأقواس المتطابقة
   ]

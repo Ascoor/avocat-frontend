@@ -37,7 +37,119 @@
 .service-procedure-modal button[type='submit']:hover {
   background-color: hsl(229, 77%, 55%); /* Darker pink on hover */
 }
+/* الألوان */
+:root {
+  --primary-color: #003366; /* اللون الأزرق الداكن */
+  --secondary-color: #0056b3; /* درجة أفتح من الأزرق الداكن */
+  --text-color: #ffffff; /* اللون الأبيض للنص */
+  --background-color: #f3f3f3; /* لون خلفية فاتح */
+  --alert-success-bg: #d4edda;
+  --alert-success-border: #c3e6cb;
+  --alert-success-text: #155724;
+}
 
-/* Centered form container */
+/* تصميم المودال */
+.modal-container {
+  background-color: var(--background-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 600px;
+  margin: 30px auto;
+}
 
-/* Centered form styles */
+.modal-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.modal-title svg {
+  margin-right: 10px;
+  color: var(--text-color);
+}
+
+/* تصميم النموذج داخل المودال */
+.modal-form {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 15px 0;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+}
+
+.form-control:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* تصميم الأزرار */
+.button-primary {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-primary:hover {
+  background-color: var(--secondary-color);
+}
+
+.button-secondary {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-secondary:hover {
+  background-color: var(--primary-color);
+}
+
+/* تصميم الرسائل التنبيهية */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-success {
+  color: var(--alert-success-text);
+  background-color: var(--alert-success-bg);
+  border-color: var(--alert-success-border);
+}
+
+/* تصميم زر غلق النموذج */
+.btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* تصميم زر غلق النموذج عند التحريك فوقه بالماوس */
+.btn-close:hover {
+  filter: invert(1) grayscale(100%) brightness(150%);
+}

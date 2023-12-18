@@ -38,20 +38,25 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
     fetchNotifications();
   }, [sidebarOpen, userId]);
 
-  return (
-    <animated.nav
-      style={userDropdownAnimation}
-      dir="rtl" // Set text direction to left-to-right (LTR)
-      className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}
-    >
-      <div className="d-flex align-items-center justify-content-start">
-        <button onClick={onToggleSidebar} className="navbar-toggler">
-          <FaBars />
-        </button>
+    
+
+return (
+  <animated.nav
+    style={userDropdownAnimation}
+    dir="rtl"
+    className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}
+  >
+    <div className="d-flex align-items-center justify-content-start">
+      <button onClick={onToggleSidebar} className="navbar-toggler">
+        <FaBars />
+      </button>
+      <div className="brand-logo"> {/* تغليف شعار العلامة التجارية في div */}
         <Navbar.Brand href="/">
           <img src={LogoImage} alt="Brand Logo" />
         </Navbar.Brand>
       </div>
+    </div>
+
 
       <div className="user-menu">
         <Notification

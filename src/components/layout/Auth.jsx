@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import TopNav from './Tools/TopNav';
 import Sidebar from './Tools/SideBar';
 import useAuth from '../layout/AuthTool/AuthUser';
@@ -9,7 +9,18 @@ import { useSpring, animated } from '@react-spring/web';
 
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { logout, user, token } = useAuth();
+  const { token, logout, getUser } = useAuth();
+  const user = getUser()
+  const userId = user.id;
+  const userName = user.name; // Access the user's name
+
+  const logoutUser = () => {
+    if (token !== undefined) {
+      logout();
+    }
+  };
+
+  const sidebarRef = useRef(null); // Ref to the sidebar element
 
   const onToggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -19,65 +30,42 @@ function Auth() {
     setSidebarOpen(false);
   };
 
-  const logoutUser = () => {
-    if (token !== undefined) {
-      logout();
-    }
+  // Add a click event listener to the sidebar to close it
+  const handleSidebarClick = (e) => {
+    // Prevent the click event from propagating to the parent elements
+    e.stopPropagation();
+    setSidebarOpen(false);
   };
-  const [timerId, setTimerId] = useState(null);
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      // إظهار الشريط الجانبي إذا كان الماوس على بعد 50px من الحافة اليمنى للنافذة
-      if (window.innerWidth - e.clientX < 50) {
-        if (timerId) {
-          clearTimeout(timerId);
-          setTimerId(null);
-        }
-        setSidebarOpen(true);
-      } else {
-        if (!timerId) {
-          const id = setTimeout(() => {
-            setSidebarOpen(false);
-          }, 2000); // تأخير 2 ثانية قبل الإغلاق
-          setTimerId(id);
-        }
-      }
-    };
-
-    // إضافة مستمع الحدث لحركة الماوس
-    window.addEventListener('mousemove', handleMouseMove);
-
-    // إزالة مستمع الحدث عند التنظيف
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (timerId) {
-        clearTimeout(timerId);
-      }
-    };
-  }, [timerId]);
-
+  // Use the useSpring hook to control the animation duration
   const sidebarAnimation = useSpring({
     right: sidebarOpen ? 0 : -450,
-    config: { duration: 500 }, // زيادة مدة الحركة لجعلها أبطأ
+    config: { duration: sidebarOpen ? 500 : 300 }, // Adjust duration as needed
   });
 
   return (
     <>
       <TopNav
         onToggleSidebar={onToggleSidebar}
-        sidebarOpen={sidebarOpen}
-        user={user}
+        userId={userId} // Display user's ID
+        userName={userName} // Display user's name
         logoutUser={logoutUser}
+        sidebarOpen={sidebarOpen}
       />
-      <MainContent sidebarOpen={sidebarOpen} />
       <animated.aside
         className={`sidebar ${sidebarOpen ? 'open' : ''}`}
         style={sidebarAnimation}
-        onClick={handleCloseSidebar}
+        ref={sidebarRef}
+        onClick={handleSidebarClick} // Add click event handler to close sidebar
       >
-        <Sidebar sidebarOpen={sidebarOpen} onClose={handleCloseSidebar} />
+        <Sidebar
+          userName={userName}
+          sidebarOpen={sidebarOpen}
+          onClose={handleCloseSidebar}
+          onToggleSidebar={onToggleSidebar}
+        />
       </animated.aside>
+      <MainContent sidebarOpen={sidebarOpen} />
     </>
   );
 }
