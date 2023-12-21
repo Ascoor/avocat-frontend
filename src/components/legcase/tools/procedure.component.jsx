@@ -214,7 +214,7 @@ const Procedure = ({ legCaseId }) => {
                 <th className="col-2">نوع الإجراء</th>
                 <th className="col-1">نوع الجهة</th>
                 <th className="col-1">المحكمة</th>
-                <th className="col-2">الوظيفة</th>
+
                 <th className="col-2">تاريخ البدء</th>
                 <th className="col-2">تاريخ الانتهاء</th>
                 <th className="col-1">المحامي</th>
@@ -230,9 +230,9 @@ const Procedure = ({ legCaseId }) => {
                 ) => (
                   <tr key={procedure.id}>
                     <td>{procedure.procedure_type?.name}</td>
-                    <td>{procedure.place_type?.name}</td>
+                    <td>{procedure.procedure_place_type?.name}</td>
                     <td>{procedure.procedure_place_name}</td>
-                    <td>{procedure.job}</td>
+
                     <td>{procedure.date_start}</td>
                     <td>{procedure.date_end}</td>
                     <td>{procedure.lawyer?.name}</td>
