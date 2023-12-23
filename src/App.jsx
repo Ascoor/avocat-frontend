@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import 'react-datepicker/dist/react-datepicker.css';
-import 'boxicons/css/boxicons.min.css';
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import 'boxicons/css/boxicons.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
+// import './App.css';
 import WebSite from './WebSite';
 
 function App() {
@@ -17,11 +18,6 @@ function App() {
     // Cleanup function to clear the timer
     return () => clearTimeout(timer);
   }, []);
-
-  const scrollRevealConfig = {
-    origin: 'top',
-    interval: 100,
-  };
 
   return (
     <div>

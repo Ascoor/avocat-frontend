@@ -43,6 +43,7 @@
     "boxicons": "^2.1.4",
     "date-fns": "^2.30.0",
     "moment": "^2.29.4",
+    "popper.js": "^1.16.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-big-calendar": "^1.8.2",

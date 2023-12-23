@@ -1,10 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { CivelLaw, CriminalLaw, FamilyLaw, Investment,LabourLaw,RealEstate } from '../images';import ScrollReveal from 'scrollreveal';
+import { CivelLaw, CriminalLaw, FamilyLaw, Investment,LabourLaw,RealEstate } from '../images/index';
+import ScrollReveal from 'scrollreveal';
 
 function ServicesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const slides = [CriminalLaw, RealEstate, FamilyLaw, Investment, CivelLaw, LabourLaw]; // Array of images
+  const slides = [
+    {
+      id: 1,
+      title: 'Civel Law',
+      image: CivelLaw,
+      description: 'Civel Law'
+    }   ,
+    {
+      id: 2,
+      title: 'Criminal Law',
+      image: CriminalLaw,
+      description: 'Criminal Law'
 
+    },
+    {
+      id: 3,
+      title: 'Family Law',
+      image: FamilyLaw,
+      description: 'Family Law'
+    },
+    {
+      id: 4,
+      title: 'Labour Law',
+      image: LabourLaw,
+      description: 'Labour Law'
+    },
+    {
+      id: 5,
+      title: 'Real Estate Law',
+      image: RealEstate,
+      description: 'Real Estate Law'
+    },
+    {
+      id: 6,
+      title: 'Investment Law',
+      image: Investment,
+      description: 'Investment Law'
+    },
+        
+
+  ]
   useEffect(() => {
     // Carousel auto-slide
     const interval = setInterval(() => {
@@ -37,7 +77,7 @@ function ServicesSection() {
     </div>
     <div className="carousel-inner">
     <div className="carousel-item active">
-    <img alt="criminal law img"  src={CriminalLaw} /><br/>
+    <img alt="criminal law img" src={CriminalLaw}/><br/>
     <a href="#">قانون جنائي</a>
     </div>
     <div className="carousel-item">
@@ -45,15 +85,15 @@ function ServicesSection() {
     <a href="#">العقارات</a>
     </div>
     <div className="carousel-item">
-    <img alt="Family Law img"   src={FamilyLaw}/>
+    <img alt="Family Law img" src={FamilyLaw}/>
     <a href="#">قانون العائلة</a>
     </div>
     <div className="carousel-item">
-    <img alt="Investment img"   src={Investment}/>
+    <img alt="Investment img" src={Investment}/>
     <a href="#">استثمار</a>
     </div>
     <div className="carousel-item">
-    <img alt="Investment img"   src={CivelLaw}/>
+    <img alt="Investment img" src={CivelLaw}/>
     <a href="#">القانون المدني</a>
     </div>
     </div>
@@ -66,35 +106,35 @@ function ServicesSection() {
     <span className="visually-hidden">التالي</span>
     </button>
     </div>
-    </div>    
-<div className="container srvices-items">
-<div className="srvices__content">
-<img alt="criminal law img" className="about__img-one" src={CriminalLaw}/>
-<a href="#">قانون جنائي</a>
-</div>
-<div className="srvices__content">
-<img alt="Real Estate img" className="about__img-one" src={RealEstate}/>
-<a href="#">العقارات</a>
-</div>
-<div className="srvices__content">.
-<img alt="Family Law img" className="about__img-one" src={FamilyLaw}/>
-<a href="#">قانون العائلة</a>
-</div>
-<div className="srvices__content">
-<img alt="Labour Law img" className="about__img-one"  src={LabourLaw}/>
-<a href="#">قانون العمل</a>
-</div>
-<div className="srvices__content">
-<img alt="Investment img" className="about__img-one" src={Investment} />
-<a href="#">استثمار</a>
-</div>
-<div className="srvices__content">
-<img alt="Investment img" className="about__img-one" src={CivelLaw}/>
-<a href="#">القانون المدني</a>
-</div>
-</div>
-
-</section>
+    </div>
+    <div className="container srvices-items">
+    <div className="srvices__content">
+    <img alt="criminal law img" className="about__img-one"  src={CriminalLaw}/>
+    <a href="#">قانون جنائي</a>
+    </div>
+    <div className="srvices__content">
+    <img alt="Real Estate img" className="about__img-one"  src={RealEstate}/>
+    <a href="#">العقارات</a>
+    </div>
+    <div className="srvices__content">
+    <img alt="Family Law img" className="about__img-one"  src={FamilyLaw}/>
+    <a href="#">قانون العائلة</a>
+    </div>
+    <div className="srvices__content">
+    <img alt="Labour Law img" className="about__img-one"  src={LabourLaw}/>
+    <a href="#">قانون العمل</a>
+    </div>
+    <div className="srvices__content">
+    <img alt="Investment img" className="about__img-one"  src={Investment}/>
+    <a href="#">استثمار</a>
+    </div>
+    <div className="srvices__content">
+    <img alt="Investment img" className="about__img-one"  src={CivelLaw}/>
+    <a href="#">القانون المدني</a>
+    </div>
+    </div>
+    </section>
+    
   );
 }
 

@@ -393,7 +393,7 @@ font-family: 'Noto Kufi Arabic', sans-serif;
     padding-top: 30px;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(rgba(78, 108, 80,0.7),rgba(78, 108, 80,0.7)), url(./images/home-img/commition.png);
+    background-image: linear-gradient(rgba(78, 108, 80,0.7),rgba(78, 108, 80,0.7)), url(./images/home-img/commition-bg.jpg);
     background-position: 30% 50%;
     background-size: cover;
 }
@@ -830,9 +830,11 @@ font-family: 'Noto Kufi Arabic', sans-serif;
         height: 220px;  /* تحديد ارتفاع الكاروسيل */
     }
     .services-slider .carousel-item a {
+
         color: #FFF;
-        margin-left: auto;  /* توسيط الروابط أفقيًا */
-        margin-right: auto;  /* توسيط الروابط أفقيًا */
+        margin-left: auto;
+        margin-right: 39px;
+    
         display: block;  /* جعل الروابط block لتسهيل التوسيط */
     }
     .services-slider img {
@@ -847,6 +849,7 @@ font-family: 'Noto Kufi Arabic', sans-serif;
         width: 0;
         height: 0;
     }
+    
     /*commitment*/
     .commitment{
         height: 320px;
