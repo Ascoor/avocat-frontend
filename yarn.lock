@@ -832,7 +832,15 @@
 
 "@react-aria/ssr@^3.5.0":
   version "3.9.1"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/@react-aria/ssr/-/ssr-3.9.1.tgz#a1252fd5ef87eada810dd9dd6751a5e21359d1d2"
+=======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/@react-aria/ssr/-/ssr-3.9.1.tgz#a1252fd5ef87eada810dd9dd6751a5e21359d1d2"
+=======
+  resolved "https://registry.npmjs.org/@react-aria/ssr/-/ssr-3.9.1.tgz#a1252fd5ef87eada810dd9dd6751a5e21359d1d2"
+>>>>>>> b3e22869e2af2f0a1e91d2ef86962a7be0900509
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
   integrity sha512-NqzkLFP8ZVI4GSorS0AYljC13QW2sc8bDqJOkBvkAt3M8gbcAXJWVRGtZBCRscki9RZF+rNlnPdg0G0jYkhJcg==
   dependencies:
     "@swc/helpers" "^0.5.0"
@@ -878,7 +886,15 @@
 
 "@remix-run/router@1.14.1":
   version "1.14.1"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.14.1.tgz#6d2dd03d52e604279c38911afc1079d58c50a755"
+=======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.14.1.tgz#6d2dd03d52e604279c38911afc1079d58c50a755"
+=======
+  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.14.1.tgz#6d2dd03d52e604279c38911afc1079d58c50a755"
+>>>>>>> b3e22869e2af2f0a1e91d2ef86962a7be0900509
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
   integrity sha512-Qg4DMQsfPNAs88rb2xkdk03N3bjK4jgX5fR24eHCTR9q6PrhZQZ4UJBPzCHJkIpTRN1UKxx2DzjZmnC+7Lj0Ow==
 
 "@restart/hooks@^0.4.7", "@restart/hooks@^0.4.9":
@@ -1437,7 +1453,15 @@ camelize@^1.0.0:
 
 caniuse-lite@^1.0.30001565:
   version "1.0.30001571"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001571.tgz#4182e93d696ff42930f4af7eba515ddeb57917ac"
+=======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001571.tgz#4182e93d696ff42930f4af7eba515ddeb57917ac"
+=======
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001571.tgz#4182e93d696ff42930f4af7eba515ddeb57917ac"
+>>>>>>> b3e22869e2af2f0a1e91d2ef86962a7be0900509
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
   integrity sha512-tYq/6MoXhdezDLFZuCO/TKboTzuQ/xR5cFdgXPfDtM7/kchBO3b4VWghE/OAi/DV7tTdhmLjZiZBZi1fA/GheQ==
 
 chalk@^2.4.2:
@@ -1781,7 +1805,15 @@ domexception@^2.0.1:
 
 electron-to-chromium@^1.4.601:
   version "1.4.616"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.616.tgz#4bddbc2c76e1e9dbf449ecd5da3d8119826ea4fb"
+=======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.616.tgz#4bddbc2c76e1e9dbf449ecd5da3d8119826ea4fb"
+=======
+  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.616.tgz#4bddbc2c76e1e9dbf449ecd5da3d8119826ea4fb"
+>>>>>>> b3e22869e2af2f0a1e91d2ef86962a7be0900509
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
   integrity sha512-1n7zWYh8eS0L9Uy+GskE0lkBUNK83cXTVJI0pU3mGprFsbfSdAc15VTFbo+A+Bq4pwstmL30AVcEU3Fo463lNg==
 
 emittery@^0.8.1:
@@ -2017,7 +2049,15 @@ fast-levenshtein@^2.0.6:
 
 fastq@^1.6.0:
   version "1.16.0"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/fastq/-/fastq-1.16.0.tgz#83b9a9375692db77a822df081edb6a9cf6839320"
+=======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.16.0.tgz#83b9a9375692db77a822df081edb6a9cf6839320"
+=======
+  resolved "https://registry.npmjs.org/fastq/-/fastq-1.16.0.tgz#83b9a9375692db77a822df081edb6a9cf6839320"
+>>>>>>> b3e22869e2af2f0a1e91d2ef86962a7be0900509
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
   integrity sha512-ifCoaXsDrsdkWTtiNJX5uzHDsrck5TzfKKDcuFFTIrrc/BS076qgEIfoIy1VeZqViznfKiysPYTh/QeHtnIsYA==
   dependencies:
     reusify "^1.0.4"
@@ -3654,10 +3694,23 @@ react-bootstrap-icons@^1.6.1:
   dependencies:
     prop-types "^15.7.2"
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
 react-bootstrap@^2.9.2:
   version "2.9.2"
   resolved "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.9.2.tgz#ee2bab4cb19df628a90868fa594a3b410fe0c0be"
   integrity sha512-a36B+EHsAI/aH+ZhXNILBFnqscE3zr10dWmjBmfhIb2QR7KSXJiGzYd6Faf/25G8G7/CP9TCL2B0WhUBOD2UBQ==
+<<<<<<< HEAD
+=======
+=======
+react-bootstrap@^2.9.0:
+  version "2.9.1"
+  resolved "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.9.1.tgz#c1ab48ae2b2cfe6d5ac957c2042eb36fcafdb1d2"
+  integrity sha512-ezgmh/ARCYp18LbZEqPp0ppvy+ytCmycDORqc8vXSKYV3cer4VH7OReV8uMOoKXmYzivJTxgzGHalGrHamryHA==
+>>>>>>> b3e22869e2af2f0a1e91d2ef86962a7be0900509
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
   dependencies:
     "@babel/runtime" "^7.22.5"
     "@restart/hooks" "^0.4.9"
@@ -3674,7 +3727,15 @@ react-bootstrap@^2.9.2:
 
 react-datepicker@^4.16.0:
   version "4.25.0"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/react-datepicker/-/react-datepicker-4.25.0.tgz#86b3ee8ac764bad1650046d0cf9280837bf6d845"
+=======
+<<<<<<< HEAD
+  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-4.25.0.tgz#86b3ee8ac764bad1650046d0cf9280837bf6d845"
+=======
+  resolved "https://registry.npmjs.org/react-datepicker/-/react-datepicker-4.25.0.tgz#86b3ee8ac764bad1650046d0cf9280837bf6d845"
+>>>>>>> b3e22869e2af2f0a1e91d2ef86962a7be0900509
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
   integrity sha512-zB7CSi44SJ0sqo8hUQ3BF1saE/knn7u25qEMTO1CQGofY1VAKahO8k9drZtp0cfW1DMfoYLR3uSY1/uMvbEzbg==
   dependencies:
     "@popperjs/core" "^2.11.8"
@@ -3798,9 +3859,16 @@ react-refresh@^0.14.0:
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"
   integrity sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==
 
+<<<<<<< HEAD
 react-router-dom@^4.2.2:
   version "4.3.1"
   resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"
+=======
+<<<<<<< HEAD
+react-router-dom@^4.2.2:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
   integrity sha512-c/MlywfxDdCp7EnB7YfPMOfMD3tOtIjrQlj/CKfNMBxdmpJP8xcz5P/UAFn3JbnQCNUxsHyVVqllF9LhgVyFCA==
   dependencies:
     history "^4.7.2"
@@ -3812,7 +3880,11 @@ react-router-dom@^4.2.2:
 
 react-router-dom@^6.2.1:
   version "6.21.1"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.21.1.tgz#58b459d2fe1841388c95bb068f85128c45e27349"
+=======
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.21.1.tgz#58b459d2fe1841388c95bb068f85128c45e27349"
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
   integrity sha512-QCNrtjtDPwHDO+AO21MJd7yIcr41UetYt5jzaB9Y1UYaPTCnVuJq6S748g1dE11OQlCFIQg+RtAA1SEZIyiBeA==
   dependencies:
     "@remix-run/router" "1.14.1"
@@ -3820,7 +3892,11 @@ react-router-dom@^6.2.1:
 
 react-router@6.21.1:
   version "6.21.1"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/react-router/-/react-router-6.21.1.tgz#8db7ee8d7cfc36513c9a66b44e0897208c33be34"
+=======
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.21.1.tgz#8db7ee8d7cfc36513c9a66b44e0897208c33be34"
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
   integrity sha512-W0l13YlMTm1YrpVIOpjCADJqEUpz1vm+CMo47RuFX4Ftegwm6KOYsL5G3eiE52jnJpKvzm6uB/vTKTPKM8dmkA==
   dependencies:
     "@remix-run/router" "1.14.1"
@@ -3837,6 +3913,25 @@ react-router@^4.3.1:
     path-to-regexp "^1.7.0"
     prop-types "^15.6.1"
     warning "^4.0.1"
+<<<<<<< HEAD
+=======
+=======
+react-router-dom@^6.2.1:
+  version "6.21.1"
+  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.21.1.tgz#58b459d2fe1841388c95bb068f85128c45e27349"
+  integrity sha512-QCNrtjtDPwHDO+AO21MJd7yIcr41UetYt5jzaB9Y1UYaPTCnVuJq6S748g1dE11OQlCFIQg+RtAA1SEZIyiBeA==
+  dependencies:
+    "@remix-run/router" "1.14.1"
+    react-router "6.21.1"
+
+react-router@6.21.1:
+  version "6.21.1"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-6.21.1.tgz#8db7ee8d7cfc36513c9a66b44e0897208c33be34"
+  integrity sha512-W0l13YlMTm1YrpVIOpjCADJqEUpz1vm+CMo47RuFX4Ftegwm6KOYsL5G3eiE52jnJpKvzm6uB/vTKTPKM8dmkA==
+  dependencies:
+    "@remix-run/router" "1.14.1"
+>>>>>>> b3e22869e2af2f0a1e91d2ef86962a7be0900509
+>>>>>>> d160fdbf3c5fc17a04ab1c66a3aecd3bcb43b177
 
 react-transition-group@^4.4.5:
   version "4.4.5"
