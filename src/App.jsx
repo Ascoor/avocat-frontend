@@ -1,16 +1,47 @@
+import React, { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'boxicons/css/boxicons.min.css';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
+import WebSite from './WebSite';
 
-import Guest from './components/layout/Guest';
-import Auth from './components/layout/Auth';
-import useAuth from './components/layout/AuthTool/AuthUser';
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
 
-const App = () => {
-  const { getToken } = useAuth();
-  const isAuthenticated = !!getToken(); // Check if the user is authenticated
+  useEffect(() => {
+    // Set a timeout to simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
 
-  return <>{isAuthenticated ? <Auth /> : <Guest />}</>;
-};
+    // Cleanup function to clear the timer
+    return () => clearTimeout(timer);
+  }, []);
+
+  const scrollRevealConfig = {
+    origin: 'top',
+    interval: 100,
+  };
+
+  return (
+    <div>
+      {isLoading ? (
+        <div className="sk-cube-grid">
+          <div className="sk-cube sk-cube1"></div>
+          <div className="sk-cube sk-cube2"></div>
+          <div className="sk-cube sk-cube3"></div>
+          <div className="sk-cube sk-cube4"></div>
+          <div className="sk-cube sk-cube5"></div>
+          <div className="sk-cube sk-cube6"></div>
+          <div className="sk-cube sk-cube7"></div>
+          <div className="sk-cube sk-cube8"></div>
+          <div className="sk-cube sk-cube9"></div>
+        </div>
+      ) : (
+ <WebSite />
+      )}
+    </div>
+  );
+}
 
 export default App;

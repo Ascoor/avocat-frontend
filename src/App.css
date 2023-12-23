@@ -1,981 +1,940 @@
 
-
-  /* App.css */
-  body {
-    font-family: 'Open Sans', sans-serif;
-    color: #272829;
-    margin: 0; /* Reset default margin */
-    padding: 0; /* Reset default padding */
-  }
-  :root {
-    --breakpoint-xs: 576px;
-    --breakpoint-sm: 768px;
-    --breakpoint-md: 992px;
-    --breakpoint-lg: 1200px;
-    --primary-color: #020818;
-    --primary-hover: #034c52;
-    --secondary-color: #e41e1e;
-    --accent-color: #df9114;
-    --accent-hover: #9c6000;
-    --bg-color: #F4F6F9;
-    --text-light: #000000;
-    --text-dark: #ffffff;
-  }
-  ::placeholder   {
-    color: #000000;
-    opacity: 1;
-    direction: rtl;
-    text-align: right;
-  }
-
-  a {
-    color: #149ddd;
-    text-decoration: none;
-  }
-
-  /* CSS for masthead */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400&display=swap');
 
 
-
-  /* CSS for form */
-
-  .form-icon {
-    margin-right: 5px;
-  }
-
-  .btn-loading {
-    background-color: rgb(225, 225, 2);
-    color: black;
-    border-radius: 60px;
-    padding: 11px 4px;
-    margin: auto;
-  }
-
-
-  /* Report */
-  .report-procedure-icon {
-    width: 95px;
-    height: 70px;
-  }
-  /* Special Table Styles */
-  .special-table {
-
-      width: 100%;
-      border-collapse: collapse;
-  }
-
-  .special-table th, .special-table td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: center;
-    }
-
-  /* Zebra striping for rows */
-  .special-table tr:nth-child(even) {
-      background-color: #f2f2f2;
-  }
-
-  /* Hover effect for rows */
-  .special-table tr:hover {
-      background-color: #ddd;
-  }
-
-  /* Header Styles */
-  .special-table th {
-      padding-top: 12px;
-      padding-bottom: 12px;
-      text-align: center; /* Aligning to the right for RTL */
-      background-color: #04AA6D;
-      color: white;
-  }
-
-  .login-back {
-    background-color: #dc3545;
-    color: #ffffff;
-    padding: 10px 20px;
-  }
-
-  /* Courte sEtting*/
-  .card-header-courts{
-    
-    background: linear-gradient(325deg, #1a485c, #0a2741);
-    color: #ffface;
-    padding: 20px;
-    border-bottom: 1px solid #ccc;  
-    
-    font-family: 'Cairo', sans-serif;
-    font-weight: bold;
-    font-size: 1.2rem;  
-  } 
-  /* Sections Headers */
-  .section-card-header {
-
-    box-shadow: 0 20px 15px #4c7286; /* Add shadow here */
-    background: linear-gradient(325deg, #1a485c, #0a2741);
-    border-radius: 80px;
-    padding: 10px;
-    font-family: 'Cairo', sans-serif;
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: #e3bd65;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Align items horizontally */
-  }
-
-  .title-row {
-    width: 100%;
-    text-align: center; /* Center the text */
-  }
-
-  .button-row {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start; 
-    /* Push button to the right */
-  }
-
-  .add-btn {
-    background-color: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 5px 14px;
-    font-size: 1rem;
-    border-radius: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    
-    margin-right: 34px;
-  }
-
-  .add-btn:hover {
-    background-color: var(--accent-hover);
-  }
-
-  .back-btn {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 5px 14px;
-    font-size: 1rem;
-    border-radius: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    
-
-  }
-
-  .back-btn:hover {
-    background-color: var(--primary-hover);
-  }
-  /* Responsive styles */
-  @media (max-width: 768px) { 
-    .section-card-header {
-      font-size: 1.2rem;
-      padding: 8px;
-      border-radius: 50px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow here */
-    }
-    }
-    .add-btn {
-      padding: 8px 16px;
-      font-size: 0.8rem;
-      border-radius: 20px;
-    }
-    .back-btn {
-      padding: 8px 16px;
-      font-size: 0.8rem;
-      border-radius: 20px;
-    }
-
-  @media (max-width: 480px) {
-    .section-card-header {
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow here */
-
-      font-size: 1rem;
-      padding: 6px;
-      border-radius: 40px;
-    }
-    .add-btn {
-      padding: 6px 12px;
-      font-size: 0.7rem;
-      border-radius: 16px;
-    }
-    .back-btn {
-      padding: 6px 12px;
-      font-size: 0.7rem;
-      border-radius: 16px;
-    }
-  }
-
-
-  /* Utility Classes */
-  .text-center {
-    text-align: center;
-  }
-
-  /* Back to top button */
-
-  /* Header */
-  #header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 300px;
-    transition: all ease-in-out 0.5s;
-    z-index: 9997;
-    transition: all 0.5s;
-    padding: 0 15px;
-    background: #040b14;
-    overflow-y: auto;
-  }
-
-  /* Profile Section */
-  #header .profile img {
-    margin: 15px auto;
-    display: block;
-    width: 120px;
-    border: 8px solid #2c2f3f;
-  }
-
-  /* Social Links */
-  /* Lawyer Section */
-
-  /* Container Padding */
-  .container {
-    padding-left: 15px; /* Adjust padding based on your design */
-    padding-right: 15px; /* Adjust padding based on your design */
-  }
-
-
-  /*Court Setting*/
-  .name {
-    color: #007bff;
-    font-size: 24px;
-    margin-bottom: 0;
-  }
-
-  .label {
-    color: #6c757d;
-    font-size: 18px;
-  }
-  .court-icon {
-    width: 60px;
-    height: 60px;
-  }
-  /*btn Start*/
-  /*btn End*/
-
-
-  /*Expenses Start*/
-
-  .expenses-card-header
-  {
-    width: auto;
-    height: auto;
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-    color: rgb(255, 251, 0);
-    background: linear-gradient(325deg, #1a485c, #0a2741);
-    border: 6px solid #e4a802;
-    border-radius: 50%;  
-    box-shadow: 0 4px 8px rgba(5, 56, 97, 0.726);
-    transition: all 0.3s ease;
-  }
-  /*Expenses End*/
-  /*Icons Start*/
-
-  .dashboard-icon {
-    width: 180px;
-    height: 100px;
-  }
-
-  .client-icon {
-    padding-bottom: 3px;
-    width: 70px;
-    height: 50px;
-  }
-
-
-    /*Icons End*/
-
-  /* legalCase Detaiis End*/
-
-  /* Responsive styles */
-  @media screen and (max-width: 767px) {
-
-    .event-card {
-      margin-bottom: 20px;
-    }
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-  /* Cards and headers */
-
-  /* Banner and Icons */
-
-  /* Mobile styles */
-  @media screen and (max-width: 767px) {
-
-    .button {
-      padding: 6px 12px;
-    }
-  }
-  .custom-card-header {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 20px;
-    font-family: 'Cairo', sans-serif;
-    font-weight: bold;
-    background: linear-gradient(
-      135deg,
-      #1a5dca,
-      #745114
-    ); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
-
-  @media (min-width: var(--breakpoint-md)) {
-    /* Your styles for medium devices and up */
-
-  /**Procedure Search Page ***/
-
-  .form-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-
-  .search-button {
-    background-color: #002d43;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  .search-button:hover {
-    background-color: #001d2b;
-  }
-
-  /* Procdure Search */
-  .search-label-text {
-    font-family: 'Cairo', sans-serif;
-    font-weight: bold;
-    font-size: 1rem;
-    color: #f3e6e6;
-    border: 1px solid linear-gradient(to top, #1d0367, #3c0381, #330250); /* تدرج ألوان جميل وجذاب */
-
-    background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
-    padding-top: 10px; /* Add padding to create space around the text */
-  }
-  .search-button {
-    font-family: 'Cairo', sans-serif;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #b14141;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    border-radius: 10px /* Add border-radius for a cute rounded look */
-
-    /* Add a cute hover effect */
-  }
-  } 
-  }
-  }
-
-
-  /* ======================== BASE STYLES ======================== */
-  body {
-    font-family: 'Open Sans', sans-serif;
-    color: #272829;
+*{
     margin: 0;
     padding: 0;
-  }
-
-  :root {
-    --breakpoint-xs: 576px;
-    --breakpoint-sm: 768px;
-    --breakpoint-md: 992px;
-    --breakpoint-lg: 1200px;
-    --primary-color: #0041e6;
-    --primary-hover: #26428b;
-    --secondary-color: #e41e1e;
-    --accent-color: #df9114;
-    --accent-hover: #9c6000;
-    --bg-color: #F4F6F9;
-    --text-light: #000000;
-    --text-dark: #ffffff;
-  }
-
-  a {
-    color: #149ddd;
-    text-decoration: none;
-  }
-
-  ::placeholder {
-    color: #000000;
-    opacity: 1;
-    direction: rtl;
-    text-align: right;
-  }
-
-  /* ======================== SPLASH STYLES ======================== */
-    .splash-container {
-      opacity: 1;
-      position: relative; /* Create a stacking context */
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at center, #0b2440 0%, #1a466b 50%, #0a2b41 100%);
-  
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      z-index: 1;
-    }
-  
-
-.splash-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  background-size: cover;
-  background-position: center;
-  /* Your pattern image */
-  background-image: url('/back.png');
-  opacity: .9;
-  z-index: -2; /* Ensure it's above the background image */
-  pointer-events: none;
-
-  /* Optional blur effect */
-  backdrop-filter: blur(15px);
+    font-size: 14.5px;
+    font-weight: 600;
+    box-sizing: border-box;
+font-family: 'Noto Kufi Arabic', sans-serif;
 }
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+a{
+    text-decoration: none !important;
 }
-
-  /* ======================== CONTENT STYLES ======================== */
-
-  /* ======================== HEADER & MASTHEAD ======================== */
-  #header {
+ul li{
+    list-style: none !important;
+}
+.modal{
+    position: relative;
+    z-index: 99999 !important;
+    margin-top: 100px;
+}
+/*loading spinner*/
+.spinner{
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
     position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
-    width: 300px;
-    transition: all 0.5s;
-    padding: 0 15px;
-    background: #040b14;
-    overflow-y: auto;
+    z-index: 9999;
+}
+.sk-cube-grid {
+    width: 40px;
+    height: 40px;
+    margin: 50vh auto;
   }
+  
+  .sk-cube-grid .sk-cube {
+    width: 33%;
+    height: 33%;
+  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
 
-  /* ======================== FORM & BUTTONS ======================== */
-
-  .form-icon {
-    margin-right: 5px;
+    float: left;
+    -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+            animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
   }
-
-  .btn-loading {
-    border: none;
-    border-radius: 60px;
-    padding: 11px 4px;
-    margin: auto;
-    font-family: 'Cairo', sans-serif;
-    font-weight: bold;
-  }
-
-  .btn-loading {
-    background-color: rgb(225, 225, 2);
-    color: black;
-  }
-
-  /* ======================== REPORT STYLES ======================== */
-
-  /* ======================== RESPONSIVE STYLES ======================== */
-  @media (max-width: 768px) {
-    /* Styles for medium devices */
-  }
-
-  @media (max-width: 480px) {
-    /* Styles for smaller devices */
-  }
-/* ======================== TYPOGRAPHY ======================== */
- h2, h3, h5 {
-  font-family: 'Cairo', sans-serif;
-  font-weight: bold;
-  margin-top: 0;
+  .sk-cube-grid .sk-cube1 {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  .sk-cube-grid .sk-cube2 {
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s; }
+  .sk-cube-grid .sk-cube3 {
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s; }
+  .sk-cube-grid .sk-cube4 {
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s; }
+  .sk-cube-grid .sk-cube5 {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  .sk-cube-grid .sk-cube6 {
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s; }
+  .sk-cube-grid .sk-cube7 {
+    -webkit-animation-delay: 0s;
+            animation-delay: 0s; }
+  .sk-cube-grid .sk-cube8 {
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s; }
+  .sk-cube-grid .sk-cube9 {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  
+@-webkit-keyframes sk-cubeGridScaleDelay {
+    0%, 70%, 100% {
+      -webkit-transform: scale3D(1, 1, 1);
+              transform: scale3D(1, 1, 1);
+    } 35% {
+      -webkit-transform: scale3D(0, 0, 1);
+              transform: scale3D(0, 0, 1); 
+    }
 }
-
-h2 {
-  font-size: 1.8rem;
+  
+@keyframes sk-cubeGridScaleDelay {
+    0%, 70%, 100% {
+      -webkit-transform: scale3D(1, 1, 1);
+              transform: scale3D(1, 1, 1);
+    } 35% {
+      -webkit-transform: scale3D(0, 0, 1);
+              transform: scale3D(0, 0, 1);
+    } 
 }
-
-h3 {
-  font-size: 1.6rem;
+/*========= buttons-hover ============*/
+.button-hover {
+    appearance: none;
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: #000;
+    cursor: pointer;
+    display: inline-block;
+    line-height: normal;
+    min-width: 0;
+    outline: none;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
 }
-
-h5 {
-  font-size: 1.2rem;
+.button-hover:disabled {
+    pointer-events: none;
 }
-
-/* ======================== CONTAINERS & SECTIONS ======================== */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
+.button-hover:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
 }
-
-/* ======================== ICONS ======================== */
-.icon {
-  font-size: 24px;
-  color: var(--accent-color);
+.button-hover:active {
+    box-shadow: none;
+    transform: translateY(0);
 }
-
-.icon:hover {
-  color: var(--accent-hover);
+/*home-page*/
+.home-page{
+    height: 700px;
 }
-
-/* ======================== MODALS ======================== */
-
-/* ======================== TABLES ======================== */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 18px;
-  text-align: left;
+.home-page .carousel-inner .carousel-item{
+    height: 700px;
 }
-
-.table thead th {
-  background-color: var(--primary-color);
-  color: var(--text-dark);
-  padding: 10px;
-}
-
-.table tbody td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.table tbody tr:hover {
-  background-color: var(--primary-hover);
-}
-
-/* ======================== UTILITY ======================== */
-.mt-5 {
-  margin-top: 5rem !important;
-}
-
-/* Add any other utilities you need... */
-
-/* ======================== FOOTER ======================== */
-.footer {
-  background-color: var(--primary-color);
-  color: var(--text-dark);
-  padding: 1rem 0;
-  position: relative;
-}
-
-.footer a {
-  color: var(--text-dark);
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-
-/* ======================== MEDIA QUERIES ======================== */
-@media (max-width: 768px) {
-  .splash-container {
-    flex-direction: column;
-  }
-
-  h2 {
-    font-size: 1.4rem;
-  }
-
-  h3 {
-    font-size: 1.2rem;
-  }
-
-  h5 {
-    font-size: 0.9rem;
-  }
-
-  .footer {
-    padding: 0.5rem 0;
-  }
-}
-
-
-
-::placeholder   {
-  color: #000000;
-  opacity: 1;
-  direction: rtl;
-  text-align: right;
-}
-/* Style for the splash screen container */
-.splash-container {
-  opacity: 1;
-  position: relative; /* Create a stacking context */
-  width: 100vw;
-  height: 100vh;
-  background-color: #0d3346; /* Theme color */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  z-index: 1;
-}
-a {
-  color: #149ddd;
-  text-decoration: none;
-}
-
-/* CSS for masthead */
-
-/* CSS for navbar */
-
-/* CSS for form */
-
-.form-icon {
-  margin-right: 5px;
-}
-
-.btn-loading {
-  background-color: rgb(225, 225, 2);
-  color: black;
-  border-radius: 60px;
-  padding: 11px 4px;
-  margin: auto;
-}
-
-
-/* Report */
-.report-procedure-icon {
-  width: 95px;
-  height: 70px;
-}
-/* Special Table Styles */
-.special-table {
-
+.home-page .carousel-inner .carousel-item img{
     width: 100%;
-    border-collapse: collapse;
-}
+    height: 100%;
 
-.special-table th, .special-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
+}
+.home-page .carousel-item .carousel-caption {
+   margin-bottom: 150px !important;
+}
+.home-page .carousel-item .carousel-caption p{
+    font-size: 25px;
+}
+.ml12 {
+    font-weight: 900;
+    font-size: 44px;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+}
+.ml12 .letter {
+    font-weight: 900;
+    display: inline-block;
+    line-height: 1em;
+}
+.ml10 {
+    letter-spacing: 0.2em;
+    position: relative;
+    font-weight: 900;
+    font-size: 4em;
+}
+.ml10 .text-wrapper {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.2em;
+    padding-right: 0.05em;
+    padding-bottom: 0.1em;
+    overflow: hidden;
+}
+.ml10 .letter {
+    display: inline-block;
+    line-height: 1em;
+    font-weight: 900;
+    transform-origin: 0 0;
+}
+.ml13 {
+    font-size: 1.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+}
+.ml13 .letter {
+    display: inline-block;
+    line-height: 1em;
+    font-weight: 900;
+}
+/*header*/
+header{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 80px;
+    width: 100%;
+    z-index: 9999;
+}
+header .top-section{
+    height: 40px;
+  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
+
+}
+header .top-section .container{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+header .top-section .media-icons {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+header .top-section .media-icons i{
+    color: #FFF;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.top-section .container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.follow-btn a {
+    font-size: 12px;
+    padding: 0 10px;
+    color: #4E6C50;
+    border-radius: 8px;
+    background-color: #FFF;
+
+}
+.follow-btn a:hover{
+    color: #4E6C50;
+}
+header .left-side-info a , header .left-side-info  i{
+    color: #FFF;
+}
+/*nav*/
+nav{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+.navbar .nav-link{
+    margin: 0 5px;
+}
+.navbar .nav-link.active{
+    color: #f5ca1e !important;
+    
+}
+.navbar-nav .nav-item a {
+    position: relative;
+    color: #000 !important;
+    font-weight: 600;
+    width: max-content;
+    font-size: large;
+}
+.navbar-nav .nav-item   a:hover {
+    color: #000;
+} 
+.navbar-nav .nav-item  a::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
+
+    transform: scaleX(0);
+    transform-origin: top left;
+    transition: transform 0.3s ease;
+}
+.navbar-nav .nav-item   a:hover::before {
+    transform: scaleX(1);
+}
+nav .nav-item a {
+    font-weight: 600;
+    width: max-content;
+    color: #000 !important;
+}
+nav .request-btn a , .home-page-btn a{
+    width: 160px;
+    color: #FFF;
+    font-size: 14px;
     text-align: center;
-  }
+    border-radius: 6px;
+    padding: 10px 0;
+  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
 
-/* Zebra striping for rows */
-.special-table tr:nth-child(even) {
-    background-color: #f2f2f2;
 }
-
-/* Hover effect for rows */
-.special-table tr:hover {
-    background-color: #ddd;
+nav .request-btn a:hover, .home-page-btn a:hover{
+    color: #FFF;
 }
-
-/* Header Styles */
-.special-table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: center; /* Aligning to the right for RTL */
-    background-color: #04AA6D;
-    color: white;
-}
-
-.login-back {
-  background-color: #dc3545;
-  color: #ffffff;
-  padding: 10px 20px;
-}
-
-/* Courte sEtting*/
-.card-header-courts{
-  
-  background: linear-gradient(325deg, #1a485c, #0a2741);
-  color: #ffface;
-  padding: 20px;
-  border-bottom: 1px solid #ccc;  
-  
-  font-family: 'Cairo', sans-serif;
-  font-weight: bold;
-  font-size: 1.2rem;  
-} 
-/* Sections Headers */
-.section-card-header {
-
-  box-shadow: 0 20px 15px #4c7286; /* Add shadow here */
-  background: linear-gradient(325deg, #1a485c, #0a2741);
-  border-radius: 80px;
-  padding: 10px;
-  font-family: 'Cairo', sans-serif;
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: #e3bd65;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Align items horizontally */
-}
-
-.title-row {
-  width: 100%;
-  text-align: center; /* Center the text */
-}
-
-.button-row {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start; 
-  /* Push button to the right */
-}
-
-.add-btn {
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  padding: 5px 14px;
-  font-size: 1rem;
-  border-radius: 24px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  
-  margin-right: 34px;
-}
-
-.add-btn:hover {
-  background-color: var(--accent-hover);
-}
-
-.back-btn {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 5px 14px;
-  font-size: 1rem;
-  border-radius: 24px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  
+/*srvices*/
+.srvices{
+  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
 
 }
 
-.back-btn:hover {
-  background-color: var(--primary-hover);
+.srvices .srvices-items{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
 }
-/* Responsive styles */
-@media (max-width: 768px) { 
-  .section-card-header {
-    font-size: 1.2rem;
-    padding: 8px;
-    border-radius: 50px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow here */
-  }
-  }
-  .add-btn {
-    padding: 8px 16px;
-    font-size: 0.8rem;
+.srvices .srvices-items img{
+    width: 80px;
+}
+.srvices .srvices-items a{
+    color: #FFF;
+}
+.srvices .srvices-items .srvices__content{
+    padding: 10px 0;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+}
+/*=============== About ===============*/
+.about{
+    height: max-content;
+}
+.law-firm-info h2{
+    text-decoration:underline #4E6C50;
+}
+.commitment h2 , .practice h2 ,.atorney-page h2 , .our-latest-news h2 ,.contact-us h2 ,.blog-details h2{
+    text-align: center;
+    text-decoration:underline #4E6C50;
+    padding: 25px 0;
+}
+.about__img {
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+.about__img-overlay {
+    overflow: hidden;
+    border-radius: 8px;
+}
+.about__img-one{
+    width: 100%;
+    height: 100%;
+}
+.about__img-one{
+    transition: .3s;
+}
+.about__container{
+    display: flex;
+}
+.about__data h2{
+    padding: 15px 0;
+}
+.about__img-overlay img{
+    border-radius: 8px;
+    cursor: pointer;
+}
+.about__img-one:hover{
+    transform: scale(1.1);
+    border-radius: 8px;
+}
+.see-more-btn a{
+    color: #4E6C50;
+}
+.see-more-btn a:hover{
+    color: #4E6C50;
+}
+.ml14 {
+    font-weight: 200;
+    
+font-family: 'Noto Kufi Arabic', sans-serif;
+}
+.ml14 .text-wrapper {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.1em;
+    padding-bottom: 0.15em;
+
+}
+.ml14 .line {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    height: 2px;
+    width: 100%;
+  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
+
+    transform-origin: 100% 100%;
+    bottom: 0;
+}
+.ml14 .letter {
+    font-size: 28px;
+    display: inline;
+    line-height: 1em;
+}
+/*===================== commitment ======================*/
+.commitment{
+    height: 250px;
+    display: flex;
+    padding-top: 30px;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(#1f5384b3, #1f5384b3), url(./images/home-img/commition.png);
+    background-position: 30% 50%;
+    background-size: cover;
+}
+.commitment-info{
+    width: 50%;
+}
+.commitment p{
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    color: #fff;
+    word-spacing: 5px;
+}
+/*============= Best Lawyers =================*/
+.lawyer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: max-content;
+}
+.best-layers-slider ,.services-slider ,.special-clients-slider{
+    display: none;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+.best-lawyers{
+    width: 100%;
+    height: max-content;
+}
+section .letters{
+    font-size: 28px;
+}
+.best-lawyers .row .col{
+    overflow: hidden;
+}
+.best-lawyers img{
+    width: 100%;
+    height: 400px;
+    border-radius: 8px;
+}
+.best-lawyers .card {
+    height: 300px;
+    overflow: hidden;
+    border: none !important;
+}
+.best-lawyers .card .imgBx,
+.best-lawyers .card .details {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    box-sizing: border-box;
+    transition: .5s;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+
+}
+.best-lawyers .card .imgBx {
+    top: 0;
+    left: 0;
+}
+.best-lawyers .card:hover .imgBx {
+    top: 0;
+    left: -100%;
+}
+.best-lawyers .card .imgBx img {
+    width: 100%;
+}
+.best-lawyers .card .details {
+    background: #262626;
+    top: 0;
+    left: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 30%;
+}
+.best-lawyers .card:hover .details {
+    top: 0;
+    left: 0%;
+}
+.best-lawyers .card .details a {
+    color: #fff;
+    text-align: center;
+    margin: 0;
+}
+.best-lawyers .media-icons-lawyers{
+    display: flex;
+    justify-content: space-between;
+
+}
+.best-lawyers .card .details p {
+    color: #fff;
+    text-align: center;
+}
+.best-lawyers .row .col a{
+    color: #4E6C50;
+}
+.best-lawyers .row .col a:hover{
+    color: #fff;
+}
+.best-lawyers .row .col a h3:hover{
+    color: #262626;
+}
+/*======clients-says=======*/
+.clients-says{
+    height: max-content;
+    background-color: rgb(245, 245, 245);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.clients-says-info{
+    display: flex;
+    align-items: center;
+}
+.clients-says .swiper-slide img{
+    height: 15vh;
+    width: 15vh;
+    border-radius: 50%;
+}
+.clients-says .container{
+    overflow: hidden;
+}
+.clients-says .rating-star i{
+    color:#daa520;
+}
+.clients-says-content{
+    padding: 10px;
+}
+.swiper {
+    direction:ltr;
+    width: 350px;
+    height: max-content;
+}
+.swiper-slide {
+    border-radius: 18px;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+.swiper .swiper-wrapper{
+    width: 90vw;
+}
+.swiper-slide {
+  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
+
+}
+/*========== our-latest-news ===========*/
+.our-latest-news{
+    height: max-content;
+}
+.our-latest-news .row .col:hover{
+    border-radius: 8px;
+    transition: .3s;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+}
+.our-latest-news img{
+    border-radius: 8px;
+}
+.our-latest-news h5{
+    margin-top: 10px;
+    font-size: 22px;
+    padding: 12px 0;
+}
+.read-more  {
+    font-size: 20px;
+    color: #4E6C50;
+}
+.read-more:hover{
+    color: #4E6C50;
+}
+/*======== our-special-clients ========*/
+.our-special-clients{
+    height: max-content;
+    background-color:rgba(78, 108, 80,0.7);
+}
+.our-special-clients h2{
+    color: #000;
+}
+.our-special-clients .row .col{
+    height: 150px;
+    margin-top: 30px;
+}
+.our-special-clients .row .col img{
+    width: 100%;
+    height: 100%;
+}
+.client-company{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.client-company img{
+   width: 310px !important;
+   height: 160px !important;
+}
+/*========== contact-us =======*/
+.contact-us img{
+    width: 90%;
+    border-radius: 15px;
+}
+.send-msg button{
+    color: #fff;
+  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
+
+}
+.send-msg button:hover{
+    color: #fff;
+}
+.contact-us h3{
+    font-size: 20px;
+    margin-top: 30px;
+}
+.contact-us i{
+    color: #4E6C50;
+}
+.contact-us a{
+    color: #000;
+    padding-left: 10px;
+}
+/*========map ==========*/
+.map iframe{
+    width: 100%;
+    height: 400px;
+}
+/*=============== FOOTER ===============*/
+footer{
+    background-color: #333333;
+}
+footer .info img{
+    width: 60px;
+}
+footer p{
+    color: #FFF;
+    font-size: 14px;
+}
+footer .info a{
+    height: max-content;
+    padding: 5px 0;
+    color: #fff;
+    text-align: left;
+    display: flex;
+    align-items: flex-start;
+}
+footer .info p{
+    color: #FFF;
+}
+footer a i{
+    color: #4E6C50;
+    font-size: 20px;
+}
+footer .footer-items ul{
+    display: flex;
+    line-height: 50px;
+    flex-direction: column;
+}
+
+footer .footer-items ul li a{
+    color: #fff;
+}
+footer .footer-items ul li a:hover{
+    color: #4E6C50;
+}
+.footer-Lawyers img{
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+}
+.footer-Lawyers p{
+    color: #FFF;
+}
+.copyright{
+    text-align: center;
+  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
+
+}
+.copyright p{
+    color: #FFF;
+    padding: 5px 0;
+    margin-bottom: 0;
+}
+
+/*================================= About Page =================================*/
+.nav-pills{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.nav-pills .nav-link{
+    color: #000;
+    
+}
+.nav-pills .nav-link:hover{
+    color: #4E6C50;
+}
+.nav-pills .nav-link.active{
+    background-color: #4E6C50 !important;
+}
+.tab-content .contract-content p{
+    color: #000;
+}
+.tab-content .contract-content{
+    height: 100%;
+    margin-top: 100px;
+}
+.tab-section{
+    display: flex;
+    align-items: center;
+}
+.tab-content .sig-img{
+    position: relative;
+    display: flex;
+}
+.tab-content .sig-img .sig-img-bg{
+    width: 90%;
+    height: 300px;
+    background-color: rgba(78, 108, 80,0.7);
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     border-radius: 20px;
-  }
-  .back-btn {
-    padding: 8px 16px;
-    font-size: 0.8rem;
-    border-radius: 20px;
-  }
+}
+.tab-content .sig-img img{
+    width: 90%;
+    height: 300px;
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    border-radius: 8px;
+}
+.tab-content .sig-img .sig-img-bg h6{
+    font-weight: 800;
+    padding: 20px;
+    color: #000;
+}
+.tab-content .tab-pane{
+    height: 60vh;
+}
+/*================================= Atorney Page =================================*/
+.atorney img{
+    width: 400px;
+    height: 280px;
+}
+.atorney .row , .practice .row{
+    display: flex;
+    flex-direction: row;
+}
+/*================================= Contact Page =================================*/
+.contact-page  ,.blog-details{
+    margin-top: 150px;
+}
+.contact-page .media-icons a i{
+    width: 0px !important;
+    font-size: 22px;
+}
+.contact-page i{
+    width: 20px;
+}
+.contact-media-icons i{
+    color: #FFF;
+  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
 
-@media (max-width: 480px) {
-  .section-card-header {
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow here */
-
-    font-size: 1rem;
-    padding: 6px;
-    border-radius: 40px;
-  }
-  .add-btn {
-    padding: 6px 12px;
-    font-size: 0.7rem;
-    border-radius: 16px;
-  }
-  .back-btn {
-    padding: 6px 12px;
-    font-size: 0.7rem;
-    border-radius: 16px;
-  }
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    padding-top: 7px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+}
+.contact-media-icons i:hover{
+    color: #4E6C50;
+    background-color: #FFF;
+    border: 1px solid #4E6C50;
+}
+/*================================= blog-details Page =================================*/
+.blog-details .about__img-one{
+    width: 600px;
+    height: 400px;
+}
+.blog-details .row{
+    display: flex;
+    flex-direction: row;
+}
+.blog-item h3{
+    font-size: 22px;
+    padding: 20px 0;
+}
+.comments-Lawyers img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.comments-Lawyers p{
+    color: #808080;
+}
+/*================================= media queries =================================*/
+@media screen and (max-width:575px) {
+    /*home-page*/
+    .ml10 ,.ml12 ,.ml13 {
+        letter-spacing: 0.2em;
+    }
+    header .top-section{
+        height: 50px;
+    }
+    .top-section .container{
+        flex-direction: column;
+    }
+    .home-page .carousel-item .carousel-caption {
+        display: block !important;
+        margin-bottom: 50px !important;
+    }
+    /*about*/
+    .about__container{
+        flex-direction: column-reverse;
+    }
+    .ml14 .letter {
+        font-size: 24px;
+        
+font-family: 'Noto Kufi Arabic', sans-serif;
+    }
+    /*srvices*/
+    .srvices {
+        width: 100vw;  /* عرض القسم بكامل عرض الشاشة */
+        overflow-x: hidden;
+        margin-top: 20px;
+    }
+    .services-slider {
+        display: flex;  /* استخدام flex لتمكين التوسيط */
+        justify-content: center;  /* توسيط العناصر أفقيًا */
+        align-items: center;  /* توسيط العناصر عموديًا */
+        visibility: visible;
+        width: 90vw;  /* تحديد عرض الكاروسيل */
+        height: 220px;  /* تحديد ارتفاع الكاروسيل */
+    }
+    .services-slider .carousel-item a {
+        color: #FFF;
+        margin-left: auto;  /* توسيط الروابط أفقيًا */
+        margin-right: auto;  /* توسيط الروابط أفقيًا */
+        display: block;  /* جعل الروابط block لتسهيل التوسيط */
+    }
+    .services-slider img {
+        width: 150px;  /* تحديد عرض الصورة */
+        margin-left: auto;  /* توسيط الصورة أفقيًا */
+        margin-right: auto;  /* توسيط الصورة أفقيًا */
+        padding: 20px 0;
+    }
+    .srvices .srvices-items {
+        display: none;
+        visibility: hidden;
+        width: 0;
+        height: 0;
+    }
+    /*commitment*/
+    .commitment{
+        height: 320px;
+    }
+    
+    .commitment-info{
+        width: 100%;
+        padding: 20px;
+    }
+    /*lawyer*/
+    .lawyer{
+        width: 0;
+        height: 0;
+        display: none;
+        visibility: hidden;
+    }
+    .best-layers-slider{
+        display: block;
+        visibility: visible;
+        width: 100%;
+        height: 220px;
+    }
+    .best-lawyers img{
+        border-radius: 0px;
+    }
+    /*our-special-clients*/
+    .our-special-clients{
+        width: 98vw;
+        height: 300px !important;
+    }
+    .special-clients-slider{
+        display: block;
+        visibility: visible;
+        width: 100%;
+        height: 200px;
+    }
+    .special-clients-slider img{
+       height: 200px;
+       width: 255px;
+       margin-left: 45px;
+    }
+    .client-company{
+        width: 0;
+        height: 0;
+        display: none;
+        visibility: hidden;
+    }
+    /*contact-us*/
+    .contact-us img{
+        width: 100%;
+    }
+    /*footer*/
+    footer{
+        height: 400px;
+        overflow-y: scroll;
+    }
+    /*================= About-page ==================*/
+    .tab-content .sig-img img{
+        left: 10px;
+        width: 90vw;
+        height: max-content;
+        position: static;
+    }
+    .tab-section{
+       padding: 10px 0;
+    }
+    .tab-content .sig-img .sig-img-bg{
+        display: none;
+    }
+    .tab-content .sig-img{
+        position: none;
+    }
+    .tab-content .contract-content{
+        margin-top: -1px;
+    }
+    .tab-content .contract-content p{
+        height: max-content;
+        
+    }
+    /*================= Atorney-page ==================*/
+    .atorney .row , .practice .row,.blog-details .row{
+        display: flex;
+        flex-direction: column !important;
+    }
 }
 
-
-/* Utility Classes */
-.text-center {
-  text-align: center;
-}
-
-
-/* Profile Section */
-#header .profile img {
-  margin: 15px auto;
-  display: block;
-  width: 120px;
-  border: 8px solid #2c2f3f;
-}
-
-/* Social Links */
-/* Lawyer Section */
-
-/* Container Padding */
-.container {
-  padding-left: 15px; /* Adjust padding based on your design */
-  padding-right: 15px; /* Adjust padding based on your design */
-}
-
-
-/*Court Setting*/
-.name {
-  color: #007bff;
-  font-size: 24px;
-  margin-bottom: 0;
-}
-
-.label {
-  color: #6c757d;
-  font-size: 18px;
-}
-.court-icon {
-  width: 60px;
-  height: 60px;
-}
-/*btn Start*/
-/*btn End*/
-
-
-/*Expenses Start*/
-
-.expenses-card-header
-{
-  width: auto;
-  height: auto;
-  display: flex;
-  align-items: center; 
-  justify-content: center; 
-  color: rgb(255, 251, 0);
-  background: linear-gradient(325deg, #1a485c, #0a2741);
-  border: 6px solid #e4a802;
-  border-radius: 50%;  
-  box-shadow: 0 4px 8px rgba(5, 56, 97, 0.726);
-  transition: all 0.3s ease;
-}
-/*Expenses End*/
-/*Icons Start*/
-
-.dashboard-icon {
-  width: 180px;
-  height: 100px;
-}
-
-.client-icon {
-  padding-bottom: 3px;
-  width: 70px;
-  height: 50px;
-}
-
-
-  /*Icons End*/
-
-/* legalCase Detaiis End*/
-
-/* Responsive styles */
-@media screen and (max-width: 767px) {
-
-  .event-card {
-    margin-bottom: 20px;
-  }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-/* Cards and headers */
-
-/* Banner and Icons */
-
-/* Mobile styles */
-@media screen and (max-width: 767px) {
-
-  .button {
-    padding: 6px 12px;
-  }
-}
-.custom-card-header {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  padding: 20px;
-  font-family: 'Cairo', sans-serif;
-  font-weight: bold;
-  background: linear-gradient(
-    135deg,
-    #1a5dca,
-    #745114
-  ); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
-
-@media (min-width: var(--breakpoint-md)) {
-  /* Your styles for medium devices and up */
-
-/**Procedure Search Page ***/
-
-.form-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.search-button {
-  background-color: #002d43;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.search-button:hover {
-  background-color: #001d2b;
-}
-
-/* Procdure Search */
-.search-label-text {
-  font-family: 'Cairo', sans-serif;
-  font-weight: bold;
-  font-size: 1rem;
-  color: #f3e6e6;
-  border: 1px solid linear-gradient(to top, #1d0367, #3c0381, #330250); /* تدرج ألوان جميل وجذاب */
-
-  background: linear-gradient(rgb(4, 19, 41), rgb(22 57 75), rgb(10 47 67));
-  padding-top: 10px; /* Add padding to create space around the text */
-}
-.search-button {
-  font-family: 'Cairo', sans-serif;
-  font-size: 1rem;
-  color: #fff;
-  background-color: #b14141;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  border-radius: 10px /* Add border-radius for a cute rounded look */
-
-  /* Add a cute hover effect */
-}
-} 
-}
+@media (min-width: 768px) and (max-width: 1200px){
+    .commitment{
+        height: 320px;
+    }
 }
