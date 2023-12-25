@@ -7,7 +7,7 @@ import HomeRoutes from '../Routes';
 
 export default function WebSite() {
     return (
-        <main> 
+      <main className="main" id="main">
         <Navbar />
           <HomeRoutes />     {/* Assuming this is your home page slider */}
   

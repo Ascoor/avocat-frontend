@@ -4,7 +4,7 @@ import { FaBars, FaUser } from 'react-icons/fa';
 import { Navbar, NavDropdown } from 'react-bootstrap'; // Import NavDropdown from react-bootstrap
 import { useSpring, animated } from '@react-spring/web';
 import '../../../assets/css/TopNav.css';
-import { LogoImage } from '../../../images/index';
+import { LogoImage } from '../../../assets/img/index';
 import API_CONFIG from '../../../config';
 import Notification from './Notification';
 

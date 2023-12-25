@@ -393,7 +393,7 @@ font-family: 'Noto Kufi Arabic', sans-serif;
     padding-top: 30px;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(rgba(78, 108, 80,0.7),rgba(78, 108, 80,0.7)), url(./images/home-img/commition-bg.jpg);
+    background-image: linear-gradient(rgba(78, 108, 80,0.7),rgba(78, 108, 80,0.7)), url(./assets/img/home-img/commition-bg.jpg);
     background-position: 30% 50%;
     background-size: cover;
 }

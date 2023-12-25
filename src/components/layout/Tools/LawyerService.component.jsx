@@ -1,6 +1,6 @@
-import lawyer1 from '../../images/lawyerr4.jpeg';
-import lawyer2 from '../../images/lawyer5.jpeg';
-import lawyer3 from '../../images/lawyer6.jpeg';
+import lawyer1 from '../../assets/img/lawyerr4.jpeg';
+import lawyer2 from '../../assets/img/lawyer5.jpeg';
+import lawyer3 from '../../assets/img/lawyer6.jpeg';
 
 const slogans = [
   'أفوكات - للحقوق والعدالة',

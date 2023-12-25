@@ -3,11 +3,11 @@ import ServicesSection from './Blade/ServicesSection';
 import AboutSection from './Blade/AboutSection';
 import Commitment from './Blade/Commitment';
 import MapSection from './Blade/MapSection';
-import  Carousel from './Blade/HomeCarousel';
+import  HomeCarousel from './Blade/HomeCarousel';
 const Home = () => {
   return (
     <>
-  <Carousel />
+  <HomeCarousel />
     <ServicesSection />      {/* Services offered */}
           
           <AboutSection />         {/* About us section */}

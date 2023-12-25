@@ -1,9 +1,14 @@
 import React from "react";
-import {Unsplah1,Unsplah2,Unsplah3,Unsplah5,Unsplah6,Unsplah7,Unsplah8,Unsplah9} from "../images/index";
-const About = () => {
-    return (
+import { Unsplah1, Unsplah2, Unsplah3, Unsplah4, Unsplah5, Unsplah6, Unsplah7, Unsplah8, Unsplah9 } from "../assets/img/index";
 
-<section className="about practice" id="about" style="margin-top: 150px;">
+const About = () => {
+  const sectionStyle = {
+    marginTop: "150px",
+  };
+
+  return (
+    <section className="about practice" id="about" style={sectionStyle}>
+    
 <div className="container">
 <h2>آخر أخبارنا</h2>
 <p>يتكون هيكل الإدارة من المحامين ومستشاروهم ، المؤهلين وذوي الخبرة العليا في التعامل مع القضايا والمعاملات ، وهم محامونا الرئيسيون هم:</p>
@@ -33,7 +38,7 @@ const About = () => {
 <a className="read-more" href="blog-details.html">Read more<i className="bx bx-right-arrow-alt"></i></a>
 </div>
 <div className="col button-hover">
-<img alt="blog img" className="img-fluid" src={unsplah4}/>
+<img alt="blog img" className="img-fluid" src={Unsplah4}/>
 <h3>يتكون هيكل الإدارة من المحامين.</h3>
 <p>الشركة تلتزم بقوة على كل منها
                                     الحالة ، سواء كانت صغيرة أو كبيرة ، ستكون

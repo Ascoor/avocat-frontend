@@ -42,10 +42,17 @@ const Contact = () => {
 </div>
 </div>
 <div className="col">
-<form className="row g-2">
-<div className="col-md-6 mt-5">
-<input className="form-control" id="" placeholder="Name" required="" type="text" value=""/>
-</div>
+{/* <form className="row g-2"> <div className="col-md-6 mt-5">
+      <input
+        className="form-control"
+        id=""
+        placeholder="Name"
+        required=""
+        type="text"
+        value={name}
+        onChange={handleNameChange}
+      />
+    </div>
 <div className="col-md-6 mt-5">
 <input className="form-control" id="" placeholder="Phone" required="" type="phone" value=""/>
 </div>
@@ -58,7 +65,7 @@ const Contact = () => {
 <div className="col-12 send-msg mt-5">
 <button className="btn button-hover" type="submit">Send Message</button>
 </div>
-</form>
+</form> */}
 </div>
 </div>
 </div>

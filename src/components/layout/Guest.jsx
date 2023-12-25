@@ -3,7 +3,7 @@ import '../../assets/css/Welcome.css';
 import { useTransition, useSpring, animated } from '@react-spring/web';
 import { Card, Button, Container } from 'react-bootstrap';
 import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
-import { LogoImage } from '../../images/index';
+import { LogoImage } from '../../assets/img/index';
 
 import WelcomeSuspense from './Tools/WelcomeSuspense';
 
