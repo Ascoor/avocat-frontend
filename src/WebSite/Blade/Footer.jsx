@@ -1,5 +1,5 @@
 import React , { useEffect } from 'react';
-import { LogoPatren, Photography, Unsplash } from '../../images';
+import { LogoPatren, Photography, Unsplash1 } from '../../images/index';
 import ScrollReveal from 'scrollreveal';
 
 function Footer() {
@@ -59,7 +59,7 @@ function Footer() {
           <div className="col">
             <p>أحدث الأخبار</p>
             <div className="footer-Lawyers d-flex">
-              <img alt="footer img" className="img-fluid" src={Unsplash}/>
+              <img alt="footer img" className="img-fluid" src={Unsplash1}/>
               <p className="px-1">المحامون ذوي الخبرة العالية والاستشاريون</p>
             </div>
             <div className="footer-Lawyers d-flex mt-3">

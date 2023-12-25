@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CivelLaw, CriminalLaw, FamilyLaw, Investment,LabourLaw,RealEstate } from '../images/index';
+import { CivelLaw, CriminalLaw, FamilyLaw, Investment,LabourLaw,RealEstate } from '../../images/index';
 import ScrollReveal from 'scrollreveal';
 
 function ServicesSection() {

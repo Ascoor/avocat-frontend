@@ -25,6 +25,15 @@ export { default as CivelLaw  } from '../images/serviceIcons/protection of right
 //About Section
 export { default as AboutUs } from '../images/about/contract.jpg';
 
+
 // footer
 export { default as Photography } from '../images/footer/cytonn-photography-gjao3ztx9gu-unsplash.jpg';
-export { default as Unsplash } from '../images/footer/adeolu-eletu-E7RLgUjjazc-unsplash.jpg';
+export { default as Unsplah1 } from '../images/footer/adeolu-eletu-E7RLgUjjazc-unsplash.jpg';
+export { default as Unsplah2 } from '../images/blog/inaki-del-olmo-NIJuEQw0RKg-unsplash.jpg';
+export { default as Unsplah3 } from '../images/blog/marten-bjork-6dW3xyQvcYE-unsplash.jpg';
+export { default as Unsplah4 } from '../images/blog/luke-michael-DUV8TJtD2QY-unsplash.jpg';
+export { default as Unsplah5 } from '../images/blog/luke-michael-DUV8TJtD2QY-unsplash.jpg';
+export { default as Unsplah6 } from '../images/blog/inaki-del-olmo-NIJuEQw0RKg-unsplash.jpg';
+export { default as Unsplah7 } from '../images/blog/luke-michael-DUV8TJtD2QY-unsplash.jpg';
+export { default as Unsplah8 } from '../images/blog/marten-bjork-6dW3xyQvcYE-unsplash.jpg';
+export { default as Unsplah9 } from '../images/blog/inaki-del-olmo-NIJuEQw0RKg-unsplash.jpg';
