@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
+import { Canvas } from '@react-three/fiber';
+import SpiderWeb from './SpiderWeb';
+import anime from 'animejs'; // Import the anime library
 import { Carousel } from 'react-bootstrap';
+
 import { Slider1, Slider2, Slider3, Slider4 } from '../../assets/img/index';
-import anime from 'animejs';
 
 const HomeCarousel = () => {
 
@@ -54,6 +57,7 @@ const HomeCarousel = () => {
     }
   ];
 
+
   return (
     <section className="home-page">
       <Carousel>
@@ -61,11 +65,21 @@ const HomeCarousel = () => {
           <Carousel.Item key={index}>
             <img src={item.imgSrc} className="d-block img-fluid" alt={item.altText} />
             <Carousel.Caption>
-              <p className="animated-p" style={{ fontSize: '24px', color: '#007bff' }}>{wrapLetters(item.caption)}</p>
+              <p className="animated-p" style={{ fontSize: '24px', color: '#007bff' }}>
+                {wrapLetters(item.caption)}
+              </p>
             </Carousel.Caption>
           </Carousel.Item>
         ))}
       </Carousel>
+
+      <div className="spider-web-container" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 10 }}>
+        <Canvas style={{ background: 'transparent' }}>
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} />
+          <SpiderWeb color="white" lineWidth={1} divisions={20} />
+        </Canvas>
+      </div>
     </section>
   );
 }

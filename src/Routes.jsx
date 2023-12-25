@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './WebSite/Home';
 import Contact from './WebSite/Contact';
 import About from './WebSite/About';
-import Atorneys from './WebSite/atorney';
+import Atorneys from './WebSite/Atorney';
 
 const HomeRoutes = () => {
   return (
