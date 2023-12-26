@@ -1,29 +1,57 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  publicDir: 'public',
+  
+  // Define server options
   server: {
-    host: '127.0.0.1',
-    port: 3000
+    host: true,
+    port: 3000,
+    open: true, // automatically open the browser
+    cors: true, // enable CORS
   },
+
+  // Resolve aliases for directories
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      // Add other aliases here
+    },
+  },
+
+  // CSS configuration
   css: {
-    modules: true
+    modules: {
+      localsConvention: 'camelCaseOnly',
+    },
+    preprocessorOptions: {
+      scss: {
+        // SCSS global styles (variables, mixins, etc.)
+        additionalData: `@import "@/styles/variables.scss";`,
+      },
+    },
   },
+
+  // Build specific configurations
   build: {
+    outDir: 'build',
     rollupOptions: {
       output: {
-        manualChunks (filePath) {
-          if (filePath.includes('node_modules')) {
-            return 'vendor';
-          }
-        }
-      }
+        // Control chunking and asset output
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          // other chunks
+        },
+      },
     },
-    chunkSizeWarningLimit: 1200
+    sourcemap: true, // enable source maps
   },
+
+  // Optimize dependencies
   optimizeDeps: {
-    include: ['react', 'react-dom', 'axios', 'bootstrap', 'react-router-dom']
-  }
+    include: ['react', 'react-dom', 'axios', 'bootstrap', 'react-router-dom'],
+    // exclude specific packages
+  },
 });
