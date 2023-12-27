@@ -1,9 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
 import { Carousel } from 'react-bootstrap';
 import anime from 'animejs';
-import SpiderWeb from './SpiderWeb';
+
 import { Slider1, Slider2, Slider3, Slider4 } from '../../assets/img/index';
 const carouselItems = [
   {
@@ -73,8 +72,8 @@ const HomeCarousel = () => {
   }, [currentSlide]);
 
   return (
-    <section className="home-page">
-      <Carousel
+    <section className="home-page" style={{ position: 'relative', zIndex: 1 }}>
+    <Carousel
         activeIndex={currentSlide}
         onSelect={(selectedIndex) => setCurrentSlide(selectedIndex)}
         interval={5000}
@@ -98,15 +97,8 @@ const HomeCarousel = () => {
 
         ))}
       </Carousel>
-      <div className="spider-web-container" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 10 }}>
-        <Canvas style={{ background: 'transparent', alpha: 0.7 }}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} />
-          <SpiderWeb color="silver" lineWidth={0.5} divisions={20} opacity={0.1} />
-        </Canvas>
-      </div>
+
     </section>
   );
 }
-
 export default HomeCarousel;
