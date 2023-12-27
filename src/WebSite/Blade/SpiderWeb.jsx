@@ -9,6 +9,8 @@ extend({ Line });
 const SpiderWeb = () => {
   const { size } = useThree();
   const gridRef = useRef();
+  const frequency = 0.5; // Set your desired frequency
+  const amplitude = 0.3; // Set your desired am
 
   // Calculate points for the web lines
   const points = useMemo(() => {
@@ -45,8 +47,10 @@ const SpiderWeb = () => {
     gridRef.current.scale.set(scale, scale, scale);
   
     // تحريك الشبكة هنا بناءً على t
+
+    // Move the grid based on t
     gridRef.current.rotation.z += 0.001;
-    gridRef.current.position.y = amplitude * Math.sin(frequency * t);
+    gridRef.current.position.y = amplitude * Math.sin(frequency * t); // Use amplitude here
   });
 
   return (
