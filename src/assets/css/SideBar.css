@@ -5,19 +5,23 @@ body {
   font-family: 'Cairo', sans-serif;
   background-color: #f0f0f0;
 }
-:root{
-  --accent-color: #F39C12; /* Tech Gold */
+:root {
+  --accent-color: #f39c12; /* Tech Gold */
 }
 /* Sidebar Styles */
 .sidebar {
-  
   position: fixed;
   top: 0;
   right: -300px; /* Adjust this */
-  width: 300px;  /* Adjust this */
+  width: 300px; /* Adjust this */
   height: 100vh;
 
-  background: radial-gradient(circle at center, #0b2440 10%, #072238 60%, #0a2b41 80%);
+  background: radial-gradient(
+    circle at center,
+    #0b2440 10%,
+    #072238 60%,
+    #0a2b41 80%
+  );
   color: #fff;
   padding-top: 25px;
   overflow-x: hidden;
@@ -75,12 +79,14 @@ body {
   color: #fff;
   text-decoration: none;
   text-align: center;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .sidebar-nav a:hover,
 .sidebar-nav li.active a {
-  background-color: #F39C12;
+  background-color: #f39c12;
 }
 
 /* Sub-menu Styles */

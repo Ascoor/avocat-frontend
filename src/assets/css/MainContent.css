@@ -1,5 +1,11 @@
 /* Reset default margin and padding */
-body, div, h2, h3, p, ul, li {
+body,
+div,
+h2,
+h3,
+p,
+ul,
+li {
   margin: 0;
   padding: 0;
 }
@@ -32,7 +38,7 @@ body {
   .main-content {
     flex-direction: column; /* Stack content vertically */
   }
-  
+
   .main-content.sidebar-open {
     margin-right: 0; /* Reset margin-right for smaller screens */
   }

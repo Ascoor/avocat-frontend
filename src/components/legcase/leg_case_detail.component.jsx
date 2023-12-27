@@ -218,7 +218,6 @@ export default function LegCaseDetail() {
                     <td>{court.pivot.case_number}</td>
                     <td>{court.pivot.case_year}</td>
                     <td>{court.name}</td>
-       
                   </tr>
                 ))}
               </tbody>
@@ -284,7 +283,7 @@ export default function LegCaseDetail() {
                     </Form.Control>
                   </Form.Group>
                 </Col>
-             
+
                 <Col xs={1}>
                   <Button
                     variant="danger"

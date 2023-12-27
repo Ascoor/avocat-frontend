@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Alert, Form, Row, Col, Button } from 'react-bootstrap';
 import {
-  FaOrcid, FaUserEdit, FaIdCard, FaMapMarkerAlt, FaCalendarAlt,
-  FaEnvelope, FaPhone, FaBriefcase, FaPray,
+  FaOrcid,
+  FaUserEdit,
+  FaIdCard,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaEnvelope,
+  FaPhone,
+  FaBriefcase,
+  FaPray,
 } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
@@ -15,7 +22,9 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
     name: client?.name ?? '',
     gender: client?.gender ?? '',
     identity_number: client?.identity_number ?? '',
-    date_of_birth: client?.date_of_birth ? moment(client.date_of_birth).toDate() : new Date(),
+    date_of_birth: client?.date_of_birth
+      ? moment(client.date_of_birth).toDate()
+      : new Date(),
     address: client?.address ?? '',
     religion: client?.religion ?? '',
     work: client?.work ?? '',
@@ -31,16 +40,17 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
       name: client?.name ?? '',
       gender: client?.gender ?? '',
       identity_number: client?.identity_number ?? '',
-      date_of_birth: client?.date_of_birth ? moment(client.date_of_birth).toDate() : new Date(),
+      date_of_birth: client?.date_of_birth
+        ? moment(client.date_of_birth).toDate()
+        : new Date(),
       address: client?.address ?? '',
       religion: client?.religion ?? '',
       work: client?.work ?? '',
       email: client?.email ?? '',
       phone_number: client?.phone_number ?? '',
       emergency_number: client?.emergency_number ?? '',
-    })
+    });
   }, [client]);
-
 
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -57,11 +67,16 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
     try {
       const clientData = {
         ...formData,
-        date_of_birth: formData.date_of_birth ? moment(formData.date_of_birth).format('YYYY-MM-DD') : null,
+        date_of_birth: formData.date_of_birth
+          ? moment(formData.date_of_birth).format('YYYY-MM-DD')
+          : null,
       };
 
       if (client.id) {
-        await axios.put(`${API_CONFIG.baseURL}/api/clients/${client.id}`, clientData);
+        await axios.put(
+          `${API_CONFIG.baseURL}/api/clients/${client.id}`,
+          clientData,
+        );
       } else {
         await axios.post(`${API_CONFIG.baseURL}/api/clients`, clientData);
       }
@@ -77,19 +92,27 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
   return (
     <Modal show={isOpen} onHide={onClose} centered dir="rtl">
       {isSuccess && (
-        <Alert variant="success" onClose={() => setIsSuccess(false)} dismissible>
+        <Alert
+          variant="success"
+          onClose={() => setIsSuccess(false)}
+          dismissible
+        >
           {/* Add a success message here */}
         </Alert>
       )}
 
-      <Modal.Header closeButton><Modal.Title>
-  {client?.id ? (
-    <><FaIdCard /> تعديل بيانات العميل</>
-  ) : (
-    <><FaIdCard /> إضافة عميل</>
-  )}
-</Modal.Title>
-
+      <Modal.Header closeButton>
+        <Modal.Title>
+          {client?.id ? (
+            <>
+              <FaIdCard /> تعديل بيانات العميل
+            </>
+          ) : (
+            <>
+              <FaIdCard /> إضافة عميل
+            </>
+          )}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
@@ -110,7 +133,7 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
           </Form.Group>
 
           {/* Repeat similar structure for other fields */}
-                  <Form.Group as={Row}>
+          <Form.Group as={Row}>
             <Form.Label column xs={12} md={6} htmlFor="inputName">
               <FaUserEdit /> الاسم
             </Form.Label>
@@ -135,7 +158,7 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
                 value={formData.gender}
                 onChange={handleChange}
                 name="gender"
-                id="inputGender"  
+                id="inputGender"
               >
                 <option value="">اختر الجنس</option>
                 <option value="ذكر">ذكر</option>
@@ -144,7 +167,7 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputIdentityNumber">  
+            <Form.Label column xs={12} md={6} htmlFor="inputIdentityNumber">
               <FaIdCard /> رقم الهوية
             </Form.Label>
             <Col xs={12} md={6}>
@@ -164,7 +187,11 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
             </Form.Label>
             <Col xs={12} md={6}>
               <DatePicker
-                selected={formData.date_of_birth ? new Date(formData.date_of_birth) : null}
+                selected={
+                  formData.date_of_birth
+                    ? new Date(formData.date_of_birth)
+                    : null
+                }
                 onChange={handleDateChange}
                 name="date_of_birth"
                 id="inputDateOfBirth"
@@ -174,7 +201,7 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
           <Form.Group as={Row}>
             <Form.Label column xs={12} md={6} htmlFor="inputAddress">
               <FaMapMarkerAlt /> العنوان
-            </Form.Label> 
+            </Form.Label>
             <Col xs={12} md={6}>
               <Form.Control
                 type="text"
@@ -193,7 +220,7 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
             <Col xs={12} md={6}>
               <Form.Control
                 type="text"
-                placeholder="أدخل رقم الهاتف" 
+                placeholder="أدخل رقم الهاتف"
                 value={formData.phone_number}
                 onChange={handleChange}
                 name="phone_number"
@@ -204,7 +231,7 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
           <Form.Group as={Row}>
             <Form.Label column xs={12} md={6} htmlFor="inputEmail">
               <FaEnvelope /> البريد الالكتروني
-            </Form.Label> 
+            </Form.Label>
             <Col xs={12} md={6}>
               <Form.Control
                 type="email"
@@ -232,7 +259,7 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
                 <option value="مسلم">مسلم</option>
                 <option value="مسيحي">مسيحي</option>
               </Form.Control>
-            </Col>  
+            </Col>
           </Form.Group>
           <Form.Group as={Row}>
             <Form.Label column xs={12} md={6} htmlFor="inputWork">
@@ -264,7 +291,7 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
               />
             </Col>
           </Form.Group>
-          
+
           <Button variant="secondary" onClick={onClose}>
             الغاء
           </Button>

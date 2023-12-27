@@ -4,7 +4,7 @@ import Home from '../../Home';
 import Lawyers from '../../lawyer/lawyer_index.component';
 import LawyersAddEdit from '../../lawyer/lawyer_index.component';
 import CourtSetting from '../../setting/court_index.component';
-import CourtSearch from "../../reports/CourtSearch";
+import CourtSearch from '../../reports/CourtSearch';
 import CaseTypeSet from '../../setting/case_index.component';
 /** FinancialDashboard**/
 import FinancialDashboard from '../../financially/index';
@@ -25,29 +25,27 @@ import { Container } from 'react-bootstrap';
 const AuthRoutes = () => {
   return (
     <Container>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/procedures" element={<ProcedureSearch />} />
+        <Route path="/clients" element={<ClientsList />} />
+        <Route path="/courts" element={<CourtSetting />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/court-search" element={<CourtSearch />} />
+        <Route path="/lawyers" element={<Lawyers />} />
+        <Route path="/cases_setting" element={<CaseTypeSet />} />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/procedures" element={<ProcedureSearch />} />
-          <Route path="/clients" element={<ClientsList />} />
-          <Route path="/courts" element={<CourtSetting />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/court-search" element={<CourtSearch />} />
-          <Route path="/lawyers" element={<Lawyers />} />
-          <Route path="/cases_setting" element={<CaseTypeSet />} />
+        <Route path="/financial" element={<FinancialDashboard />} />
+        <Route path="/legcases/show/:id" element={<LegCaseDetail />} />
+        <Route path="/profile/:userId" element={<ProfileUser />} />
+        <Route path="/legcases" element={<LegcaseList />} />
+        <Route path="/client/create" element={<AddEditClient />} />
+        <Route path="/client/edit/:id" element={<AddEditClient />} />
 
-          <Route path="/financial" element={<FinancialDashboard />} />
-          <Route path="/legcases/show/:id" element={<LegCaseDetail />} />
-          <Route path="/profile/:userId" element={<ProfileUser />} />
-          <Route path="/legcases" element={<LegcaseList />} />
-          <Route path="/client/create" element={<AddEditClient />} />
-          <Route path="/client/edit/:id" element={<AddEditClient />} />
-
-          <Route path="/lawyers/form" element={<LawyersAddEdit />} />
-          {/* <Route path="/archives" element={<Archives />} /> */}
-          {/* <Route path="/archives/wordpadeditor" element={<WordPadEditor />} /> */}
-        </Routes>
-
+        <Route path="/lawyers/form" element={<LawyersAddEdit />} />
+        {/* <Route path="/archives" element={<Archives />} /> */}
+        {/* <Route path="/archives/wordpadeditor" element={<WordPadEditor />} /> */}
+      </Routes>
     </Container>
   );
 };

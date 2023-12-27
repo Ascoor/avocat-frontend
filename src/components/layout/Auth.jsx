@@ -10,7 +10,7 @@ import { useSpring, animated } from '@react-spring/web';
 function Auth() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { token, logout, getUser } = useAuth();
-  const user = getUser()
+  const user = getUser();
   const userId = user.id;
   const userName = user.name; // Access the user's name
 

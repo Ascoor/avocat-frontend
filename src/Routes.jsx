@@ -14,6 +14,6 @@ const HomeRoutes = () => {
       <Route path="/atorney" element={<Atorneys />} />
     </Routes>
   );
-}
+};
 
 export default HomeRoutes;

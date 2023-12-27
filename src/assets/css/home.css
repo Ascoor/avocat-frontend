@@ -2,11 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lateef&display=swap');
 
-
-
 /* Basic styling for event cards */
 .event-card {
-  display:flow-root;
+  display: flow-root;
   align-items: center;
   background-color: #f8f9fa; /* Background color of the card */
   border: 5px solid rgb(255, 155, 5);
@@ -15,12 +13,12 @@
   transition:
     transform 0.3s ease-in-out,
     box-shadow 0.3s ease-in-out;
-  box-shadow: 0 10px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1);
 }
 
 .event-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .event-card-body {
@@ -39,7 +37,7 @@
 }
 
 .home-card .event-card-title {
-  z-index:-1 ;
+  z-index: -1;
   color: #f6ff72;
 }
 
@@ -51,17 +49,26 @@
 /* Brand Button */
 .btn.btn-home-search {
   background-color: #14435a; /* Background color of the button */
-  color: #F6CD59; /* Text color on the button */
+  color: #f6cd59; /* Text color on the button */
   border-radius: 20px;
   padding: 10px 20px;
   font-size: 1.2rem;
 }
 
 .btn.btn-home-search:hover {
-  background: linear-gradient(15deg, #a87b2d, #d8d50a); /* Background color of the button on hover */
+  background: linear-gradient(
+    15deg,
+    #a87b2d,
+    #d8d50a
+  ); /* Background color of the button on hover */
 }
 .home-text-center {
-  background: radial-gradient(circle at center, #0b2440 0%, #1a466b 50%, #0a2b41 100%);
+  background: radial-gradient(
+    circle at center,
+    #0b2440 0%,
+    #1a466b 50%,
+    #0a2b41 100%
+  );
 
   border-radius: 40px;
   padding: 20px;
@@ -72,7 +79,6 @@
   font-weight: 700;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adjusted box shadow */
 }
-
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
@@ -85,5 +91,4 @@
     font-size: 1.2rem;
     margin-bottom: 5px;
   }
-
 }

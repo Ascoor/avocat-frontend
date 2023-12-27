@@ -12,11 +12,19 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
   const [isUser, setIsUser] = useState(!!initialValues?.user_id);
   const [name, setName] = useState(initialValues?.name || '');
   const [birthdate, setBirthdate] = useState(initialValues?.birthdate || null);
-  const [identityNumber, setIdentityNumber] = useState(initialValues?.identity_number || '');
-  const [lawRegNumber, setLawRegNumber] = useState(initialValues?.law_reg_num || '');
-  const [lawyerClass, setLawyerClass] = useState(initialValues?.lawyer_class || '');
+  const [identityNumber, setIdentityNumber] = useState(
+    initialValues?.identity_number || '',
+  );
+  const [lawRegNumber, setLawRegNumber] = useState(
+    initialValues?.law_reg_num || '',
+  );
+  const [lawyerClass, setLawyerClass] = useState(
+    initialValues?.lawyer_class || '',
+  );
   const [email, setEmail] = useState(initialValues?.email || '');
-  const [phoneNumber, setPhoneNumber] = useState(initialValues?.phone_number || '');
+  const [phoneNumber, setPhoneNumber] = useState(
+    initialValues?.phone_number || '',
+  );
   const [religion, setReligion] = useState(initialValues?.religion || '');
   const [gender, setGender] = useState(initialValues?.gender || '');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -43,9 +51,9 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
       return;
     }
     setShowAlert(false);
-    
-  // تحويل تاريخ الولادة إلى التنسيق الصحيح (YYYY-MM-DD)
-  const formattedBirthdate = moment(birthdate).format('YYYY-MM-DD');
+
+    // تحويل تاريخ الولادة إلى التنسيق الصحيح (YYYY-MM-DD)
+    const formattedBirthdate = moment(birthdate).format('YYYY-MM-DD');
 
     const formData = {
       name,
@@ -71,10 +79,23 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
   };
 
   const validateForm = () => {
-    if (!name || !isValidDate(birthdate) || !identityNumber || !lawRegNumber || !email || !phoneNumber || !religion || !gender) {
+    if (
+      !name ||
+      !isValidDate(birthdate) ||
+      !identityNumber ||
+      !lawRegNumber ||
+      !email ||
+      !phoneNumber ||
+      !religion ||
+      !gender
+    ) {
       return false;
     }
-    if (isUser && showPasswordInput && (password !== confirmPassword || password === '********')) {
+    if (
+      isUser &&
+      showPasswordInput &&
+      (password !== confirmPassword || password === '********')
+    ) {
       return false;
     }
     return true;
@@ -89,7 +110,9 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
   };
   return (
     <Form onSubmit={handleSubmit}>
-      {showAlert && <Alert variant="danger">يرجى ملء جميع الحقول المطلوبة.</Alert>}
+      {showAlert && (
+        <Alert variant="danger">يرجى ملء جميع الحقول المطلوبة.</Alert>
+      )}
       <Form.Check
         type="radio"
         label="User"
@@ -102,7 +125,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         checked={!isUser}
         onChange={() => setIsUser(false)}
       />
-  {isUser && (
+      {isUser && (
         <>
           <Form.Group>
             <Form.Label>Password</Form.Label>
@@ -124,18 +147,17 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
         </>
       )}
 
-      <Form.Group >
+      <Form.Group>
         <Form.Label>الاسم</Form.Label>
         <Form.Control
           type="text"
           value={name}
-          
           onChange={(e) => setName(e.target.value)}
           required
         />
       </Form.Group>
 
-      <Form.Group >
+      <Form.Group>
         <Form.Label>
           <FaCalendarAlt /> تاريخ الميلاد
         </Form.Label>
@@ -148,15 +170,13 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
           placeholderText="اختر تاريخ الميلاد"
           isInvalid={!isValidDate(birthdate) || birthdate === null}
         />
-        
       </Form.Group>
-      <Form.Group >
+      <Form.Group>
         <Form.Label>رقم التسجيل القانوني</Form.Label>
         <Form.Control
           type="text"
           value={lawRegNumber || ''}
           onChange={(e) => setLawRegNumber(e.target.value)}
-          
           required
         />
       </Form.Group>
@@ -175,12 +195,11 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
           <option value="جدول عام">جدول عام</option>
         </Form.Control>
       </Form.Group>
-      <Form.Group >
+      <Form.Group>
         <Form.Label>البريد الإلكتروني</Form.Label>
         <Form.Control
           type="email"
           value={email || ''}
-          
           onChange={(e) => setEmail(e.target.value)}
           required
         />
@@ -209,21 +228,19 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
           <option value="مسيحى">مسيحى</option>
         </Form.Control>
       </Form.Group>
-      <Form.Group >
+      <Form.Group>
         <Form.Label>رقم الهاتف</Form.Label>
         <Form.Control
           type="tel"
           placeholder="أدخل رقم الهاتف"
-          
           value={phoneNumber || ''}
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
       </Form.Group>
-      <Form.Group >
+      <Form.Group>
         <Form.Label>رقم الهوية</Form.Label>
         <Form.Control
           type="text"
-          
           placeholder="أدخل رقم الهويةالمكون من 14 رقم"
           value={identityNumber}
           onChange={(e) => setIdentityNumber(e.target.value)}
@@ -236,7 +253,6 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
       </Button>
     </Form>
   );
-
 };
 
 export default LawyerAddEdit;

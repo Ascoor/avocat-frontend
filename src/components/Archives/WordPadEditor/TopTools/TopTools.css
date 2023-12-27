@@ -4,7 +4,10 @@
   padding: 10px;
 }
 
-.text-tools, .alignment-tools, .color-tools, .file-tools {
+.text-tools,
+.alignment-tools,
+.color-tools,
+.file-tools {
   margin-right: 20px;
 }
 

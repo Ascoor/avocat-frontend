@@ -4,7 +4,7 @@ import AboutSection from './Blade/AboutSection';
 import Commitment from './Blade/Commitment';
 
 import MapSection from './Blade/MapSection';
-import  HomeCarousel from './Blade/HomeCarousel';
+import HomeCarousel from './Blade/HomeCarousel';
 const Home = () => {
   return (
     <>

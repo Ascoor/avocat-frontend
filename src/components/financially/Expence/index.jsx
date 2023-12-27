@@ -153,8 +153,8 @@ const ExpenseIndex = () => {
                       {expense.service_id
                         ? expense.service.service_no
                         : expense.leg_case_id
-                        ? expense.leg_case.slug
-                        : ''}
+                          ? expense.leg_case.slug
+                          : ''}
                     </td>
                     <td>{expense.expense_category?.name}</td>
                     <td>{expense.description}</td>

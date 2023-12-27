@@ -23,7 +23,8 @@ const LegalSession = ({ legCaseId }) => {
   const [rollNumber, setRollNumber] = useState('');
   const [selectedLawyer, setSelectedLawyer] = useState('');
   const [orders, setOrders] = useState('');
-  const [showAddLegalSessionModal, setShowAddLegalSessionModal] = useState(false);
+  const [showAddLegalSessionModal, setShowAddLegalSessionModal] =
+    useState(false);
   const [lawyers, setLawyers] = useState([]);
   const [courts, setCourts] = useState([]);
   const [result, setResult] = useState('');
@@ -34,11 +35,14 @@ const LegalSession = ({ legCaseId }) => {
   // Fetch data function
   const fetchData = useCallback(async () => {
     try {
-      const [sessionsResponse, lawyersResponse, courtsResponse] = await Promise.all([
-        axios.get(`${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`),
-        axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
-        axios.get(`${API_CONFIG.baseURL}/api/courts`),
-      ]);
+      const [sessionsResponse, lawyersResponse, courtsResponse] =
+        await Promise.all([
+          axios.get(
+            `${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`,
+          ),
+          axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
+          axios.get(`${API_CONFIG.baseURL}/api/courts`),
+        ]);
       setLegalSessions(sessionsResponse.data);
       setLawyers(lawyersResponse.data);
       setCourts(courtsResponse.data);
@@ -51,7 +55,6 @@ const LegalSession = ({ legCaseId }) => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
 
   const handleEditLegalSession = (legalSession) => {
     setModalMode('edit');
@@ -216,7 +219,7 @@ const LegalSession = ({ legCaseId }) => {
                   <tr key={legalSession.id}>
                     <td>{legalSession.session_date}</td>
                     <td>{legalSession.lawyer.name}</td>
-      <td>{legalSession.legal_session_type.name}</td>
+                    <td>{legalSession.legal_session_type.name}</td>
                     <td>{legalSession.court.name}</td>
                     <td>{legalSession.orders}</td>
                     <td>{legalSession.result}</td>

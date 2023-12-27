@@ -17,9 +17,9 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
   const userDropdownAnimation = useSpring({
     opacity: 1,
     from: { opacity: 0 },
-    zIndex: 1000
+    zIndex: 1000,
   });
-  
+
   const fetchNotifications = async () => {
     try {
       const response = await axios.get(
@@ -38,25 +38,24 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
     fetchNotifications();
   }, [sidebarOpen, userId]);
 
-    
-
-return (
-  <animated.nav
-    style={userDropdownAnimation}
-    dir="rtl"
-    className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}
-  >
-    <div className="d-flex align-items-center justify-content-start">
-      <button onClick={onToggleSidebar} className="navbar-toggler">
-        <FaBars />
-      </button>
-      <div className="brand-logo"> {/* تغليف شعار العلامة التجارية في div */}
-        <Navbar.Brand href="/">
-          <img src={LogoImage} alt="Brand Logo" />
-        </Navbar.Brand>
+  return (
+    <animated.nav
+      style={userDropdownAnimation}
+      dir="rtl"
+      className={`top-nav ${sidebarOpen ? 'sidebar-open' : ''}`}
+    >
+      <div className="d-flex align-items-center justify-content-start">
+        <button onClick={onToggleSidebar} className="navbar-toggler">
+          <FaBars />
+        </button>
+        <div className="brand-logo">
+          {' '}
+          {/* تغليف شعار العلامة التجارية في div */}
+          <Navbar.Brand href="/">
+            <img src={LogoImage} alt="Brand Logo" />
+          </Navbar.Brand>
+        </div>
       </div>
-    </div>
-
 
       <div className="user-menu">
         <Notification
@@ -82,7 +81,6 @@ return (
             نسجيل الخروج
           </NavDropdown.Item>
         </NavDropdown>
-
       </div>
     </animated.nav>
   );

@@ -14,12 +14,12 @@
   width: 150px;
   height: 150px;
   display: flex;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   color: rgb(255, 251, 0);
   background: linear-gradient(325deg, #1a485c, #0a2741);
   border: 6px solid #e4a802;
-  border-radius: 50%;  
+  border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
@@ -30,7 +30,7 @@
 }
 
 .financial-card:hover {
-  background: rgb(9, 81, 122); 
+  background: rgb(9, 81, 122);
   box-shadow: 15px 8px 16px rgba(0, 0, 0, 0.2);
   transform: translateY(-10px);
 }
@@ -48,10 +48,8 @@
 
 .expenses-card-header {
   background: linear-gradient(325deg, #1a485c, #0a2741);
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
-
