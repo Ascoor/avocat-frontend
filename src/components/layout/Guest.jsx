@@ -82,13 +82,18 @@ const Guest = () => {
           <>
             {showLogoAndButtons && (
               <animated.div style={logoAnimation} className="logo-container">
-            <img
-              src={LogoImage}
-              alt="Pattern Logo"
-              className="logo img-fluid"
-              style={{marginLeft: '80px',paddingRight: '15px', paddingLeft: '30px',  width: '250px',height: 'auto' }}
-            />
-
+                <img
+                  src={LogoImage}
+                  alt="Pattern Logo"
+                  className="logo img-fluid"
+                  style={{
+                    marginLeft: '80px',
+                    paddingRight: '15px',
+                    paddingLeft: '30px',
+                    width: '250px',
+                    height: 'auto',
+                  }}
+                />
               </animated.div>
             )}
             {showLogoAndButtons && (
@@ -105,8 +110,11 @@ const Guest = () => {
                     <RiLoginCircleLine className="mr-1" />
                     دخول
                   </Button>
-                  <Button variant="danger" onClick={handleShowRegisterForm} 
-                    style={{ marginTop: '10px' }}>
+                  <Button
+                    variant="danger"
+                    onClick={handleShowRegisterForm}
+                    style={{ marginTop: '10px' }}
+                  >
                     <RiUserAddLine className="mr-1" />
                     تسجيل اشتراك
                   </Button>
@@ -149,7 +157,8 @@ const Guest = () => {
 
       <footer
         style={{
-          background: 'linear-gradient(35deg, rgb(7 51 56),#972c2c, rgb(8 36 60))',
+          background:
+            'linear-gradient(35deg, rgb(7 51 56),#972c2c, rgb(8 36 60))',
           direction: 'rtl',
           color: '#fff',
           textAlign: 'center',

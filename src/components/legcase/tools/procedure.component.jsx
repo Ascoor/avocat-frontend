@@ -22,11 +22,13 @@ const Procedure = ({ legCaseId }) => {
   const [showAddProcedureModal, setShowAddProcedureModal] = useState(false);
   const [procedureTypes, setProcedureTypes] = useState([]);
   const [lawyers, setLawyers] = useState([]);
-  const [procedurePlaceTypes,   setProcedurePlaceTypes] = useState([]);
+  const [procedurePlaceTypes, setProcedurePlaceTypes] = useState([]);
   const [selectedProcedureType, setSelectedProcedureType] = useState('');
   const [selectedLawyer, setSelectedLawyer] = useState('');
-  const [selectedProcedurePlaceType, setSelectedProcedurePlaceType] = useState('');
-  const [selectedProcedurePlaceName, setSelectedProcedurePlaceName] = useState('');
+  const [selectedProcedurePlaceType, setSelectedProcedurePlaceType] =
+    useState('');
+  const [selectedProcedurePlaceName, setSelectedProcedurePlaceName] =
+    useState('');
   const [modalMode, setModalMode] = useState('');
   const [procedureId, setProcedureId] = useState(null);
   const user = getUser();
@@ -91,7 +93,9 @@ const Procedure = ({ legCaseId }) => {
 
   const fetchProcedurePlaceTypes = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/procedure_place_types`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/procedure_place_types`,
+      );
       setProcedurePlaceTypes(response.data);
     } catch (error) {
       console.log(error);
@@ -400,7 +404,6 @@ const Procedure = ({ legCaseId }) => {
               </Form.Control>
             </Form.Group>
 
-           
             <Form.Group controlId="procedureStatus">
               <Form.Label>الحالة</Form.Label>
               {modalMode === 'edit' && ( // شرط للتحقق من وضع التعديل

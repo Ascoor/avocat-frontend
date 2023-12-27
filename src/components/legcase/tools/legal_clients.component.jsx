@@ -72,47 +72,47 @@ export default function LegCaseClients({ legCaseId }) {
   };
 
   // Handle client change// Handle client change
-const handleClientChange = (index, key, value, listType) => {
-  if (!value) {
-    setErrorMsg('لابد من اختيار عميل');
-    setTimeout(() => {
-      setErrorMsg('');
-    }, 5000);
-    return;
-  }
+  const handleClientChange = (index, key, value, listType) => {
+    if (!value) {
+      setErrorMsg('لابد من اختيار عميل');
+      setTimeout(() => {
+        setErrorMsg('');
+      }, 5000);
+      return;
+    }
 
-  // Check if the client ID already exists in either legCaseClients or legCaseNewClients
-  const clientExistsInLegCase = legCaseClients.some(
-    (client) => client.client_id === value,
-  );
+    // Check if the client ID already exists in either legCaseClients or legCaseNewClients
+    const clientExistsInLegCase = legCaseClients.some(
+      (client) => client.client_id === value,
+    );
 
-  const clientExistsInNew = legCaseNewClients.some(
-    (client) => client.client_id === value,
-  );
+    const clientExistsInNew = legCaseNewClients.some(
+      (client) => client.client_id === value,
+    );
 
-  // Refactored condition to check if the client is already added
-  if (clientExistsInLegCase || (clientExistsInNew && listType === 'new')) {
-    setErrorMsg('لا يمكن إضافة عميل موجود بالفعل في القضية');
-    setTimeout(() => {
-      setErrorMsg('');
-    }, 5000);
-    return;
-  }
+    // Refactored condition to check if the client is already added
+    if (clientExistsInLegCase || (clientExistsInNew && listType === 'new')) {
+      setErrorMsg('لا يمكن إضافة عميل موجود بالفعل في القضية');
+      setTimeout(() => {
+        setErrorMsg('');
+      }, 5000);
+      return;
+    }
 
-  if (listType === 'existing') {
-    setLegCaseClients((prevClients) => {
-      const updatedClients = [...prevClients];
-      updatedClients[index][key] = value;
-      return updatedClients;
-    });
-  } else {
-    setLegCaseNewClients((prevClients) => {
-      const updatedClients = [...prevClients];
-      updatedClients[index][key] = value;
-      return updatedClients;
-    });
-  }
-};
+    if (listType === 'existing') {
+      setLegCaseClients((prevClients) => {
+        const updatedClients = [...prevClients];
+        updatedClients[index][key] = value;
+        return updatedClients;
+      });
+    } else {
+      setLegCaseNewClients((prevClients) => {
+        const updatedClients = [...prevClients];
+        updatedClients[index][key] = value;
+        return updatedClients;
+      });
+    }
+  };
 
   const handleDeleteClient = async (client) => {
     try {
@@ -124,25 +124,24 @@ const handleClientChange = (index, key, value, listType) => {
       // Check if the deletion was successful
       if (response.status === 200) {
         // Refresh the list of clients since the client was deleted successfully
-        fetchLegCaseClients(); 
-    
+        fetchLegCaseClients();
+
         // Set success message
         setDeleteSuccessMsg(`تم حذف العميل ${client.name} بنجاح`);
-    } else {
+      } else {
         // Set error message
         setDeleteErrorMsg(`فشل حذف العميل ${client.name}`);
-    }
-    
-    // Clear messages after a duration
-    setTimeout(() => {
+      }
+
+      // Clear messages after a duration
+      setTimeout(() => {
         setDeleteSuccessMsg(''); // Clear any success message
-        setDeleteErrorMsg('');  // Clear any error message
-    }, 3000);
+        setDeleteErrorMsg(''); // Clear any error message
+      }, 3000);
     } catch (error) {
-        console.error('Error deleting client:', error);
+      console.error('Error deleting client:', error);
     }
   };
-    
 
   // Handle form submission
   const handleSubmit = async () => {
@@ -150,9 +149,9 @@ const handleClientChange = (index, key, value, listType) => {
 
     // Check if there are new clients to add
     const clientsToSubmit = legCaseNewClients.filter(
-      client => client.client_id && client.client_id !== ''
+      (client) => client.client_id && client.client_id !== '',
     );
-  
+
     if (clientsToSubmit.length === 0) {
       setErrorMsg('لابد من اختيار عميل أولاً قبل إرسال الطلب');
       setTimeout(() => {
@@ -161,7 +160,6 @@ const handleClientChange = (index, key, value, listType) => {
       return;
     }
 
-  
     // Check for duplicate clients in legCaseClients
     const duplicateClients = clientsToSubmit.filter((newClient) =>
       legCaseClients.some(

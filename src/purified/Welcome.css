@@ -13,7 +13,7 @@
 }
 
 .form-container {
-  background: linear-gradient(135deg, #071F32, #0c497f, #071F32);
+  background: linear-gradient(135deg, #071f32, #0c497f, #071f32);
   color: #fff;
   border-radius: 10px;
   padding: 20px;
@@ -31,7 +31,6 @@
   height: 100vh;
 }
 
-
 .loader {
   border: 8px solid rgba(79, 169, 77, 0.2);
   border-top: 8px solid #4fa94d; /* Loader color */
@@ -42,8 +41,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .auth-setting-card-header {
@@ -51,15 +54,16 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
-  background: #071F32; /* Darker background with some transparency */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2), 0 0 10px #ffca1c; /* Neon-like light shadow effect */
+  background: #071f32; /* Darker background with some transparency */
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.2),
+    0 0 10px #ffca1c; /* Neon-like light shadow effect */
   padding: 10px;
 }
 
 /* Neon text effect */
 
 /* Neon text effect */
-
 
 .welcome-page-icon {
   font-size: 24px;
@@ -74,7 +78,7 @@
 .login-btn {
   background-color: #ffa600; /* Gold color for login button */
   color: #fff;
-  font-size: .9rem;
+  font-size: 0.9rem;
   padding: 10px;
   border-radius: 20px;
   box-shadow: 0 2px 4px #ffa600;
@@ -89,8 +93,8 @@
   background-color: #c02514; /* Red color for back button */
   color: #fff;
   padding: 10px;
-  
-  font-size: .9rem;
+
+  font-size: 0.9rem;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 2;

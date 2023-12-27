@@ -29,7 +29,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         // SCSS global styles (variables, mixins, etc.)
-        additionalData: `@import "@/styles/variables.scss";`,
+        additionalData: '@import \'@/styles/variables.scss\';',
       },
     },
   },

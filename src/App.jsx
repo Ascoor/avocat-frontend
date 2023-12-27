@@ -34,8 +34,7 @@ function App() {
         </div>
       ) : (
         <>
-
- <WebSite />
+          <WebSite />
         </>
       )}
     </div>

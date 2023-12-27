@@ -21,14 +21,14 @@ function CourtSearch() {
   // Fetch degrees from the backend
   const fetchDegrees = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/search-court/degrees`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/search-court/degrees`,
+      );
       setDegrees(response.data.degrees);
     } catch (error) {
       console.error('Error fetching degrees:', error);
     }
   };
-  
-  
 
   // Fetch courts when a degree is selected
   const handleDegreeSelect = async (event) => {
@@ -39,7 +39,9 @@ function CourtSearch() {
 
     if (selectedDegree) {
       try {
-        const response = await axios.get(`${API_CONFIG.baseURL}/api/search-court/courts/`+selectedDegree);
+        const response = await axios.get(
+          `${API_CONFIG.baseURL}/api/search-court/courts/` + selectedDegree,
+        );
         if (response.data && Array.isArray(response.data.courts)) {
           setCourts(response.data.courts);
         } else {
@@ -52,14 +54,15 @@ function CourtSearch() {
     }
   };
 
-  
   async function handleCourtSelect(event) {
     const courtId = event.target.value;
     setSelectedCourt(courtId);
     if (!courtId) return;
-  
+
     try {
-      const response = await axios.post(`${API_CONFIG.baseURL}/api/search-court/case-types/${courtId}`);
+      const response = await axios.post(
+        `${API_CONFIG.baseURL}/api/search-court/case-types/${courtId}`,
+      );
       setCaseTypes(response.data.caseTypes);
     } catch (error) {
       console.error('Error fetching case types:', error);
@@ -75,25 +78,32 @@ function CourtSearch() {
       year: caseYear,
       number: caseNumber,
     };
-  
+
     try {
-      const response = await axios.post(`${API_CONFIG.baseURL}/api/search-court/search`, searchParams);
+      const response = await axios.post(
+        `${API_CONFIG.baseURL}/api/search-court/search`,
+        searchParams,
+      );
       // Handle the response
     } catch (error) {
       console.error('Error performing search:', error);
     }
   }
-  
-  
-  
+
   return (
     <Form onSubmit={handleSearchSubmit}>
       <Form.Group controlId="degreeSelect">
         <Form.Label>Select Degree:</Form.Label>
-        <Form.Control as="select" value={selectedDegree} onChange={handleDegreeSelect}>
+        <Form.Control
+          as="select"
+          value={selectedDegree}
+          onChange={handleDegreeSelect}
+        >
           <option value="">Select Degree</option>
           {degrees.map((degree) => (
-            <option key={degree.value} value={degree.value}>{degree.label}</option>
+            <option key={degree.value} value={degree.value}>
+              {degree.label}
+            </option>
           ))}
         </Form.Control>
       </Form.Group>
@@ -101,10 +111,17 @@ function CourtSearch() {
       {/* Courts dropdown */}
       <Form.Group controlId="courtSelect">
         <Form.Label>Select Court:</Form.Label>
-        <Form.Control as="select" value={selectedCourt} onChange={handleCourtSelect} disabled={!selectedDegree}>
+        <Form.Control
+          as="select"
+          value={selectedCourt}
+          onChange={handleCourtSelect}
+          disabled={!selectedDegree}
+        >
           <option value="">Select Court</option>
           {courts.map((court) => (
-            <option key={court.value} value={court.value}>{court.label}</option>
+            <option key={court.value} value={court.value}>
+              {court.label}
+            </option>
           ))}
         </Form.Control>
       </Form.Group>
@@ -112,14 +129,23 @@ function CourtSearch() {
       {/* Case Types dropdown */}
       <Form.Group controlId="caseTypeSelect">
         <Form.Label>Select Case Type:</Form.Label>
-        <Form.Control as="select" value={selectedCaseType} onChange={(e) => setSelectedCaseType(e.target.value)} disabled={!selectedCourt}>
+        <Form.Control
+          as="select"
+          value={selectedCaseType}
+          onChange={(e) => setSelectedCaseType(e.target.value)}
+          disabled={!selectedCourt}
+        >
           <option value="">Select Case Type</option>
           {caseTypes.map((caseType) => (
-            <option key={caseType.value} value={caseType.value}>{caseType.label}</option>
+            <option key={caseType.value} value={caseType.value}>
+              {caseType.label}
+            </option>
           ))}
         </Form.Control>
       </Form.Group>
-      <Button variant="primary" type="submit">Search</Button>
+      <Button variant="primary" type="submit">
+        Search
+      </Button>
     </Form>
   );
 }

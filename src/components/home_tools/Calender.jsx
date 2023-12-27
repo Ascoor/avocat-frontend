@@ -47,12 +47,11 @@ const Calendar = () => {
       });
   }, []);
 
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date()); // هذا سيحدث الوقت كل ثانية
     }, 1000);
-  
+
     return () => clearInterval(interval);
   }, []);
   const calendarSpringStyles = useSpring({
