@@ -10,10 +10,10 @@ export { default as SideLogoDark } from '../img/splash-image.png';
 export { default as LandingPageImg } from '../img/landing.png';
 // Slider images
 
-export { default as Slider1 } from '../img/home-img/home-slider1.webp';
-export { default as Slider2 } from '../img/home-img/home-slider2.webp';
+export { default as Slider1 } from '../img/home-img/home-slider1.png';
+export { default as Slider2 } from '../img/home-img/slide-2.png';
 export { default as Slider3 } from '../img/home-img/home-slider3.png';
-export { default as Slider4 } from '../img/home-img/home-slider4.png';
+export { default as Slider4 } from '../img/home-img/home-slider-4.png';
 //Services icons
 export { default as CriminalLaw  } from '../img/serviceIcons/criminal law1.svg';
 export { default as RealEstate  } from '../img/serviceIcons/real-estate1.svg';
@@ -23,7 +23,7 @@ export { default as LabourLaw  } from '../img/serviceIcons/labor1.svg';
 export { default as CivelLaw  } from '../img/serviceIcons/protection of rights1.svg';
 
 //About Section
-export { default as AboutUs } from '../img/about/contract.jpg';
+export { default as AboutUs } from '../img/about/contract.png';
 
 
 // footer

@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'; // استخدم Link بدلاً من Na
 import { LogoText } from '../../assets/img/index';
 
 function Navbar() {
+  
+  const phoneNumber = "+201122242888";
+  const whatsappLink = `https://wa.me/${phoneNumber}`;
   return (
 
     
@@ -12,11 +15,11 @@ function Navbar() {
 <div className="left-side-info d-flex align-items-center">
 <div className="d-flex align-items-center h-100 me-3">
 <i className="bx bxs-envelope px-1"></i>
-<a className="email" href="#">info@info.com</a>
+<a className="email" href="#">Avocat@Avocat.live</a>
 </div>
 <div className="d-flex align-items-center h-100">
 <i className="bx bxs-phone px-1"></i>
-<a className="phone" href="#">00971234567</a>
+<a className="phone" href="#">050-2305699</a>
 </div>
 </div>
 <div className="right-side-icons d-flex align-items-center">
@@ -24,9 +27,11 @@ function Navbar() {
 <a href="#">متابعة</a>
 </div>
 <div className="media-icons ps-3">
-<a className="facebook" href="#"><i className="bx bxl-facebook"></i></a>
-<a className="twitter" href="#"><i className="bx bxl-twitter"></i></a>
-<a className="linkedin" href="#"><i className="bx bxl-linkedin"></i></a>
+<a className="facebook" href="https://www.facebook.com/Avocat.Lawfirm/"><i className="bx bxl-facebook"></i></a>
+<a className="whatsapp" href={whatsappLink}>
+        <i className="bx bxl-whatsapp"></i> 
+      </a>
+
 </div>
 </div>
 </div>
@@ -36,7 +41,9 @@ function Navbar() {
           <Link to="/" className="navbar-brand"> {/* قم باستخدام Link بدلاً من a */}
             <img alt="شعار الشركة" className="img-fluid" src={LogoText} width="80px" />
           </Link>
-
+          <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+<span className="navbar-toggler-icon"></span>
+</button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav m-auto mb-2 mb-lg-0">
               <li className="nav-item">
