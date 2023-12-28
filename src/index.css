@@ -168,15 +168,6 @@ ul li {
 .caption h3 {
   font-size: 16px;
 }
-.spider-web-container {
-  position: absolute; /* أو relative حسب تصميم صفحتك */
-  top: 0;
-  left: 0;
-  width: 100%; /* تأكد من أن العرض والارتفاع يتناسبان مع تصميمك */
-  height: 100%;
-  z-index: 1; /* استخدم قيمة z-index مناسبة لضمان عدم تغطية العناصر الأخرى */
-  pointer-events: none; /* هذا سيمنع شبكة العنكبوت من حجب الفيديو الأخرى */
-}
 .home-page .carousel-inner .carousel-item {
   height: 700px;
 }

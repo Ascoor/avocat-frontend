@@ -4,6 +4,7 @@ import Home from './WebSite/Home';
 import Contact from './WebSite/Contact';
 import About from './WebSite/About';
 import Atorneys from './WebSite/Atorney';
+import FileUploadComponent from './WebSite/Blade/FileUploadComponent';
 
 const HomeRoutes = () => {
   return (
@@ -12,6 +13,7 @@ const HomeRoutes = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/about" element={<About />} />
       <Route path="/atorney" element={<Atorneys />} />
+      <Route path="/upload_pdf" element={<FileUploadComponent />} />
     </Routes>
   );
 };

@@ -77,7 +77,7 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/about" className="nav-link">
+                <Link to="/upload_pdf" className="nav-link">
                   معلومات عنا
                 </Link>
               </li>
