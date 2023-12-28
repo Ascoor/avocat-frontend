@@ -2,6 +2,8 @@ import React from 'react';
 
 const Footer = () => {
   return (
+    <section className="footer" id="map" style={{ position: 'relative', zIndex: 2 }}>
+    
     <footer className="footer">
       <div className="container">
         <div className="row">
@@ -44,6 +46,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+      </section>
   );
 };
 

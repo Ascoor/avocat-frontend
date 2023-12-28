@@ -137,49 +137,33 @@ ul li {
   transform: translateY(-2px);
 }
 .button-hover:active {
-  box-shadow: none;
-  transform: translateY(0);
-}
-.home-page {
-  height: 700px;
-}
-.caption {
-  background: rgba(0, 0, 0, 0.8); /* لون خلفية سوداء مع تعتيم */
-  padding: 20px; /* هامش داخلي للنصوص لتجنب التداخل مع النص */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* تأثير ضبابي */
-  /* أضف أي تنسيقات أخرى حسب احتياجاتك */
+    box-shadow: none;
+    transform: translateY(0);
+}.home-page{
+    height: auto; /* الارتفاع يتغير تبعًا للمحتوى */
 }
 
-.caption-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 20px;
-  text-align: center;
+.home-page .carousel-inner .carousel-item{
+    height: auto; /* ارتفاع تلقائي */
+}
+
+.home-page .carousel-inner .carousel-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* يظهر الصورة بالكامل */
+}
+
+.caption, .caption-container {
+  padding: 20px; /* التباعد للشاشات الكبيرة */
+  background: rgba(0, 0, 0, 0.7); /* خلفية شبه شفافة */
 }
 
 .caption h1 {
-  font-size: 24px;
+  font-size: 24px; /* حجم الخط للشاشات الكبيرة */
 }
 
 .caption h3 {
-  font-size: 16px;
-}
-.home-page .carousel-inner .carousel-item {
-  height: 700px;
-}
-.home-page .carousel-inner .carousel-item img {
-  width: 100%;
-  height: 100%;
-}
-.home-page .carousel-item .carousel-caption {
-  margin-bottom: 10px !important;
-}
-.home-page .carousel-item .carousel-caption p {
-  font-size: 25px;
+  font-size: 16px; /* حجم الخط للشاشات الكبيرة */
 }
 .ml12 {
   font-weight: 900;
@@ -457,29 +441,27 @@ nav .request-btn a:hover,
   line-height: 1em;
 }
 /*===================== commitment ======================*/
-.commitment {
-  height: 350px;
-  display: flex;
-  padding-top: 30px;
-  justify-content: center;
-  align-items: center;
-  background-image: linear-gradient(
-      rgba(78, 108, 80, 0.7),
-      rgba(78, 108, 80, 0.7)
-    ),
-    url(./assets/img/home-img/commet.png);
-  background-position: 40% 80%;
-  background-size: cover;
+.commitment{
+    height: 350px;
+    display: flex;
+    padding-top: 30px;
+    justify-content: center;
+
+    align-items: center;
+    background-image: linear-gradient(rgb(47 70 81 / 70%),rgb(58 102 110 / 70%)), url(/src/assets/img/home-img/commet.png);
+    background-position: 40% 80%;
+    background-size: cover;
 }
 .commitment-info {
   width: 50%;
 }
-.commitment p {
-  font-size: 20px;
-  font-weight: 500;
-  text-align: center;
-  color: #fff;
-  word-spacing: 5px;
+.commitment p{
+
+    font-weight: 500;
+    font-size: 26px;
+    text-align: center;
+    color: #fff;
+    word-spacing: 5px;
 }
 /*============= Best Lawyers =================*/
 .lawyer {
@@ -744,10 +726,25 @@ section .letters {
 }
 /*=============== FOOTER ===============*/
 footer {
-  background-color: #333333;
+    background-color: #333333;
+    color: #FFF; /* تعيين لون النص الأساسي */
+    font-family: 'Arial', sans-serif; /* تحديد الخط */
 }
-footer .info img {
-  width: 60px;
+
+footer a {
+    color: #05364c; /* لون الروابط */
+}
+
+footer a:hover {
+    color: #FFF; /* لون الرابط عند التحريك فوقه */
+}
+
+footer h3 {
+    color: #FFF; /* لون العناوين */
+}
+
+footer .info img{
+    width: 60px;
 }
 footer p {
   color: #fff;
@@ -921,42 +918,56 @@ footer .footer-items ul li a:hover {
   color: #808080;
 }
 /*================================= media queries =================================*/
-@media screen and (max-width: 575px) {
-  /*home-page*/
-  .home-page .carousel-item .carousel-caption {
-    display: block !important;
-    margin-bottom: 50px !important;
-  }
-  .home-page {
+@media screen and (max-width:575px) {
+    /*home-page*/
+    .home-page .carousel-inner .carousel-item {
+        height: auto; /* جعل الارتفاع يتغير تبعاً للعرض */
+        margin-top: 60px !important;
+    }
+    .home-page .carousel-item .carousel-caption {
+        display: block !important;
+    }
+    
+.carousel-caption {
+    position: absolute;
+    left: 15%;
+    bottom: -2.75rem;
+    right: 15%;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    color: #fff;
+    text-align: center;
+}
+.home-page{
     height: auto;
-  }
+}  .carousel-indicators{
+    display: none;
+}
 
   .caption {
-    padding: 5px; /* تقليل الهامش الداخلي بشكل أكبر للهواتف المحمولة */
+    padding-top:    15px; /* تقليل الهامش الداخلي بشكل أكبر للهواتف المحمولة */
   }
 
   .caption-container {
-    padding: 5px; /* تقليل الهامش الداخلي بشكل أكبر للهواتف المحمولة */
+    padding-bottom: 15px; /* تقليل الهامش الداخلي بشكل أكبر للهواتف المحمولة */
   }
 
   .caption h1 {
-    font-size: 16px; /* تقليل حجم العنوان بشكل أكبر للهواتف المحمولة */
+    font-size: 12px; /* تقليل حجم العنوان بشكل أكبر للهواتف المحمولة */
   }
 
   .caption h3 {
-    font-size: 12px; /* تقليل حجم النص الفرعي بشكل أكبر للهواتف المحمولة */
-  }
-  .ml10,
-  .ml12,
-  .ml13 {
-    letter-spacing: 0.2em;
-  }
-  header .top-section {
-    height: 50px;
-  }
-  .top-section .container {
-    flex-direction: column;
-  }
+    font-size: 10px; /* تقليل حجم النص الفرعي بشكل أكبر للهواتف المحمولة */
+  } 
+    .ml10 ,.ml12 ,.ml13 {
+        letter-spacing: 0.2em;
+    }
+    header .top-section{
+        height: 50px;
+    }
+    .top-section .container{
+        flex-direction: column;
+    }
 
   /*about*/
   .about__container {

@@ -75,8 +75,8 @@ const HomeCarousel = () => {
   }, [currentSlide]);
 
   return (
-    <section className="home-page">
-      <Carousel
+    <section className="home-page" style={{ position: 'relative', zIndex: 1 }}>
+    <Carousel
         activeIndex={currentSlide}
         onSelect={(selectedIndex) => setCurrentSlide(selectedIndex)}
         interval={5000}
@@ -104,6 +104,5 @@ const HomeCarousel = () => {
 
     </section>
   );
-};
-
+}
 export default HomeCarousel;
