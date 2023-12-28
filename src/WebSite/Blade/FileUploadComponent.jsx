@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import API_CONFIG from '../../config';
 const FileUploadComponent = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
 
@@ -15,7 +15,7 @@ const FileUploadComponent = () => {
     }
 
     try {
-      const response = await axios.post('api/doc_pdf_upload', formData, {
+      const response = await axios.post(`${API_CONFIG.baseURL}/api/doc_pdf_upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
