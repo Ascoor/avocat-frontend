@@ -4,7 +4,7 @@ import Home from './WebSite/Home';
 import Contact from './WebSite/Contact';
 import About from './WebSite/About';
 import Atorneys from './WebSite/Atorney';
-import FileUploadComponent from './WebSite/Blade/FileUploadComponent';
+import FileUploadComponent from './WebSite/FileUploadComponent';
 
 const HomeRoutes = () => {
   return (

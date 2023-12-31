@@ -1096,6 +1096,48 @@ footer .footer-items ul li a:hover {
     display: flex;
     flex-direction: column !important;
   }
+  /*================= PDF Page ==================*/
+  
+.appealument-types, .subtypes {
+  margin-bottom: 20px;
+}
+
+h2, h3 {
+  text-align: center;
+  color: #333;
+}
+
+#file {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+button.btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+button.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.alert {
+  margin-top: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+
+  .row div {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
 }
 
 @media (min-width: 768px) and (max-width: 1200px) {
