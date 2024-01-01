@@ -15,7 +15,6 @@ const PDFUploadComponent = () => {
     setJsonData(null); // Reset JSON data
     setError('');
   };
-
   const uploadFile = async () => {
     if (!selectedFile) {
       setError('Please select a PDF file to upload.');
@@ -31,7 +30,7 @@ const PDFUploadComponent = () => {
         formData,
       );
       setFileDetails(response.data);
-      setJsonData(response.data); // Assuming response data is JSON
+      setJsonData(response.data); // Assuming response data contains the text from pages
     } catch (err) {
       setError('Error uploading file: ' + err.message);
     }
@@ -45,10 +44,16 @@ const PDFUploadComponent = () => {
         <Card.Text className="home-text-center">
           Please select a file to upload
         </Card.Text>
-       
+
         <div className="mb-4 text-center">
-          <input type="file" onChange={handleFileChange} accept="application/pdf" />
-          <Button onClick={uploadFile} className="mt-2">Upload PDF</Button>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept="application/pdf"
+          />
+          <Button onClick={uploadFile} className="mt-2">
+            Upload PDF
+          </Button>
 
           {error && <Alert variant="danger">{error}</Alert>}
 
@@ -60,14 +65,18 @@ const PDFUploadComponent = () => {
             </div>
           )}
 
-          {jsonData && (
-            <div className="json-result mt-3">
-              <h3>Upload Response (JSON):</h3>
-              <pre>{JSON.stringify(jsonData, null, 2)}</pre>
+          {jsonData && jsonData.text_from_pages && (
+            <div className="page-texts">
+              {jsonData.text_from_pages.map((text, index) => (
+                <div key={index}>
+                  <h3>Text from Page {index + 1}</h3>
+                  <p>{text}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>
-      </Card.Body>  
+      </Card.Body>
     </Card>
   );
 };
