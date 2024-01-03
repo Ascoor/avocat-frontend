@@ -5,6 +5,7 @@ import Contact from './WebSite/Contact';
 import About from './WebSite/About';
 import Atorneys from './WebSite/Atorney';
 import FileUploadComponent from './WebSite/FileUploadComponent';
+import CourtSearch from './WebSite/CourtSearch';
 
 const HomeRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const HomeRoutes = () => {
       <Route path="/about" element={<About />} />
       <Route path="/atorney" element={<Atorneys />} />
       <Route path="/upload_pdf" element={<FileUploadComponent />} />
+      <Route path="/court_search" element={<CourtSearch />} />
     </Routes>
   );
 };

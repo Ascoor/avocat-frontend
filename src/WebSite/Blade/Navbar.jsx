@@ -86,6 +86,11 @@ function Navbar() {
                   فريق العمل
                 </Link>
               </li>
+              <li className="nav-item">
+              <Link to="/court_search" className="nav-link">
+                  البحث
+                </Link>
+              </li>
             </ul>
             <div className="request-btn d-flex">
               <a

@@ -4,7 +4,7 @@ import { FaBars, FaUser } from 'react-icons/fa';
 import { Navbar, NavDropdown } from 'react-bootstrap'; // Import NavDropdown from react-bootstrap
 import { useSpring, animated } from '@react-spring/web';
 import '../../../assets/css/TopNav.css';
-import { LogoImage } from '../../../assets/img/index';
+import { LogoPatren } from '../../../assets/img/index';
 import API_CONFIG from '../../../config';
 import Notification from './Notification';
 
@@ -52,7 +52,7 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
           {' '}
           {/* تغليف شعار العلامة التجارية في div */}
           <Navbar.Brand href="/">
-            <img src={LogoImage} alt="Brand Logo" />
+            <img src={LogoPatren} alt="Brand Logo" />
           </Navbar.Brand>
         </div>
       </div>

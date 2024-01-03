@@ -3,7 +3,7 @@ import '../../assets/css/Welcome.css';
 import { useTransition, useSpring, animated } from '@react-spring/web';
 import { Card, Button, Container } from 'react-bootstrap';
 import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
-import { LogoImage } from '../../assets/img/index';
+import { LogoPatren } from '../../assets/img/index';
 
 import WelcomeSuspense from './Tools/WelcomeSuspense';
 
@@ -83,7 +83,7 @@ const Guest = () => {
             {showLogoAndButtons && (
               <animated.div style={logoAnimation} className="logo-container">
                 <img
-                  src={LogoImage}
+                  src={LogoPatren}
                   alt="Pattern Logo"
                   className="logo img-fluid"
                   style={{
