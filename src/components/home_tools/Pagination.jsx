@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+
 import { Pagination } from 'react-bootstrap';
 
 const CustomPagination = ({
@@ -47,11 +47,5 @@ const CustomPagination = ({
   );
 };
 
-CustomPagination.propTypes = {
-  totalCount: PropTypes.number.isRequired,
-  itemsPerPage: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  onPageChange: PropTypes.func.isRequired,
-};
 
 export default CustomPagination;

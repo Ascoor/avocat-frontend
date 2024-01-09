@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
-import PropTypes from 'prop-types';
 import { Form, Button, Card, Alert, Row, Col, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import useAuth from '../layout/AuthTool/AuthUser';
@@ -473,9 +472,5 @@ const LegCaseCreate = () => {
       </Modal.Body>
     </Modal>
   );
-};
-LegCaseCreate.propTypes = {
-  legCaseId: PropTypes.string,
-  isEditing: PropTypes.bool.isRequired,
 };
 export default LegCaseCreate;

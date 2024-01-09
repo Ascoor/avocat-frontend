@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
 import Pagination from '../home_tools/Pagination';
-import PropTypes from 'prop-types';
 const LegCaseSearch = ({
   searchResults,
   casesPerPage,
@@ -101,12 +100,6 @@ const LegCaseSearch = ({
       </Col>
     </Row>
   );
-};
-LegCaseSearch.propTypes = {
-  searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
-  casesPerPage: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  paginate: PropTypes.func.isRequired,
 };
 
 export default LegCaseSearch;

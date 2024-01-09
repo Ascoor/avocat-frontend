@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Modal, Form, Button, Row, Col } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import { Modal, Form,FormControl, Button, Row, Col } from 'react-bootstrap';
 import arEG from 'date-fns/locale/ar-EG';
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import { useSpring, animated } from '@react-spring/web';
@@ -266,19 +265,5 @@ const FormGroup = ({ controlId, label, children }) => (
     {children}
   </Form.Group>
 );
-
-const FormControl = ({ ...props }) => <Form.Control {...props} />;
-
-ServiceProcedureModal.propTypes = {
-  show: PropTypes.bool.isRequired,
-  onHide: PropTypes.func.isRequired,
-  lawyers: PropTypes.array.isRequired,
-  procedure: PropTypes.object,
-  serviceId: PropTypes.number.isRequired,
-  isEditing: PropTypes.bool.isRequired,
-  fetchServiceProcedures: PropTypes.func,
-  addServiceProcedure: PropTypes.func,
-  editServiceProcedure: PropTypes.func,
-};
 
 export default ServiceProcedureModal;

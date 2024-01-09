@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 
 const ClientSearch = ({ searchResults }) => {
   if (!searchResults) {
@@ -29,8 +28,5 @@ const ClientSearch = ({ searchResults }) => {
       </tbody>
     </table>
   );
-};
-ClientSearch.propTypes = {
-  searchResults: PropTypes.array.isRequired,
 };
 export default ClientSearch;

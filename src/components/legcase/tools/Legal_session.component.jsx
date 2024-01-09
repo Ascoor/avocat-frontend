@@ -2,11 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { Button, Row, Modal, Card, Form, Alert } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';
-import arEG from 'date-fns/locale/ar-EG';
-import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 const LegalSession = ({ legCaseId }) => {
   const { getUser } = useAuth();
   const user = getUser();

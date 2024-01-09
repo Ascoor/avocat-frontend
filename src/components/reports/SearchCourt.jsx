@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Form, Button, FormGroup } from 'react-bootstrap';
-import API_CONFIG from '../config';
+import API_CONFIG from '../../config';
 
 const SearchCourt = () => {
   const [allData, setAllData] = useState({
@@ -15,6 +15,7 @@ const SearchCourt = () => {
   const [selectedCaseYear, setSelectedCaseYear] = useState('');
   const [selectedCaseNumber, setSelectedCaseNumber] = useState('');
 
+  const [searchResults, setSearchResults] = useState(null);
   useEffect(() => {
     // Fetch data from the API when the component mounts
     axios
@@ -47,18 +48,22 @@ const SearchCourt = () => {
     event.preventDefault();
 
     const formData = {
-      degree_value: selectedDegree,
-      court_value: selectedCourt,
-      case_type_value: selectedCaseType,
-      case_year: selectedCaseYear,
-      case_number: selectedCaseNumber,
+      degree: selectedDegree,
+      court: selectedCourt,
+      caseType: selectedCaseType,
+      caseYear: selectedCaseYear,
+      caseNumber: selectedCaseNumber,
     };
 
     axios
-      .post(`http://127.0.0.1:5000/search-result`, formData)
+      .post('https://search-api-9igr.onrender.com/search', formData, {
+        headers: {
+          'X-Request-Source': 'React', // إرسال عنوان الرأس للتحقق من المصدر
+        },
+      })
       .then((response) => {
-        // Handle the response here
-        console.log(response.data);
+        // تحديث حالة نتائج البحث
+        setSearchResults(response.data);
       })
       .catch((error) => console.log(error));
   };
@@ -66,21 +71,19 @@ const SearchCourt = () => {
   return (
     <section className="home-page">
       <Card>
-        <Card.Header className="home-text-center">لوحة التحكم</Card.Header>
+        <Card.Header className="home-text-center">بحث  المحكمة</Card.Header>
         <Card.Body>
-          <Card.Title className="home-text-center">Search Forms</Card.Title>
-          <Card.Text className="home-text-center">
-            Please select search options
-          </Card.Text>
+   
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formDegree">
-              <Form.Label>Degree</Form.Label>
+              <Form.Label>الدرجة  </Form.Label>
               <Form.Control
                 as="select"
                 value={selectedDegree}
                 onChange={handleDegreeChange}
+                required
               >
-                <option value="">Select a degree</option>
+                <option value="">إختر الدرجة</option>
                 {allData.search_degrees.map((degree) => (
                   <option key={degree.id} value={degree.degree_value}>
                     {degree.degree_name}
@@ -96,6 +99,7 @@ const SearchCourt = () => {
                   as="select"
                   value={selectedCourt}
                   onChange={handleCourtChange}
+                  required
                 >
                   <option value="">Select a court</option>
                   {allData.search_courts
@@ -116,6 +120,7 @@ const SearchCourt = () => {
                   as="select"
                   value={selectedCaseType}
                   onChange={handleCaseTypeChange}
+                  required
                 >
                   <option value="">Select a case type</option>
                   {allData.search_case_types
@@ -140,7 +145,8 @@ const SearchCourt = () => {
               <Form.Control
                 as="select"
                 value={selectedCaseYear} // Use selectedCaseYear here
-                onChange={(event) => setSelectedCaseYear(event.target.value)} 
+                onChange={(event) => setSelectedCaseYear(event.target.value)}
+                required
               >
                 <option value="">--اختر--</option>
                 <option value="2024">2024</option>
@@ -166,7 +172,8 @@ const SearchCourt = () => {
                 as="input"
                 type="number"
                 value={selectedCaseNumber}
-                onChange={(event) => setSelectedCaseNumber(event.target.value)} // تحديث قيمة selectedCaseNumber عند التغيير
+                onChange={(event) => setSelectedCaseNumber(event.target.value)}
+                required
               />
             </FormGroup>
 
@@ -176,6 +183,85 @@ const SearchCourt = () => {
           </Form>
         </Card.Body>
       </Card>
+      {searchResults && (
+        <Card className="mt-3">
+          <Card.Header className="home-text-center">Search Results</Card.Header>
+          <Card.Body>
+            {/* تخصيص عرض النتائج بتنسيق HTML */}
+            <div className="container mt-5">
+              <div className="card mt-4">
+                <div className="card-header">
+                  <h2>تفاصيل القضية</h2>
+                </div>
+                <div className="card-body">
+                  <ul>
+                    <li>
+                      <strong>رقم الدعوى:</strong> {searchResults['رقم الدعوى']}
+                    </li>
+                    <li>
+                      <strong>السنة:</strong> {searchResults['السنة']}
+                    </li>
+                    <li>
+                      <strong>نوع الدعوى:</strong> {searchResults['نوع الدعوى']}
+                    </li>
+                    <li>
+                      <strong>تاريخ القيد:</strong>{' '}
+                      {searchResults['تاريخ القيد']}
+                    </li>
+                    <li>
+                      <strong>اسم المدعى:</strong> {searchResults['اسم المدعى']}
+                    </li>
+                    <li>
+                      <strong>اسم المدعى عليه:</strong>{' '}
+                      {searchResults['اسم المدعى عليه']}
+                    </li>
+                    <li>
+                      <strong>الموضوع:</strong> {searchResults['الموضوع']}
+                    </li>
+                  </ul>
+                </div>
+                <div className="card-body">
+                  <ul>
+                    <li>
+                      <strong>تاريخ آخر جلسة:</strong>{' '}
+                      {searchResults['تاريخ أخر جلسة']}
+                    </li>
+                    <li>
+                      <strong>قرار آخر جلسة:</strong>{' '}
+                      {searchResults['قرار أخر جلسة']}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="card mt-4">
+                <div className="card-header">
+                  <h2>Case Sessions</h2>
+                </div>
+                <div className="card-body">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">تاريخ الجلسة</th>
+                        <th scope="col">قرار الجلسة</th>
+                        <th scope="col">تاريخ الجلسة القادمة</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {searchResults['جلسات القضية'].map((session, index) => (
+                        <tr key={index}>
+                          <td>{session['تاريخ الجلسة']}</td>
+                          <td>{session['قرار الجلسة']}</td>
+                          <td>{session['تاريخ الجلسة القادمة']}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </Card.Body>
+        </Card>
+      )}
     </section>
   );
 };

@@ -3,10 +3,14 @@ import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'boxicons/css/boxicons.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
-// import './App.css';
-import WebSite from './WebSite';
+import './App.css';
+import Guest from './components/layout/Guest'
+import Auth from './components/layout/Auth'
+import useAuth from './components/layout/AuthTool/AuthUser';
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const { getToken } = useAuth();
 
   useEffect(() => {
     // Set a timeout to simulate loading time
@@ -18,27 +22,27 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  return (
-    <div>
-      {isLoading ? (
-        <div className="sk-cube-grid">
-          <div className="sk-cube sk-cube1"></div>
-          <div className="sk-cube sk-cube2"></div>
-          <div className="sk-cube sk-cube3"></div>
-          <div className="sk-cube sk-cube4"></div>
-          <div className="sk-cube sk-cube5"></div>
-          <div className="sk-cube sk-cube6"></div>
-          <div className="sk-cube sk-cube7"></div>
-          <div className="sk-cube sk-cube8"></div>
-          <div className="sk-cube sk-cube9"></div>
-        </div>
-      ) : (
-        <>
-          <WebSite />
-        </>
-      )}
-    </div>
-  );
+  if (isLoading) {
+    return (
+      <div className="sk-cube-grid">
+        <div className="sk-cube sk-cube1"></div>
+        <div className="sk-cube sk-cube2"></div>
+        <div className="sk-cube sk-cube3"></div>
+        <div className="sk-cube sk-cube4"></div>
+        <div className="sk-cube sk-cube5"></div>
+        <div className="sk-cube sk-cube6"></div>
+        <div className="sk-cube sk-cube7"></div>
+        <div className="sk-cube sk-cube8"></div>
+        <div className="sk-cube sk-cube9"></div>
+      </div>
+    );
+  }
+
+  if (!getToken()) {
+    return <Guest />;
+  }
+
+  return <Auth />;
 }
 
 export default App;

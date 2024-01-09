@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 
 const DateInput = ({ selected, onChange, required }) => (
@@ -11,11 +10,4 @@ const DateInput = ({ selected, onChange, required }) => (
     required={required}
   />
 );
-
-DateInput.propTypes = {
-  selected: PropTypes.instanceOf(Date),
-  onChange: PropTypes.func.isRequired,
-  required: PropTypes.bool,
-};
-
 export default DateInput;

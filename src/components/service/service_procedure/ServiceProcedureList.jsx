@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Button } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
-import PropTypes from 'prop-types';
 import ServiceProcedureModal from './ServiceProcdureModal';
 import API_CONFIG from '../../../config';
 
@@ -159,10 +158,6 @@ const ServiceProcedureList = ({ serviceId }) => {
       </Card.Body>
     </>
   );
-};
-
-ServiceProcedureList.propTypes = {
-  serviceId: PropTypes.number.isRequired,
 };
 
 export default ServiceProcedureList;

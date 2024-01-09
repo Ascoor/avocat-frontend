@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Badge, ListGroup, Row, Col } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import { useSpring, animated, config } from '@react-spring/web';
 import ServiceProcedureList from './service_procedure/ServiceProcedureList';
 
@@ -74,17 +73,4 @@ const ServiceDetailsModal = ({ service }) => {
     </Row>
   );
 };
-
-ServiceDetailsModal.propTypes = {
-  service: PropTypes.shape({
-    service_name: PropTypes.string.isRequired,
-    service_description: PropTypes.string.isRequired,
-    service_status: PropTypes.string.isRequired,
-    client_name: PropTypes.string,
-    service_place: PropTypes.string,
-    field1: PropTypes.string,
-    field2: PropTypes.string,
-  }).isRequired,
-};
-
 export default ServiceDetailsModal;

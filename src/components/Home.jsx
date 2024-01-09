@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import PropTypes from 'prop-types'; // تعديل هنا
 import { Link } from 'react-router-dom';
 import {
   FcBusinessman,
@@ -97,7 +96,7 @@ const Home = () => {
 
   const [searchText, setSearchText] = useState(''); // State to store the search text
   const [searchResults, setSearchResults] = useState([]); // State to store the search results
-  const [showResults, setShowResults] = useState(false); // State to determine whether search results should be displayed or not
+  const [showResults, setShowResults] = useState(false); 
   const [searchType, setSearchType] = useState('clients'); // State to store the selected search type
   const [setEvents] = useState([]);
   useEffect(() => {}, []);
@@ -305,13 +304,6 @@ const Home = () => {
       </Row>
     </>
   );
-};
-
-EventCard.propTypes = {
-  count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired, // تعديل هنا
-  icon: PropTypes.element.isRequired, // تعديل هنا
-  title: PropTypes.string, // تعديل النوع هنا
-  color: PropTypes.string, // تعديل النوع هنا
 };
 
 export default Home;

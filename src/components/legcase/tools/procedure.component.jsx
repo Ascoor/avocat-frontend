@@ -4,7 +4,6 @@ import { Card, Button, Modal, Row, Form, Alert } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';
-import PropTypes from 'prop-types';
 const Procedure = ({ legCaseId }) => {
   const { getUser } = useAuth();
   const [alert, setAlert] = useState(null);
@@ -438,9 +437,6 @@ const Procedure = ({ legCaseId }) => {
       </Modal>
     </>
   );
-};
-Procedure.propTypes = {
-  legCaseId: PropTypes.string.isRequired,
 };
 
 export default Procedure;

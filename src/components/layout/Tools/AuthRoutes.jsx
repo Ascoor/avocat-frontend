@@ -1,14 +1,16 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../../Home';
 import Lawyers from '../../lawyer/lawyer_index.component';
 import LawyersAddEdit from '../../lawyer/lawyer_index.component';
 import CourtSetting from '../../setting/court_index.component';
-import CourtSearch from '../../reports/CourtSearch';
+import CourtSearch from '../../reports/SearchCourt';
 import CaseTypeSet from '../../setting/case_index.component';
 /** FinancialDashboard**/
 import FinancialDashboard from '../../financially/index';
 
+/** reports **/
+import SearchCourt from '../../reports/SearchCourt';
 /** Clients**/
 import AddEditClient from '../../client/AddEditClient';
 import ClientsList from '../../client/ClientsList';
@@ -42,6 +44,7 @@ const AuthRoutes = () => {
         <Route path="/client/create" element={<AddEditClient />} />
         <Route path="/client/edit/:id" element={<AddEditClient />} />
 
+        <Route path="/reports/search-court" element={<SearchCourt />} />
         <Route path="/lawyers/form" element={<LawyersAddEdit />} />
         {/* <Route path="/archives" element={<Archives />} /> */}
         {/* <Route path="/archives/wordpadeditor" element={<WordPadEditor />} /> */}
