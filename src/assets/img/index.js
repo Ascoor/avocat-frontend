@@ -1,19 +1,19 @@
 // @ts-ignore
 // / <reference path="../path/to/images.d.ts" />
 
-export { default as LogoText } from '../img/logo.png';
-export { default as LogoPatren } from '../img/logoPatren.png';
+export { default as LogoText } from '../img/logo512.png';
+export { default as LogoPatren } from '../img/logo512.png';
 export { default as WelcomeImage } from '../img/welcome.jpg';
-export { default as WelcomePatren } from '../img/logo2.png';
+export { default as WelcomePatren } from '../img/logo512.png';
 export { default as WelcomeLogo } from '../img/logo512.png';
 export { default as SideLogoDark } from '../img/splash-image.png';
 export { default as LandingPageImg } from '../img/landing.png';
 // Slider images
 
-export { default as Slider1 } from '../img/home-img/home-slider1.png';
+export { default as Slider1 } from '../img/home-img/home-slider1.jpeg';
 export { default as Slider2 } from '../img/home-img/slide-2.png';
 export { default as Slider3 } from '../img/home-img/home-slider3.png';
-export { default as Slider4 } from '../img/home-img/home-slider-4.png';
+export { default as Slider4 } from '../img/home-img/home-slider-4.jpeg';
 //Services icons
 export { default as CriminalLaw } from '../img/serviceIcons/criminal law1.svg';
 export { default as RealEstate } from '../img/serviceIcons/real-estate1.svg';
@@ -23,7 +23,7 @@ export { default as LabourLaw } from '../img/serviceIcons/labor1.svg';
 export { default as CivelLaw } from '../img/serviceIcons/protection of rights1.svg';
 
 //About Section
-export { default as AboutUs } from '../img/about/contract.png';
+export { default as AboutUs } from '../img/about/contract.jpeg';
 
 // footer
 export { default as Photography } from '../img/footer/cytonn-photography-gjao3ztx9gu-unsplash.jpg';
