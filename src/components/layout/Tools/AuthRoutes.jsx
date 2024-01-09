@@ -22,7 +22,7 @@ import Services from '../../service/index';
 import ProcedureSearch from '../../reports/procedure_search.component';
 import ProfileUser from '../../layout/AuthTool/ProfileUser';
 // import Archives from '../../Archives/ArchiveDashboard';
-// import WordPadEditor from '../../Archives/WordPadEditor/WordPadEditor';
+import LegalWriter from '../../LegalWriter/LegalWriterPlatform';
 import { Container } from 'react-bootstrap';
 const AuthRoutes = () => {
   return (
@@ -43,6 +43,8 @@ const AuthRoutes = () => {
         <Route path="/legcases" element={<LegcaseList />} />
         <Route path="/client/create" element={<AddEditClient />} />
         <Route path="/client/edit/:id" element={<AddEditClient />} />
+        <Route path="/legal-writer" element={<LegalWriter />} />
+
 
         <Route path="/reports/search-court" element={<SearchCourt />} />
         <Route path="/lawyers/form" element={<LawyersAddEdit />} />

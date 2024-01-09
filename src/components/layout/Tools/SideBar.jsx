@@ -79,6 +79,11 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
           </Link>
         </li>
         <li>
+          <Link to="/legal-writer">
+            <FaBriefcase className="m-2" size={25} /> المحرر
+          </Link>
+        </li>
+        <li>
           <Link to="/procedures">
             <FaTasks className="m-2" size={25} /> الإجراءات
           </Link>

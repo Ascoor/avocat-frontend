@@ -7,6 +7,7 @@ import '../../../assets/css/TopNav.css';
 import { LogoPatren } from '../../../assets/img/index';
 import API_CONFIG from '../../../config';
 import Notification from './Notification';
+import {Link} from 'react-router-dom';
 
 const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
   const [notifications, setNotifications] = useState([]);
@@ -51,8 +52,10 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
         <div className="brand-logo">
           {' '}
           {/* تغليف شعار العلامة التجارية في div */}
-          <Navbar.Brand href="/">
+          <Navbar.Brand>
+          <Link to="/">
             <img src={LogoPatren} alt="Brand Logo" />
+            </Link>
           </Navbar.Brand>
         </div>
       </div>
