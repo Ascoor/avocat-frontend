@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {Form, Button, Card} from 'react-bootstrap';
 import axios from 'axios';
 import API_CONFIG from '../../../config.js';
 
-const UploadLegalDoc = ({ show, onHide, docTypes }) => {
+const UploadLegalDoc = ({docSubTypes, docTypes}) => {
   const [selectedDocType, setSelectedDocType] = useState('');
   const [selectedDocSubType, setSelectedDocSubType] = useState('');
-    const [legalDocDiscription, setLegalDocDiscription] = useState([]);
+  const [legalDocDiscription, setLegalDocDiscription] = useState([]);
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -36,11 +36,10 @@ const UploadLegalDoc = ({ show, onHide, docTypes }) => {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
-        }
+        },
       );
       console.log(response.data);
       setSuccess('Document uploaded successfully!');
-      onHide();
     } catch (error) {
       setError('Upload failed. Please try again.');
       console.error('Upload failed:', error);
@@ -51,20 +50,30 @@ const UploadLegalDoc = ({ show, onHide, docTypes }) => {
 
   const getDocSubTypes = (docTypeId) => {
     const docType = docTypes.find(
-      (type) => type.id === parseInt(docTypeId, 10)
+      (type) => type.id === parseInt(docTypeId, 10),
     );
     return docType ? docType.doc_sub_types : [];
   };
 
   return (
-    <Modal show={show} onHide={onHide} size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title>Upload Legal Document</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+    <Card size="lg">
+      <Card.Header>
+        <Card.Title>Upload Legal Document</Card.Title>
+      </Card.Header>
+      <Card.Body>
         {error && <div className="alert alert-danger">{error}</div>}
         {success && <div className="alert alert-success">{success}</div>}
         <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3">
+            <Form.Label>Legal Doc Discription</Form.Label>
+            <Form.Control
+              type="text"
+              value={legalDocDiscription}
+              onChange={(event) => setLegalDocDiscription(event.target.value)}
+              required
+            />
+          </Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Label>Select a Document Type</Form.Label>
             <Form.Select
@@ -73,6 +82,7 @@ const UploadLegalDoc = ({ show, onHide, docTypes }) => {
                 setSelectedDocType(event.target.value);
                 setSelectedDocSubType('');
               }}
+              required
             >
               <option value="">Select a Document Type</option>
               {docTypes.map((docType) => (
@@ -84,19 +94,12 @@ const UploadLegalDoc = ({ show, onHide, docTypes }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>file discription</Form.Label>
-            <Form.Control
-              type="text"
-              value={legalDocDiscription}
-              onChange={(event) => setLegalDocDiscription(event.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
             <Form.Label>Select a DocSubType</Form.Label>
             <Form.Select
               value={selectedDocSubType}
               onChange={(event) => setSelectedDocSubType(event.target.value)}
               disabled={!selectedDocType}
+              required
             >
               <option value="">Select a DocSubType</option>
               {getDocSubTypes(selectedDocType).map((docSubType) => (
@@ -109,7 +112,7 @@ const UploadLegalDoc = ({ show, onHide, docTypes }) => {
 
           <Form.Group className="mb-3">
             <Form.Label>Document File</Form.Label>
-            <Form.Control type="file" onChange={handleFileChange} />
+            <Form.Control type="file" onChange={handleFileChange} required />
           </Form.Group>
 
           <Button
@@ -120,12 +123,10 @@ const UploadLegalDoc = ({ show, onHide, docTypes }) => {
             {isLoading ? 'Uploading...' : 'Upload'}
           </Button>
         </Form>
-      </Modal.Body>
-      <Modal.Footer>
-                <Button variant="secondary" onClick={onHide}>Close</Button>
-            </Modal.Footer>
-        </Modal>
-    );
+      </Card.Body>
+      <Card.Footer></Card.Footer>
+    </Card>
+  );
 };
 
 export default UploadLegalDoc;

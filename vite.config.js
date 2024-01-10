@@ -4,9 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  define: {
-    'global': 'window',
-  },
+ 
   // Define server options
   server: {
     host: true,

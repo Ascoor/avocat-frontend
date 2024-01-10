@@ -1,93 +1,115 @@
-    import React, { useState, useEffect } from 'react';
-    import { Editor } from 'react-draft-wysiwyg';
-    import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
-    import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-    import { Button, Container, Modal } from 'react-bootstrap';
-    import axios from 'axios';
-    import UploadLegalDoc from './WriterTools/uploadLegalDoc';
-    import API_CONFIG from '../../config';
-    import DocTypeManager from './WriterTools/DocTypeManager';
+import React, {useState, useEffect} from 'react';
 
-    const LegalWriterPlatform = () => {
-        const [showDocTypeManager, setShowDocTypeManager] = useState(false);
-        const [showUploadModal, setShowUploadModal] = useState(false);
-        const [showEditorModal, setShowEditorModal] = useState(false);
-        const [editorState, setEditorState] = useState(EditorState.createEmpty());
-        const [docTypes, setDocTypes] = useState([]);
-        useEffect(() => {
-            const fetchDocTypes = async () => {
-                try {
-                    const response = await axios.get(`${API_CONFIG.baseURL}/api/doc-types`);
-                    setDocTypes(response.data.data);
-                } catch (error) {
-                    console.error('Error fetching document types:', error);
-                    // Handle the error appropriately
-                }
-            };
-    
-            fetchDocTypes();
-        }, []);
+import {Editor, EditorState} from 'draft-js';
+import 'draft-js/dist/Draft.css';
 
+import {Tabs, Tab, Card, Container} from 'react-bootstrap';
+import axios from 'axios';
+import UploadLegalDoc from './WriterTools/uploadLegalDoc';
+import API_CONFIG from '../../config';
+import DocTypeManager from './WriterTools/DocTypeManager';
 
-const toggleDocTypeManager = () => {
-    setShowDocTypeManager(!showDocTypeManager);
+const LegalWriterPlatform = () => {
+  const [editorState, setEditorState] = React.useState(() =>
+    EditorState.createEmpty(),
+  );
+  const [key, setKey] = useState('legalDocWriter');
 
-}
+  const [docTypes, setDocTypes] = useState([]);
+  const [docSubTypes, setDocSubTypes] = useState([]);
 
-        const toggleUploadModal = () => {
-            setShowUploadModal(!showUploadModal);
-        }
-
-
-        const onEditorStateChange = (newState) => {
-            setEditorState(newState);
-        };
-
-        const saveDocument = () => {
-            const rawContentState = convertToRaw(editorState.getCurrentContent());
-            // Implement the logic to save the document here
-            console.log('Saved content:', rawContentState);
-        };
-        return (
-            <Container>
-            <Button variant="primary" onClick={() => setShowEditorModal(true)}>Open Editor</Button>
-                <Button variant="primary" onClick={toggleDocTypeManager}>Manage Document Types</Button>
-                <Button variant="primary" onClick={toggleUploadModal}>Upload Legal Document</Button>
-{/* 
-            <DocTypeManager
-
-                show={showDocTypeManager}
-                fetchDocTypes={fetchDocTypes}
-                docTypes={docTypes}
-                onHide={() => setShowDocTypeManager(false)}
-            />
-
-            */}
-            <UploadLegalDoc
-                show={showUploadModal}
-                docTypes={docTypes}
-                onHide={() => setShowUploadModal(false)}
-            />
-
-<Modal show={showEditorModal} onHide={() => setShowEditorModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Legal Document Editor</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Editor
-                        editorState={editorState}
-                        wrapperClassName="editor-wrapper"
-                        editorClassName="editor"
-                        onEditorStateChange={onEditorStateChange}
-                    />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowEditorModal(false)}>Close</Button>
-                    <Button variant="primary" onClick={saveDocument}>Save Document</Button>
-                </Modal.Footer>
-            </Modal> 
-        </Container>
-        );
+  // Fetch docTypes from the server
+  useEffect(() => {
+    const fetchDocTypes = async () => {
+      try {
+        const response = await axios.get(`${API_CONFIG.baseURL}/api/doc-types`);
+        const fetchedDocTypes = response.data.data;
+        setDocTypes(fetchedDocTypes);
+        // استخراج التصنيفات الفرعية من التصنيفات الرئيسية
+        const fetchedDocSubTypes = fetchedDocTypes
+          .map((docType) => docType.doc_sub_types)
+          .flat();
+        setDocSubTypes(fetchedDocSubTypes);
+      } catch (error) {
+        console.error('Error fetching doc types:', error);
+        // Handle error
+      }
     };
 
-    export default LegalWriterPlatform;
+    fetchDocTypes();
+  }, []);
+
+  const handleEditorChange = (newEditorState) => {
+    setEditorState(newEditorState);
+  };
+
+  return (
+    <Container>
+      <Card className="text-center">
+        <Card.Body>
+          <Tabs
+            id="controlled-tab-example"
+            activeKey={key}
+            onSelect={(k) => setKey(k)}
+          >
+            <Tab eventKey="legalDocWriter" title="محرر المستندات">
+              <Card className="card-body">
+                <Editor
+                  editorState={editorState}
+                  onChange={setEditorState}
+                  textAlignment="right"
+                  placeholder="محرر المستندات"
+                  spellCheck={true}
+                  stripPastedStyles={true}
+                  toolbar={{
+                    options: [
+                      'inline',
+                      'blockType',
+                      'fontSize',
+                      'list',
+                      'textAlign',
+                      'link',
+                      'embedded',
+                      'emoji',
+                      'image',
+                      'remove',
+                      'history',
+                      'clear',
+                      'table',
+                      'header',
+                      'extra',
+                      'inlineToolbar',
+                      'uploadImage',
+                      'mediaEmbed',
+                      'emoji',
+                      'wordCount',
+                      'code',
+                      'quote',
+                      'colorize',
+                      'inlineStyles'
+                    ],
+                  }}
+                  readOnly={false}
+                  onEditorStateChange={handleEditorChange}
+                />
+              </Card>
+            </Tab>
+            <Tab eventKey="uploadLegalDoc" title="رفع المستندات">
+              <Card className="card-body">
+                <UploadLegalDoc docTypes={docTypes} />
+              </Card>
+            </Tab>
+            <Tab eventKey="docTypeManager" title="إعدادت التصنيفات">
+              <Card className="card-body">
+                <DocTypeManager docTypes={docTypes} docSubTypes={docSubTypes} />
+              </Card>
+            </Tab>
+          </Tabs>
+        </Card.Body>
+        <Card.Footer></Card.Footer>
+      </Card>
+    </Container>
+  );
+};
+
+export default LegalWriterPlatform;

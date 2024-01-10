@@ -1,92 +1,195 @@
-import React, { useState, useEffect } from 'react';
-import { Card, ListGroup, Button, Form, Modal } from 'react-bootstrap';
-import API_CONFIG from '../../../config';
+import React, {useEffect, useState} from 'react';
+import {Button, Table, Modal} from 'react-bootstrap';
 import axios from 'axios';
+import API_CONFIG from '../../../config';
+import AddEditDocType from './AddEditDocType';
+import AddEditDocSubType from './AddEditDocSubType';
+import {AiTwotoneDelete} from 'react-icons/ai';
+import {FaEdit} from 'react-icons/fa';
+import {IoMdAddCircleOutline} from 'react-icons/io';
+import {ImCancelCircle} from 'react-icons/im';
+import {MdOutlineDoneOutline} from 'react-icons/md';
+const DocTypeManager = ({ docTypes, docSubTypes}) => {
 
-const DocTypeManager = ({ show, onHide, docTypes, fetchDocTypes }) => {
-    const [showModal, setShowModal] = useState(false);
-    const [currentDocType, setCurrentDocType] = useState(null);
-    const [currentDocSubType, setCurrentDocSubType] = useState(null);
-    const [newName, setNewName] = useState('');
+  const [currentDocType, setCurrentDocType] = useState(null);
+  const [currentDocSubType, setCurrentDocSubType] = useState(null);
+  const [showDocTypeModal, setShowDocTypeModal] = useState(false);
+  const [showDocSubTypeModal, setShowDocSubTypeModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+const [updateDocTypes] = useState(docTypes);
+  // Fetch docTypes from the server
+  useEffect(() => {
+   
+  }, []);
 
-    useEffect(() => {
-        fetchDocTypes();
-    }, []);
+  // Show modals
+  const handleShowDocTypeModal = () => setShowDocTypeModal(true);
+  const handleShowDocSubTypeModal = () => setShowDocSubTypeModal(true);
+  // Handle add   
+  const handleAddDocType = () => {
+    setCurrentDocType(null);
+    handleShowDocTypeModal();
+  }
 
-    const handleAddOrUpdate = async () => {
-        const payload = { name: newName };
-        const url = currentDocType
-            ? `${API_CONFIG.baseURL}/doc-types/${currentDocType.id}`
-            : `${API_CONFIG.baseURL}/doc-types`;
+  // Handle Add DocSubType
+  const handleAddDocSubType = () => {
+    setCurrentDocSubType(null);
+    handleShowDocSubTypeModal();
+  }
+  
+  // Handle Edit DocType
+  const handleEditDocType = (docType) => {
+    setCurrentDocType(docType);
+    handleShowDocTypeModal();
+  }
 
-        try {
-            if (currentDocType) {
-                await axios.put(url, payload);
-            } else {
-                await axios.post(url, payload);
-            }
-            setShowModal(false);
-            setNewName('');
-            fetchDocTypes();
-        } catch (error) {
-            console.error('Operation failed:', error);
-        }
-    };
+  // Handle Edit DocSubType
+  const handleEditDocSubType = (subType) => {
+    setCurrentDocSubType(subType);
+    handleShowDocSubTypeModal();
+  };
 
-    const handleDelete = async (docTypeId, docSubTypeId) => {
-        const url = docSubTypeId
-            ? `${API_CONFIG.baseURL}/doc-sub-types/${docSubTypeId}`
-            : `${API_CONFIG.baseURL}/doc-types/${docTypeId}`;
+  // Handle deletion confirmation
+  const handleConfirmDelete = (docType) => {
+    setCurrentDocType(docType);
+    setShowAlert(true);
+  };
 
-        try {
-            await axios.delete(url);
-            fetchDocTypes();
-        } catch (error) {
-            console.error('Delete failed:', error);
-        }
-    };
+  // Handle deletion of document type
+  const handleDelete = async () => {
+    try {
+      await axios.delete(
+        `${API_CONFIG.baseURL}/api/doc-types/${currentDocType.id}`,
+      );
+      
+      const updatedDocTypes = docTypes.filter((docType) => docType.id !== currentDocType.id);
+      // استخدام الوظيفة التي تمررها كخاصية من القمة لتحديث قائمة docTypes
+      updateDocTypes(updatedDocTypes);
+      
+      setShowAlert(false);
+       // إعادة تحميل البيانات بعد الحذف
+    } catch (error) {
+      console.error('Error deleting doc type:', error);
+    }
+  };
+  // Render Document Type Table
+  const renderDocTypeTable = () => {
     return (
-        <div>
-            <Button onClick={() => setShowModal(true)}>Add New DocType</Button>
-            <Card>
-                <ListGroup>
-                    {docTypes.map(docType => (
-                        <ListGroup.Item key={docType.id}>
-                            {docType.name}
-                            <Button onClick={() => { setCurrentDocType(docType); setShowModal(true); }}>Edit</Button>
-                            <Button onClick={() => handleDelete(docType.id)}>Delete</Button>
-                            <ul>
-                                {docType.docSubTypes.map(subType => (
-                                    <li key={subType.id}>
-                                        {subType.name}
-                                        <Button onClick={() => { setCurrentDocSubType(subType); setShowModal(true); }}>Edit</Button>
-                                        <Button onClick={() => handleDelete(docType.id, subType.id)}>Delete</Button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </ListGroup.Item>
-                    ))}
-                </ListGroup>
-            </Card>
+      <Table className="special-table" striped bordered hover>
+        <thead>
+          <tr>
+            <th>تصنيف</th>
+            <th>التحكم</th>
+          </tr>
+        </thead>
+        <tbody>
+          {docTypes.map((docType) => (
+            <tr key={docType.id}>
+              <td>{docType.name}</td>
 
-            <Modal show={showModal} onHide={() => setShowModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{currentDocType || currentDocSubType ? 'Edit' : 'Add New'}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Enter name" value={newName} onChange={(e) => setNewName(e.target.value)} />
-                        </Form.Group>
-                        <Button variant="primary" onClick={handleAddOrUpdate}>
-                            {currentDocType || currentDocSubType ? 'Update' : 'Add'}
-                        </Button>
-                    </Form>
-                </Modal.Body>
-            </Modal>
-        </div>
+              <td>
+                <Button
+                  variant="primary"
+                  onClick={() => handleEditDocType(docType)}
+                >
+                  <FaEdit />
+                </Button>
+
+                <Button
+                  variant="danger"
+                  onClick={() => handleConfirmDelete(docType)}
+                >
+                  <AiTwotoneDelete />
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     );
+  };
+
+  // Render Document Sub-Type Table
+  const renderDocSubTypeTable = () => {
+    return (
+      <Table className="special-table" striped bordered hover>
+        <thead className="thead-dark text-center">
+          <tr>
+            <th>تصنيف فرعي</th>
+            <th>تصنيف</th>
+            <th>التحكم</th>
+          </tr>
+        </thead>
+        <tbody>
+        {docSubTypes.map((subType) => (
+            <tr key={subType.id}>
+              <td>{subType.name}</td>
+              <td>{docTypes.find(docType => docType.id === subType.doc_type_id)?.name}</td>
+              
+              <td>
+                <Button
+                  variant="primary"
+                
+                  onClick={() => handleEditDocSubType(subType)}
+                >
+                  <FaEdit />
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => handleConfirmDelete(subType)}
+                >
+                  <AiTwotoneDelete />
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    );
+  };
+
+  return (
+    <div>
+      <Button variant="success" onClick={handleAddDocType}>
+        <IoMdAddCircleOutline /> إضافة تصنيف
+      </Button>
+      <Button variant="success" onClick={handleAddDocSubType}>
+        <IoMdAddCircleOutline /> إضافة تصنيف فرعي
+      </Button>
+      <AddEditDocType
+        showDocTypeModal={showDocTypeModal}
+        handleCloseDocTypeModal={() => setShowDocTypeModal(false)}
+        docType={currentDocType}
+        setDocType={setCurrentDocType}
+      />
+      <AddEditDocSubType
+        showDocSubTypeModal={showDocSubTypeModal}
+        handleCloseDocSubTypeModal={() => setShowDocSubTypeModal(false)}
+        currentDocSubType={currentDocSubType}
+        setCurrentDocSubType={setCurrentDocSubType}
+        docTypes={docTypes}
+      />
+
+      {renderDocTypeTable()}
+      {renderDocSubTypeTable()}
+      <Modal show={showAlert} onHide={() => setShowAlert(false)}>
+        <Modal.Header>
+          <Modal.Title>تأكيد الحذف</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h5>هل أنت متأكد أنك تريد حذف هذا العنصر؟</h5>
+          <div className="buttons">
+            <Button variant="danger" onClick={handleDelete}>
+              <MdOutlineDoneOutline /> نعم
+            </Button>
+            <Button variant="secondary" onClick={() => setShowAlert(false)}>
+              <ImCancelCircle /> لا
+            </Button>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
 };
 
 export default DocTypeManager;
