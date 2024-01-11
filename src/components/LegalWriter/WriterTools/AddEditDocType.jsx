@@ -7,41 +7,33 @@ const AddEditDocType = ({
   showDocTypeModal, 
   handleCloseDocTypeModal, 
   currentDocType, 
-  setCurrentDocType ,
+  setCurrentDocType 
 }) => {
   const [name, setName] = useState('');
-  const isEditing = !!currentDocType;
-  const title = isEditing ? 'Edit Document Type' : 'Add Document Type';
 
   useEffect(() => {
-    if (isEditing) {
-      setName(currentDocType.name);
-    } else {
-      setName('');
-    }
-  }, [isEditing, currentDocType]);
+    setName(currentDocType ? currentDocType.name : '');
+  }, [currentDocType]);
+  
+  const isEditing = !!currentDocType;
+  const title = isEditing ? 'Edit Document Type' : 'Add Document Type';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const payload = {
-        name,
-      };
+      const payload = { name };
+      let response;
       if (isEditing) {
-        await axios.put(
-          `${API_CONFIG.baseURL}/api/doc-types/${currentDocType.id}`,
-          payload
-        );
+        response = await axios.put(`${API_CONFIG.baseURL}/api/doc-types/${currentDocType.id}`, payload);
       } else {
-        const response = await axios.post(
-          `${API_CONFIG.baseURL}/api/doc-types`,
-          payload
-        );
-        setCurrentDocType(response.data);
+        response = await axios.post(`${API_CONFIG.baseURL}/api/doc-types`, payload);
       }
 
+      setCurrentDocType(response.data);
+      handleCloseDocTypeModal();
     } catch (error) {
       console.error(`Error ${isEditing ? 'updating' : 'adding'} DocType:`, error);
+      handleCloseDocTypeModal();
     }
   };
 

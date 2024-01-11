@@ -7,7 +7,6 @@ export default defineConfig({
   define: {
     global: 'window',
 },
-
   // Server configuration for development
   server: {
     host: true,
@@ -20,8 +19,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      // Define other aliases here if necessary
-      "documentServerUrl": "http://documentserver/"
+      '@components': path.resolve(__dirname, './src/components'),
+      '@styles': path.resolve(__dirname, './src/styles'),
+      '@assets': path.resolve(__dirname, './src/assets'),
+
         
 
 
@@ -47,9 +48,10 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'bootstrap', '@fullcalendar/core', 'axios', 'react-router-dom'],
-          // Define other chunks or vendors as needed
-          // draft.js and others
-          
+          commonjsOptions: {
+            include: [/@workspace\/ckeditor5-custom-build/, /node_modules/],
+          }
+      
 
 
         },
@@ -67,7 +69,10 @@ export default defineConfig({
       'bootstrap',
       'react-router-dom',
       '@fullcalendar/core',
-      // Include other dependencies that need pre-bundling
+      '@ckeditor/ckeditor5-react',
+      '@ckeditor/ckeditor5-build-classic',  
+      
+    '@workspace/ckeditor5-custom-build'
     ],
     exclude: ['@babel/core'],
   },

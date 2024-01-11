@@ -1,50 +1,101 @@
-/* MyEditor.css */
-/* Apply styles to the entire editor */
-.my-editor {
-  font-family: Arial, sans-serif; /* Match the font used in Word */
-  font-size: 12pt; /* Match the font size used in Word */
-  line-height: 1.6; /* Match the line height used in Word */
-  margin: 20px; /* Add margin for spacing like Word's default margin */
+
+/* ======================== MYEDITOR STYLES ======================== */
+
+/* ======================== RESPONSIVE STYLES ======================== */
+@media (max-width: 768px) {
+  /* Styles for medium devices */
+
+/* Main container for the editor */
+.editor-container {
+  width: 100%;
+  max-width: 800px; /* Adjust the maximum width as needed */
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-/* Apply styles to headings (adjust the font size and margin as needed) */
-.my-editor h1 {
-  font-size: 24pt;
-  margin-top: 16px;
-  margin-bottom: 12px;
+/* Editor header styles */
+h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333; /* Adjust the color as needed */
 }
 
-.my-editor h2 {
-  font-size: 18pt;
-  margin-top: 14px;
-  margin-bottom: 10px;
+/* Toolbar container styles */
+.ck-toolbar {
+  border: 1px solid #ccc; /* Add a border to the toolbar */
+  border-radius: 4px;
+  background-color: #f9f9f9; /* Toolbar background color */
+  padding: 10px;
 }
 
-.my-editor h3 {
-  font-size: 16pt;
-  margin-top: 12px;
-  margin-bottom: 8px;
+/* Editor content area styles */
+.ck-editor {
+  border: 1px solid #ccc; /* Add a border to the editor content area */
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #fff; /* Editor background color */
 }
 
-/* Apply styles to paragraphs */
-.my-editor p {
-  margin: 0; /* Remove default margin to match Word's style */
+/* Customize the toolbar buttons */
+.ck-button {
+  margin: 0 5px;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff; /* Button background color */
+  color: #fff; /* Button text color */
 }
 
-/* Apply styles to bulleted and numbered lists */
-.my-editor ul, .my-editor ol {
-  margin-left: 20px; /* Add left margin to match Word's indentation */
+/* Button hover effect */
+.ck-button:hover {
+  background-color: #0056b3; /* Button background color on hover */
 }
 
-/* Apply styles to list items */
-.my-editor ul li, .my-editor ol li {
-  margin: 5px 0; /* Add margin to match Word's spacing */
+/* Add spacing between buttons in the toolbar */
+.ck-toolbar .ck-button + .ck-button {
+  margin-left: 5px;
 }
 
-/* Apply styles to links */
-.my-editor a {
-  color: #007bff; /* Match the default link color in Word */
-  text-decoration: underline; /* Underline links like in Word */
+/* Adjust the styles of specific toolbar buttons */
+.ck-button.ck-button__bold {
+  font-weight: bold;
 }
 
-/* Apply styles to other elements as needed (e.g., tables, images) */
+.ck-button.ck-button__italic {
+  font-style: italic;
+}
+
+.ck-button.ck-button__underline {
+  text-decoration: underline;
+
+}
+
+@media (max-width: 480px) {
+  /* Styles for smaller devices */
+
+  /* Adjust the maximum width as needed */
+  .editor-container {
+    max-width: 100%;
+  }
+
+  /* Adjust the spacing between buttons in the toolbar */
+  .ck-toolbar .ck-button + .ck-button {
+    margin-left: 0;
+  }
+
+  /* Adjust the padding of the editor content area */
+  .ck-editor {
+    padding: 5px;
+  }
+
+  /* Adjust the font size of the editor header */
+  h2 {
+    font-size: 20px;
+  }
+ 
+}
+
+}

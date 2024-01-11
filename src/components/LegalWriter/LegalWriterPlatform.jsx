@@ -12,24 +12,26 @@ const LegalWriterPlatform = () => {
 
   const [docTypes, setDocTypes] = useState([]);
   const [docSubTypes, setDocSubTypes] = useState([]);
+  
+  // تعريف دالة fetchDocTypes
+  const fetchDocTypes = async () => {
+    try {
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/doc-types`);
+      const fetchedDocTypes = response.data.data;
+      setDocTypes(fetchedDocTypes);
+      // استخراج التصنيفات الفرعية من التصنيفات الرئيسية
+      const fetchedDocSubTypes = fetchedDocTypes
+        .map((docType) => docType.doc_sub_types)
+        .flat();
+      setDocSubTypes(fetchedDocSubTypes);
+    } catch (error) {
+      console.error('Error fetching doc types:', error);
+      // Handle error
+    }
+  };
 
   // Fetch docTypes from the server
   useEffect(() => {
-    const fetchDocTypes = async () => {
-      try {
-        const response = await axios.get(`${API_CONFIG.baseURL}/api/doc-types`);
-        const fetchedDocTypes = response.data.data;
-        setDocTypes(fetchedDocTypes);
-        // استخراج التصنيفات الفرعية من التصنيفات الرئيسية
-        const fetchedDocSubTypes = fetchedDocTypes
-          .map((docType) => docType.doc_sub_types)
-          .flat();
-        setDocSubTypes(fetchedDocSubTypes);
-      } catch (error) {
-        console.error('Error fetching doc types:', error);
-        // Handle error
-      }
-    };
 
     fetchDocTypes();
   }, []);
@@ -45,9 +47,7 @@ const LegalWriterPlatform = () => {
             onSelect={(k) => setKey(k)}
           >
             <Tab eventKey="legalDocWriter" title="محرر المستندات">
-              <Card className="card-body">
-              <MyEditor />
-              </Card>
+         <MyEditor />
             </Tab>
             <Tab eventKey="uploadLegalDoc" title="رفع المستندات">
               <Card className="card-body">
@@ -56,7 +56,7 @@ const LegalWriterPlatform = () => {
             </Tab>
             <Tab eventKey="docTypeManager" title="إعدادت التصنيفات">
               <Card className="card-body">
-                <DocTypeManager docTypes={docTypes} docSubTypes={docSubTypes} />
+                <DocTypeManager fetchDocTypes={fetchDocTypes} docTypes={docTypes} docSubTypes={docSubTypes} />
               </Card>
             </Tab>
           </Tabs>

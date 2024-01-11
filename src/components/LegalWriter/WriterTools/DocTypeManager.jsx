@@ -1,192 +1,109 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Table, Modal} from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Table, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
 import AddEditDocType from './AddEditDocType';
 import AddEditDocSubType from './AddEditDocSubType';
-import {AiTwotoneDelete} from 'react-icons/ai';
-import {FaEdit} from 'react-icons/fa';
-import {IoMdAddCircleOutline} from 'react-icons/io';
-import {ImCancelCircle} from 'react-icons/im';
-import {MdOutlineDoneOutline} from 'react-icons/md';
-const DocTypeManager = ({ docTypes, docSubTypes}) => {
+import { AiTwotoneDelete } from 'react-icons/ai';
+import { FaEdit } from 'react-icons/fa';
+import { IoMdAddCircleOutline } from 'react-icons/io';
+import { ImCancelCircle } from 'react-icons/im';
+import { MdOutlineDoneOutline } from 'react-icons/md';
 
-  const [currentDocType, setCurrentDocType] = useState(null);
-  const [currentDocSubType, setCurrentDocSubType] = useState(null);
-  const [showDocTypeModal, setShowDocTypeModal] = useState(false);
-  const [showDocSubTypeModal, setShowDocSubTypeModal] = useState(false);
+const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [isSubType, setIsSubType] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
-const [updateDocTypes] = useState(docTypes);
-const [updatedDocTypes, setUpdatedDocTypes] = useState(docTypes);
-const fetchData = async () => {
-  try {
-    const response = await axios.get(
-      `${API_CONFIG.baseURL}/api/doc-types`
-    );
-    setUpdatedDocTypes(response.data);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-};
 
   useEffect(() => {
-    // استدعاء البيانات من الخادم عند تحميل المكون
-    fetchData();
+    fetchDocTypes();
   }, []);
-  // Show modals
-  const handleShowDocTypeModal = () => setShowDocTypeModal(true);
-  const handleShowDocSubTypeModal = () => setShowDocSubTypeModal(true);
-  
-  // Handle Add DocType
-  const handleAddDocType = async () => {
-    setCurrentDocType(null);
-    handleShowDocTypeModal();
+
+  const handleShowModal = (item, isSubType = false) => {
+    setCurrentItem(item);
+    setIsSubType(isSubType);
+    setShowModal(true);
   };
 
-  // Handle Add DocSubType
-  const handleAddDocSubType = async () => {
-    setCurrentDocSubType(null);
-    handleShowDocSubTypeModal();
+  const handleModalClose = () => {
+    setShowModal(false);
+    setCurrentItem(null);
+    setIsSubType(false);
+    fetchDocTypes();
   };
 
-  // Handle Edit DocType
-  const handleEditDocType = async (docType) => {
-    setCurrentDocType(docType);
-    handleShowDocTypeModal();
-  };
-
-  // Handle Edit DocSubType
-  const handleEditDocSubType = async (subType) => {
-    setCurrentDocSubType(subType);
-    handleShowDocSubTypeModal();
-  };
-
-  // Handle deletion confirmation
-  const handleConfirmDelete = (docType) => {
-    setCurrentDocType(docType);
+  const handleConfirmDelete = (item) => {
     setShowAlert(true);
+    setCurrentItem(item);
   };
 
   const handleDelete = async () => {
     try {
-      await axios.delete(
-        `${API_CONFIG.baseURL}/api/doc-types/${currentDocType.id}`
-      );
-  
-      const updatedDocTypes = docTypes.filter(
-        (docType) => docType.id !== currentDocType.id
-      );
-  
-      // استخدام setUpdatedDocTypes لتحديث قائمة updatedDocTypes
-      setUpdatedDocTypes(updatedDocTypes);
-  
+      await axios.delete(`${API_CONFIG.baseURL}/api/${isSubType ? 'doc-sub-types' : 'doc-types'}/${currentItem.id}`);
+     
       setShowAlert(false);
-      // إعادة تحميل البيانات بعد الحذف
-      fetchData(); // استدعاء الوظيفة التي تقوم بإعادة تحميل البيانات من الخادم
+      fetchDocTypes();
     } catch (error) {
-      console.error('Error deleting doc type:', error);
+      console.error('Error deleting item:', error);
     }
   };
-  // Render Document Type Table
-  const renderDocTypeTable = () => {
-    return (
-      <Table className="special-table" striped bordered hover>
-        <thead>
-          <tr>
-            <th>تصنيف</th>
-            <th>التحكم</th>
+
+  const renderTable = (items, isSubType) => (
+    <Table className="special-table" striped bordered hover>
+      <thead>
+        <tr>
+          <th>{isSubType ? 'تصنيف فرعي' : 'تصنيف'}</th>
+          {isSubType && <th>تصنيف</th>}
+          <th>التحكم</th>
+        </tr>
+      </thead>
+      <tbody>
+        {items.map((item) => (
+          <tr key={item.id}>
+            <td>{item.name}</td>
+            {isSubType && <td>{docTypes.find((docType) => docType.id === item.doc_type_id)?.name}</td>}
+            <td>
+              <Button variant="primary" onClick={() => handleShowModal(item, isSubType)}>
+                <FaEdit />
+              </Button>
+              <Button variant="danger" onClick={() => handleConfirmDelete(item)}>
+                <AiTwotoneDelete />
+              </Button>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {docTypes.map((docType) => (
-            <tr key={docType.id}>
-              <td>{docType.name}</td>
-
-              <td>
-                <Button
-                  variant="primary"
-                  onClick={() => handleEditDocType(docType)}
-                >
-                  <FaEdit />
-                </Button>
-
-                <Button
-                  variant="danger"
-                  onClick={() => handleConfirmDelete(docType)}
-                >
-                  <AiTwotoneDelete />
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
-  };
-
-  // Render Document Sub-Type Table
-  const renderDocSubTypeTable = () => {
-    return (
-      <Table className="special-table" striped bordered hover>
-        <thead className="thead-dark text-center">
-          <tr>
-            <th>تصنيف فرعي</th>
-            <th>تصنيف</th>
-            <th>التحكم</th>
-          </tr>
-        </thead>
-        <tbody>
-        {docSubTypes.map((subType) => (
-            <tr key={subType.id}>
-              <td>{subType.name}</td>
-              <td>{docTypes.find(docType => docType.id === subType.doc_type_id)?.name}</td>
-              
-              <td>
-                <Button
-                  variant="primary"
-                
-                  onClick={() => handleEditDocSubType(subType)}
-                >
-                  <FaEdit />
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => handleConfirmDelete(subType)}
-                >
-                  <AiTwotoneDelete />
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
-  };
+        ))}
+      </tbody>
+    </Table>
+  );
 
   return (
     <div>
-      <Button variant="success" onClick={handleAddDocType}>
+      <Button variant="success" onClick={() => handleShowModal(null)}>
         <IoMdAddCircleOutline /> إضافة تصنيف
       </Button>
-      <Button variant="success" onClick={handleAddDocSubType}>
+      <Button variant="success" onClick={() => handleShowModal(null, true)}>
         <IoMdAddCircleOutline /> إضافة تصنيف فرعي
       </Button>
-      <AddEditDocType
-        showDocTypeModal={showDocTypeModal}
-        handleCloseDocTypeModal={() => setShowDocTypeModal(false)}
-        docType={currentDocType}
-        setDocType={setCurrentDocType}
-      />
-      <AddEditDocSubType
-        showDocSubTypeModal={showDocSubTypeModal}
-        handleCloseDocSubTypeModal={() => setShowDocSubTypeModal(false)}
-        currentDocSubType={currentDocSubType}
-        setCurrentDocSubType={setCurrentDocSubType}
-        docTypes={docTypes}
-      />
 
-      {renderDocTypeTable()}
-      {renderDocSubTypeTable()}
+      {renderTable(docTypes, false)}
+      {renderTable(docSubTypes, true)}
+
+      <AddEditDocType
+        showDocTypeModal={showModal && !isSubType}
+        handleCloseDocSubTypeModal={handleModalClose}
+        currentDocSubType={currentItem}
+        setCurrentDocSubType={setCurrentItem}
+      />
+<AddEditDocSubType
+  docTypes={docTypes}
+  showDocSubTypeModal={showModal && isSubType}
+  handleCloseDocSubTypeModal={handleModalClose}
+  currentDocSubType={currentItem}
+  setCurrentDocSubType={setCurrentItem}
+/>
+
+
       <Modal show={showAlert} onHide={() => setShowAlert(false)}>
         <Modal.Header>
           <Modal.Title>تأكيد الحذف</Modal.Title>
