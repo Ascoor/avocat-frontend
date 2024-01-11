@@ -9,8 +9,6 @@ module.exports = {
   bracketSpacing: true,
   jsxBracketSameLine: false,
   arrowParens: 'always',
-
-  // Additional Configurations
-  endOfLine: 'auto', // or 'lf' for Unix-style line endings
-  proseWrap: 'always', // or 'preserve' to leave markdown files as-is
+  endOfLine: 'auto',
+  proseWrap: 'always',
 };

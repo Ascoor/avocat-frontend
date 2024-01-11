@@ -17,34 +17,46 @@ const DocTypeManager = ({ docTypes, docSubTypes}) => {
   const [showDocSubTypeModal, setShowDocSubTypeModal] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 const [updateDocTypes] = useState(docTypes);
-  // Fetch docTypes from the server
-  useEffect(() => {
-   
-  }, []);
+const [updatedDocTypes, setUpdatedDocTypes] = useState(docTypes);
+const fetchData = async () => {
+  try {
+    const response = await axios.get(
+      `${API_CONFIG.baseURL}/api/doc-types`
+    );
+    setUpdatedDocTypes(response.data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
 
+  useEffect(() => {
+    // استدعاء البيانات من الخادم عند تحميل المكون
+    fetchData();
+  }, []);
   // Show modals
   const handleShowDocTypeModal = () => setShowDocTypeModal(true);
   const handleShowDocSubTypeModal = () => setShowDocSubTypeModal(true);
-  // Handle add   
-  const handleAddDocType = () => {
+  
+  // Handle Add DocType
+  const handleAddDocType = async () => {
     setCurrentDocType(null);
     handleShowDocTypeModal();
-  }
+  };
 
   // Handle Add DocSubType
-  const handleAddDocSubType = () => {
+  const handleAddDocSubType = async () => {
     setCurrentDocSubType(null);
     handleShowDocSubTypeModal();
-  }
-  
+  };
+
   // Handle Edit DocType
-  const handleEditDocType = (docType) => {
+  const handleEditDocType = async (docType) => {
     setCurrentDocType(docType);
     handleShowDocTypeModal();
-  }
+  };
 
   // Handle Edit DocSubType
-  const handleEditDocSubType = (subType) => {
+  const handleEditDocSubType = async (subType) => {
     setCurrentDocSubType(subType);
     handleShowDocSubTypeModal();
   };
@@ -55,19 +67,22 @@ const [updateDocTypes] = useState(docTypes);
     setShowAlert(true);
   };
 
-  // Handle deletion of document type
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `${API_CONFIG.baseURL}/api/doc-types/${currentDocType.id}`,
+        `${API_CONFIG.baseURL}/api/doc-types/${currentDocType.id}`
       );
-      
-      const updatedDocTypes = docTypes.filter((docType) => docType.id !== currentDocType.id);
-      // استخدام الوظيفة التي تمررها كخاصية من القمة لتحديث قائمة docTypes
-      updateDocTypes(updatedDocTypes);
-      
+  
+      const updatedDocTypes = docTypes.filter(
+        (docType) => docType.id !== currentDocType.id
+      );
+  
+      // استخدام setUpdatedDocTypes لتحديث قائمة updatedDocTypes
+      setUpdatedDocTypes(updatedDocTypes);
+  
       setShowAlert(false);
-       // إعادة تحميل البيانات بعد الحذف
+      // إعادة تحميل البيانات بعد الحذف
+      fetchData(); // استدعاء الوظيفة التي تقوم بإعادة تحميل البيانات من الخادم
     } catch (error) {
       console.error('Error deleting doc type:', error);
     }

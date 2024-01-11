@@ -1,0 +1,50 @@
+/* MyEditor.css */
+/* Apply styles to the entire editor */
+.my-editor {
+  font-family: Arial, sans-serif; /* Match the font used in Word */
+  font-size: 12pt; /* Match the font size used in Word */
+  line-height: 1.6; /* Match the line height used in Word */
+  margin: 20px; /* Add margin for spacing like Word's default margin */
+}
+
+/* Apply styles to headings (adjust the font size and margin as needed) */
+.my-editor h1 {
+  font-size: 24pt;
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
+
+.my-editor h2 {
+  font-size: 18pt;
+  margin-top: 14px;
+  margin-bottom: 10px;
+}
+
+.my-editor h3 {
+  font-size: 16pt;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+/* Apply styles to paragraphs */
+.my-editor p {
+  margin: 0; /* Remove default margin to match Word's style */
+}
+
+/* Apply styles to bulleted and numbered lists */
+.my-editor ul, .my-editor ol {
+  margin-left: 20px; /* Add left margin to match Word's indentation */
+}
+
+/* Apply styles to list items */
+.my-editor ul li, .my-editor ol li {
+  margin: 5px 0; /* Add margin to match Word's spacing */
+}
+
+/* Apply styles to links */
+.my-editor a {
+  color: #007bff; /* Match the default link color in Word */
+  text-decoration: underline; /* Underline links like in Word */
+}
+
+/* Apply styles to other elements as needed (e.g., tables, images) */

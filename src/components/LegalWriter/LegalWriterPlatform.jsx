@@ -1,8 +1,5 @@
 import React, {useState, useEffect} from 'react';
-
-import {Editor, EditorState} from 'draft-js';
-import 'draft-js/dist/Draft.css';
-
+import MyEditor from './WriterTools/MyEditor';
 import {Tabs, Tab, Card, Container} from 'react-bootstrap';
 import axios from 'axios';
 import UploadLegalDoc from './WriterTools/uploadLegalDoc';
@@ -10,9 +7,7 @@ import API_CONFIG from '../../config';
 import DocTypeManager from './WriterTools/DocTypeManager';
 
 const LegalWriterPlatform = () => {
-  const [editorState, setEditorState] = React.useState(() =>
-    EditorState.createEmpty(),
-  );
+
   const [key, setKey] = useState('legalDocWriter');
 
   const [docTypes, setDocTypes] = useState([]);
@@ -39,9 +34,6 @@ const LegalWriterPlatform = () => {
     fetchDocTypes();
   }, []);
 
-  const handleEditorChange = (newEditorState) => {
-    setEditorState(newEditorState);
-  };
 
   return (
     <Container>
@@ -54,44 +46,7 @@ const LegalWriterPlatform = () => {
           >
             <Tab eventKey="legalDocWriter" title="محرر المستندات">
               <Card className="card-body">
-                <Editor
-                  editorState={editorState}
-                  onChange={setEditorState}
-                  textAlignment="right"
-                  placeholder="محرر المستندات"
-                  spellCheck={true}
-                  stripPastedStyles={true}
-                  toolbar={{
-                    options: [
-                      'inline',
-                      'blockType',
-                      'fontSize',
-                      'list',
-                      'textAlign',
-                      'link',
-                      'embedded',
-                      'emoji',
-                      'image',
-                      'remove',
-                      'history',
-                      'clear',
-                      'table',
-                      'header',
-                      'extra',
-                      'inlineToolbar',
-                      'uploadImage',
-                      'mediaEmbed',
-                      'emoji',
-                      'wordCount',
-                      'code',
-                      'quote',
-                      'colorize',
-                      'inlineStyles'
-                    ],
-                  }}
-                  readOnly={false}
-                  onEditorStateChange={handleEditorChange}
-                />
+              <MyEditor />
               </Card>
             </Tab>
             <Tab eventKey="uploadLegalDoc" title="رفع المستندات">

@@ -4,54 +4,74 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
- 
-  // Define server options
+  define: {
+    global: 'window',
+},
+
+  // Server configuration for development
   server: {
     host: true,
     port: 3000,
-    open: true, // automatically open the browser
-    cors: true, // enable CORS
+    open: true,
+    cors: true,
   },
 
-  // Resolve aliases for directories
+  // Alias and other resolve options
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      // Add other aliases here
+      // Define other aliases here if necessary
+      "documentServerUrl": "http://documentserver/"
+        
+
+
     },
   },
 
-  // CSS configuration
+  // CSS and styling options
   css: {
     modules: {
       localsConvention: 'camelCaseOnly',
     },
     preprocessorOptions: {
       scss: {
-        // SCSS global styles (variables, mixins, etc.)
-        additionalData: '@import \'@/styles/variables.scss\';',
+        additionalData: '@import "@/styles/variables.scss";',
       },
     },
   },
 
-  // Build specific configurations
+  // Build options for production
   build: {
-    outDir: 'build',
+    outDir: 'dist',
     rollupOptions: {
       output: {
-        // Control chunking and asset output
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          // other chunks
+          vendor: ['react', 'react-dom', 'bootstrap', '@fullcalendar/core', 'axios', 'react-router-dom'],
+          // Define other chunks or vendors as needed
+          // draft.js and others
+          
+
+
         },
       },
     },
-    sourcemap: true, // enable source maps
+    sourcemap: process.env.NODE_ENV !== 'production',
   },
 
   // Optimize dependencies
   optimizeDeps: {
-    include: ['react', 'react-dom', 'axios', 'bootstrap', 'react-router-dom'],
-    // exclude specific packages
+    include: [
+      'react',
+      'react-dom',
+      'axios',
+      'bootstrap',
+      'react-router-dom',
+      '@fullcalendar/core',
+      // Include other dependencies that need pre-bundling
+    ],
+    exclude: ['@babel/core'],
   },
+
+ 
+
 });
