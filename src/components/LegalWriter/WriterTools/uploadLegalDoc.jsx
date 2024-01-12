@@ -2,15 +2,16 @@ import React, {useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
 import axios from 'axios';
 import API_CONFIG from '../../../config.js';
-
+import EditorViewer from './EditorTools/EditorViewer.jsx';
 const UploadLegalDoc = ({docSubTypes, docTypes}) => {
   const [selectedDocType, setSelectedDocType] = useState('');
   const [selectedDocSubType, setSelectedDocSubType] = useState('');
-  const [legalDocDiscription, setLegalDocDiscription] = useState([]);
+  const [legalDocDiscription, setLegalDocDescription] = useState('');
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [uploadResponse, setUploadResponse] = useState(null);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -26,32 +27,26 @@ const UploadLegalDoc = ({docSubTypes, docTypes}) => {
     formData.append('file', file);
     formData.append('docTypeId', selectedDocType);
     formData.append('docSubTypeId', selectedDocSubType);
-    formData.append('legalDocDiscription', legalDocDiscription);
+    formData.append('legalDocDescription', legalDocDiscription);
 
     try {
-      const response = await axios.post(
-        `${API_CONFIG.baseURL}/api/legal-doc-upload`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+      const response = await axios.post(`${API_CONFIG.baseURL}/api/legal-doc-upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-      );
-      console.log(response.data);
+      });
+
       setSuccess('Document uploaded successfully!');
+      setUploadResponse(response.data);
     } catch (error) {
-      setError('Upload failed. Please try again.');
-      console.error('Upload failed:', error);
+      setError('Error uploading document: ' + error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
   const getDocSubTypes = (docTypeId) => {
-    const docType = docTypes.find(
-      (type) => type.id === parseInt(docTypeId, 10),
-    );
+    const docType = docTypes.find(type => type.id === parseInt(docTypeId, 10));
     return docType ? docType.doc_sub_types : [];
   };
 
@@ -69,7 +64,7 @@ const UploadLegalDoc = ({docSubTypes, docTypes}) => {
             <Form.Control
               type="text"
               value={legalDocDiscription}
-              onChange={(event) => setLegalDocDiscription(event.target.value)}
+              onChange={(event) => setLegalDocDescription(event.target.value)}
               required
             />
           </Form.Group>
@@ -112,7 +107,7 @@ const UploadLegalDoc = ({docSubTypes, docTypes}) => {
 
           <Form.Group className="mb-3">
             <Form.Label>Document File</Form.Label>
-            <Form.Control type="file" onChange={handleFileChange} required />
+            <Form.Control as="input" name="file" type="file" onChange={handleFileChange} required />
           </Form.Group>
 
           <Button
@@ -124,7 +119,14 @@ const UploadLegalDoc = ({docSubTypes, docTypes}) => {
           </Button>
         </Form>
       </Card.Body>
-      <Card.Footer></Card.Footer>
+      <Card.Footer>
+        <Card.Title>Uploaded Document</Card.Title>
+        <section>
+          {uploadResponse && (
+            <EditorViewer editorData={uploadResponse.path} />
+          )}
+        </section>
+      </Card.Footer>
     </Card>
   );
 };
