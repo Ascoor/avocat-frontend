@@ -1,7 +1,7 @@
 import React, { Suspense, useState } from 'react';
 import '../../assets/css/Welcome.css';
 import { useTransition, useSpring, animated } from '@react-spring/web';
-import { Card, Button, Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
 import { LogoPatren } from '../../assets/img/index';
 
@@ -132,7 +132,7 @@ const Guest = () => {
                       className="glass-container"
                       style={{ position: 'relative', zIndex: 3 }}
                     >
-                      <Card className="form-container">
+                   
                         {showLoginForm && (
                           <Login
                             className="form-content"
@@ -145,7 +145,7 @@ const Guest = () => {
                             handleCloseForm={handleCloseForm}
                           />
                         )}
-                      </Card>
+            
                     </div>
                   </animated.div>
                 ) : null,

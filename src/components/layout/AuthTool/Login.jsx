@@ -33,66 +33,66 @@ const Login = ({ handleCloseForm }) => {
       setLoading(false);
     }
   };
-
   return (
-    <>
-      <Card.Header>
-        <div className="auth-setting-card-header">
-          <Card.Title className="auth-login-title">
-            <FaSignInAlt className="welcome-page-icon m-2" />
-            تسجيل الدخول
-          </Card.Title>
-        </div>
+    <Card className="special-login-card">
+      <Card.Header className="special-login-header">
+        <Card.Title className="special-login-title">
+          <FaSignInAlt className="special-login-icon" />
+          تسجيل الدخول
+        </Card.Title>
       </Card.Header>
 
-      <Card.Body>
+      <Card.Body className="special-login-body">
         <Form onSubmit={onSubmit}>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label className="form-label m-2">
-              عنوان البريد الإلكتروني
-            </Form.Label>
+            <Form.Label className="form-label m-2">عنوان البريد الإلكتروني</Form.Label>
             <Form.Control
+              className="special-login-input"
               type="email"
-              placeholder="Enter an email address"
+              placeholder="أدخل بريدك الإلكتروني"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group>
+          <Form.Group controlId="formBasicPassword">
             <Form.Label className="form-label m-2">كلمة المرور</Form.Label>
             <Form.Control
+              className="special-login-input"
               type="password"
-              placeholder="Enter your password"
+              placeholder="أدخل كلمة المرور"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-        </Form>
 
-        {error && <p className="text-danger mt-3 text-center">{error}</p>}
-      </Card.Body>
-
-      <Card.Footer>
-        {loading ? (
-          <Button type="button" disabled className="btn-warning login-btn">
+     
+          {loading ? (
+          <Button disabled className="btn-warning special-login-button">
             ...جارى الدخول
           </Button>
         ) : (
-          <Button onClick={onSubmit} className="btn-success login-btn">
+          <Button onClick={onSubmit} className="btn-success special-login-button">
             تسجيل الدخول
           </Button>
         )}
 
+          {error && <p className="text-danger mt-3 text-center">{error}</p>}
+        </Form>
+      </Card.Body>
+
+      <Card.Footer className="special-login-footer">
+
         <Button
           type="button"
           onClick={handleCloseForm}
-          className="btn-danger login-back"
+          className="btn-danger special-login-button"
         >
           العودة للرئيسية
         </Button>
       </Card.Footer>
-    </>
+    </Card>
+
   );
 };
 
