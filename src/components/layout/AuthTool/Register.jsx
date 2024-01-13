@@ -57,86 +57,80 @@ const Register = ({ handleCloseForm }) => {
   };
 
   return (
-    <>
-      <Card.Header>
-        <div className="auth-setting-card-header">
-          <Card.Title className="auth-login-title">
-            <FaSignInAlt className="welcome-page-icon m-2" />
-            تسجيل إشتراك جديد
-          </Card.Title>
-        </div>
+    <Card className="special-register-card">
+      <Card.Header className="special-register-header">
+        <Card.Title className="special-register-title">
+          <FaUser className="special-register-icon" />
+          تسجيل اشتراك جديد
+        </Card.Title>
       </Card.Header>
 
-      <Card.Body>
-        <Form>
+      <Card.Body className="special-register-body">
+        <Form onSubmit={submitForm}>
           <FormGroup>
-            <Form.Label className="form-label m-2">
-              <FaUser className="form-icon" /> الاسم:
-            </Form.Label>
+            <Form.Label>الاسم</Form.Label>
             <Form.Control
+              className="special-register-input"
               type="text"
-              placeholder="ادخل الاسم"
+              placeholder="ادخل اسمك"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </FormGroup>
+
           <FormGroup>
-            <Form.Label className="form-label m-2">
-              <FaEnvelope className="form-icon" /> البريد الإلكتروني:
-            </Form.Label>
+            <Form.Label>البريد الإلكتروني</Form.Label>
             <Form.Control
+              className="special-register-input"
               type="email"
-              placeholder="ادخل البريد الإلكتروني"
+              placeholder="أدخل بريدك الإلكتروني"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </FormGroup>
+
           <FormGroup>
-            <Form.Label className="form-label m-2">
-              <FaKey className="form-icon" /> كلمة المرور:
-            </Form.Label>
+            <Form.Label>كلمة المرور</Form.Label>
             <Form.Control
+              className="special-register-input"
               type="password"
-              placeholder="ادخل كلمة المرور"
+              placeholder="أدخل كلمة المرور"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </FormGroup>
 
           <FormGroup>
-            <Form.Label className="form-label m-2">
-              <FaKey className="form-icon" /> إعادة إدخال كلمة المرور:
-            </Form.Label>
+            <Form.Label>إعادة إدخال كلمة المرور</Form.Label>
             <Form.Control
+              className="special-register-input"
               type="password"
-              placeholder="إعادة إدخال كلمة المرور"
+              placeholder="أعد إدخال كلمة المرور"
               value={rePassword}
               onChange={(e) => setRePassword(e.target.value)}
             />
           </FormGroup>
+
+          <Button type="submit" className="special-register-button">
+            تسجيل الاشتراك
+          </Button>
+
+          {error && <p className="text-danger mt-3 text-center">{error}</p>}
         </Form>
       </Card.Body>
 
-      <Card.Footer>
-        <Button type="button" onClick={submitForm} className="btn-danger-guest">
-          تسجيل اشتراك
-        </Button>
-        {loading ? (
-          <Button type="button" disabled className="btn-loading">
-            جاري التحميل...
-          </Button>
-        ) : null}
-        {error && <p className="text-danger-guest mt-1">{error}</p>}
-        <Button
-          type="button"
-          onClick={handleCloseForm}
-          className="btn-danger login-guest"
-        >
-          العودة للرئيسية
-        </Button>
-      </Card.Footer>
-    </>
-  );
-};
+      <Card.Footer className="special-register-footer">
 
-export default Register;
+      <Button
+            onClick={handleCloseForm}
+            className="btn-danger login-guest special-register-button"
+          >
+            العودة للرئيسية
+          </Button>
+      </Card.Footer>
+    </Card>
+
+    );
+  };
+
+  export default Register;
