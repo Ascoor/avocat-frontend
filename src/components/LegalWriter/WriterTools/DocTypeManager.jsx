@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Table, Modal } from 'react-bootstrap';
+import { Button, Table, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
 import AddEditDocType from './AddEditDocType';
@@ -15,6 +15,7 @@ const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
   const [isSubType, setIsSubType] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  const [selectedMainDocType, setSelectedMainDocType] = useState('');
 
   useEffect(() => {
     fetchDocTypes();
@@ -23,6 +24,7 @@ const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
   const handleShowModal = (item, isSubType = false) => {
     setCurrentItem(item);
     setIsSubType(isSubType);
+    setSelectedMainDocType(isSubType ? (item ? item.doc_type_id : '') : '');
     setShowModal(true);
   };
 
@@ -30,10 +32,11 @@ const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
     setShowModal(false);
     setCurrentItem(null);
     setIsSubType(false);
+    setSelectedMainDocType('');
     fetchDocTypes();
   };
 
-  const handleConfirmDelete = (item, isSubType,isSubType_docTypeId) => {
+  const handleConfirmDelete = (item, isSubType, isSubType_docTypeId) => {
     setShowAlert(true);
     setCurrentItem(item);
     setIsSubType(isSubType);
@@ -56,7 +59,7 @@ const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
       <thead>
         <tr>
           <th>{isSubType ? 'تصنيف فرعي' : 'تصنيف'}</th>
-          {isSubType && <th>تصنيف</th>}
+          {isSubType && <th>تصنيف رئيسي</th>}
           <th>التحكم</th>
         </tr>
       </thead>
@@ -64,12 +67,14 @@ const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
         {items.map((item) => (
           <tr key={item.id}>
             <td>{item.name}</td>
-            {isSubType && <td>{docTypes.find((docType) => docType.id === item.doc_type_id)?.name}</td>}
+            {isSubType && (
+              <td>{docTypes.find((docType) => docType.id === item.doc_type_id)?.name}</td>
+            )}
             <td>
               <Button variant="primary" onClick={() => handleShowModal(item, isSubType)}>
                 <FaEdit />
               </Button>
-              <Button variant="danger" onClick={() => handleConfirmDelete(item)}>
+              <Button variant="danger" onClick={() => handleConfirmDelete(item, isSubType, item.doc_type_id)}>
                 <AiTwotoneDelete />
               </Button>
             </td>
@@ -93,16 +98,18 @@ const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
 
       <AddEditDocType
         showDocTypeModal={showModal && !isSubType}
-        handleCloseDocSubTypeModal={handleModalClose}
-        currentDocSubType={currentItem}
-        setCurrentDocSubType={setCurrentItem}
+        handleCloseDocTypeModal={handleModalClose}
+        currentDocType={currentItem}
+        setCurrentDocType={setCurrentItem}
       />
-<AddEditDocSubType
+    <AddEditDocSubType
   docTypes={docTypes}
   showDocSubTypeModal={showModal && isSubType}
   handleCloseDocSubTypeModal={handleModalClose}
   currentDocSubType={currentItem}
   setCurrentDocSubType={setCurrentItem}
+  selectedMainDocType={selectedMainDocType}
+  setSelectedMainDocType={setSelectedMainDocType}
 />
 
 

@@ -8,6 +8,8 @@ const AddEditDocSubType = ({
   showDocSubTypeModal,
   handleCloseDocSubTypeModal,
   currentDocSubType,
+  selectedMainDocType,
+  setSelectedMainDocType, // تم تعديل هذا المعامل
   setCurrentDocSubType,
 }) => {
   const [selectedDocType, setSelectedDocType] = useState('');
@@ -16,27 +18,26 @@ const AddEditDocSubType = ({
   useEffect(() => {
     if (currentDocSubType) {
       setName(currentDocSubType.name);
-      setSelectedDocType(currentDocSubType.docTypeId); // تحديد نوع المستند المختار عند التحرير
+      setSelectedDocType(currentDocSubType.docTypeId);
     } else {
       setName('');
-      setSelectedDocType(''); // إعادة تعيين نوع المستند المختار عند الإضافة
+      setSelectedDocType('');
     }
   }, [currentDocSubType]);
 
   const isEditing = !!currentDocSubType;
   const title = isEditing ? 'تحرير تصنيف فرعي للمستند' : 'إضافة تصنيف فرعي للمستند';
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const payload = { name, docTypeId: selectedDocType };
+      const payload = { name, docTypeId: selectedMainDocType }; // استخدام selectedMainDocType هنا
       let response;
       if (isEditing) {
         response = await axios.put(`${API_CONFIG.baseURL}/api/doc-sub-types/${currentDocSubType.id}`, payload);
       } else {
         response = await axios.post(`${API_CONFIG.baseURL}/api/doc-sub-types`, payload);
       }
-
+  
       setCurrentDocSubType(response.data);
       handleCloseDocSubTypeModal();
     } catch (error) {
@@ -44,6 +45,7 @@ const AddEditDocSubType = ({
       handleCloseDocSubTypeModal();
     }
   };
+  
 
   return (
     <Modal show={showDocSubTypeModal} onHide={handleCloseDocSubTypeModal}>
@@ -58,14 +60,18 @@ const AddEditDocSubType = ({
           </Form.Group>
           <Form.Group controlId="docTypeName">
             <Form.Label>اختر نوع المستند</Form.Label>
-            <Form.Control as="select" value={selectedDocType} onChange={(e) => setSelectedDocType(e.target.value)}>
-              <option value="">اختر نوع المستند</option>
+
+            <select
+              value={selectedMainDocType}
+              onChange={(e) => setSelectedMainDocType(e.target.value)}
+            >
+              <option value="">اختر التصنيف الرئيسي</option>
               {docTypes.map((docType) => (
                 <option key={docType.id} value={docType.id}>
                   {docType.name}
                 </option>
               ))}
-            </Form.Control>
+            </select>
           </Form.Group>
           <Button variant="primary" type="submit">
             {isEditing ? 'تحديث' : 'إضافة'}
