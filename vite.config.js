@@ -6,13 +6,14 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import compression from 'vite-plugin-compression';
 
 export default defineConfig({
-  plugins: [react(),
+  plugins: [
+    react(),
     visualizer({ open: true }), // لتحليل حجم الحزمة
     compression(), // لضغط الأصول
   ],
   define: {
     global: 'window',
-},
+  },
   // Server configuration for development
   server: {
     host: true,
@@ -28,10 +29,9 @@ export default defineConfig({
       '@components': path.resolve(__dirname, './src/components'),
       '@styles': path.resolve(__dirname, './src/styles'),
       '@assets': path.resolve(__dirname, './src/assets'),
-
-        
-
-
+      'path': 'path-browserify',
+      'util': 'util',
+  
     },
   },
 
@@ -52,14 +52,10 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       output: {
+        chunkSizeWarningLimit: 1000, // Adjust the value as needed
+
         manualChunks: {
           vendor: ['react', 'react-dom', 'bootstrap', '@fullcalendar/core', 'axios', 'react-router-dom'],
-          commonjsOptions: {
-            include: [/@workspace\/node_modules/],
-          }
-      
-
-
         },
       },
     },
@@ -76,13 +72,9 @@ export default defineConfig({
       'react-router-dom',
       '@fullcalendar/core',
       '@ckeditor/ckeditor5-react',
-      '@ckeditor/ckeditor5-build-classic',  
-      
-    '@workspace/ckeditor5-custom-build'
+      '@ckeditor/ckeditor5-build-classic',
+      '@workspace/ckeditor5-custom-build',
     ],
     exclude: ['@babel/core'],
   },
-
- 
-
 });
