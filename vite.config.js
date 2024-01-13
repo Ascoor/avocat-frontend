@@ -1,9 +1,15 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { visualizer } from 'rollup-plugin-visualizer';
+
+import compression from 'vite-plugin-compression';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(),
+    visualizer({ open: true }), // لتحليل حجم الحزمة
+    compression(), // لضغط الأصول
+  ],
   define: {
     global: 'window',
 },
@@ -49,7 +55,7 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom', 'bootstrap', '@fullcalendar/core', 'axios', 'react-router-dom'],
           commonjsOptions: {
-            include: [/@workspace\/ckeditor5-custom-build/, /node_modules/],
+            include: [/@workspace\/node_modules/],
           }
       
 

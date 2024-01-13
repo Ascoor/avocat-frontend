@@ -11,6 +11,13 @@
       "type": "image/x-icon"
     },
     {
+      "src": "splash-image.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    
+    {
       "src": "splash-image.jpg",
       "type": "image/png",
       "sizes": "192x192"

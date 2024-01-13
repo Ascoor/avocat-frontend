@@ -33,9 +33,11 @@ const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
     fetchDocTypes();
   };
 
-  const handleConfirmDelete = (item) => {
+  const handleConfirmDelete = (item, isSubType,isSubType_docTypeId) => {
     setShowAlert(true);
     setCurrentItem(item);
+    setIsSubType(isSubType);
+    setIsSubType_docTypeId(isSubType_docTypeId);
   };
 
   const handleDelete = async () => {
