@@ -33,18 +33,14 @@ ClassicEditor.defaultConfig = {
         // يمكنك إضافة المزيد من الخطوط العربية هنا
       ],
     },
-    
-    
   },
 
   image: {
     toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
   },
-  
-  
-  
+
   language: 'ar',
   direction: 'rtl',
-}
+};
 
 export default ClassicEditor;

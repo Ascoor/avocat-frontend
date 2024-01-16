@@ -71,12 +71,11 @@ const SearchCourt = () => {
   return (
     <section className="home-page">
       <Card>
-        <Card.Header className="home-text-center">بحث  المحكمة</Card.Header>
+        <Card.Header className="home-text-center">بحث المحكمة</Card.Header>
         <Card.Body>
-   
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formDegree">
-              <Form.Label>الدرجة  </Form.Label>
+              <Form.Label>الدرجة </Form.Label>
               <Form.Control
                 as="select"
                 value={selectedDegree}

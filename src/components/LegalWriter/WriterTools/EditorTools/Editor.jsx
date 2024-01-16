@@ -4,7 +4,7 @@ import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'; // U
 
 function Editor({ importedDocContent }) {
   // State to store the editor content
-  const [editorData, setEditorData] = useState("<p>Hello from CKEditor 5!</p>");
+  const [editorData, setEditorData] = useState('<p>Hello from CKEditor 5!</p>');
 
   // Handler for when the editor is ready
   const handleEditorReady = (editor) => {

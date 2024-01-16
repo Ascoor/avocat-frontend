@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Modal, Form,FormControl, Button, Row, Col } from 'react-bootstrap';
+import { Modal, Form, FormControl, Button, Row, Col } from 'react-bootstrap';
 import arEG from 'date-fns/locale/ar-EG';
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import { useSpring, animated } from '@react-spring/web';

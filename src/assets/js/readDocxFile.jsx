@@ -9,13 +9,17 @@ async function readWordDocument(filePath) {
   } else if (filePath.endsWith('.doc')) {
     // Read .doc using textract
     return new Promise((resolve, reject) => {
-      textract.fromFileWithPath(filePath, { preserveLineBreaks: true }, (error, text) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(text);
-        }
-      });
+      textract.fromFileWithPath(
+        filePath,
+        { preserveLineBreaks: true },
+        (error, text) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(text);
+          }
+        },
+      );
     });
   } else {
     throw new Error('Unsupported file format');

@@ -43,18 +43,6 @@ a {
 
 /* CSS for form */
 
-.form-icon {
-  margin-right: 5px;
-}
-
-.btn-loading {
-  background-color: rgb(225, 225, 2);
-  color: black;
-  border-radius: 60px;
-  padding: 11px 4px;
-  margin: auto;
-}
-
 /* Report */
 .report-procedure-icon {
   width: 95px;
@@ -90,12 +78,6 @@ a {
   text-align: center; /* Aligning to the right for RTL */
   background-color: #04aa6d;
   color: white;
-}
-
-.login-back {
-  background-color: #dc3545;
-  color: #ffffff;
-  padding: 10px 20px;
 }
 
 /* Courte sEtting*/
@@ -419,23 +401,6 @@ a {
 }
 
 /* ======================== spinner  loading ======================== */
-
-.sk-cube-grid {
-  width: 40px;
-  height: 40px;
-  margin: 50vh auto;
-}
-
-.sk-cube-grid .sk-cube {
-  width: 33%;
-  height: 33%;
-  background: radial-gradient(
-    circle at center,
-    #0b2440 10%,
-    #072238 60%,
-    #0a2b41 80%
-  );
-}
 /* ======================== SPLASH STYLES ======================== */
 .splash-container {
   opacity: 1;
@@ -500,24 +465,6 @@ a {
 }
 
 /* ======================== FORM & BUTTONS ======================== */
-
-.form-icon {
-  margin-right: 5px;
-}
-
-.btn-loading {
-  border: none;
-  border-radius: 60px;
-  padding: 11px 4px;
-  margin: auto;
-  font-family: 'Cairo', sans-serif;
-  font-weight: bold;
-}
-
-.btn-loading {
-  background-color: rgb(225, 225, 2);
-  color: black;
-}
 
 /* ======================== REPORT STYLES ======================== */
 
@@ -669,18 +616,6 @@ a {
 
 /* CSS for form */
 
-.form-icon {
-  margin-right: 5px;
-}
-
-.btn-loading {
-  background-color: rgb(225, 225, 2);
-  color: black;
-  border-radius: 60px;
-  padding: 11px 4px;
-  margin: auto;
-}
-
 /* Report */
 .report-procedure-icon {
   width: 95px;
@@ -716,12 +651,6 @@ a {
   text-align: center; /* Aligning to the right for RTL */
   background-color: #04aa6d;
   color: white;
-}
-
-.login-back {
-  background-color: #dc3545;
-  color: #ffffff;
-  padding: 10px 20px;
 }
 
 /* Courte sEtting*/

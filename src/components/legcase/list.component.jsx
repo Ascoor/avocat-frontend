@@ -90,7 +90,7 @@ const LegCaseList = () => {
         buttonName="قضية"
         icon={LegCaseIcon}
       />
-      <Card className="m-4">
+      <Card className="leg-case-list-card"> {/* Apply custom styling to the card */}
         <Card.Header>
           <Row className="add-case-row">
             {showModal && (
@@ -104,10 +104,9 @@ const LegCaseList = () => {
             </Alert>
           )}
         </Card.Header>
-        <div className="text-center">
+        <div className="text-center search-bar">
           <Row className="justify-content-center">
             <Col xs={12} md={6} lg={6} className="text-center text-md">
-              {/* Adjust the grid classes */}
               <input
                 type="text"
                 className="form-control search-input"
@@ -138,7 +137,7 @@ const LegCaseList = () => {
                   <th className="header-cell">الحالة</th>
                   <th className="header-cell">التحكم</th>
                 </tr>
-              </thead>
+                </thead>
               <tbody>
                 {paginatedLegCases.map((legCase, index) => (
                   <tr key={index}>

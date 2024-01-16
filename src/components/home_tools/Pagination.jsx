@@ -1,4 +1,3 @@
-
 import { Pagination } from 'react-bootstrap';
 
 const CustomPagination = ({
@@ -46,6 +45,5 @@ const CustomPagination = ({
     </Pagination>
   );
 };
-
 
 export default CustomPagination;

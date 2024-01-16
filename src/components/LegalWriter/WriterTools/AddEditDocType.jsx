@@ -3,18 +3,18 @@ import axios from 'axios';
 import { Modal, Form, Button } from 'react-bootstrap';
 import API_CONFIG from '../../../config.js';
 
-const AddEditDocType = ({ 
-  showDocTypeModal, 
-  handleCloseDocTypeModal, 
-  currentDocType, 
-  setCurrentDocType 
+const AddEditDocType = ({
+  showDocTypeModal,
+  handleCloseDocTypeModal,
+  currentDocType,
+  setCurrentDocType,
 }) => {
   const [name, setName] = useState('');
 
   useEffect(() => {
     setName(currentDocType ? currentDocType.name : '');
   }, [currentDocType]);
-  
+
   const isEditing = !!currentDocType;
   const title = isEditing ? 'Edit Document Type' : 'Add Document Type';
 
@@ -24,15 +24,24 @@ const AddEditDocType = ({
       const payload = { name };
       let response;
       if (isEditing) {
-        response = await axios.put(`${API_CONFIG.baseURL}/api/doc-types/${currentDocType.id}`, payload);
+        response = await axios.put(
+          `${API_CONFIG.baseURL}/api/doc-types/${currentDocType.id}`,
+          payload,
+        );
       } else {
-        response = await axios.post(`${API_CONFIG.baseURL}/api/doc-types`, payload);
+        response = await axios.post(
+          `${API_CONFIG.baseURL}/api/doc-types`,
+          payload,
+        );
       }
 
       setCurrentDocType(response.data);
       handleCloseDocTypeModal();
     } catch (error) {
-      console.error(`Error ${isEditing ? 'updating' : 'adding'} DocType:`, error);
+      console.error(
+        `Error ${isEditing ? 'updating' : 'adding'} DocType:`,
+        error,
+      );
       handleCloseDocTypeModal();
     }
   };

@@ -45,7 +45,9 @@ const Login = ({ handleCloseForm }) => {
       <Card.Body className="special-login-body">
         <Form onSubmit={onSubmit}>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label className="form-label m-2">عنوان البريد الإلكتروني</Form.Label>
+            <Form.Label className="form-label m-2">
+              عنوان البريد الإلكتروني
+            </Form.Label>
             <Form.Control
               className="special-login-input"
               type="email"
@@ -66,23 +68,24 @@ const Login = ({ handleCloseForm }) => {
             />
           </Form.Group>
 
-     
           {loading ? (
-          <Button disabled className="btn-warning special-login-button">
-            ...جارى الدخول
-          </Button>
-        ) : (
-          <Button onClick={onSubmit} className="btn-success special-login-button">
-            تسجيل الدخول
-          </Button>
-        )}
+            <Button disabled className="btn-warning special-login-button">
+              ...جارى الدخول
+            </Button>
+          ) : (
+            <Button
+              onClick={onSubmit}
+              className="btn-success special-login-button"
+            >
+              تسجيل الدخول
+            </Button>
+          )}
 
           {error && <p className="text-danger mt-3 text-center">{error}</p>}
         </Form>
       </Card.Body>
 
       <Card.Footer className="special-login-footer">
-
         <Button
           type="button"
           onClick={handleCloseForm}
@@ -92,7 +95,6 @@ const Login = ({ handleCloseForm }) => {
         </Button>
       </Card.Footer>
     </Card>
-
   );
 };
 

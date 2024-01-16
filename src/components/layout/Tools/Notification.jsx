@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
-import { MdOutlineNotificationsActive } from "react-icons/md";
+import { MdOutlineNotificationsActive } from 'react-icons/md';
 
 const Notification = ({ notifications, fetchNotifications }) => {
   const [showDropdown, setShowDropdown] = useState(false);

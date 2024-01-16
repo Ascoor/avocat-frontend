@@ -1,4 +1,3 @@
-
 const ClientSearch = ({ searchResults }) => {
   if (!searchResults) {
     searchResults = []; // Assign an empty array if searchResults is undefined

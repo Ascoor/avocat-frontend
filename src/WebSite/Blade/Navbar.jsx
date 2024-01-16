@@ -87,7 +87,7 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-              <Link to="/court_search" className="nav-link">
+                <Link to="/court_search" className="nav-link">
                   البحث
                 </Link>
               </li>

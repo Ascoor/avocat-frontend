@@ -76,7 +76,7 @@ const HomeCarousel = () => {
 
   return (
     <section className="home-page" style={{ position: 'relative', zIndex: 1 }}>
-    <Carousel
+      <Carousel
         activeIndex={currentSlide}
         onSelect={(selectedIndex) => setCurrentSlide(selectedIndex)}
         interval={5000}
@@ -101,8 +101,7 @@ const HomeCarousel = () => {
           </Carousel.Item>
         ))}
       </Carousel>
-
     </section>
   );
-}
+};
 export default HomeCarousel;

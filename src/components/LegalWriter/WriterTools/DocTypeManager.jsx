@@ -45,8 +45,10 @@ const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${API_CONFIG.baseURL}/api/${isSubType ? 'doc-sub-types' : 'doc-types'}/${currentItem.id}`);
-     
+      await axios.delete(
+        `${API_CONFIG.baseURL}/api/${isSubType ? 'doc-sub-types' : 'doc-types'}/${currentItem.id}`,
+      );
+
       setShowAlert(false);
       fetchDocTypes();
     } catch (error) {
@@ -68,13 +70,26 @@ const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
           <tr key={item.id}>
             <td>{item.name}</td>
             {isSubType && (
-              <td>{docTypes.find((docType) => docType.id === item.doc_type_id)?.name}</td>
+              <td>
+                {
+                  docTypes.find((docType) => docType.id === item.doc_type_id)
+                    ?.name
+                }
+              </td>
             )}
             <td>
-              <Button variant="primary" onClick={() => handleShowModal(item, isSubType)}>
+              <Button
+                variant="primary"
+                onClick={() => handleShowModal(item, isSubType)}
+              >
                 <FaEdit />
               </Button>
-              <Button variant="danger" onClick={() => handleConfirmDelete(item, isSubType, item.doc_type_id)}>
+              <Button
+                variant="danger"
+                onClick={() =>
+                  handleConfirmDelete(item, isSubType, item.doc_type_id)
+                }
+              >
                 <AiTwotoneDelete />
               </Button>
             </td>
@@ -102,16 +117,15 @@ const DocTypeManager = ({ fetchDocTypes, docTypes, docSubTypes }) => {
         currentDocType={currentItem}
         setCurrentDocType={setCurrentItem}
       />
-    <AddEditDocSubType
-  docTypes={docTypes}
-  showDocSubTypeModal={showModal && isSubType}
-  handleCloseDocSubTypeModal={handleModalClose}
-  currentDocSubType={currentItem}
-  setCurrentDocSubType={setCurrentItem}
-  selectedMainDocType={selectedMainDocType}
-  setSelectedMainDocType={setSelectedMainDocType}
-/>
-
+      <AddEditDocSubType
+        docTypes={docTypes}
+        showDocSubTypeModal={showModal && isSubType}
+        handleCloseDocSubTypeModal={handleModalClose}
+        currentDocSubType={currentItem}
+        setCurrentDocSubType={setCurrentItem}
+        selectedMainDocType={selectedMainDocType}
+        setSelectedMainDocType={setSelectedMainDocType}
+      />
 
       <Modal show={showAlert} onHide={() => setShowAlert(false)}>
         <Modal.Header>

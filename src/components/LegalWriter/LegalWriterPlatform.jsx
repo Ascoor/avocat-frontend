@@ -1,18 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import MyEditor from './WriterTools/MyEditor';
-import {Tabs, Tab, Card, Container} from 'react-bootstrap';
+import { Tabs, Tab, Card, Container } from 'react-bootstrap';
 import axios from 'axios';
 import UploadLegalDoc from './WriterTools/uploadLegalDoc';
 import API_CONFIG from '../../config';
 import DocTypeManager from './WriterTools/DocTypeManager';
 
 const LegalWriterPlatform = () => {
-
   const [key, setKey] = useState('legalDocWriter');
 
   const [docTypes, setDocTypes] = useState([]);
   const [docSubTypes, setDocSubTypes] = useState([]);
-  
+
   // تعريف دالة fetchDocTypes
   const fetchDocTypes = async () => {
     try {
@@ -32,10 +31,8 @@ const LegalWriterPlatform = () => {
 
   // Fetch docTypes from the server
   useEffect(() => {
-
     fetchDocTypes();
   }, []);
-
 
   return (
     <Container>
@@ -47,7 +44,7 @@ const LegalWriterPlatform = () => {
             onSelect={(k) => setKey(k)}
           >
             <Tab eventKey="legalDocWriter" title="محرر المستندات">
-         <MyEditor />
+              <MyEditor />
             </Tab>
             <Tab eventKey="uploadLegalDoc" title="رفع المستندات">
               <Card className="card-body">
@@ -56,7 +53,11 @@ const LegalWriterPlatform = () => {
             </Tab>
             <Tab eventKey="docTypeManager" title="إعدادت التصنيفات">
               <Card className="card-body">
-                <DocTypeManager fetchDocTypes={fetchDocTypes} docTypes={docTypes} docSubTypes={docSubTypes} />
+                <DocTypeManager
+                  fetchDocTypes={fetchDocTypes}
+                  docTypes={docTypes}
+                  docSubTypes={docSubTypes}
+                />
               </Card>
             </Tab>
           </Tabs>

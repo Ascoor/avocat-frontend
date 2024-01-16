@@ -1,75 +1,67 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import {
   FaTimes,
-  FaHome,
   FaUser,
-  FaBriefcase,
-  FaFileAlt,
-  FaTasks,
-  FaArchive,
   FaCog,
 } from 'react-icons/fa';
 import { MdOutlinePriceChange } from 'react-icons/md';
-import { useSpring, animated } from '@react-spring/web';
+import { Offcanvas } from 'react-bootstrap';
 import '../../../assets/css/SideBar.css';
+import { Link } from 'react-router-dom';
 import useAuth from '../AuthTool/AuthUser';
 
-const Sidebar = ({ sidebarOpen, onClose }) => {
-  const sidebarAnimation = useSpring({
-    right: sidebarOpen ? 0 : -450, // Adjust the value based on your sidebar width
-  });
 
-  const userDropdownAnimation = useSpring({
-    opacity: 1,
-    transform: 'scale(1)',
-    from: { opacity: 0, transform: 'scale(0.8)' },
-    fontSize: '.9rem',
-    fontFamily: 'inherit',
-  });
+import { MdOutlineGavel  } from 'react-icons/md';
+const Sidebar = ({ sidebarOpen, onClose }) => {
   const { user } = useAuth();
+
   useEffect(() => {
     document.body.classList.toggle('sidebar-open', sidebarOpen);
   }, [sidebarOpen]);
 
   return (
-    <animated.aside
-      className={`sidebar ${sidebarOpen ? 'open' : ''}`}
-      style={sidebarAnimation}
-    >
-      <button onClick={onClose} className="close-icon">
-        <FaTimes />
-      </button>
-      <div className="user-profile">
-        <img src="/log1.png" alt="صورة المستخدم" className="user-profile-img" />
-        <animated.span style={userDropdownAnimation}>
-          المستشار/{user?.name}
-        </animated.span>
-      </div>
+    <Offcanvas className="offcanvas-sidebar" show={sidebarOpen} onHide={onClose} placement="start">
+      <Offcanvas.Header className="offcanvas-header">
+        <Offcanvas.Title className="offcanvas-title m-3">الإعدادات</Offcanvas.Title>
+      </Offcanvas.Header>
+      <Offcanvas.Body>
+        <button onClick={onClose} className="close-icon">
+          <FaTimes />
+        </button>
+        <div className="user-profile">
+          <img src="/log1.png" alt="صورة المستخدم" className="user-profile-img" />
+          <span>المستشار/{user?.name}</span>
+        </div>
 
-      <ul className="sidebar-nav">
-      
+        <ul className="sidebar-nav">
+          <li>
+            <a href="/financial">
+              <MdOutlinePriceChange className="m-2" size={25} />
+              الحسابات
+            </a>
+          </li>
 
-        <li>
-          <Link to="/financial">
-            <MdOutlinePriceChange className="m-2" size={25} />
-            الحسابات
-          </Link>
-        </li>
-
-        <li>
-          <Link to="/courts">
-            <FaCog className="m-1" size={25} />
-            اعدادات المحاكم
-          </Link>
-        </li>
-        <li>
-          <Link to="/cases_setting">
-            <FaCog className="m-1" size={25} /> اعدادات القضايا
-          </Link>
-        </li>
-      </ul>
-    </animated.aside>
+          <li>
+            <a href="/courts">
+              <FaCog className="m-1" size={25} />
+              اعدادات المحاكم
+            </a>
+          </li>
+         
+          <li className="nav-item m-1">
+                <MdOutlineGavel className="m-2" size={30} />
+                <Link className="nav-link" to="/lawyers">
+                  المحامون
+                </Link>
+              </li>
+                      <li>
+            <a href="/cases_setting">
+              <FaCog className="m-1" size={25} /> اعدادات القضايا
+            </a>
+          </li>
+        </ul>
+      </Offcanvas.Body>
+    </Offcanvas>
   );
 };
 

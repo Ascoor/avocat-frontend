@@ -23,55 +23,16 @@ h2 {
 }
 
 /* Toolbar container styles */
-.ck-toolbar {
-  border: 1px solid #ccc; /* Add a border to the toolbar */
-  border-radius: 4px;
-  background-color: #f9f9f9; /* Toolbar background color */
-  padding: 10px;
-}
 
 /* Editor content area styles */
-.ck-editor {
-  border: 1px solid #ccc; /* Add a border to the editor content area */
-  border-radius: 4px;
-  padding: 10px;
-  background-color: #fff; /* Editor background color */
-}
 
 /* Customize the toolbar buttons */
-.ck-button {
-  margin: 0 5px;
-  padding: 5px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #007bff; /* Button background color */
-  color: #fff; /* Button text color */
-}
 
 /* Button hover effect */
-.ck-button:hover {
-  background-color: #0056b3; /* Button background color on hover */
-}
 
 /* Add spacing between buttons in the toolbar */
-.ck-toolbar .ck-button + .ck-button {
-  margin-left: 5px;
-}
 
 /* Adjust the styles of specific toolbar buttons */
-.ck-button.ck-button__bold {
-  font-weight: bold;
-}
-
-.ck-button.ck-button__italic {
-  font-style: italic;
-}
-
-.ck-button.ck-button__underline {
-  text-decoration: underline;
-
-}
 
 @media (max-width: 480px) {
   /* Styles for smaller devices */
@@ -82,14 +43,8 @@ h2 {
   }
 
   /* Adjust the spacing between buttons in the toolbar */
-  .ck-toolbar .ck-button + .ck-button {
-    margin-left: 0;
-  }
 
   /* Adjust the padding of the editor content area */
-  .ck-editor {
-    padding: 5px;
-  }
 
   /* Adjust the font size of the editor header */
   h2 {

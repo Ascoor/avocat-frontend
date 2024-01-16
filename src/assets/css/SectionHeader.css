@@ -1,0 +1,70 @@
+/* SectionHeader.css */
+
+/* تدرجات خلفية اللون الأزرق الداكن */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #051937, #004d7a);
+    color: #ffffff; /* لون النص */
+    padding: 15px 20px; /* تعديل الهوامش حسب الحاجة */
+  }
+  
+  .section-header-title {
+    display: flex;
+    align-items: center;
+  }
+  
+  .section-header-title h2 {
+    margin: 0;
+    font-size: 24px;
+    margin-right: 10px;
+    color: #ffffff; /* لون النص */
+  }
+  
+  .section-icon {
+    width: 30px;
+    height: 30px;
+    fill: #ffffff; /* لون الأيقونة (إذا كانت SVG) */
+  }
+  
+  .section-header-buttons button {
+    background-color: #007bff; /* لون خلفية الزر */
+    color: #ffffff; /* لون النص */
+    border: none;
+    padding: 8px 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .section-header-buttons button:hover {
+    background-color: #0056b3; /* لون خلفية الزر عند التحويل */
+  }
+  
+  .back-btn {
+    background-color: #dc3545;
+  }
+  
+  .back-btn:hover {
+    background-color: #c82333;
+  }
+  
+  /* وسائط الاستجابة للتصميم الاستجابي */
+  @media (max-width: 768px) {
+    .section-header {
+      flex-direction: column;
+      text-align: center;
+      padding: 15px;
+    }
+  
+    .section-header-title h2 {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  
+    .section-header-buttons button {
+      margin-left: 0;
+    }
+  }
+  

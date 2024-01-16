@@ -132,20 +132,18 @@ const Guest = () => {
                       className="glass-container"
                       style={{ position: 'relative', zIndex: 3 }}
                     >
-                   
-                        {showLoginForm && (
-                          <Login
-                            className="form-content"
-                            handleCloseForm={handleCloseForm}
-                          />
-                        )}
-                        {showRegisterForm && (
-                          <Register
-                            className="form-content"
-                            handleCloseForm={handleCloseForm}
-                          />
-                        )}
-            
+                      {showLoginForm && (
+                        <Login
+                          className="form-content"
+                          handleCloseForm={handleCloseForm}
+                        />
+                      )}
+                      {showRegisterForm && (
+                        <Register
+                          className="form-content"
+                          handleCloseForm={handleCloseForm}
+                        />
+                      )}
                     </div>
                   </animated.div>
                 ) : null,

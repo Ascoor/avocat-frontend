@@ -26,26 +26,36 @@ const AddEditDocSubType = ({
   }, [currentDocSubType]);
 
   const isEditing = !!currentDocSubType;
-  const title = isEditing ? 'تحرير تصنيف فرعي للمستند' : 'إضافة تصنيف فرعي للمستند';
+  const title = isEditing
+    ? 'تحرير تصنيف فرعي للمستند'
+    : 'إضافة تصنيف فرعي للمستند';
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const payload = { name, docTypeId: selectedMainDocType }; // استخدام selectedMainDocType هنا
       let response;
       if (isEditing) {
-        response = await axios.put(`${API_CONFIG.baseURL}/api/doc-sub-types/${currentDocSubType.id}`, payload);
+        response = await axios.put(
+          `${API_CONFIG.baseURL}/api/doc-sub-types/${currentDocSubType.id}`,
+          payload,
+        );
       } else {
-        response = await axios.post(`${API_CONFIG.baseURL}/api/doc-sub-types`, payload);
+        response = await axios.post(
+          `${API_CONFIG.baseURL}/api/doc-sub-types`,
+          payload,
+        );
       }
-  
+
       setCurrentDocSubType(response.data);
       handleCloseDocSubTypeModal();
     } catch (error) {
-      console.error(`Error ${isEditing ? 'updating' : 'adding'} DocSubType:`, error);
+      console.error(
+        `Error ${isEditing ? 'updating' : 'adding'} DocSubType:`,
+        error,
+      );
       handleCloseDocSubTypeModal();
     }
   };
-  
 
   return (
     <Modal show={showDocSubTypeModal} onHide={handleCloseDocSubTypeModal}>
@@ -56,7 +66,12 @@ const AddEditDocSubType = ({
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="docSubTypeName">
             <Form.Label>اسم التصنيف الفرعي للمستند</Form.Label>
-            <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            <Form.Control
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </Form.Group>
           <Form.Group controlId="docTypeName">
             <Form.Label>اختر نوع المستند</Form.Label>

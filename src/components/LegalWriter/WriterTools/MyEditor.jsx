@@ -20,7 +20,9 @@ const MyEditor = () => {
     Mammoth.convertToDocx({ html: editorData }) // Pass editorData here
       .then((result) => {
         // Handle the generated DOCX file here, e.g., save or download it
-        const blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+        const blob = new Blob([result], {
+          type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        });
         const url = URL.createObjectURL(blob);
         window.open(url);
       })
@@ -82,7 +84,10 @@ const MyEditor = () => {
 
       {showEditor && (
         <>
-          <Editor importedDocContent={editorProps.importedDocContent} editorData={editorData} />
+          <Editor
+            importedDocContent={editorProps.importedDocContent}
+            editorData={editorData}
+          />
 
           <div className="button-container">
             <Button variant="danger" onClick={handleCloseEditor}>

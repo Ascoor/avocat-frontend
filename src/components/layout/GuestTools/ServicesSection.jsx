@@ -7,7 +7,6 @@ import {
   LabourLaw,
   RealEstate,
 } from '../../images';
-import { Carousel as BootstrapCarousel } from 'bootstrap';
 
 function ServicesSection() {
   const [activeIndex, setActiveIndex] = useState(0);

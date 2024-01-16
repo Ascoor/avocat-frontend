@@ -23,11 +23,10 @@ class EditorViewer extends Component {
     const { editorData } = this.state;
 
     return (
-        <div className="App">
-          <h2>Uploaded Document</h2>
-          <p>File path: {editorData}</p>
-        </div>
-
+      <div className="App">
+        <h2>Uploaded Document</h2>
+        <p>File path: {editorData}</p>
+      </div>
     );
   }
 }

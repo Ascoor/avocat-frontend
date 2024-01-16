@@ -120,17 +120,15 @@ const Register = ({ handleCloseForm }) => {
       </Card.Body>
 
       <Card.Footer className="special-register-footer">
-
-      <Button
-            onClick={handleCloseForm}
-            className="btn-danger login-guest special-register-button"
-          >
-            العودة للرئيسية
-          </Button>
+        <Button
+          onClick={handleCloseForm}
+          className="btn-danger login-guest special-register-button"
+        >
+          العودة للرئيسية
+        </Button>
       </Card.Footer>
     </Card>
+  );
+};
 
-    );
-  };
-
-  export default Register;
+export default Register;

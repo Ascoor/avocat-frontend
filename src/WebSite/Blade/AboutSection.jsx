@@ -19,7 +19,8 @@ function AboutSection() {
     wrapLetters();
 
     // Anime.js Animation for each letter
-    anime.timeline()
+    anime
+      .timeline()
       .add({
         targets: '.ml14 .letter',
         translateX: [-40, 0],
@@ -37,17 +38,16 @@ function AboutSection() {
         delay: (el, i) => 100 + 30 * i,
       });
 
- // تهيئة ScrollReveal
- ScrollReveal().reveal('.about__img-overlay, .about__container', {
-  origin: 'top',
-  distance: '50px',
-  duration: 1000,
-  delay: 400,
-  reset: true,
-  viewFactor: 0.1 // تظهر العناصر عندما يكون 10% منها في العرض
-});
-}, []);
-
+    // تهيئة ScrollReveal
+    ScrollReveal().reveal('.about__img-overlay, .about__container', {
+      origin: 'top',
+      distance: '50px',
+      duration: 1000,
+      delay: 400,
+      reset: true,
+      viewFactor: 0.1, // تظهر العناصر عندما يكون 10% منها في العرض
+    });
+  }, []);
 
   return (
     <section className="about py-5" id="about">

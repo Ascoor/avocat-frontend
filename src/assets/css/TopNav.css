@@ -1,10 +1,5 @@
 /* TopNav.css */
-
-.user-profile {
-  display: flex;
-  align-items: center;
-  margin-right: 1.2rem;
-}
+/* TopNav.css */
 
 /* Top Navigation Styles */
 .navbar-top-nav {
@@ -12,79 +7,70 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1.5rem;
-
-  background:  linear-gradient(
-
-  
+  background: linear-gradient(
     #0b2440 0%,
     #010e18 50%,
     #0a2b41 100%
   );
-  color: #ffffff; /* Text color */
+  color: #ffffff;
   box-shadow: 0 4px 60px rgba(0, 108, 216, 0.44);
   transition: transform 0.3s ease-in-out;
+  overflow: hidden; /* Ensure content doesn't overflow */
 }
+
 .container-top-nav {
-  background: 
-  linear-gradient(
+  background: linear-gradient(
     325deg,
     #123646,
     #0a2741
-  
-    );
+  );
   display: flex;
   align-items: center;
-  
-}.nav-item {
+  overflow: hidden; /* Ensure content doesn't overflow */
+}
+
+/* Base styles for navigation items */
+.nav-item {
   display: flex;
-  flex-direction: column; /* Stack icon and text vertically */
-  align-items: center;   /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  white-space: nowrap; /* Prevent text from breaking into multiple lines */
 }
 
 .nav-link {
-  text-align: center; /* Center the link text */
-  padding: 4px 0; /* Add some padding above and below the text */
-}
-
-.user-profile {
-  display: flex;
-  align-items: center;
-  margin-right: 1.2rem;
-}
-
-.user-menu {
-  display: flex;
-  align-items: center;
- z-index: 1000; /* Set a higher z-index value to ensure it displays over other content */
-}
-.navbar-brand-logo {
-  height: auto; /* يضمن الحفاظ على نسب الأبعاد */
-  width: 100px; /* العرض الافتراضي */
+  text-align: center;
+  padding: 4px 0;
+  color: #ffffff;
+  font-size: 1.2rem;
+  text-decoration: none;
 }
 
 /* User Menu and Notification Common Styles */
+.user-menu {
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden; /* Ensure content doesn't overflow */
+}
+
 .notification-button {
   border: none;
   cursor: pointer;
   font-size: 1.6rem;
-  color: #dda20c; /* Text color */
+  color: #dda20c;
   position: relative;
-}
-
-.notification-button {
   background-color: transparent;
-  border: none;
-  cursor: pointer;
 }
 
 .notification-badge {
-  background-color: red; /* Or any color of your choice */
+  background-color: red;
   color: white;
   padding: 2px 6px;
   border-radius: 50%;
   font-size: 0.75rem;
-  position: absolute; /* Adjust as needed */
+  position: absolute;
   top: 0;
   right: 0;
 }
@@ -93,7 +79,6 @@
   position: relative;
 }
 
-/* This will show the notification dropdown */
 .notification-alert {
   display: none;
   position: absolute;
@@ -103,28 +88,12 @@
   padding: 0.6rem 1.2rem;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1; /* Add this to ensure it appears above other elements */
-  text-align: right; /* Align text to right for RTL */
+  z-index: 1;
+  text-align: right;
 }
 
-.sidebar-open .navbar-top-nav {
-  margin-right: 250px;
-  transition: margin-right 0.3s ease-in-out;
-}
-.navbar-nav
-{
-  color:rgb(221, 162, 12);
-  padding: revert;
-}
-.nav-link{
-  color: #ffffff;
-  font-size: .9rem;
-}
+/* Media queries and other styles remain unchanged */
 
-.nav-item .nav-link:hover, .nav-item.active .nav-link {
-    color: rgb(255, 186, 59); /* Change to your preferred shade of orange */
-    text-decoration: none; /* Optional: removes the underline on hover */
-}
 @media (max-width: 768px) {
   .sidebar-open .top-nav {
     margin-right: 0; /* Reset margin for small screens */
@@ -133,12 +102,13 @@
 
   .nav-item .m-2 {
     font-size: 12px; /* Smaller icons on smaller screens */
+    
   }
 }
 
 @media (min-width: 769px) {
   .nav-item .m-2 {
-    font-size: 15px; /* Larger icons on larger screens */
+    color: #dfbc67;
   }
 }
 
@@ -158,22 +128,4 @@
 
 .nav-link:hover, .nav-link.active {
   color: orange; /* Color change on hover and active state */
-}
-
-
-@media (max-width: 768px) {
-  .navbar-brand img {
-    width: 70px; /* عرض أصغر للشاشات الأصغر */
-  }
-}
-
-/* إذا كان هناك نص بجانب الشعار */
-.navbar-brand .brand-text {
-  font-size: 16px; /* الحجم الافتراضي للنص */
-}
-
-@media (max-width: 768px) {
-  .navbar-brand .brand-text {
-    font-size: 12px; /* حجم نص أصغر للشاشات الأصغر */
-  }
 }

@@ -8,13 +8,12 @@ import HomeCarousel from './Blade/HomeCarousel';
 const Home = () => {
   return (
     <>
-
       <HomeCarousel />
       <ServicesSection />
       <AboutSection />
       <Commitment />
       <MapSection />
     </>
-     );
-}
+  );
+};
 export default Home;
