@@ -1,5 +1,11 @@
 /* App.css */
 body {
+   background: radial-gradient(
+    circle at center,
+    #00040e 10%,
+    #202b45 50%,
+    #15203c 100%
+  );
   font-family: 'Open Sans', sans-serif;
   color: #272829;
   margin: 0; /* Reset default margin */

@@ -71,9 +71,9 @@ export default defineConfig({
       'bootstrap',
       'react-router-dom',
       '@fullcalendar/core',
-      '@ckeditor/ckeditor5-react',
-      '@ckeditor/ckeditor5-build-classic',
-      '@workspace/ckeditor5-custom-build',
+      
+    '@ckeditor/ckeditor5-build-decoupled-document',
+    '@ckeditor/ckeditor5-react',
     ],
     exclude: ['@babel/core'],
   },
