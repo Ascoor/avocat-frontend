@@ -1,7 +1,14 @@
 /* App.css */
 body {
+  background: radial-gradient(
+
+    #202b45,
+    #00040e ,
+    #15203c
+);
+
   font-family: 'Open Sans', sans-serif;
-  color: #272829;
+  color: #cce6ff;
   margin: 0; /* Reset default margin */
   padding: 0; /* Reset default padding */
 }
@@ -411,6 +418,24 @@ a {
   text-align: right;
 }
 
+/* ======================== spinner  loading ======================== */
+
+.sk-cube-grid {
+  width: 40px;
+  height: 40px;
+  margin: 50vh auto;
+}
+
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background: radial-gradient(
+    circle at center,
+    #0b2440 10%,
+    #072238 60%,
+    #0a2b41 80%
+  );
+}
 /* ======================== SPLASH STYLES ======================== */
 .splash-container {
   opacity: 1;

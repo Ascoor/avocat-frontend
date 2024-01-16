@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
-import { RiNotification2Line } from 'react-icons/ri';
+import { MdOutlineNotificationsActive } from "react-icons/md";
 
 const Notification = ({ notifications, fetchNotifications }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -36,7 +36,7 @@ const Notification = ({ notifications, fetchNotifications }) => {
   return (
     <div className="notification-icon" ref={dropdownRef}>
       <button className="notification-button" onClick={toggleDropdown}>
-        <RiNotification2Line />{' '}
+        <MdOutlineNotificationsActive />{' '}
         <span className="notification-badge">
           {notifications.filter((n) => !n.read).length}
         </span>

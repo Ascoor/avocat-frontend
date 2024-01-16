@@ -2,27 +2,33 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
-
 import compression from 'vite-plugin-compression';
 
 export default defineConfig({
   plugins: [
     react(),
-    visualizer({ open: true }), // لتحليل حجم الحزمة
-    compression(), // لضغط الأصول
+    visualizer({
+      open: true, 
+      gzipSize: true, 
+      brotliSize: true, 
+      filename: 'bundle-visualizer-report.html'
+    }),
+    compression({ 
+      algorithm: 'brotliCompress', 
+      ext: '.br' 
+    }),
   ],
   define: {
+    'process.env': {},
     global: 'window',
   },
-  // Server configuration for development
   server: {
-    host: true,
+    host: '127.0.0.1',
     port: 3000,
     open: true,
     cors: true,
+    strictPort: true,
   },
-
-  // Alias and other resolve options
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -31,38 +37,31 @@ export default defineConfig({
       '@assets': path.resolve(__dirname, './src/assets'),
       'path': 'path-browserify',
       'util': 'util',
-  
     },
   },
-
-  // CSS and styling options
   css: {
     modules: {
       localsConvention: 'camelCaseOnly',
     },
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "@/styles/variables.scss";',
+        additionalData: `@import "@/styles/variables.scss";`,
       },
     },
   },
-
-  // Build options for production
   build: {
-    outDir: 'dist',
+    outDir: 'build',
+    sourcemap: false,
     rollupOptions: {
+      external: ['path', 'util'],
       output: {
-        chunkSizeWarningLimit: 1000, // Adjust the value as needed
-
+        chunkSizeWarningLimit: 500,
         manualChunks: {
           vendor: ['react', 'react-dom', 'bootstrap', '@fullcalendar/core', 'axios', 'react-router-dom'],
         },
       },
     },
-    sourcemap: process.env.NODE_ENV !== 'production',
   },
-
-  // Optimize dependencies
   optimizeDeps: {
     include: [
       'react',
@@ -72,8 +71,7 @@ export default defineConfig({
       'react-router-dom',
       '@fullcalendar/core',
       '@ckeditor/ckeditor5-react',
-      '@ckeditor/ckeditor5-build-classic',
-      '@workspace/ckeditor5-custom-build',
+      '@ckeditor/ckeditor5-build-decoupled-document',
     ],
     exclude: ['@babel/core'],
   },

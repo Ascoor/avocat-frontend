@@ -4,20 +4,14 @@
   "homepage": "https://avocat.live",
   "description": "Lawyer office manager",
   "license": "MIT",
-  "keywords": [
-    "react",
-    "vite",
-    "bootstrap",
-    "fullcalendar",
-    "eslint"
-  ],
+  "keywords": ["react", "vite", "bootstrap", "fullcalendar", "eslint"],
   "main": "index.js",
   "repository": "https://github.com/ascoor/avocat-frontend",
   "author": "Askar <mr.askar1984@gmail.com>",
   "scripts": {
     "lint": "eslint . --ext .js,.jsx",
     "lint:fix": "eslint . --ext .js,.jsx --fix",
-    "format": "prettier --write \"src/**/*.+(js|jsx)\",",
+    "format": "prettier --write \"src/**/*.+(js|jsx)\"",
     "dev": "vite",
     "build:dev": "vite build --mode development",
     "build:prod": "vite build --mode production",
@@ -26,7 +20,8 @@
     "start:prod": "node server.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "analyze": "vite build --mode production && rollup-plugin-visualizer"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-decoupled-document": "^40.2.0",
@@ -79,5 +74,10 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.16.7"
-  }
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "not dead"
+  ]
 }
