@@ -48,46 +48,7 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
       </div>
 
       <ul className="sidebar-nav">
-        <li>
-          <Link to="/">
-            <FaHome className="m-1" size={25} />
-            الصفحة الرئيسية
-          </Link>
-        </li>
-        <li>
-          <Link to="/lawyers">
-            <FaUser className="m-2" size={25} />
-            المحامون
-          </Link>
-        </li>
-        <li>
-          <Link to="/clients">
-            <FaUser className="m-2" size={25} />
-            الموكلين
-          </Link>
-        </li>
-
-        <li>
-          <Link to="/legcases">
-            <FaFileAlt className="m-2" size={25} />
-            القضايا
-          </Link>
-        </li>
-        <li>
-          <Link to="/services">
-            <FaBriefcase className="m-2" size={25} /> الخدمات
-          </Link>
-        </li>
-        <li>
-          <Link to="/legal-writer">
-            <FaBriefcase className="m-2" size={25} /> المحرر
-          </Link>
-        </li>
-        <li>
-          <Link to="/procedures">
-            <FaTasks className="m-2" size={25} /> الإجراءات
-          </Link>
-        </li>
+      
 
         <li>
           <Link to="/financial">
@@ -96,12 +57,6 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
           </Link>
         </li>
 
-        <li>
-          <Link to="/court-search">
-            <FaArchive className="m-2" size={25} />
-            بحث القضايا
-          </Link>
-        </li>
         <li>
           <Link to="/courts">
             <FaCog className="m-1" size={25} />

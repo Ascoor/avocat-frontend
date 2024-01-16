@@ -58,6 +58,10 @@
   align-items: center;
  z-index: 1000; /* Set a higher z-index value to ensure it displays over other content */
 }
+.navbar-brand-logo {
+  height: auto; /* يضمن الحفاظ على نسب الأبعاد */
+  width: 100px; /* العرض الافتراضي */
+}
 
 /* User Menu and Notification Common Styles */
 .notification-button {
@@ -139,16 +143,23 @@
 }
 
 
-.navbar-brand {
+
+/* Base styles for navigation items */
+.nav-item {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem 1rem; /* Adjust padding as needed */
 }
 
 .navbar-brand  {
   height: auto; /* يضمن الحفاظ على نسب الأبعاد */
   width: 100px; /* العرض الافتراضي */
 }
+
+.nav-link:hover, .nav-link.active {
+  color: orange; /* Color change on hover and active state */
+}
+
 
 @media (max-width: 768px) {
   .navbar-brand img {

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+// src\components\layout\Tools\TopNav.jsx
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { MdOutlineGavel  } from 'react-icons/md';
@@ -23,7 +24,6 @@ import '../../../assets/css/TopNav.css';
 import { LogoPatren } from '../../../assets/img/index';
 import API_CONFIG from '../../../config';
 import Notification from './Notification';
-import {Link} from 'react-router-dom';
 
 const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
   const [notifications, setNotifications] = useState([]);
@@ -39,13 +39,13 @@ const TopNav = ({ onToggleSidebar, sidebarOpen, user, logoutUser }) => {
         `${API_CONFIG.baseURL}/api/notifications/${userId}`,
       );
       setNotifications(response.data);
-      const unreadCount = response.data.filter((n) => !n.read).length;
+      const unreadCount = response.data.filter(n => !n.read).length;
       setUnreadNotifications(unreadCount);
     } catch (error) {
       console.error('Could not fetch notifications:', error);
     }
   };
-
+  
   useEffect(() => {
     document.body.classList.toggle('sidebar-open', sidebarOpen);
     fetchNotifications();
