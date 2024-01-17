@@ -5,8 +5,6 @@
 .navbar-top-nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 1.5rem;
   background: linear-gradient(
     #0b2440 0%,
     #010e18 50%,
@@ -24,8 +22,6 @@
     #123646,
     #0a2741
   );
-  display: flex;
-  align-items: center;
   overflow: hidden; /* Ensure content doesn't overflow */
 }
 

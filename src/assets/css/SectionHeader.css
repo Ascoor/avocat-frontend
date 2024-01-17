@@ -23,8 +23,8 @@
   }
   
   .section-icon {
-    width: 30px;
-    height: 30px;
+    width: 100px;
+    height: 50px;
     fill: #ffffff; /* لون الأيقونة (إذا كانت SVG) */
   }
   

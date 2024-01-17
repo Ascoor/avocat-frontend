@@ -28,7 +28,7 @@
 
 /* Styles for the content area when the sidebar is open */
 .content.content-with-sidebar {
-  padding-left: 270px; /* Adjust the left padding to accommodate the sidebar width */
+  padding-right: 270px; /* Adjust the left padding to accommodate the sidebar width */
 }
 
 /* Add any additional styles for AuthRoutes or other components here */

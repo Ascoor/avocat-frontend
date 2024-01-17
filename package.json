@@ -4,7 +4,13 @@
   "homepage": "https://avocat.live",
   "description": "Lawyer office manager",
   "license": "MIT",
-  "keywords": ["react", "vite", "bootstrap", "fullcalendar", "eslint"],
+  "keywords": [
+    "react",
+    "vite",
+    "bootstrap",
+    "fullcalendar",
+    "eslint"
+  ],
   "main": "index.js",
   "repository": "https://github.com/ascoor/avocat-frontend",
   "author": "Askar <mr.askar1984@gmail.com>",
@@ -62,6 +68,7 @@
   "devDependencies": {
     "@babel/core": "^7.16.7",
     "@babel/preset-react": "^7.16.5",
+    "@rollup/plugin-terser": "^0.4.4",
     "@testing-library/react": "^14.0.0",
     "depcheck": "^1.4.7",
     "eslint": "^8.4.1",
