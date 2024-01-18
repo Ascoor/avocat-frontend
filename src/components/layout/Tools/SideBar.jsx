@@ -34,31 +34,33 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
         </div>
 
         <ul className="sidebar-nav">
-          <li>
-            <a href="/financial">
-              <MdOutlinePriceChange className="m-2" size={25} />
-              الحسابات
-            </a>
-          </li>
+        <li>
+  <Link to="/financial">
+    <MdOutlinePriceChange className="m-2" size={25} />
+    الحسابات
+  </Link>
+</li>
 
-          <li>
-            <a href="/courts">
-              <FaCog className="m-1" size={25} />
-              اعدادات المحاكم
-            </a>
-          </li>
-         
-          <li className="nav-item m-1">
-                <MdOutlineGavel className="m-2" size={30} />
-                <Link className="nav-link" to="/lawyers">
-                  المحامون
-                </Link>
-              </li>
-                      <li>
-            <a href="/cases_setting">
-              <FaCog className="m-1" size={25} /> اعدادات القضايا
-            </a>
-          </li>
+<li>
+  <Link to="/courts">
+    <FaCog className="m-1" size={25} />
+    اعدادات المحاكم
+  </Link>
+</li>
+
+<li className="nav-item m-1">
+  <MdOutlineGavel className="m-2" size={30} />
+  <Link className="nav-link" to="/lawyers">
+    المحامون
+  </Link>
+</li>
+
+<li>
+  <Link to="/cases_setting">
+    <FaCog className="m-1" size={25} /> اعدادات القضايا
+  </Link>
+</li>
+
         </ul>
       </Offcanvas.Body>
     </Offcanvas>

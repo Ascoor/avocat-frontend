@@ -5,7 +5,7 @@ import axios from 'axios';
 import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';
 import DatePicker from 'react-datepicker';
-const LegalSession = ({ legCaseId }) => {
+const LegalCaseSessions = ({ legCaseId }) => {
   const { getUser } = useAuth();
   const user = getUser();
 
@@ -377,4 +377,4 @@ const LegalSession = ({ legCaseId }) => {
   );
 };
 
-export default LegalSession;
+export default LegalCaseSessions;

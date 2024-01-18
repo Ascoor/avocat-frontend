@@ -4,7 +4,7 @@ import { Card, Button, Modal, Row, Form, Alert } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';
-const Procedure = ({ legCaseId }) => {
+const LegalCaseProcedures = ({ legCaseId }) => {
   const { getUser } = useAuth();
   const [alert, setAlert] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
@@ -439,4 +439,4 @@ const Procedure = ({ legCaseId }) => {
   );
 };
 
-export default Procedure;
+export default  LegalCaseProcedures;

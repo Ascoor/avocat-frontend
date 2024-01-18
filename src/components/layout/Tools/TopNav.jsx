@@ -48,8 +48,9 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
     <Navbar expand="md" className="bg-body-tertiary navbar-dark navbar-top-nav">
 
         <Container className="container container-top-nav">
-          <Navbar.Brand href="#home">
-          <Link to="/">
+
+          <Navbar.Brand>
+
             <img
          src={LogoPatren}
               width="30"
@@ -57,8 +58,9 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
-            </Link>
+ 
           </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -68,60 +70,59 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
           >
             <ul className="navbar-nav">
 
-            
-              <li className="nav-item">
-                <Link className="nav-link" to="/">
-                <BiHomeCircle className="m-1" size={15} />
-                  الرئيسية
-                </Link>
-              </li>
-   
-        <li className='nav-item'>
-          <Link className='nav-link' to="/clients">
-            <IoMdPeople className="m-1" size={15} />
-            الموكلين
-          </Link>
-        </li>
+            <li className="nav-item">
+    <Link className="nav-link" to="/">
+      <BiHomeCircle className="m-1" size={15} />
+      الرئيسية
+    </Link>
+  </li>
 
-        <li className='nav-item'>
-          <Link className='nav-link' to="/legcases">
-            <GiJusticeStar  className="m-1" size={15} />
-            القضايا
-          </Link>
-        </li>
-        <li className='nav-item'>
-          <Link className='nav-link' to="/services">
-            <RiServiceLine   className="m-1" size={15} /> 
-            الخدمات
-          </Link>
-        </li>
-        <li className='nav-item'>
-          <Link className='nav-link' to="/legal-writer">
-            <HiOutlineDocumentText   className="m-1" size={15} />
-             المحرر
-          </Link>
-        </li>
-        <li className='nav-item'>
-          <Link className='nav-link' to="/procedures">
-            <AiOutlineAudit   className="m-1" size={15} />
-             الإجراءات
-          </Link>
-        </li>
+  <li className='nav-item'>
+    <Link className='nav-link' to="/clients">
+      <IoMdPeople className="m-1" size={15} />
+      الموكلين
+    </Link>
+  </li>
 
-        <li className='nav-item'>
-          <Link className='nav-link' to="/financial">
-            <BsCashStack  className="m-1" size={15} />
-            الحسابات
-          </Link>
-        </li>
+  <li className='nav-item'>
+    <Link className='nav-link' to="/legcases">
+      <GiJusticeStar  className="m-1" size={15} />
+      القضايا
+    </Link>
+  </li>
+  <li className='nav-item'>
+    <Link className='nav-link' to="/services">
+      <RiServiceLine   className="m-1" size={15} /> 
+      الخدمات
+    </Link>
+  </li>
+  <li className='nav-item'>
+    <Link className='nav-link' to="/legal-writer">
+      <HiOutlineDocumentText   className="m-1" size={15} />
+       المحرر
+    </Link>
+  </li>
+  <li className='nav-item'>
+    <Link className='nav-link' to="/procedures">
+      <AiOutlineAudit   className="m-1" size={15} />
+       الإجراءات
+    </Link>
+  </li>
 
-        <li className='nav-item'>
-          <Link className='nav-link' to="/court-search">
-            <GiMagnifyingGlass  className="m-1" size={15} />
-            بحث محاكم
-          </Link>
-        </li>
-            </ul>
+  <li className='nav-item'>
+    <Link className='nav-link' to="/financial">
+      <BsCashStack  className="m-1" size={15} />
+      الحسابات
+    </Link>
+  </li>
+
+  <li className='nav-item'>
+    <Link className='nav-link' to="/court-search">
+      <GiMagnifyingGlass  className="m-1" size={15} />
+      بحث محاكم
+    </Link>
+  </li>
+</ul>
           </Nav>
         </Navbar.Collapse>
         <div className="user-menu">

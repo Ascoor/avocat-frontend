@@ -1,59 +1,57 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
-import { visualizer } from 'rollup-plugin-visualizer';
-import compression from 'vite-plugin-compression';
+import path from 'path'
+
 
 export default defineConfig({
-  plugins: [
-    react(),
-    visualizer({
-      open: true,
-      gzipSize: true,
-      brotliSize: true,
-      filename: 'bundle-visualizer-report.html'
-    }),
-    compression({ 
-      algorithm: 'brotliCompress', 
-      ext: '.br' 
-    }),
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      // Add other aliases as needed
+      '@': path.resolve(__dirname, 'src'), // تغييره إلى مسار مشروعك الفعلي
     },
   },
   server: {
     host: '127.0.0.1',
-    port: 3000,
-    open: true,
-    cors: true,
-    strictPort: true,
-  },
-  css: {
-    modules: {
-      localsConvention: 'camelCaseOnly',
-    },
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "@/styles/variables.scss";`,
-      },
-    },
+    network: 'host',
+    port: 3000, // تغييره حسب احتياجاتك
   },
   build: {
-    outDir: 'build',
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        chunkSizeWarningLimit: 500,
-        manualChunks: {
-          vendor: ['react', 'react-dom'], // Include other libraries as needed
-        },
-      },
-    },
+    outDir: 'dist', // تغييره حسب احتياجاتك
   },
   optimizeDeps: {
-    // Include necessary dependencies for pre-bundling
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      '@ckeditor/ckeditor5-build-decoupled-document',
+      '@ckeditor/ckeditor5-react',
+      '@fullcalendar/core',
+      '@fullcalendar/daygrid',
+      '@fullcalendar/interaction',
+      '@fullcalendar/react',
+      '@fullcalendar/timegrid',
+      '@popperjs/core',
+      '@react-spring/web',
+      'animejs',
+      'axios',
+      'bootstrap',
+      'boxicons',
+      'date-fns',
+      'docx',
+      'docxtemplater',
+      'file-saver',
+      'mammoth',
+      'moment',
+      'path-browserify',
+      'pizzip',
+      'react-big-calendar',
+      'react-bootstrap',
+      'react-datepicker',
+      'react-draft-wysiwyg',
+      'react-icons',
+      'react-loader-spinner',
+      'react-toastify',
+      'scrollreveal',
+    ],
   },
 });

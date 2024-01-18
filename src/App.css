@@ -489,6 +489,53 @@ h5 {
 
 /* ======================== MODALS ======================== */
 
+/* Modal Content Styles */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: radial-gradient(
+    circle at center, /* تحديد نقطة بداية التدرج في المركز */
+    #202b45 0%,     /* أزرق غامق في المركز */
+    #15203c 60%,    /* أزرق غامق أكثر في المنتصف */
+    #00040e 100%    /* أزرق شديد الغمقة على الأطراف */
+  );
+  color: orange;
+  
+
+}
+.modal-header .btn-close {
+ 
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 100;
+    color: #b93030 !important;
+
+}
+.modal-content {
+  background-color: #e8e8e8; /* White background for modals */
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  max-width: 90%; /* Adjust the maximum width as needed */
+  overflow: auto;
+  max-height: 90%; /* Adjust the maximum height as needed */
+  position: relative;
+  padding: 20px;
+  color: #000; /* Text color for modal content */
+}
+
+/* Modal Close Button Styles */
+
+/* Responsive Styles for Modals */
+@media (max-width: 768px) {
+  /* Adjust modal styles for smaller screens */
+  .modal-content {
+    max-width: 95%;
+    max-height: 95%;
+  }
+}
+
 /* ======================== TABLES ======================== */
 .table {
   width: 100%;

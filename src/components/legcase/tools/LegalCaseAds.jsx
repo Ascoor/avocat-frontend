@@ -9,7 +9,7 @@ import API_CONFIG from '../../../config';
 registerLocale('ar_eg', arEG);
 setDefaultLocale('ar_eg');
 
-const LegalAd = ({ legCaseId }) => {
+const LegalCaseAds = ({ legCaseId }) => {
   const { getUser } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -418,4 +418,4 @@ const LegalAd = ({ legCaseId }) => {
   );
 };
 
-export default LegalAd;
+export default LegalCaseAds;

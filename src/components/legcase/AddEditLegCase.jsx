@@ -1,54 +1,55 @@
 import { useEffect, useState } from 'react';
-import { Form, Button, Alert, Row, Col, Modal } from 'react-bootstrap';
 import axios from 'axios';
+import { Form, Button, Alert, Row, Col, Modal } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import useAuth from '../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../config';
 
-const AddEditLegCase = ({ onClose, isEditing }) => {
-  const [slug, setSlug] = useState('');
-  const [validated, setValidated] = useState(false);
-  const [litigants_name, setLitigantsName] = useState('');
-  const [litigants_phone, setLitigantsPhone] = useState('');
-  const [caseTypes, setCaseTypes] = useState([]);
-  const [caseSubTypes, setCaseSubTypes] = useState([]);
-  const [selectedCaseType, setSelectedCaseType] = useState('');
-  const [selectedCaseSubType, setSelectedCaseSubType] = useState('');
-  const [description, setDescription] = useState('');
-  const [title, setTitle] = useState('');
-  const [client_capacity, setClientCapacity] = useState('');
-  const [message, setMessage] = useState('');
+const AddEditLegCase = ({ onClose, isEditing, fetchLegCases }) => {
+  const { caseId } = useParams();
   const { getUser } = useAuth();
 
-  const [showMessage, setShowMessage] = useState(false);
-  
+  const [caseData, setCaseData] = useState({
+    slug: '',
+    litigants_name: '',
+    litigants_phone: '',
+    case_type_id: '',
+    case_sub_type_id: '',
+    description: '',
+    title: '',
+    client_capacity: '',
+  });
+
+  const [caseTypes, setCaseTypes] = useState([]);
+  const [caseSubTypes, setCaseSubTypes] = useState([]);
+  const [validated, setValidated] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [selectedCaseType, setSelectedCaseType] = useState('');
+  const [selectedCaseSubType, setSelectedCaseSubType] = useState('');
+  const [clientCapacity, setClientCapacity] = useState('');
+
   useEffect(() => {
     const fetchFormData = async () => {
       try {
         const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/leg-cases/create`,
+          `${API_CONFIG.baseURL}/api/leg-cases/create`
         );
         setCaseTypes(response.data.caseTypes);
         setCaseSubTypes(response.data.caseSubTypes);
-   
+
+        if (isEditing) {
+          const caseResponse = await axios.get(
+            `${API_CONFIG.baseURL}/api/leg-cases/${caseId}`
+          );
+          setCaseData(caseResponse.data);
+        }
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching form data', error);
       }
-    
-    if (isEditing) {
-      try {
-        const response = await axios.get(`${API_CONFIG.baseURL}/api/leg-cases/${caseId}`);
-        const caseData = response.data;
-        // تعيين البيانات في الـ states
-        setSlug(caseData.slug);
-        // ... تعيين البيانات الأخرى
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-  fetchFormData();
-}, [caseId, isEditing]);
+    };
+    fetchFormData();
+  }, [caseId, isEditing]);
 
   const handleCaseTypeChange = (event) => {
     const caseTypeId = event.target.value;
@@ -67,56 +68,63 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
     const caseSubTypeId = event.target.value;
     setSelectedCaseSubType(caseSubTypeId);
   };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCaseData({
+      ...caseData,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
-      const caseData = {
-        slug,
-        litigants_name,
-        litigants_phone,
-        case_type_id: selectedCaseType,
-        case_sub_type_id: selectedCaseSubType,
-        description,
-        title, 
-        client_capacity,
-        created_by: getUser().id,
-      };
       try {
-        let response;
-        if (isEditing) {
-          response = await axios.put(`${API_CONFIG.baseURL}/api/leg_cases/${caseId}`, caseData);
-        } else {
-          response = await axios.post(`${API_CONFIG.baseURL}/api/leg_cases`, caseData);
-        }
-        // ... التعامل مع الاستجابة
+        const response = isEditing
+          ? await axios.put(
+              `${API_CONFIG.baseURL}/api/leg_cases/${caseId}`,
+              caseData
+            )
+          : await axios.post(`${API_CONFIG.baseURL}/api/leg_cases`, {
+              ...caseData,
+              created_by: getUser().id,
+            });
+        setValidated(true);
+        setAlertMessage(response.data.message);
+        setShowAlert(true);
+        fetchLegCases();
       } catch (error) {
-        console.error(error);
+        console.error('Error submitting form', error);
       }
-      setValidated(true);  
-        onClose(); // Close the modal after successful operation
-    };
-  
-    // Use onClose for handling cancel action
-    const handleCancel = () => {
-      onClose();
-    };
+    }
   };
-    
-    return (
-    <Modal show={true} onHide={handleCancel}>
-      <Modal.Header closeButton>
+
+  return (
+    <Modal
+      className="mt-5 modal-md modal-dialog-scrollable  "
+      restoreFocus={true}
+      enforceFocus={true}
+      show={true}
+      onHide={onClose}
+    >
+      <Modal.Header closeVariant="white" closeButton>
         <Modal.Title>
           {isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          {showMessage && (
-            <Alert variant={message.includes('success') ? 'success' : 'danger'}>
-              {message}
+          {showAlert && (
+            <Alert
+              variant={
+                alertMessage.includes('success') ? 'success' : 'danger'
+              }
+            >
+              {alertMessage}
             </Alert>
           )}
           <Row className="mt-3">
@@ -124,9 +132,10 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
               <Form.Group>
                 <Form.Label>رقم ملف المكتب</Form.Label>
                 <Form.Control
-                  value={slug}
+                  name="slug"
+                  value={caseData.slug}
                   type="text"
-                  onChange={(e) => setSlug(e.target.value)}
+                  onChange={handleInputChange}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
@@ -139,7 +148,9 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
                 <Form.Label>نوع القضية</Form.Label>
                 <Form.Control
                   as="select"
-                  onChange={handleCaseTypeChange}
+                  name="case_type_id"
+                  value={caseData.case_type_id}
+                  onChange={handleInputChange}
                   required
                 >
                   <option value="">اختر نوع القضية</option>
@@ -155,13 +166,16 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
               </Form.Group>
             </Col>
           </Row>
+
           <Row className="mt-3">
             <Col xs={12} md={6}>
               <Form.Group controlId="caseSubType">
                 <Form.Label>نوع القضية الفرعي</Form.Label>
                 <Form.Control
                   as="select"
-                  onChange={handleCaseSubTypeChange}
+                  name="case_sub_type_id"
+                  value={caseData.case_sub_type_id}
+                  onChange={handleInputChange}
                   required
                 >
                   <option value="">اختر نوع القضية الفرعي</option>
@@ -171,16 +185,20 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
                     </option>
                   ))}
                 </Form.Control>
+                <Form.Control.Feedback type="invalid">
+                  لم تقم بإختيار نوع القضية الفرعي
+                </Form.Control.Feedback>
               </Form.Group>
             </Col>
-       
+
             <Col xs={12} md={6}>
               <Form.Group>
                 <Form.Label>صفة الإدعاء</Form.Label>
                 <Form.Control
                   as="select"
-                  value={client_capacity}
-                  onChange={(e) => setClientCapacity(e.target.value)}
+                  name="client_capacity"
+                  value={caseData.client_capacity}
+                  onChange={handleInputChange}
                   required
                 >
                   <option value="">اختر الصفة</option>
@@ -196,15 +214,15 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
             </Col>
           </Row>
 
-
           <Row className="mt-3">
             <Col xs={12} md={6}>
               <Form.Group>
                 <Form.Label>موضوع الدعوى</Form.Label>
                 <Form.Control
                   type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  name="title"
+                  value={caseData.title}
+                  onChange={handleInputChange}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
@@ -218,8 +236,9 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
                 <Form.Control
                   as="textarea"
                   rows={3}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  name="description"
+                  value={caseData.description}
+                  onChange={handleInputChange}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
@@ -235,8 +254,9 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
                 <Form.Label>وكيل الخصم</Form.Label>
                 <Form.Control
                   type="text"
-                  value={litigants_name}
-                  onChange={(e) => setLitigantsName(e.target.value)}
+                  name="litigants_name"
+                  value={caseData.litigants_name}
+                  onChange={handleInputChange}
                 />
               </Form.Group>
             </Col>
@@ -245,8 +265,9 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
                 <Form.Label>رقم هاتف وكيل الخصم</Form.Label>
                 <Form.Control
                   type="text"
-                  value={litigants_phone}
-                  onChange={(e) => setLitigantsPhone(e.target.value)}
+                  name="litigants_phone"
+                  value={caseData.litigants_phone}
+                  onChange={handleInputChange}
                 />
               </Form.Group>
             </Col>
@@ -257,7 +278,7 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
               <Button variant="primary" type="submit">
                 {isEditing ? 'تحديث' : 'حفظ'}
               </Button>
-              <Button variant="secondary" onClick={handleCancel}>
+              <Button variant="secondary" onClick={onClose}>
                 إلغاء
               </Button>
             </Col>
@@ -267,4 +288,5 @@ const AddEditLegCase = ({ onClose, isEditing }) => {
     </Modal>
   );
 };
+
 export default AddEditLegCase;
