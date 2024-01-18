@@ -45,11 +45,20 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
   }, [userId]);
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary navbar-dark navbar-top-nav">
-      <Container fluid className="container-fluid container-top-nav">
-        <Link to="/">
-          <img className="navbar-brand" src={LogoPatren} alt="Brand Logo" />
-        </Link>
+    <Navbar expand="md" className="bg-body-tertiary navbar-dark navbar-top-nav">
+
+        <Container className="container container-top-nav">
+          <Navbar.Brand href="#home">
+          <Link to="/">
+            <img
+         src={LogoPatren}
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+            </Link>
+          </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -57,56 +66,58 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item m-1">
-                <BiHomeCircle className="m-2" size={30} />
+            <ul className="navbar-nav">
+
+            
+              <li className="nav-item">
                 <Link className="nav-link" to="/">
+                <BiHomeCircle className="m-1" size={15} />
                   الرئيسية
                 </Link>
               </li>
    
-        <li className='nav-item m-1'>
-            <IoMdPeople className="m-2" size={25} />
+        <li className='nav-item'>
           <Link className='nav-link' to="/clients">
+            <IoMdPeople className="m-1" size={15} />
             الموكلين
           </Link>
         </li>
 
-        <li className='nav-item m-1'>
-            <GiJusticeStar className="m-2" size={25} />
+        <li className='nav-item'>
           <Link className='nav-link' to="/legcases">
+            <GiJusticeStar  className="m-1" size={15} />
             القضايا
           </Link>
         </li>
-        <li className='nav-item m-1'>
-            <RiServiceLine  className="m-2" size={25} /> 
+        <li className='nav-item'>
           <Link className='nav-link' to="/services">
+            <RiServiceLine   className="m-1" size={15} /> 
             الخدمات
           </Link>
         </li>
-        <li className='nav-item m-1'>
-            <HiOutlineDocumentText  className="m-2" size={25} />
+        <li className='nav-item'>
           <Link className='nav-link' to="/legal-writer">
+            <HiOutlineDocumentText   className="m-1" size={15} />
              المحرر
           </Link>
         </li>
-        <li className='nav-item m-1'>
-            <AiOutlineAudit  className="m-2" size={25} />
+        <li className='nav-item'>
           <Link className='nav-link' to="/procedures">
+            <AiOutlineAudit   className="m-1" size={15} />
              الإجراءات
           </Link>
         </li>
 
-        <li className='nav-item m-1'>
-            <BsCashStack className="m-2" size={25} />
+        <li className='nav-item'>
           <Link className='nav-link' to="/financial">
+            <BsCashStack  className="m-1" size={15} />
             الحسابات
           </Link>
         </li>
 
-        <li className='nav-item m-1'>
-            <GiMagnifyingGlass className="m-2" size={25} />
+        <li className='nav-item'>
           <Link className='nav-link' to="/court-search">
+            <GiMagnifyingGlass  className="m-1" size={15} />
             بحث محاكم
           </Link>
         </li>
@@ -114,11 +125,18 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
           </Nav>
         </Navbar.Collapse>
         <div className="user-menu">
-          <NavDropdown
-            title={<FaUser className="m-2" color="orange" size={20} />}
+        
+          <Notification
+            notifications={notifications}
+            unreadNotifications={unreadNotifications}
+            fetchNotifications={fetchNotifications}
+          />
+           <NavDropdown
             id="userDropdown"
+            title={<FaUser  color="orange" size={20} />}
             align="end"
             drop="down"
+            className="dropdown-menu-right m-2" 
           >
             <NavDropdown.Item href={`/profile/${userId}`}>
               الملف الشخصي
@@ -129,21 +147,15 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
             >
               نسجيل الخروج
             </NavDropdown.Item>
-          </NavDropdown>
-          <Notification
-            notifications={notifications}
-            unreadNotifications={unreadNotifications}
-            fetchNotifications={fetchNotifications}
-          />
-          
+          </NavDropdown> 
 <SlSettings
-                  className="m-2"
+                  
                   size={30}
                   color='orange'
                   onClick={toggleSidebar}
                 />
         </div>
-      </Container>
+     </Container>
     </Navbar>
   );
 };

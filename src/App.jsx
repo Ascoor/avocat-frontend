@@ -10,12 +10,12 @@ import useAuth from './components/layout/AuthTool/AuthUser';
 
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
   const { getToken } = useAuth();
 
   return (
     <>
       {!getToken() ? <Guest /> : <Auth />}
+    
     </>
   );
 }

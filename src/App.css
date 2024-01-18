@@ -1,17 +1,22 @@
 /* App.css */
 body {
+  /* تدرج لوني راديالي يستخدم درجات الأزرق الغامق */
   background: radial-gradient(
-
-    #202b45,
-    #00040e ,
-    #15203c
-);
+    circle at center, /* تحديد نقطة بداية التدرج في المركز */
+    #202b45 0%,     /* أزرق غامق في المركز */
+    #15203c 60%,    /* أزرق غامق أكثر في المنتصف */
+    #00040e 100%    /* أزرق شديد الغمقة على الأطراف */
+  );
 
   font-family: 'Open Sans', sans-serif;
   color: #cce6ff;
   margin: 0; /* Reset default margin */
   padding: 0; /* Reset default padding */
+
+  /* إضافة تأثير إضاءة خافتة */
+  box-shadow: inset 0 0 100px #00040e; /* تظليل داخلي للإضافة عمق */
 }
+
 :root {
   --breakpoint-xs: 576px;
   --breakpoint-sm: 768px;
@@ -366,41 +371,6 @@ a {
       }
     }
   }
-}
-
-/* ======================== BASE STYLES ======================== */
-body {
-  font-family: 'Open Sans', sans-serif;
-  color: #272829;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --breakpoint-xs: 576px;
-  --breakpoint-sm: 768px;
-  --breakpoint-md: 992px;
-  --breakpoint-lg: 1200px;
-  --primary-color: #0041e6;
-  --primary-hover: #26428b;
-  --secondary-color: #e41e1e;
-  --accent-color: #df9114;
-  --accent-hover: #9c6000;
-  --bg-color: #f4f6f9;
-  --text-light: #000000;
-  --text-dark: #ffffff;
-}
-
-a {
-  color: #149ddd;
-  text-decoration: none;
-}
-
-::placeholder {
-  color: #000000;
-  opacity: 1;
-  direction: rtl;
-  text-align: right;
 }
 
 /* ======================== spinner  loading ======================== */

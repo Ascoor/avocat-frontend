@@ -19,16 +19,20 @@
     "lint:fix": "eslint . --ext .js,.jsx --fix",
     "format": "prettier --write \"src/**/*.+(js|jsx)\"",
     "dev": "vite",
-    "build:dev": "vite build --mode development",
-    "build:prod": "vite build --mode production",
+    "clean": "rm -rf build/",
+    "build:dev": "npm run clean && vite build --mode development",
+    "build:prod": "npm run clean && vite build --mode production",
     "purgecss": "purgecss --css src/**/*.css --content src/**/*.{html,js,jsx} --output src/purified/",
     "start:dev": "vite --mode development",
     "start:prod": "node server.js",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "serve": "vite preview",
-    "analyze": "vite build --mode production && rollup-plugin-visualizer"
+    "analyze": "vite build --mode production && rollup-plugin-visualizer",
+    "check:deps": "depcheck"
   },
+  
   "dependencies": {
     "@ckeditor/ckeditor5-build-decoupled-document": "^40.2.0",
     "@ckeditor/ckeditor5-react": "^6.2.0",

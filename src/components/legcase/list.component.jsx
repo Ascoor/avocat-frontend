@@ -1,22 +1,21 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Card, Row, Col, Alert } from 'react-bootstrap';
+import { Card, Row, Col, Alert, CardHeader } from 'react-bootstrap';
 import API_CONFIG from '../../config';
-import { LegCaseIcon } from '../../assets/icons/index';
-import CustomPagination from '../home_tools/Pagination'; // Import your custom Pagination component here
-import LegCaseCreate from './LegCaseCreate';
-
+import AddEditLegCase from './AddEditLegCase';
 import SectionHeader from '../home_tools/SectionHeader';
+import CustomPagination from '../home_tools/Pagination';
+import {LegCaseIcon} from '../../assets/icons/index';
 const LegCaseList = () => {
-  const itemsPerPage = 10; // Set the number of items to display per page
+  const itemsPerPage = 10;
   const [legCasesPage, setLegCasesPage] = useState(1); // Define legCasesPage and set its initial value to 1
   const [legCases, setLegCases] = useState([]);
-  const [showAlert, setShowAlert] = useState(false);
+const [showAlert, setShowAlert] = useState(false);
   const [currentAlertMessage, setCurrentAlertMessage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredLegCases, setFilteredLegCases] = useState([]);
-
+  
   const handlePageChange = (newPage) => {
     setLegCasesPage(newPage);
   };
@@ -37,92 +36,86 @@ const LegCaseList = () => {
       setLegCases(response.data);
       setFilteredLegCases(response.data);
     } catch (error) {
-      console.log('Failed to fetch leg cases');
+      console.error('Error fetching leg cases', error);
     }
   };
-
-  const handleSearch = () => {
-    const filteredCases = legCases.filter((legCase) => {
-      return (
-        legCase.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        legCase.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        legCase.case_sub_type.name
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase()) ||
-        legCase.clients.some((client) =>
-          client.name.toLowerCase().includes(searchQuery.toLowerCase()),
-        ) ||
-        legCase.courts.some((court) =>
-          court.name.toLowerCase().includes(searchQuery.toLowerCase()),
-        )
-      );
-    });
-    setFilteredLegCases(filteredCases);
-  };
-
-  const deleteLegCase = async (id) => {
-    try {
-      await axios.delete(`${API_CONFIG.baseURL}/api/leg_cases/${id}`);
-      setShowAlert(true);
-      setCurrentAlertMessage('تم حذف الحالة القانونية بنجاح');
-      fetchLegCases();
-      setFilteredLegCases(
-        filteredLegCases.filter((legCase) => legCase.id !== id),
-      );
-    } catch (error) {
-      console.log('فشل في حذف الحالة القانونية');
-    }
-  };
-
   const handleAddClick = () => {
     setIsEditing(false);
     setShowModal(true);
   };
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
+  const handleSearch = () => {
+    
+    const filteredCases = legCases.filter((legCase) => {
+      return (
+      legCase.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      legCase.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      legCase.case_sub_type.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      legCase.clients.some((client) =>
+        client.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      ) ||
+      legCase.courts.some((court) =>
+        court.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      )
+    );
+  });
+  setFilteredLegCases(filteredCases);
+};
+
+  const deleteLegCase = async (id) => {
+    try {
+      await axios.delete(`${API_CONFIG.baseURL}/api/leg_cases/${id}`);
+      setAlertMessage('Legal case successfully deleted');
+      setShowAlert(true);
+      fetchLegCases(); // Refresh list after deletion
+    } catch (error) {
+      console.error('Error deleting legal case', error);
+    }
+  };
+
+  const currentItems = filteredLegCases.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <>
       <SectionHeader
-        setShowAddModal={handleAddClick}
+        setShowAddModal={() => { setShowModal(true); setIsEditing(false); }}
         listName="القضايا"
         buttonName="قضية"
         icon={LegCaseIcon}
-      />
+      />   {showModal && (
+        <AddEditLegCase 
+          isEditing={isEditing} 
+          onClose={handleCloseModal} 
+        />
+      )}    
+     
       <Card className="leg-case-list-card"> {/* Apply custom styling to the card */}
-        <Card.Header>
-          <Row className="add-case-row">
-            {showModal && (
-              <LegCaseCreate isEditing={isEditing} onClose={handleCloseModal} />
-            )}
-          </Row>
+  <CardHeader>
 
-          {showAlert && (
-            <Alert variant="success" className="text-center">
-              {currentAlertMessage}
-            </Alert>
-          )}
-        </Card.Header>
+        {showAlert && <Alert variant="success">{alertMessage}</Alert>}
+  </CardHeader>
         <div className="text-center search-bar">
           <Row className="justify-content-center">
             <Col xs={12} md={6} lg={6} className="text-center text-md">
-              <input
-                type="text"
-                className="form-control search-input"
-                placeholder="ابحث..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button
-                className="btn btn-primary btn-search"
-                onClick={handleSearch}
-              >
-                بحث
-              </button>
+
+    <input
+          type="text"
+          className="form-control search-input"
+          placeholder="ابحث..."
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+        />
+        <button className="btn-btn-primary btn-search" onClick={handleSearch}>بحث</button>
+
             </Col>
           </Row>
-        </div>
+      </div>
+      
         <Card.Body>
           <div className="table-responsive">
             <table className="special-table">

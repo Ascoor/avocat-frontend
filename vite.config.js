@@ -8,9 +8,9 @@ export default defineConfig({
   plugins: [
     react(),
     visualizer({
-      open: true, 
-      gzipSize: true, 
-      brotliSize: true, 
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
       filename: 'bundle-visualizer-report.html'
     }),
     compression({ 
@@ -18,9 +18,11 @@ export default defineConfig({
       ext: '.br' 
     }),
   ],
-  define: {
-    'process.env': {},
-    global: 'window',
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      // Add other aliases as needed
+    },
   },
   server: {
     host: '127.0.0.1',
@@ -28,16 +30,6 @@ export default defineConfig({
     open: true,
     cors: true,
     strictPort: true,
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@styles': path.resolve(__dirname, './src/styles'),
-      '@assets': path.resolve(__dirname, './src/assets'),
-      'path': 'path-browserify',
-      'util': 'util',
-    },
   },
   css: {
     modules: {
@@ -53,26 +45,15 @@ export default defineConfig({
     outDir: 'build',
     sourcemap: false,
     rollupOptions: {
-      external: ['path', 'util'],
       output: {
         chunkSizeWarningLimit: 500,
         manualChunks: {
-          vendor: ['react', 'react-dom', 'bootstrap', '@fullcalendar/core', 'axios', 'react-router-dom'],
+          vendor: ['react', 'react-dom'], // Include other libraries as needed
         },
       },
     },
   },
   optimizeDeps: {
-    include: [
-      'react',
-      'react-dom',
-      'axios',
-      'bootstrap',
-      'react-router-dom',
-      '@fullcalendar/core',
-      '@ckeditor/ckeditor5-react',
-      '@ckeditor/ckeditor5-build-decoupled-document',
-    ],
-    exclude: ['@babel/core'],
+    // Include necessary dependencies for pre-bundling
   },
 });

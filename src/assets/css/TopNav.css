@@ -1,54 +1,47 @@
-/* TopNav.css */
-/* TopNav.css */
-
-/* Top Navigation Styles */
+/* General styling for the navbar */
 .navbar-top-nav {
-  display: flex;
-  align-items: center;
+  padding: 0.5rem 1rem; /* Spacing */
+
   background: linear-gradient(
     #0b2440 0%,
     #010e18 50%,
     #0a2b41 100%
-  );
-  color: #ffffff;
-  box-shadow: 0 4px 60px rgba(0, 108, 216, 0.44);
-  transition: transform 0.3s ease-in-out;
-  overflow: hidden; /* Ensure content doesn't overflow */
+  ); /* Same gradient as topnav */
+
 }
 
-.container-top-nav {
-  background: linear-gradient(
-    325deg,
-    #123646,
-    #0a2741
-  );
-  overflow: hidden; /* Ensure content doesn't overflow */
-}
-
-/* Base styles for navigation items */
-.nav-item {
+.navbar-top-nav .navbar-brand img {
+    height: auto; /* يضمن الحفاظ على نسب الأبعاد */
+    width: 100px; /* العرض الافتراضي */
+  }
+  
+  .nav-link:hover, .nav-link.active {
+    color: orange; /* Color change on hover and active state */
+  }
+/* Styling for navigation items */
+.navbar-top-nav .nav-link {
+  color:rgba(255, 226, 171, 0.898); /* Dark text color for contrast */
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem 1rem;
-  white-space: nowrap; /* Prevent text from breaking into multiple lines */
+  font-size: small;
+  align-items: center; /* Align icons with text */
 }
 
-.nav-link {
-  text-align: center;
-  padding: 4px 0;
-  color: #ffffff;
-  font-size: 1.2rem;
-  text-decoration: none;
+.navbar-top-nav .nav-link:hover {
+  color: orange; /* Highlight color on hover */
 }
 
-/* User Menu and Notification Common Styles */
-.user-menu {
+.nav-item .m-2 {
+  color: #dfbc67;
+}
+/* Icons in the navbar */
+.navbar-top-nav .nav-item .react-icon {
+  margin: auto 5px;
+}
+
+/* Dropdown and User menu */
+.navbar-top-nav .user-menu {
   display: flex;
   align-items: center;
-  z-index: 1000;
-  overflow: hidden; /* Ensure content doesn't overflow */
 }
 
 .notification-button {
@@ -63,7 +56,7 @@
 .notification-badge {
   background-color: red;
   color: white;
-  padding: 2px 6px;
+padding: 2px 6px;
   border-radius: 50%;
   font-size: 0.75rem;
   position: absolute;
@@ -88,40 +81,23 @@
   text-align: right;
 }
 
-/* Media queries and other styles remain unchanged */
-
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .sidebar-open .top-nav {
-    margin-right: 0; /* Reset margin for small screens */
+  .navbar-top-nav .nav-link {
+    margin-left: 0; /* Adjust spacing on smaller screens */
   }
-  
 
-  .nav-item .m-2 {
-    font-size: 12px; /* Smaller icons on smaller screens */
-    
+  .navbar-top-nav .user-menu .nav-dropdown {
+    margin-right: 0.5rem; /* Adjust user menu spacing */
+  }
+  @media (max-width: 768px) {
+    .nav-icon {
+      font-size: 1.25rem;
+    }
+    .nav-link {
+      font-size: 0.9rem;
+    }
   }
 }
 
-@media (min-width: 769px) {
-  .nav-item .m-2 {
-    color: #dfbc67;
-  }
-}
-
-
-
-/* Base styles for navigation items */
-.nav-item {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem; /* Adjust padding as needed */
-}
-
-.navbar-brand  {
-  height: auto; /* يضمن الحفاظ على نسب الأبعاد */
-  width: 100px; /* العرض الافتراضي */
-}
-
-.nav-link:hover, .nav-link.active {
-  color: orange; /* Color change on hover and active state */
-}
+/* Additional styling can be added here for specific needs */
