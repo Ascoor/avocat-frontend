@@ -1,64 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import '../../assets/css/legcase.css';
 import API_CONFIG from '../../config';
-import '../../assets/css/legcase.css'
-import LegalCaseClients from './tools/LegalCaseClients';
+import { Col, Row, Tab, Tabs, Card, Button, Form } from 'react-bootstrap';
+import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
+import { BsPersonFillX } from 'react-icons/bs';
 
 import Procedure from './tools/LegalCaseProcedures';
-import LegalAd from './tools/LegalCaseAds';
 import LegalSession from './tools/LegalCaseSessions';
-import { Col, Row, Tab, Tabs, Card, Button, Form } from 'react-bootstrap';
-
+import LegCaseClients from './tools/LegalCaseClients';
 import { LegCaseDetailsIcon } from '../../assets/icons';
-import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
-import {BsPersonFillX } from 'react-icons/bs';  
-export default function LegalCaseDetails() {
+import LegalAd from './tools/LegalCaseAds';
+export default function LegCaseDetail() {
   const { id } = useParams();
   const [legCase, setLegCase] = useState(null);
+  const [key, setKey] = useState('procedure');
   const [courts, setCourts] = useState([]);
   const [clients, setClients] = useState([]);
-  const [sessions,  setSessions] = useState([]);
-  const [procedures,    setProcedures] = useState([]);
-  const [legalAds,      setLegalAds] = useState([]);
   const [legCaseCourts, setLegCaseCourts] = useState([]);
-  const [legCaseNewCourts, setLegCaseNewCourts] = useState([]);
-  const [legCaseNewClients, setLegCaseNewClients] = useState([]);
-  const [legCaseClients, setLegCaseClients] = useState([]);
 
+  const [legCaseNewClients, setLegCaseNewClients] = useState([]);
+  const [legCaseNewCourts, setLegCaseNewCourts] = useState([]);
   useEffect(() => {
     const fetchLegCase = async () => {
       try {
-        const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-cases/${id}`);
+        const response = await axios.get(
+          `${API_CONFIG.baseURL}/api/legal-cases/${id}`,
+        );
         setLegCase(response.data.leg_case);
         setLegCaseCourts(response.data.leg_case.courts);
-        setLegCaseNewClients(response.data.leg_case_clients);
-        setSessions(response.data.leg_case.sessions);
-        setProcedures(response.data.leg_case.procedures);
-        setLegalAds(response.data.leg_case.legalAds);
-
-
       } catch (error) {
-        console.error('Error fetching legal case:', error);
+        console.log(error);
       }
     };
 
-    const fetchCourtsAndClientsLists = async () => {
-      try {
-        const response = await axios.get(API_CONFIG.baseURL+'/api/legal-case/legal-case-detail-create');
-
-        setCourts(response.data.courts);
-        setClients(response.data.clients);
-      } catch (error) {
-        console.error('Error fetching courts and clients:', error);
-      }
-    };
 
     fetchLegCase();
-    fetchCourtsAndClientsLists();
   }, [id]);
 
-
+  const handleAddNewClient = () => {
+    setLegCaseNewClients((prevClients) => [...prevClients, { client_id: '' }]);
+  };
   // Function to add a new court to the legCaseNewCourts state
   const handleAddNewCourt = () => {
     setLegCaseNewCourts((prevCourts) => [
@@ -91,7 +74,7 @@ export default function LegalCaseDetails() {
       };
 
       // Make a POST request to add leg case courts
-      const response = await axios.post('/legal-case/add_courts', requestData);
+      const response = await axios.post('/leg-case/add_courts', requestData);
 
       // Handle the response as needed (e.g., show a success message)
       console.log('Leg case courts added successfully', response.data);
@@ -104,6 +87,18 @@ export default function LegalCaseDetails() {
   if (!legCase) {
     return <div>Loading...</div>;
   }
+
+  const handleRemoveNewClient = (index) => {
+    setLegCaseNewClients((prevClients) =>
+      prevClients.filter((_, i) => i !== index),
+    );
+  };
+
+  const handleNewClientChange = (index, field, value) => {
+    const updatedClients = [...legCaseNewClients];
+    updatedClients[index][field] = value;
+    setLegCaseNewClients(updatedClients);
+  };
 
   const CaseHeader = () => (
     <div className="legalcase-card-header">
@@ -187,8 +182,13 @@ export default function LegalCaseDetails() {
       <CaseHeader />
       <Card.Body>
         <CaseBody />
-      <LegalCaseClients clients={clients} legCaseClients={legCaseClients} legCaseId={id} />
-     
+        <LegCaseClients
+          legCaseId={id}
+          clients={clients}
+          onAddNewClient={handleAddNewClient} // This will add a new client in the LegCaseDetails state
+          handleNewClientChange={handleNewClientChange} // Propagate changes in the client fields
+          handleRemoveNewClient={handleRemoveNewClient} // Propagate removal of a new client
+        />
       </Card.Body>
       <CourtsHeader />
       <Card.Body>
@@ -301,21 +301,21 @@ export default function LegalCaseDetails() {
       </Card.Body>
 
       <Card.Body>
-        {/* <Tabs
+        <Tabs
           id="controlled-tab-example"
           activeKey={key}
           onSelect={(k) => setKey(k)}
         >
           <Tab eventKey="procedure" title="الإجراءات">
-            <Procedure procedures={procedures} />
+            <Procedure legCaseId={String(id)} />
           </Tab>
           <Tab eventKey="session" title="الجلسات">
-            <LegalSession sessions={sessions} />
+            <LegalSession legCaseId={String(id)} />
           </Tab>
           <Tab eventKey="legalAd" title="الإعلانات">
-            <LegalAd legalAds={legalAds} />
+            <LegalAd legCaseId={String(id)} />
           </Tab>
-        </Tabs> */}
+        </Tabs>
       </Card.Body>
       <Card.Footer></Card.Footer>
     </Card>

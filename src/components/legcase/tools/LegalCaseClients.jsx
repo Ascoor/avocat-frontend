@@ -1,20 +1,44 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Button, Form, Alert, Row, Col } from 'react-bootstrap';
 import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
 import API_CONFIG from '../../../config';
 
-export default function LegalCaseClients({ clients, legCaseClients, legCaseId }) {
+export default function LegalCaseClients({  legCaseId }) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [legCaseNewClients, setLegCaseNewClients] = useState([]);
-
-  const handleAddNewClient = () => {
-    setLegCaseNewClients([...legCaseNewClients, { client_id: '' }]);
+useEffect(() => {
+  const fetchLegCaseClients = async () => {
+    try {
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}/clients`);
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleRemoveNewClient = index => {
-    setLegCaseNewClients(prev => prev.filter((_, i) => i !== index));
+  const fetchClients = async () => {
+    try {
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
+      setClients(response.data);
+    }
+    catch (error) {
+      console.log(error);
+
+    }
+  };
+
+  fetchClients();
+  fetchLegCaseClients();
+
+}, [legCaseId]);
+  const handleAddNewClient = () => {
+    setLegCaseNewClients((prevClients) => [...prevClients, { client_id: '' }]);
+  };
+
+  const handleRemoveNewClient = (index) => {
+    setLegCaseNewClients((prevClients) => prevClients.filter((_, i) => i !== index));
   };
 
   const handleNewClientChange = (e, index) => {
@@ -25,23 +49,22 @@ export default function LegalCaseClients({ clients, legCaseClients, legCaseId })
 
   const handleAddLegCaseClients = async () => {
     try {
-      await axios.post(`${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}/add_clients`, {
-        clients: legCaseNewClients.filter(client => client.client_id),
+      const response = await axios.post(`${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}/add_clients`, {
+        clients: legCaseNewClients.filter((client) => client.client_id),
       });
-      setSuccess('Clients added successfully');
+      setSuccess(response.data.message); // Assuming the API returns a success message
       setError('');
       // Consider refreshing the client's list here
-    } catch (err) {
-      setError('Error adding clients: ' + err.message);
+    } catch (error) {
+      setError('Error adding clients: ' + error.message);
       setSuccess('');
     }
   };
+
   const handleRemoveClient = (clientId) => {
-    // Make an API call to remove the client from the legal case
     axios
       .delete(`${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}/remove_client/${clientId}`)
       .then(() => {
-        // Update the list of legCaseClients by filtering out the removed client
         setLegCaseClients((prevClients) => prevClients.filter((client) => client.id !== clientId));
       })
       .catch((error) => {
@@ -54,28 +77,20 @@ export default function LegalCaseClients({ clients, legCaseClients, legCaseId })
     <>
       <Card.Header>
         <div className="legalcase-card-header d-flex justify-content-between align-items-center">
-
           <h3 style={{ fontWeight: 'bold' }}>بيانات الموكل</h3>
-
           {error && <Alert variant="danger">{error}</Alert>}
           {success && <Alert variant="success">{success}</Alert>}
           <div>
-            <Button
-              className="btn btn-sm btn-start mx-2"
-              variant="warning"
-              onClick={handleAddNewClient}
-            >
+            <Button className="btn btn-sm btn-start mx-2" variant="warning" onClick={handleAddNewClient}>
               إضافة موكل <BiPlusCircle />
             </Button>
           </div>
-
         </div>
       </Card.Header>
 
       <div className="table-responsive">
         <table className="special-table">
           <thead>
-
             <tr>
               <th>رقم المكتب</th>
               <th>اسم الموكل</th>
@@ -90,19 +105,11 @@ export default function LegalCaseClients({ clients, legCaseClients, legCaseId })
                   <td>{client.slug}</td>
                   <td>{client.name}</td>
                   <td>{client.phone_number}</td>
-                  <td
-                    className={`${client.status === 'active'
-                        ? 'text-success'
-                        : 'text-danger'
-                      }`}
-                  >
+                  <td className={client.status === 'active' ? 'text-success' : 'text-danger'}>
                     {client.status}
                   </td>
                   <td>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleRemoveNewClient(client)}
-                    >
+                    <Button variant="danger" onClick={() => handleRemoveClient(client.id)}>
                       حذف
                     </Button>
                   </td>
@@ -118,26 +125,29 @@ export default function LegalCaseClients({ clients, legCaseClients, legCaseId })
       </div>
 
       <Form onSubmit={(e) => e.preventDefault()}>
-        {clients.map((client, index) => (
+        {legCaseNewClients.map((client, index) => (
           <Row key={index}>
             <Col xs={12} lg={6}>
               <Form.Group className="mb-0" controlId={`newClientName_${index}`}>
-                <Form.Control as="select" value={client} onChange={(e) => handleNewClientChange(e, index)}>
+                <Form.Control
+                  as="select"
+                  value={client.client_id}
+                  onChange={(e) => handleNewClientChange(e, index)}
+                >
+                  <option value="">اختر عميلًا</option>
                   {clients.map((client) => (
                     <option key={client.id} value={client.id}>
                       {client.name}
                     </option>
                   ))}
-
                 </Form.Control>
-
-                {client.client_id === '' && (
-                  <div className="text-danger">لابد من اختيار عميل</div>
-                )}
+                {client.client_id === '' && <div className="text-danger">لابد من اختيار عميل</div>}
               </Form.Group>
             </Col>
             <Col>
-              <Button variant="danger" onClick={() => handleRemoveClient(index)}><BiMinusCircle /></Button>
+              <Button variant="danger" onClick={() => handleRemoveNewClient(index)}>
+                <BiMinusCircle />
+              </Button>
             </Col>
           </Row>
         ))}

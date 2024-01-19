@@ -5,119 +5,103 @@ import { useParams } from 'react-router-dom';
 import useAuth from '../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../config';
 
-const AddEditLegCase = ({ onClose, isEditing, fetchLegCases }) => {
+const AddEditLegCase = ({ onClose, isEditing, refreshLegCases }) => {
   const { caseId } = useParams();
   const { getUser } = useAuth();
-
   const [caseData, setCaseData] = useState({
     slug: '',
-    litigants_name: '',
-    litigants_phone: '',
+    title: '',
+    description: '',
     case_type_id: '',
     case_sub_type_id: '',
-    description: '',
-    title: '',
     client_capacity: '',
+    litigants_name: '',
+    litigants_phone: '',
+    created_by: getUser().id,
   });
-
   const [caseTypes, setCaseTypes] = useState([]);
-  const [caseSubTypes, setCaseSubTypes] = useState([]);
+const [selectedCaseTypeId, setSelectedCaseTypeId] = useState('');
   const [validated, setValidated] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  const [selectedCaseType, setSelectedCaseType] = useState('');
-  const [selectedCaseSubType, setSelectedCaseSubType] = useState('');
-  const [clientCapacity, setClientCapacity] = useState('');
-
-  useEffect(() => {
-    const fetchFormData = async () => {
-      try {
-        const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/leg-cases/create`
-        );
-        setCaseTypes(response.data.caseTypes);
-        setCaseSubTypes(response.data.caseSubTypes);
-
-        if (isEditing) {
-          const caseResponse = await axios.get(
-            `${API_CONFIG.baseURL}/api/leg-cases/${caseId}`
-          );
-          setCaseData(caseResponse.data);
-        }
-      } catch (error) {
-        console.error('Error fetching form data', error);
-      }
-    };
+  const [showAlert, setShowAlert] = useState(false);useEffect(() => {
     fetchFormData();
-  }, [caseId, isEditing]);
+    if (isEditing) {
+        fetchCaseData();
+    } else {
+        // في حالة الإضافة، تأكد من أن التصنيفات الفارغة محددة
+        setSelectedCaseTypeId('');
+        setCaseData(prevData => ({ ...prevData, case_type_id: '', case_sub_type_id: '' }));
+    }
+}, [caseId, isEditing]);
 
+  
+  const fetchFormData = async () => {
+    try {
+        const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-case/case-types-sub-types`);
+        setCaseTypes(response.data.caseTypes);
+    } catch (error) {
+        console.error('Error fetching form data:', error);
+    }
+};
+
+  const fetchCaseData = async () => {
+    try {
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/leg_cases/${caseId}`);
+      setCaseData(response.data);
+    } catch (error) {
+      console.error('Error fetching case data:', error);
+    }
+  };
   const handleCaseTypeChange = (event) => {
-    const caseTypeId = event.target.value;
-    setSelectedCaseType(caseTypeId);
+    const newCaseTypeId = event.target.value;
+    setSelectedCaseTypeId(newCaseTypeId);
+    setCaseData(prevData => ({ ...prevData, case_type_id: newCaseTypeId, case_sub_type_id: '' }));
+};
 
-    // Fetch case sub types based on selected case type
-    axios
-      .get(`${API_CONFIG.baseURL}/api/case-types/${caseTypeId}/sub-types`)
-      .then((response) => {
-        setCaseSubTypes(response.data);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const handleCaseSubTypeChange = (event) => {
-    const caseSubTypeId = event.target.value;
-    setSelectedCaseSubType(caseSubTypeId);
-  };
-
-  const handleInputChange = (event) => {
+const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setCaseData({
-      ...caseData,
-      [name]: value,
-    });
-  };
+    setCaseData(prevData => ({ ...prevData, [name]: value }));
+};
+
+const getCaseSubTypes = () => {
+  // استخدام selectedCaseTypeId بدلاً من caseData.case_type_id
+  const selectedCaseType = caseTypes.find(type => type.id.toString() === selectedCaseTypeId);
+  return selectedCaseType ? selectedCaseType.case_sub_types : [];
+};
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (!form.checkValidity()) {
       event.stopPropagation();
-    } else {
-      try {
-        const response = isEditing
-          ? await axios.put(
-              `${API_CONFIG.baseURL}/api/leg_cases/${caseId}`,
-              caseData
-            )
-          : await axios.post(`${API_CONFIG.baseURL}/api/leg_cases`, {
-              ...caseData,
-              created_by: getUser().id,
-            });
-        setValidated(true);
-        setAlertMessage(response.data.message);
-        setShowAlert(true);
-        fetchLegCases();
-      } catch (error) {
-        console.error('Error submitting form', error);
-      }
+      setValidated(true);
+      return;
     }
+
+// best logic put & post request axios with if have caseId edit else add
+try {
+  const response = await axios[caseId ? 'put' : 'post'](
+    `${API_CONFIG.baseURL}/api/legal-cases`,
+    caseData,
+  );
+  setAlertMessage(response.data.message);
+  setShowAlert(true);
+  refreshLegCases();
+} catch (error) {
+  console.error('Error submitting form:', error);
+}
   };
 
+
   return (
-    <Modal
-      className="mt-5 modal-md modal-dialog-scrollable  "
-      restoreFocus={true}
-      enforceFocus={true}
-      show={true}
-      onHide={onClose}
-    >
-      <Modal.Header closeVariant="white" closeButton>
-        <Modal.Title>
-          {isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}
-        </Modal.Title>
+    <Modal show={true} onHide={onClose}>
+      <Modal.Header animation={true} closeVariant="white" closeButton>
+        <Modal.Title>{isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          {showAlert && <Alert variant="success">{alertMessage}</Alert>}
+          
           {showAlert && (
             <Alert
               variant={
@@ -144,51 +128,40 @@ const AddEditLegCase = ({ onClose, isEditing, fetchLegCases }) => {
               </Form.Group>
             </Col>
             <Col xs={12} md={6}>
-              <Form.Group controlId="caseType">
-                <Form.Label>نوع القضية</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="case_type_id"
-                  value={caseData.case_type_id}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="">اختر نوع القضية</option>
-                  {caseTypes.map((caseType) => (
-                    <option key={caseType.id} value={caseType.id}>
-                      {caseType.name}
-                    </option>
-                  ))}
-                </Form.Control>
-                <Form.Control.Feedback type="invalid">
-                  لم تقم بإختيار نوع القضية
-                </Form.Control.Feedback>
-              </Form.Group>
+            <Form.Group controlId="caseType">
+            <Form.Label>Case Type</Form.Label>
+            <Form.Control as="select" name="case_type_id" onChange={handleCaseTypeChange} value={caseData.case_type_id}>
+                <option value="">Select Case Type</option>
+                {caseTypes.map(type => (
+                    <option key={type.id} value={type.id}>{type.name}</option>
+                ))}
+            </Form.Control>
+            
+            <Form.Control.Feedback type="invalid">
+                Please select a case type.
+                  
+            </Form.Control.Feedback>
+        </Form.Group>
+
+
             </Col>
           </Row>
 
           <Row className="mt-3">
             <Col xs={12} md={6}>
-              <Form.Group controlId="caseSubType">
-                <Form.Label>نوع القضية الفرعي</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="case_sub_type_id"
-                  value={caseData.case_sub_type_id}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="">اختر نوع القضية الفرعي</option>
-                  {caseSubTypes.map((caseSubType) => (
-                    <option key={caseSubType.id} value={caseSubType.id}>
-                      {decodeURIComponent(caseSubType.name)}
-                    </option>
-                  ))}
-                </Form.Control>
-                <Form.Control.Feedback type="invalid">
-                  لم تقم بإختيار نوع القضية الفرعي
-                </Form.Control.Feedback>
-              </Form.Group>
+        <Form.Group controlId="caseSubType">
+            <Form.Label>Case SubType</Form.Label>
+            <Form.Control as="select" name="case_sub_type_id" onChange={handleInputChange} value={caseData.case_sub_type_id}>
+                <option value="">Select Case SubType</option>
+                {getCaseSubTypes().map(subType => (
+                    <option key={subType.id} value={subType.id}>{subType.name}</option>
+                ))}
+            </Form.Control>
+        </Form.Group>
+        <Form.Control.Feedback type="invalid">
+                Please select a case sub type.
+        </Form.Control.Feedback>  
+         
             </Col>
 
             <Col xs={12} md={6}>

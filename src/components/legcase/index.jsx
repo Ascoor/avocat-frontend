@@ -1,71 +1,56 @@
-import React, { useState, useEffect } from 'react';
+
+
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Card, Row, Col, Alert, CardHeader } from 'react-bootstrap';
+import { Card, Row, Col, CardHeader, Button, InputGroup, FormControl } from 'react-bootstrap';
 import API_CONFIG from '../../config';
 import AddEditLegCase from './AddEditLegCase';
 import SectionHeader from '../home_tools/SectionHeader';
 import CustomPagination from '../home_tools/Pagination';
-import { LegCaseIcon } from '../../assets/icons/index';
+import { LegCaseIcon } from '../../assets/icons';
 
-const LegalCases = () => {
-  // State declarations
+const LegalCasesIndex = () => {
   const [legCases, setLegCases] = useState([]);
-  const [filteredLegCases, setFilteredLegCases] = useState([]);
-  const [legCasesPage, setLegCasesPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
-
   const itemsPerPage = 10;
 
-  // Fetching legal cases
   useEffect(() => {
-    const fetchLegCases = async () => {
-      try {
-        const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-cases`);
-        setLegCases(response.data);
-        setFilteredLegCases(response.data);
-      } catch (error) {
-        console.error('Error fetching leg cases', error);
-      }
-    };
-
     fetchLegCases();
   }, []);
 
-  // Event handlers
-  const handlePageChange = (newPage) => {
-    setLegCasesPage(newPage);
-  };const handleSearch = async () => {
+  const fetchLegCases = async () => {
     try {
-      const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal-case-search?search=${searchQuery}`
-      );
-      setFilteredLegCases(response.data);
-      setLegCasesPage(1); // Reset pagination to the first page after search
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-cases`);
+      setLegCases(response.data);
+    } catch (error) {
+      console.error('Error fetching leg cases', error);
+    }
+  };
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-case-search?search=${searchQuery}`);
+      setLegCases(response.data);
+      setCurrentPage(1);
     } catch (error) {
       console.error('Error searching cases:', error);
     }
   };
-  
+
   const deleteLegCase = async (id) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/leg-cases/${id}`);
-      setAlertMessage('Legal case successfully deleted');
-      setShowAlert(true);
-      fetchLegCases();
+      fetchLegCases(); // Re-fetch cases after deletion
     } catch (error) {
       console.error('Error deleting legal case', error);
     }
   };
 
-  // Pagination logic
-  const startIndex = (legCasesPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedLegCases = filteredLegCases.slice(startIndex, endIndex);
+  const paginatedLegCases = legCases.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <>
@@ -74,40 +59,37 @@ const LegalCases = () => {
           setShowModal(true);
           setIsEditing(false);
         }}
-        listName="القضايا"
-        buttonName="قضية"
+        listName="Legal Cases"
+        buttonName="Add Case"
         icon={LegCaseIcon}
       />
 
       {showModal && (
-        <AddEditLegCase isEditing={isEditing} onClose={() => setShowModal(false)} />
-      )}
-      <Card className="leg-case-list-card">
-  <CardHeader>
-    {showAlert && <Alert variant="success">{alertMessage}</Alert>}
-  </CardHeader>
-  <div className="text-center search-bar">
-    {/* Search Bar */}
-    <Row className="justify-content-center">
-      <Col xs={12} md={6} lg={6} className="text-center text-md">
-        <input
-          type="text"
-          className="form-control search-input"
-          placeholder="ابحث..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+        <AddEditLegCase
+          isEditing={isEditing}
+          onClose={() => setShowModal(false)}
+          fetchLegCases={fetchLegCases}
         />
-        <button
-          className="btn btn-primary btn-search"
-          onClick={handleSearch}
-        >
-          بحث
-        </button>
-      </Col>
-    </Row>
-  </div>
+      )}
 
-  <Card.Body>
+      <Card>
+        <CardHeader>
+          <Row>
+            <Col xs={12} md={6} lg={4}>
+              <InputGroup className="mb-3">
+                <FormControl
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <Button variant="outline-secondary" onClick={handleSearch}>
+                  Search
+                </Button>
+              </InputGroup>
+            </Col>
+          </Row>
+        </CardHeader>
+        <Card.Body>
     <div className="table-responsive">
       <table className="special-table">
         <thead>
@@ -166,20 +148,18 @@ const LegalCases = () => {
           ))}
         </tbody>
       </table>
-    </div>
-  </Card.Body>
-  <Card.Footer>
-    <CustomPagination
-      totalCount={filteredLegCases.length}
-      itemsPerPage={itemsPerPage}
-      currentPage={legCasesPage}
-      onPageChange={handlePageChange}
-    />
-  </Card.Footer>
-</Card>
-
+    </div>  </Card.Body>
+        <Card.Footer>
+          <CustomPagination
+            totalCount={legCases.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        </Card.Footer>
+      </Card>
     </>
   );
 };
 
-export default LegalCases;
+export default LegalCasesIndex;

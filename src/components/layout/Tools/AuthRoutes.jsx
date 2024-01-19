@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Routes, Route } from 'react-router-dom';
 import Home from '../../Home';
 import Lawyers from '../../lawyer/lawyer_index.component';
@@ -15,7 +15,7 @@ import SearchCourt from '../../reports/SearchCourt';
 import AddEditClient from '../../client/AddEditClient';
 import ClientsList from '../../client/ClientsList';
 
-import LegalCases from '../../legcase/LegalCases';
+import LegalCasesIndex from '../../legcase/index';
 import LegCaseDetail from '../../legcase/LegalCaseDetails';
 import Services from '../../service/index';
 // import LegalSession from '../../legcase/tools/Legal_session.component';
@@ -40,7 +40,7 @@ const AuthRoutes = () => {
         <Route path="/financial" element={<FinancialDashboard />} />
         <Route path="/legcases/show/:id" element={<LegCaseDetail />} />
         <Route path="/profile/:userId" element={<ProfileUser />} />
-        <Route path="/legcases" element={<LegalCases />} />
+        <Route path="/legcases" element={<LegalCasesIndex />} />
         <Route path="/client/create" element={<AddEditClient />} />
         <Route path="/client/edit/:id" element={<AddEditClient />} />
         <Route path="/legal-writer" element={<LegalWriter />} />
