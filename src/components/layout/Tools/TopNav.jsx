@@ -1,4 +1,4 @@
- import React, { useEffect, useState } from 'react';
+ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import '../../../assets/css/TopNav.css';
@@ -6,7 +6,6 @@ import { LogoPatren } from '../../../assets/img/index';
 import API_CONFIG from '../../../config';
 import Notification from './Notification';
 import { Link } from 'react-router-dom';
-
 import { GiJusticeStar  } from 'react-icons/gi';
 import { RiServiceLine   } from 'react-icons/ri';
 import { HiOutlineDocumentText    } from 'react-icons/hi';
@@ -75,14 +74,16 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
       <BiHomeCircle className="m-1" size={15} />
       الرئيسية
     </Link>
-  </li>
-
-  <li className='nav-item'>
-    <Link className='nav-link' to="/clients">
-      <IoMdPeople className="m-1" size={15} />
+  </li><li className='nav-item'>
+  <NavDropdown title={<span><IoMdPeople className="m-1" size={15} /> العملاء</span>} id="client-dropdown">
+    <NavDropdown.Item as={Link} to="/clients">
       الموكلين
-    </Link>
-  </li>
+    </NavDropdown.Item>
+    <NavDropdown.Item as={Link} to="/unclients">
+      العملاء غير الموكلين
+    </NavDropdown.Item>
+  </NavDropdown>
+</li>
 
   <li className='nav-item'>
     <Link className='nav-link' to="/legcases">

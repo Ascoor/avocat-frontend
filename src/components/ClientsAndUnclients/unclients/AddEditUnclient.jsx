@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Modal, Alert, Form, Row, Col, Button } from 'react-bootstrap';
 import {
   FaOrcid,
@@ -11,46 +11,48 @@ import {
   FaBriefcase,
   FaPray,
 } from 'react-icons/fa';
+
+import API_CONFIG from '../../../config';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import axios from 'axios';
-import '../../assets/css/Models.css';
+import '../../../assets/css/Models.css';
 
-function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
+function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
   const [formData, setFormData] = useState({
-    slug: client?.slug ?? '',
-    name: client?.name ?? '',
-    gender: client?.gender ?? '',
-    identity_number: client?.identity_number ?? '',
-    date_of_birth: client?.date_of_birth
-      ? moment(client.date_of_birth).toDate()
+    slug: unclient?.slug ?? '',
+    name: unclient?.name ?? '',
+    gender: unclient?.gender ?? '',
+    identity_number: unclient?.identity_number ?? '',
+    date_of_birth: unclient?.date_of_birth
+      ? moment(unclient.date_of_birth).toDate()
       : new Date(),
-    address: client?.address ?? '',
-    religion: client?.religion ?? '',
-    work: client?.work ?? '',
-    email: client?.email ?? '',
-    phone_number: client?.phone_number ?? '',
-    emergency_number: client?.emergency_number ?? '',
+    address: unclient?.address ?? '',
+    work: unclient?.work ?? '',
+    email: unclient?.email ?? '',
+    religion: unclient?.religion ?? '',
+    phone_number: unclient?.phone_number ?? '',
+    emergency_number: unclient?.emergency_number ?? '',
   });
 
   useEffect(() => {
     setFormData({
       ...formData,
-      slug: client?.slug ?? '',
-      name: client?.name ?? '',
-      gender: client?.gender ?? '',
-      identity_number: client?.identity_number ?? '',
-      date_of_birth: client?.date_of_birth
-        ? moment(client.date_of_birth).toDate()
+      slug: unclient?.slug ?? '',
+      name: unclient?.name ?? '',
+      gender: unclient?.gender ?? '',
+      identity_number: unclient?.identity_number ?? '',
+      date_of_birth: unclient?.date_of_birth
+        ? moment(unclient.date_of_birth).toDate()
         : new Date(),
-      address: client?.address ?? '',
-      religion: client?.religion ?? '',
-      work: client?.work ?? '',
-      email: client?.email ?? '',
-      phone_number: client?.phone_number ?? '',
-      emergency_number: client?.emergency_number ?? '',
+      address: unclient?.address ?? '',
+      work: unclient?.work ?? '',
+      email: unclient?.email ?? '',
+      religion: unclient?.religion ?? '',
+      phone_number: unclient?.phone_number ?? '',
+      emergency_number: unclient?.emergency_number ?? '',
     });
-  }, [client]);
+  }, [unclient]);
 
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -65,20 +67,20 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const clientData = {
+      const unclientData = {
         ...formData,
         date_of_birth: formData.date_of_birth
           ? moment(formData.date_of_birth).format('YYYY-MM-DD')
           : null,
       };
 
-      if (client.id) {
+      if (unclient.id) {
         await axios.put(
-          `${API_CONFIG.baseURL}/api/clients/${client.id}`,
-          clientData,
+          `${API_CONFIG.baseURL}/api/clients/${unclient.id}`,
+          unclientData,
         );
       } else {
-        await axios.post(`${API_CONFIG.baseURL}/api/clients`, clientData);
+        await axios.post(`${API_CONFIG.baseURL}/api/unclients`, unclientData);
       }
       setIsSuccess(true);
       onSaved();
@@ -103,13 +105,13 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
 
       <Modal.Header closeButton>
         <Modal.Title>
-          {client?.id ? (
+          {unclient?.id ? (
             <>
-              <FaIdCard /> تعديل بيانات العميل
+              <FaIdCard /> تعديل بيانات العميل بدون توكيل
             </>
           ) : (
             <>
-              <FaIdCard /> إضافة عميل
+              <FaIdCard /> إضافة عميل بدون توكيل
             </>
           )}
         </Modal.Title>
@@ -118,12 +120,12 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
         <Form onSubmit={handleSubmit}>
           <Form.Group as={Row}>
             <Form.Label column xs={12} md={6} htmlFor="inputSlug">
-              <FaOrcid /> رقم العميل بالمكتب
+              <FaOrcid /> رقم العميل بدون توكيل بالمكتب
             </Form.Label>
             <Col xs={12} md={6}>
               <Form.Control
                 type="text"
-                placeholder="أدخل الرمز"
+                placeholder="أدخل رقم العميل بدون توكيل بالمكتب"
                 value={formData.slug}
                 onChange={handleChange}
                 name="slug"
@@ -304,4 +306,4 @@ function AddEditClient({ client = {}, isOpen, onClose, onSaved }) {
   );
 }
 
-export default AddEditClient;
+export default AddEditUnclient;

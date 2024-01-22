@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import  { useState,useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Alert } from 'react-bootstrap';
-import { ClientIcon } from '../../assets/icons/index';
-import API_CONFIG from '../../config';
+import { ClientIcon } from '../../../assets/icons/index';
+import API_CONFIG from '../../../config';
 import {
   AiFillCheckCircle,
   AiFillCloseCircle,
   AiFillEdit,
   AiFillDelete,
 } from 'react-icons/ai';
-import CustomPagination from '../home_tools/Pagination';
-import SectionHeader from '../home_tools/SectionHeader';
+import CustomPagination from '../../home_tools/Pagination';
+import SectionHeader from '../../home_tools/SectionHeader';
 import AddEditClient from './AddEditClient';
 
-function Clients() {
+function ClientList() {
   const [clients, setClients] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState(null);
@@ -21,43 +21,11 @@ function Clients() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const [currentAlertMessage, setCurrentAlertMessage] = useState('');
   const itemsPerPage = 5;
   const [clientsPage, setClientsPage] = useState(1);
 
-  // Fetch and filter clients
-  useEffect(() => {
-    fetchClients();
-  }, []);
-
-  useEffect(() => {
-    const filtered = clients.filter(
-      (client) =>
-        client.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        client.identity_number
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase()) ||
-        client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        client.phone_number.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
-    setFilteredClients(filtered);
-  }, [searchQuery, clients]);
-
-  // Handlers
-  const handlePageChange = (newPage) => setClientsPage(newPage);
-
-  const handleSearch = () => {
-    setClientsPage(1); // Reset to first page on search
-    // Filter logic already handled in useEffect
-  };
-
-  const handleSlugClick = (slug) => {
-    const client = clients.find((client) => client.slug === slug);
-    setSelectedClient(client);
-  };
-
-  // API Calls
-  const fetchClients = async () => {
+  // Fetch clients from API
+  const fetchClients = useCallback(async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
       if (Array.isArray(response.data.clients)) {
@@ -69,24 +37,50 @@ function Clients() {
     } catch (error) {
       console.error('Failed to fetch clients', error);
     }
+  }, []);
+
+  useEffect(() => {
+    fetchClients();
+  }, [fetchClients]);
+
+  // Filter clients based on search query
+  useEffect(() => {
+    const filtered = clients.filter(client =>
+      ['slug', 'identity_number', 'name', 'phone_number'].some(key =>
+        client[key].toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+    setFilteredClients(filtered);
+  }, [clients, searchQuery]);
+
+  const handlePageChange = newPage => setClientsPage(newPage);
+
+  // Handlers for client actions
+  const handleSearch = () => {
+    setClientsPage(1);
   };
 
+  const handleSlugClick = slug => {
+    const client = clients.find(client => client.slug === slug);
+    setSelectedClient(client);
+  };
   const deleteClient = async (id) => {
     try {
       const response = await axios.delete(
         `${API_CONFIG.baseURL}/api/clients/${id}`,
-      );
-      fetchClients();
-      setCurrentAlertMessage(response.data.message);
-      setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-        setCurrentAlertMessage('');
-      }, 3000);
-    } catch (error) {
-      console.log(error.response.data.message);
-    }
-  };
+        );
+        fetchClients();
+        setAlertMessage(response.data.message);
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+          setAlertMessage('');
+        }, 3000);
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+    };
+  
 
   const handleToggleStatus = async (id) => {
     try {
@@ -113,7 +107,7 @@ function Clients() {
     setModalOpen(true);
   };
 
-  // Render
+  // Render paginated clients
   const startIndex = (clientsPage - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, filteredClients.length);
   const paginatedClients = filteredClients.slice(startIndex, endIndex);
@@ -240,4 +234,4 @@ function Clients() {
     </>
   );
 }
-export default Clients;
+export default ClientList;

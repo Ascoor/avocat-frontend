@@ -108,6 +108,8 @@ const Services = () => {
                   <th className="col-2">وصف الخدمة</th>
                   <th className="col-3">العميل</th>
                   <th className="col-2">الجهة</th>
+                  <th className="col-2">الموضوع</th>
+
                   <th className="col-2">الحالة</th>
                   <th className="col-2">الإجراءات</th>
                 </tr>
@@ -134,6 +136,7 @@ const Services = () => {
 
 
                     <td>{service.service_place_name}</td>
+                    <td>{service.description}</td>
                     <td>{service.status}</td>
                     <td>
                       <Button

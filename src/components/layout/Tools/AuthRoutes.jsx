@@ -12,8 +12,9 @@ import FinancialDashboard from '../../financially/index';
 /** reports **/
 import SearchCourt from '../../reports/SearchCourt';
 /** Clients**/
-import AddEditClient from '../../client/AddEditClient';
-import ClientsList from '../../client/ClientsList';
+import AddEditClient from '../../ClientsAndUnclients/clients/AddEditClient';
+import ClientList from '../../ClientsAndUnclients/clients/ClientList';
+import UnclientList from '../../ClientsAndUnclients/unclients/UnclientList';
 
 import LegalCasesIndex from '../../legcase/index';
 import LegCaseDetail from '../../legcase/LegalCaseDetails';
@@ -30,7 +31,8 @@ const AuthRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/procedures" element={<ProcedureSearch />} />
-        <Route path="/clients" element={<ClientsList />} />
+        <Route path="/clients" element={<ClientList />} />
+        <Route path="/unclients" element={<UnclientList />} />
         <Route path="/courts" element={<CourtSetting />} />
         <Route path="/services" element={<Services />} />
         <Route path="/court-search" element={<CourtSearch />} />
