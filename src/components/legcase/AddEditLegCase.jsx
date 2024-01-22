@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Form, Button, Alert, Row, Col, Modal } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Modal, Form, Button, Alert , Row, Col} from 'react-bootstrap';
 import useAuth from '../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../config';
 
-const AddEditLegCase = ({ onClose, isEditing, refreshLegCases }) => {
-  const { caseId } = useParams();
+const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
   const { getUser } = useAuth();
   const [caseData, setCaseData] = useState({
     slug: '',
@@ -19,56 +17,62 @@ const AddEditLegCase = ({ onClose, isEditing, refreshLegCases }) => {
     litigants_phone: '',
     created_by: getUser().id,
   });
-  const [caseTypes, setCaseTypes] = useState([]);
-const [selectedCaseTypeId, setSelectedCaseTypeId] = useState('');
   const [validated, setValidated] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const [showAlert, setShowAlert] = useState(false);useEffect(() => {
-    fetchFormData();
-    if (isEditing) {
-        fetchCaseData();
-    } else {
-        // في حالة الإضافة، تأكد من أن التصنيفات الفارغة محددة
-        setSelectedCaseTypeId('');
-        setCaseData(prevData => ({ ...prevData, case_type_id: '', case_sub_type_id: '' }));
-    }
-}, [caseId, isEditing]);
+  const [caseTypes, setCaseTypes] = useState([]);
+    const [caseSubTypes,setCaseSubTypes] = useState([]);
 
-  
-  const fetchFormData = async () => {
-    try {
-        const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-case/case-types-sub-types`);
-        setCaseTypes(response.data.caseTypes);
-    } catch (error) {
-        console.error('Error fetching form data:', error);
-    }
-};
+    useEffect(() => {
+      fetchCaseTypes();
+    }, []); // إزالة التبعيات لتجنب التكرار المستمر
+    
+    useEffect(() => {
+      if (isEditing && editingLegCase) {
+        setCaseData(editingLegCase);
+        const selectedCaseType = caseTypes.find(type => type.id === editingLegCase.case_type_id);
+        if (selectedCaseType) {
+          setCaseSubTypes(selectedCaseType.case_sub_types);
+          setCaseData(prevData => ({ ...prevData, case_sub_type_id: editingLegCase.case_sub_type_id }));
+        }
+      } else {
+        setCaseData({
+          slug: '',
+          title: '',
+          description: '',
+          case_type_id: '',
+          case_sub_type_id: '',
+          client_capacity: '',
+          litigants_name: '',
+          litigants_phone: '',
+          created_by: getUser().id,
 
-  const fetchCaseData = async () => {
+        });
+        setCaseSubTypes([]); // تفريغ التصنيفات الفرعية للإضافة
+      }
+    }, [isEditing, editingLegCase, caseTypes]);
+
+  const fetchCaseTypes = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/leg_cases/${caseId}`);
-      setCaseData(response.data);
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-case/case-types-sub-types`);
+      setCaseTypes(response.data.caseTypes);
     } catch (error) {
-      console.error('Error fetching case data:', error);
+      console.error('Error fetching case types:', error);
     }
   };
-  const handleCaseTypeChange = (event) => {
-    const newCaseTypeId = event.target.value;
-    setSelectedCaseTypeId(newCaseTypeId);
-    setCaseData(prevData => ({ ...prevData, case_type_id: newCaseTypeId, case_sub_type_id: '' }));
-};
-
-const handleInputChange = (event) => {
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
     setCaseData(prevData => ({ ...prevData, [name]: value }));
-};
+  };
 
-const getCaseSubTypes = () => {
-  // استخدام selectedCaseTypeId بدلاً من caseData.case_type_id
-  const selectedCaseType = caseTypes.find(type => type.id.toString() === selectedCaseTypeId);
-  return selectedCaseType ? selectedCaseType.case_sub_types : [];
-};
+  const handleCaseTypeChange = (event) => {
+    const newCaseTypeId = event.target.value;
+    setCaseData(prevData => ({ ...prevData, case_type_id: newCaseTypeId, case_sub_type_id: '' }));
 
+    // تحديث قائمة التصنيفات الفرعية بناءً على التصنيف المحدد
+    const selectedCaseType = caseTypes.find(type => type.id.toString() === newCaseTypeId);
+    setCaseSubTypes(selectedCaseType ? selectedCaseType.case_sub_types : []);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -77,93 +81,52 @@ const getCaseSubTypes = () => {
       setValidated(true);
       return;
     }
+  
+    let dataToSend = { ...caseData };
+    if (isEditing) {
+      dataToSend = { ...dataToSend, updated_by: getUser().id };
+    }
 
-// best logic put & post request axios with if have caseId edit else add
-try {
-  const response = await axios[caseId ? 'put' : 'post'](
-    `${API_CONFIG.baseURL}/api/legal-cases`,
-    caseData,
-  );
-  setAlertMessage(response.data.message);
-  setShowAlert(true);
-  refreshLegCases();
-} catch (error) {
-  console.error('Error submitting form:', error);
-}
+    try {
+      const method = isEditing ? 'put' : 'post';
+      const url = `${API_CONFIG.baseURL}/api/legal-cases${isEditing ? `/${editingLegCase.id}` : ''}`;
+      await axios[method](url, dataToSend);
+  
+      onClose();
+    } catch (error) {
+      setAlertMessage('Error: ' + error.message);
+      setShowAlert(true);
+    }
   };
-
-
   return (
     <Modal show={true} onHide={onClose}>
-      <Modal.Header animation={true} closeVariant="white" closeButton>
+      <Modal.Header closeButton>
         <Modal.Title>{isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          {showAlert && <Alert variant="success">{alertMessage}</Alert>}
-          
-          {showAlert && (
-            <Alert
-              variant={
-                alertMessage.includes('success') ? 'success' : 'danger'
-              }
-            >
-              {alertMessage}
-            </Alert>
-          )}
-          <Row className="mt-3">
+        {showAlert && (
+          <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+            {alertMessage}
+          </Alert>
+        )}
+        <Row className="mt-3">
             <Col xs={12} md={6}>
-              <Form.Group>
-                <Form.Label>رقم ملف المكتب</Form.Label>
-                <Form.Control
-                  name="slug"
-                  value={caseData.slug}
-                  type="text"
-                  onChange={handleInputChange}
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
+          <Form.Group controlId="formBasicSlug">
+            <Form.Label>رقم الملف</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter slug"
+              name="slug"
+              value={caseData.slug}
+              onChange={handleInputChange}
+              required
+            />
+          <Form.Control.Feedback type="invalid">
                   لم تقم بإضافة رقم ملف المكتب
                 </Form.Control.Feedback>
               </Form.Group>
             </Col>
-            <Col xs={12} md={6}>
-            <Form.Group controlId="caseType">
-            <Form.Label>Case Type</Form.Label>
-            <Form.Control as="select" name="case_type_id" onChange={handleCaseTypeChange} value={caseData.case_type_id}>
-                <option value="">Select Case Type</option>
-                {caseTypes.map(type => (
-                    <option key={type.id} value={type.id}>{type.name}</option>
-                ))}
-            </Form.Control>
-            
-            <Form.Control.Feedback type="invalid">
-                Please select a case type.
-                  
-            </Form.Control.Feedback>
-        </Form.Group>
-
-
-            </Col>
-          </Row>
-
-          <Row className="mt-3">
-            <Col xs={12} md={6}>
-        <Form.Group controlId="caseSubType">
-            <Form.Label>Case SubType</Form.Label>
-            <Form.Control as="select" name="case_sub_type_id" onChange={handleInputChange} value={caseData.case_sub_type_id}>
-                <option value="">Select Case SubType</option>
-                {getCaseSubTypes().map(subType => (
-                    <option key={subType.id} value={subType.id}>{subType.name}</option>
-                ))}
-            </Form.Control>
-        </Form.Group>
-        <Form.Control.Feedback type="invalid">
-                Please select a case sub type.
-        </Form.Control.Feedback>  
-         
-            </Col>
-
             <Col xs={12} md={6}>
               <Form.Group>
                 <Form.Label>صفة الإدعاء</Form.Label>
@@ -174,7 +137,7 @@ try {
                   onChange={handleInputChange}
                   required
                 >
-                  <option value="">اختر الصفة</option>
+                  <option value="">اختر صفة الإدعاء</option>
                   <option value="مدعى عليه">مدعى عليه</option>
                   <option value="مجنى عليه">مجنى عليه</option>
                   <option value="مدعى">مدعى</option>
@@ -186,7 +149,42 @@ try {
               </Form.Group>
             </Col>
           </Row>
-
+          <Row className="mt-3">
+            <Col xs={12} md={6}>
+              <Form.Group controlId="caseType">
+                <Form.Label>نوع القضية</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="case_type_id"
+                  onChange={handleCaseTypeChange}
+                  value={caseData.case_type_id}
+                  required
+                >
+                  <option value="">اختر نوع القضية</option>
+                  {caseTypes.map((type) => (
+                    <option key={type.id} value={type.id}>{type.name}</option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col xs={12} md={6}>
+              <Form.Group controlId="caseSubType">
+                <Form.Label>نوع القضية الفرعي</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="case_sub_type_id"
+                  onChange={handleInputChange}
+                  value={caseData.case_sub_type_id}
+                  required
+                >
+                  <option value="">اختر نوع القضية الفرعي</option>
+                  {caseSubTypes.map((subType) => (
+                    <option key={subType.id} value={subType.id}>{subType.name}</option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+          </Row>
           <Row className="mt-3">
             <Col xs={12} md={6}>
               <Form.Group>
@@ -245,18 +243,12 @@ try {
               </Form.Group>
             </Col>
           </Row>
-
-          <Row className="mt-5">
-            <Col xs={12} md={6}>
-              <Button variant="primary" type="submit">
-                {isEditing ? 'تحديث' : 'حفظ'}
-              </Button>
-              <Button variant="secondary" onClick={onClose}>
-                إلغاء
-              </Button>
-            </Col>
-          </Row>
+          <Button variant="primary" type="submit">
+            {isEditing ? 'تحديث' : 'حفظ'}
+          </Button>
         </Form>
+
+
       </Modal.Body>
     </Modal>
   );

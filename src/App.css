@@ -53,37 +53,6 @@ a {
   width: 95px;
   height: 70px;
 }
-/* Special Table Styles */
-.special-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.special-table th,
-.special-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-
-/* Zebra striping for rows */
-.special-table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-/* Hover effect for rows */
-.special-table tr:hover {
-  background-color: #ddd;
-}
-
-/* Header Styles */
-.special-table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: center; /* Aligning to the right for RTL */
-  background-color: #04aa6d;
-  color: white;
-}
 
 /* Courte sEtting*/
 .card-header-courts {
@@ -537,36 +506,37 @@ h5 {
 }
 
 /* ======================== TABLES ======================== */
-.table {
+/* Special Table Styles */
+.special-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 18px;
-  text-align: left;
 }
 
-.table thead th {
-  background-color: var(--primary-color);
-  color: var(--text-dark);
-  padding: 10px;
+.special-table th,
+.special-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
 }
 
-.table tbody td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+/* Zebra striping for rows */
+.special-table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
-.table tbody tr:hover {
-  background-color: var(--primary-hover);
+/* Hover effect for rows */
+.special-table tr:hover {
+  background-color: #ddd;
 }
 
-/* ======================== UTILITY ======================== */
-.mt-5 {
-  margin-top: 5rem !important;
+/* Header Styles */
+.special-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center; /* Aligning to the right for RTL */
+  background-color: #04aa6d;
+  color: white;
 }
-
-/* Add any other utilities you need... */
-
 /* ======================== FOOTER ======================== */
 .footer {
   background-color: var(--primary-color);
