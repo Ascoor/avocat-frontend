@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Button, Card, Row, Col,InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
-import ServiceModal from './ServiceModal';
+import AddEditServiceModal from './AddEditServiceModal';
 import API_CONFIG from '../../config';
-import ServiceDetailsModal from './ServiceDetailsModal';
+
 import SectionHeader from '../home_tools/SectionHeader';
 import { ServiceIcon } from '../../assets/icons/index';
 import CustomPagination from '../home_tools/Pagination';
@@ -13,9 +13,9 @@ const Services = () => {
   const [editingService, setEditingService] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedService, setSelectedService] = useState(null);
-  const [showDetailsModal, setShowDetailsModal] = useState(false);
+   
   const itemsPerPage = 10;
+
   useEffect(() => {
     // Fetch services when the component mounts
     fetchServices();
@@ -30,16 +30,16 @@ const Services = () => {
     }
   };
 
+  // Handler Functions
   const handleAddService = () => {
     setEditingService(null);
     setShowModal(true);
   };
-
+  
   const handleEditService = (service) => {
     setEditingService(service);
     setShowModal(true);
   };
-
   const handleDeleteService = async (serviceId) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/services/${serviceId}`);
@@ -50,15 +50,6 @@ const Services = () => {
     }
   };
 
-  const handleServiceAddedOrEdited = () => {
-    // After adding or editing a service, fetch services again to update the list
-    fetchServices();
-  };
-  const handleReturn = () => {
-    // Show the table and reset the selected service when returning
-    setSelectedService(null);
-    setShowDetailsModal(false); // Add this line to set showDetailsModal to false
-  };
   const handleSearch = async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/service-search?search=${searchQuery}`);
@@ -80,6 +71,19 @@ const Services = () => {
         setShowAddModal={handleAddService}
         icon={ServiceIcon}
       />
+      {showModal && (
+  <AddEditServiceModal
+    show={showModal}
+    handleClose={() => {
+      setShowModal(false);
+      fetchServices(); // Refresh services list
+    }}
+    service={editingService}
+    isEditing={!!editingService}
+  />
+)}
+
+
       <Card>
       <Row>
             <Col xs={12} md={6} lg={4}>
@@ -144,15 +148,7 @@ const Services = () => {
                       >
                         حذف
                       </Button>
-                      <Button
-                        variant="secondary"
-                        onClick={() => {
-                          setSelectedService(service);
-                          setShowDetailsModal(true); // Add this line to set showDetailsModal to true
-                        }}
-                      >
-                        عرض التفاصيل
-                      </Button>
+
                     </td>
                   </tr>
                 ))}
@@ -169,21 +165,15 @@ const Services = () => {
           />
         </Card.Footer>
       </Card>
-      {showDetailsModal && (
-        <ServiceDetailsModal
-          service={selectedService}
-          handleClose={handleReturn}
-        />
-      )}
-      <ServiceModal
-        show={showModal}
-        handleClose={() => setShowModal(false)}
-        service={editingService}
-        handleServiceAddedOrEdited={handleServiceAddedOrEdited}
-        isEditing={!!editingService}
-      />
+     
+      {/* Modals */}
+
+
+
+
     </>
   );
 };
+
 
 export default Services;
