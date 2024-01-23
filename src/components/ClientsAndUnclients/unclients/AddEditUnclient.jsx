@@ -1,60 +1,46 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Alert, Form, Row, Col, Button } from 'react-bootstrap';
 import {
-  FaOrcid,
-  FaUserEdit,
-  FaIdCard,
-  FaMapMarkerAlt,
-  FaCalendarAlt,
-  FaEnvelope,
-  FaPhone,
-  FaBriefcase,
-  FaPray,
+  FaOrcid, FaUserEdit, FaIdCard, FaMapMarkerAlt,
+  FaCalendarAlt, FaEnvelope, FaPhone, FaBriefcase, FaPray
 } from 'react-icons/fa';
-
-import API_CONFIG from '../../../config';
 import DatePicker from 'react-datepicker';
-import moment from 'moment';
 import axios from 'axios';
+import API_CONFIG from '../../../config';
 import '../../../assets/css/Models.css';
 
 function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
-  const [formData, setFormData] = useState({
-    slug: unclient?.slug ?? '',
-    name: unclient?.name ?? '',
-    gender: unclient?.gender ?? '',
-    identity_number: unclient?.identity_number ?? '',
-    date_of_birth: unclient?.date_of_birth
-      ? moment(unclient.date_of_birth).toDate()
-      : new Date(),
-    address: unclient?.address ?? '',
-    work: unclient?.work ?? '',
-    email: unclient?.email ?? '',
-    religion: unclient?.religion ?? '',
-    phone_number: unclient?.phone_number ?? '',
-    emergency_number: unclient?.emergency_number ?? '',
-  });
+  const isEditMode = unclient && unclient.id;
+  const initialFormData = {
 
-  useEffect(() => {
-    setFormData({
-      ...formData,
-      slug: unclient?.slug ?? '',
-      name: unclient?.name ?? '',
-      gender: unclient?.gender ?? '',
-      identity_number: unclient?.identity_number ?? '',
-      date_of_birth: unclient?.date_of_birth
-        ? moment(unclient.date_of_birth).toDate()
-        : new Date(),
-      address: unclient?.address ?? '',
-      work: unclient?.work ?? '',
-      email: unclient?.email ?? '',
-      religion: unclient?.religion ?? '',
-      phone_number: unclient?.phone_number ?? '',
-      emergency_number: unclient?.emergency_number ?? '',
-    });
-  }, [unclient]);
-
+    name: '', gender: '', identity_number: '', date_of_birth: '',
+    address: '', religion: '', work: '', email: '', 
+    phone_number: '', emergency_number: '', slug: ''
+  };
+  const [formData, setFormData] = useState(initialFormData)
   const [isSuccess, setIsSuccess] = useState(false);
+  
+  // Function to reset form data
+  const resetFormData = () => {
+    setFormData(initialFormData);
+  };
+  useEffect(() => {
+    if (unclient) {
+      setFormData({
+        name: unclient.name || '', gender: unclient.gender || '',
+        identity_number: unclient.identity_number || '',
+        date_of_birth: unclient.date_of_birth || '',
+        address: unclient.address || '', religion: unclient.religion || '',
+        work: unclient.work || '', email: unclient.email || '',
+        phone_number: unclient.phone_number || '',
+        emergency_number: unclient.emergency_number || '',
+        slug: unclient.slug || '' // Handle slug similarly
+      });
+    } else {
+      resetFormData();
+      }
+  }, [unclient]);
+  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -63,46 +49,42 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
   const handleDateChange = (date) => {
     setFormData({ ...formData, date_of_birth: date });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const unclientData = {
-        ...formData,
-        date_of_birth: formData.date_of_birth
-          ? moment(formData.date_of_birth).format('YYYY-MM-DD')
-          : null,
-      };
+    const formattedData = {
+        // Format and collect the data from the form
+    };
 
-      if (unclient.id) {
-        await axios.put(
-          `${API_CONFIG.baseURL}/api/clients/${unclient.id}`,
-          unclientData,
-        );
-      } else {
-        await axios.post(`${API_CONFIG.baseURL}/api/unclients`, unclientData);
-      }
-      setIsSuccess(true);
-      onSaved();
-      onClose();
+    try {
+        if (isEditMode) {
+            // Make a PUT request to update the existing record
+            await axios.put(`${API_CONFIG.baseURL}/api/unclients/${unclient.id}`, formattedData);
+        } else {
+            // Make a POST request to create a new record
+            await axios.post(`${API_CONFIG.baseURL}/api/unclients`, formattedData);
+        }
+
+        // Handle success: reset form, show success message, and perform any other necessary actions
+        resetFormData();
+        setIsSuccess(true);
+        onSaved();
+        onClose();
     } catch (error) {
-      console.error(error);
-      // Handle the error here, e.g., display an error message to the user.
+        // Handle errors here, display error messages or take appropriate action
+        console.error(error);
     }
-  };
+};
+
+
 
   return (
+    // JSX for the component
     <Modal show={isOpen} onHide={onClose} centered dir="rtl">
       {isSuccess && (
-        <Alert
-          variant="success"
-          onClose={() => setIsSuccess(false)}
-          dismissible
-        >
+        <Alert variant="success" onClose={() => setIsSuccess(false)} dismissible>
           {/* Add a success message here */}
         </Alert>
       )}
-
       <Modal.Header closeButton>
         <Modal.Title>
           {unclient?.id ? (
@@ -298,7 +280,7 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
             الغاء
           </Button>
           <Button variant="primary" type="submit">
-            حفظ
+            {isEditMode ? 'تعديل' : 'إضافة'}
           </Button>
         </Form>
       </Modal.Body>

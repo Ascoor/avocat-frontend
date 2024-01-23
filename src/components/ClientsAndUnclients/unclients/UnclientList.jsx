@@ -16,11 +16,8 @@ function UnclientList() {
   const [selectedUnclient, setSelectedUnclient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  
-  const [filteredUnclients, setFilteredUnclients] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const[currentAlertMessage  , setCurrentAlertMessage] = useState('');
-
   const itemsPerPage = 5;
   const [unclientsPage, setUnclientsPage] = useState(1);
 
@@ -43,15 +40,6 @@ function UnclientList() {
   useEffect(() => {
     fetchUnclients();
   }, []);
-  // Filter clients based on search query
-  useEffect(() => {
-    const filtered = unclients.filter(client =>
-      ['slug', 'identity_number', 'name', 'phone_number'].some(key =>
-        client[key].toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    );
-    setFilteredUnclients(filtered);
-  }, [unclients, searchQuery]);
 
   // Handlers
   const handlePageChange = (newPage) => setUnclientsPage(newPage);
@@ -90,8 +78,8 @@ function UnclientList() {
 
   // Render
   const startIndex = (unclientsPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, filteredUnclients.length);
-  const paginatedClients = filteredUnclients.slice(startIndex, endIndex);
+  const endIndex = Math.min(startIndex + itemsPerPage, unclients.length);
+  const paginatedClients = unclients.slice(startIndex, endIndex);
 
   return (
     <>
@@ -101,15 +89,12 @@ function UnclientList() {
         icon={ClientIcon}
         setShowAddModal={() => openAddEditModal()}
       />
-      {/* <AddEditUnclient
-        client={selectedUnclient}
+    <AddEditUnclient
+        unclient={selectedUnclient}
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        onSaved={() => {
-          setModalOpen(false);
-          fetchUnclients();
-        }}
-      /> */}
+        onSaved={() => fetchUnclients()}
+      /> 
 
       <Card className="mt-4">
         <Card.Header>
@@ -149,7 +134,6 @@ function UnclientList() {
                   <th>رقم القومى</th>
                   <th>العنوان</th>
                   <th>رقم الهاتف</th>
-                  <th>الحالة</th>
                   <th>التحكم</th>
                 </tr>
               </thead>
