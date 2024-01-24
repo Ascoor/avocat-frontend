@@ -5,9 +5,8 @@ import {
   FcBusinessman,
   FcLibrary,
   FcOvertime,
-  FcBriefcase,
 } from 'react-icons/fc';
-import { ClientIcon, DashBoard } from '../assets/icons/index';
+import { ClientIcon, DashBoard,MainLegalCases,MainSessions } from '../assets/icons/index';
 import { Card, Row, Col, Button, Form } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
 import axios from 'axios';
@@ -189,7 +188,7 @@ const Home = () => {
                       title="القضايا"
                       color="#002d76"
                       count={toArabicNumeral(legCaseCount)}
-                      icon={<FcBriefcase size={50} />}
+                      icon={<img className='legal-case-icon' src={MainLegalCases} alt="Icon" />}
                     />
                   </Link>
                 </Col>
@@ -219,7 +218,7 @@ const Home = () => {
                     title="الجلسات"
                     color="#002d76"
                     count={toArabicNumeral(legalSessionCount)}
-                    icon={<FcLibrary size={50} />}
+                    icon={<img className='legal-session-icon' src={MainSessions} alt="Icon" />}
                   />
                 </Col>
               </Row>

@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Alert } from 'react-bootstrap';
 import { ClientIcon } from '../../../assets/icons/index';
@@ -17,9 +17,11 @@ function UnclientList() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const[currentAlertMessage  , setCurrentAlertMessage] = useState('');
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const [currentAlertMessage, setCurrentAlertMessage] = useState('');
   const itemsPerPage = 5;
-  const [unclientsPage, setUnclientsPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
 
   // API Calls
@@ -41,18 +43,16 @@ function UnclientList() {
     fetchUnclients();
   }, []);
 
-  // Handlers
-  const handlePageChange = (newPage) => setUnclientsPage(newPage);
-
-  const handleSearch = () => {
-    setUnclientsPage(1); // Reset to first page on search
-    // Filter logic already handled in useEffect
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/unclients-search?search=${searchQuery}`);
+      setUnclients(response.data);
+      setCurrentPage(1);
+    } catch (error) {
+      console.error('Error searching cases:', error);
+    }
   };
 
-  const handleSlugClick = (slug) => {
-    const unclient = unclients.find((unclient) => unclient.slug === slug);
-    setSelectedUnclient(unclient);
-  };
 
   const deleteUnclient = async (id) => {
     try {
@@ -70,6 +70,15 @@ function UnclientList() {
       console.log(error.response.data.message);
     }
   };
+  const handleSuccess = (message) => {
+    // Set the success message state in the parent component
+    // Display the message or take other actions as needed
+    setSuccessMessage(message);
+    fetchUnclients();
+    // Optionally, clear the message after a delay
+    setTimeout(() => setSuccessMessage(''), 3000);
+  };
+
 
   const openAddEditModal = (unclient = null) => {
     setSelectedUnclient(unclient);
@@ -77,9 +86,9 @@ function UnclientList() {
   };
 
   // Render
-  const startIndex = (unclientsPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, unclients.length);
-  const paginatedClients = unclients.slice(startIndex, endIndex);
+
+  const paginatedUnclients = unclients.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
 
   return (
     <>
@@ -89,15 +98,19 @@ function UnclientList() {
         icon={ClientIcon}
         setShowAddModal={() => openAddEditModal()}
       />
-    <AddEditUnclient
+      <AddEditUnclient
         unclient={selectedUnclient}
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        onSaved={() => fetchUnclients()}
-      /> 
+        onSaved={handleSuccess}
+        onUnclientDelete={deleteUnclient}
+      />
+
 
       <Card className="mt-4">
         <Card.Header>
+          {successMessage && <Alert variant="success">{successMessage}</Alert>}
+
           {showAlert && (
             <Alert
               variant="success"
@@ -108,22 +121,19 @@ function UnclientList() {
             </Alert>
           )}
         </Card.Header>
-        <div className="input-group w-50">
+        <div className="search-form w-50">
           <input
             type="text"
-            className="form-control"
-            placeholder="البحث عن موكلين"
+            className="search-input-group"
+            placeholder="البحث عن العملاء غير الموكلين"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button
-            className="btn btn-primary"
-            type="button"
-            onClick={handleSearch}
-          >
+          <button className="search-button" type="button" onClick={handleSearch}>
             بحث
           </button>
         </div>
+
         <Card.Body>
           <div className="table-responsive">
             <table className="special-table">
@@ -132,45 +142,41 @@ function UnclientList() {
                   <th>رقم المكتب</th>
                   <th>اسم العميل</th>
                   <th>رقم القومى</th>
-                  <th>العنوان</th>
+                  <th>النوع</th>
                   <th>رقم الهاتف</th>
-                  <th>التحكم</th>
+           
+                  <th>حذف</th>
                 </tr>
               </thead>
               <tbody>
-                {paginatedClients.length === 0 ? (
+                {paginatedUnclients.length === 0 ? (
                   <tr>
-                    <td colSpan="5">
+                    <td colSpan="7">
                       <Alert variant="warning">لا يوجد موكلين لعرضهم.</Alert>
                     </td>
                   </tr>
                 ) : (
-                  unclients.map((unclient) => (
+                  paginatedUnclients.map((unclient) => (
                     <tr key={unclient.id}>
-                      <td onClick={() => handleSlugClick(unclient.slug)}>
-                        {unclient.slug}
-                      </td>
-
-                      <td>{unclient.name}</td>
-                      <td>{unclient.identity_number}</td>
-                      <td>{unclient.address}</td>
-                      <td>{unclient.phone_number}</td>
-                    
-
-                      <td>
+                    <td>   <span className="btn client-slug"
+                          onClick={() => openAddEditModal(unclient)}>
                         <AiFillEdit
                           color="blue"
-                          onClick={() => openAddEditModal(unclient)}
+                 
                         />
-
-                        <AiFillDelete
-                          color="red"
-                          onClick={() => deleteUnclient(unclient.id)}
-                        />
+                  {unclient.slug}</span>
                       </td>
+                      <td>{unclient.name}</td>
+                      <td>{unclient.identity_number}</td>
+                      <td>{unclient.gender}</td>
+                      <td>{unclient.phone_number}</td>
+             <td><AiFillDelete color="red" onClick={() => deleteUnclient(unclient)} />
+</td>
+
                     </tr>
                   ))
                 )}
+
               </tbody>
             </table>
           </div>
@@ -179,8 +185,8 @@ function UnclientList() {
           <CustomPagination
             totalCount={unclients.length}
             itemsPerPage={itemsPerPage}
-            currentPage={unclientsPage}
-            onPageChange={handlePageChange}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
           />
         </Card.Footer>
       </Card>

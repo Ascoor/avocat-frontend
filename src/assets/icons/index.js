@@ -12,3 +12,6 @@ export { default as BgFloat } from './bg-float.png';
 export { default as LogoNav } from './logo512.png';
 export { default as ServiceIcon } from './services.png';
 export { default as SearchIcon } from './search-icon.png';
+export { default as MainLegalCases } from '../icons/mainLegalCases.png';
+export { default as MainSessions } from '../icons/LegalCaseession.png';
+

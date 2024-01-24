@@ -286,63 +286,17 @@ a {
       #745114
     ); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
 
-    @media (min-width: var(--breakpoint-md)) {
-      /* Your styles for medium devices and up */
+  }}
 
-      /**Procedure Search Page ***/
-
-      .form-label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-
-      .search-button {
-        background-color: #002d43;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-      }
-
-      .search-button:hover {
-        background-color: #001d2b;
-      }
-
-      /* Procdure Search */
-      .search-label-text {
-        font-family: 'Cairo', sans-serif;
-        font-weight: bold;
-        font-size: 1rem;
-        color: #f3e6e6;
-        border: 1px solid linear-gradient(to top, #1d0367, #3c0381, #330250); /* تدرج ألوان جميل وجذاب */
-
-        background: linear-gradient(
-          rgb(4, 19, 41),
-          rgb(22 57 75),
-          rgb(10 47 67)
-        );
-        padding-top: 10px; /* Add padding to create space around the text */
-      }
-      .search-button {
-        font-family: 'Cairo', sans-serif;
-        font-size: 1rem;
-        color: #fff;
-        background-color: #b14141;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
-        border-radius: 10px; /* Add border-radius for a cute rounded look */
-
-        /* Add a cute hover effect */
-      }
-    }
-  }
+/* ======================== Icons ======================== */
+.legal-case-icon {
+  width: 100px;
+  height: 100px;
 }
-
-/* ======================== spinner  loading ======================== */
+.legal-session-icon {
+  width: 100px;
+  height: 100px;
+}
 /* ======================== SPLASH STYLES ======================== */
 .splash-container {
   opacity: 1;
@@ -409,6 +363,53 @@ a {
 /* ======================== FORM & BUTTONS ======================== */
 
 /* ======================== REPORT STYLES ======================== */
+
+/* ======================== Search form STYLES ======================== *//* Base styles for the search form *//* Base styles for the search button */
+.search-button {
+  background-color: #b14141;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+/* Hover effect for the search button */
+.search-button:hover {
+  background-color: #ff6b6b; /* Change the background color on hover */
+}
+
+/* Base styles for the search input */
+.search-input-group {
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+/* Adjustments for medium devices */
+@media (max-width: 768px) {
+  .search-form {
+    background-color: #f2f2f2;
+    border-radius: 10px;
+  }
+
+  .search-input-group {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* Adjustments for smaller devices */
+@media (max-width: 480px) {
+  .search-input-group {
+    width: 90%;
+  }
+}
 
 /* ======================== RESPONSIVE STYLES ======================== */
 @media (max-width: 768px) {
@@ -855,58 +856,5 @@ a {
       #745114
     ); /* Same gradient as topnav */ /* تدرج ألوان جميل وجذاب */
 
-    @media (min-width: var(--breakpoint-md)) {
-      /* Your styles for medium devices and up */
-
-      /**Procedure Search Page ***/
-
-      .form-label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-
-      .search-button {
-        background-color: #002d43;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-      }
-
-      .search-button:hover {
-        background-color: #001d2b;
-      }
-
-      /* Procdure Search */
-      .search-label-text {
-        font-family: 'Cairo', sans-serif;
-        font-weight: bold;
-        font-size: 1rem;
-        color: #f3e6e6;
-        border: 1px solid linear-gradient(to top, #1d0367, #3c0381, #330250); /* تدرج ألوان جميل وجذاب */
-
-        background: linear-gradient(
-          rgb(4, 19, 41),
-          rgb(22 57 75),
-          rgb(10 47 67)
-        );
-        padding-top: 10px; /* Add padding to create space around the text */
-      }
-      .search-button {
-        font-family: 'Cairo', sans-serif;
-        font-size: 1rem;
-        color: #fff;
-        background-color: #b14141;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
-        border-radius: 10px; /* Add border-radius for a cute rounded look */
-
-        /* Add a cute hover effect */
-      }
-    }
   }
 }

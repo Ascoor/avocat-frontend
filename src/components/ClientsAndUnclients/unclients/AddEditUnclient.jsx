@@ -11,19 +11,21 @@ import '../../../assets/css/Models.css';
 
 function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
   const isEditMode = unclient && unclient.id;
-  const initialFormData = {
+  const [validationErrors, setValidationErrors] = useState('')
 
+
+
+  const initialFormData = {
     name: '', gender: '', identity_number: '', date_of_birth: '',
-    address: '', religion: '', work: '', email: '', 
+    address: '', religion: '', work: '', email: '',
     phone_number: '', emergency_number: '', slug: ''
   };
   const [formData, setFormData] = useState(initialFormData)
-  const [isSuccess, setIsSuccess] = useState(false);
-  
-  // Function to reset form data
   const resetFormData = () => {
     setFormData(initialFormData);
+    setValidationErrors({});
   };
+
   useEffect(() => {
     if (unclient) {
       setFormData({
@@ -38,53 +40,57 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
       });
     } else {
       resetFormData();
-      }
+    }
   }, [unclient]);
-  
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleDateChange = (date) => {
-    setFormData({ ...formData, date_of_birth: date });
+    setFormData({ ...formData, date_of_birth: date || new Date() });
+  };
+
+  const formatDateForBackend = (date) => {
+    if (!date) return '';
+    const dateObj = date instanceof Date ? date : new Date(date);
+    return dateObj.toISOString().split('T')[0];
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formattedData = {
-        // Format and collect the data from the form
+      ...formData,
+      date_of_birth: formatDateForBackend(formData.date_of_birth)
     };
-
     try {
-        if (isEditMode) {
-            // Make a PUT request to update the existing record
-            await axios.put(`${API_CONFIG.baseURL}/api/unclients/${unclient.id}`, formattedData);
-        } else {
-            // Make a POST request to create a new record
-            await axios.post(`${API_CONFIG.baseURL}/api/unclients`, formattedData);
-        }
+      let successMessage = '';
+      if (isEditMode) {
+        await axios.put(`${API_CONFIG.baseURL}/api/unclients/${unclient.id}`, formattedData);
+        successMessage = 'تم تحديث بيانات العميل بنجاح'; // Update success message
+      } else {
+        await axios.post(`${API_CONFIG.baseURL}/api/unclients`, formattedData);
+        successMessage = 'تم إضافة العميل بنجاح'; // Create success message
+      }
+      resetFormData();
+      onSaved(successMessage); // Pass success message to parent component
+      onClose();
 
-        // Handle success: reset form, show success message, and perform any other necessary actions
-        resetFormData();
-        setIsSuccess(true);
-        onSaved();
-        onClose();
     } catch (error) {
-        // Handle errors here, display error messages or take appropriate action
+      if (error.response && error.response.status === 422) {
+        // Set the validation errors from the server's response
+        setValidationErrors(error.response.data.errors);
+      } else {
         console.error(error);
+        // Handle other types of errors (optional)
+      }
     }
-};
-
+  };
 
 
   return (
     // JSX for the component
     <Modal show={isOpen} onHide={onClose} centered dir="rtl">
-      {isSuccess && (
-        <Alert variant="success" onClose={() => setIsSuccess(false)} dismissible>
-          {/* Add a success message here */}
-        </Alert>
-      )}
+
       <Modal.Header closeButton>
         <Modal.Title>
           {unclient?.id ? (
@@ -97,7 +103,14 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
             </>
           )}
         </Modal.Title>
+
       </Modal.Header>
+      {validationErrors.non_field_errors && (
+        <Alert variant="danger">
+          {validationErrors.non_field_errors.join(', ')}
+        </Alert>
+      )}
+
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group as={Row}>
@@ -112,9 +125,15 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
                 onChange={handleChange}
                 name="slug"
                 id="inputSlug"
+                isInvalid={!!validationErrors.slug}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                {validationErrors.slug ? validationErrors.slug[0] : ''}
+              </Form.Control.Feedback>
             </Col>
           </Form.Group>
+
 
           {/* Repeat similar structure for other fields */}
           <Form.Group as={Row}>
@@ -129,6 +148,7 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
                 onChange={handleChange}
                 name="name"
                 id="inputName"
+                required
               />
             </Col>
           </Form.Group>
@@ -143,10 +163,11 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
                 onChange={handleChange}
                 name="gender"
                 id="inputGender"
+                required
               >
                 <option value="">اختر الجنس</option>
                 <option value="ذكر">ذكر</option>
-                <option value="أنثى">أنثى</option>
+                <option value="أنثى">أنثى</option>
               </Form.Control>
             </Col>
           </Form.Group>
@@ -156,12 +177,15 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
             </Form.Label>
             <Col xs={12} md={6}>
               <Form.Control
-                type="text"
+                type="number"
+                min="0"
                 placeholder="أدخل رقم الهوية"
                 value={formData.identity_number}
                 onChange={handleChange}
                 name="identity_number"
                 id="inputIdentityNumber"
+                required
+                maxLength="14"
               />
             </Col>
           </Form.Group>
@@ -179,6 +203,7 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
                 onChange={handleDateChange}
                 name="date_of_birth"
                 id="inputDateOfBirth"
+
               />
             </Col>
           </Form.Group>
@@ -203,13 +228,16 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
             </Form.Label>
             <Col xs={12} md={6}>
               <Form.Control
-                type="text"
+                type="tel"
                 placeholder="أدخل رقم الهاتف"
                 value={formData.phone_number}
                 onChange={handleChange}
                 name="phone_number"
                 id="inputPhoneNumber"
+                required
+                maxLength="11"
               />
+
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
@@ -238,6 +266,7 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
                 onChange={handleChange}
                 name="religion"
                 id="inputReligion"
+                required
               >
                 <option value="">اختر الديانة</option>
                 <option value="مسلم">مسلم</option>
@@ -266,12 +295,14 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
             </Form.Label>
             <Col xs={12} md={6}>
               <Form.Control
-                type="text"
+                type="tel"
                 placeholder="أدخل رقم الطوارئ"
                 value={formData.emergency_number}
                 onChange={handleChange}
                 name="emergency_number"
                 id="inputEmergencyNumber"
+
+                maxLength="11"
               />
             </Col>
           </Form.Group>
