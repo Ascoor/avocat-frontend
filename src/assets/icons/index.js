@@ -14,4 +14,9 @@ export { default as ServiceIcon } from './services.png';
 export { default as SearchIcon } from './search-icon.png';
 export { default as MainLegalCases } from '../icons/mainLegalCases.png';
 export { default as MainSessions } from '../icons/LegalCaseession.png';
+export { default as MainProcedures } from '../icons/Legal-procedure-icon.png';
+export { default as MainCourts } from '../icons/mainCourts.png';
+export { default as MainProceduresIcon } from '../icons/MainProcedures.png';
+export { default as MainSessionsIcon } from '../icons/main-session-icon.png';
+export { default as MainLawyerIcon } from '../icons/lawyer-icon.png';
 

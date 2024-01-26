@@ -1,4 +1,4 @@
-import React from 'react';
+
 import AuthRoutes from './AuthRoutes';
 import '../../../assets/css/MainContent.css';
 import Sidebar from './SideBar';
@@ -19,7 +19,7 @@ const MainContent = ({ sidebarOpen, userName, toggleSidebar }) => {
         />
       </div>
       <div className={contentClass}>
-        <AuthRoutes />a
+        <AuthRoutes />
       </div>
     </div>
   );
