@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import { MainLawyerIcon,MainCourts,MainSessionsIcon, MainProcedures,ClientIcon,MainLegalCases,MainSessions } from '../assets/icons/index';
+import { MainCourts,MainSessionsIcon, MainProcedures,ClientIcon,MainLegalCases,MainSessions } from '../assets/icons/index';
 
 import { useSpring, animated } from '@react-spring/web';
 import axios from 'axios';
@@ -52,7 +52,6 @@ const EventCard = ({ count, icon }) => {
   const { cardSpringStyles, iconSpringStyles, setHovered, setTouched } = useIconCardAnimation();
 
   return (
-    <div className="col">
       <animated.div
         style={cardSpringStyles}
         onMouseEnter={() => setHovered(true)}
@@ -63,7 +62,7 @@ const EventCard = ({ count, icon }) => {
         <animated.span style={iconSpringStyles}>{icon}</animated.span> 
         <br/> {count}
       </animated.div>
-    </div>
+
   );
 };
 
@@ -110,53 +109,37 @@ const Home = () => {
     <div className="container mt-4">
     <div className="row mb-4">
 
+    <div className="col d-flex">
+
         <EventCard
                       
                       color="#002d76"
                       count={toArabicNumeral(legCaseCount)}
                       icon={<img src={MainSessions} alt="Logo" />}
                     />
-        <EventCard
-                      
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainLegalCases} alt="Logo"/>}
-                    />
-        
-        
-        <EventCard
-                     
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainProcedures} alt="Logo"  />}
-                    />
-        
-        <EventCard
-                      
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={ClientIcon} alt="Logo"  />}
-                    />
-                            <EventCard
-                      
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainCourts} alt="Logo" />}
-                    />
-                              <EventCard
-                      
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainLawyerIcon} alt="Logo" />}
-                    />
-                            <EventCard
-                      
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainSessionsIcon} alt="Logo" />}
-                      />
-                      
 
+        <EventCard
+                      
+                      color="#002d76"
+                      count={toArabicNumeral(legCaseCount)}
+                      icon={<img src={MainProcedures} alt="Logo"/>}
+                    />
+        
+    
+        <EventCard
+                      
+                      color="#002d76"
+                      count={toArabicNumeral(legCaseCount)}
+                      icon={<img src={MainSessionsIcon} alt="Logo"/>}
+                    />
+        <EventCard
+                      
+                      color="#002d76"
+                      count={toArabicNumeral(legCaseCount)}
+                      icon={<img src={ClientIcon} alt="Logo"/>}
+                    />
+        
+    </div>
     </div>
 
     <div className="row">
