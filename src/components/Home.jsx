@@ -137,24 +137,12 @@ const Home = () => {
                       count={toArabicNumeral(legCaseCount)}
                       icon={<img src={ClientIcon} alt="Logo"  />}
                     />
-                            <EventCard
+        <EventCard
                       
                       color="#002d76"
                       count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainCourts} alt="Logo" />}
+                      icon={<img src={MainLawyerIcon} alt="Logo"  />}
                     />
-                              <EventCard
-                      
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainLawyerIcon} alt="Logo" />}
-                    />
-                            <EventCard
-                      
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainSessionsIcon} alt="Logo" />}
-                      />
                       
 
     </div>

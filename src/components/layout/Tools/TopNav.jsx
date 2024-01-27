@@ -42,124 +42,115 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
   useEffect(() => {
     fetchNotifications();
   }, [userId]);
-
+  
   return (
     <Navbar expand="md" className="bg-body-tertiary navbar-dark navbar-top-nav">
+      <Container className="container container-top-nav">
+        {/* Centered Navbar */}
+        <div className="centered-navbar">
+          {/* Round Logo */}
+          
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
+  
+              <ul className="navbar-nav">
 
-        <Container className="container container-top-nav">
-
-          <Navbar.Brand>
-
-            <img
-         src={LogoPatren}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-              alt="React Bootstrap logo"
-            />
- 
-          </Navbar.Brand>
-
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
-            <ul className="navbar-nav">
-
-            <li className="nav-item">
-    <Link className="nav-link" to="/">
-      <BiHomeCircle className="m-1" size={15} />
-      الرئيسية
-    </Link>
-  </li><li className='nav-item'>
-  <NavDropdown title={<span><IoMdPeople className="m-1" size={15} /> العملاء</span>} id="client-dropdown">
-    <NavDropdown.Item as={Link} to="/clients">
-      الموكلين
-    </NavDropdown.Item>
-    <NavDropdown.Item as={Link} to="/unclients">
-      العملاء غير الموكلين
-    </NavDropdown.Item>
-  </NavDropdown>
+<li className="nav-item">
+<Link className="nav-link" to="/">
+<BiHomeCircle className="m-1" size={15} />
+الرئيسية
+</Link>
+</li><li className='nav-item'>
+<NavDropdown title={<span><IoMdPeople className="m-1" size={15} /> العملاء</span>} id="client-dropdown">
+<NavDropdown.Item as={Link} to="/clients">
+الموكلين
+</NavDropdown.Item>
+<NavDropdown.Item as={Link} to="/unclients">
+العملاء غير الموكلين
+</NavDropdown.Item>
+</NavDropdown>
 </li>
 
-  <li className='nav-item'>
-    <Link className='nav-link' to="/legcases">
-      <GiJusticeStar  className="m-1" size={15} />
-      القضايا
-    </Link>
-  </li>
-  <li className='nav-item'>
-    <Link className='nav-link' to="/services">
-      <RiServiceLine   className="m-1" size={15} /> 
-      الخدمات
-    </Link>
-  </li>
-  <li className='nav-item'>
-    <Link className='nav-link' to="/legal-writer">
-      <HiOutlineDocumentText   className="m-1" size={15} />
-       المحرر
-    </Link>
-  </li>
-  <li className='nav-item'>
-    <Link className='nav-link' to="/procedures">
-      <AiOutlineAudit   className="m-1" size={15} />
-       الإجراءات
-    </Link>
-  </li>
+<li className='nav-item'>
+<Link className='nav-link' to="/legcases">
+<GiJusticeStar  className="m-1" size={15} />
+القضايا
+</Link>
+</li>
+<li className='nav-item'>
+<Link className='nav-link' to="/services">
+<RiServiceLine   className="m-1" size={15} /> 
+الخدمات
+</Link>
+</li>
+<div className="logo-container">
+            <img src={LogoPatren} width="30" height="30" alt="React Bootstrap logo" />
+          </div>
+<li className='nav-item'>
+<Link className='nav-link' to="/legal-writer">
+<HiOutlineDocumentText   className="m-1" size={15} />
+المحرر
+</Link>
+</li>
+<li className='nav-item'>
+<Link className='nav-link' to="/procedures">
+<AiOutlineAudit   className="m-1" size={15} />
+الإجراءات
+</Link>
+</li>
 
-  <li className='nav-item'>
-    <Link className='nav-link' to="/financial">
-      <BsCashStack  className="m-1" size={15} />
-      الحسابات
-    </Link>
-  </li>
+<li className='nav-item'>
+<Link className='nav-link' to="/financial">
+<BsCashStack  className="m-1" size={15} />
+الحسابات
+</Link>
+</li>
 
-  <li className='nav-item'>
-    <Link className='nav-link' to="/court-search">
-      <GiMagnifyingGlass  className="m-1" size={15} />
-      بحث محاكم
-    </Link>
-  </li>
+<li className='nav-item'>
+<Link className='nav-link' to="/court-search">
+<GiMagnifyingGlass  className="m-1" size={15} />
+بحث محاكم
+</Link>
+</li>
 </ul>
-          </Nav>
-        </Navbar.Collapse>
+            </Nav>
+          </Navbar.Collapse>
+        </div>
+        {/* User Menu */}
         <div className="user-menu">
-        
           <Notification
             notifications={notifications}
             unreadNotifications={unreadNotifications}
             fetchNotifications={fetchNotifications}
           />
-           <NavDropdown
+          <NavDropdown
             id="userDropdown"
-            title={<FaUser  color="orange" size={20} />}
+            title={<FaUser color="orange" size={20} />}
             align="end"
             drop="down"
-            className="dropdown-menu-right m-2" 
+            className="dropdown-menu-right m-2"
           >
-            <NavDropdown.Item href={`/profile/${userId}`}>
-              الملف الشخصي
-            </NavDropdown.Item>
+            <NavDropdown.Item href={`/profile/${userId}`}>الملف الشخصي</NavDropdown.Item>
             <NavDropdown.Item
               className="dropdown-item-logout beautiful-logout-item"
               onClick={logoutUser}
             >
               نسجيل الخروج
             </NavDropdown.Item>
-          </NavDropdown> 
-<SlSettings
+          </NavDropdown>
+          <SlSettings
                   
                   size={30}
                   color='orange'
                   onClick={toggleSidebar}
                 />
+ 
         </div>
-     </Container>
+      </Container>
     </Navbar>
   );
 };
+
 
 export default TopNav;
