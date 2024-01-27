@@ -24,7 +24,7 @@ function Auth() {
   };
 
   return (
-    <>
+    <div className="frame">
       <TopNav
         toggleSidebar={toggleSidebar}
         userId={userId}
@@ -32,12 +32,19 @@ function Auth() {
         logoutUser={logoutUser}
         sidebarOpen={sidebarOpen}
       />
-    
+
+
+<div className="content-app">
+ 
+
 
       <MainContent     
         toggleSidebar={toggleSidebar} userName={userName} sidebarOpen={sidebarOpen} />
 
-    </>
+   
+    </div>
+    </div>
+    
   );
 }
 

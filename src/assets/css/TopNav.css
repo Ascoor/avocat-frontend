@@ -9,30 +9,45 @@
   ); /* Same gradient as topnav */
 
 }
+.centered-navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
 
-.navbar-top-nav .navbar-brand img {
-    height: auto; /* يضمن الحفاظ على نسب الأبعاد */
-    width: 100px; /* العرض الافتراضي */
-  }
-  
-  .nav-link:hover, .nav-link.active {
-    color: orange; /* Color change on hover and active state */
-  }
+/* Styles for the round logo */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px; /* Adjust the width as needed */
+  height: 50px; /* Adjust the height as needed */
+  background-color: #020124; /* Background color of the logo container */
+  border-radius: 50%; /* Make it round */
+  margin-right: 20px; /* Add margin for spacing from the navigation items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow to the logo */
+}
+
+.logo-container img {
+  width: 30px; /* Adjust the size of the logo image */
+  height: 30px; /* Adjust the size of the logo image */
+}
+
+.navbar-top-nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: end; /* Center items vertically */
+}
+
 /* Styling for navigation items */
 .navbar-top-nav .nav-link {
-  color:rgba(255, 226, 171, 0.898); /* Dark text color for contrast */
+  color: rgba(255, 226, 171, 0.898); /* Dark text color for contrast */
   display: flex;
   font-size: small;
   align-items: center; /* Align icons with text */
 }
 
-.navbar-top-nav .nav-link:hover {
-  color: orange; /* Highlight color on hover */
-}
-
-.nav-item .m-2 {
-  color: #dfbc67;
-}
 /* Icons in the navbar */
 .navbar-top-nav .nav-item .react-icon {
   margin: auto 5px;
@@ -41,6 +56,12 @@
 /* Dropdown and User menu */
 .navbar-top-nav .user-menu {
   display: flex;
+  flex-direction: column; /* Stack user and notification on top of log out */
+  align-items: center; /* Center content horizontally */
+}
+.centered-navbar {
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 

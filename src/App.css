@@ -46,7 +46,40 @@ a {
 }
 
 
-/* CSS for masthead */
+/* CSS for Frame App */
+.frame {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* ظل لخلق تأثير البروز */
+  border: solid 1px #ddd; /* حدود للتمييز */
+  padding: 20px; /* مساحة داخل البرواز */
+  margin: 20px auto; /* تمركز وهامش خارجي */
+  background: radial-gradient(
+    circle at center, /* تحديد نقطة بداية التدرج في المركز */
+    #0f1621 10%,     /* أزرق غامق جدًا في المركز */
+    #121e33 50%,    /* أزرق ملكي في المنتصف */
+    #172133 90%,    /* أزرق غامق مع لمسة من الرمادي لإضافة العمق */
+    #26351c 100%    /* أزرق بنفسجي غامق على الأطراف لإضافة الفخامة */
+  );
+  
+  border-radius: 5px; /* تقريب الزوايا */
+}
+
+
+.logo-circle-app {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  margin: auto;
+}
+
+.content-app {
+  background-color:  #1a2840;
+  
+  padding: 20px; /* مساحة داخل الصفحة */
+  border-radius: 5px; /* تقريب الزوايا للصفحة */
+}
+
 
 /* CSS for form */
 

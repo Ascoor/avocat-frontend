@@ -4,6 +4,14 @@
 .main-content {
   display: flow; /* Use flexbox layout for sidebar and content */
   height: 100%; /* Ensure the main content takes full height */
+  background: radial-gradient(
+    circle at center, /* تحديد نقطة بداية التدرج في المركز */
+    #0f1621 10%,     /* أزرق غامق جدًا في المركز */
+    #121e33 50%,    /* أزرق ملكي في المنتصف */
+    #172133 90%,    /* أزرق غامق مع لمسة من الرمادي لإضافة العمق */
+    #26351c 100%    /* أزرق بنفسجي غامق على الأطراف لإضافة الفخامة */
+  );
+  
 }
 
 /* Styles for the sidebar when closed */

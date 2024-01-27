@@ -117,6 +117,37 @@ const Home = () => {
                       count={toArabicNumeral(legCaseCount)}
                       icon={<img src={MainSessions} alt="Logo" />}
                     />
+<<<<<<< HEAD
+=======
+        <EventCard
+                      
+                      color="#002d76"
+                      count={toArabicNumeral(legCaseCount)}
+                      icon={<img src={MainLegalCases} alt="Logo"/>}
+                    />
+        
+        
+        <EventCard
+                     
+                      color="#002d76"
+                      count={toArabicNumeral(legCaseCount)}
+                      icon={<img src={MainProcedures} alt="Logo"  />}
+                    />
+        
+        <EventCard
+                      
+                      color="#002d76"
+                      count={toArabicNumeral(legCaseCount)}
+                      icon={<img src={ClientIcon} alt="Logo"  />}
+                    />
+        <EventCard
+                      
+                      color="#002d76"
+                      count={toArabicNumeral(legCaseCount)}
+                      icon={<img src={MainLawyerIcon} alt="Logo"  />}
+                    />
+                      
+>>>>>>> 6db0cc2df466e76e090e9ac8c5f2cb26c60e99d9
 
         <EventCard
                       
