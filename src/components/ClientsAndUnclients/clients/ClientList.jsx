@@ -1,7 +1,7 @@
 import  { useState,useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Alert } from 'react-bootstrap';
-import { ClientIcon } from '../../../assets/icons/index';
+import { ClientSectionIcon } from '../../../assets/icons/index';
 import API_CONFIG from '../../../config';
 import {
   AiFillCheckCircle,
@@ -117,7 +117,7 @@ function ClientList() {
       <SectionHeader
         buttonName="موكل"
         listName="موكلين"
-        icon={ClientIcon}
+        icon={ClientSectionIcon}
         setShowAddModal={() => openAddEditModal()}
       />
       <AddEditClient

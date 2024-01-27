@@ -18,4 +18,6 @@ export { default as MainProcedures } from '../icons/Legal-procedure-icon.png';
 export { default as MainCourts } from '../icons/mainCourts.png';
 export { default as MainProceduresIcon } from '../icons/MainProcedures.png';
 export { default as MainSessionsIcon } from '../icons/main-session-icon.png';
+export { default as MainLawyerIcon } from '../icons/clients.png';
+export { default as  ClientSectionIcon } from '../icons/ClientSection.png';
 
