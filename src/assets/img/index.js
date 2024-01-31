@@ -6,7 +6,6 @@ export { default as LogoPatren } from '../img/logo512.png';
 export { default as WelcomeImage } from '../img/welcome.jpg';
 export { default as WelcomePatren } from '../img/logo512.png';
 export { default as WelcomeLogo } from '../img/logo512.png';
-export { default as SideLogoDark } from '../img/splash-image.png';
 export { default as LandingPageImg } from '../img/landing.png';
 // Slider images
 
