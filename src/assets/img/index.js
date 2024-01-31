@@ -25,16 +25,16 @@ export { default as CivelLaw } from '../img/serviceIcons/protection of rights1.s
 export { default as AboutUs } from '../img/about/contract.jpeg';
 
 // footer
-export { default as Photography } from '../img/footer/cytonn-photography-gjao3ztx9gu-unsplash.jpg';
-export { default as Unsplah1 } from '../img/footer/adeolu-eletu-e7rlgujjazc-unsplash.jpg';
-export { default as Unsplah2 } from '../img/blog/inaki-del-olmo-NIJuEQw0RKg-unsplash.jpg';
-export { default as Unsplah3 } from '../img/blog/marten-bjork-6dW3xyQvcYE-unsplash.jpg';
-export { default as Unsplah4 } from '../img/blog/luke-michael-DUV8TJtD2QY-unsplash.jpg';
-export { default as Unsplah5 } from '../img/blog/luke-michael-DUV8TJtD2QY-unsplash.jpg';
-export { default as Unsplah6 } from '../img/blog/inaki-del-olmo-NIJuEQw0RKg-unsplash.jpg';
-export { default as Unsplah7 } from '../img/blog/luke-michael-DUV8TJtD2QY-unsplash.jpg';
-export { default as Unsplah8 } from '../img/blog/marten-bjork-6dW3xyQvcYE-unsplash.jpg';
-export { default as Unsplah9 } from '../img/blog/inaki-del-olmo-NIJuEQw0RKg-unsplash.jpg';
+// export { default as Photography } from '../img/footer/cytonn-photography-gjao3ztx9gu-unsplash.jpg';
+// export { default as Unsplah1 } from '../img/footer/adeolu-eletu-e7rlgujjazc-unsplash.jpg';
+// export { default as Unsplah2 } from '../img/blog/inaki-del-olmo-NIJuEQw0RKg-unsplash.jpg';
+// export { default as Unsplah3 } from '../img/blog/marten-bjork-6dW3xyQvcYE-unsplash.jpg';
+// export { default as Unsplah4 } from '../img/blog/luke-michael-DUV8TJtD2QY-unsplash.jpg';
+// export { default as Unsplah5 } from '../img/blog/luke-michael-DUV8TJtD2QY-unsplash.jpg';
+// export { default as Unsplah6 } from '../img/blog/inaki-del-olmo-NIJuEQw0RKg-unsplash.jpg';
+// export { default as Unsplah7 } from '../img/blog/luke-michael-DUV8TJtD2QY-unsplash.jpg';
+// export { default as Unsplah8 } from '../img/blog/marten-bjork-6dW3xyQvcYE-unsplash.jpg';
+// export { default as Unsplah9 } from '../img/blog/inaki-del-olmo-NIJuEQw0RKg-unsplash.jpg';
 
 // Atorney
 export { default as Atorney1 } from '../img/atorneys/linkedin-sales-solutions-pata8xe_ivm-unsplash.jpg';
