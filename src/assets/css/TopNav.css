@@ -8,8 +8,30 @@
     #0a2b41 100%
   ); /* Same gradient as topnav */
 
+
 }
+/* Custom styling for the basic-navbar-nav */
+.basic-navbar-nav {
+  /* Add your styling properties here */
+  background-color: #333;
+  padding: 10px;
+}
+
+.basic-navbar-nav .nav-link {
+  /* Customize the appearance of the navigation links inside basic-navbar-nav */
+  color: #fff;
+  font-size: 16px;
+  margin-right: 20px; /* Adjust spacing between links */
+}
+
+.basic-navbar-nav .nav-link:hover {
+  /* Add hover effect */
+  color: #ffc107; /* Change the text color on hover */
+  text-decoration: underline; /* Add underline on hover */
+}
+
 .centered-navbar {
+
   display: flex;
   justify-content: center;
   align-items: center;

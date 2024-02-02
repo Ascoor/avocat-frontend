@@ -1,6 +1,6 @@
  import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, NavDropdown } from 'react-bootstrap';
 import '../../../assets/css/TopNav.css';
 import { LogoPatren } from '../../../assets/img/index';
 import API_CONFIG from '../../../config';
@@ -44,24 +44,21 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
   }, [userId]);
   
   return (
-    <Navbar expand="md" className="bg-body-tertiary navbar-dark navbar-top-nav">
-      <Container className="container container-top-nav">
-        {/* Centered Navbar */}
-        <div className="centered-navbar">
-          {/* Round Logo */}
-          
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-  
-              <ul className="navbar-nav">
-
-<li className="nav-item">
-<Link className="nav-link" to="/">
-<BiHomeCircle className="m-1" size={15} />
-الرئيسية
-</Link>
-</li><li className='nav-item'>
+    <Navbar className="navbar-top-nav bg-body-tertiary" expand="lg">
+    <Navbar.Brand href="#home">
+      <div className="logo-container">
+        <img src={LogoPatren} alt="Logo" width={100} height={50} />
+      </div>
+    </Navbar.Brand>
+    <Navbar.Toggle aria-controls="basic-navbar-nav" className="custom-navbar-toggle" />
+    <Navbar.Collapse id="basic-navbar-nav" className="basic-navbar-nav">   <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">
+                <BiHomeCircle className="m-1" size={15} />
+                الرئيسية
+              </Link>
+            </li>
+<li className='nav-item'>
 <NavDropdown title={<span><IoMdPeople className="m-1" size={15} /> العملاء</span>} id="client-dropdown">
 <NavDropdown.Item as={Link} to="/clients">
 الموكلين
@@ -84,9 +81,7 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
 الخدمات
 </Link>
 </li>
-<div className="logo-container">
-            <img src={LogoPatren} width="30" height="30" alt="React Bootstrap logo" />
-          </div>
+
 <li className='nav-item'>
 <Link className='nav-link' to="/legal-writer">
 <HiOutlineDocumentText   className="m-1" size={15} />
@@ -114,41 +109,17 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
 </Link>
 </li>
 </ul>
-            </Nav>
-          </Navbar.Collapse>
-        </div>
-        {/* User Menu */}
-        <div className="user-menu">
-          <Notification
-            notifications={notifications}
-            unreadNotifications={unreadNotifications}
-            fetchNotifications={fetchNotifications}
-          />
-          <NavDropdown
-            id="userDropdown"
-            title={<FaUser color="orange" size={20} />}
-            align="end"
-            drop="down"
-            className="dropdown-menu-right m-2"
-          >
-            <NavDropdown.Item href={`/profile/${userId}`}>الملف الشخصي</NavDropdown.Item>
-            <NavDropdown.Item
-              className="dropdown-item-logout beautiful-logout-item"
-              onClick={logoutUser}
-            >
-              نسجيل الخروج
-            </NavDropdown.Item>
-          </NavDropdown>
-          <SlSettings
-                  
-                  size={30}
-                  color='orange'
-                  onClick={toggleSidebar}
-                />
- 
-        </div>
-      </Container>
-    </Navbar>
+  </Navbar.Collapse>
+     <div className="user-menu">
+     <Notification notifications={notifications} unreadNotifications={unreadNotifications} fetchNotifications={fetchNotifications} />
+     <NavDropdown id="userDropdown" title={<FaUser color="orange" size={20} />} align="end" drop="down" className="dropdown-menu-right m-2">
+       <NavDropdown.Item href={`/profile/${userId}`}>الملف الشخصي</NavDropdown.Item>
+       <NavDropdown.Item onClick={logoutUser}>تسجيل الخروج</NavDropdown.Item>
+     </NavDropdown>
+     <SlSettings size={30} color="orange" onClick={toggleSidebar} />
+   </div>
+
+</Navbar>
   );
 };
 

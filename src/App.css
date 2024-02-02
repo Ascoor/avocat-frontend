@@ -1,14 +1,22 @@
 /* App.css */
 body {
   /* تدرج لوني راديالي يستخدم درجات الأزرق الغامق */
-  background: radial-gradient(
-    circle at center, /* تحديد نقطة بداية التدرج في المركز */
-    #0f1621 10%,     /* أزرق غامق جدًا في المركز */
-    #121e33 50%,    /* أزرق ملكي في المنتصف */
-    #172133 90%,    /* أزرق غامق مع لمسة من الرمادي لإضافة العمق */
-    #26351c 100%    /* أزرق بنفسجي غامق على الأطراف لإضافة الفخامة */
-  );
+/* Radial Gradient Background */
+background: radial-gradient(
+  circle at center,
+  /* Dark blue at the center */
+  #0f1621 10%,
   
+  /* Royal blue in the middle */
+  #121e33 50%,
+  
+  /* Dark blue with a touch of gray for depth */
+  #172133 90%,
+  
+  /* Dark purple-blue at the edges for a luxurious look */
+  #063e50 100%
+);
+
 
   font-family: 'Open Sans', sans-serif;
   color: #cce6ff;

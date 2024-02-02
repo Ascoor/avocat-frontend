@@ -47,22 +47,23 @@ const useIconCardAnimation = () => {
     setTouched,
   };
 };
-
 const EventCard = ({ count, icon }) => {
-  const { cardSpringStyles, iconSpringStyles, setHovered, setTouched } = useIconCardAnimation();
+  const { cardSpringStyles, iconSpringStyles, handleHover, handleHoverEnd, handleTouchStart, handleTouchEnd } = useIconCardAnimation();
 
   return (
+    <div className="col-md-4 col-sm-6 col-xs-12 mb-4"> {/* تعديل لجعل العرض متجاوب */}
       <animated.div
         style={cardSpringStyles}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onTouchStart={() => setTouched(true)}
-        onTouchEnd={() => setTouched(false)}
+        onMouseEnter={handleHover}
+        onMouseLeave={handleHoverEnd}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="d-flex justify-content-center align-items-center" // لتوسيط المحتوى
       >
-        <animated.span style={iconSpringStyles}>{icon}</animated.span> 
+        <animated.span style={iconSpringStyles}>{icon}</animated.span>
         <br/> {count}
       </animated.div>
-
+    </div>
   );
 };
 
@@ -109,8 +110,6 @@ const Home = () => {
     <div className="container mt-4">
     <div className="row mb-4">
 
-    <div className="col d-flex">
-
         <EventCard
                       
                       color="#002d76"
@@ -133,7 +132,6 @@ const Home = () => {
                     />
         
     
-    </div>
     </div>
 
     <div className="row">
