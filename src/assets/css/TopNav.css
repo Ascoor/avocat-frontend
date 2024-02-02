@@ -24,9 +24,11 @@
 }
 .basic-navbar-nav {
   background-color: #333;
-  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Ensure the links occupy the full width */
 }
-
 .basic-navbar-nav .nav-link {
   color: #fff;
   font-size: 16px;
@@ -82,8 +84,9 @@
 .user-menu {
   display: flex;
   align-items: center;
-  flex-direction: column; /* Stack user and notification on top of log out */
+  flex-direction: row; /* Change from column to row */
 }
+
 
 .notification-button {
   border: none;

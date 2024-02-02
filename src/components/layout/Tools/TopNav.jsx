@@ -109,14 +109,14 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
 </li>
 </ul>
   </Navbar.Collapse>
-     <div className="user-menu">
-     <Notification notifications={notifications} unreadNotifications={unreadNotifications} fetchNotifications={fetchNotifications} />
-     <NavDropdown id="userDropdown" title={<FaUser color="orange" size={20} />} align="end" drop="down" className="dropdown-menu-right m-2">
-       <NavDropdown.Item href={`/profile/${userId}`}>الملف الشخصي</NavDropdown.Item>
-       <NavDropdown.Item onClick={logoutUser}>تسجيل الخروج</NavDropdown.Item>
-     </NavDropdown>
+  <div className="user-menu ml-auto"> {/* Use ml-auto to move it to the end */}
+        <Notification notifications={notifications} unreadNotifications={unreadNotifications} fetchNotifications={fetchNotifications} />
+        <NavDropdown id="userDropdown" title={<FaUser color="orange" size={20} />} align="end" drop="down" className="dropdown-menu-right m-2">
+          <NavDropdown.Item href={`/profile/${userId}`}>الملف الشخصي</NavDropdown.Item>
+          <NavDropdown.Item onClick={logoutUser}>تسجيل الخروج</NavDropdown.Item>
+        </NavDropdown>
+      </div>
      <SlSettings size={30} color="orange" onClick={toggleSidebar} />
-   </div>
 
 </Navbar>
   );

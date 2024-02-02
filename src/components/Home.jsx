@@ -1,33 +1,29 @@
 import { useState, useEffect } from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import { MainCourts,MainSessionsIcon, MainLawyerIcon,MainProcedures,ClientIcon,MainLegalCases,MainSessions } from '../assets/icons/index';
+import {  MainLawyers,MainProcedures,MainClients,MainLegalCases,MainSessions } from '../assets/icons/index';
 
 import { useSpring, animated } from '@react-spring/web';
 import axios from 'axios';
 import API_CONFIG from '../config';
-// import ClientSearch from './home_tools/client_search.component';
-// import LegCaseSearch from './home_tools/leg_case_search.component`  ';
 import 'moment/locale/ar';
 import moment from 'moment';
 import '../assets/css/home.css';
 moment.locale('ar');
-
-
+// import ClientSearch from './home_tools/client_search.component';
+// import LegCaseSearch from './home_tools/leg_case_search.component`  ';
 const useIconCardAnimation = () => {
   const [hovered, setHovered] = useState(false);
   const [touched, setTouched] = useState(false);
-
-  // Animation for card scaling and shadow
   const cardSpringStyles = useSpring({
-    boxShadow: hovered || touched ? '0px 0px 10px 5px #f0f900)' : 'none',
-    scale: hovered || touched ? 1.1 : 1,
-    y: touched ? -5 : 0,
+    boxShadow: hovered || touched ? '0px 0px 10px 5px #f0f900' : 'none',
+    scale: hovered || touched ? 1.1 : 1, // Ensure this remains a number
+    y: touched ? -5 : 0, // Ensure this remains a number
   });
-
- // Animation for icon light-on effect
+  
   const iconSpringStyles = useSpring({
-    filter: hovered || touched ? 'brightness(1.5)' : 'brightness(0.8)', // تقليل الإضاءة في الوضع الافتراضي
+    filter: hovered || touched ? 'brightness(1.5)' : 'brightness(0.8)',
+    config: { mass: 1, tension: 170, friction: 26 }, // No need to add filter method here
   });
 
   // Event handlers
@@ -47,18 +43,18 @@ const useIconCardAnimation = () => {
     setTouched,
   };
 };
-const EventCard = ({ count, icon }) => {
+const MainCards = ({ count, icon }) => {
   const { cardSpringStyles, iconSpringStyles, handleHover, handleHoverEnd, handleTouchStart, handleTouchEnd } = useIconCardAnimation();
 
   return (
-    <div className="col-md-4 col-sm-6 col-xs-12 mb-4"> {/* تعديل لجعل العرض متجاوب */}
+    <div className="col-lg-4 col-md-6 col-sm-12 mb-4"> {/* Adjust column classes */}
       <animated.div
         style={cardSpringStyles}
         onMouseEnter={handleHover}
         onMouseLeave={handleHoverEnd}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        className="d-flex justify-content-center align-items-center" // لتوسيط المحتوى
+        className="d-flex justify-content-center align-items-center"
       >
         <animated.span style={iconSpringStyles}>{icon}</animated.span>
         <br/> {count}
@@ -105,66 +101,62 @@ const Home = () => {
       console.log(error);
     }
   };
-
+  
   return (
     <div className="container mt-4">
-    <div className="row mb-4">
+      <div className="row mb-4">
+        <MainCards
+          count={toArabicNumeral(legalSessionCount)}
+          icon={<img src={MainSessions} alt="Logo" />}
+        />
+        <MainCards
+          count={toArabicNumeral(legCaseCount)}
+          icon={<img src={MainLegalCases} alt="Logo"/>}
+        />
+        <MainCards
+          count={toArabicNumeral(procedureCount)}
+          icon={<img src={MainProcedures} alt="Logo"  />}
+        />
+        <MainCards
+          count={toArabicNumeral(clientCount)}
+          icon={<img src={MainClients} alt="Logo"  />}
+        />
+        <MainCards
+          count={toArabicNumeral(lawyerCount)}
+          icon={<img src={MainLawyers} alt="Logo"  />}
+        />
+      </div>
 
-        <EventCard
-                      
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainSessions} alt="Logo" />}
-                    />
-        <EventCard
-                      
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainLegalCases} alt="Logo"/>}
-                    />
-        
-        
-        <EventCard
-                     
-                      color="#002d76"
-                      count={toArabicNumeral(legCaseCount)}
-                      icon={<img src={MainProcedures} alt="Logo"  />}
-                    />
-        
-    
-    </div>
-
-    <div className="row">
+      <div className="row">
         <div className="col-md-4 mb-3">
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">Last Sessions</h5>
-                </div>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Last Sessions</h5>
             </div>
+          </div>
         </div>
         <div className="col-md-4 mb-3">
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">Procedures</h5>
-                </div>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Procedures</h5>
             </div>
+          </div>
         </div>
         <div className="col-md-4 mb-3">
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">Last Clients</h5>
-                </div>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Last Clients</h5>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-
-    <div className="row mt-3">
+      <div className="row mt-3">
         <div className="col">
-            <input type="text" className="form-control" placeholder="Search..."/>
+          <input type="text" className="form-control" placeholder="Search..."/>
         </div>
+      </div>
     </div>
-</div>
   );
 };
 
