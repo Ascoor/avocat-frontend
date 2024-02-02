@@ -1,20 +1,15 @@
 {
   "name": "avocat-frontend",
   "version": "1.0.0",
-  "homepage": "http://avocat.live",
   "description": "Lawyer office manager",
+  "homepage": "http://avocat.live",
   "license": "MIT",
-  "keywords": [
-    "react",
-    "vite",
-    "bootstrap",
-    "fullcalendar",
-    "eslint"
-  ],
-  "main": "index.js",
-  "repository": "https://github.com/ascoor/avocat-frontend",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ascoor/avocat-frontend"
+  },
   "author": "Askar <mr.askar1984@gmail.com>",
-  "type": "commonjs",
+  "private": true,
   "scripts": {
     "start": "vite",
     "dev": "vite",
@@ -23,6 +18,13 @@
     "lint": "eslint . --ext .js,.jsx",
     "preview": "vite preview"
   },
+  "keywords": [
+    "react",
+    "vite",
+    "bootstrap",
+    "fullcalendar",
+    "eslint"
+  ],
   "dependencies": {
     "@ckeditor/ckeditor5-build-decoupled-document": "^41.0.0",
     "@ckeditor/ckeditor5-react": "^6.2.0",
@@ -31,6 +33,7 @@
     "@fullcalendar/interaction": "^6.1.10",
     "@fullcalendar/react": "^6.1.10",
     "@fullcalendar/timegrid": "^6.1.10",
+    "@jridgewell/sourcemap-codec": "^1.4.15",
     "@popperjs/core": "^2.11.8",
     "@react-spring/web": "^9.7.3",
     "animejs": "^3.2.2",

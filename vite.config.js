@@ -19,6 +19,8 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist', // Output directory for production build
+    
+  chunkSizeWarningLimit: 1000, 
   },
   optimizeDeps: {
     include: [
