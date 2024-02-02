@@ -1,25 +1,29 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path'
-
+import path from 'path';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    nodePolyfills(), // Apply Node.js polyfills
+  ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'), // تغييره إلى مسار مشروعك الفعلي
+      '@': path.resolve(__dirname, 'src'), // Alias for src directory
     },
   },
   server: {
-    host: '127.0.0.1',
-    network: 'host',
-    port: 3000, // تغييره حسب احتياجاتك
+    host: 'localhost',
+    port: 3000, // Development server configuration
   },
   build: {
-    outDir: 'dist', // تغييره حسب احتياجاتك
+    outDir: 'dist', // Output directory for production build
   },
   optimizeDeps: {
     include: [
+      // List of dependencies for pre-bundling
+    
       'react',
       'react-dom',
       'react-router-dom',
@@ -51,7 +55,6 @@ export default defineConfig({
       'react-icons',
       'react-loader-spinner',
       'react-toastify',
-      'scrollreveal',
-    ],
+      'scrollreveal', ],
   },
 });
