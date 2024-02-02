@@ -4,10 +4,8 @@
   "description": "Lawyer office manager",
   "homepage": "http://avocat.live",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ascoor/avocat-frontend"
-  },
+  "repository": "https://github.com/ascoor/avocat-frontend",
+
   "author": "Askar <mr.askar1984@gmail.com>",
   "private": true,
   "scripts": {
