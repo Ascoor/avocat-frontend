@@ -1,37 +1,44 @@
 /* General styling for the navbar */
 .navbar-top-nav {
-  padding: 0.5rem 1rem; /* Spacing */
-
+  padding: 0.5rem 1rem;
   background: linear-gradient(
     #0b2440 0%,
     #010e18 50%,
     #0a2b41 100%
-  ); /* Same gradient as topnav */
-
-
+  );
 }
-/* Custom styling for the basic-navbar-nav */
+.home-navbar-toggle {
+  /* Your existing styles for the toggle button */
+  background-color: #ffa500; /* Initial background color (orange) */
+  color: #fff; /* Initial text color (white) */
+  padding: 10px 20px; /* Adjust padding as needed */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.home-navbar-toggle:hover {
+  background-color: #ff7f00; /* Darker orange color on hover */
+}
 .basic-navbar-nav {
-  /* Add your styling properties here */
   background-color: #333;
   padding: 10px;
 }
 
 .basic-navbar-nav .nav-link {
-  /* Customize the appearance of the navigation links inside basic-navbar-nav */
   color: #fff;
   font-size: 16px;
-  margin-right: 20px; /* Adjust spacing between links */
+  margin-right: 20px;
 }
 
 .basic-navbar-nav .nav-link:hover {
-  /* Add hover effect */
-  color: #ffc107; /* Change the text color on hover */
-  text-decoration: underline; /* Add underline on hover */
+  color: #ffc107;
+  text-decoration: underline;
 }
 
 .centered-navbar {
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,31 +50,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px; /* Adjust the width as needed */
-  height: 50px; /* Adjust the height as needed */
-  background-color: #020124; /* Background color of the logo container */
-  border-radius: 50%; /* Make it round */
-  margin-right: 20px; /* Add margin for spacing from the navigation items */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow to the logo */
+  width: 50px;
+  height: 50px;
+  background-color: #020124;
+  border-radius: 50%;
+  margin-right: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.logo-container img {
-  width: 30px; /* Adjust the size of the logo image */
-  height: 30px; /* Adjust the size of the logo image */
-}
 
 .navbar-top-nav .container {
   display: flex;
   justify-content: space-between;
-  align-items: end; /* Center items vertically */
+  align-items: end;
 }
 
 /* Styling for navigation items */
 .navbar-top-nav .nav-link {
-  color: rgba(255, 226, 171, 0.898); /* Dark text color for contrast */
+  color: rgba(255, 226, 171, 0.898);
   display: flex;
   font-size: small;
-  align-items: center; /* Align icons with text */
+  align-items: center;
 }
 
 /* Icons in the navbar */
@@ -76,15 +79,10 @@
 }
 
 /* Dropdown and User menu */
-.navbar-top-nav .user-menu {
+.user-menu {
   display: flex;
-  flex-direction: column; /* Stack user and notification on top of log out */
-  align-items: center; /* Center content horizontally */
-}
-.centered-navbar {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  flex-direction: column; /* Stack user and notification on top of log out */
 }
 
 .notification-button {
@@ -99,7 +97,7 @@
 .notification-badge {
   background-color: red;
   color: white;
-padding: 2px 6px;
+  padding: 2px 6px;
   border-radius: 50%;
   font-size: 0.75rem;
   position: absolute;

@@ -46,11 +46,10 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
   return (
     <Navbar className="navbar-top-nav bg-body-tertiary" expand="lg">
     <Navbar.Brand href="#home">
-      <div className="logo-container">
+    <Navbar.Toggle aria-controls="basic-navbar-nav" className="home-navbar-toggle m-3" />
         <img src={LogoPatren} alt="Logo" width={100} height={50} />
-      </div>
+
     </Navbar.Brand>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" className="custom-navbar-toggle" />
     <Navbar.Collapse id="basic-navbar-nav" className="basic-navbar-nav">   <ul className="navbar-nav">
             <li className="nav-item">
               <Link className="nav-link" to="/">
