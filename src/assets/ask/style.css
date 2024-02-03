@@ -18,7 +18,10 @@ body, html {
 }
 .text {
     color: #fff; /* لون النص */
-    font-size: 1.6rem; /* حجم الخط */
+    font-family: "Protest Riot", sans-serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    font-style: normal;
     text-align: left; /* محاذاة النص إلى اليسار */
     position: absolute;
     left: 10%; /* النص يبدأ من 10% من اليسار */
@@ -33,7 +36,7 @@ body, html {
     left: 0;
     bottom: 0;
     width: 100%;
-
+font-size: 1.4rem;
     color: #f2f2f2;
 }
 
@@ -45,5 +48,21 @@ body, html {
     .text {
         font-size: .9rem; /* Smaller font size for better readability on small devices */
         left: 5%; /* Adjust text positioning for smaller screens */
+    
+        font-family: "Protest Riot", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 400;
+        font-style: normal;
     }
+    .footer {
+        text-align: center;
+        padding: 5px;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    font-size: .7rem;
+        color: #f2f2f2;
+    }
+    
 }
