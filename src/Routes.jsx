@@ -3,7 +3,6 @@ import Home from './WebSite/Home';
 import Contact from './WebSite/Contact';
 import About from './WebSite/About';
 import Atorneys from './WebSite/Atorney';
-import FileUploadComponent from './WebSite/FileUploadComponent';
 import SearchCourt from './WebSite/SearchCourt';
 
 const HomeRoutes = () => {
@@ -13,7 +12,6 @@ const HomeRoutes = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/about" element={<About />} />
       <Route path="/atorney" element={<Atorneys />} />
-      <Route path="/upload_pdf" element={<FileUploadComponent />} />
       <Route path="/court_search" element={<SearchCourt />} />
     </Routes>
   );
