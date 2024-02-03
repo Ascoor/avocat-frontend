@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Button, Card, Row, Col,InputGroup, FormControl } from 'react-bootstrap';
+import {
+  Button,
+  Card,
+  Row,
+  Col,
+  InputGroup,
+  FormControl,
+} from 'react-bootstrap';
 import axios from 'axios';
 import AddEditServiceModal from './AddEditServiceModal';
 import API_CONFIG from '../../config';
@@ -13,7 +20,7 @@ const Services = () => {
   const [editingService, setEditingService] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-   
+
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -35,7 +42,7 @@ const Services = () => {
     setEditingService(null);
     setShowModal(true);
   };
-  
+
   const handleEditService = (service) => {
     setEditingService(service);
     setShowModal(true);
@@ -52,7 +59,9 @@ const Services = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/service-search?search=${searchQuery}`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/service-search?search=${searchQuery}`,
+      );
       setServices(response.data);
       setCurrentPage(1);
     } catch (error) {
@@ -60,9 +69,10 @@ const Services = () => {
     }
   };
 
-
-
-  const paginatedServices = services.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const paginatedServices = services.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
   return (
     <>
       <SectionHeader
@@ -72,34 +82,33 @@ const Services = () => {
         icon={ServiceIcon}
       />
       {showModal && (
-  <AddEditServiceModal
-    show={showModal}
-    handleClose={() => {
-      setShowModal(false);
-      fetchServices(); // Refresh services list
-    }}
-    service={editingService}
-    isEditing={!!editingService}
-  />
-)}
-
+        <AddEditServiceModal
+          show={showModal}
+          handleClose={() => {
+            setShowModal(false);
+            fetchServices(); // Refresh services list
+          }}
+          service={editingService}
+          isEditing={!!editingService}
+        />
+      )}
 
       <Card>
-      <Row>
-            <Col xs={12} md={6} lg={4}>
-              <InputGroup className="mb-3">
-                <FormControl
-                  placeholder="بحث..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <Button variant="outline-secondary" onClick={handleSearch}>
-                  بحث
-                </Button>
-              </InputGroup>
-            </Col>
-          </Row>
-              <Card.Body>
+        <Row>
+          <Col xs={12} md={6} lg={4}>
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="بحث..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button variant="outline-secondary" onClick={handleSearch}>
+                بحث
+              </Button>
+            </InputGroup>
+          </Col>
+        </Row>
+        <Card.Body>
           <div className="table-responsive">
             <table className="special-table">
               <thead>
@@ -120,20 +129,21 @@ const Services = () => {
                     <td>{service.slug}</td>
                     <td>{service.service_type?.name}</td>
                     <td>
-  {service.clients && service.clients.length > 0
-    ? service.clients.map((client, index) => (
-        <span key={index}>
-          {client.name}{index < service.clients.length - 1 ? ', ' : ''}
-        </span>
-      ))
-    : service.unclients && service.unclients.map((unclient, index) => (
-        <span key={index}>
-          {unclient.name}{index < service.unclients.length - 1 ? ', ' : ''}
-        </span>
-      ))
-  }
-</td>
-
+                      {service.clients && service.clients.length > 0
+                        ? service.clients.map((client, index) => (
+                            <span key={index}>
+                              {client.name}
+                              {index < service.clients.length - 1 ? ', ' : ''}
+                            </span>
+                          ))
+                        : service.unclients &&
+                          service.unclients.map((unclient, index) => (
+                            <span key={index}>
+                              {unclient.name}
+                              {index < service.unclients.length - 1 ? ', ' : ''}
+                            </span>
+                          ))}
+                    </td>
 
                     <td>{service.service_place_name}</td>
                     <td>{service.description}</td>
@@ -151,7 +161,6 @@ const Services = () => {
                       >
                         حذف
                       </Button>
-
                     </td>
                   </tr>
                 ))}
@@ -168,15 +177,10 @@ const Services = () => {
           />
         </Card.Footer>
       </Card>
-     
+
       {/* Modals */}
-
-
-
-
     </>
   );
 };
-
 
 export default Services;

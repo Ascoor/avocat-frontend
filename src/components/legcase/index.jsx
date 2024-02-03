@@ -1,9 +1,18 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Card, Row, Col, CardHeader, Button, InputGroup, Alert, FormControl } from 'react-bootstrap';
+import {
+  Card,
+  Row,
+  Col,
+  CardHeader,
+  Button,
+  InputGroup,
+  Alert,
+  FormControl,
+} from 'react-bootstrap';
 import API_CONFIG from '../../config';
-import { CiEdit } from "react-icons/ci";
+import { CiEdit } from 'react-icons/ci';
 import AddEditLegCase from './AddEditLegCase';
 import SectionHeader from '../home_tools/SectionHeader';
 import CustomPagination from '../home_tools/Pagination';
@@ -54,7 +63,9 @@ const LegalCasesIndex = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-case-search?search=${searchQuery}`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/legal-case-search?search=${searchQuery}`,
+      );
       setLegCases(response.data);
       setCurrentPage(1);
     } catch (error) {
@@ -71,7 +82,10 @@ const LegalCasesIndex = () => {
     }
   };
 
-  const paginatedLegCases = legCases.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const paginatedLegCases = legCases.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
   return (
     <>
@@ -113,13 +127,16 @@ const LegalCasesIndex = () => {
           <Row>
             <Col>
               {showAlert && (
-                <Alert variant={alertVariant} onClose={() => setShowAlert(false)} dismissible>
+                <Alert
+                  variant={alertVariant}
+                  onClose={() => setShowAlert(false)}
+                  dismissible
+                >
                   {alertMessage}
                 </Alert>
               )}
             </Col>
           </Row>
-
         </CardHeader>
         <Card.Body>
           <div className="table-responsive">
@@ -142,7 +159,7 @@ const LegalCasesIndex = () => {
                   <tr key={index}>
                     <td>
                       <a
-                        className='btn item-link'
+                        className="btn item-link"
                         onClick={() => handleEditCase(legCase)}
                       >
                         <CiEdit className="edit-icon mb-1" />
@@ -150,35 +167,45 @@ const LegalCasesIndex = () => {
                       </a>
                     </td>
                     <td>
-                      {legCase.clients && legCase.clients.map((client, clientIndex) => (
-                        <span key={clientIndex}>
-                          {client.name}
-                          {clientIndex < legCase.clients.length - 1 && ', '}
-                        </span>
-                      ))}
+                      {legCase.clients &&
+                        legCase.clients.map((client, clientIndex) => (
+                          <span key={clientIndex}>
+                            {client.name}
+                            {clientIndex < legCase.clients.length - 1 && ', '}
+                          </span>
+                        ))}
                     </td>
                     <td>{legCase.client_capacity}</td>
                     <td>{legCase.title}</td>
                     <td>{legCase.case_sub_type?.name || '-'}</td>
                     <td>
-                      {legCase.courts && legCase.courts.map((court, courtIndex) => (
-                        <span key={courtIndex}>
-                          {court.name}
-                          {courtIndex < legCase.courts.length - 1 && ', '}
-                        </span>
-                      ))}
+                      {legCase.courts &&
+                        legCase.courts.map((court, courtIndex) => (
+                          <span key={courtIndex}>
+                            {court.name}
+                            {courtIndex < legCase.courts.length - 1 && ', '}
+                          </span>
+                        ))}
                     </td>
                     <td>
                       {legCase.created_by && (
-                        <span className='span details-text text-danger'>
-                          تم تحرير البيانات بواسطة <strong className='text-primary text-xs'>{legCase.created_by.name}</strong>
+                        <span className="span details-text text-danger">
+                          تم تحرير البيانات بواسطة{' '}
+                          <strong className="text-primary text-xs">
+                            {legCase.created_by.name}
+                          </strong>
                         </span>
                       )}
                       <br />
-                      {legCase.updated_by && legCase.created_by && <span>, </span>}
+                      {legCase.updated_by && legCase.created_by && (
+                        <span>, </span>
+                      )}
                       {legCase.updated_by && (
-                        <span className='span details-text text-danger'>
-                          تم تعديل البيانات بواسطة <strong  className='text-primary text-xs'>{legCase.updated_by.name}</strong>
+                        <span className="span details-text text-danger">
+                          تم تعديل البيانات بواسطة{' '}
+                          <strong className="text-primary text-xs">
+                            {legCase.updated_by.name}
+                          </strong>
                         </span>
                       )}
                     </td>
@@ -203,7 +230,8 @@ const LegalCasesIndex = () => {
                 ))}
               </tbody>
             </table>
-          </div>  </Card.Body>
+          </div>{' '}
+        </Card.Body>
         <Card.Footer>
           <CustomPagination
             totalCount={legCases.length}

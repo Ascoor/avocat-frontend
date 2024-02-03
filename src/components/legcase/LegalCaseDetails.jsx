@@ -35,7 +35,6 @@ export default function LegCaseDetail() {
       }
     };
 
-
     fetchLegCase();
   }, [id]);
 

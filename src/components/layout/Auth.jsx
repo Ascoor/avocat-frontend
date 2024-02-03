@@ -33,18 +33,14 @@ function Auth() {
         sidebarOpen={sidebarOpen}
       />
 
-
-<div className="content-app">
- 
-
-
-      <MainContent     
-        toggleSidebar={toggleSidebar} userName={userName} sidebarOpen={sidebarOpen} />
-
-   
+      <div className="content-app">
+        <MainContent
+          toggleSidebar={toggleSidebar}
+          userName={userName}
+          sidebarOpen={sidebarOpen}
+        />
+      </div>
     </div>
-    </div>
-    
   );
 }
 

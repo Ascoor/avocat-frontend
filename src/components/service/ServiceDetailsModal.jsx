@@ -1,4 +1,3 @@
-
 import { Card, Badge, ListGroup, Row, Col } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
 import ServiceProcedureList from './service_procedure/ServiceProcedureList';
@@ -51,26 +50,33 @@ const ServiceDetailsModal = ({ service }) => {
         <animated.div style={cardAnimation}>
           <Card>
             <Card.Body>
-              <Card.Title className="text-center">{service.service_name}</Card.Title>
+              <Card.Title className="text-center">
+                {service.service_name}
+              </Card.Title>
               <Card.Text>{service.service_description}</Card.Text>
               <ListGroup variant="flush">
                 {renderClientInfo()}
                 <ListGroup.Item>
                   <strong>الحالة: </strong>
-                  <Badge bg={getStatusColor(service.service_status)}>{service.service_status}</Badge>
+                  <Badge bg={getStatusColor(service.service_status)}>
+                    {service.service_status}
+                  </Badge>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>الجهه: </strong> {service.service_place || 'N/A'}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>رقم ملف الخدمة: </strong> {service.service_no || 'N/A'}
+                  <strong>رقم ملف الخدمة: </strong>{' '}
+                  {service.service_no || 'N/A'}
                 </ListGroup.Item>
               </ListGroup>
             </Card.Body>
           </Card>
         </animated.div>
 
-        {service && service.id && <ServiceProcedureList serviceId={service.id} />}
+        {service && service.id && (
+          <ServiceProcedureList serviceId={service.id} />
+        )}
       </Col>
     </Row>
   );

@@ -1,4 +1,4 @@
-import  { useState,useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Alert } from 'react-bootstrap';
 import { ClientSectionIcon } from '../../../assets/icons/index';
@@ -45,42 +45,41 @@ function ClientList() {
 
   // Filter clients based on search query
   useEffect(() => {
-    const filtered = clients.filter(client =>
-      ['slug', 'identity_number', 'name', 'phone_number'].some(key =>
-        client[key].toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    const filtered = clients.filter((client) =>
+      ['slug', 'identity_number', 'name', 'phone_number'].some((key) =>
+        client[key].toLowerCase().includes(searchQuery.toLowerCase()),
+      ),
     );
     setFilteredClients(filtered);
   }, [clients, searchQuery]);
 
-  const handlePageChange = newPage => setClientsPage(newPage);
+  const handlePageChange = (newPage) => setClientsPage(newPage);
 
   // Handlers for client actions
   const handleSearch = () => {
     setClientsPage(1);
   };
 
-  const handleSlugClick = slug => {
-    const client = clients.find(client => client.slug === slug);
+  const handleSlugClick = (slug) => {
+    const client = clients.find((client) => client.slug === slug);
     setSelectedClient(client);
   };
   const deleteClient = async (id) => {
     try {
       const response = await axios.delete(
         `${API_CONFIG.baseURL}/api/clients/${id}`,
-        );
-        fetchClients();
-        setAlertMessage(response.data.message);
-        setShowAlert(true);
-        setTimeout(() => {
-          setShowAlert(false);
-          setAlertMessage('');
-        }, 3000);
-      } catch (error) {
-        console.log(error.response.data.message);
-      }
-    };
-  
+      );
+      fetchClients();
+      setAlertMessage(response.data.message);
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+        setAlertMessage('');
+      }, 3000);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
 
   const handleToggleStatus = async (id) => {
     try {

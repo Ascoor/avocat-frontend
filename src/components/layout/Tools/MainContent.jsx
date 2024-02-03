@@ -1,4 +1,3 @@
-
 import AuthRoutes from './AuthRoutes';
 import '../../../assets/css/MainContent.css';
 import Sidebar from './SideBar';

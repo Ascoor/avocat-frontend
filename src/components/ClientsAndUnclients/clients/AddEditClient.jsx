@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Alert, Form, Row, Col, Button } from 'react-bootstrap';
 import {
   FaOrcid,

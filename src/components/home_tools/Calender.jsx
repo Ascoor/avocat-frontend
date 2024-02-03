@@ -55,15 +55,15 @@ const Calendar = () => {
     return () => clearInterval(interval);
   }, []);
   const calendarSpringStyles = useSpring({
-    from: { 
-      background: 'linear-gradient(45deg, #000000, #333333, #555555, #777777)', 
+    from: {
+      background: 'linear-gradient(45deg, #000000, #333333, #555555, #777777)',
     },
     to: {
-      background: 'linear-gradient(45deg, #0f1621, #121e33, #172133, #063e50)', 
+      background: 'linear-gradient(45deg, #0f1621, #121e33, #172133, #063e50)',
     },
     config: { duration: 1000 }, // Adjust the duration as needed
   });
-  
+
   useEffect(() => {
     // Update the current time every second
     const interval = setInterval(() => {
@@ -95,13 +95,13 @@ const Calendar = () => {
     <Row>
       <Col md={12} lg={12} xs={12}>
         <Card className="home-card">
-        <Card.Header className="home-text-center">
-  <h3>الأجندة</h3>
-  <div className="clock">
-    <AnalogClock />
-    <p>الوقت الحالي: {currentTime.toLocaleTimeString('ar-EG')}</p>
-  </div>
-</Card.Header>
+          <Card.Header className="home-text-center">
+            <h3>الأجندة</h3>
+            <div className="clock">
+              <AnalogClock />
+              <p>الوقت الحالي: {currentTime.toLocaleTimeString('ar-EG')}</p>
+            </div>
+          </Card.Header>
 
           <Card.Body>
             <div className="calendar-container">

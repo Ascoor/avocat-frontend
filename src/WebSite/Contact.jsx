@@ -1,4 +1,3 @@
-
 const Contact = () => {
   const phoneNumber = '+201122242888';
   const whatsappLink = `https://wa.me/${phoneNumber}`;

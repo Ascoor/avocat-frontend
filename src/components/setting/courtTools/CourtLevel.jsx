@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Row, Col, Alert, Button, Modal, Form } from 'react-bootstrap';
 import { FcFullTrash } from 'react-icons/fc';
 import axios from 'axios';

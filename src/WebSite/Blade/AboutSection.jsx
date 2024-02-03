@@ -1,4 +1,4 @@
-import  { useEffect } from 'react';
+import { useEffect } from 'react';
 import { AboutUs } from '../../assets/img/index';
 import anime from 'animejs';
 import ScrollReveal from 'scrollreveal';

@@ -1,14 +1,13 @@
-import reactRefresh from '@vitejs/plugin-react-refresh';
-import compression from 'vite-plugin-compression';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import compression from 'vite-plugin-compression';
+
 export default defineConfig({
   plugins: [
-    react(),
-    reactRefresh(),
+    react(), // This now includes fast refresh by default
     compression({
-      algorithm: 'gzip',
-      ext: '.gz',
+      algorithm: 'gzip', // Consider 'brotliCompress' for better compression if targeting modern browsers
+      ext: '.gz', // Use '.br' if using Brotli
     }),
   ],
   define: {
@@ -20,7 +19,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    minify: true,
-    sourcemap: false,
+    minify: true, // Consider specifying the minification method, e.g., 'terser' or 'esbuild'
+    sourcemap: false, // Toggle based on your need for source maps in production
   },
 });

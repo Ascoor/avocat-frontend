@@ -439,4 +439,4 @@ const LegalCaseProcedures = ({ legCaseId }) => {
   );
 };
 
-export default  LegalCaseProcedures;
+export default LegalCaseProcedures;

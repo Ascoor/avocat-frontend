@@ -81,7 +81,10 @@ const Guest = () => {
         ) : (
           <>
             {showLogoAndButtons && (
-              <animated.div style={logoAnimation} className="guest-logo-container">
+              <animated.div
+                style={logoAnimation}
+                className="guest-logo-container"
+              >
                 <img
                   src={LogoPatren}
                   alt="Pattern Logo"
@@ -97,7 +100,10 @@ const Guest = () => {
               </animated.div>
             )}
             {showLogoAndButtons && (
-              <animated.div style={buttonsAnimation} className="guest-logo-container">
+              <animated.div
+                style={buttonsAnimation}
+                className="guest-logo-container"
+              >
                 <div
                   className="buttons-container"
                   style={{ position: 'relative', zIndex: 2 }}

@@ -1,4 +1,3 @@
-
 import { Routes, Route } from 'react-router-dom';
 import Home from '../../Home';
 import Lawyers from '../../lawyer/lawyer_index.component';

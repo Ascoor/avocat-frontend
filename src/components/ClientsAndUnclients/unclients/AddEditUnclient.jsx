@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Modal, Alert, Form, Row, Col, Button } from 'react-bootstrap';
 import {
-  FaOrcid, FaUserEdit, FaIdCard, FaMapMarkerAlt,
-  FaCalendarAlt, FaEnvelope, FaPhone, FaBriefcase, FaPray
+  FaOrcid,
+  FaUserEdit,
+  FaIdCard,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaEnvelope,
+  FaPhone,
+  FaBriefcase,
+  FaPray,
 } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
@@ -11,16 +18,22 @@ import '../../../assets/css/Models.css';
 
 function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
   const isEditMode = unclient && unclient.id;
-  const [validationErrors, setValidationErrors] = useState('')
-
-
+  const [validationErrors, setValidationErrors] = useState('');
 
   const initialFormData = {
-    name: '', gender: '', identity_number: '', date_of_birth: '',
-    address: '', religion: '', work: '', email: '',
-    phone_number: '', emergency_number: '', slug: ''
+    name: '',
+    gender: '',
+    identity_number: '',
+    date_of_birth: '',
+    address: '',
+    religion: '',
+    work: '',
+    email: '',
+    phone_number: '',
+    emergency_number: '',
+    slug: '',
   };
-  const [formData, setFormData] = useState(initialFormData)
+  const [formData, setFormData] = useState(initialFormData);
   const resetFormData = () => {
     setFormData(initialFormData);
     setValidationErrors({});
@@ -29,20 +42,22 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
   useEffect(() => {
     if (unclient) {
       setFormData({
-        name: unclient.name || '', gender: unclient.gender || '',
+        name: unclient.name || '',
+        gender: unclient.gender || '',
         identity_number: unclient.identity_number || '',
         date_of_birth: unclient.date_of_birth || '',
-        address: unclient.address || '', religion: unclient.religion || '',
-        work: unclient.work || '', email: unclient.email || '',
+        address: unclient.address || '',
+        religion: unclient.religion || '',
+        work: unclient.work || '',
+        email: unclient.email || '',
         phone_number: unclient.phone_number || '',
         emergency_number: unclient.emergency_number || '',
-        slug: unclient.slug || '' // Handle slug similarly
+        slug: unclient.slug || '', // Handle slug similarly
       });
     } else {
       resetFormData();
     }
   }, [unclient]);
-
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,12 +75,15 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
     e.preventDefault();
     const formattedData = {
       ...formData,
-      date_of_birth: formatDateForBackend(formData.date_of_birth)
+      date_of_birth: formatDateForBackend(formData.date_of_birth),
     };
     try {
       let successMessage = '';
       if (isEditMode) {
-        await axios.put(`${API_CONFIG.baseURL}/api/unclients/${unclient.id}`, formattedData);
+        await axios.put(
+          `${API_CONFIG.baseURL}/api/unclients/${unclient.id}`,
+          formattedData,
+        );
         successMessage = 'تم تحديث بيانات العميل بنجاح'; // Update success message
       } else {
         await axios.post(`${API_CONFIG.baseURL}/api/unclients`, formattedData);
@@ -74,7 +92,6 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
       resetFormData();
       onSaved(successMessage); // Pass success message to parent component
       onClose();
-
     } catch (error) {
       if (error.response && error.response.status === 422) {
         // Set the validation errors from the server's response
@@ -86,11 +103,9 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
     }
   };
 
-
   return (
     // JSX for the component
     <Modal show={isOpen} onHide={onClose} centered dir="rtl">
-
       <Modal.Header closeButton>
         <Modal.Title>
           {unclient?.id ? (
@@ -103,7 +118,6 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
             </>
           )}
         </Modal.Title>
-
       </Modal.Header>
       {validationErrors.non_field_errors && (
         <Alert variant="danger">
@@ -133,7 +147,6 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
               </Form.Control.Feedback>
             </Col>
           </Form.Group>
-
 
           {/* Repeat similar structure for other fields */}
           <Form.Group as={Row}>
@@ -203,7 +216,6 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
                 onChange={handleDateChange}
                 name="date_of_birth"
                 id="inputDateOfBirth"
-
               />
             </Col>
           </Form.Group>
@@ -237,7 +249,6 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
                 required
                 maxLength="11"
               />
-
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
@@ -301,7 +312,6 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
                 onChange={handleChange}
                 name="emergency_number"
                 id="inputEmergencyNumber"
-
                 maxLength="11"
               />
             </Col>

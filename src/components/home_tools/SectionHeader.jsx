@@ -1,10 +1,15 @@
-
 import '../../assets/css/SectionHeader.css';
 
-const SectionHeader = ({ buttonName, listName, setShowAddModal, icon, showBackButton }) => {
+const SectionHeader = ({
+  buttonName,
+  listName,
+  setShowAddModal,
+  icon,
+  showBackButton,
+}) => {
   return (
     <div className="section-header">
-        {icon && <img src={icon} alt="Icon" className="section-icon" />}
+      {icon && <img src={icon} alt="Icon" className="section-icon" />}
       <div className="section-header-title">
         <h2>قائمة {listName}</h2>
       </div>

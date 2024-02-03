@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import {  MainLawyers,MainProcedures,MainClients,MainLegalCases,MainSessions } from '../assets/icons/index';
+import {
+  MainLawyers,
+  MainProcedures,
+  MainClients,
+  MainLegalCases,
+  MainSessions,
+} from '../assets/icons/index';
 import { useSpring, animated } from '@react-spring/web';
 import { Card, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
@@ -46,10 +52,16 @@ const useIconCardAnimation = () => {
   };
 };
 const MainCards = ({ count, icon }) => {
-  const { cardSpringStyles, iconSpringStyles, handleHover, handleHoverEnd, handleTouchStart, handleTouchEnd } = useIconCardAnimation();
+  const {
+    cardSpringStyles,
+    iconSpringStyles,
+    handleHover,
+    handleHoverEnd,
+    handleTouchStart,
+    handleTouchEnd,
+  } = useIconCardAnimation();
 
   return (
-    
     <div className="col-lg-2 col-md-6 col-sm-12 mb-4">
       <animated.div
         style={cardSpringStyles}
@@ -59,16 +71,12 @@ const MainCards = ({ count, icon }) => {
         onTouchEnd={handleTouchEnd}
         className="d-flex justify-content-center align-items-center"
       >
-
-          <Card.Body>
-            <animated.div style={iconSpringStyles} className="icon mb-2">
-              {icon}
-            </animated.div>
-            <Card.Text className="count">
-              {count}
-            </Card.Text>
-          </Card.Body>
-
+        <Card.Body>
+          <animated.div style={iconSpringStyles} className="icon mb-2">
+            {icon}
+          </animated.div>
+          <Card.Text className="count">{count}</Card.Text>
+        </Card.Body>
       </animated.div>
     </div>
   );
@@ -107,32 +115,30 @@ const Home = () => {
     }
   };
 
-
   return (
- 
     <div className="container mt-4">
       <div className="row mb-4 justify-content-center">
         <MainCards
-                  count={toArabicNumeral(legalSessionCount)}
-          icon={<img src={MainSessions} alt="Logo"/>}
+          count={toArabicNumeral(legalSessionCount)}
+          icon={<img src={MainSessions} alt="Logo" />}
         />
         <MainCards
           count={toArabicNumeral(legCaseCount)}
-          icon={<img src={MainLegalCases} alt="Logo"/>}
+          icon={<img src={MainLegalCases} alt="Logo" />}
         />
         <MainCards
           count={toArabicNumeral(procedureCount)}
-          icon={<img src={MainProcedures} alt="Logo"  />}
+          icon={<img src={MainProcedures} alt="Logo" />}
         />
         <MainCards
           count={toArabicNumeral(clientCount)}
-          icon={<img src={MainClients} alt="Logo"  />}
+          icon={<img src={MainClients} alt="Logo" />}
         />
         <MainCards
           count={toArabicNumeral(lawyerCount)}
-          icon={<img src={MainLawyers} alt="Logo"  />}
+          icon={<img src={MainLawyers} alt="Logo" />}
         />
-</div>
+      </div>
 
       <div className="row">
         <div className="col-md-4 mb-3">
@@ -146,7 +152,6 @@ const Home = () => {
           <div className="home-card">
             <div className="card-body">
               <h5 className="card-title">Procedures</h5>
-              
             </div>
           </div>
         </div>
@@ -161,7 +166,7 @@ const Home = () => {
 
       <div className="row mt-3">
         <div className="col">
-          <input type="text" className="form-control" placeholder="Search..."/>
+          <input type="text" className="form-control" placeholder="Search..." />
         </div>
       </div>
       <Row className="mt-12">

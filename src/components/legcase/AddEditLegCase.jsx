@@ -1,6 +1,6 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Modal, Form, Button, Alert , Row, Col} from 'react-bootstrap';
+import { Modal, Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import useAuth from '../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../config';
 
@@ -21,40 +21,46 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [caseTypes, setCaseTypes] = useState([]);
-    const [caseSubTypes,setCaseSubTypes] = useState([]);
+  const [caseSubTypes, setCaseSubTypes] = useState([]);
 
-    useEffect(() => {
-      fetchCaseTypes();
-    }, []); // إزالة التبعيات لتجنب التكرار المستمر
-    
-    useEffect(() => {
-      if (isEditing && editingLegCase) {
-        setCaseData(editingLegCase);
-        const selectedCaseType = caseTypes.find(type => type.id === editingLegCase.case_type_id);
-        if (selectedCaseType) {
-          setCaseSubTypes(selectedCaseType.case_sub_types);
-          setCaseData(prevData => ({ ...prevData, case_sub_type_id: editingLegCase.case_sub_type_id }));
-        }
-      } else {
-        setCaseData({
-          slug: '',
-          title: '',
-          description: '',
-          case_type_id: '',
-          case_sub_type_id: '',
-          client_capacity: '',
-          litigants_name: '',
-          litigants_phone: '',
-          created_by: getUser().id,
+  useEffect(() => {
+    fetchCaseTypes();
+  }, []); // إزالة التبعيات لتجنب التكرار المستمر
 
-        });
-        setCaseSubTypes([]); // تفريغ التصنيفات الفرعية للإضافة
+  useEffect(() => {
+    if (isEditing && editingLegCase) {
+      setCaseData(editingLegCase);
+      const selectedCaseType = caseTypes.find(
+        (type) => type.id === editingLegCase.case_type_id,
+      );
+      if (selectedCaseType) {
+        setCaseSubTypes(selectedCaseType.case_sub_types);
+        setCaseData((prevData) => ({
+          ...prevData,
+          case_sub_type_id: editingLegCase.case_sub_type_id,
+        }));
       }
-    }, [isEditing, editingLegCase, caseTypes]);
+    } else {
+      setCaseData({
+        slug: '',
+        title: '',
+        description: '',
+        case_type_id: '',
+        case_sub_type_id: '',
+        client_capacity: '',
+        litigants_name: '',
+        litigants_phone: '',
+        created_by: getUser().id,
+      });
+      setCaseSubTypes([]); // تفريغ التصنيفات الفرعية للإضافة
+    }
+  }, [isEditing, editingLegCase, caseTypes]);
 
   const fetchCaseTypes = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-case/case-types-sub-types`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/legal-case/case-types-sub-types`,
+      );
       setCaseTypes(response.data.caseTypes);
     } catch (error) {
       console.error('Error fetching case types:', error);
@@ -62,15 +68,21 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
   };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setCaseData(prevData => ({ ...prevData, [name]: value }));
+    setCaseData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleCaseTypeChange = (event) => {
     const newCaseTypeId = event.target.value;
-    setCaseData(prevData => ({ ...prevData, case_type_id: newCaseTypeId, case_sub_type_id: '' }));
+    setCaseData((prevData) => ({
+      ...prevData,
+      case_type_id: newCaseTypeId,
+      case_sub_type_id: '',
+    }));
 
     // تحديث قائمة التصنيفات الفرعية بناءً على التصنيف المحدد
-    const selectedCaseType = caseTypes.find(type => type.id.toString() === newCaseTypeId);
+    const selectedCaseType = caseTypes.find(
+      (type) => type.id.toString() === newCaseTypeId,
+    );
     setCaseSubTypes(selectedCaseType ? selectedCaseType.case_sub_types : []);
   };
   const handleSubmit = async (event) => {
@@ -81,7 +93,7 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
       setValidated(true);
       return;
     }
-  
+
     let dataToSend = { ...caseData };
     if (isEditing) {
       dataToSend = { ...dataToSend, updated_by: getUser().id };
@@ -91,7 +103,7 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
       const method = isEditing ? 'put' : 'post';
       const url = `${API_CONFIG.baseURL}/api/legal-cases${isEditing ? `/${editingLegCase.id}` : ''}`;
       await axios[method](url, dataToSend);
-  
+
       onClose();
     } catch (error) {
       setAlertMessage('Error: ' + error.message);
@@ -101,28 +113,34 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
   return (
     <Modal show={true} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}</Modal.Title>
+        <Modal.Title>
+          {isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        {showAlert && (
-          <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
-            {alertMessage}
-          </Alert>
-        )}
-        <Row className="mt-3">
+          {showAlert && (
+            <Alert
+              variant="danger"
+              onClose={() => setShowAlert(false)}
+              dismissible
+            >
+              {alertMessage}
+            </Alert>
+          )}
+          <Row className="mt-3">
             <Col xs={12} md={6}>
-          <Form.Group controlId="formBasicSlug">
-            <Form.Label>رقم الملف</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter slug"
-              name="slug"
-              value={caseData.slug}
-              onChange={handleInputChange}
-              required
-            />
-          <Form.Control.Feedback type="invalid">
+              <Form.Group controlId="formBasicSlug">
+                <Form.Label>رقم الملف</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter slug"
+                  name="slug"
+                  value={caseData.slug}
+                  onChange={handleInputChange}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
                   لم تقم بإضافة رقم ملف المكتب
                 </Form.Control.Feedback>
               </Form.Group>
@@ -162,7 +180,9 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
                 >
                   <option value="">اختر نوع القضية</option>
                   {caseTypes.map((type) => (
-                    <option key={type.id} value={type.id}>{type.name}</option>
+                    <option key={type.id} value={type.id}>
+                      {type.name}
+                    </option>
                   ))}
                 </Form.Control>
               </Form.Group>
@@ -179,7 +199,9 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
                 >
                   <option value="">اختر نوع القضية الفرعي</option>
                   {caseSubTypes.map((subType) => (
-                    <option key={subType.id} value={subType.id}>{subType.name}</option>
+                    <option key={subType.id} value={subType.id}>
+                      {subType.name}
+                    </option>
                   ))}
                 </Form.Control>
               </Form.Group>
@@ -247,8 +269,6 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
             {isEditing ? 'تحديث' : 'حفظ'}
           </Button>
         </Form>
-
-
       </Modal.Body>
     </Modal>
   );

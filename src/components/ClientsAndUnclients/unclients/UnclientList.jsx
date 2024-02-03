@@ -3,10 +3,7 @@ import axios from 'axios';
 import { Card, Alert } from 'react-bootstrap';
 import { ClientIcon } from '../../../assets/icons/index';
 import API_CONFIG from '../../../config';
-import {
-  AiFillEdit,
-  AiFillDelete,
-} from 'react-icons/ai';
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import CustomPagination from '../../home_tools/Pagination';
 import SectionHeader from '../../home_tools/SectionHeader';
 import AddEditUnclient from './AddEditUnclient';
@@ -23,14 +20,12 @@ function UnclientList() {
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
-
   // API Calls
   const fetchUnclients = async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/unclients`);
       if (Array.isArray(response.data.unclients)) {
         setUnclients(response.data.unclients);
-
       } else {
         console.error('Data fetched is not an array:', response.data.unclients);
       }
@@ -45,14 +40,15 @@ function UnclientList() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/unclients-search?search=${searchQuery}`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/unclients-search?search=${searchQuery}`,
+      );
       setUnclients(response.data);
       setCurrentPage(1);
     } catch (error) {
       console.error('Error searching cases:', error);
     }
   };
-
 
   const deleteUnclient = async (id) => {
     try {
@@ -79,7 +75,6 @@ function UnclientList() {
     setTimeout(() => setSuccessMessage(''), 3000);
   };
 
-
   const openAddEditModal = (unclient = null) => {
     setSelectedUnclient(unclient);
     setModalOpen(true);
@@ -87,8 +82,10 @@ function UnclientList() {
 
   // Render
 
-  const paginatedUnclients = unclients.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-
+  const paginatedUnclients = unclients.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
   return (
     <>
@@ -105,7 +102,6 @@ function UnclientList() {
         onSaved={handleSuccess}
         onUnclientDelete={deleteUnclient}
       />
-
 
       <Card className="mt-4">
         <Card.Header>
@@ -129,7 +125,11 @@ function UnclientList() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button className="search-button" type="button" onClick={handleSearch}>
+          <button
+            className="search-button"
+            type="button"
+            onClick={handleSearch}
+          >
             بحث
           </button>
         </div>
@@ -144,7 +144,7 @@ function UnclientList() {
                   <th>رقم القومى</th>
                   <th>النوع</th>
                   <th>رقم الهاتف</th>
-           
+
                   <th>حذف</th>
                 </tr>
               </thead>
@@ -158,25 +158,29 @@ function UnclientList() {
                 ) : (
                   paginatedUnclients.map((unclient) => (
                     <tr key={unclient.id}>
-                    <td>   <span className="btn client-slug"
-                          onClick={() => openAddEditModal(unclient)}>
-                        <AiFillEdit
-                          color="blue"
-                 
-                        />
-                  {unclient.slug}</span>
+                      <td>
+                        {' '}
+                        <span
+                          className="btn client-slug"
+                          onClick={() => openAddEditModal(unclient)}
+                        >
+                          <AiFillEdit color="blue" />
+                          {unclient.slug}
+                        </span>
                       </td>
                       <td>{unclient.name}</td>
                       <td>{unclient.identity_number}</td>
                       <td>{unclient.gender}</td>
                       <td>{unclient.phone_number}</td>
-             <td><AiFillDelete color="red" onClick={() => deleteUnclient(unclient)} />
-</td>
-
+                      <td>
+                        <AiFillDelete
+                          color="red"
+                          onClick={() => deleteUnclient(unclient)}
+                        />
+                      </td>
                     </tr>
                   ))
                 )}
-
               </tbody>
             </table>
           </div>
