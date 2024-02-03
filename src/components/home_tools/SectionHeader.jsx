@@ -1,4 +1,4 @@
-import React from 'react';
+
 import '../../assets/css/SectionHeader.css';
 
 const SectionHeader = ({ buttonName, listName, setShowAddModal, icon, showBackButton }) => {

@@ -1,53 +1,56 @@
 import { useState, useEffect } from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-
 import {  MainLawyers,MainProcedures,MainClients,MainLegalCases,MainSessions } from '../assets/icons/index';
-
 import { useSpring, animated } from '@react-spring/web';
+import { Card, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import Calendar from './home_tools/Calender';
 import API_CONFIG from '../config';
+// import ClientSearch from './home_tools/client_search.component';
+// import LegCaseSearch from './home_tools/leg_case_search.component';
 import 'moment/locale/ar';
 import moment from 'moment';
 import '../assets/css/home.css';
 moment.locale('ar');
-// import ClientSearch from './home_tools/client_search.component';
-// import LegCaseSearch from './home_tools/leg_case_search.component`  ';
+
 const useIconCardAnimation = () => {
   const [hovered, setHovered] = useState(false);
+
   const [touched, setTouched] = useState(false);
   const cardSpringStyles = useSpring({
-    boxShadow: hovered || touched ? '0px 0px 10px 5px #f0f900' : 'none',
-    scale: hovered || touched ? 1.1 : 1, // Ensure this remains a number
-    y: touched ? -5 : 0, // Ensure this remains a number
+    scale: hovered || touched ? 1.1 : 1,
+    y: touched ? -5 : 0,
   });
-  
-  const iconSpringStyles = useSpring({
-    filter: hovered || touched ? 'brightness(1.5)' : 'brightness(0.8)',
-    config: { mass: 1, tension: 170, friction: 26 }, // No need to add filter method here
-  });
+  const handleHover = () => {
+    setHovered(true);
+  };
 
-  // Event handlers
-  const handleHover = () => setHovered(true);
-  const handleHoverEnd = () => setHovered(false);
-  const handleTouchStart = () => setTouched(true);
-  const handleTouchEnd = () => setTouched(false);
+  const handleHoverEnd = () => {
+    setHovered(false);
+  };
+
+  const handleTouchStart = () => {
+    setTouched(true);
+  };
+
+  const handleTouchEnd = () => {
+    setTouched(false);
+  };
 
   return {
     cardSpringStyles,
-    iconSpringStyles,
     handleHover,
     handleHoverEnd,
     handleTouchStart,
     handleTouchEnd,
-    setHovered,
-    setTouched,
   };
 };
 const MainCards = ({ count, icon }) => {
   const { cardSpringStyles, iconSpringStyles, handleHover, handleHoverEnd, handleTouchStart, handleTouchEnd } = useIconCardAnimation();
 
   return (
-    <div className="col-lg-4 col-md-6 col-sm-12 mb-4"> {/* Adjust column classes */}
+    
+    <div className="col-lg-2 col-md-6 col-sm-12 mb-4">
       <animated.div
         style={cardSpringStyles}
         onMouseEnter={handleHover}
@@ -56,33 +59,35 @@ const MainCards = ({ count, icon }) => {
         onTouchEnd={handleTouchEnd}
         className="d-flex justify-content-center align-items-center"
       >
-        <animated.span style={iconSpringStyles}>{icon}</animated.span>
-        <br/> {count}
+
+          <Card.Body>
+            <animated.div style={iconSpringStyles} className="icon mb-2">
+              {icon}
+            </animated.div>
+            <Card.Text className="count">
+              {count}
+            </Card.Text>
+          </Card.Body>
+
       </animated.div>
     </div>
   );
 };
 
-// Convert to Arabic Numerals
 function toArabicNumeral(en) {
-  return String(en).replace(/[0-9]/g, t => '٠١٢٣٤٥٦٧٨٩'[+t]);
+  return ('' + en).replace(/[0-9]/g, function (t) {
+    return '٠١٢٣٤٥٦٧٨٩'.slice(+t, +t + 1);
+  });
 }
 
-// Home Component
 const Home = () => {
-  const [counts, setCounts] = useState({
-    clientCount: 0,
-    legCaseCount: 0,
-    procedureCount: 0,
-    lawyerCount: 0,
-    legalSessionCount: 0,
-  });
-  
   const [clientCount, setClientCount] = useState([0]);
   const [legCaseCount, setLegCaseCount] = useState(0);
   const [procedureCount, setProcedureCount] = useState(0);
   const [lawyerCount, setLawyerCount] = useState(0);
   const [legalSessionCount, setlegalSessionCount] = useState(0);
+  const [setEvents] = useState([]);
+  useEffect(() => {}, []);
   useEffect(() => {
     fetchOfficeCount();
   }, []);
@@ -101,13 +106,15 @@ const Home = () => {
       console.log(error);
     }
   };
-  
+
+
   return (
+ 
     <div className="container mt-4">
-      <div className="row mb-4">
+      <div className="row mb-4 justify-content-center">
         <MainCards
-          count={toArabicNumeral(legalSessionCount)}
-          icon={<img src={MainSessions} alt="Logo" />}
+                  count={toArabicNumeral(legalSessionCount)}
+          icon={<img src={MainSessions} alt="Logo"/>}
         />
         <MainCards
           count={toArabicNumeral(legCaseCount)}
@@ -125,25 +132,26 @@ const Home = () => {
           count={toArabicNumeral(lawyerCount)}
           icon={<img src={MainLawyers} alt="Logo"  />}
         />
-      </div>
+</div>
 
       <div className="row">
         <div className="col-md-4 mb-3">
-          <div className="card">
+          <div className="home-card">
             <div className="card-body">
               <h5 className="card-title">Last Sessions</h5>
             </div>
           </div>
         </div>
         <div className="col-md-4 mb-3">
-          <div className="card">
+          <div className="home-card">
             <div className="card-body">
               <h5 className="card-title">Procedures</h5>
+              
             </div>
           </div>
         </div>
         <div className="col-md-4 mb-3">
-          <div className="card">
+          <div className="home-card">
             <div className="card-body">
               <h5 className="card-title">Last Clients</h5>
             </div>
@@ -156,6 +164,11 @@ const Home = () => {
           <input type="text" className="form-control" placeholder="Search..."/>
         </div>
       </div>
+      <Row className="mt-12">
+        <Col md={12}>
+          <Calendar events={setEvents} />
+        </Col>
+      </Row>
     </div>
   );
 };

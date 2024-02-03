@@ -89,8 +89,12 @@ a {
 }
 
 
-/* CSS for form */
-
+/* CSS for Home card */
+.home-card {
+  box-shadow: 0 5px 5px #4c7286, 0 10px 10px #ffe863; /* Add shadow here */
+  background: linear-gradient(325deg, #1a485c, #0a2741);
+  color: #e3bd65;
+}
 /* Report */
 .report-procedure-icon {
   width: 95px;
@@ -370,7 +374,7 @@ a {
   background-size: cover;
   background-position: center;
   /* Your pattern image */
-  background-image: url('/back.png');
+  background-image: url('/back.jpg');
   opacity: 0.9;
   z-index: -2; /* Ensure it's above the background image */
   pointer-events: none;

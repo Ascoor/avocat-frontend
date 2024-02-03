@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import {
   FaTimes,
-  FaUser,
   FaCog,
 } from 'react-icons/fa';
 import { MdOutlinePriceChange } from 'react-icons/md';

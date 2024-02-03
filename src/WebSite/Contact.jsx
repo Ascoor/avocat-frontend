@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Contact = () => {
   const phoneNumber = '+201122242888';

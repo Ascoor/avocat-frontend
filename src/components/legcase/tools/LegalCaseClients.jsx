@@ -8,6 +8,7 @@ export default function LegalCaseClients({  legCaseId }) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [legCaseNewClients, setLegCaseNewClients] = useState([]);
+  const [clients, setClients] = useState([]);
 useEffect(() => {
   const fetchLegCaseClients = async () => {
     try {

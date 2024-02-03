@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Form, Button, FormGroup } from 'react-bootstrap';
-import { FaUser, FaEnvelope, FaKey, FaSignInAlt } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import AuthUser from './AuthUser';
 import API_CONFIG from '../../../config';
 import axios from 'axios';

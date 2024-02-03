@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button, Form, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import { FaCalendarAlt } from 'react-icons/fa';
-
+import moment from 'moment';
 import { ar } from 'date-fns/locale'; // Import Arabic locale
 import 'react-datepicker/dist/react-datepicker.css';
 

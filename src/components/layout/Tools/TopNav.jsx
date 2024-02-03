@@ -1,4 +1,4 @@
- import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Navbar, NavDropdown } from 'react-bootstrap';
 import '../../../assets/css/TopNav.css';
@@ -8,7 +8,6 @@ import Notification from './Notification';
 import { Link } from 'react-router-dom';
 import { GiJusticeStar  } from 'react-icons/gi';
 import { RiServiceLine   } from 'react-icons/ri';
-import { HiOutlineDocumentText    } from 'react-icons/hi';
 import { AiOutlineAudit     } from 'react-icons/ai';
 import { BsCashStack     } from 'react-icons/bs';
 import { GiMagnifyingGlass     } from 'react-icons/gi';
@@ -81,12 +80,8 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
 </Link>
 </li>
 
-<li className='nav-item'>
-<Link className='nav-link' to="/legal-writer">
-<HiOutlineDocumentText   className="m-1" size={15} />
-المحرر
-</Link>
-</li>
+
+
 <li className='nav-item'>
 <Link className='nav-link' to="/procedures">
 <AiOutlineAudit   className="m-1" size={15} />

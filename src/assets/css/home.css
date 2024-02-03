@@ -1,80 +1,30 @@
-/* تحسينات CSS للصفحة الرئيسية */
-
-/* استخدام خطوط مخصصة لتعزيز القراءة */
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
-
-.body {
-  font-family: 'Cairo', sans-serif;
-  background-color: #f0f2f5; /* خلفية خفيفة لراحة العين */
-}
-
-.container {
-  max-width: 1200px; /* تحديد أقصى عرض للحاوية */
-  margin: auto;
-  padding: 20px;
-}
-
-/* تصميم بطاقات الأحداث بشكل متجاوب */
-.event-card {
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
-  border-radius: 8px;
-  overflow: hidden; /* لضمان بقاء كل العناصر داخل البطاقة */
-  transition: transform 0.3s ease-in-out;
-}
-
-.event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-/* تحسين العناوين والنصوص داخل البطاقات */
-.card-title {
-  font-size: 1.2rem; /* حجم الخط للعنوان */
-  color: #333; /* لون الخط */
-}
-
-/* تحسين استجابة الأعمدة والصفوف */
-.row {
+/* Icon and Count Display Enhancements */
+.icon {
   display: flex;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem; /* Adjust size as needed */
 }
 
-.col {
-  flex: 0 0 auto;
-  width: 100%;
-  max-width: 100%; /* لضمان امتلاء العرض */
+.count {
+  font-size: 1.2rem; /* Adjust size as needed */
+  display: block; /* Ensure counts are displayed under icons */
+  text-align: center; /* Center-align the count text */
+  font-weight: 500;
 }
 
-/* تحديد أحجام الأعمدة للشاشات المختلفة */
-@media (min-width: 768px) {
-  .col-md-4 {
-    max-width: 33.33333%;
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+  .col-md-6 {
+    max-width: 50%;
   }
-}
 
-@media (min-width: 992px) {
-  .col-lg-4 {
-    max-width: 33.33333%;
+  .col-sm-12 {
+    max-width: 100%;
   }
-}
 
-/* تصميم زر البحث */
-.form-control {
-  border-radius: 20px; /* جعل حواف الزر مستديرة */
-  border: 1px solid #ced4da;
-}
-
-.btn-home-search {
-  background-color: #0056b3; /* لون الخلفية للزر */
-  color: #ffffff; /* لون النص */
-  border-radius: 20px; /* جعل حواف الزر مستديرة */
-  padding: 10px 20px;
-}
-
-.btn-home-search:hover {
-  background-color: #004085; /* تغيير لون الزر عند التمرير */
+  .icon, .count {
+    font-size: 1.2rem; /* Smaller font size for smaller devices */
+    font-weight: 500;
+  }
 }

@@ -23,7 +23,6 @@ import Services from '../../service/index';
 import ProcedureSearch from '../../reports/procedure_search.component';
 import ProfileUser from '../../layout/AuthTool/ProfileUser';
 // import Archives from '../../Archives/ArchiveDashboard';
-import LegalWriter from '../../LegalWriter/LegalWriterPlatform';
 import { Container } from 'react-bootstrap';
 const AuthRoutes = () => {
   return (
@@ -38,19 +37,14 @@ const AuthRoutes = () => {
         <Route path="/court-search" element={<CourtSearch />} />
         <Route path="/lawyers" element={<Lawyers />} />
         <Route path="/cases_setting" element={<CaseTypeSet />} />
-
         <Route path="/financial" element={<FinancialDashboard />} />
         <Route path="/legcases/show/:id" element={<LegCaseDetail />} />
         <Route path="/profile/:userId" element={<ProfileUser />} />
         <Route path="/legcases" element={<LegalCasesIndex />} />
         <Route path="/client/create" element={<AddEditClient />} />
         <Route path="/client/edit/:id" element={<AddEditClient />} />
-        <Route path="/legal-writer" element={<LegalWriter />} />
-
         <Route path="/reports/search-court" element={<SearchCourt />} />
         <Route path="/lawyers/form" element={<LawyersAddEdit />} />
-        {/* <Route path="/archives" element={<Archives />} /> */}
-        {/* <Route path="/archives/wordpadeditor" element={<WordPadEditor />} /> */}
       </Routes>
     </Container>
   );

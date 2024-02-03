@@ -1,4 +1,4 @@
-import React from 'react';
+
 import DatePicker from 'react-datepicker';
 
 const DateInput = ({ selected, onChange, required }) => (

@@ -1,11 +1,10 @@
-import React from 'react';
+
 import {
   Atorney1,
   Atorney2,
   Atorney3,
   Atorney4,
   Atorney5,
-  Atorney6,
 } from '../assets/img/index';
 
 const Atorneys = () => {

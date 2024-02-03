@@ -1,31 +1,24 @@
-module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    es2020: true,
+export const root = true;
+export const env = {
+  browser: true,
+  es2020: true,
+};
+
+export const ignorePatterns = ['dist', '.eslintrc.cjs'];
+export const parserOptions = {
+  ecmaVersion: 'latest',
+  sourceType: 'module',
+};
+export const settings = {
+  react: {
+    version: '18.2',
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended',
+};
+export const plugins = ['react-refresh'];
+export const rules = {
+  'react/prop-types': 'off', // Disable prop-types warnings
+  'react-refresh/only-export-components': [
+    'warn',
+    { allowConstantExport: true },
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
-  settings: {
-    react: {
-      version: '18.2',
-    },
-  },
-  plugins: ['react-refresh'],
-  rules: {
-    'react/prop-types': 'off', // Disable prop-types warnings
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-  },
 };

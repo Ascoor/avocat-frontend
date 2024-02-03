@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
 import anime from 'animejs';
 import { Slider1, Slider2, Slider3, Slider4 } from '../../assets/img/index';
