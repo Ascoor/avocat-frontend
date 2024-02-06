@@ -23,7 +23,13 @@
   background-color: #ff7f00; /* Darker orange color on hover */
 }
 .basic-navbar-nav {
-  background-color: #333;
+
+  background: linear-gradient(
+    to top, 
+    #0b2440 0%, 
+    #010e18 50%, 
+    #0a2b41 100%
+  );
   display: flex;
   justify-content: center;
   align-items: center;

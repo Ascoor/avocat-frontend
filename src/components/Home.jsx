@@ -51,36 +51,34 @@ const useIconCardAnimation = () => {
     handleTouchEnd,
   };
 };
-const MainCards = ({ count, icon }) => {
-  const {
-    cardSpringStyles,
-    iconSpringStyles,
-    handleHover,
-    handleHoverEnd,
-    handleTouchStart,
-    handleTouchEnd,
-  } = useIconCardAnimation();
 
-  return (
-    <div className="col-lg-2 col-md-6 col-sm-12 mb-4">
-      <animated.div
-        style={cardSpringStyles}
-        onMouseEnter={handleHover}
-        onMouseLeave={handleHoverEnd}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        className="d-flex justify-content-center align-items-center"
-      >
-        <Card.Body>
-          <animated.div style={iconSpringStyles} className="icon mb-2">
-            {icon}
+    const MainCards = ({ count, icon }) => {
+      const {
+        cardSpringStyles,
+        handleHover,
+        handleHoverEnd,
+        handleTouchStart,
+        handleTouchEnd,
+      } = useIconCardAnimation();
+    
+      return (
+        <div className="col-lg-2 col-md-4 col-sm-6 mb-4">
+          <animated.div
+            style={cardSpringStyles}
+            onMouseEnter={handleHover}
+            onMouseLeave={handleHoverEnd}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="card-container"
+          >
+            <div className="icon-wrapper d-flex flex-column justify-content-center align-items-center">
+              <div className="icon mb-2">{icon}</div>
+              <div className="count">{count}</div>
+            </div>
           </animated.div>
-          <Card.Text className="count">{count}</Card.Text>
-        </Card.Body>
-      </animated.div>
-    </div>
-  );
-};
+        </div>
+      );
+    };
 
 function toArabicNumeral(en) {
   return ('' + en).replace(/[0-9]/g, function (t) {
@@ -117,8 +115,12 @@ const Home = () => {
 
   return (
     <div className="container mt-4">
-      <div className="row mb-4 justify-content-center">
-        <MainCards
+<Card className="text-center text-center-gradient-card">
+  <Card.Header className="main-dashboard-card-header p-3">
+  لوحة التحكم</Card.Header>
+  <Card.Body className="main-dashboard-card-body">
+    <div className="row justify-content-center">
+    <MainCards
           count={toArabicNumeral(legalSessionCount)}
           icon={<img src={MainSessions} alt="Logo" />}
         />
@@ -138,42 +140,61 @@ const Home = () => {
           count={toArabicNumeral(lawyerCount)}
           icon={<img src={MainLawyers} alt="Logo" />}
         />
-      </div>
 
-      <div className="row">
-        <div className="col-md-4 mb-3">
-          <div className="home-card">
-            <div className="card-body">
-              <h5 className="card-title">Last Sessions</h5>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-4 mb-3">
-          <div className="home-card">
-            <div className="card-body">
-              <h5 className="card-title">Procedures</h5>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-4 mb-3">
-          <div className="home-card">
-            <div className="card-body">
-              <h5 className="card-title">Last Clients</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    </div>
+  </Card.Body>
+</Card>
       <div className="row mt-3">
         <div className="col">
           <input type="text" className="form-control" placeholder="Search..." />
         </div>
       </div>
-      <Row className="mt-12">
-        <Col md={12}>
+<div className="row" dir="rtl">
+  <div className="col-md-6 mb-3">
+    <div className="home-card">
+      <div className="card-body">
+        <h5 className="card-title p-3">آخر الجلسات</h5>
+        <p className="card-text">معلومات حول آخر الجلسات.</p>
+        <button className="btn btn-home-card">عرض المزيد</button>
+      </div>
+    </div>
+  </div>
+  <div className="col-md-6  mb-3">
+    <div className="home-card">
+      <div className="card-body">
+        <h5 className="card-title p-3">الإجراءات</h5>
+        <p className="card-text">تفاصيل حول الإجراءات الأخيرة.</p>
+        <button className="btn btn-home-card">عرض المزيد</button>
+      </div>
+    </div>
+  </div>
+  <div className="col-md-6 mb-3">
+    <div className="home-card">
+      <div className="card-body">
+        <h5 className="card-title p-3">آخر العملاء</h5>
+        <p className="card-text">معلومات عن آخر العملاء.</p>
+        <button className="btn btn-home-card">عرض المزيد</button>
+      </div>
+    </div>
+  </div>
+
+  <div className="col-md-6 mb-3">
+    <div className="home-card">
+      <div className="card-body">
+        <h5 className="card-title p-3">آخر القضايا</h5>
+        <p className="card-text">معلومات عن آخر القضايا.</p>
+        <button className="btn btn-home-card">عرض المزيد</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+    
           <Calendar events={setEvents} />
-        </Col>
-      </Row>
+
     </div>
   );
 };

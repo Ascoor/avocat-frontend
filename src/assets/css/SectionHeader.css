@@ -5,7 +5,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(to right, #051937, #004d7a);
+    background: linear-gradient(
+      to bottom, 
+      #0b2440 0%, 
+      #010e18 50%, 
+      #0a2b41 100%
+    );
+  border-radius: 50px;
+  box-shadow: 0 2px 4px rgba(171, 5, 5, 0.763);  
     color: #ffffff; /* لون النص */
     padding: 15px 20px; /* تعديل الهوامش حسب الحاجة */
   }
@@ -19,7 +26,7 @@
     margin: 0;
     font-size: 24px;
     margin-right: 10px;
-    color: #ffffff; /* لون النص */
+    color: #df9114; /* لون النص */
   }
   
   .section-icon {
@@ -29,7 +36,7 @@
   }
   
   .section-header-buttons button {
-    background-color: #007bff; /* لون خلفية الزر */
+    background-color: #df9114; /* لون خلفية الزر */
     color: #ffffff; /* لون النص */
     border: none;
     padding: 10px 20px;
@@ -38,15 +45,15 @@
   }
   
   .section-header-buttons button:hover {
-    background-color: orange; /* لون خلفية الزر عند التحويل */
+    background-color: #b67000; /* لون خلفية الزر عند التحويل */
   }
   
   .back-btn {
-    background-color: #dc3545;
+    background-color: #fe0019;
   }
   
   .back-btn:hover {
-    background-color: #c82333;
+    background-color: #8b010f;
   }
   
   /* وسائط الاستجابة للتصميم الاستجابي */

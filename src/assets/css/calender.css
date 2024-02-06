@@ -1,21 +1,22 @@
 /* General Styles for FullCalendar */
 .fc {
   font-family: 'Arial', sans-serif;
-  color: #333;
+  color: #ffffff;
 }
 
 /* Card Style for Events */
-.calendar-event-card {
-  background-color: #fff;
+.home-card-calendar {
+  background-color: #dde9ff;
   border-radius: 12px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
   margin-bottom: 16px;
 }
 
-.calendar-event-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.2);
+.calendar-container-display {
+  position: relative;
+  z-index: 1;
+  background-color: #0a263c;
 }
 
 /* Media Query for Responsive Design */
@@ -54,7 +55,7 @@
 .calendar-event-card {
   background-color: #fff; /* White background to allow for better text readability */
   border-radius: 12px; /* Rounded corners */
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); /* Box shadow for 3D effect */
+  box-shadow: 0px 8px 16px 0px rgba(226, 29, 29, 0.2); /* Box shadow for 3D effect */
   transition: transform 0.2s; /* Animation for hover effect */
   margin-bottom: 16px; /* Margin at the bottom to separate multiple cards */
   overflow: hidden; /* Add this line to prevent overflow */
@@ -74,12 +75,4 @@
 .calendar-event-card:hover {
   transform: scale(1.02); /* Slightly enlarge the card */
   box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.2); /* Enhanced box shadow on hover */
-}
-
-/* Media Query for Responsive Design */
-@media (max-width: 768px) {
-  .calendar-event-card {
-    margin-bottom: 12px;
-    padding: 12px;
-  }
 }

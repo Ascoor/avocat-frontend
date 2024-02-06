@@ -77,15 +77,19 @@ const ProcedureSearch = () => {
   };
   return (
     <>
-      <div className="section-card-header">
-        <div className="title-row">
-          بحث الإجراءات
+
+<div className="section-header">
           <img src={SearchIcon} alt="Icon" className="report-procedure-icon" />
+        <div className="section-report-title">
+        <h3>
+
+          بحث الإجراءات
+        </h3>
         </div>
         <button className="back-btn" onClick={() => window.history.back()}>
-          رجوع
-        </button>
-      </div>
+            رجوع
+          </button>
+        </div>
       <Card className="m-4">
         <Card.Body>
           <Form onSubmit={handleFormSubmit}>

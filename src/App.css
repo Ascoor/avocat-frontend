@@ -60,12 +60,12 @@ a {
   border: solid 1px #ddd; /* حدود للتمييز */
   padding: 20px; /* مساحة داخل البرواز */
   margin: 20px auto; /* تمركز وهامش خارجي */
-  background: radial-gradient(
-    circle at center, /* تحديد نقطة بداية التدرج في المركز */
-    #0f1621 10%,     /* أزرق غامق جدًا في المركز */
-    #121e33 50%,    /* أزرق ملكي في المنتصف */
-    #172133 90%,    /* أزرق غامق مع لمسة من الرمادي لإضافة العمق */
-    #26351c 100%    /* أزرق بنفسجي غامق على الأطراف لإضافة الفخامة */
+
+  background: linear-gradient(
+    to bottom, 
+    #0b2440 0%, 
+    #010e18 50%, 
+    #0a2b41 100%
   );
   
   border-radius: 5px; /* تقريب الزوايا */
@@ -658,6 +658,13 @@ a {
 .report-procedure-icon {
   width: 95px;
   height: 70px;
+}
+.section-report-title h3
+{
+  margin: 0;
+  font-size: 24px;
+  margin-right: 10px;
+  color: #df9114; /* لون النص */
 }
 /* Special Table Styles */
 .special-table {

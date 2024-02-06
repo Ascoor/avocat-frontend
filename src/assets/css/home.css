@@ -1,30 +1,140 @@
-/* Icon and Count Display Enhancements */
-.icon {
+/* Card Styles with Gradient Background */
+/* Card Styles with Darker Gradient Background */
+.text-center-gradient-card {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(
+    to right, 
+    #0b2440 0%, 
+    #010e18 50%, 
+    #0a2b41 100%
+  );
+  color: white; /* White text color for readability */
+  border-radius: 15px; /* Rounded corners for the card */
+  box-shadow: 0 2px 4px rgb(235, 9, 9);
+  margin: 20px 0; /* Margin around the card */
+  overflow: hidden; /* Ensures nothing spills out of the card */
+}
+
+.text-center-gradient-card .card-header {
+  background: rgba(0, 0, 0, 0.2); /* Slightly darker header for contrast */
+  color: #ffa500; /* White text for the header */
+  /* shadow light background */
+  box-shadow: 0 2px 4px rgb(235, 9, 9);
+  border-radius: 50px;
+  padding: 10px 15px; /* Padding for the header */
+  border: none; /* Remove any border */
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.text-center-gradient-card .card-body {
+  padding: 20px 15px; /* Padding inside the card */
+}
+
+
+.card-container {
+  background: linear-gradient(
+    to right, 
+    #0b2440 0%, 
+    #010e18 50%, 
+    #0a2b41 100%
+  );
+  color: white; /* Adjust text color for better readability */
+  border-radius: 10px; /* Rounded corners */
+  
+  box-shadow: 0 2px 4px rgb(235, 9, 9);
+
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem; /* Adjust size as needed */
+  overflow: hidden; /* Ensures nothing spills out of the card */
+}
+
+.card-container:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+}
+
+/* Icon and Count Styling */
+.icon {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 
 .count {
-  font-size: 1.2rem; /* Adjust size as needed */
-  display: block; /* Ensure counts are displayed under icons */
-  text-align: center; /* Center-align the count text */
+  font-size: 1.2rem;
   font-weight: 500;
+}
+.home-card {
+  background: linear-gradient(
+    to bottom, 
+    #0b2440 0%, 
+    #010e18 50%, 
+    #0a2b41 100%
+  );
+  
+  box-shadow: 0 2px 4px rgb(235, 9, 9);
+  border-radius: 50px;
+  padding: 15px; /* Card padding */
+  text-align: right; /* Align text to the right for RTL */
+}
+ 
+.card-title {
+ text-align: center;
+ background: linear-gradient(
+  to right, 
+  #0b2440 0%, 
+  #010e18 50%, 
+  #0a2b41 100%
+);
+
+box-shadow: 0 2px 4px rgb(235, 9, 9);
+border-radius: 50px;
+ color: #ffa500;
+  margin-bottom: 15px; /* Space below the title */
+}
+
+.card-text {
+  margin-bottom: 20px; /* Space above the button */
+  color: #fff;
+}
+.btn-home-card {
+  background: linear-gradient(
+    to right,
+    #990516 0%,
+    #940909 50%,
+    #ff1f1f 100%
+  
+  );
+  color: white;
+  border: none;
+  padding: 10px 20px;
 }
 
 /* Responsive Design Adjustments */
 @media (max-width: 768px) {
-  .col-md-6 {
+  .col-md-4 {
     max-width: 50%;
   }
-
-  .col-sm-12 {
+  .col-sm-6 {
     max-width: 100%;
   }
-
   .icon, .count {
-    font-size: 1.2rem; /* Smaller font size for smaller devices */
-    font-weight: 500;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .col-md-4 {
+    max-width: 50%;
+  }
+  .col-sm-6 {
+    max-width: 100%;
+  }
+  .icon, .count {
+    font-size: 1rem;
   }
 }
