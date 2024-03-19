@@ -43,10 +43,10 @@ const SearchCourt = () => {
     const caseTypeValue = event.target.value;
     setSelectedCaseType(caseTypeValue);
   };
-
-  const handleSubmit = (event) => {
+  
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     const formData = {
       degree: selectedDegree,
       court: selectedCourt,
@@ -54,20 +54,20 @@ const SearchCourt = () => {
       caseYear: selectedCaseYear,
       caseNumber: selectedCaseNumber,
     };
-
-    axios
-      .post('https://search-api.avocat.live/search', formData, {
+  
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/search', formData, {
         headers: {
-          'X-Request-Source': 'React', // إرسال عنوان الرأس للتحقق من المصدر
+          'Content-Type': 'application/json',
+          'X-Request-Source': 'React', // Make sure this header is expected and correctly handled in your FastAPI app
         },
-      })
-      .then((response) => {
-        // تحديث حالة نتائج البحث
-        setSearchResults(response.data);
-      })
-      .catch((error) => console.log(error));
+      });
+      // Assuming your FastAPI responds with JSON containing the search results
+      setSearchResults(response.data); // Update your component's state with the received search results
+    } catch (error) {
+      console.error('Search failed:', error);
   };
-
+  };
   return (
     <section className="home-page">
       <Card>
