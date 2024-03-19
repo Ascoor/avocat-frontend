@@ -56,7 +56,7 @@ const SearchCourt = () => {
     };
   
     try {
-      const response = await axios.post('http://127.0.0.1:8000/search', formData, {
+      const response = await axios.post('https://search-api.avocat.live/search', formData, {
         headers: {
           'Content-Type': 'application/json',
           'X-Request-Source': 'React', // Make sure this header is expected and correctly handled in your FastAPI app
