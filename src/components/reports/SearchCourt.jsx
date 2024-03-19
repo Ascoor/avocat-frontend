@@ -56,7 +56,7 @@ const SearchCourt = () => {
     };
 
     axios
-      .post('https://search-api.avocat.live/search', formData, {
+      .post('http://search-api.avocat.live/search', formData, {
         headers: {
           'X-Request-Source': 'React', // إرسال عنوان الرأس للتحقق من المصدر
         },
