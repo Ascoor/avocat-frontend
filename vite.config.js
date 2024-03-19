@@ -17,6 +17,7 @@ export default defineConfig({
     host: '127.0.0.1',
     port: 3000,
   },
+  
   build: {
     outDir: 'dist',
     minify: true, // Consider specifying the minification method, e.g., 'terser' or 'esbuild'
