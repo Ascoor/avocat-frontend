@@ -59,8 +59,7 @@ const SearchCourt = () => {
       const response = await axios.post('https://search-api.avocat.live/search', formData, {
         headers: {
           'Content-Type': 'application/json',
-          'X-Request-Source': 'React', // Make sure this header is expected and correctly handled in your FastAPI app
-        },
+          },
       });
       // Assuming your FastAPI responds with JSON containing the search results
       setSearchResults(response.data); // Update your component's state with the received search results
