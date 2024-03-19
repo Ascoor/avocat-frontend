@@ -11,8 +11,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "copy-build": "find ../hadathah/ -type f -not -name '.htaccess' -delete && cp -R dist/* /home/ubuntu/domains/avocat.live/public/",
-
+        "copy-dist": "find  /home/ubuntu/domains/avocat.live/public/ -type f -not -name '.htaccess' -delete &&cp -R dist/* /home/ubuntu/domains/avocat.live/public/",
     "lint": "eslint . --ext .js,.jsx",
     "lint-fix": "eslint . --ext .js,.jsx --fix",
     "preview": "vite preview",
