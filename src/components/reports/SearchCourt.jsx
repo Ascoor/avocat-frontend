@@ -56,10 +56,8 @@ const SearchCourt = () => {
     };
 
     axios
-      .post('http://0.0.0.0:8000/search', formData, {
-        headers: {
-          'X-Request-Source': 'React', // إرسال عنوان الرأس للتحقق من المصدر
-        },
+      .post('https://search-api.avocat.live/search', formData, {
+
       })
       .then((response) => {
         // تحديث حالة نتائج البحث
