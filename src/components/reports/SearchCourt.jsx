@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Form, Button, FormGroup } from 'react-bootstrap';
 import API_CONFIG from '../../config';
-
 const SearchCourt = () => {
   const [allData, setAllData] = useState({
     search_degrees: [],
@@ -43,10 +42,9 @@ const SearchCourt = () => {
     const caseTypeValue = event.target.value;
     setSelectedCaseType(caseTypeValue);
   };
-  
   const handleSubmit = (event) => {
     event.preventDefault();
-
+  
     const formData = {
       degree: selectedDegree,
       court: selectedCourt,
@@ -54,16 +52,20 @@ const SearchCourt = () => {
       caseYear: selectedCaseYear,
       caseNumber: selectedCaseNumber,
     };
-
+  
     axios
       .post('https://search-api.avocat.live/search', formData, {
 
+ 
       })
       .then((response) => {
-        // تحديث حالة نتائج البحث
+        // Update search results state
         setSearchResults(response.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        // Handle errors here, such as updating UI to show error message
+      });
   };
 
   return (
@@ -139,29 +141,15 @@ const SearchCourt = () => {
             )}
             <Form.Group controlId="caseYear">
               <Form.Label>Case Year</Form.Label>
-              <Form.Control
-                as="select"
-                value={selectedCaseYear} // Use selectedCaseYear here
-                onChange={(event) => setSelectedCaseYear(event.target.value)}
-                required
-              >
-                <option value="">--اختر--</option>
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-                <option value="2020">2020</option>
-                <option value="2019">2019</option>
-                <option value="2018">2018</option>
-                <option value="2017">2017</option>
-                <option value="2016">2016</option>
-                <option value="2015">2015</option>
-                <option value="2014">2014</option>
-                <option value="2013">2013</option>
-                <option value="2012">2012</option>
-                <option value="2011">2011</option>
-                <option value="2010">2010</option>
-              </Form.Control>
+<Form.Control
+  as="input"
+  type="number"
+  pattern="\d{2,4}" // Regular expression to match exactly 4 digits
+  title="Please enter a 4-digit year"
+  value={selectedCaseYear} // Use selectedCaseYear here
+  onChange={(event) => setSelectedCaseYear(event.target.value)}
+  required
+/>
             </Form.Group>
             <FormGroup controlId="caseNumber">
               <Form.Label>Case Number</Form.Label>
@@ -180,85 +168,8 @@ const SearchCourt = () => {
           </Form>
         </Card.Body>
       </Card>
-      {searchResults && (
-        <Card className="mt-3">
-          <Card.Header className="home-text-center">Search Results</Card.Header>
-          <Card.Body>
-            {/* تخصيص عرض النتائج بتنسيق HTML */}
-            <div className="container mt-5">
-              <div className="card mt-4">
-                <div className="card-header">
-                  <h2>تفاصيل القضية</h2>
-                </div>
-                <div className="card-body">
-                  <ul>
-                    <li>
-                      <strong>رقم الدعوى:</strong> {searchResults['رقم الدعوى']}
-                    </li>
-                    <li>
-                      <strong>السنة:</strong> {searchResults['السنة']}
-                    </li>
-                    <li>
-                      <strong>نوع الدعوى:</strong> {searchResults['نوع الدعوى']}
-                    </li>
-                    <li>
-                      <strong>تاريخ القيد:</strong>{' '}
-                      {searchResults['تاريخ القيد']}
-                    </li>
-                    <li>
-                      <strong>اسم المدعى:</strong> {searchResults['اسم المدعى']}
-                    </li>
-                    <li>
-                      <strong>اسم المدعى عليه:</strong>{' '}
-                      {searchResults['اسم المدعى عليه']}
-                    </li>
-                    <li>
-                      <strong>الموضوع:</strong> {searchResults['الموضوع']}
-                    </li>
-                  </ul>
-                </div>
-                <div className="card-body">
-                  <ul>
-                    <li>
-                      <strong>تاريخ آخر جلسة:</strong>{' '}
-                      {searchResults['تاريخ أخر جلسة']}
-                    </li>
-                    <li>
-                      <strong>قرار آخر جلسة:</strong>{' '}
-                      {searchResults['قرار أخر جلسة']}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="card mt-4">
-                <div className="card-header">
-                  <h2>Case Sessions</h2>
-                </div>
-                <div className="card-body">
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">تاريخ الجلسة</th>
-                        <th scope="col">قرار الجلسة</th>
-                        <th scope="col">تاريخ الجلسة القادمة</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {searchResults['جلسات القضية'].map((session, index) => (
-                        <tr key={index}>
-                          <td>{session['تاريخ الجلسة']}</td>
-                          <td>{session['قرار الجلسة']}</td>
-                          <td>{session['تاريخ الجلسة القادمة']}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </Card.Body>
-        </Card>
-      )}
+      
+      <div dangerouslySetInnerHTML={{ __html: searchResults }} />
     </section>
   );
 };

@@ -457,6 +457,27 @@ a {
     width: 90%;
   }
 }
+.results-card-header {
+  background-color: #007bff; /* Blue header */
+  color: white;
+}
+
+.results-table-header {
+  background-color: #f8f9fa; /* Light grey background */
+  color: #343a40; /* Dark text */
+}
+
+.results-table-row:hover {
+  background-color: #f0f0f0; /* Light hover effect */
+}
+
+.important-result-date {
+  color: #dc3545; /* Red color for important dates */
+}
+
+.important-result-decision {
+  font-weight: bold; /* Bold for important decisions */
+}
 
 /* ======================== RESPONSIVE STYLES ======================== */
 @media (max-width: 768px) {
