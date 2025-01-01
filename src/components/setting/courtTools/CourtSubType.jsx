@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, Button, Modal, Form, Card, Alert } from 'react-bootstrap';
-import { FcFullTrash } from 'react-icons/fc';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
-import CustomPagination from '../../home_tools/Pagination';
 
 const CourtSubType = ({ show, handleClose }) => {
   const [newCourtSubType, setNewCourtSubType] = useState({
@@ -15,36 +12,20 @@ const CourtSubType = ({ show, handleClose }) => {
   const [modalMessage, setModalMessage] = useState(null);
   const [courtTypes, setCourtTypes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [alert, setAlert] = useState({ show: false, message: '', variant: 'success' });
 
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [alertMessage, setAlertMessage] = useState(null);
   const itemsPerPage = 10;
-  const [alert, setAlert] = useState({
-    show: false,
-    message: '',
-    variant: 'success',
-  });
 
-  const fetchCourtData = async (apiPath, setData) => {
-    try {
-      const response = await axios.get(`${API_CONFIG.baseURL}${apiPath}`);
-      setData(response.data);
-    } catch (e) {
-      setAlert({
-        show: true,
-        message: `Error fetching ${apiPath}`,
-        variant: 'danger',
-      });
-    }
-  };
-  // Added a function definition for fetchCourtSubTypes
-  const fetchCourtSubTypes = async () => {
-    fetchCourtData(
-      API_CONFIG.baseURL + '/api/court_sub_types',
-      setCourtSubTypes,
-    );
-  };
   useEffect(() => {
+    const fetchCourtData = async (endpoint, setter) => {
+      try {
+        const response = await axios.get(`${API_CONFIG.baseURL}${endpoint}`);
+        setter(response.data);
+      } catch (error) {
+        setAlert({ show: true, message: `Error fetching ${endpoint}`, variant: 'danger' });
+      }
+    };
+
     if (show) {
       fetchCourtData('/api/court_types', setCourtTypes);
     }
@@ -68,131 +49,110 @@ const CourtSubType = ({ show, handleClose }) => {
     currentPage * itemsPerPage,
   );
 
-  const clearModalFields = () =>
-    setNewCourtSubType({ name: '', court_type_id: '' });
-
-  const handleAddCourtSubType = () => {
-    axios
-      .post(`${API_CONFIG.baseURL}/api/court_sub_types`, newCourtSubType)
-      .then((response) => {
-        setCourtSubTypes([...courtSubTypes, response.data]);
-        setSuccessMessage({
-          type: 'success',
-          text: 'تمت إضافة مستوى المحكمة بنجاح.',
-        });
-
-        handleClose(); // Close modal
-        clearModalFields();
-        fetchCourtSubTypes();
-      }).catch;
-    setModalMessage({
-      type: 'danger',
-      text: 'تأكد من البيان الذى يتم إدخاله',
-    });
-  };
-
-  const handleCourtTypeChange = (e) => {
-    const selectedTypeId = e.target.value;
-    setSelectedCourtTypeId(selectedTypeId); // Fixed this to use the selectedTypeId
-    setNewCourtSubType({ ...newCourtSubType, court_type_id: selectedTypeId }); // And this too
-  };
-
-  const handleSubmit = () => {
+  const handleAddCourtSubType = async () => {
     if (!newCourtSubType.name.trim() || !newCourtSubType.court_type_id) {
-      setModalMessage({
-        type: 'danger',
-        text: 'برجاء إدخال مستوى المحكمة المراد إضافته.',
-      });
+      setModalMessage({ type: 'danger', text: 'برجاء إدخال البيانات المطلوبة.' });
       return;
     }
-    handleAddCourtSubType();
+
+    try {
+      const response = await axios.post(`${API_CONFIG.baseURL}/api/court_sub_types`, newCourtSubType);
+      setCourtSubTypes([...courtSubTypes, response.data]);
+      setAlert({ show: true, message: 'تمت إضافة النوع الفرعي بنجاح.', variant: 'success' });
+      setNewCourtSubType({ name: '', court_type_id: '' });
+      handleClose();
+    } catch (error) {
+      setModalMessage({ type: 'danger', text: 'حدث خطأ أثناء الإضافة.' });
+    }
   };
 
   const handleDeleteCourtSubType = async (id) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/court_sub_types/${id}`);
-      setCourtSubTypes(
-        courtSubTypes.filter((courtSubType) => courtSubType.id !== id),
-      );
+      setCourtSubTypes(courtSubTypes.filter((courtSubType) => courtSubType.id !== id));
+      setAlert({ show: true, message: 'تم الحذف بنجاح.', variant: 'success' });
     } catch (error) {
-      setAlertMessage({
-        show: true,
-        message: 'Error deleting court sub-type',
-        variant: 'danger',
-      });
+      setAlert({ show: true, message: 'حدث خطأ أثناء الحذف.', variant: 'danger' });
     }
   };
+
   return (
-    <>
-      <Card>
-        <Row>
-          <Col>
-            <Card.Header className="card-header-courts text-center">
-              <h3>أنواع المحاكم الفرعية</h3>
-            </Card.Header>
-            <Card.Body>
-              {alertMessage && (
-                <Alert variant={alertMessage.type}>{alertMessage.text}</Alert>
-              )}
-              {successMessage && (
-                <Alert variant="success">{successMessage}</Alert>
-              )}
+    <div className="p-4">
+      <div className="mb-4 text-center">
+        <h3 className="text-2xl font-bold text-gray-800">أنواع المحاكم الفرعية</h3>
+      </div>
 
-              <div className="table-responsive">
-                <table className="special-table">
-                  <thead>
-                    <tr>
-                      <th>الاسم</th>
-                      <th>نوع المحكمة</th>
-                      <th>الإجراءات</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentItems.map((courtSubType) => (
-                      <tr className="table-row-courts" key={courtSubType.id}>
-                        <td>{courtSubType.name}</td>
-                        <td>{courtSubType.court_type?.name}</td>
-                        <td>
-                          <Button
-                            variant="danger"
-                            onClick={() =>
-                              handleDeleteCourtSubType(courtSubType.id)
-                            }
-                          >
-                            <FcFullTrash />
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <Card.Footer>
-                <CustomPagination
-                  totalCount={courtSubTypes.length}
-                  itemsPerPage={itemsPerPage}
-                  currentPage={currentPage}
-                  onPageChange={handlePageChange}
-                />
-              </Card.Footer>
-            </Card.Body>
-          </Col>
-        </Row>
-      </Card>
+      {alert.show && (
+        <div className={`mb-4 p-4 text-white ${alert.variant === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
+          {alert.message}
+        </div>
+      )}
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>إضافة نوع محكمة فرعية</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="courtTypeId">
-              <Form.Label>نوع المحكمة:</Form.Label>
-              <Form.Control
-                as="select"
-                value={selectedCourtTypeId}
-                name="court_type_id"
-                onChange={handleCourtTypeChange}
+      <div className="overflow-x-auto shadow rounded-lg">
+        <table className="w-full border-collapse border border-gray-300">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-4 py-2 border border-gray-300">الاسم</th>
+              <th className="px-4 py-2 border border-gray-300">نوع المحكمة</th>
+              <th className="px-4 py-2 border border-gray-300">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.map((courtSubType) => (
+              <tr key={courtSubType.id}>
+                <td className="px-4 py-2 border border-gray-300">{courtSubType.name}</td>
+                <td className="px-4 py-2 border border-gray-300">{courtSubType.court_type?.name}</td>
+                <td className="px-4 py-2 border border-gray-300">
+                  <button
+                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
+                    onClick={() => handleDeleteCourtSubType(courtSubType.id)}
+                  >
+                    حذف
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="flex justify-center mt-4">
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          السابق
+        </button>
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 ml-2"
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentItems.length < itemsPerPage}
+        >
+          التالي
+        </button>
+      </div>
+
+      {show && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 shadow-lg w-1/2">
+            <div className="flex justify-between items-center mb-4">
+              <h4 className="text-xl font-bold">إضافة نوع محكمة فرعية</h4>
+              <button className="text-red-500" onClick={handleClose}>
+                &times;
+              </button>
+            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleAddCourtSubType();
+              }}
+            >
+              <label className="block mb-2 text-gray-700">نوع المحكمة:</label>
+              <select
+                className="w-full p-2 border rounded"
+                value={newCourtSubType.court_type_id}
+                onChange={(e) => setNewCourtSubType({ ...newCourtSubType, court_type_id: e.target.value })}
               >
                 <option value="">اختر نوع المحكمة</option>
                 {courtTypes.map((courtType) => (
@@ -200,34 +160,37 @@ const CourtSubType = ({ show, handleClose }) => {
                     {courtType.name}
                   </option>
                 ))}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="newCourtSubTypeName">
-              <Form.Label>الاسم:</Form.Label>
-              <Form.Control
+              </select>
+              <label className="block mt-4 mb-2 text-gray-700">الاسم:</label>
+              <input
                 type="text"
+                className="w-full p-2 border rounded"
                 value={newCourtSubType.name}
-                onChange={(e) =>
-                  setNewCourtSubType({
-                    ...newCourtSubType,
-                    name: e.target.value,
-                  })
-                }
+                onChange={(e) => setNewCourtSubType({ ...newCourtSubType, name: e.target.value })}
               />
-            </Form.Group>
-          </Form>
-          {alert.show && <Alert variant={alert.variant}>{alert.message}</Alert>}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            إغلاق
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            إضافة
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+              {modalMessage && (
+                <p className="text-red-500 mt-2">{modalMessage.text}</p>
+              )}
+              <div className="flex justify-end mt-4">
+                <button
+                  type="button"
+                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2"
+                  onClick={handleClose}
+                >
+                  إغلاق
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                >
+                  إضافة
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

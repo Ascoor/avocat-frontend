@@ -1,26 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Modal, Alert, Form, Row, Col, Button } from 'react-bootstrap';
-import {
-  FaOrcid,
-  FaUserEdit,
-  FaIdCard,
-  FaMapMarkerAlt,
-  FaCalendarAlt,
-  FaEnvelope,
-  FaPhone,
-  FaBriefcase,
-  FaPray,
-} from 'react-icons/fa';
+import { FaOrcid, FaUserEdit, FaIdCard, FaMapMarkerAlt, FaCalendarAlt, FaEnvelope, FaPhone, FaBriefcase, FaPray } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
 import '../../../assets/css/Models.css';
 
 function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
-  const isEditMode = unclient && unclient.id;
-  const [validationErrors, setValidationErrors] = useState('');
-
-  const initialFormData = {
+  const isEditMode = !!unclient?.id;
+  const [formData, setFormData] = useState({
     name: '',
     gender: '',
     identity_number: '',
@@ -32,300 +19,228 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
     phone_number: '',
     emergency_number: '',
     slug: '',
-  };
-  const [formData, setFormData] = useState(initialFormData);
-  const resetFormData = () => {
-    setFormData(initialFormData);
-    setValidationErrors({});
-  };
+  });
+  const [validationErrors, setValidationErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (unclient) {
+    if (isEditMode) {
       setFormData({
-        name: unclient.name || '',
-        gender: unclient.gender || '',
-        identity_number: unclient.identity_number || '',
-        date_of_birth: unclient.date_of_birth || '',
-        address: unclient.address || '',
-        religion: unclient.religion || '',
-        work: unclient.work || '',
-        email: unclient.email || '',
-        phone_number: unclient.phone_number || '',
-        emergency_number: unclient.emergency_number || '',
-        slug: unclient.slug || '', // Handle slug similarly
+        ...unclient,
+        date_of_birth: unclient.date_of_birth ? new Date(unclient.date_of_birth) : '',
       });
     } else {
-      resetFormData();
+      resetForm();
     }
   }, [unclient]);
 
-  const handleChange = (e) => {
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      gender: '',
+      identity_number: '',
+      date_of_birth: '',
+      address: '',
+      religion: '',
+      work: '',
+      email: '',
+      phone_number: '',
+      emergency_number: '',
+      slug: '',
+    });
+    setValidationErrors({});
+  };
+
+  const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleDateChange = (date) => {
-    setFormData({ ...formData, date_of_birth: date || new Date() });
+    setFormData({ ...formData, date_of_birth: date });
   };
 
   const formatDateForBackend = (date) => {
-    if (!date) return '';
-    const dateObj = date instanceof Date ? date : new Date(date);
-    return dateObj.toISOString().split('T')[0];
+    return date ? date.toISOString().split('T')[0] : '';
   };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.name) errors.name = 'الاسم مطلوب';
+    if (!formData.slug) errors.slug = 'رقم العميل مطلوب';
+    if (formData.phone_number && formData.phone_number.length !== 11)
+      errors.phone_number = 'يجب أن يكون رقم الهاتف مكونًا من 11 رقمًا';
+    if (formData.identity_number && formData.identity_number.length !== 14)
+      errors.identity_number = 'رقم الهوية يجب أن يكون مكونًا من 14 رقمًا';
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
+    setIsLoading(true);
     const formattedData = {
       ...formData,
       date_of_birth: formatDateForBackend(formData.date_of_birth),
     };
+
     try {
-      let successMessage = '';
-      if (isEditMode) {
-        await axios.put(
-          `${API_CONFIG.baseURL}/api/unclients/${unclient.id}`,
-          formattedData,
-        );
-        successMessage = 'تم تحديث بيانات العميل بنجاح'; // Update success message
-      } else {
-        await axios.post(`${API_CONFIG.baseURL}/api/unclients`, formattedData);
-        successMessage = 'تم إضافة العميل بنجاح'; // Create success message
-      }
-      resetFormData();
-      onSaved(successMessage); // Pass success message to parent component
+      const response = isEditMode
+        ? await axios.put(
+            `${API_CONFIG.baseURL}/api/unclients/${unclient.id}`,
+            formattedData
+          )
+        : await axios.post(`${API_CONFIG.baseURL}/api/unclients`, formattedData);
+
+      onSaved(response.data.message || 'تم الحفظ بنجاح');
       onClose();
+      resetForm();
     } catch (error) {
-      if (error.response && error.response.status === 422) {
-        // Set the validation errors from the server's response
-        setValidationErrors(error.response.data.errors);
+      if (error.response?.status === 422) {
+        setValidationErrors(error.response.data.errors || {});
       } else {
-        console.error(error);
-        // Handle other types of errors (optional)
+        console.error('Unexpected error:', error);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return (
-    // JSX for the component
-    <Modal show={isOpen} onHide={onClose} centered dir="rtl">
-      <Modal.Header closeButton>
-        <Modal.Title>
-          {unclient?.id ? (
-            <>
-              <FaIdCard /> تعديل بيانات العميل بدون توكيل
-            </>
-          ) : (
-            <>
-              <FaIdCard /> إضافة عميل بدون توكيل
-            </>
-          )}
-        </Modal.Title>
-      </Modal.Header>
-      {validationErrors.non_field_errors && (
-        <Alert variant="danger">
-          {validationErrors.non_field_errors.join(', ')}
-        </Alert>
+  const renderFormField = (label, name, type = 'text', placeholder = '') => (
+    <div className="mb-4">
+      <label className="block text-sm font-medium text-gray-700" htmlFor={name}>
+        {label}
+      </label>
+      <input
+        type={type}
+        name={name}
+        id={name}
+        placeholder={placeholder}
+        value={formData[name]}
+        onChange={handleInputChange}
+        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+          validationErrors[name] ? 'border-red-500' : 'border-gray-300'
+        }`}
+      />
+      {validationErrors[name] && (
+        <p className="mt-1 text-xs text-red-600">{validationErrors[name]}</p>
       )}
+    </div>
+  );
 
-      <Modal.Body>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputSlug">
-              <FaOrcid /> رقم العميل بدون توكيل بالمكتب
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <Form.Control
-                type="text"
-                placeholder="أدخل رقم العميل بدون توكيل بالمكتب"
-                value={formData.slug}
-                onChange={handleChange}
-                name="slug"
-                id="inputSlug"
-                isInvalid={!!validationErrors.slug}
-                required
+  return (
+    <div
+      className={`fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50 ${
+        isOpen ? 'block' : 'hidden'
+      }`}
+    >
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold text-gray-900">
+            {isEditMode ? 'تعديل بيانات العميل' : 'إضافة عميل جديد'}
+          </h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 focus:outline-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-6 w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
               />
-              <Form.Control.Feedback type="invalid">
-                {validationErrors.slug ? validationErrors.slug[0] : ''}
-              </Form.Control.Feedback>
-            </Col>
-          </Form.Group>
+            </svg>
+          </button>
+        </div>
 
-          {/* Repeat similar structure for other fields */}
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputName">
-              <FaUserEdit /> الاسم
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <Form.Control
-                type="text"
-                placeholder="أدخل الاسم"
-                value={formData.name}
-                onChange={handleChange}
-                name="name"
-                id="inputName"
-                required
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputGender">
-              <FaIdCard /> الجنس
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <Form.Control
-                as="select"
-                value={formData.gender}
-                onChange={handleChange}
-                name="gender"
-                id="inputGender"
-                required
-              >
-                <option value="">اختر الجنس</option>
-                <option value="ذكر">ذكر</option>
-                <option value="أنثى">أنثى</option>
-              </Form.Control>
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputIdentityNumber">
-              <FaIdCard /> رقم الهوية
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <Form.Control
-                type="number"
-                min="0"
-                placeholder="أدخل رقم الهوية"
-                value={formData.identity_number}
-                onChange={handleChange}
-                name="identity_number"
-                id="inputIdentityNumber"
-                required
-                maxLength="14"
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputDateOfBirth">
-              <FaCalendarAlt /> تاريخ الميلاد
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <DatePicker
-                selected={
-                  formData.date_of_birth
-                    ? new Date(formData.date_of_birth)
-                    : null
-                }
-                onChange={handleDateChange}
-                name="date_of_birth"
-                id="inputDateOfBirth"
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputAddress">
-              <FaMapMarkerAlt /> العنوان
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <Form.Control
-                type="text"
-                placeholder="أدخل العنوان"
-                value={formData.address}
-                onChange={handleChange}
-                name="address"
-                id="inputAddress"
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputPhoneNumber">
-              <FaPhone /> رقم الهاتف
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <Form.Control
-                type="tel"
-                placeholder="أدخل رقم الهاتف"
-                value={formData.phone_number}
-                onChange={handleChange}
-                name="phone_number"
-                id="inputPhoneNumber"
-                required
-                maxLength="11"
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputEmail">
-              <FaEnvelope /> البريد الالكتروني
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <Form.Control
-                type="email"
-                placeholder="أدخل البريد الالكتروني"
-                value={formData.email}
-                onChange={handleChange}
-                name="email"
-                id="inputEmail"
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputReligion">
-              <FaPray /> الديانة
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <Form.Control
-                as="select"
-                value={formData.religion}
-                onChange={handleChange}
-                name="religion"
-                id="inputReligion"
-                required
-              >
-                <option value="">اختر الديانة</option>
-                <option value="مسلم">مسلم</option>
-                <option value="مسيحي">مسيحي</option>
-              </Form.Control>
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputWork">
-              <FaBriefcase /> الوظيفة
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <Form.Control
-                type="text"
-                placeholder="أدخل الوظيفة"
-                value={formData.work}
-                onChange={handleChange}
-                name="work"
-                id="inputWork"
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column xs={12} md={6} htmlFor="inputEmergencyNumber">
-              <FaPhone /> رقم الطوارئ
-            </Form.Label>
-            <Col xs={12} md={6}>
-              <Form.Control
-                type="tel"
-                placeholder="أدخل رقم الطوارئ"
-                value={formData.emergency_number}
-                onChange={handleChange}
-                name="emergency_number"
-                id="inputEmergencyNumber"
-                maxLength="11"
-              />
-            </Col>
-          </Form.Group>
+        {validationErrors.non_field_errors && (
+          <div className="mb-4 text-sm text-red-600">
+            {validationErrors.non_field_errors.join(', ')}
+          </div>
+        )}
 
-          <Button variant="secondary" onClick={onClose}>
-            الغاء
-          </Button>
-          <Button variant="primary" type="submit">
-            {isEditMode ? 'تعديل' : 'إضافة'}
-          </Button>
-        </Form>
-      </Modal.Body>
-    </Modal>
+        <form onSubmit={handleSubmit}>
+          {renderFormField('رقم العميل', 'slug', 'text', 'أدخل رقم العميل')}
+          {renderFormField('الاسم', 'name', 'text', 'أدخل الاسم')}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700" htmlFor="gender">
+              الجنس
+            </label>
+            <select
+              name="gender"
+              id="gender"
+              value={formData.gender}
+              onChange={handleInputChange}
+              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">اختر الجنس</option>
+              <option value="ذكر">ذكر</option>
+              <option value="أنثى">أنثى</option>
+            </select>
+          </div>
+          {renderFormField('رقم الهوية', 'identity_number', 'number', 'أدخل رقم الهوية')}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700" htmlFor="date_of_birth">
+              تاريخ الميلاد
+            </label>
+            <DatePicker
+              selected={formData.date_of_birth}
+              onChange={handleDateChange}
+              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          {renderFormField('العنوان', 'address', 'text', 'أدخل العنوان')}
+          {renderFormField('رقم الهاتف', 'phone_number', 'tel', 'أدخل رقم الهاتف')}
+          {renderFormField('البريد الإلكتروني', 'email', 'email', 'أدخل البريد الإلكتروني')}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700" htmlFor="religion">
+              الديانة
+            </label>
+            <select
+              name="religion"
+              id="religion"
+              value={formData.religion}
+              onChange={handleInputChange}
+              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">اختر الديانة</option>
+              <option value="مسلم">مسلم</option>
+              <option value="مسيحي">مسيحي</option>
+            </select>
+          </div>
+          {renderFormField('الوظيفة', 'work', 'text', 'أدخل الوظيفة')}
+          {renderFormField('رقم الطوارئ', 'emergency_number', 'tel', 'أدخل رقم الطوارئ')}
+
+          <div className="flex justify-end space-x-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+            >
+              إلغاء
+            </button>
+            <button
+              type="submit"
+              className={`px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 ${
+                isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              disabled={isLoading}
+            >
+              {isLoading ? 'جار التحميل...' : isEditMode ? 'تعديل' : 'إضافة'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
 

@@ -1,10 +1,7 @@
 import React, { Suspense, useState } from 'react';
-import '../../assets/css/Welcome.css';
 import { useTransition, useSpring, animated } from '@react-spring/web';
-import { Button, Container } from 'react-bootstrap';
 import { RiLoginCircleLine, RiUserAddLine } from 'react-icons/ri';
 import { LogoPatren } from '../../assets/img/index';
-
 import WelcomeSuspense from './Tools/WelcomeSuspense';
 
 const Login = React.lazy(() => import('./AuthTool/Login'));
@@ -61,83 +58,55 @@ const Guest = () => {
     opacity: showLogoAndButtons ? 1 : 0,
     transform: showLogoAndButtons ? 'translateY(0)' : 'translateY(100px)',
     from: { opacity: 0, transform: 'translateY(100px)' },
-    delay: showLogoAndButtons ? 500 : 0, // Adjusted delay here
+    delay: showLogoAndButtons ? 500 : 0,
   });
 
   return (
-    <div className="splash-container">
+    <div className="relative h-screen bg-gradient-to-br from-gray-800 via-red-800 to-gray-900 text-white flex flex-col">
       {/* Splash Mask */}
-      <div className="splash-mask"></div>
+      <div className="absolute inset-0 bg-black opacity-30"></div>
 
-      <div
-        className="d-flex flex-column justify-content-center align-items-center"
-        style={{
-          paddingLeft: '10px',
-          height: 'calc(100% - 64px)', // Adjusted to exclude navbar height
-        }}
-      >
+      <div className="relative flex flex-col justify-center items-center flex-grow">
         {loading ? (
           <WelcomeSuspense />
         ) : (
           <>
             {showLogoAndButtons && (
-              <animated.div
-                style={logoAnimation}
-                className="guest-logo-container"
-              >
+              <animated.div style={logoAnimation} className="mb-8">
                 <img
                   src={LogoPatren}
                   alt="Pattern Logo"
-                  className="logo img-fluid"
-                  style={{
-                    marginLeft: '80px',
-                    paddingRight: '15px',
-                    paddingLeft: '30px',
-                    width: '250px',
-                    height: 'auto',
-                  }}
+                  className="w-64 h-auto"
                 />
               </animated.div>
             )}
+
             {showLogoAndButtons && (
-              <animated.div
-                style={buttonsAnimation}
-                className="guest-logo-container"
-              >
-                <div
-                  className="buttons-container"
-                  style={{ position: 'relative', zIndex: 2 }}
-                >
-                  <Button
-                    variant="success"
+              <animated.div style={buttonsAnimation}>
+                <div className="flex space-x-4">
+                  <button
                     onClick={handleShowLoginForm}
-                    style={{ marginTop: '10px' }}
+                    className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded flex items-center"
                   >
-                    <RiLoginCircleLine className="mr-1" />
+                    <RiLoginCircleLine className="mr-2" />
                     دخول
-                  </Button>
-                  <Button
-                    variant="danger"
+                  </button>
+                  <button
                     onClick={handleShowRegisterForm}
-                    style={{ marginTop: '10px' }}
+                    className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded flex items-center"
                   >
-                    <RiUserAddLine className="mr-1" />
+                    <RiUserAddLine className="mr-2" />
                     تسجيل اشتراك
-                  </Button>
+                  </button>
                 </div>
               </animated.div>
             )}
 
-            {/* Forms */}
             <Suspense fallback={<div>Loading...</div>}>
               {formsTransition((styles, item) =>
                 item ? (
                   <animated.div style={styles}>
-                    {/* Glass effect container */}
-                    <div
-                      className="glass-container"
-                      style={{ position: 'relative', zIndex: 3 }}
-                    >
+                    <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-6 w-11/12 max-w-md">
                       {showLoginForm && (
                         <Login
                           className="form-content"
@@ -152,31 +121,15 @@ const Guest = () => {
                       )}
                     </div>
                   </animated.div>
-                ) : null,
+                ) : null
               )}
             </Suspense>
           </>
         )}
       </div>
 
-      <footer
-        style={{
-          background:
-            'linear-gradient(35deg, rgb(7 51 56),#972c2c, rgb(8 36 60))',
-          direction: 'rtl',
-          color: '#fff',
-          textAlign: 'center',
-          padding: '10px 0',
-          position: 'absolute',
-          bottom: 0,
-          width: '100%',
-        }}
-      >
-        <Container>
-          <p style={{ margin: 0 }}>
-            &copy; {new Date().getFullYear()} Avocat All rights reserved
-          </p>
-        </Container>
+      <footer className="bg-gradient-to-r from-gray-800 via-red-600 to-gray-900 text-center py-3">
+        <p className="m-0">&copy; {new Date().getFullYear()} Avocat All rights reserved</p>
       </footer>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Carousel } from 'react-bootstrap';
 import anime from 'animejs';
 import { Slider1, Slider2, Slider3, Slider4 } from '../../assets/img/index';
+
 const carouselItems = [
   {
     imgSrc: Slider1,
@@ -23,7 +23,6 @@ const carouselItems = [
   },
   {
     imgSrc: Slider4,
-
     caption: 'قاعدة الأحكام والتشريعات',
     shortCaption:
       'قاعدة بيانات شاملة الاحكام والتشريعات وفق أحدث التعديلات بنظام بحث متطور يمنحك سهولة بالغة فى الوصول الى الأحكام المراد الوصول اليها بخكاوت بسيطة وسهلة',
@@ -38,70 +37,73 @@ const HomeCarousel = () => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % carouselItems.length);
     }, 5000);
 
-    return () => {
-      clearInterval(slideInterval);
-    };
+    return () => clearInterval(slideInterval);
   }, []);
 
   useEffect(() => {
-    const charTimeline = anime.timeline({ autoplay: false });
-    charTimeline
+    const animation = anime.timeline({ autoplay: false });
+    animation
       .add({
-        targets: '.animated-caption .animated-char',
+        targets: '.animated-caption',
         opacity: [0, 1],
-        translateX: [-50, 0],
+        translateY: [30, 0],
         easing: 'easeOutExpo',
         duration: 800,
-        delay: (el, i) => 100 * i,
       })
       .add({
-        targets: '.animated-caption-short .animated-char',
+        targets: '.animated-caption-short',
         opacity: [0, 1],
-        translateX: [-50, 0],
+        translateY: [30, 0],
         easing: 'easeOutExpo',
         duration: 800,
-        delay: (el, i) => 100 * i,
+        delay: anime.stagger(100),
       });
 
-    const handleSlideChange = () => {
-      charTimeline.restart();
-    };
+    animation.restart();
 
-    handleSlideChange();
-
-    return () => {
-      charTimeline.pause();
-    };
+    return () => animation.pause();
   }, [currentSlide]);
 
   return (
-    <section className="home-page" style={{ position: 'relative', zIndex: 1 }}>
-      <Carousel
-        activeIndex={currentSlide}
-        onSelect={(selectedIndex) => setCurrentSlide(selectedIndex)}
-        interval={5000}
-      >
+    <section className="relative">
+      <div className="relative w-full h-[500px] overflow-hidden">
         {carouselItems.map((item, index) => (
-          <Carousel.Item key={index} className="home-page carousel-item">
-            <div className="carousel-item active">
-              <img
-                src={item.imgSrc}
-                className="d-block img-fluid"
-                alt={item.caption}
-              />
-              <div className="carousel-caption d-none d-md-block">
-                <div className="caption">
-                  <h1 className="animated-caption">{item.caption}</h1>
-                  <h3 className="animated-caption-short">
-                    {item.shortCaption}
-                  </h3>
-                </div>
-              </div>
+          <div
+            key={index}
+            className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <img
+              src={item.imgSrc}
+              alt={item.caption}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-center text-white px-4">
+              <h1 className="animated-caption text-2xl md:text-4xl font-bold mb-4">
+                {item.caption}
+              </h1>
+              <p className="animated-caption-short text-sm md:text-lg">
+                {item.shortCaption}
+              </p>
             </div>
-          </Carousel.Item>
+          </div>
         ))}
-      </Carousel>
+      </div>
+
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {carouselItems.map((_, index) => (
+          <button
+            key={index}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === currentSlide ? 'bg-white' : 'bg-gray-500'
+            }`}
+            onClick={() => setCurrentSlide(index)}
+          ></button>
+        ))}
+      </div>
     </section>
   );
 };
+
 export default HomeCarousel;

@@ -1,380 +1,212 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Button, Row, Modal, Card, Form, Alert } from 'react-bootstrap';
-import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import axios from 'axios';
 import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';
 import DatePicker from 'react-datepicker';
-const LegalCaseSessions = ({ legCaseId }) => {
+import 'react-datepicker/dist/react-datepicker.css';
+
+export default function LegalCaseSessions({ legCaseId }) {
   const { getUser } = useAuth();
   const user = getUser();
 
-  // State variables
   const [alert, setAlert] = useState(null);
-  const [selectStatus, setSelectStatus] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const [selectedCost, setSelectedCost] = useState(0);
-  const [selectedCost2, setSelectedCost2] = useState(0);
-  const [selectedSession, setSelectedSession] = useState({});
-  const [legalSessions, setLegalSessions] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [rollNumber, setRollNumber] = useState('');
-  const [selectedLawyer, setSelectedLawyer] = useState('');
-  const [orders, setOrders] = useState('');
-  const [showAddLegalSessionModal, setShowAddLegalSessionModal] =
-    useState(false);
+  const [sessions, setSessions] = useState([]);
   const [lawyers, setLawyers] = useState([]);
   const [courts, setCourts] = useState([]);
-  const [result, setResult] = useState('');
-  const [selectedCourt, setSelectedCourt] = useState('');
-  const [modalMode, setModalMode] = useState('');
-  const userId = user.id;
+  const [modalData, setModalData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState('add');
 
-  // Fetch data function
   const fetchData = useCallback(async () => {
     try {
-      const [sessionsResponse, lawyersResponse, courtsResponse] =
-        await Promise.all([
-          axios.get(
-            `${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`,
-          ),
-          axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
-          axios.get(`${API_CONFIG.baseURL}/api/courts`),
-        ]);
-      setLegalSessions(sessionsResponse.data);
-      setLawyers(lawyersResponse.data);
-      setCourts(courtsResponse.data);
+      const [sessionsRes, lawyersRes, courtsRes] = await Promise.all([
+        axios.get(`${API_CONFIG.baseURL}/api/legal_sessions/leg-case/${legCaseId}`),
+        axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
+        axios.get(`${API_CONFIG.baseURL}/api/courts`),
+      ]);
+      setSessions(sessionsRes.data);
+      setLawyers(lawyersRes.data);
+      setCourts(courtsRes.data);
     } catch (error) {
-      console.log('Error fetching data:', error);
+      console.error('Error fetching data:', error);
     }
   }, [legCaseId]);
 
-  // UseEffect for initial data fetch
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  const handleEditLegalSession = (legalSession) => {
-    setModalMode('edit');
-    setSelectedSession(legalSession);
-    setSelectedDate(new Date(legalSession.date.split('T')[0])); // Parse the date string into a Date object
-    setSelectStatus(legalSession.status);
-    setSelectedLawyer(legalSession.lawyer_id);
-    setRollNumber(legalSession.roll_number);
-    setSelectedCost(legalSession.cost);
-    setSelectedCost2(legalSession.cost2);
-    setOrders(legalSession.orders);
-    setSelectedCourt(legalSession.court_id);
-    setResult(legalSession.result);
-
-    setShowAddLegalSessionModal(true);
+  const handleModalOpen = (mode, session = {}) => {
+    setModalMode(mode);
+    setModalData({
+      date: session.date ? new Date(session.date) : null,
+      lawyerId: session.lawyer_id || '',
+      rollNumber: session.roll_number || '',
+      courtId: session.court_id || '',
+      orders: session.orders || '',
+      result: session.result || '',
+      cost: session.cost || '',
+      cost2: session.cost2 || '',
+      status: session.status || 'قيد التنفيذ',
+    });
+    setIsModalOpen(true);
   };
-  const handleAddOrUpdateLegalSession = async () => {
-    const dateOnly = selectedDate
-      ? selectedDate.toISOString().split('T')[0]
-      : null;
-    const data = {
-      date: dateOnly,
-      lawyer_id: selectedLawyer,
-      roll_number: rollNumber,
-      orders,
-      court_id: selectedCourt,
-      result,
-      cost: selectedCost,
-      cost2: selectedCost2,
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setModalData({});
+  };
+
+  const handleSaveSession = async () => {
+    const payload = {
+      ...modalData,
+      date: modalData.date ? modalData.date.toISOString().split('T')[0] : null,
       leg_case_id: legCaseId,
-      created_by: userId,
+      created_by: user.id,
     };
-
-    if (modalMode === 'edit') {
-      data.status = selectStatus;
-    }
-
-    // Include created_by only when creating a new record
-    if (modalMode === 'add') {
-      data.created_by = userId; // Include created_by when creating a new record
-    }
 
     try {
       if (modalMode === 'add') {
-        await axios.post(`${API_CONFIG.baseURL}/api/legal_sessions`, data);
-        fetchData();
-        setTimeout(() => {
-          setShowAlert(false);
-        }, 5000);
-
-        setAlert({ variant: 'info', message: 'تمت الإضافة بنجاح.' });
-        setShowAlert(true);
-      } else if (modalMode === 'edit') {
-        await axios.put(
-          `${API_CONFIG.baseURL}/api/legal_sessions/${selectedSession.id}`,
-          data,
-        );
-        fetchData();
-
-        setTimeout(() => {
-          setShowAlert(false);
-        }, 5000);
-
-        setAlert({ variant: 'info', message: 'تم التعديل بنجاح.' });
-        setShowAlert(true);
+        await axios.post(`${API_CONFIG.baseURL}/api/legal_sessions`, payload);
+        setAlert({ type: 'success', message: 'تمت الإضافة بنجاح.' });
+      } else {
+        await axios.put(`${API_CONFIG.baseURL}/api/legal_sessions/${modalData.id}`, payload);
+        setAlert({ type: 'success', message: 'تم التعديل بنجاح.' });
       }
-
-      handleCloseModal();
+      fetchData();
     } catch (error) {
-      console.log(error);
-
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 5000);
-
-      setAlert({
-        variant: 'danger',
-        message: 'حدث خطأ أثناء عملية التعديل.',
-      });
+      setAlert({ type: 'error', message: 'حدث خطأ أثناء الحفظ.' });
+    } finally {
       setShowAlert(true);
+      handleModalClose();
+      setTimeout(() => setShowAlert(false), 3000);
     }
   };
 
-  const handleAddLegalSession = () => {
-    setModalMode('add');
-    setShowAddLegalSessionModal(true);
-  };
-
-  const handleDeleteLegalSession = async (id) => {
+  const handleDeleteSession = async (id) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/legal_sessions/${id}`);
+      setAlert({ type: 'success', message: 'تم الحذف بنجاح.' });
       fetchData();
-      setAlert({ variant: 'success', message: 'تم الحذف بنجاح' });
-      setShowAlert(true);
     } catch (error) {
-      console.log('خطأ في حذف الجلسة القانونية:', error);
-      setAlert({
-        variant: 'danger',
-        message: 'حدث خطأ أثناء حذف الجلسة القانونية',
-      });
+      setAlert({ type: 'error', message: 'حدث خطأ أثناء الحذف.' });
+    } finally {
       setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 3000);
     }
-  };
-
-  const handleCloseModal = () => {
-    fetchData();
-    setModalMode('');
-    setSelectedSession({});
-    setSelectedDate('');
-    setSelectStatus('');
-    setSelectedLawyer('');
-    setRollNumber('');
-    setOrders('');
-    setSelectedCourt('');
-    setResult('');
-    setShowAddLegalSessionModal(false);
   };
 
   return (
-    <>
-      <Row>
-        {showAlert && (
-          <Alert
-            variant={alert.variant}
-            onClose={() => setShowAlert(false)}
-            dismissible
-          >
-            {alert.message}
-          </Alert>
-        )}
-      </Row>
+    <div className="p-4">
+      {showAlert && (
+        <div className={`alert ${alert.type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white p-2 mb-4`}>
+          {alert.message}
+        </div>
+      )}
 
-      <Card.Header>
-        <Button
-          variant="success"
-          className="btn-sm"
-          onClick={handleAddLegalSession}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-bold">جلسات القضية</h2>
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          onClick={() => handleModalOpen('add')}
         >
-          <BiPlusCircle className="mr-1" />
           إضافة جلسة
-        </Button>
-      </Card.Header>
-      <Card.Body>
-        <Row>
-          <div className="table-responsive">
-            <table className="special-table">
-              <thead>
-                <tr>
-                  <th className="col-2">تاريخ الجلسة</th>
-                  <th className="col-2">اسم المحامي</th>
-                  <th className="col-1">الرول</th>
-                  <th className="col-2">المحكمة</th>
-                  <th className="col-3">الطلبات</th>
-                  <th className="col-3">النتيجة</th>
-                  <th className="col-1">الحالة</th>
-                  <th>تعديل</th>
-                  <th>حذف</th>
-                </tr>
-              </thead>
-              <tbody>
-                {legalSessions.map((legalSession) => (
-                  <tr key={legalSession.id}>
-                    <td>{legalSession.session_date}</td>
-                    <td>{legalSession.lawyer.name}</td>
-                    <td>{legalSession.legal_session_type.name}</td>
-                    <td>{legalSession.court.name}</td>
-                    <td>{legalSession.orders}</td>
-                    <td>{legalSession.result}</td>
-                    <td>{legalSession.status}</td>
-                    <td>
-                      <Button
-                        variant="info"
-                        onClick={() => handleEditLegalSession(legalSession)}
-                      >
-                        <BiPencil />
-                      </Button>
-                    </td>
-                    <td>
-                      <Button
-                        variant="danger"
-                        onClick={() =>
-                          handleDeleteLegalSession(legalSession.id)
-                        }
-                      >
-                        <BiTrash />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Row>
-      </Card.Body>
+        </button>
+      </div>
 
-      <Modal
-        show={showAddLegalSessionModal}
-        onHide={handleCloseModal}
-        centered
-        size="lg"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {modalMode === 'add' ? 'إضافة جلسة جديدة' : 'تعديل جلسة'}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="sessionDate">
-              <Form.Label>تاريخ الجلسة</Form.Label>
-              <br />
-              <DatePicker
-                className="form-control"
-                dateFormat="yyyy-MM-dd"
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-              />
-            </Form.Group>
-
-            {modalMode === 'edit' && (
-              <Form.Group controlId="status">
-                <Form.Label>حالة الجلسة</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={selectStatus}
-                  onChange={(e) => setSelectStatus(e.target.value)}
+      <table className="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border border-gray-300 px-4 py-2">تاريخ الجلسة</th>
+            <th className="border border-gray-300 px-4 py-2">اسم المحامي</th>
+            <th className="border border-gray-300 px-4 py-2">المحكمة</th>
+            <th className="border border-gray-300 px-4 py-2">الطلبات</th>
+            <th className="border border-gray-300 px-4 py-2">النتيجة</th>
+            <th className="border border-gray-300 px-4 py-2">الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sessions.map((session) => (
+            <tr key={session.id} className="hover:bg-gray-100">
+              <td className="border border-gray-300 px-4 py-2">{session.date}</td>
+              <td className="border border-gray-300 px-4 py-2">{session.lawyer?.name}</td>
+              <td className="border border-gray-300 px-4 py-2">{session.court?.name}</td>
+              <td className="border border-gray-300 px-4 py-2">{session.orders}</td>
+              <td className="border border-gray-300 px-4 py-2">{session.result}</td>
+              <td className="border border-gray-300 px-4 py-2">
+                <button
+                  className="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600"
+                  onClick={() => handleModalOpen('edit', session)}
                 >
-                  <option value="">اختر حالة الجلسة</option>
-                  <option value="منتهي">منتهي</option>
-                  <option value="لم ينفذ">لم ينفذ</option>
-                  <option value="قيد التنفيذ">قيد التنفيذ</option>
-                </Form.Control>
-              </Form.Group>
-            )}
-            <Form.Group controlId="formLawyer">
-              <Form.Label>اسم المحامي</Form.Label>
-              <Form.Control
-                as="select"
-                value={selectedLawyer}
-                onChange={(e) => setSelectedLawyer(e.target.value)}
-              >
-                <option value="">اختر المحامي</option>
-                {lawyers.map((lawyer) => (
-                  <option key={lawyer.id} value={lawyer.id}>
-                    {lawyer.name}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="formRollNumber">
-              <Form.Label>رقم الرول</Form.Label>
-              <Form.Control
-                type="text"
-                value={rollNumber}
-                onChange={(e) => setRollNumber(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group controlId="formOrders">
-              <Form.Label>الطلبات</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={orders}
-                onChange={(e) => setOrders(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group controlId="formCourt">
-              <Form.Label>المحكمة</Form.Label>
-              <Form.Control
-                as="select"
-                value={selectedCourt}
-                onChange={(e) => setSelectedCourt(e.target.value)}
-              >
-                <option value="">اختر المحكمة</option>
-                {courts.map((court) => (
-                  <option key={court.id} value={court.id}>
-                    {court.name}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="legalSessioCost">
-              <Form.Label>التكلفة</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="ادخل التكلفة"
-                value={selectedCost}
-                onChange={(e) => setSelectedCost(e.target.value)}
-              />
-            </Form.Group>
+                  تعديل
+                </button>
+                <button
+                  className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                  onClick={() => handleDeleteSession(session.id)}
+                >
+                  حذف
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-            <Form.Group controlId="legalSessioCost2">
-              <Form.Label>التكلفة 2</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="ادخل التكلفة 2"
-                value={selectedCost2 | ''}
-                onChange={(e) => setSelectedCost2(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group controlId="formResult">
-              <Form.Label>النتيجة</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={result}
-                onChange={(e) => setResult(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            إلغاء
-          </Button>
-          <Button variant="primary" onClick={handleAddOrUpdateLegalSession}>
-            {modalMode === 'add' ? 'إضافة' : 'تعديل'}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded shadow-md w-1/2">
+            <h3 className="text-lg font-bold mb-4">
+              {modalMode === 'add' ? 'إضافة جلسة جديدة' : 'تعديل جلسة'}
+            </h3>
+            <form>
+              <div className="mb-4">
+                <label className="block text-gray-700">تاريخ الجلسة</label>
+                <DatePicker
+                  className="w-full border border-gray-300 p-2 rounded"
+                  selected={modalData.date}
+                  onChange={(date) => setModalData((prev) => ({ ...prev, date }))}
+                  dateFormat="yyyy-MM-dd"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">اسم المحامي</label>
+                <select
+                  className="w-full border border-gray-300 p-2 rounded"
+                  value={modalData.lawyerId}
+                  onChange={(e) => setModalData((prev) => ({ ...prev, lawyerId: e.target.value }))}
+                >
+                  <option value="">اختر المحامي</option>
+                  {lawyers.map((lawyer) => (
+                    <option key={lawyer.id} value={lawyer.id}>
+                      {lawyer.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  className="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600"
+                  onClick={handleModalClose}
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="button"
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  onClick={handleSaveSession}
+                >
+                  {modalMode === 'add' ? 'إضافة' : 'تعديل'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
-};
+}
+
 
 export default LegalCaseSessions;

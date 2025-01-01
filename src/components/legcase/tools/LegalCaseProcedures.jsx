@@ -1,83 +1,58 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Button, Modal, Row, Form, Alert } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
-import useAuth from '../../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../../config';
+
 const LegalCaseProcedures = ({ legCaseId }) => {
-  const { getUser } = useAuth();
   const [alert, setAlert] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
 
   const [procedures, setProcedures] = useState([]);
-  const [selectedTitle, setSelectedTitle] = useState('');
-  const [selectedJob, setSelectedJob] = useState('');
-  const [selectedDateStart, setSelectedDateStart] = useState('');
-  const [selectedDateEnd, setSelectedDateEnd] = useState('');
-  const [selectedCost, setSelectedCost] = useState('');
-  const [selectedCost2, setSelectedCost2] = useState('');
-  const [selectedResult, setSelectedResult] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [showAddProcedureModal, setShowAddProcedureModal] = useState(false);
+  const [formData, setFormData] = useState({
+    title: '',
+    job: '',
+    dateStart: '',
+    dateEnd: '',
+    cost: '',
+    cost2: '',
+    result: '',
+    procedureType: '',
+    lawyer: '',
+    procedurePlaceType: '',
+    procedurePlaceName: '',
+    status: 'قيد التنفيذ',
+  });
+
   const [procedureTypes, setProcedureTypes] = useState([]);
   const [lawyers, setLawyers] = useState([]);
   const [procedurePlaceTypes, setProcedurePlaceTypes] = useState([]);
-  const [selectedProcedureType, setSelectedProcedureType] = useState('');
-  const [selectedLawyer, setSelectedLawyer] = useState('');
-  const [selectedProcedurePlaceType, setSelectedProcedurePlaceType] =
-    useState('');
-  const [selectedProcedurePlaceName, setSelectedProcedurePlaceName] =
-    useState('');
-  const [modalMode, setModalMode] = useState('');
-  const [procedureId, setProcedureId] = useState(null);
-  const user = getUser();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingProcedureId, setEditingProcedureId] = useState(null);
+
   useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        await Promise.all([
-          fetchProcedurePlaceTypes(),
-          fetchLawyers(),
-          fetchProcedureTypes(),
-        ]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const fetchProcedures = async () => {
-      try {
-        const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/procedures/leg-case/${legCaseId}`,
-        );
-        setProcedures(response.data);
-      } catch (error) {
-        console.log('خطأ في جلب إجراءات المحاكم:', error);
-      }
-    };
-
     fetchProcedures();
-    fetchAllData();
+    fetchProcedureTypes();
+    fetchLawyers();
+    fetchProcedurePlaceTypes();
   }, [legCaseId]);
 
   const fetchProcedures = async () => {
     try {
-      const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/procedures/leg-case/${legCaseId}`,
-      );
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/procedures/leg-case/${legCaseId}`);
       setProcedures(response.data);
     } catch (error) {
-      console.log('خطأ في جلب إجراءات المحاكم:', error);
+      console.error('Error fetching procedures:', error);
     }
   };
 
   const fetchProcedureTypes = async () => {
     try {
-      const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/procedure_types`,
-      );
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/procedure_types`);
       setProcedureTypes(response.data);
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching procedure types:', error);
     }
   };
 
@@ -86,356 +61,198 @@ const LegalCaseProcedures = ({ legCaseId }) => {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/lawyers`);
       setLawyers(response.data);
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching lawyers:', error);
     }
   };
 
   const fetchProcedurePlaceTypes = async () => {
     try {
-      const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/procedure_place_types`,
-      );
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/procedure_place_types`);
       setProcedurePlaceTypes(response.data);
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching procedure place types:', error);
     }
   };
-  const handleOpenAddProcedureModal = () => {
-    clearFields(); // Clearing all the input fields
-    setModalMode('add');
-    setShowAddProcedureModal(true);
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleEditProcedure = (procedure) => {
-    setModalMode('edit');
-    setProcedureId(procedure.id);
-    setSelectedTitle(procedure.title);
-    setSelectedJob(procedure.job);
-    setSelectedDateStart(procedure.date_start);
-    setSelectedDateEnd(procedure.date_end);
-    setSelectedCost(procedure.cost);
-    setSelectedCost2(procedure.cost2);
-    setSelectedResult(procedure.result);
-    setSelectedProcedureType(procedure.procedure_type_id);
-    setSelectedLawyer(procedure.lawyer_id);
-    setSelectedProcedurePlaceName(procedure.procedure_place_name);
-    setSelectedProcedurePlaceType(procedure.procedure_place_type_id);
-    setSelectedStatus(procedure.status); // تمت إضافة تعيين الحالة هنا
-
-    setShowAddProcedureModal(true);
-  };
-
-  const handleDeleteProcedure = async (procedureId) => {
+  const handleAddOrEditProcedure = async () => {
     try {
-      await axios.delete(`${API_CONFIG.baseURL}/api/procedures/${procedureId}`);
+      const endpoint = isEditing
+        ? `${API_CONFIG.baseURL}/api/procedures/${editingProcedureId}`
+        : `${API_CONFIG.baseURL}/api/procedures`;
+      const method = isEditing ? 'put' : 'post';
+
+      await axios[method](endpoint, { ...formData, leg_case_id: legCaseId });
+      setAlert(isEditing ? 'تم تحديث الإجراء بنجاح.' : 'تم إضافة الإجراء بنجاح.');
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 3000);
       fetchProcedures();
+      closeModal();
+    } catch (error) {
+      console.error('Error adding or editing procedure:', error);
+    }
+  };
+
+  const handleDeleteProcedure = async (id) => {
+    try {
+      await axios.delete(`${API_CONFIG.baseURL}/api/procedures/${id}`);
       setAlert('تم حذف الإجراء بنجاح.');
       setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 3000);
-    } catch (error) {
-      console.log('خطأ في حذف الإجراء:', error);
-    }
-  };
-
-  const handleAddProcedure = async () => {
-    try {
-      const newProcedure = {
-        title: selectedTitle,
-        job: selectedJob,
-        date_start: selectedDateStart,
-        date_end: selectedDateEnd,
-        cost: selectedCost,
-        cost2: selectedCost2,
-        result: selectedResult,
-        procedure_type_id: selectedProcedureType,
-        lawyer_id: selectedLawyer,
-        procedure_place_type_id_: selectedProcedurePlaceType,
-        procedure_place_name_: selectedProcedurePlaceName,
-        leg_case_id: legCaseId,
-
-        created_by: user.id,
-      };
-
-      if (modalMode === 'edit') {
-        await axios.put(
-          `${API_CONFIG.baseURL}/api/procedures/${procedureId}`,
-          newProcedure,
-        );
-        setAlert('تم تحديث الإجراء بنجاح.');
-      } else {
-        await axios.post(`${API_CONFIG.baseURL}/api/procedures`, newProcedure);
-        setAlert('تم إضافة الإجراء بنجاح.');
-      }
-
-      setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 3000);
-
+      setTimeout(() => setShowAlert(false), 3000);
       fetchProcedures();
-      setShowAddProcedureModal(false);
-      clearFields();
     } catch (error) {
-      console.log('خطأ في إضافة/تحديث الإجراء:', error);
+      console.error('Error deleting procedure:', error);
     }
   };
 
-  const clearFields = () => {
-    setSelectedTitle('');
-    setSelectedJob('');
-    setSelectedDateStart('');
-    setSelectedDateEnd('');
-    setSelectedCost('');
-    setSelectedCost2('');
-    setSelectedResult('');
-    setSelectedProcedureType('');
-    setSelectedLawyer('');
-    setSelectedProcedurePlaceName('');
-    setSelectedProcedurePlaceType('');
+  const openModal = (procedure = null) => {
+    if (procedure) {
+      setFormData({
+        title: procedure.title,
+        job: procedure.job,
+        dateStart: procedure.date_start,
+        dateEnd: procedure.date_end,
+        cost: procedure.cost,
+        cost2: procedure.cost2,
+        result: procedure.result,
+        procedureType: procedure.procedure_type_id,
+        lawyer: procedure.lawyer_id,
+        procedurePlaceType: procedure.procedure_place_type_id,
+        procedurePlaceName: procedure.procedure_place_name,
+        status: procedure.status,
+      });
+      setIsEditing(true);
+      setEditingProcedureId(procedure.id);
+    } else {
+      resetForm();
+      setIsEditing(false);
+    }
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setFormData({
+      title: '',
+      job: '',
+      dateStart: '',
+      dateEnd: '',
+      cost: '',
+      cost2: '',
+      result: '',
+      procedureType: '',
+      lawyer: '',
+      procedurePlaceType: '',
+      procedurePlaceName: '',
+      status: 'قيد التنفيذ',
+    });
   };
 
   return (
-    <>
-      <Row>
-        {showAlert && alert && <Alert variant="success">{alert}</Alert>}
-      </Row>
+    <div>
+      {showAlert && <div className="bg-green-100 text-green-700 p-2 rounded mb-4">{alert}</div>}
 
-      <Card.Header>
-        <Button onClick={handleOpenAddProcedureModal}>
-          <BiPlusCircle className="mr-1" />
-          إإضافة إجراء
-        </Button>
-      </Card.Header>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold">الإجراءات</h2>
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          onClick={() => openModal()}
+        >
+          <BiPlusCircle className="inline mr-1" /> إضافة إجراء
+        </button>
+      </div>
 
-      <Card.Body>
-        <div className="table-responsive">
-          <table className="special-table">
-            <thead>
-              <tr>
-                <th className="col-2">نوع الإجراء</th>
-                <th className="col-1">نوع الجهة</th>
-                <th className="col-1">المحكمة</th>
-
-                <th className="col-2">تاريخ البدء</th>
-                <th className="col-2">تاريخ الانتهاء</th>
-                <th className="col-1">المحامي</th>
-                <th className="col-3">النتيجة</th>
-                <th className="col-1">الحالة</th>
-                <th className="col-2">التحكم</th>
-              </tr>
-            </thead>
-            <tbody>
-              {procedures.map(
-                (
-                  procedure, // Removed the unused 'index' variable
-                ) => (
-                  <tr key={procedure.id}>
-                    <td>{procedure.procedure_type?.name}</td>
-                    <td>{procedure.procedure_place_type?.name}</td>
-                    <td>{procedure.procedure_place_name}</td>
-
-                    <td>{procedure.date_start}</td>
-                    <td>{procedure.date_end}</td>
-                    <td>{procedure.lawyer?.name}</td>
-                    <td>{procedure.result}</td>
-                    <td>{procedure.status}</td>
-                    <td>
-                      <span>
-                        <Button
-                          variant="info"
-                          onClick={() => handleEditProcedure(procedure)}
-                        >
-                          <BiPencil />
-                        </Button>
-                      </span>
-                      <span>
-                        <Button
-                          variant="danger"
-                          onClick={() => handleDeleteProcedure(procedure.id)}
-                        >
-                          <BiTrash />
-                        </Button>
-                      </span>
-                    </td>
-                  </tr>
-                ),
-              )}
-            </tbody>
-          </table>
-        </div>
-      </Card.Body>
-
-      <Modal
-        show={showAddProcedureModal}
-        onHide={() => setShowAddProcedureModal(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {modalMode === 'edit' ? 'تعديل الإجراء' : 'إضافة إجراء'}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="procedureTitle">
-              <Form.Label>العنوان</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="ادخل العنوان"
-                value={selectedTitle}
-                onChange={(e) => setSelectedTitle(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="procedureJob">
-              <Form.Label>الوظيفة</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="ادخل الوظيفة"
-                value={selectedJob}
-                onChange={(e) => setSelectedJob(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="procedureDateStart">
-              <Form.Label>تاريخ البدء</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="ادخل تاريخ البدء"
-                value={selectedDateStart}
-                onChange={(e) => setSelectedDateStart(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="procedureDateEnd">
-              <Form.Label>تاريخ الانتهاء</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="ادخل تاريخ الانتهاء"
-                value={selectedDateEnd}
-                onChange={(e) => setSelectedDateEnd(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="procedureCost">
-              <Form.Label>التكلفة</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="ادخل التكلفة"
-                value={selectedCost}
-                onChange={(e) => setSelectedCost(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="procedureCost2">
-              <Form.Label>التكلفة 2</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="ادخل التكلفة 2"
-                value={selectedCost2 | ''}
-                onChange={(e) => setSelectedCost2(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group controlId="procedureResult">
-              <Form.Label>النتيجة</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="ادخل النتيجة"
-                value={selectedResult || ''}
-                onChange={(e) => setSelectedResult(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group controlId="procedurePlaceName">
-              <Form.Label>مكان الجهة</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="ادخل النتيجة"
-                value={selectedProcedurePlaceName || ''}
-                onChange={(e) => setSelectedProcedurePlaceName(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="procedureType">
-              <Form.Label>نوع الإجراء</Form.Label>
-              <Form.Control
-                as="select"
-                value={selectedProcedureType}
-                onChange={(e) => setSelectedProcedureType(e.target.value)}
-              >
-                <option value="">اختر نوع الإجراء</option>
-                {procedureTypes.map((type) => (
-                  <option key={type.id} value={type.id}>
-                    {type.name}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="procedurePlaceType">
-              <Form.Label>نوع الجهة</Form.Label>
-              <Form.Control
-                as="select"
-                value={selectedProcedurePlaceType}
-                onChange={(e) => setSelectedProcedureType(e.target.value)}
-              >
-                <option value="">اختر نوع الإجراء</option>
-                {procedurePlaceTypes.map((type) => (
-                  <option key={type.id} value={type.id}>
-                    {type.name}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="procedureLawyer">
-              <Form.Label>المحامي</Form.Label>
-              <Form.Control
-                as="select"
-                value={selectedLawyer}
-                onChange={(e) => setSelectedLawyer(e.target.value)}
-              >
-                <option value="">اختر المحامي</option>
-                {lawyers.map((lawyer) => (
-                  <option key={lawyer.id} value={lawyer.id}>
-                    {lawyer.name}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="procedureStatus">
-              <Form.Label>الحالة</Form.Label>
-              {modalMode === 'edit' && ( // شرط للتحقق من وضع التعديل
-                <Form.Control
-                  as="select"
-                  value={selectedStatus}
-                  onChange={(e) => setSelectedStatus(e.target.value)}
+      <table className="min-w-full bg-white shadow-md rounded overflow-hidden">
+        <thead className="bg-gray-200">
+          <tr>
+            <th className="py-2 px-4">نوع الإجراء</th>
+            <th className="py-2 px-4">نوع الجهة</th>
+            <th className="py-2 px-4">المحكمة</th>
+            <th className="py-2 px-4">تاريخ البدء</th>
+            <th className="py-2 px-4">تاريخ الانتهاء</th>
+            <th className="py-2 px-4">المحامي</th>
+            <th className="py-2 px-4">النتيجة</th>
+            <th className="py-2 px-4">الحالة</th>
+            <th className="py-2 px-4">التحكم</th>
+          </tr>
+        </thead>
+        <tbody>
+          {procedures.map((procedure) => (
+            <tr key={procedure.id} className="border-b">
+              <td className="py-2 px-4">{procedure.procedure_type?.name}</td>
+              <td className="py-2 px-4">{procedure.procedure_place_type?.name}</td>
+              <td className="py-2 px-4">{procedure.procedure_place_name}</td>
+              <td className="py-2 px-4">{procedure.date_start}</td>
+              <td className="py-2 px-4">{procedure.date_end}</td>
+              <td className="py-2 px-4">{procedure.lawyer?.name}</td>
+              <td className="py-2 px-4">{procedure.result}</td>
+              <td className="py-2 px-4">{procedure.status}</td>
+              <td className="py-2 px-4">
+                <button
+                  className="text-blue-500 mr-2 hover:underline"
+                  onClick={() => openModal(procedure)}
                 >
-                  <option value="">اختر الحالة</option>
-                  <option value="منتهي">منتهي</option>
-                  <option value="لم ينفذ">لم ينفذ</option>
-                  <option value="قيد التنفيذ">قيد التنفيذ</option>
-                </Form.Control>
-              )}
-              {modalMode !== 'edit' && ( // شرط للتحقق من وضع الإضافة
-                <Form.Control type="text" readOnly value="قيد التنفيذ" />
-              )}
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowAddProcedureModal(false)}
-          >
-            إلغاء
-          </Button>
-          <Button variant="primary" onClick={handleAddProcedure}>
-            حفظ
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+                  <BiPencil />
+                </button>
+                <button
+                  className="text-red-500 hover:underline"
+                  onClick={() => handleDeleteProcedure(procedure.id)}
+                >
+                  <BiTrash />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded shadow-lg w-1/2">
+            <h3 className="text-xl font-bold mb-4">
+              {isEditing ? 'تعديل الإجراء' : 'إضافة إجراء'}
+            </h3>
+            <form>
+              <div className="mb-4">
+                <label className="block text-gray-700">العنوان</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleFormChange}
+                  className="w-full px-3 py-2 border rounded"
+                />
+              </div>
+              {/* باقي الحقول */}
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAddOrEditProcedure}
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                >
+                  حفظ
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

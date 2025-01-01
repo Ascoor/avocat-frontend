@@ -1,24 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, Button, Modal, Form, Card, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import API_CONFIG from '../../../config';
-import CustomPagination from '../../home_tools/Pagination';
 
-/**
- * CourtType component
- * @param {Object} props - The props object
- * @param {boolean} props.show - Show modal
- * @param {Function} props.handleClose - Close modal
- */
 export default function CourtType({ show, handleClose }) {
   const [newCourtTypeName, setNewCourtTypeName] = useState('');
   const [courtTypes, setCourtTypes] = useState([]);
-  const [setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [alertMessage, setAlertMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
   const [modalMessage, setModalMessage] = useState(null);
-  const [courtTypeAlert, setCourtTypeAlert] = useState('');
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -26,39 +15,44 @@ export default function CourtType({ show, handleClose }) {
   }, []);
 
   useEffect(() => {
-    if (successMessage || alertMessage) {
+    if (alertMessage) {
       const timer = setTimeout(() => {
-        setSuccessMessage(null);
         setAlertMessage(null);
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [successMessage, alertMessage]);
+  }, [alertMessage]);
+
   const fetchCourtTypes = async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/court_types`);
       setCourtTypes(response.data);
     } catch (err) {
-      setError(err);
-      setAlertMessage({ type: 'danger', text: 'Failed to fetch data' });
+      setAlertMessage({ type: 'error', text: 'Failed to fetch data' });
     }
   };
 
   const handleAddCourtType = async () => {
+    if (!newCourtTypeName.trim()) {
+      setModalMessage({
+        type: 'error',
+        text: 'برجاء إدخال نوع المحكمة المراد إضافته.',
+      });
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        `${API_CONFIG.baseURL}/api/court_types`,
-        { name: newCourtTypeName },
-      );
+      const response = await axios.post(`${API_CONFIG.baseURL}/api/court_types`, {
+        name: newCourtTypeName,
+      });
       setCourtTypes([...courtTypes, response.data]);
-      setAlertMessage({ type: 'success', text: 'تم اضافة نوع المحكمة بنجاح' });
+      setAlertMessage({ type: 'success', text: 'تم إضافة نوع المحكمة بنجاح' });
       setNewCourtTypeName('');
       handleClose();
     } catch (err) {
-      setError(err);
-      setAlertMessage({
-        type: 'danger',
-        text: 'تأكد من البيان الذى يتم إدخاله',
+      setModalMessage({
+        type: 'error',
+        text: 'تأكد من البيانات المدخلة.',
       });
     }
   };
@@ -68,11 +62,10 @@ export default function CourtType({ show, handleClose }) {
       await axios.delete(`${API_CONFIG.baseURL}/api/court_types/${id}`);
       setCourtTypes(courtTypes.filter((courtType) => courtType.id !== id));
       setAlertMessage({ type: 'success', text: 'تم حذف نوع المحكمة بنجاح' });
-    } catch (error) {
-      setError(error);
+    } catch (err) {
       setAlertMessage({
-        type: 'danger',
-        text: 'لا يمكن حذف نوع المحكمة لارتباطة بمحاكم وتصنيفات فرعية اخري',
+        type: 'error',
+        text: 'لا يمكن حذف نوع المحكمة لارتباطه ببيانات أخرى.',
       });
     }
   };
@@ -81,121 +74,109 @@ export default function CourtType({ show, handleClose }) {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = courtTypes.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
-  const handleCloseModal = () => {
-    setModalMessage(null);
-    setNewCourtTypeName('');
-    handleClose();
-  };
-
-  const handleSubmit = () => {
-    if (!newCourtTypeName.trim()) {
-      setModalMessage({
-        type: 'danger',
-        text: 'برجاء إدخال نوع المحكمة المراد إضافته.',
-      });
-    } else {
-      handleAddCourtType();
-      setNewCourtTypeName('');
-      handleClose();
-    }
-  };
   return (
-    <>
-      <Card>
-        <Row>
-          <Col>
-            <Card.Header className="card-header-courts text-center">
-              <h3>تصنيف المحاكم</h3>
-            </Card.Header>
-            <Card.Body>
-              {alertMessage && (
-                <Alert variant={alertMessage.type}>{alertMessage.text}</Alert>
-              )}
-              {successMessage && (
-                <Alert variant="success">{successMessage}</Alert>
-              )}
-              {courtTypeAlert && (
-                <Alert variant="danger"> {alertMessage}</Alert>
-              )}
+    <div className="p-4">
+      <div className="mb-4 text-center">
+        <h3 className="text-2xl font-bold text-gray-800">تصنيف المحاكم</h3>
+      </div>
 
-              <div className="table-responsive">
-                <table className="special-table">
-                  <thead>
-                    <tr>
-                      <th>الاسم</th>
-                      <th>الإجراءات</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentItems.map((courtType) => (
-                      <tr className="table-row-courts" key={courtType.id}>
-                        <td>{courtType.name}</td>
-                        <td>
-                          <Button
-                            variant="danger"
-                            onClick={() =>
-                              handleDeleteCourtType(
-                                courtType.id,
-                                courtType.name,
-                                'court_types',
-                              )
-                            }
-                          >
-                            حذف
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Card.Body>
-          </Col>
-        </Row>
-        <Card.Footer>
-          <CustomPagination
-            totalCount={courtTypes.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
-        </Card.Footer>
-      </Card>
+      {alertMessage && (
+        <div
+          className={`mb-4 p-4 text-white ${
+            alertMessage.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+          }`}
+        >
+          {alertMessage.text}
+        </div>
+      )}
 
-      <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>إضافة نوع المحكمة</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="courtTypeName">
-              <Form.Label>اسم نوع المحكمة:</Form.Label>
-              <Form.Control
+      <div className="overflow-x-auto shadow rounded-lg">
+        <table className="w-full border-collapse border border-gray-300">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-4 py-2 border border-gray-300">الاسم</th>
+              <th className="px-4 py-2 border border-gray-300">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.map((courtType) => (
+              <tr key={courtType.id}>
+                <td className="px-4 py-2 border border-gray-300">{courtType.name}</td>
+                <td className="px-4 py-2 border border-gray-300">
+                  <button
+                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
+                    onClick={() => handleDeleteCourtType(courtType.id)}
+                  >
+                    حذف
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="flex justify-center mt-4">
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          السابق
+        </button>
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 ml-2"
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={indexOfLastItem >= courtTypes.length}
+        >
+          التالي
+        </button>
+      </div>
+
+      {show && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 shadow-lg w-1/2">
+            <div className="flex justify-between items-center mb-4">
+              <h4 className="text-xl font-bold">إضافة نوع المحكمة</h4>
+              <button className="text-red-500" onClick={handleClose}>
+                &times;
+              </button>
+            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleAddCourtType();
+              }}
+            >
+              <label className="block mb-2 text-gray-700">اسم نوع المحكمة:</label>
+              <input
                 type="text"
+                className="w-full p-2 border rounded"
                 value={newCourtTypeName}
-                onChange={(e) => {
-                  setNewCourtTypeName(e.target.value);
-                  setCourtTypeAlert(null); // Clear the alert message when the user types
-                }}
+                onChange={(e) => setNewCourtTypeName(e.target.value)}
               />
               {modalMessage && (
-                <Alert variant={modalMessage.type}>{modalMessage.text}</Alert>
+                <p className="text-red-500 mt-2">{modalMessage.text}</p>
               )}
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            إغلاق
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            إضافة نوع المحكمة
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+              <div className="flex justify-end mt-4">
+                <button
+                  type="button"
+                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2"
+                  onClick={handleClose}
+                >
+                  إغلاق
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                >
+                  إضافة نوع المحكمة
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

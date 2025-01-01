@@ -5,7 +5,6 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { Card, Col, Row } from 'react-bootstrap';
 import { useSpring, animated } from '@react-spring/web';
 import AnalogClock from './AnalogClock';
 
@@ -75,59 +74,51 @@ const Calendar = () => {
   };
 
   return (
-    <Row>
-      <Col md={6} lg={12} xs={12}>
-        <Card className="home-card-calendar">
-          <Card.Header className="home-text-center">
-            <h3 className="card-title p-3">الأجندة</h3>
-            <div className="clock">
-              <AnalogClock />
-              <p>الوقت الحالي: {currentTime.toLocaleTimeString('ar-EG')}</p>
-            </div>
-          </Card.Header>
+    <div className="grid grid-cols-1 gap-4 p-6 bg-gray-50 min-h-screen">
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="text-center">
+          <h3 className="text-2xl font-bold mb-4">الأجندة</h3>
+          <div className="flex justify-center items-center flex-col">
+            <AnalogClock />
+            <p className="text-gray-700 mt-2">
+              الوقت الحالي: {currentTime.toLocaleTimeString('ar-EG')}
+            </p>
+          </div>
+        </div>
+      </div>
 
-          <Card.Body>
-            <div className="calendar-container">
-              <animated.div style={calendarSpringStyles}>
-                <div className="calendar-container-display">
-                  <FullCalendar
-                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView="dayGridMonth"
-                    events={events}
-                    headerToolbar={{
-                      left: 'next,prev today',
-                      center: 'title',
-                      right: 'dayGridMonth,timeGridWeek,timeGridDay',
-                    }}
-                    dayCellContent={({ date }) => (
-                      <span className="arabic-font">
-                        {arabicToHindi(date.getDate())}
-                      </span>
-                    )}
-                    locale="ar"
-                    eventContent={({ event }) => {
-                      const hindiDate = arabicToHindi(
-                        formatDate(new Date(event.start))
-                      );
-                      return (
-                        <Card className="calendar-event-card">
-                          <Card.Header>{event.title}</Card.Header>
-                          <Card.Body>
-                            <strong>{event.description}</strong>
-                            <br />
-                            <p>بتاريخ: {hindiDate}</p>
-                          </Card.Body>
-                        </Card>
-                      );
-                    }}
-                  />
-                </div>
-              </animated.div>
-            </div>
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
+      <animated.div
+        style={calendarSpringStyles}
+        className="bg-gradient-to-r from-blue-500 to-indigo-700 rounded-lg shadow-lg p-6"
+      >
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          events={events}
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay',
+          }}
+          dayCellContent={({ date }) => (
+            <span className="text-lg font-semibold">
+              {arabicToHindi(date.getDate())}
+            </span>
+          )}
+          locale="ar"
+          eventContent={({ event }) => {
+            const hindiDate = arabicToHindi(formatDate(new Date(event.start)));
+            return (
+              <div className="bg-white shadow-md rounded-lg p-2">
+                <h4 className="font-bold">{event.title}</h4>
+                <p className="text-sm">{event.description}</p>
+                <p className="text-sm text-gray-500">بتاريخ: {hindiDate}</p>
+              </div>
+            );
+          }}
+        />
+      </animated.div>
+    </div>
   );
 };
 

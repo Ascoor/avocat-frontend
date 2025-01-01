@@ -1,35 +1,24 @@
-import { useEffect, useState } from 'react';
-import API_CONFIG from '../../config';
-import { JudgeIcon } from '../../assets/icons';
-import {
-  Button,
-  Row,
-  Col,
-  ButtonGroup,
-  Modal,
-  Alert,
-  Card,
-} from 'react-bootstrap';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import API_CONFIG from "../../config";
+import { JudgeIcon } from "../../assets/icons";
 
 const CaseType = () => {
   const [procedureTypes, setProcedureTypes] = useState([]);
   const [caseTypes, setCaseTypes] = useState([]);
   const [caseSubTypes, setCaseSubTypes] = useState([]);
-  const [error, setError] = useState(null);
-  const [showAddProcedureTypeModal, setShowAddProcedureTypeModal] =
-    useState(false);
-  const [deleteItem, setDeleteItem] = useState(null);
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [legalAdTypes, setLegalAdTypes] = useState([]);
-  const [showAddLegalAdModal, setShowAddLegalAdModal] = useState(false);
-  const [newAdType, setNewAdType] = useState('');
+
+  const [showAddProcedureTypeModal, setShowAddProcedureTypeModal] = useState(false);
   const [showAddCaseTypeModal, setShowAddCaseTypeModal] = useState(false);
   const [showAddCaseSubTypeModal, setShowAddCaseSubTypeModal] = useState(false);
-  const [newProcedureTypeName, setNewProcedureTypeName] = useState('');
-  const [newCaseTypeName, setNewCaseTypeName] = useState('');
-  const [newCaseSubTypeName, setNewCaseSubTypeName] = useState('');
-  const [newCaseTypeId, setNewCaseTypeId] = useState('');
+  const [showAddLegalAdModal, setShowAddLegalAdModal] = useState(false);
+
+  const [newProcedureTypeName, setNewProcedureTypeName] = useState("");
+  const [newCaseTypeName, setNewCaseTypeName] = useState("");
+  const [newCaseSubTypeName, setNewCaseSubTypeName] = useState("");
+  const [newCaseTypeId, setNewCaseTypeId] = useState("");
+  const [newAdType, setNewAdType] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -37,529 +26,118 @@ const CaseType = () => {
 
   const fetchData = async () => {
     try {
-      const procedureTypesResponse = await axios.get(
-        `${API_CONFIG.baseURL}/api/procedure_types/`,
-      );
-      const caseTypesResponse = await axios.get(
-        `${API_CONFIG.baseURL}/api/case_types/`,
-      );
-      const caseSubTypesResponse = await axios.get(
-        `${API_CONFIG.baseURL}/api/case_sub_types/`,
-      );
-      const legalAdTypesResponse = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal_ad_types/`,
-      );
+      const [procedureTypesResponse, caseTypesResponse, caseSubTypesResponse, legalAdTypesResponse] = await Promise.all([
+        axios.get(`${API_CONFIG.baseURL}/api/procedure_types/`),
+        axios.get(`${API_CONFIG.baseURL}/api/case_types/`),
+        axios.get(`${API_CONFIG.baseURL}/api/case_sub_types/`),
+        axios.get(`${API_CONFIG.baseURL}/api/legal_ad_types/`),
+      ]);
 
       setProcedureTypes(procedureTypesResponse.data);
       setCaseTypes(caseTypesResponse.data);
       setCaseSubTypes(caseSubTypesResponse.data);
       setLegalAdTypes(legalAdTypesResponse.data);
     } catch (error) {
-      setError('Error fetching data');
-      console.error('Error fetching data: ', error);
+      console.error("Error fetching data: ", error);
     }
   };
 
-  const handleAddProcedureType = () => {
-    axios
-      .post(`${API_CONFIG.baseURL}/api/procedure_types/`, {
-        name: newProcedureTypeName,
-      })
-      .then(() => {
-        setShowAddProcedureTypeModal(false);
-        setNewProcedureTypeName('');
-        fetchData();
-      })
-      .catch((error) => {
-        setError('Error adding Procedure Type');
-        console.error('Error adding Procedure Type: ', error);
-      });
+  const handleAddProcedureType = async () => {
+    try {
+      await axios.post(`${API_CONFIG.baseURL}/api/procedure_types/`, { name: newProcedureTypeName });
+      setShowAddProcedureTypeModal(false);
+      setNewProcedureTypeName("");
+      fetchData();
+    } catch {
+      console.error("Error adding Procedure Type");
+    }
   };
 
-  const handleAddCaseType = () => {
-    axios
-      .post(`${API_CONFIG.baseURL}/api/case_types/`, {
-        name: newCaseTypeName,
-      })
-      .then(() => {
-        setShowAddCaseTypeModal(false);
-        setNewCaseTypeName('');
-        fetchData();
-      })
-      .catch((error) => {
-        setError('Error adding Case Type');
-        console.error('Error adding Case Type: ', error);
-      });
+  const handleAddCaseType = async () => {
+    try {
+      await axios.post(`${API_CONFIG.baseURL}/api/case_types/`, { name: newCaseTypeName });
+      setShowAddCaseTypeModal(false);
+      setNewCaseTypeName("");
+      fetchData();
+    } catch {
+      console.error("Error adding Case Type");
+    }
   };
 
-  const handleAddCaseSubType = () => {
-    axios
-      .post(`${API_CONFIG.baseURL}/api/case_sub_types/`, {
+  const handleAddCaseSubType = async () => {
+    try {
+      await axios.post(`${API_CONFIG.baseURL}/api/case_sub_types/`, {
         case_type_id: newCaseTypeId,
         name: newCaseSubTypeName,
-      })
-      .then(() => {
-        setShowAddCaseSubTypeModal(false);
-        setNewCaseSubTypeName('');
-        setNewCaseTypeId('');
-        fetchData();
-      })
-      .catch((error) => {
-        setError('Error adding Case Sub Type');
-        console.error('Error adding Case Sub Type: ', error);
       });
-  };
-  const handleAddAdType = () => {
-    axios
-      .post(`${API_CONFIG.baseURL}/api/legal_ad_types`, {
-        name: newAdType,
-      })
-      .then(() => {
-        setShowAddLegalAdModal(false);
-        setNewAdType('');
-        fetchData();
-      })
-      .catch((error) => {
-        setError('Error adding legal ad type');
-        console.error('Error adding legal ad type: ', error);
-      });
-  };
-
-  const handleDelete = (id, name, tableName) => {
-    let message = '';
-
-    switch (tableName) {
-      case 'case_types':
-        message = 'Case Type';
-        break;
-      case 'case_sub_types':
-        message = 'Case Sub Type';
-        break;
-      case 'procedure_types':
-        message = 'Procedure Type';
-        break;
-      case 'legal_ad_types':
-        message = 'Ad Type';
-        break;
-      default:
-        throw new Error('Invalid table name');
+      setShowAddCaseSubTypeModal(false);
+      setNewCaseSubTypeName("");
+      setNewCaseTypeId("");
+      fetchData();
+    } catch {
+      console.error("Error adding Case Sub Type");
     }
-
-    const item = {
-      id,
-      name,
-      tableName,
-      message,
-    };
-
-    setDeleteItem(item);
-    setShowConfirmationModal(true);
   };
 
-  const handleConfirmDelete = () => {
-    const { id, name, tableName, message } = deleteItem;
-
-    axios
-      .delete(`${API_CONFIG.baseURL}/api/${tableName}/${id}`)
-      .then((response) => {
-        if (response.status === 204) {
-          alert(`${message} "${name}" deleted successfully`);
-
-          // Fetch data after successful deletion
-          if (tableName === 'case_types') {
-            // Fetch case types and case subtypes after deleting a case type
-            fetchData();
-          } else if (tableName === 'case_sub_types') {
-            // Fetch only case subtypes after deleting a case subtype
-            fetchData();
-          } else if (tableName === 'procedure_types') {
-            // Fetch only procedure types after deleting a procedure type
-            fetchData();
-          } else if (tableName === 'legal_ad_types') {
-            // Fetch only procedure types after deleting a procedure type
-            fetchData();
-          }
-        } else {
-          throw new Error('Failed to delete');
-        }
-      })
-      .catch((error) => {
-        console.error('Failed to delete', error);
-        alert(`Failed to delete ${message} "${name}". Please try again later.`);
-      });
-
-    setShowConfirmationModal(false);
-  };
-
-  const handleCloseConfirmationModal = () => {
-    setShowConfirmationModal(false);
+  const handleAddAdType = async () => {
+    try {
+      await axios.post(`${API_CONFIG.baseURL}/api/legal_ad_types`, { name: newAdType });
+      setShowAddLegalAdModal(false);
+      setNewAdType("");
+      fetchData();
+    } catch {
+      console.error("Error adding Ad Type");
+    }
   };
 
   return (
-    <>
-      <Card>
-        <Row>
-          <div className="legalcase-card-header">
-            <Card.Header className="text-center">
-              إعدادات القضايا
-              <img src={JudgeIcon} alt="Icon" className="court-icon" />
-              {error && <Alert variant="danger">{error}</Alert>}
-            </Card.Header>
-          </div>
-        </Row>
-        <Row>
-          <ButtonGroup aria-label="Basic example">
-            <Button
-              onClick={() => setShowAddCaseTypeModal(true)}
-              variant="success"
-            >
-              إضافة نوع القضية
-            </Button>
-            <Button
-              onClick={() => setShowAddCaseSubTypeModal(true)}
-              variant="warning"
-            >
-              إضافة نوع القضية الفرعية
-            </Button>
-            <Button
-              onClick={() => setShowAddProcedureTypeModal(true)}
-              variant="warning"
-            >
-              إضافة نوع الإجراء
-            </Button>
-            <Button
-              onClick={() => setShowAddLegalAdModal(true)}
-              variant="success"
-            >
-              إضافة نوع إعلان
-            </Button>
-          </ButtonGroup>
-        </Row>
-        <Card.Body>
-          <Row>
-            <Col>
-              <Card.Header className="card-header-courts text-center">
-                <h3>أنواع القضايا</h3>
-              </Card.Header>
+    <div className="p-6 space-y-6">
+      <div className="flex items-center justify-center space-x-4">
+        <img src={JudgeIcon} alt="Icon" className="w-12 h-12" />
+        <h2 className="text-2xl font-bold">إعدادات القضايا</h2>
+      </div>
 
-              <div className="table-responsive">
-                <table className="special-table">
-                  <thead>
-                    <tr>
-                      <th>الاسم</th>
-                      <th>التحكم</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {caseTypes.map((caseType) => (
-                      <tr
-                        style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
-                        key={caseType.id}
-                      >
-                        <td>{caseType.name}</td>
-                        <td>
-                          <Button
-                            variant="danger"
-                            onClick={() =>
-                              handleDelete(
-                                caseType.id,
-                                caseType.name,
-                                'case_types',
-                              )
-                            }
-                          >
-                            حذف
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Col>
-            <Col>
-              <Card.Header className="card-header-courts text-center">
-                <h3>أنواع القضايا الفرعية</h3>
-              </Card.Header>
-              <div className="table-responsive">
-                <table className="special-table table-striped">
-                  <thead>
-                    <tr>
-                      <th>النوع الفرعي</th>
-                      <th>اسم نوع القضية</th>
-                      <th>التحكم</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {caseSubTypes.map((caseSubType) => (
-                      <tr
-                        style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
-                        key={caseSubType.id}
-                      >
-                        <td>{caseSubType.name}</td>
-                        <td>{caseSubType.case_type.name}</td>
-                        <td>
-                          <Button
-                            variant="danger"
-                            onClick={() =>
-                              handleDelete(
-                                caseSubType.id,
-                                caseSubType.name,
-                                'case_sub_types',
-                              )
-                            }
-                          >
-                            حذف
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Card.Header className="card-header-courts text-center">
-                <h3>أنواع الإجراءات</h3>
-              </Card.Header>
-              <div className="table-responsive">
-                <table className="special-table">
-                  <thead>
-                    <tr>
-                      <th>الاسم</th>
-                      <th>التحكم</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {procedureTypes.map((procedureType) => (
-                      <tr
-                        style={{ backgroundColor: '#D1ECF1', color: '#0C5460' }}
-                        key={procedureType.id}
-                      >
-                        <td>{procedureType.name}</td>
-                        <td>
-                          <Button
-                            variant="danger"
-                            onClick={() =>
-                              handleDelete(
-                                procedureType.id,
-                                procedureType.name,
-                                'procedure_types',
-                              )
-                            }
-                          >
-                            حذف
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Col>
-            <Col>
-              <Card.Header className="card-header-courts text-center">
-                <h3>أنواع الإعلانات</h3>
-              </Card.Header>
-              <div className="table-responsive">
-                <table className="special-table">
-                  <thead>
-                    <tr>
-                      <th>الاسم</th>
-                      <th>التحكم</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {legalAdTypes.map((adType) => (
-                      <tr key={adType.id}>
-                        <td>{adType.name}</td>
-                        <td>
-                          <Button
-                            variant="danger"
-                            onClick={() =>
-                              handleDelete(
-                                adType.id,
-                                adType.name,
-                                'legal_ad_types',
-                              )
-                            }
-                          >
-                            حذف
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Col>
-          </Row>
-          <Modal
-            show={showAddCaseTypeModal}
-            onHide={() => setShowAddCaseTypeModal(false)}
+      <div className="grid grid-cols-2 gap-6">
+        <div className="bg-white rounded shadow p-4">
+          <h3 className="font-bold text-lg mb-4">أنواع القضايا</h3>
+          <ul className="list-disc pl-6">
+            {caseTypes.map((caseType) => (
+              <li key={caseType.id} className="flex justify-between items-center">
+                {caseType.name}
+                <button className="text-red-600 hover:underline">حذف</button>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+            onClick={() => setShowAddCaseTypeModal(true)}
           >
-            <Modal.Header closeButton>
-              <Modal.Title>إضافة نوع الحالة</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <form>
-                <label htmlFor="CaseTypeName">اسم نوع الحالة:</label>
-                <input
-                  type="text"
-                  id="CaseTypeName"
-                  value={newCaseTypeName}
-                  onChange={(e) => setNewCaseTypeName(e.target.value)}
-                />
-              </form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                variant="secondary"
-                onClick={() => setShowAddCaseTypeModal(false)}
-              >
-                إغلاق
-              </Button>
-              <Button variant="primary" onClick={handleAddCaseType}>
-                إضافة نوع الحالة
-              </Button>
-            </Modal.Footer>
-          </Modal>
-          <Modal
-            show={showAddCaseSubTypeModal}
-            onHide={() => setShowAddCaseSubTypeModal(false)}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>إضافة نوع الحالة الفرعية</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <form>
-                <label htmlFor="CaseTypeId">نوع الحالة:</label>
-                <select
-                  id="CaseTypeId"
-                  value={newCaseTypeId}
-                  onChange={(e) => setNewCaseTypeId(e.target.value)}
-                >
-                  <option value="">اختر نوع الحالة</option>
-                  {caseTypes.map((caseType) => (
-                    <option key={caseType.id} value={caseType.id}>
-                      {caseType.name}
-                    </option>
-                  ))}
-                </select>
-                <br />
-                <label htmlFor="CaseSubTypeName">اسم نوع الحالة الفرعية:</label>
-                <input
-                  type="text"
-                  id="CaseSubTypeName"
-                  value={newCaseSubTypeName}
-                  onChange={(e) => setNewCaseSubTypeName(e.target.value)}
-                />
-              </form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                variant="secondary"
-                onClick={() => setShowAddCaseSubTypeModal(false)}
-              >
-                إغلاق
-              </Button>
-              <Button variant="primary" onClick={handleAddCaseSubType}>
-                إضافة نوع الحالة الفرعية
-              </Button>
-            </Modal.Footer>
-          </Modal>
+            إضافة نوع قضية
+          </button>
+        </div>
 
-          <Modal
-            show={showAddProcedureTypeModal}
-            onHide={() => setShowAddProcedureTypeModal(false)}
+        <div className="bg-white rounded shadow p-4">
+          <h3 className="font-bold text-lg mb-4">أنواع الإجراءات</h3>
+          <ul className="list-disc pl-6">
+            {procedureTypes.map((type) => (
+              <li key={type.id} className="flex justify-between items-center">
+                {type.name}
+                <button className="text-red-600 hover:underline">حذف</button>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+            onClick={() => setShowAddProcedureTypeModal(true)}
           >
-            <Modal.Header closeButton>
-              <Modal.Title>إضافة نوع الإجراء</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <form>
-                <label htmlFor="ProcedureTypeName">اسم نوع الإجراء:</label>
-                <input
-                  type="text"
-                  id="ProcedureTypeName"
-                  value={newProcedureTypeName}
-                  onChange={(e) => setNewProcedureTypeName(e.target.value)}
-                />
-              </form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                variant="secondary"
-                onClick={() => setShowAddProcedureTypeModal(false)}
-              >
-                إغلاق
-              </Button>
-              <Button variant="primary" onClick={handleAddProcedureType}>
-                إضافة نوع الإجراء
-              </Button>
-            </Modal.Footer>
-          </Modal>
-          <>
-            <Modal
-              show={showConfirmationModal}
-              onHide={handleCloseConfirmationModal}
-            >
-              <Modal.Body>
-                {deleteItem && (
-                  <p>
-                    Are you sure you want to delete {deleteItem.message} &quot;
-                    {deleteItem.name}&quot;?
-                  </p>
-                )}
-              </Modal.Body>
-              <Modal.Footer>
-                <Button
-                  variant="secondary"
-                  onClick={handleCloseConfirmationModal}
-                >
-                  إلغاء
-                </Button>
-                <Button variant="danger" onClick={handleConfirmDelete}>
-                  حذف
-                </Button>
-              </Modal.Footer>
-            </Modal>
-            <Modal
-              show={showAddLegalAdModal}
-              onHide={() => setShowAddLegalAdModal(false)}
-            >
-              <Modal.Header closeButton>
-                <Modal.Title>إضافة نوع الإعلان</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <form>
-                  <label htmlFor="LegalAdTypeName">اسم نوع الإعلان:</label>
-                  <input
-                    type="text"
-                    id="LegalAdTypeName"
-                    value={newAdType}
-                    onChange={(e) => setNewAdType(e.target.value)}
-                  />
-                </form>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button
-                  variant="secondary"
-                  onClick={() => setShowAddLegalAdModal(false)}
-                >
-                  إغلاق
-                </Button>
-                <Button variant="primary" onClick={handleAddAdType}>
-                  إضافة نوع الإعلان
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          </>
-        </Card.Body>
-      </Card>
-    </>
+            إضافة نوع إجراء
+          </button>
+        </div>
+      </div>
+
+      {/* Additional UI for other sections can be added similarly */}
+    </div>
   );
 };
+
 export default CaseType;

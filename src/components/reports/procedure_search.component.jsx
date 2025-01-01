@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Form, Card, Row, Col } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/fa';
+import axios from 'axios';
 import API_CONFIG from '../../config';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-import axios from 'axios';
-
-import { SearchIcon } from '../../assets/icons/index';
 const ProcedureSearch = () => {
   const [procedureTypes, setProcedureTypes] = useState([]);
-  const [searchError, setSearchError] = useState('');
   const [lawyers, setLawyers] = useState([]);
   const [courts, setCourts] = useState([]);
   const [selectedProcedureType, setSelectedProcedureType] = useState('');
@@ -19,25 +15,30 @@ const ProcedureSearch = () => {
   const [selectedCourt, setSelectedCourt] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const [filteredProcedures, setFilteredProcedures] = useState([]);
+  const [searchError, setSearchError] = useState('');
+
   useEffect(() => {
-    fetch(`${API_CONFIG.baseURL}/api/procedure_types`)
-      .then((response) => response.json())
-      .then((data) => setProcedureTypes(data))
-      .catch((error) =>
-        console.error('Error fetching procedure types:', error),
-      );
-    fetch(`${API_CONFIG.baseURL}/api/lawyers`)
-      .then((response) => response.json())
-      .then((data) => setLawyers(data))
-      .catch((error) => console.error('Error fetching lawyers:', error));
-    fetch(`${API_CONFIG.baseURL}/api/courts`)
-      .then((response) => response.json())
-      .then((data) => setCourts(data))
-      .catch((error) => console.error('Error fetching courts:', error));
+    const fetchData = async () => {
+      try {
+        const [procedureTypesRes, lawyersRes, courtsRes] = await Promise.all([
+          axios.get(`${API_CONFIG.baseURL}/api/procedure_types`),
+          axios.get(`${API_CONFIG.baseURL}/api/lawyers`),
+          axios.get(`${API_CONFIG.baseURL}/api/courts`),
+        ]);
+        setProcedureTypes(procedureTypesRes.data);
+        setLawyers(lawyersRes.data);
+        setCourts(courtsRes.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    // Check if any of the search parameters is empty
+
     if (
       !selectedDateStart &&
       !selectedDateEnd &&
@@ -50,198 +51,150 @@ const ProcedureSearch = () => {
       setFilteredProcedures([]);
       return;
     }
-    // Prepare the query parameters based on the form input
+
     const queryParams = {};
     if (selectedDateStart) queryParams.date_start = selectedDateStart;
     if (selectedDateEnd) queryParams.date_end = selectedDateEnd;
     if (selectedLawyer) queryParams.lawyer_id = selectedLawyer;
     if (selectedCourt) queryParams.court_id = selectedCourt;
-    if (selectedProcedureType) {
-      queryParams.procedure_type_id = selectedProcedureType;
-    }
+    if (selectedProcedureType) queryParams.procedure_type_id = selectedProcedureType;
     if (selectedStatus) queryParams.status = selectedStatus;
-    // Send the GET request with query parameters to the API
+
     axios
-      .get(`${API_CONFIG.baseURL}/api/procedures-search`, {
-        params: queryParams,
-      })
+      .get(`${API_CONFIG.baseURL}/api/procedures-search`, { params: queryParams })
       .then((response) => {
-        // Handle the API response here (e.g., update state with search results)
-        setFilteredProcedures(response.data); // Update the state with the received data
-        console.log(response.data);
+        setFilteredProcedures(response.data);
+        setSearchError('');
       })
       .catch((error) => {
-        // Handle errors here if necessary
-        console.error(error);
+        console.error('Error fetching procedures:', error);
       });
   };
+
   return (
-    <>
-
-<div className="section-header">
-          <img src={SearchIcon} alt="Icon" className="report-procedure-icon" />
-        <div className="section-report-title">
-        <h3>
-
-          بحث الإجراءات
-        </h3>
+    <div className="bg-gray-100 p-6 rounded-md shadow-md">
+      <h2 className="text-2xl font-bold mb-4">بحث الإجراءات</h2>
+      <form onSubmit={handleFormSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="flex flex-col">
+          <label htmlFor="procedureType" className="mb-2 font-medium">نوع الإجراء</label>
+          <select
+            id="procedureType"
+            value={selectedProcedureType}
+            onChange={(event) => setSelectedProcedureType(event.target.value)}
+            className="p-2 border rounded-md shadow-sm"
+          >
+            <option value="">اختر نوع الإجراء</option>
+            {procedureTypes.map((type) => (
+              <option key={type.id} value={type.id}>{type.name}</option>
+            ))}
+          </select>
         </div>
-        <button className="back-btn" onClick={() => window.history.back()}>
-            رجوع
-          </button>
-        </div>
-      <Card className="m-4">
-        <Card.Body>
-          <Form onSubmit={handleFormSubmit}>
-            <Row>
-              <Col xs={12} md={6} sm={6}>
-                <Form.Group controlId="procedureType">
-                  <Form.Label className="search-label-text">
-                    نوع الإجراء
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={selectedProcedureType}
-                    onChange={(event) =>
-                      setSelectedProcedureType(event.target.value)
-                    }
-                  >
-                    <option value="">اختر نوع الإجراء</option>
-                    {procedureTypes.map((type) => (
-                      <option key={type.id} value={type.id}>
-                        {type.name}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="lawyer">
-                  <Form.Label className="search-label-text">المحامي</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={selectedLawyer}
-                    onChange={(event) => setSelectedLawyer(event.target.value)}
-                  >
-                    <option value="">اختر المحامي</option>
-                    {lawyers.map((lawyer) => (
-                      <option key={lawyer.id} value={lawyer.id}>
-                        {lawyer.name}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col xs={12} md={6} sm={6}>
-                <Form.Group controlId="dateRange">
-                  <Form.Label className="search-label-text">
-                    الفترة الزمنية
-                  </Form.Label>
-                  <DatePicker
-                    selected={selectedDateStart}
-                    onChange={(date) => setSelectedDateStart(date)}
-                    dateFormat="yyyy/MM/dd"
-                    placeholderText="تاريخ البدء"
-                    className="form-control"
-                    locale="ar"
-                    isClearable
-                    showYearDropdown
-                    scrollableYearDropdown
-                  />
-                  <DatePicker
-                    selected={selectedDateEnd}
-                    onChange={(date) => setSelectedDateEnd(date)}
-                    dateFormat="yyyy/MM/dd"
-                    placeholderText="تاريخ الانتهاء"
-                    className="form-control"
-                    locale="ar"
-                    isClearable
-                    showYearDropdown
-                    scrollableYearDropdown
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} sm={6} md={6}>
-                <Form.Group controlId="court">
-                  <Form.Label className="search-label-text">المحكمة</Form.Label>
 
-                  <Form.Control
-                    as="select"
-                    value={selectedCourt}
-                    onChange={(event) => setSelectedCourt(event.target.value)}
-                  >
-                    <option value="">اختر المحكمة</option>
-                    {courts.map((court) => (
-                      <option key={court.id} value={court.id}>
-                        {court.name}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col xs={12} sm={6} md={6}>
-                <Form.Group>
-                  <Form.Label className="search-label-text" htmlFor="status">
-                    الحالة
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    id="status"
-                    value={selectedStatus}
-                    onChange={(event) => setSelectedStatus(event.target.value)}
-                  >
-                    <option value="">All</option>
-                    <option value="منتهي">منتهي</option>
-                    <option value="لم ينفذ">لم ينفذ</option>
-                    <option value="قيد التنفيذ">قيد التنفيذ</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <button type="submit" className="search-button">
-                  <FaSearch /> بحث
-                </button>
-              </Col>
-            </Row>
-          </Form>
-        </Card.Body>
-      </Card>
-      <div className="table-responsive">
-        {searchError && <p>{searchError}</p>}
-        {filteredProcedures.length > 0 && (
-          <table className="special-table">
-            <thead className="table-info">
+        <div className="flex flex-col">
+          <label htmlFor="lawyer" className="mb-2 font-medium">المحامي</label>
+          <select
+            id="lawyer"
+            value={selectedLawyer}
+            onChange={(event) => setSelectedLawyer(event.target.value)}
+            className="p-2 border rounded-md shadow-sm"
+          >
+            <option value="">اختر المحامي</option>
+            {lawyers.map((lawyer) => (
+              <option key={lawyer.id} value={lawyer.id}>{lawyer.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-col">
+          <label className="mb-2 font-medium">الفترة الزمنية</label>
+          <DatePicker
+            selected={selectedDateStart}
+            onChange={(date) => setSelectedDateStart(date)}
+            dateFormat="yyyy/MM/dd"
+            placeholderText="تاريخ البدء"
+            className="p-2 border rounded-md shadow-sm"
+          />
+          <DatePicker
+            selected={selectedDateEnd}
+            onChange={(date) => setSelectedDateEnd(date)}
+            dateFormat="yyyy/MM/dd"
+            placeholderText="تاريخ الانتهاء"
+            className="p-2 border rounded-md shadow-sm mt-2"
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label htmlFor="court" className="mb-2 font-medium">المحكمة</label>
+          <select
+            id="court"
+            value={selectedCourt}
+            onChange={(event) => setSelectedCourt(event.target.value)}
+            className="p-2 border rounded-md shadow-sm"
+          >
+            <option value="">اختر المحكمة</option>
+            {courts.map((court) => (
+              <option key={court.id} value={court.id}>{court.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-col">
+          <label htmlFor="status" className="mb-2 font-medium">الحالة</label>
+          <select
+            id="status"
+            value={selectedStatus}
+            onChange={(event) => setSelectedStatus(event.target.value)}
+            className="p-2 border rounded-md shadow-sm"
+          >
+            <option value="">اختر الحالة</option>
+            <option value="منتهي">منتهي</option>
+            <option value="لم ينفذ">لم ينفذ</option>
+            <option value="قيد التنفيذ">قيد التنفيذ</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="col-span-1 md:col-span-2 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+        >
+          بحث
+        </button>
+      </form>
+
+      {searchError && <p className="text-red-500 mt-4">{searchError}</p>}
+
+      {filteredProcedures.length > 0 && (
+        <div className="mt-6 overflow-x-auto">
+          <table className="min-w-full bg-white border rounded-md">
+            <thead className="bg-gray-200">
               <tr>
-                <th>نوع اإجراء</th>
-                <th>المحامى</th>
-                <th>جهة الإجراء</th>
-                <th>تاريخ البدء</th>
-                <th>تاريخ الانتهاء</th>
-                <th>نتيجة الإجراء</th>
-                <th>حالة الإجراء</th>
-                <th>أخر تحديث</th>
+                <th className="p-3 border">نوع الإجراء</th>
+                <th className="p-3 border">المحامي</th>
+                <th className="p-3 border">جهة الإجراء</th>
+                <th className="p-3 border">تاريخ البدء</th>
+                <th className="p-3 border">تاريخ الانتهاء</th>
+                <th className="p-3 border">نتيجة الإجراء</th>
+                <th className="p-3 border">حالة الإجراء</th>
               </tr>
             </thead>
             <tbody>
-              {filteredProcedures.map((result, index) => (
-                <tr key={`${result._id}-${index}`}>
-                  <td>{result.procedure_type?.name}</td>
-                  <td>{result.lawyer?.name}</td>
-                  <td>{result.court?.name}</td>
-                  <td>{result.date_start}</td>
-                  <td>{result.date_end}</td>
-                  <td className="col-4">{result.result}</td>
-                  <td>{result.status}</td>
-                  <td>{result.created_by?.name}</td>
+              {filteredProcedures.map((procedure) => (
+                <tr key={procedure.id} className="hover:bg-gray-100">
+                  <td className="p-3 border">{procedure.procedure_type?.name}</td>
+                  <td className="p-3 border">{procedure.lawyer?.name}</td>
+                  <td className="p-3 border">{procedure.court?.name}</td>
+                  <td className="p-3 border">{procedure.date_start}</td>
+                  <td className="p-3 border">{procedure.date_end}</td>
+                  <td className="p-3 border">{procedure.result}</td>
+                  <td className="p-3 border">{procedure.status}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 };
+
 export default ProcedureSearch;

@@ -1,83 +1,67 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { JudgeIcon } from '../../assets/icons/index';
-import { Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import CourtType from './courtTools/CourtType';
 import CourtSubType from './courtTools/CourtSubType';
 import CourtLevel from './courtTools/CourtLevel';
 import Court from './courtTools/Court';
-import '../../assets/css/Courts.css';
 
 const CourtSetting = () => {
-  // Court Type data (replace with actual data from API or state)
   const [showAddCourtTypeModal, setShowAddCourtTypeModal] = useState(false);
-  const [showAddCourtSubTypeModal, setShowAddCourtSubTypeModal] =
-    useState(false);
+  const [showAddCourtSubTypeModal, setShowAddCourtSubTypeModal] = useState(false);
   const [showAddCourtLevelModal, setShowAddCourtLevelModal] = useState(false);
   const [showAddCourtModal, setShowAddCourtModal] = useState(false);
 
-  useEffect(() => {}, []);
-
   return (
-    <div>
-      <Row className="justify-content-center">
-        <div className="legalcase-card-header">
+    <div className="p-4 space-y-6">
+      <div className="text-center">
+        <div className="flex justify-center items-center space-x-4 text-2xl font-bold text-gray-800">
           إعدادات المحاكم
-          <img src={JudgeIcon} alt="Icon" className="court-icon ms-2" />
+          <img src={JudgeIcon} alt="Icon" className="w-8 h-8" />
         </div>
+      </div>
 
-        <Col xs={12} md={10} lg={8} className="text-center">
-          <ButtonGroup className="special-button-group">
-            <Button
-              className="special-button"
-              onClick={() => setShowAddCourtTypeModal(true)}
-              variant="success"
-            >
-              إضافة تصنيف المحكمة
-            </Button>
-            <Button
-              className="special-button"
-              onClick={() => setShowAddCourtLevelModal(true)}
-              variant="warning"
-            >
-              إضافة درجة المحكمة
-            </Button>
-            <Button
-              className="special-button"
-              onClick={() => setShowAddCourtSubTypeModal(true)}
-              variant="warning"
-            >
-              إضافة نوع فرعي للمحكمة
-            </Button>
-            <Button
-              className="special-button"
-              onClick={() => setShowAddCourtModal(true)}
-              variant="success"
-            >
-              إضافة محكمة
-            </Button>
-          </ButtonGroup>
-        </Col>
-      </Row>
-      <Row className="justify-content-around">
-        <Col xs={12} sm={6} md={4}>
-          <CourtLevel
-            show={showAddCourtLevelModal}
-            handleClose={() => setShowAddCourtLevelModal(false)}
-          />
-        </Col>
-        <Col xs={12} sm={6} md={4}>
-          <CourtType
-            show={showAddCourtTypeModal}
-            handleClose={() => setShowAddCourtTypeModal(false)}
-          />
-        </Col>
-        <Col xs={12} sm={6} md={4}>
-          <CourtSubType
-            show={showAddCourtSubTypeModal}
-            handleClose={() => setShowAddCourtSubTypeModal(false)}
-          />
-        </Col>
-      </Row>
+      <div className="flex justify-center space-x-4">
+        <button
+          onClick={() => setShowAddCourtTypeModal(true)}
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700"
+        >
+          إضافة تصنيف المحكمة
+        </button>
+        <button
+          onClick={() => setShowAddCourtLevelModal(true)}
+          className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-700"
+        >
+          إضافة درجة المحكمة
+        </button>
+        <button
+          onClick={() => setShowAddCourtSubTypeModal(true)}
+          className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-700"
+        >
+          إضافة نوع فرعي للمحكمة
+        </button>
+        <button
+          onClick={() => setShowAddCourtModal(true)}
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700"
+        >
+          إضافة محكمة
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <CourtLevel
+          show={showAddCourtLevelModal}
+          handleClose={() => setShowAddCourtLevelModal(false)}
+        />
+        <CourtType
+          show={showAddCourtTypeModal}
+          handleClose={() => setShowAddCourtTypeModal(false)}
+        />
+        <CourtSubType
+          show={showAddCourtSubTypeModal}
+          handleClose={() => setShowAddCourtSubTypeModal(false)}
+        />
+      </div>
+
       <Court
         show={showAddCourtModal}
         handleClose={() => setShowAddCourtModal(false)}

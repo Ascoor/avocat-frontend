@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Alert } from 'react-bootstrap';
-import { ClientIcon } from '../../../assets/icons/index';
-import API_CONFIG from '../../../config';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import API_CONFIG from '../../../config';
 import CustomPagination from '../../home_tools/Pagination';
 import SectionHeader from '../../home_tools/SectionHeader';
 import AddEditUnclient from './AddEditUnclient';
@@ -13,27 +11,20 @@ function UnclientList() {
   const [selectedUnclient, setSelectedUnclient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-
   const [successMessage, setSuccessMessage] = useState('');
-  const [currentAlertMessage, setCurrentAlertMessage] = useState('');
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
-  // API Calls
+  // Fetch clients from API
   const fetchUnclients = async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/unclients`);
-      if (Array.isArray(response.data.unclients)) {
-        setUnclients(response.data.unclients);
-      } else {
-        console.error('Data fetched is not an array:', response.data.unclients);
-      }
+      setUnclients(response.data.unclients || []);
     } catch (error) {
       console.error('Failed to fetch clients', error);
     }
   };
-  // Fetch and filter clients
+
   useEffect(() => {
     fetchUnclients();
   }, []);
@@ -41,38 +32,26 @@ function UnclientList() {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/unclients-search?search=${searchQuery}`,
+        `${API_CONFIG.baseURL}/api/unclients-search?search=${searchQuery}`
       );
       setUnclients(response.data);
       setCurrentPage(1);
     } catch (error) {
-      console.error('Error searching cases:', error);
+      console.error('Error searching unclients:', error);
     }
   };
 
   const deleteUnclient = async (id) => {
     try {
       const response = await axios.delete(
-        `${API_CONFIG.baseURL}/api/unclients/${id}`,
+        `${API_CONFIG.baseURL}/api/unclients/${id}`
       );
       fetchUnclients();
-      setCurrentAlertMessage(response.data.message);
-      setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-        setCurrentAlertMessage('');
-      }, 3000);
+      setSuccessMessage(response.data.message || 'تم الحذف بنجاح');
+      setTimeout(() => setSuccessMessage(''), 3000);
     } catch (error) {
-      console.log(error.response.data.message);
+      console.error('Error deleting unclient:', error);
     }
-  };
-  const handleSuccess = (message) => {
-    // Set the success message state in the parent component
-    // Display the message or take other actions as needed
-    setSuccessMessage(message);
-    fetchUnclients();
-    // Optionally, clear the message after a delay
-    setTimeout(() => setSuccessMessage(''), 3000);
   };
 
   const openAddEditModal = (unclient = null) => {
@@ -80,121 +59,105 @@ function UnclientList() {
     setModalOpen(true);
   };
 
-  // Render
-
   const paginatedUnclients = unclients.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   return (
-    <>
+    <div className="p-4">
       <SectionHeader
-        buttonName="عميل بدون"
+        buttonName="إضافة عميل"
         listName="عملاء بدون وكالة"
-        icon={ClientIcon}
         setShowAddModal={() => openAddEditModal()}
       />
       <AddEditUnclient
         unclient={selectedUnclient}
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        onSaved={handleSuccess}
-        onUnclientDelete={deleteUnclient}
+        onSaved={() => fetchUnclients()}
       />
 
-      <Card className="mt-4">
-        <Card.Header>
-          {successMessage && <Alert variant="success">{successMessage}</Alert>}
-
-          {showAlert && (
-            <Alert
-              variant="success"
-              onClose={() => setShowAlert(false)}
-              dismissible
-            >
-              {currentAlertMessage}
-            </Alert>
-          )}
-        </Card.Header>
-        <div className="search-form w-50">
-          <input
-            type="text"
-            className="search-input-group"
-            placeholder="البحث عن العملاء غير الموكلين"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button
-            className="search-button"
-            type="button"
-            onClick={handleSearch}
-          >
-            بحث
-          </button>
+      {successMessage && (
+        <div className="mb-4 p-4 bg-green-100 text-green-700 rounded shadow">
+          {successMessage}
         </div>
+      )}
 
-        <Card.Body>
-          <div className="table-responsive">
-            <table className="special-table">
-              <thead>
-                <tr>
-                  <th>رقم المكتب</th>
-                  <th>اسم العميل</th>
-                  <th>رقم القومى</th>
-                  <th>النوع</th>
-                  <th>رقم الهاتف</th>
+      <div className="mb-4 flex justify-between items-center">
+        <input
+          type="text"
+          placeholder="البحث عن العملاء غير الموكلين"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="px-4 py-2 border rounded-md w-1/2 focus:ring-2 focus:ring-blue-500"
+        />
+        <button
+          onClick={handleSearch}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          بحث
+        </button>
+      </div>
 
-                  <th>حذف</th>
+      <div className="bg-white rounded-lg shadow">
+        <table className="table-auto w-full text-right">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-2">رقم المكتب</th>
+              <th className="px-4 py-2">اسم العميل</th>
+              <th className="px-4 py-2">رقم القومى</th>
+              <th className="px-4 py-2">النوع</th>
+              <th className="px-4 py-2">رقم الهاتف</th>
+              <th className="px-4 py-2">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedUnclients.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="px-4 py-2 text-center text-gray-500">
+                  لا يوجد عملاء لعرضهم.
+                </td>
+              </tr>
+            ) : (
+              paginatedUnclients.map((unclient) => (
+                <tr key={unclient.id} className="border-b">
+                  <td className="px-4 py-2">{unclient.slug}</td>
+                  <td className="px-4 py-2">{unclient.name}</td>
+                  <td className="px-4 py-2">{unclient.identity_number}</td>
+                  <td className="px-4 py-2">{unclient.gender}</td>
+                  <td className="px-4 py-2">{unclient.phone_number}</td>
+                  <td className="px-4 py-2 flex space-x-2">
+                    <button
+                      onClick={() => openAddEditModal(unclient)}
+                      className="text-blue-500 hover:text-blue-700"
+                    >
+                      <AiFillEdit size={20} />
+                    </button>
+                    <button
+                      onClick={() => deleteUnclient(unclient.id)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <AiFillDelete size={20} />
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {paginatedUnclients.length === 0 ? (
-                  <tr>
-                    <td colSpan="7">
-                      <Alert variant="warning">لا يوجد موكلين لعرضهم.</Alert>
-                    </td>
-                  </tr>
-                ) : (
-                  paginatedUnclients.map((unclient) => (
-                    <tr key={unclient.id}>
-                      <td>
-                        {' '}
-                        <span
-                          className="btn client-slug"
-                          onClick={() => openAddEditModal(unclient)}
-                        >
-                          <AiFillEdit color="blue" />
-                          {unclient.slug}
-                        </span>
-                      </td>
-                      <td>{unclient.name}</td>
-                      <td>{unclient.identity_number}</td>
-                      <td>{unclient.gender}</td>
-                      <td>{unclient.phone_number}</td>
-                      <td>
-                        <AiFillDelete
-                          color="red"
-                          onClick={() => deleteUnclient(unclient)}
-                        />
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </Card.Body>
-        <Card.Footer>
-          <CustomPagination
-            totalCount={unclients.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
-        </Card.Footer>
-      </Card>
-    </>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-4">
+        <CustomPagination
+          totalCount={unclients.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+    </div>
   );
 }
+
 export default UnclientList;

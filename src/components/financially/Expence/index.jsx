@@ -1,14 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import {
-  Card,
-  Form,
-  Button,
-  FormControl,
-  Row,
-  Col,
-  Alert,
-} from 'react-bootstrap';
 import { BiSearchAlt } from 'react-icons/bi';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -21,20 +12,17 @@ const ExpenseIndex = () => {
   const [category, setCategory] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [error, setError] = useState(''); // State for error message
+  const [error, setError] = useState('');
 
   const isAtLeastOneFieldFilled = () => {
-    return (
-      identifier.trim() !== '' || category.trim() !== '' || startDate || endDate
-    );
+    return identifier.trim() !== '' || category.trim() !== '' || startDate || endDate;
   };
 
   useEffect(() => {
     axios
       .get(`${API_CONFIG.baseURL}/api/expense_categories`)
       .then((response) => {
-        const [categories] = response.data;
-        setExpenseCategories(categories || []);
+        setExpenseCategories(response.data || []);
       })
       .catch((error) => {
         console.error('Error fetching expense categories:', error);
@@ -44,10 +32,8 @@ const ExpenseIndex = () => {
   const handleSearch = async () => {
     try {
       if (!isAtLeastOneFieldFilled()) {
-        setError('لابد من اختيار عنصر واحد على الأقل للبحث.'); // Set the error message
-        setTimeout(() => {
-          setError(''); // Clear the error message after 6 seconds
-        }, 6000); // 6 seconds (6000 milliseconds)
+        setError('لابد من اختيار عنصر واحد على الأقل للبحث.');
+        setTimeout(() => setError(''), 6000);
         return;
       }
 
@@ -60,117 +46,115 @@ const ExpenseIndex = () => {
 
       const response = await axios.get(
         `${API_CONFIG.baseURL}/api/expenses/search`,
-        { params: searchCriteria },
+        { params: searchCriteria }
       );
       setExpenses(response.data.filtered_expenses || []);
-      setError(''); // Clear the error message
+      setError('');
     } catch (error) {
       console.error('An error occurred:', error);
     }
   };
 
   return (
-    <Card>
-      <Card.Header className="expenses-card-header">
-        <Row>
-          <Col xs={12} md={6} lg={3} className="text-center text-md">
-            <FormControl
-              type="search"
-              placeholder="إبحث برقم ملف القضية أو الخدمة"
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
-              required
-            />
-          </Col>
-          <Col xs={12} md={6} lg={3} className="text-center text-md">
-            <Form.Select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="">اختر نوع المصروف</option>
-              {expenseCategories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
-                </option>
-              ))}
-            </Form.Select>
-          </Col>
-          <Col xs={12} md={6} lg={3} className="text-center text-md p-4">
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              placeholderText="بدأ من تاريخ"
-              dateFormat="yyyy-MM-dd"
-              isClearable
-            />
-          </Col>
-          <Col xs={12} md={6} lg={3} className="text-center text-md p-4">
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              placeholderText="حتى تاريخ"
-              dateFormat="yyyy-MM-dd"
-              isClearable
-            />
-          </Col>
-          <Col xs={12} md={12} lg={12} className="text-center text-md p-4">
-            <Button onClick={handleSearch}>
-              <BiSearchAlt /> بحث
-            </Button>
-          </Col>
-        </Row>
-      </Card.Header>
+    <div className="bg-gray-50 p-6 min-h-screen">
+      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <input
+            type="search"
+            placeholder="إبحث برقم ملف القضية أو الخدمة"
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">اختر نوع المصروف</option>
+            {expenseCategories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            placeholderText="بدأ من تاريخ"
+            dateFormat="yyyy-MM-dd"
+            isClearable
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+          <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            placeholderText="حتى تاريخ"
+            dateFormat="yyyy-MM-dd"
+            isClearable
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={handleSearch}
+            className="px-6 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
+          >
+            <BiSearchAlt className="inline-block mr-2" /> بحث
+          </button>
+        </div>
+      </div>
+
       {error && (
-        <Row>
-          <Col xs={12} md={12} lg={12} className="text-center text-md">
-            <Alert variant="danger">{error}</Alert>
-          </Col>
-        </Row>
+        <div className="bg-red-100 text-red-800 p-4 rounded-lg mb-6">
+          {error}
+        </div>
       )}
-      <Card.Body>
-        <div className="table-responsive">
-          <table className="special-table">
+
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className="overflow-x-auto">
+          <table className="min-w-full border-collapse table-auto">
             <thead>
-              <tr>
-                <th className="col-1">م</th>
-                <th className="col-2">رقم ملف الخدمة أو القضية</th>
-                <th className="col-2">نوع المصروف</th>
-                <th className="col-3">التفاصيل</th>
-                <th className="col-2">ملاحظة</th>
-                <th className="col-3">تاريخ المصروف</th>
-                <th className="col-1">الرسوم</th>
-                <th className="col-1">تكاليف اخرى</th>
-                <th className="col-2">أنشئ بواسطة</th>
+              <tr className="bg-gray-100 text-gray-800">
+                <th className="border px-4 py-2">م</th>
+                <th className="border px-4 py-2">رقم ملف الخدمة أو القضية</th>
+                <th className="border px-4 py-2">نوع المصروف</th>
+                <th className="border px-4 py-2">التفاصيل</th>
+                <th className="border px-4 py-2">ملاحظة</th>
+                <th className="border px-4 py-2">تاريخ المصروف</th>
+                <th className="border px-4 py-2">الرسوم</th>
+                <th className="border px-4 py-2">تكاليف اخرى</th>
+                <th className="border px-4 py-2">أنشئ بواسطة</th>
               </tr>
             </thead>
             <tbody>
               {expenses.map((expense) => {
                 const amountObj = JSON.parse(expense.amount || '{}');
                 return (
-                  <tr key={expense.id}>
-                    <td>{expense.id}</td>
-                    <td>
+                  <tr key={expense.id} className="text-gray-700">
+                    <td className="border px-4 py-2">{expense.id}</td>
+                    <td className="border px-4 py-2">
                       {expense.service_id
                         ? expense.service.service_no
                         : expense.leg_case_id
-                          ? expense.leg_case.slug
-                          : ''}
+                        ? expense.leg_case.slug
+                        : ''}
                     </td>
-                    <td>{expense.expense_category?.name}</td>
-                    <td>{expense.description}</td>
-                    <td>{expense.note}</td>
-                    <td>{expense.expense_date}</td>
-                    <td>{amountObj.cost}</td>
-                    <td>{amountObj.cost2}</td>
-                    <td>{expense.user?.name}</td>
+                    <td className="border px-4 py-2">{expense.expense_category?.name}</td>
+                    <td className="border px-4 py-2">{expense.description}</td>
+                    <td className="border px-4 py-2">{expense.note}</td>
+                    <td className="border px-4 py-2">{expense.expense_date}</td>
+                    <td className="border px-4 py-2">{amountObj.cost}</td>
+                    <td className="border px-4 py-2">{amountObj.cost2}</td>
+                    <td className="border px-4 py-2">{expense.user?.name}</td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
         </div>
-      </Card.Body>
-    </Card>
+      </div>
+    </div>
   );
 };
 

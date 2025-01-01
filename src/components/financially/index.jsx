@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import '../../assets/css/FinancialDashboard.css';
-import { Card } from 'react-bootstrap';
 import ExpenseIndex from './Expence/index';
 import ClientAccounttIndex from './ClientAccount/index';
 
@@ -13,41 +11,55 @@ const FinancialDashboard = () => {
         return <div>الإيرادات - Add your revenue content here</div>;
       case 'expenses':
         return <ExpenseIndex />;
-      case 'client': // Corrected to 'client' with a lowercase 'c'
+      case 'client':
         return <ClientAccounttIndex />;
       case 'nonClient':
         return <div>العملاء - Add your client content here</div>;
       default:
-        return null; // Default content when no tab is selected
+        return <div className="text-gray-500">اختر قسمًا لعرض المحتوى</div>;
     }
   };
 
   return (
-    <div className="financial-dashboard">
-      <div className="card-container">
-        <div className="financial-card" onClick={() => setActiveTab('revenue')}>
-          <p>الإيرادات</p>
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div
+          className={`p-4 bg-white rounded-lg shadow-md text-center cursor-pointer ${
+            activeTab === 'revenue' ? 'ring-2 ring-blue-500' : ''
+          }`}
+          onClick={() => setActiveTab('revenue')}
+        >
+          <p className="text-lg font-semibold text-gray-800">الإيرادات</p>
         </div>
         <div
-          className="financial-card"
+          className={`p-4 bg-white rounded-lg shadow-md text-center cursor-pointer ${
+            activeTab === 'expenses' ? 'ring-2 ring-blue-500' : ''
+          }`}
           onClick={() => setActiveTab('expenses')}
         >
-          <p>المصروفات</p>
-        </div>
-        <div className="financial-card" onClick={() => setActiveTab('client')}>
-          <p>العملاء</p>
+          <p className="text-lg font-semibold text-gray-800">المصروفات</p>
         </div>
         <div
-          className="financial-card"
+          className={`p-4 bg-white rounded-lg shadow-md text-center cursor-pointer ${
+            activeTab === 'client' ? 'ring-2 ring-blue-500' : ''
+          }`}
+          onClick={() => setActiveTab('client')}
+        >
+          <p className="text-lg font-semibold text-gray-800">العملاء</p>
+        </div>
+        <div
+          className={`p-4 bg-white rounded-lg shadow-md text-center cursor-pointer ${
+            activeTab === 'nonClient' ? 'ring-2 ring-blue-500' : ''
+          }`}
           onClick={() => setActiveTab('nonClient')}
         >
-          <p>غير العملاء</p>
+          <p className="text-lg font-semibold text-gray-800">غير العملاء</p>
         </div>
       </div>
-      <Card className="content-card">
-        <Card.Body>{renderContent()}</Card.Body>
-        <Card.Footer></Card.Footer>
-      </Card>
+
+      <div className="bg-white rounded-lg shadow-md p-6">
+        {renderContent()}
+      </div>
     </div>
   );
 };

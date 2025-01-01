@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Navbar, NavDropdown } from 'react-bootstrap';
-import '../../../assets/css/TopNav.css';
-import { LogoPatren } from '../../../assets/img/index';
-import API_CONFIG from '../../../config';
-import Notification from './Notification';
 import { Link } from 'react-router-dom';
-import { GiJusticeStar } from 'react-icons/gi';
 import { RiServiceLine } from 'react-icons/ri';
 import { AiOutlineAudit } from 'react-icons/ai';
-import { GiMagnifyingGlass } from 'react-icons/gi';
 import { SlSettings } from 'react-icons/sl';
+import API_CONFIG from '../../../config';
+import Notification from './Notification';
+
 import { BiHomeCircle } from 'react-icons/bi';
 import { IoMdPeople } from 'react-icons/io';
 import { FaUser } from 'react-icons/fa';
+
 const TopNav = ({ toggleSidebar, user, logoutUser }) => {
   const [notifications, setNotifications] = useState([]);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
@@ -23,7 +20,7 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
   const fetchNotifications = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/notifications/${userId}`,
+        `${API_CONFIG.baseURL}/api/notifications/${userId}`
       );
       setNotifications(response.data);
       const unreadCount = response.data.filter((n) => !n.read).length;
@@ -38,93 +35,123 @@ const TopNav = ({ toggleSidebar, user, logoutUser }) => {
   }, [userId]);
 
   return (
-    <Navbar className="navbar-top-nav bg-body-tertiary" expand="lg">
-      <Navbar.Brand href="#home">
-        <Navbar.Toggle
-          aria-controls="basic-navbar-nav"
-          className="home-navbar-toggle m-3"
+    <nav className="bg-gray-800 text-white px-4 py-3 flex items-center shadow-md">
+      <div className="flex items-center space-x-4">
+        <img
+          src={LogoPatren}
+          alt="Logo"
+          className="w-24 h-auto"
         />
-        <img src={LogoPatren} alt="Logo" width={100} height={50} />
-      </Navbar.Brand>
-      <Navbar.Collapse id="basic-navbar-nav" className="basic-navbar-nav">
-        {' '}
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <Link className="nav-link" to="/">
-              <BiHomeCircle className="m-1" size={15} />
-              الرئيسية
-            </Link>
-          </li>
-          <li className="nav-item">
-            <NavDropdown
-              title={
-                <span>
-                  <IoMdPeople className="m-1" size={15} /> العملاء
-                </span>
-              }
-              id="client-dropdown"
-            >
-              <NavDropdown.Item as={Link} to="/clients">
+        <button
+          className="text-white focus:outline-none"
+          onClick={toggleSidebar}
+        >
+          <SlSettings size={24} />
+        </button>
+      </div>
+
+      <ul className="flex-grow flex space-x-4 items-center justify-center">
+        <li>
+          <Link
+            className="flex items-center text-sm hover:text-orange-500"
+            to="/"
+          >
+            <BiHomeCircle size={20} className="mr-1" />
+            الرئيسية
+          </Link>
+        </li>
+        <li>
+          <div className="relative group">
+            <span className="flex items-center text-sm cursor-pointer hover:text-orange-500">
+              <IoMdPeople size={20} className="mr-1" />
+              العملاء
+            </span>
+            <div className="absolute hidden group-hover:block bg-gray-700 text-white shadow-md mt-2 rounded-md">
+              <Link
+                className="block px-4 py-2 hover:bg-gray-600"
+                to="/clients"
+              >
                 الموكلين
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/unclients">
+              </Link>
+              <Link
+                className="block px-4 py-2 hover:bg-gray-600"
+                to="/unclients"
+              >
                 العملاء غير الموكلين
-              </NavDropdown.Item>
-            </NavDropdown>
-          </li>
+              </Link>
+            </div>
+          </div>
+        </li>
+        <li>
+          <Link
+            className="flex items-center text-sm hover:text-orange-500"
+            to="/legcases"
+          >
+            <GiJusticeStar size={20} className="mr-1" />
+            القضايا
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="flex items-center text-sm hover:text-orange-500"
+            to="/services"
+          >
+            <RiServiceLine size={20} className="mr-1" />
+            الخدمات
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="flex items-center text-sm hover:text-orange-500"
+            to="/procedures"
+          >
+            <AiOutlineAudit size={20} className="mr-1" />
+            الإجراءات
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="flex items-center text-sm hover:text-orange-500"
+            to="/court-search"
+          >
+            <GiMagnifyingGlass size={20} className="mr-1" />
+            بحث محاكم
+          </Link>
+        </li>
+      </ul>
 
-          <li className="nav-item">
-            <Link className="nav-link" to="/legcases">
-              <GiJusticeStar className="m-1" size={15} />
-              القضايا
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/services">
-              <RiServiceLine className="m-1" size={15} />
-              الخدمات
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link className="nav-link" to="/procedures">
-              <AiOutlineAudit className="m-1" size={15} />
-              الإجراءات
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link className="nav-link" to="/court-search">
-              <GiMagnifyingGlass className="m-1" size={15} />
-              بحث محاكم
-            </Link>
-          </li>
-        </ul>
-      </Navbar.Collapse>
-      <div className="user-menu ml-auto">
-        {' '}
-        {/* Use ml-auto to move it to the end */}
+      <div className="flex items-center space-x-4 ml-auto">
         <Notification
           notifications={notifications}
           unreadNotifications={unreadNotifications}
           fetchNotifications={fetchNotifications}
         />
-        <NavDropdown
-          id="userDropdown"
-          title={<FaUser color="orange" size={20} />}
-          align="end"
-          drop="down"
-          className="dropdown-menu-right m-2"
-        >
-          <NavDropdown.Item href={`/profile/${userId}`}>
-            الملف الشخصي
-          </NavDropdown.Item>
-          <NavDropdown.Item onClick={logoutUser}>تسجيل الخروج</NavDropdown.Item>
-        </NavDropdown>
+        <div className="relative">
+          <button
+            className="text-orange-500 hover:text-orange-400"
+            aria-haspopup="true"
+          >
+            <FaUser size={20} />
+          </button>
+          <div className="absolute right-0 hidden group-hover:block bg-gray-700 text-white shadow-md mt-2 rounded-md">
+            <Link
+              to={`/profile/${userId}`}
+              className="block px-4 py-2 hover:bg-gray-600"
+            >
+              الملف الشخصي
+            </Link>
+            <button
+              onClick={logoutUser}
+              className="block px-4 py-2 hover:bg-gray-600 w-full text-left"
+            >
+              تسجيل الخروج
+            </button>
+          </div>
+        </div>
       </div>
-      <SlSettings size={30} color="orange" onClick={toggleSidebar} />
-    </Navbar>
+    </nav>
   );
 };
 
 export default TopNav;
+

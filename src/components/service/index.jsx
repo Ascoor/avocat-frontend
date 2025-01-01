@@ -1,19 +1,9 @@
 import { useState, useEffect } from 'react';
-import {
-  Button,
-  Card,
-  Row,
-  Col,
-  InputGroup,
-  FormControl,
-} from 'react-bootstrap';
 import axios from 'axios';
 import AddEditServiceModal from './AddEditServiceModal';
 import API_CONFIG from '../../config';
-
-import SectionHeader from '../home_tools/SectionHeader';
-import { ServiceIcon } from '../../assets/icons/index';
 import CustomPagination from '../home_tools/Pagination';
+
 const Services = () => {
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -24,7 +14,6 @@ const Services = () => {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    // Fetch services when the component mounts
     fetchServices();
   }, []);
 
@@ -37,7 +26,6 @@ const Services = () => {
     }
   };
 
-  // Handler Functions
   const handleAddService = () => {
     setEditingService(null);
     setShowModal(true);
@@ -47,10 +35,10 @@ const Services = () => {
     setEditingService(service);
     setShowModal(true);
   };
+
   const handleDeleteService = async (serviceId) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/services/${serviceId}`);
-      // After deleting a service, fetch services again to update the list
       fetchServices();
     } catch (error) {
       console.error('حدث خطأ أثناء حذف الخدمة:', error);
@@ -60,7 +48,7 @@ const Services = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/service-search?search=${searchQuery}`,
+        `${API_CONFIG.baseURL}/api/service-search?search=${searchQuery}`
       );
       setServices(response.data);
       setCurrentPage(1);
@@ -71,115 +59,115 @@ const Services = () => {
 
   const paginatedServices = services.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+    currentPage * itemsPerPage
   );
+
   return (
-    <>
-      <SectionHeader
-        listName="الخدمات"
-        buttonName="خدمة"
-        setShowAddModal={handleAddService}
-        icon={ServiceIcon}
-      />
+    <div className="p-4">
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">الخدمات</h1>
+        <button
+          onClick={handleAddService}
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+        >
+          إضافة خدمة
+        </button>
+      </div>
+
       {showModal && (
         <AddEditServiceModal
           show={showModal}
           handleClose={() => {
             setShowModal(false);
-            fetchServices(); // Refresh services list
+            fetchServices();
           }}
           service={editingService}
           isEditing={!!editingService}
         />
       )}
 
-      <Card>
-        <Row>
-          <Col xs={12} md={6} lg={4}>
-            <InputGroup className="mb-3">
-              <FormControl
-                placeholder="بحث..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Button variant="outline-secondary" onClick={handleSearch}>
-                بحث
-              </Button>
-            </InputGroup>
-          </Col>
-        </Row>
-        <Card.Body>
-          <div className="table-responsive">
-            <table className="special-table">
-              <thead>
-                <tr>
-                  <th className="col-1">رقم الخدمة</th>
-                  <th className="col-2">وصف الخدمة</th>
-                  <th className="col-3">العميل</th>
-                  <th className="col-2">الجهة</th>
-                  <th className="col-2">الموضوع</th>
+      <div className="flex mb-4">
+        <input
+          type="text"
+          placeholder="بحث..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="border border-gray-300 rounded-l px-4 py-2 w-full"
+        />
+        <button
+          onClick={handleSearch}
+          className="px-4 py-2 bg-blue-500 text-white rounded-r hover:bg-blue-600"
+        >
+          بحث
+        </button>
+      </div>
 
-                  <th className="col-2">الحالة</th>
-                  <th className="col-2">الإجراءات</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedServices.map((service) => (
-                  <tr key={service.id}>
-                    <td>{service.slug}</td>
-                    <td>{service.service_type?.name}</td>
-                    <td>
-                      {service.clients && service.clients.length > 0
-                        ? service.clients.map((client, index) => (
-                            <span key={index}>
-                              {client.name}
-                              {index < service.clients.length - 1 ? ', ' : ''}
-                            </span>
-                          ))
-                        : service.unclients &&
-                          service.unclients.map((unclient, index) => (
-                            <span key={index}>
-                              {unclient.name}
-                              {index < service.unclients.length - 1 ? ', ' : ''}
-                            </span>
-                          ))}
-                    </td>
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto border-collapse border border-gray-200">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border border-gray-200 px-4 py-2">رقم الخدمة</th>
+              <th className="border border-gray-200 px-4 py-2">وصف الخدمة</th>
+              <th className="border border-gray-200 px-4 py-2">العميل</th>
+              <th className="border border-gray-200 px-4 py-2">الجهة</th>
+              <th className="border border-gray-200 px-4 py-2">الموضوع</th>
+              <th className="border border-gray-200 px-4 py-2">الحالة</th>
+              <th className="border border-gray-200 px-4 py-2">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedServices.map((service) => (
+              <tr key={service.id} className="hover:bg-gray-50">
+                <td className="border border-gray-200 px-4 py-2">{service.slug}</td>
+                <td className="border border-gray-200 px-4 py-2">{service.service_type?.name}</td>
+                <td className="border border-gray-200 px-4 py-2">
+                  {service.clients && service.clients.length > 0
+                    ? service.clients.map((client, index) => (
+                        <span key={index}>
+                          {client.name}
+                          {index < service.clients.length - 1 ? ', ' : ''}
+                        </span>
+                      ))
+                    : service.unclients &&
+                      service.unclients.map((unclient, index) => (
+                        <span key={index}>
+                          {unclient.name}
+                          {index < service.unclients.length - 1 ? ', ' : ''}
+                        </span>
+                      ))}
+                </td>
+                <td className="border border-gray-200 px-4 py-2">{service.service_place_name}</td>
+                <td className="border border-gray-200 px-4 py-2">{service.description}</td>
+                <td className="border border-gray-200 px-4 py-2">{service.status}</td>
+                <td className="border border-gray-200 px-4 py-2 flex space-x-2">
+                  <button
+                    onClick={() => handleEditService(service)}
+                    className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    تعديل
+                  </button>
+                  <button
+                    onClick={() => handleDeleteService(service.id)}
+                    className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    حذف
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-                    <td>{service.service_place_name}</td>
-                    <td>{service.description}</td>
-                    <td>{service.status}</td>
-                    <td>
-                      <Button
-                        variant="primary"
-                        onClick={() => handleEditService(service)}
-                      >
-                        تعديل
-                      </Button>
-                      <Button
-                        variant="danger"
-                        onClick={() => handleDeleteService(service.id)}
-                      >
-                        حذف
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Card.Body>
-        <Card.Footer>
-          <CustomPagination
-            totalCount={services.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
-        </Card.Footer>
-      </Card>
-
-      {/* Modals */}
-    </>
+      <div className="mt-4">
+        <CustomPagination
+          totalCount={services.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+    </div>
   );
 };
 

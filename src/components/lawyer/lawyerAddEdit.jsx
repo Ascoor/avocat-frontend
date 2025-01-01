@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Button, Form, Alert } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { FaCalendarAlt } from 'react-icons/fa';
 import moment from 'moment';
-import { ar } from 'date-fns/locale'; // Import Arabic locale
+import { ar } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const LawyerAddEdit = ({ onSubmit, initialValues }) => {
@@ -13,17 +12,17 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
   const [name, setName] = useState(initialValues?.name || '');
   const [birthdate, setBirthdate] = useState(initialValues?.birthdate || null);
   const [identityNumber, setIdentityNumber] = useState(
-    initialValues?.identity_number || '',
+    initialValues?.identity_number || ''
   );
   const [lawRegNumber, setLawRegNumber] = useState(
-    initialValues?.law_reg_num || '',
+    initialValues?.law_reg_num || ''
   );
   const [lawyerClass, setLawyerClass] = useState(
-    initialValues?.lawyer_class || '',
+    initialValues?.lawyer_class || ''
   );
   const [email, setEmail] = useState(initialValues?.email || '');
   const [phoneNumber, setPhoneNumber] = useState(
-    initialValues?.phone_number || '',
+    initialValues?.phone_number || ''
   );
   const [religion, setReligion] = useState(initialValues?.religion || '');
   const [gender, setGender] = useState(initialValues?.gender || '');
@@ -31,9 +30,7 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
   const [password, setPassword] = useState('');
   const [showPasswordInput, setShowPasswordInput] = useState(false);
 
-  const isValidDate = (date) => {
-    return date !== null && date.toString() !== 'Invalid Date';
-  };
+  const isValidDate = (date) => date !== null && date.toString() !== 'Invalid Date';
 
   useEffect(() => {
     setIsEditing(!!initialValues);
@@ -52,7 +49,6 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
     }
     setShowAlert(false);
 
-    // تحويل تاريخ الولادة إلى التنسيق الصحيح (YYYY-MM-DD)
     const formattedBirthdate = moment(birthdate).format('YYYY-MM-DD');
 
     const formData = {
@@ -70,7 +66,6 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
     if (isUser && password !== '********') {
       formData.password = password;
       if (password !== confirmPassword) {
-        // إظهار خطأ إذا كانت كلمتا المرور غير متطابقتين
         return;
       }
     }
@@ -91,167 +86,143 @@ const LawyerAddEdit = ({ onSubmit, initialValues }) => {
     ) {
       return false;
     }
-    if (
-      isUser &&
-      showPasswordInput &&
-      (password !== confirmPassword || password === '********')
-    ) {
+    if (isUser && showPasswordInput && password !== confirmPassword) {
       return false;
     }
     return true;
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    // If editing, clear confirmPassword only when password is changed
-    if (isEditing) {
-      setConfirmPassword('');
-    }
-  };
   return (
-    <Form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-4">
       {showAlert && (
-        <Alert variant="danger">يرجى ملء جميع الحقول المطلوبة.</Alert>
+        <div className="p-4 text-red-700 bg-red-100 rounded">
+          يرجى ملء جميع الحقول المطلوبة.
+        </div>
       )}
-      <Form.Check
-        type="radio"
-        label="User"
-        checked={isUser}
-        onChange={() => setIsUser(true)}
-      />
-      <Form.Check
-        type="radio"
-        label="Not User"
-        checked={!isUser}
-        onChange={() => setIsUser(false)}
-      />
+      <div className="flex items-center space-x-4">
+        <label className="flex items-center space-x-2">
+          <input
+            type="radio"
+            checked={isUser}
+            onChange={() => setIsUser(true)}
+            className="form-radio text-blue-500"
+          />
+          <span>حساب مستخدم</span>
+        </label>
+        <label className="flex items-center space-x-2">
+          <input
+            type="radio"
+            checked={!isUser}
+            onChange={() => setIsUser(false)}
+            className="form-radio text-blue-500"
+          />
+          <span>بدون حساب مستخدم</span>
+        </label>
+      </div>
+
       {isUser && (
         <>
-          <Form.Group>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
+          <div>
+            <label className="block mb-2">كلمة المرور</label>
+            <input
               type="password"
               value={password}
-              onChange={handlePasswordChange}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Label>Re-type Password</Form.Label>
-            <Form.Control
+          </div>
+          <div>
+            <label className="block mb-2">تأكيد كلمة المرور</label>
+            <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             />
-          </Form.Group>
+          </div>
         </>
       )}
 
-      <Form.Group>
-        <Form.Label>الاسم</Form.Label>
-        <Form.Control
+      <div>
+        <label className="block mb-2">الاسم</label>
+        <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           required
         />
-      </Form.Group>
+      </div>
 
-      <Form.Group>
-        <Form.Label>
-          <FaCalendarAlt /> تاريخ الميلاد
-        </Form.Label>
+      <div>
+        <label className="block mb-2 flex items-center space-x-2">
+          <FaCalendarAlt /> <span>تاريخ الميلاد</span>
+        </label>
         <DatePicker
           selected={isValidDate(birthdate) ? birthdate : null}
           onChange={(date) => setBirthdate(date)}
-          locale={ar} // Set Arabic locale
+          locale={ar}
           dateFormat="yyyy-MM-dd"
-          className="form-control"
+          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           placeholderText="اختر تاريخ الميلاد"
-          isInvalid={!isValidDate(birthdate) || birthdate === null}
         />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>رقم التسجيل القانوني</Form.Label>
-        <Form.Control
+      </div>
+
+      <div>
+        <label className="block mb-2">رقم التسجيل القانوني</label>
+        <input
           type="text"
-          value={lawRegNumber || ''}
+          value={lawRegNumber}
           onChange={(e) => setLawRegNumber(e.target.value)}
+          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           required
         />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>فئة المحامي</Form.Label>
-        <Form.Control
-          as="select"
-          value={lawyerClass || ''}
+      </div>
+
+      <div>
+        <label className="block mb-2">فئة المحامي</label>
+        <select
+          value={lawyerClass}
           onChange={(e) => setLawyerClass(e.target.value)}
+          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           required
         >
-          <option value="">إختر</option>
+          <option value="">اختر</option>
           <option value="نقض">نقض</option>
           <option value="إستئناف">إستئناف</option>
           <option value="إبتدائي">إبتدائي</option>
           <option value="جدول عام">جدول عام</option>
-        </Form.Control>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>البريد الإلكتروني</Form.Label>
-        <Form.Control
+        </select>
+      </div>
+
+      <div>
+        <label className="block mb-2">البريد الإلكتروني</label>
+        <input
           type="email"
-          value={email || ''}
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           required
         />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>الجنس</Form.Label>
-        <Form.Control
-          as="select"
-          value={gender || ''}
-          onChange={(e) => setGender(e.target.value)}
-        >
-          <option value="">اختر</option>
-          <option value="ذكر">ذكر</option>
-          <option value="أنثى">أنثى</option>
-        </Form.Control>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>الديانة</Form.Label>
-        <Form.Control
-          as="select"
-          value={religion || ''}
-          onChange={(e) => setReligion(e.target.value)}
-        >
-          <option value="">اختر</option>
-          <option value="مسلم">مسلم</option>
-          <option value="مسيحى">مسيحى</option>
-        </Form.Control>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>رقم الهاتف</Form.Label>
-        <Form.Control
-          type="tel"
-          placeholder="أدخل رقم الهاتف"
-          value={phoneNumber || ''}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>رقم الهوية</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="أدخل رقم الهويةالمكون من 14 رقم"
-          value={identityNumber}
-          onChange={(e) => setIdentityNumber(e.target.value)}
-          maxLength={14}
-        />
-      </Form.Group>
+      </div>
 
-      <Button variant="primary" type="submit">
+      <div>
+        <label className="block mb-2">رقم الهاتف</label>
+        <input
+          type="tel"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+      >
         حفظ
-      </Button>
-    </Form>
+      </button>
+    </form>
   );
 };
 

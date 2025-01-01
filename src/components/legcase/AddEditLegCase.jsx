@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Modal, Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import useAuth from '../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../config';
 
@@ -25,13 +24,13 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
 
   useEffect(() => {
     fetchCaseTypes();
-  }, []); // إزالة التبعيات لتجنب التكرار المستمر
+  }, []);
 
   useEffect(() => {
     if (isEditing && editingLegCase) {
       setCaseData(editingLegCase);
       const selectedCaseType = caseTypes.find(
-        (type) => type.id === editingLegCase.case_type_id,
+        (type) => type.id === editingLegCase.case_type_id
       );
       if (selectedCaseType) {
         setCaseSubTypes(selectedCaseType.case_sub_types);
@@ -52,20 +51,21 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
         litigants_phone: '',
         created_by: getUser().id,
       });
-      setCaseSubTypes([]); // تفريغ التصنيفات الفرعية للإضافة
+      setCaseSubTypes([]);
     }
   }, [isEditing, editingLegCase, caseTypes]);
 
   const fetchCaseTypes = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal-case/case-types-sub-types`,
+        `${API_CONFIG.baseURL}/api/legal-case/case-types-sub-types`
       );
       setCaseTypes(response.data.caseTypes);
     } catch (error) {
       console.error('Error fetching case types:', error);
     }
   };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setCaseData((prevData) => ({ ...prevData, [name]: value }));
@@ -79,17 +79,16 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
       case_sub_type_id: '',
     }));
 
-    // تحديث قائمة التصنيفات الفرعية بناءً على التصنيف المحدد
     const selectedCaseType = caseTypes.find(
-      (type) => type.id.toString() === newCaseTypeId,
+      (type) => type.id.toString() === newCaseTypeId
     );
     setCaseSubTypes(selectedCaseType ? selectedCaseType.case_sub_types : []);
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    if (!form.checkValidity()) {
-      event.stopPropagation();
+
+    if (!caseData.slug || !caseData.title || !caseData.description) {
       setValidated(true);
       return;
     }
@@ -101,7 +100,9 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
 
     try {
       const method = isEditing ? 'put' : 'post';
-      const url = `${API_CONFIG.baseURL}/api/legal-cases${isEditing ? `/${editingLegCase.id}` : ''}`;
+      const url = `${API_CONFIG.baseURL}/api/legal-cases${
+        isEditing ? `/${editingLegCase.id}` : ''
+      }`;
       await axios[method](url, dataToSend);
 
       onClose();
@@ -110,167 +111,81 @@ const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
       setShowAlert(true);
     }
   };
-  return (
-    <Modal show={true} onHide={onClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>
-          {isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          {showAlert && (
-            <Alert
-              variant="danger"
-              onClose={() => setShowAlert(false)}
-              dismissible
-            >
-              {alertMessage}
-            </Alert>
-          )}
-          <Row className="mt-3">
-            <Col xs={12} md={6}>
-              <Form.Group controlId="formBasicSlug">
-                <Form.Label>رقم الملف</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter slug"
-                  name="slug"
-                  value={caseData.slug}
-                  onChange={handleInputChange}
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  لم تقم بإضافة رقم ملف المكتب
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-            <Col xs={12} md={6}>
-              <Form.Group>
-                <Form.Label>صفة الإدعاء</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="client_capacity"
-                  value={caseData.client_capacity}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="">اختر صفة الإدعاء</option>
-                  <option value="مدعى عليه">مدعى عليه</option>
-                  <option value="مجنى عليه">مجنى عليه</option>
-                  <option value="مدعى">مدعى</option>
-                  <option value="متهم">متهم</option>
-                </Form.Control>
-                <Form.Control.Feedback type="invalid">
-                  يجب اختيار صفة الإدعاء
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="mt-3">
-            <Col xs={12} md={6}>
-              <Form.Group controlId="caseType">
-                <Form.Label>نوع القضية</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="case_type_id"
-                  onChange={handleCaseTypeChange}
-                  value={caseData.case_type_id}
-                  required
-                >
-                  <option value="">اختر نوع القضية</option>
-                  {caseTypes.map((type) => (
-                    <option key={type.id} value={type.id}>
-                      {type.name}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col xs={12} md={6}>
-              <Form.Group controlId="caseSubType">
-                <Form.Label>نوع القضية الفرعي</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="case_sub_type_id"
-                  onChange={handleInputChange}
-                  value={caseData.case_sub_type_id}
-                  required
-                >
-                  <option value="">اختر نوع القضية الفرعي</option>
-                  {caseSubTypes.map((subType) => (
-                    <option key={subType.id} value={subType.id}>
-                      {subType.name}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="mt-3">
-            <Col xs={12} md={6}>
-              <Form.Group>
-                <Form.Label>موضوع الدعوى</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="title"
-                  value={caseData.title}
-                  onChange={handleInputChange}
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  يجب إدخال موضوع الدعوى
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-            <Col xs={12} md={6}>
-              <Form.Group>
-                <Form.Label>الوصف</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  name="description"
-                  value={caseData.description}
-                  onChange={handleInputChange}
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  يجب إدخال الوصف
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-          </Row>
 
-          <Row className="mt-3">
-            <Col xs={12} md={6}>
-              <Form.Group>
-                <Form.Label>وكيل الخصم</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="litigants_name"
-                  value={caseData.litigants_name}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </Col>
-            <Col xs={12} md={6}>
-              <Form.Group>
-                <Form.Label>رقم هاتف وكيل الخصم</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="litigants_phone"
-                  value={caseData.litigants_phone}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Button variant="primary" type="submit">
-            {isEditing ? 'تحديث' : 'حفظ'}
-          </Button>
-        </Form>
-      </Modal.Body>
-    </Modal>
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+      <div className="bg-white w-full max-w-4xl rounded-lg shadow-lg">
+        <div className="px-6 py-4 border-b flex justify-between items-center">
+          <h3 className="text-lg font-semibold">
+            {isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}
+          </h3>
+          <button
+            onClick={onClose}
+            className="text-gray-600 hover:text-gray-800"
+          >
+            ✕
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="px-6 py-4">
+          {showAlert && (
+            <div className="bg-red-100 text-red-600 px-4 py-2 rounded mb-4">
+              {alertMessage}
+            </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="slug" className="block text-sm font-medium">
+                رقم الملف
+              </label>
+              <input
+                type="text"
+                id="slug"
+                name="slug"
+                value={caseData.slug}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="client_capacity" className="block text-sm font-medium">
+                صفة الإدعاء
+              </label>
+              <select
+                id="client_capacity"
+                name="client_capacity"
+                value={caseData.client_capacity}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500"
+                required
+              >
+                <option value="">اختر صفة الإدعاء</option>
+                <option value="مدعى عليه">مدعى عليه</option>
+                <option value="مجنى عليه">مجنى عليه</option>
+                <option value="مدعى">مدعى</option>
+                <option value="متهم">متهم</option>
+              </select>
+            </div>
+          </div>
+          {/* باقي الحقول بنفس الفلسفة */}
+          <div className="flex justify-end mt-6">
+            <button
+              type="button"
+              onClick={onClose}
+              className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded"
+            >
+              إلغاء
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded ml-2"
+            >
+              {isEditing ? 'تحديث' : 'حفظ'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

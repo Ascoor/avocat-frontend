@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Modal, Form, FormControl, Button, Row, Col } from 'react-bootstrap';
-import arEG from 'date-fns/locale/ar-EG';
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
+import arEG from 'date-fns/locale/ar-EG';
 import { useSpring, animated } from '@react-spring/web';
+import 'react-datepicker/dist/react-datepicker.css';
 import '../../../assets/css/Models.css';
 import useAuth from '../../layout/AuthTool/AuthUser';
+
 const ServiceProcedureModal = ({
   show,
   onHide,
@@ -19,17 +20,15 @@ const ServiceProcedureModal = ({
   setDefaultLocale('ar_eg');
 
   const { getUser } = useAuth();
+
   const handleDateChange = (field, date) => {
-    // Check if date is not null
     if (date) {
-      // Format the date as 'yyyy-MM-dd' and update formData
       const formattedDate = date.toISOString().split('T')[0];
       setFormData({
         ...formData,
         [field]: formattedDate,
       });
     } else {
-      // If date is null, set the field as null in formData
       setFormData({
         ...formData,
         [field]: null,
@@ -52,9 +51,8 @@ const ServiceProcedureModal = ({
     service_id: serviceId,
   };
 
-  // Include status only when adding a new procedure
   if (!isEditing) {
-    initialFormData.status = ''; // Default value for status
+    initialFormData.status = '';
   }
 
   const modalAnimation = useSpring({
@@ -68,15 +66,15 @@ const ServiceProcedureModal = ({
     if (isEditing && procedure) {
       setFormData({
         ...initialFormData,
-        title: procedure.title || '', // Use an empty string if null
-        job: procedure.job || '', // Use an empty string if null
-        lawyer_id: procedure.lawyer_id || '', // Use an empty string if null
-        date_start: procedure.date_start || '', // Use an empty string if null
-        date_end: procedure.date_end || '', // Use an empty string if null
-        cost: procedure.cost || 0, // Use an empty string if null
-        cost2: procedure.cost2 || 0, // Use an empty string if null
-        result: procedure.result || '', // Use an empty string if null
-        place: procedure.place || '', // Use an empty string if null
+        title: procedure.title || '',
+        job: procedure.job || '',
+        lawyer_id: procedure.lawyer_id || '',
+        date_start: procedure.date_start || '',
+        date_end: procedure.date_end || '',
+        cost: procedure.cost || 0,
+        cost2: procedure.cost2 || 0,
+        result: procedure.result || '',
+        place: procedure.place || '',
       });
     } else {
       setFormData(initialFormData);
@@ -91,10 +89,8 @@ const ServiceProcedureModal = ({
     e.preventDefault();
     try {
       if (isEditing) {
-        // Edit an existing procedure
         await editServiceProcedure(procedure.id, formData);
       } else {
-        // Add a new procedure
         await addServiceProcedure(formData);
       }
       resetForm();
@@ -109,161 +105,157 @@ const ServiceProcedureModal = ({
 
   return (
     <animated.div style={modalAnimation}>
-      <Modal
-        show={show}
-        onHide={onHide}
-        centered
-        className="service-procedure-modal"
+      <div
+        className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity ${
+          show ? 'opacity-100' : 'opacity-0'
+        }`}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {isEditing ? 'تعديل الإجراء' : 'إضافة إجراء جديد'}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Row className="mb-3">
-            <Col
-              sm={12}
-              md={12}
-              lg={12}
-              className="mb-3"
-              style={{ textAlign: 'right' }}
+        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-bold">
+              {isEditing ? 'تعديل الإجراء' : 'إضافة إجراء جديد'}
+            </h2>
+            <button
+              onClick={onHide}
+              className="text-gray-500 hover:text-gray-700 focus:outline-none"
             >
-              <Form onSubmit={handleSubmit}>
-                <FormGroup controlId="title" label="نوع الإجراء">
-                  <FormControl
-                    type="text"
-                    value={formData.title}
-                    onChange={(e) => handleFieldChange('title', e.target.value)}
-                    required
-                  />
-                </FormGroup>
+              ×
+            </button>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <FormGroup label="نوع الإجراء">
+              <input
+                type="text"
+                value={formData.title}
+                onChange={(e) => handleFieldChange('title', e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </FormGroup>
 
-                <FormGroup controlId="job" label="الوظيفة">
-                  <FormControl
-                    type="text"
-                    value={formData.job}
-                    onChange={(e) => handleFieldChange('job', e.target.value)}
-                    required
-                  />
-                </FormGroup>
+            <FormGroup label="الوظيفة">
+              <input
+                type="text"
+                value={formData.job}
+                onChange={(e) => handleFieldChange('job', e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </FormGroup>
 
-                <FormGroup controlId="lawyer" label="المحامي">
-                  <FormControl
-                    as="select"
-                    value={formData.lawyer_id}
-                    onChange={(e) =>
-                      handleFieldChange('lawyer_id', e.target.value)
-                    }
-                    required
-                  >
-                    <option value="">اختر المحامي</option>
-                    {lawyers.map((lawyer) => (
-                      <option key={lawyer.id} value={lawyer.id}>
-                        {lawyer.name}
-                      </option>
-                    ))}
-                  </FormControl>
-                </FormGroup>
+            <FormGroup label="المحامي">
+              <select
+                value={formData.lawyer_id}
+                onChange={(e) => handleFieldChange('lawyer_id', e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="">اختر المحامي</option>
+                {lawyers.map((lawyer) => (
+                  <option key={lawyer.id} value={lawyer.id}>
+                    {lawyer.name}
+                  </option>
+                ))}
+              </select>
+            </FormGroup>
 
-                <div className="mb-3">
-                  <Form.Label>تاريخ البداية:</Form.Label>
-                  <DatePicker
-                    className="form-control"
-                    dateFormat="yyyy-MM-dd"
-                    name="date_start"
-                    selected={
-                      formData.date_start ? new Date(formData.date_start) : null
-                    }
-                    onChange={(date) => handleDateChange('date_start', date)}
-                    required
-                  />
-                </div>
+            <FormGroup label="تاريخ البداية">
+              <DatePicker
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                dateFormat="yyyy-MM-dd"
+                selected={
+                  formData.date_start ? new Date(formData.date_start) : null
+                }
+                onChange={(date) => handleDateChange('date_start', date)}
+                required
+              />
+            </FormGroup>
 
-                <div className="mb-3">
-                  <Form.Label>تاريخ الانتهاء:</Form.Label>
-                  <DatePicker
-                    className="form-control"
-                    dateFormat="yyyy-MM-dd"
-                    name="date_end"
-                    selected={
-                      formData.date_end ? new Date(formData.date_end) : null
-                    }
-                    onChange={(date) => handleFieldChange('date_end', date)}
-                    required
-                  />
-                </div>
+            <FormGroup label="تاريخ الانتهاء">
+              <DatePicker
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                dateFormat="yyyy-MM-dd"
+                selected={
+                  formData.date_end ? new Date(formData.date_end) : null
+                }
+                onChange={(date) => handleDateChange('date_end', date)}
+                required
+              />
+            </FormGroup>
 
-                <FormGroup controlId="cost" label="التكلفة">
-                  <FormControl
-                    type="number"
-                    value={formData.cost}
-                    onChange={(e) => handleFieldChange('cost', e.target.value)}
-                  />
-                </FormGroup>
+            <FormGroup label="التكلفة">
+              <input
+                type="number"
+                value={formData.cost}
+                onChange={(e) => handleFieldChange('cost', e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </FormGroup>
 
-                <FormGroup controlId="cost2" label="التكلفة 2">
-                  <FormControl
-                    type="number"
-                    value={formData.cost2}
-                    onChange={(e) => handleFieldChange('cost2', e.target.value)}
-                    required
-                  />
-                </FormGroup>
+            <FormGroup label="التكلفة 2">
+              <input
+                type="number"
+                value={formData.cost2}
+                onChange={(e) => handleFieldChange('cost2', e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </FormGroup>
 
-                <FormGroup controlId="result" label="النتيجة">
-                  <FormControl
-                    type="text"
-                    value={formData.result}
-                    onChange={(e) =>
-                      handleFieldChange('result', e.target.value)
-                    }
-                  />
-                </FormGroup>
+            <FormGroup label="النتيجة">
+              <input
+                type="text"
+                value={formData.result}
+                onChange={(e) => handleFieldChange('result', e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </FormGroup>
 
-                <FormGroup controlId="place" label="الجهة">
-                  <FormControl
-                    type="text"
-                    value={formData.place}
-                    onChange={(e) => handleFieldChange('place', e.target.value)}
-                  />
-                </FormGroup>
+            <FormGroup label="الجهة">
+              <input
+                type="text"
+                value={formData.place}
+                onChange={(e) => handleFieldChange('place', e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </FormGroup>
 
-                {/* Include status field only when adding a new procedure */}
-                {!isEditing && (
-                  <FormGroup controlId="status" label="الحالة">
-                    <FormControl
-                      as="select"
-                      name="status"
-                      value={formData.status}
-                      onChange={(e) =>
-                        handleFieldChange('status', e.target.value)
-                      }
-                    >
-                      <option value="قيد التجهيز">قيد التجهيز</option>
-                      <option value="لم ينفذ">لم ينفذ</option>
-                      <option value="منتهي">منتهي</option>
-                    </FormControl>
-                  </FormGroup>
-                )}
+            {!isEditing && (
+              <FormGroup label="الحالة">
+                <select
+                  value={formData.status}
+                  onChange={(e) => handleFieldChange('status', e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="قيد التجهيز">قيد التجهيز</option>
+                  <option value="لم ينفذ">لم ينفذ</option>
+                  <option value="منتهي">منتهي</option>
+                </select>
+              </FormGroup>
+            )}
 
-                <Button variant="primary" type="submit">
-                  {isEditing ? 'تحديث' : 'حفظ'}
-                </Button>
-              </Form>
-            </Col>
-          </Row>
-        </Modal.Body>
-      </Modal>
+            <div className="flex justify-end mt-4">
+              <button
+                type="submit"
+                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
+                {isEditing ? 'تحديث' : 'حفظ'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </animated.div>
   );
 };
 
-const FormGroup = ({ controlId, label, children }) => (
-  <Form.Group controlId={controlId}>
-    <Form.Label>{label}:</Form.Label>
+const FormGroup = ({ label, children }) => (
+  <div className="mb-4">
+    <label className="block mb-2 text-sm font-medium text-gray-700">
+      {label}:
+    </label>
     {children}
-  </Form.Group>
+  </div>
 );
 
 export default ServiceProcedureModal;

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Card, Modal } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { LawyerIcon } from '../../assets/icons';
 import LawyerAddEdit from './lawyerAddEdit';
@@ -22,7 +21,7 @@ const Lawyers = () => {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/lawyers`);
       setLawyers(response.data);
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching lawyers:', error);
     }
   };
 
@@ -40,7 +39,7 @@ const Lawyers = () => {
     try {
       await axios.put(
         `${API_CONFIG.baseURL}/api/lawyers/${selectedLawyer.id}`,
-        formData,
+        formData
       );
       await fetchLawyers();
       setShowEditModal(false);
@@ -69,82 +68,93 @@ const Lawyers = () => {
   };
 
   return (
-    <>
+    <div className="p-6 bg-gray-50 min-h-screen">
       <SectionHeader
         listName="المحامين"
         buttonName="محامي"
-        setShowAddModal={setShowAddModal} // pass setShowAddModal function
+        setShowAddModal={setShowAddModal}
         icon={LawyerIcon}
       />
 
-      <Card className="m-4">
-        <Card.Header></Card.Header>
-        <div className="table-responsive">
-          <table className="special-table">
-            <thead className="table-info">
+      <div className="bg-white shadow rounded-lg p-6">
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border-collapse border border-gray-200 text-right">
+            <thead className="bg-gray-100">
               <tr>
-                <th>الاسم</th>
-                <th>تاريخ الميلاد</th>
-                <th>رقم الهوية</th>
-                <th>رقم تسجيل المحاماة</th>
-                <th>فئة المحامي</th>
-                <th>البريد الإلكتروني</th>
-                <th>رقم الهاتف</th>
-                <th>التحكم</th>
+                <th className="border border-gray-300 px-4 py-2">الاسم</th>
+                <th className="border border-gray-300 px-4 py-2">تاريخ الميلاد</th>
+                <th className="border border-gray-300 px-4 py-2">رقم الهوية</th>
+                <th className="border border-gray-300 px-4 py-2">رقم تسجيل المحاماة</th>
+                <th className="border border-gray-300 px-4 py-2">فئة المحامي</th>
+                <th className="border border-gray-300 px-4 py-2">البريد الإلكتروني</th>
+                <th className="border border-gray-300 px-4 py-2">رقم الهاتف</th>
+                <th className="border border-gray-300 px-4 py-2">التحكم</th>
               </tr>
             </thead>
             <tbody>
               {lawyers.map((lawyer) => (
-                <tr key={lawyer.id}>
-                  <td>{lawyer.name}</td>
-                  <td>{lawyer.birthdate}</td>
-                  <td>{lawyer.identity_number}</td>
-                  <td>{lawyer.law_reg_num}</td>
-                  <td>{lawyer.lawyer_class}</td>
-                  <td>{lawyer.email}</td>
-                  <td>{lawyer.phone_number}</td>
-                  <td>
-                    <Button
-                      variant="primary"
+                <tr key={lawyer.id} className="hover:bg-gray-50">
+                  <td className="border border-gray-300 px-4 py-2">{lawyer.name}</td>
+                  <td className="border border-gray-300 px-4 py-2">{lawyer.birthdate}</td>
+                  <td className="border border-gray-300 px-4 py-2">{lawyer.identity_number}</td>
+                  <td className="border border-gray-300 px-4 py-2">{lawyer.law_reg_num}</td>
+                  <td className="border border-gray-300 px-4 py-2">{lawyer.lawyer_class}</td>
+                  <td className="border border-gray-300 px-4 py-2">{lawyer.email}</td>
+                  <td className="border border-gray-300 px-4 py-2">{lawyer.phone_number}</td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <button
                       onClick={() => handleShowEditModal(lawyer)}
+                      className="text-blue-500 hover:text-blue-700"
                     >
                       <FaEdit />
-                    </Button>
-                    <Button
-                      variant="danger"
+                    </button>
+                    <button
                       onClick={() => handleDeleteLawyer(lawyer.id)}
+                      className="text-red-500 hover:text-red-700 ml-4"
                     >
                       <FaTrash />
-                    </Button>
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+      </div>
 
-        <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>إضافة محامي</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+      {showAddModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
+            <h3 className="text-xl font-semibold mb-4">إضافة محامي</h3>
             <LawyerAddEdit onSubmit={handleAddLawyer} />
-          </Modal.Body>
-        </Modal>
+            <button
+              onClick={() => setShowAddModal(false)}
+              className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+            >
+              إغلاق
+            </button>
+          </div>
+        </div>
+      )}
 
-        <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>تعديل محامي</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+      {showEditModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
+            <h3 className="text-xl font-semibold mb-4">تعديل محامي</h3>
             <LawyerAddEdit
               onSubmit={handleEditLawyer}
               initialValues={selectedLawyer}
             />
-          </Modal.Body>
-        </Modal>
-      </Card>
-    </>
+            <button
+              onClick={() => setShowEditModal(false)}
+              className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+            >
+              إغلاق
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -5,12 +5,13 @@ import LawyersAddEdit from '../../lawyer/lawyer_index.component';
 import CourtSetting from '../../setting/court_index.component';
 import CourtSearch from '../../reports/SearchCourt';
 import CaseTypeSet from '../../setting/case_index.component';
-/** FinancialDashboard**/
+/** FinancialDashboard **/
 import FinancialDashboard from '../../financially/index';
 
-/** reports **/
+/** Reports **/
 import SearchCourt from '../../reports/SearchCourt';
-/** Clients**/
+
+/** Clients **/
 import AddEditClient from '../../ClientsAndUnclients/clients/AddEditClient';
 import ClientList from '../../ClientsAndUnclients/clients/ClientList';
 import UnclientList from '../../ClientsAndUnclients/unclients/UnclientList';
@@ -22,10 +23,10 @@ import Services from '../../service/index';
 import ProcedureSearch from '../../reports/procedure_search.component';
 import ProfileUser from '../../layout/AuthTool/ProfileUser';
 // import Archives from '../../Archives/ArchiveDashboard';
-import { Container } from 'react-bootstrap';
+
 const AuthRoutes = () => {
   return (
-    <Container>
+    <div className="max-w-screen-lg mx-auto p-4">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/procedures" element={<ProcedureSearch />} />
@@ -45,7 +46,7 @@ const AuthRoutes = () => {
         <Route path="/reports/search-court" element={<SearchCourt />} />
         <Route path="/lawyers/form" element={<LawyersAddEdit />} />
       </Routes>
-    </Container>
+    </div>
   );
 };
 

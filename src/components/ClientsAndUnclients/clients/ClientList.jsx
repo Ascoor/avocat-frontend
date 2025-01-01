@@ -1,17 +1,64 @@
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Alert } from 'react-bootstrap';
-import { ClientSectionIcon } from '../../../assets/icons/index';
+import styled from 'styled-components';
+import { AiFillCheckCircle, AiFillCloseCircle, AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import API_CONFIG from '../../../config';
-import {
-  AiFillCheckCircle,
-  AiFillCloseCircle,
-  AiFillEdit,
-  AiFillDelete,
-} from 'react-icons/ai';
 import CustomPagination from '../../home_tools/Pagination';
 import SectionHeader from '../../home_tools/SectionHeader';
 import AddEditClient from './AddEditClient';
+
+// Styled Components
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+`;
+
+const Th = styled.th`
+  background-color: #f4f4f4;
+  padding: 10px;
+  text-align: left;
+`;
+
+const Td = styled.td`
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+`;
+
+const ActionButton = styled.span`
+  cursor: pointer;
+  margin-right: 10px;
+
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+const SearchBar = styled.div`
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Input = styled.input`
+  width: 70%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+
+const Button = styled.button`
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
 
 function ClientList() {
   const [clients, setClients] = useState([]);
@@ -19,23 +66,17 @@ function ClientList() {
   const [selectedClient, setSelectedClient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const itemsPerPage = 5;
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   const [clientsPage, setClientsPage] = useState(1);
+  const [alert, setAlert] = useState({ show: false, message: '', type: '' });
 
-  // Fetch clients from API
   const fetchClients = useCallback(async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
-      if (Array.isArray(response.data.clients)) {
-        setClients(response.data.clients);
-        setFilteredClients(response.data.clients);
-      } else {
-        console.error('Data fetched is not an array:', response.data.clients);
-      }
+      setClients(response.data.clients || []);
+      setFilteredClients(response.data.clients || []);
     } catch (error) {
-      console.error('Failed to fetch clients', error);
+      console.error('Error fetching clients:', error);
     }
   }, []);
 
@@ -43,61 +84,37 @@ function ClientList() {
     fetchClients();
   }, [fetchClients]);
 
-  // Filter clients based on search query
   useEffect(() => {
-    const filtered = clients.filter((client) =>
-      ['slug', 'identity_number', 'name', 'phone_number'].some((key) =>
-        client[key].toLowerCase().includes(searchQuery.toLowerCase()),
-      ),
-    );
-    setFilteredClients(filtered);
-  }, [clients, searchQuery]);
-
-  const handlePageChange = (newPage) => setClientsPage(newPage);
-
-  // Handlers for client actions
-  const handleSearch = () => {
-    setClientsPage(1);
-  };
-
-  const handleSlugClick = (slug) => {
-    const client = clients.find((client) => client.slug === slug);
-    setSelectedClient(client);
-  };
-  const deleteClient = async (id) => {
-    try {
-      const response = await axios.delete(
-        `${API_CONFIG.baseURL}/api/clients/${id}`,
+    const timeout = setTimeout(() => {
+      const filtered = clients.filter((client) =>
+        ['slug', 'identity_number', 'name', 'phone_number'].some((key) =>
+          client[key]?.toLowerCase().includes(searchQuery.toLowerCase())
+        )
       );
+      setFilteredClients(filtered);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [searchQuery, clients]);
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`${API_CONFIG.baseURL}/api/clients/${id}`);
       fetchClients();
-      setAlertMessage(response.data.message);
-      setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-        setAlertMessage('');
-      }, 3000);
+      setAlert({ show: true, message: response.data.message, type: 'success' });
     } catch (error) {
-      console.log(error.response.data.message);
+      console.error('Error deleting client:', error);
+      setAlert({ show: true, message: 'Failed to delete client.', type: 'error' });
     }
   };
 
   const handleToggleStatus = async (id) => {
     try {
-      const client = clients.find((client) => client.id === id);
+      const client = clients.find((c) => c.id === id);
       const newStatus = client.status === 'active' ? 'inactive' : 'active';
-      const response = await axios.put(
-        `${API_CONFIG.baseURL}/api/clients/${id}`,
-        { ...client, status: newStatus },
-      );
+      await axios.put(`${API_CONFIG.baseURL}/api/clients/${id}`, { status: newStatus });
       fetchClients();
-      setAlertMessage(response.data.message);
-      setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-        setAlertMessage('');
-      }, 3000);
     } catch (error) {
-      console.error('Error toggling status', error);
+      console.error('Error toggling status:', error);
     }
   };
 
@@ -106,16 +123,14 @@ function ClientList() {
     setModalOpen(true);
   };
 
-  // Render paginated clients
   const startIndex = (clientsPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, filteredClients.length);
-  const paginatedClients = filteredClients.slice(startIndex, endIndex);
+  const paginatedClients = filteredClients.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <>
       <SectionHeader
-        buttonName="موكل"
-        listName="موكلين"
+        buttonName="Add Client"
+        listName="Client List"
         icon={ClientSectionIcon}
         setShowAddModal={() => openAddEditModal()}
       />
@@ -123,114 +138,81 @@ function ClientList() {
         client={selectedClient}
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        onSaved={() => {
-          setModalOpen(false);
-          fetchClients();
-        }}
+        onSaved={fetchClients}
       />
 
-      <Card className="mt-4">
-        <Card.Header>
-          {showAlert && (
-            <Alert
-              variant="success"
-              onClose={() => setShowAlert(false)}
-              dismissible
-            >
-              {alertMessage}
-            </Alert>
+      {alert.show && <div className={`alert alert-${alert.type}`}>{alert.message}</div>}
+
+      <SearchBar>
+        <Input
+          type="text"
+          placeholder="Search clients..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <Button onClick={() => setClientsPage(1)}>Search</Button>
+      </SearchBar>
+
+      <Table>
+        <thead>
+          <tr>
+            <Th>Slug</Th>
+            <Th>Name</Th>
+            <Th>Identity Number</Th>
+            <Th>Address</Th>
+            <Th>Phone Number</Th>
+            <Th>Status</Th>
+            <Th>Actions</Th>
+          </tr>
+        </thead>
+        <tbody>
+          {paginatedClients.length > 0 ? (
+            paginatedClients.map((client) => (
+              <tr key={client.id}>
+                <Td>{client.slug}</Td>
+                <Td>{client.name}</Td>
+                <Td>{client.identity_number}</Td>
+                <Td>{client.address}</Td>
+                <Td>{client.phone_number}</Td>
+                <Td>
+                  {client.status === 'active' ? (
+                    <ActionButton onClick={() => handleToggleStatus(client.id)}>
+                      <AiFillCheckCircle color="green" />
+                      Active
+                    </ActionButton>
+                  ) : (
+                    <ActionButton onClick={() => handleToggleStatus(client.id)}>
+                      <AiFillCloseCircle color="red" />
+                      Inactive
+                    </ActionButton>
+                  )}
+                </Td>
+                <Td>
+                  <ActionButton onClick={() => openAddEditModal(client)}>
+                    <AiFillEdit color="blue" />
+                  </ActionButton>
+                  <ActionButton onClick={() => handleDelete(client.id)}>
+                    <AiFillDelete color="red" />
+                  </ActionButton>
+                </Td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <Td colSpan="7">No clients available.</Td>
+            </tr>
           )}
-        </Card.Header>
-        <div className="input-group w-50">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="البحث عن موكلين"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button
-            className="btn btn-primary"
-            type="button"
-            onClick={handleSearch}
-          >
-            بحث
-          </button>
-        </div>
-        <Card.Body>
-          <div className="table-responsive">
-            <table className="special-table">
-              <thead>
-                <tr>
-                  <th>رقم المكتب</th>
-                  <th>اسم العميل</th>
-                  <th>رقم القومى</th>
-                  <th>العنوان</th>
-                  <th>رقم الهاتف</th>
-                  <th>الحالة</th>
-                  <th>التحكم</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedClients.length === 0 ? (
-                  <tr>
-                    <td colSpan="5">
-                      <Alert variant="warning">لا يوجد موكلين لعرضهم.</Alert>
-                    </td>
-                  </tr>
-                ) : (
-                  filteredClients.map((client) => (
-                    <tr key={client.id}>
-                      <td onClick={() => handleSlugClick(client.slug)}>
-                        {client.slug}
-                      </td>
+        </tbody>
+      </Table>
 
-                      <td>{client.name}</td>
-                      <td>{client.identity_number}</td>
-                      <td>{client.address}</td>
-                      <td>{client.phone_number}</td>
-                      <td>
-                        {client.status === 'active' ? (
-                          <div onClick={() => handleToggleStatus(client.id)}>
-                            <AiFillCheckCircle color="green" />
-                            <span className="text-success">نشط</span>
-                          </div>
-                        ) : (
-                          <div onClick={() => handleToggleStatus(client.id)}>
-                            <AiFillCloseCircle color="red" />
-                            <span className="text-danger">غير نشط</span>
-                          </div>
-                        )}
-                      </td>
-
-                      <td>
-                        <AiFillEdit
-                          color="blue"
-                          onClick={() => openAddEditModal(client)}
-                        />
-
-                        <AiFillDelete
-                          color="red"
-                          onClick={() => deleteClient(client.id)}
-                        />
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </Card.Body>
-        <Card.Footer>
-          <CustomPagination
-            totalCount={filteredClients.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={clientsPage}
-            onPageChange={handlePageChange}
-          />
-        </Card.Footer>
-      </Card>
+      <CustomPagination
+        totalCount={filteredClients.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={clientsPage}
+        onPageChange={setClientsPage}
+      />
     </>
   );
 }
+
 export default ClientList;

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Button } from 'react-bootstrap';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
-import ServiceProcedureModal from './ServiceProcdureModal';
+import ServiceProcedureModal from './ServiceProcedureModal';
 import API_CONFIG from '../../../config';
 
 const ServiceProcedureList = ({ serviceId }) => {
@@ -19,7 +18,7 @@ const ServiceProcedureList = ({ serviceId }) => {
 
   const fetchLawyers = async () => {
     try {
-      const response = await axios.get(API_CONFIG.baseURL + '/api/lawyers');
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/lawyers`);
       setLawyers(response.data);
     } catch (error) {
       console.error('Error fetching lawyers:', error);
@@ -29,7 +28,7 @@ const ServiceProcedureList = ({ serviceId }) => {
   const fetchServiceProcedures = async () => {
     try {
       const response = await axios.get(
-        API_CONFIG.baseURL + `/api/service-procedures/${serviceId}`,
+        `${API_CONFIG.baseURL}/api/service-procedures/${serviceId}`
       );
       setServiceProcedures(response.data);
     } catch (error) {
@@ -46,7 +45,7 @@ const ServiceProcedureList = ({ serviceId }) => {
   const handleDeleteServiceProcedure = async (procedureId) => {
     try {
       await axios.delete(
-        API_CONFIG.baseURL + `/api/service-procedure/delete/${procedureId}`,
+        `${API_CONFIG.baseURL}/api/service-procedure/delete/${procedureId}`
       );
       fetchServiceProcedures();
     } catch (error) {
@@ -62,9 +61,9 @@ const ServiceProcedureList = ({ serviceId }) => {
 
   const addServiceProcedure = async (data) => {
     try {
-      await axios.post(API_CONFIG.baseURL + '/api/service-procedures', data);
-      fetchServiceProcedures(); // Reload the list of service procedures
-      setShowModal(false); // Close the modal
+      await axios.post(`${API_CONFIG.baseURL}/api/service-procedures`, data);
+      fetchServiceProcedures();
+      setShowModal(false);
     } catch (error) {
       console.error('Error adding procedure:', error);
     }
@@ -73,28 +72,25 @@ const ServiceProcedureList = ({ serviceId }) => {
   const editServiceProcedure = async (procedureId, data) => {
     try {
       await axios.put(
-        API_CONFIG.baseURL + `/api/service-procedure/${procedureId}`,
-        data,
+        `${API_CONFIG.baseURL}/api/service-procedure/${procedureId}`,
+        data
       );
-      fetchServiceProcedures(); // Reload the list of service procedures
-      setShowModal(false); // Close the modal
+      fetchServiceProcedures();
+      setShowModal(false);
     } catch (error) {
       console.error('Error editing procedure:', error);
     }
   };
 
   return (
-    <>
-      <Card.Header>
-        <Button
-          variant="success"
-          className="btn-sm"
+    <div className="bg-white shadow-md rounded-md p-6">
+      <div className="flex justify-between items-center mb-4">
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 flex items-center gap-2"
           onClick={openAddProcedureModal}
         >
-          <BiPlusCircle className="mr-1" />
-          إضافة إجراء
-        </Button>
-
+          <BiPlusCircle size={20} /> إضافة إجراء
+        </button>
         <ServiceProcedureModal
           show={showModal}
           onHide={() => setShowModal(false)}
@@ -106,57 +102,62 @@ const ServiceProcedureList = ({ serviceId }) => {
           addServiceProcedure={addServiceProcedure}
           editServiceProcedure={editServiceProcedure}
         />
-      </Card.Header>
-      <Card.Body>
-        <div className="table-responsive">
-          <table className="special-table">
-            <thead>
-              <tr>
-                <th className="col-1">نوع الإجراء</th>
-                <th className="col-2">تاريخ الإجراء</th>
-                <th className="col-2">المحامي</th>
-                <th className="col-2">الجهة</th>
-                <th className="col-2">النتيجة</th>
-                <th className="col-2">الحالة</th>
-                <th className="col-2">الإجراءات</th>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border border-gray-300 px-4 py-2">نوع الإجراء</th>
+              <th className="border border-gray-300 px-4 py-2">تاريخ الإجراء</th>
+              <th className="border border-gray-300 px-4 py-2">المحامي</th>
+              <th className="border border-gray-300 px-4 py-2">الجهة</th>
+              <th className="border border-gray-300 px-4 py-2">النتيجة</th>
+              <th className="border border-gray-300 px-4 py-2">الحالة</th>
+              <th className="border border-gray-300 px-4 py-2">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            {serviceProcedures.map((procedure) => (
+              <tr key={procedure.id} className="odd:bg-white even:bg-gray-50">
+                <td className="border border-gray-300 px-4 py-2">{procedure.title}</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {procedure.date_start
+                    ? new Date(procedure.date_start).toLocaleDateString('ar-EG')
+                    : ''}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {procedure.lawyer?.name}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {procedure.place || ''}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {procedure.result || ''}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {procedure.status || ''}
+                </td>
+                <td className="border border-gray-300 px-4 py-2 flex gap-2">
+                  <button
+                    className="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600"
+                    onClick={() => handleEditServiceProcedure(procedure)}
+                  >
+                    <BiPencil size={18} />
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                    onClick={() => handleDeleteServiceProcedure(procedure.id)}
+                  >
+                    <BiTrash size={18} />
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {serviceProcedures.map((procedure) => (
-                <tr key={procedure.id}>
-                  <td>{procedure.title}</td>
-                  <td>
-                    {procedure.date_start
-                      ? new Date(procedure.date_start).toLocaleDateString(
-                          'ar-EG',
-                        )
-                      : ''}
-                  </td>
-                  <td>{procedure.lawyer?.name}</td>
-                  <td>{procedure.place || ''}</td>
-                  <td>{procedure.result || ''}</td>
-                  <td>{procedure.status || ''}</td>
-                  <td>
-                    <Button
-                      variant="info"
-                      onClick={() => handleEditServiceProcedure(procedure)}
-                    >
-                      <BiPencil />
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteServiceProcedure(procedure.id)}
-                    >
-                      <BiTrash />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Card.Body>
-    </>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 

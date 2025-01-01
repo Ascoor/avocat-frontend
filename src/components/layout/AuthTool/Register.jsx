@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Form, Button, FormGroup } from 'react-bootstrap';
 import { FaUser } from 'react-icons/fa';
 import AuthUser from './AuthUser';
 import API_CONFIG from '../../../config';
@@ -16,7 +15,8 @@ const Register = ({ handleCloseForm }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const submitForm = async () => {
+  const submitForm = async (e) => {
+    e.preventDefault();
     setLoading(true);
     setError('');
 
@@ -41,7 +41,7 @@ const Register = ({ handleCloseForm }) => {
     } catch (error) {
       setLoading(false);
       setError('Failed to register. Please try again later.');
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -52,82 +52,101 @@ const Register = ({ handleCloseForm }) => {
       navigate('/');
     } catch (error) {
       setError('Failed to login. Please try again later.');
-      console.log(error);
+      console.error(error);
     }
   };
 
   return (
-    <Card className="special-register-card">
-      <Card.Header className="special-register-header">
-        <Card.Title className="special-register-title">
-          <FaUser className="special-register-icon" />
-          تسجيل اشتراك جديد
-        </Card.Title>
-      </Card.Header>
+    <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md mx-auto">
+      <div className="text-center mb-6">
+        <FaUser className="text-4xl text-blue-500 mx-auto mb-2" />
+        <h2 className="text-2xl font-bold text-gray-800">تسجيل اشتراك جديد</h2>
+      </div>
 
-      <Card.Body className="special-register-body">
-        <Form onSubmit={submitForm}>
-          <FormGroup>
-            <Form.Label>الاسم</Form.Label>
-            <Form.Control
-              className="special-register-input"
-              type="text"
-              placeholder="ادخل اسمك"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </FormGroup>
+      <form onSubmit={submitForm} className="space-y-4">
+        <div>
+          <label htmlFor="name" className="block mb-1 text-gray-700 font-medium">
+            الاسم
+          </label>
+          <input
+            id="name"
+            type="text"
+            placeholder="ادخل اسمك"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-          <FormGroup>
-            <Form.Label>البريد الإلكتروني</Form.Label>
-            <Form.Control
-              className="special-register-input"
-              type="email"
-              placeholder="أدخل بريدك الإلكتروني"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </FormGroup>
+        <div>
+          <label htmlFor="email" className="block mb-1 text-gray-700 font-medium">
+            البريد الإلكتروني
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="أدخل بريدك الإلكتروني"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-          <FormGroup>
-            <Form.Label>كلمة المرور</Form.Label>
-            <Form.Control
-              className="special-register-input"
-              type="password"
-              placeholder="أدخل كلمة المرور"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </FormGroup>
+        <div>
+          <label htmlFor="password" className="block mb-1 text-gray-700 font-medium">
+            كلمة المرور
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="أدخل كلمة المرور"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-          <FormGroup>
-            <Form.Label>إعادة إدخال كلمة المرور</Form.Label>
-            <Form.Control
-              className="special-register-input"
-              type="password"
-              placeholder="أعد إدخال كلمة المرور"
-              value={rePassword}
-              onChange={(e) => setRePassword(e.target.value)}
-            />
-          </FormGroup>
+        <div>
+          <label
+            htmlFor="rePassword"
+            className="block mb-1 text-gray-700 font-medium"
+          >
+            إعادة إدخال كلمة المرور
+          </label>
+          <input
+            id="rePassword"
+            type="password"
+            placeholder="أعد إدخال كلمة المرور"
+            value={rePassword}
+            onChange={(e) => setRePassword(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-          <Button type="submit" className="special-register-button">
-            تسجيل الاشتراك
-          </Button>
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-          {error && <p className="text-danger mt-3 text-center">{error}</p>}
-        </Form>
-      </Card.Body>
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full px-4 py-2 rounded-lg font-semibold text-white ${
+            loading
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-500 hover:bg-blue-600'
+          }`}
+        >
+          {loading ? '...جارى التسجيل' : 'تسجيل الاشتراك'}
+        </button>
+      </form>
 
-      <Card.Footer className="special-register-footer">
-        <Button
+      <div className="mt-6 text-center">
+        <button
           onClick={handleCloseForm}
-          className="btn-danger login-guest special-register-button"
+          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
         >
           العودة للرئيسية
-        </Button>
-      </Card.Footer>
-    </Card>
+        </button>
+      </div>
+    </div>
   );
 };
 

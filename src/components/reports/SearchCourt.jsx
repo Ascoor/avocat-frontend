@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Form, Button, FormGroup } from 'react-bootstrap';
 import API_CONFIG from '../../config';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 const SearchCourt = () => {
   const [allData, setAllData] = useState({
     search_degrees: [],
@@ -13,10 +15,9 @@ const SearchCourt = () => {
   const [selectedCaseType, setSelectedCaseType] = useState('');
   const [selectedCaseYear, setSelectedCaseYear] = useState('');
   const [selectedCaseNumber, setSelectedCaseNumber] = useState('');
-
   const [searchResults, setSearchResults] = useState(null);
+
   useEffect(() => {
-    // Fetch data from the API when the component mounts
     axios
       .get(`${API_CONFIG.baseURL}/api/search-court`)
       .then((response) => {
@@ -42,9 +43,10 @@ const SearchCourt = () => {
     const caseTypeValue = event.target.value;
     setSelectedCaseType(caseTypeValue);
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-  
+
     const formData = {
       degree: selectedDegree,
       court: selectedCourt,
@@ -52,35 +54,32 @@ const SearchCourt = () => {
       caseYear: selectedCaseYear,
       caseNumber: selectedCaseNumber,
     };
-  
-    axios
-      .post('https://search-api.avocat.live/search', formData, {
 
- 
-      })
+    axios
+      .post('https://search-api.avocat.live/search', formData)
       .then((response) => {
-        // Update search results state
         setSearchResults(response.data);
       })
       .catch((error) => {
         console.log(error);
-        // Handle errors here, such as updating UI to show error message
       });
   };
 
   return (
-    <section className="home-page">
-      <Card>
-        <Card.Header className="home-text-center">بحث المحكمة</Card.Header>
-        <Card.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formDegree">
-              <Form.Label>الدرجة </Form.Label>
-              <Form.Control
-                as="select"
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-xl font-bold">بحث المحكمة</h3>
+      </div>
+
+      <div className="bg-white p-6 rounded shadow-md">
+        <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-gray-700">الدرجة</label>
+              <select
+                className="w-full border border-gray-300 p-2 rounded"
                 value={selectedDegree}
                 onChange={handleDegreeChange}
-                required
               >
                 <option value="">إختر الدرجة</option>
                 {allData.search_degrees.map((degree) => (
@@ -88,19 +87,18 @@ const SearchCourt = () => {
                     {degree.degree_name}
                   </option>
                 ))}
-              </Form.Control>
-            </Form.Group>
+              </select>
+            </div>
 
             {selectedDegree && (
-              <Form.Group controlId="formCourt">
-                <Form.Label>Court</Form.Label>
-                <Form.Control
-                  as="select"
+              <div>
+                <label className="block text-gray-700">المحكمة</label>
+                <select
+                  className="w-full border border-gray-300 p-2 rounded"
                   value={selectedCourt}
                   onChange={handleCourtChange}
-                  required
                 >
-                  <option value="">Select a court</option>
+                  <option value="">اختر المحكمة</option>
                   {allData.search_courts
                     .filter((court) => court.degree_value === selectedDegree)
                     .map((court) => (
@@ -108,20 +106,19 @@ const SearchCourt = () => {
                         {court.court_name}
                       </option>
                     ))}
-                </Form.Control>
-              </Form.Group>
+                </select>
+              </div>
             )}
 
             {selectedCourt && (
-              <Form.Group controlId="formCaseType">
-                <Form.Label>Case Type</Form.Label>
-                <Form.Control
-                  as="select"
+              <div>
+                <label className="block text-gray-700">نوع القضية</label>
+                <select
+                  className="w-full border border-gray-300 p-2 rounded"
                   value={selectedCaseType}
                   onChange={handleCaseTypeChange}
-                  required
                 >
-                  <option value="">Select a case type</option>
+                  <option value="">اختر نوع القضية</option>
                   {allData.search_case_types
                     .filter(
                       (caseType) =>
@@ -129,48 +126,52 @@ const SearchCourt = () => {
                         caseType.court_value === selectedCourt,
                     )
                     .map((caseType) => (
-                      <option
-                        key={caseType.id}
-                        value={caseType.case_type_value}
-                      >
+                      <option key={caseType.id} value={caseType.case_type_value}>
                         {caseType.case_type_name}
                       </option>
                     ))}
-                </Form.Control>
-              </Form.Group>
+                </select>
+              </div>
             )}
-            <Form.Group controlId="caseYear">
-              <Form.Label>Case Year</Form.Label>
-<Form.Control
-  as="input"
-  type="number"
-  pattern="\d{2,4}" // Regular expression to match exactly 4 digits
-  title="Please enter a 4-digit year"
-  value={selectedCaseYear} // Use selectedCaseYear here
-  onChange={(event) => setSelectedCaseYear(event.target.value)}
-  required
-/>
-            </Form.Group>
-            <FormGroup controlId="caseNumber">
-              <Form.Label>Case Number</Form.Label>
-              <Form.Control
-                as="input"
+
+            <div>
+              <label className="block text-gray-700">سنة القضية</label>
+              <input
                 type="number"
+                className="w-full border border-gray-300 p-2 rounded"
+                value={selectedCaseYear}
+                onChange={(event) => setSelectedCaseYear(event.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700">رقم القضية</label>
+              <input
+                type="number"
+                className="w-full border border-gray-300 p-2 rounded"
                 value={selectedCaseNumber}
                 onChange={(event) => setSelectedCaseNumber(event.target.value)}
-                required
               />
-            </FormGroup>
+            </div>
+          </div>
 
-            <Button variant="primary" type="submit">
-              Search
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
-      
-      <div dangerouslySetInnerHTML={{ __html: searchResults }} />
-    </section>
+          <div className="mt-6">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
+            >
+              بحث
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {searchResults && (
+        <div className="mt-6">
+          <div dangerouslySetInnerHTML={{ __html: searchResults }} />
+        </div>
+      )}
+    </div>
   );
 };
 

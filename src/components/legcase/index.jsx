@@ -1,248 +1,192 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import {
-  Card,
-  Row,
-  Col,
-  CardHeader,
-  Button,
-  InputGroup,
-  Alert,
-  FormControl,
-} from 'react-bootstrap';
+import useAuth from '../layout/AuthTool/AuthUser';
 import API_CONFIG from '../../config';
-import { CiEdit } from 'react-icons/ci';
-import AddEditLegCase from './AddEditLegCase';
-import SectionHeader from '../home_tools/SectionHeader';
-import CustomPagination from '../home_tools/Pagination';
-import { LegCaseIcon } from '../../assets/icons';
 
-const LegalCasesIndex = () => {
-  const [legCases, setLegCases] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [editingLegCase, setEditingLegCase] = useState(null);
-  const [successMessage, setSuccessMessage] = useState('');
+const AddEditLegCase = ({ onClose, isEditing, editingLegCase }) => {
+  const { getUser } = useAuth();
+  const [caseData, setCaseData] = useState({
+    slug: '',
+    title: '',
+    description: '',
+    case_type_id: '',
+    case_sub_type_id: '',
+    client_capacity: '',
+    litigants_name: '',
+    litigants_phone: '',
+    created_by: getUser().id,
+  });
+  const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const [alertVariant, setAlertVariant] = useState('');
-  const itemsPerPage = 10;
+  const [caseTypes, setCaseTypes] = useState([]);
+  const [caseSubTypes, setCaseSubTypes] = useState([]);
 
   useEffect(() => {
-    fetchLegCases();
+    fetchCaseTypes();
   }, []);
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    if (successMessage) {
-      setAlertMessage(successMessage);
-      setAlertVariant('success');
-      setShowAlert(true);
-      setSuccessMessage('');
+  useEffect(() => {
+    if (isEditing && editingLegCase) {
+      setCaseData(editingLegCase);
+      const selectedCaseType = caseTypes.find(
+        (type) => type.id === editingLegCase.case_type_id
+      );
+      if (selectedCaseType) {
+        setCaseSubTypes(selectedCaseType.case_sub_types);
+        setCaseData((prevData) => ({
+          ...prevData,
+          case_sub_type_id: editingLegCase.case_sub_type_id,
+        }));
+      }
+    } else {
+      setCaseData({
+        slug: '',
+        title: '',
+        description: '',
+        case_type_id: '',
+        case_sub_type_id: '',
+        client_capacity: '',
+        litigants_name: '',
+        litigants_phone: '',
+        created_by: getUser().id,
+      });
+      setCaseSubTypes([]);
     }
-    fetchLegCases(); // Re-fetch cases to update the list
-  };
+  }, [isEditing, editingLegCase, caseTypes]);
 
-  const fetchLegCases = async () => {
-    try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-cases`);
-      setLegCases(response.data);
-    } catch (error) {
-      console.error('Error fetching leg cases:', error);
-    }
-  };
-
-  const handleEditCase = (legCase) => {
-    setEditingLegCase(legCase);
-    setIsEditing(true);
-    setShowModal(true);
-  };
-
-  const handleSearch = async () => {
+  const fetchCaseTypes = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal-case-search?search=${searchQuery}`,
+        `${API_CONFIG.baseURL}/api/legal-case/case-types-sub-types`
       );
-      setLegCases(response.data);
-      setCurrentPage(1);
+      setCaseTypes(response.data.caseTypes);
     } catch (error) {
-      console.error('Error searching cases:', error);
+      console.error('Error fetching case types:', error);
     }
   };
 
-  const deleteLegCase = async (id) => {
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCaseData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleCaseTypeChange = (event) => {
+    const newCaseTypeId = event.target.value;
+    setCaseData((prevData) => ({
+      ...prevData,
+      case_type_id: newCaseTypeId,
+      case_sub_type_id: '',
+    }));
+
+    const selectedCaseType = caseTypes.find(
+      (type) => type.id.toString() === newCaseTypeId
+    );
+    setCaseSubTypes(selectedCaseType ? selectedCaseType.case_sub_types : []);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!caseData.slug || !caseData.title || !caseData.description) {
+      setValidated(true);
+      return;
+    }
+
+    let dataToSend = { ...caseData };
+    if (isEditing) {
+      dataToSend = { ...dataToSend, updated_by: getUser().id };
+    }
+
     try {
-      await axios.delete(`${API_CONFIG.baseURL}/api/leg-cases/${id}`);
-      fetchLegCases(); // Re-fetch cases after deletion
+      const method = isEditing ? 'put' : 'post';
+      const url = `${API_CONFIG.baseURL}/api/legal-cases${
+        isEditing ? `/${editingLegCase.id}` : ''
+      }`;
+      await axios[method](url, dataToSend);
+
+      onClose();
     } catch (error) {
-      console.error('Error deleting legal case:', error);
+      setAlertMessage('Error: ' + error.message);
+      setShowAlert(true);
     }
   };
-
-  const paginatedLegCases = legCases.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
-  );
 
   return (
-    <>
-      <SectionHeader
-        setShowAddModal={() => {
-          setEditingLegCase(null);
-          setIsEditing(false);
-          setShowModal(true);
-        }}
-        listName="القضايا"
-        buttonName="قضية جديدة"
-        icon={LegCaseIcon}
-      />
-
-      {showModal && (
-        <AddEditLegCase
-          isEditing={isEditing}
-          editingLegCase={editingLegCase}
-          onClose={handleCloseModal}
-          fetchLegCases={fetchLegCases}
-        />
-      )}
-      <Card>
-        <CardHeader>
-          <Row>
-            <Col xs={12} md={6} lg={4}>
-              <InputGroup className="mb-3">
-                <FormControl
-                  placeholder="بحث..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <Button variant="outline-secondary" onClick={handleSearch}>
-                  بحث
-                </Button>
-              </InputGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {showAlert && (
-                <Alert
-                  variant={alertVariant}
-                  onClose={() => setShowAlert(false)}
-                  dismissible
-                >
-                  {alertMessage}
-                </Alert>
-              )}
-            </Col>
-          </Row>
-        </CardHeader>
-        <Card.Body>
-          <div className="table-responsive">
-            <table className="special-table">
-              <thead>
-                <tr>
-                  <th className="header-cell">رقم الملف</th>
-                  <th className="header-cell">الموكل</th>
-                  <th className="header-cell">صفة</th>
-                  <th className="header-cell">الموضوع</th>
-                  <th className="header-cell">نوع القضية</th>
-                  <th className="header-cell">المحكمة</th>
-                  <th className="header-cell">المحرر</th>
-                  <th className="header-cell">الحالة</th>
-                  <th className="header-cell">التحكم</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedLegCases.map((legCase, index) => (
-                  <tr key={index}>
-                    <td>
-                      <a
-                        className="btn item-link"
-                        onClick={() => handleEditCase(legCase)}
-                      >
-                        <CiEdit className="edit-icon mb-1" />
-                        {legCase.slug}
-                      </a>
-                    </td>
-                    <td>
-                      {legCase.clients &&
-                        legCase.clients.map((client, clientIndex) => (
-                          <span key={clientIndex}>
-                            {client.name}
-                            {clientIndex < legCase.clients.length - 1 && ', '}
-                          </span>
-                        ))}
-                    </td>
-                    <td>{legCase.client_capacity}</td>
-                    <td>{legCase.title}</td>
-                    <td>{legCase.case_sub_type?.name || '-'}</td>
-                    <td>
-                      {legCase.courts &&
-                        legCase.courts.map((court, courtIndex) => (
-                          <span key={courtIndex}>
-                            {court.name}
-                            {courtIndex < legCase.courts.length - 1 && ', '}
-                          </span>
-                        ))}
-                    </td>
-                    <td>
-                      {legCase.created_by && (
-                        <span className="span details-text text-danger">
-                          تم تحرير البيانات بواسطة{' '}
-                          <strong className="text-primary text-xs">
-                            {legCase.created_by.name}
-                          </strong>
-                        </span>
-                      )}
-                      <br />
-                      {legCase.updated_by && legCase.created_by && (
-                        <span>, </span>
-                      )}
-                      {legCase.updated_by && (
-                        <span className="span details-text text-danger">
-                          تم تعديل البيانات بواسطة{' '}
-                          <strong className="text-primary text-xs">
-                            {legCase.updated_by.name}
-                          </strong>
-                        </span>
-                      )}
-                    </td>
-                    <td>{legCase.status}</td>
-                    <td>
-                      <div className="button-container">
-                        <Link
-                          className="btn btn-secondary mb-2 float-end"
-                          to={`/legcases/show/${legCase.id}`}
-                        >
-                          عرض
-                        </Link>
-                        <button
-                          className="btn btn-danger mb-2 float-end"
-                          onClick={() => deleteLegCase(legCase.id)}
-                        >
-                          حذف
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>{' '}
-        </Card.Body>
-        <Card.Footer>
-          <CustomPagination
-            totalCount={legCases.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
-        </Card.Footer>
-      </Card>
-    </>
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+      <div className="bg-white w-full max-w-4xl rounded-lg shadow-lg">
+        <div className="px-6 py-4 border-b flex justify-between items-center">
+          <h3 className="text-lg font-semibold">
+            {isEditing ? 'تعديل بيانات القضية' : 'إضافة قضية'}
+          </h3>
+          <button
+            onClick={onClose}
+            className="text-gray-600 hover:text-gray-800"
+          >
+            ✕
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="px-6 py-4">
+          {showAlert && (
+            <div className="bg-red-100 text-red-600 px-4 py-2 rounded mb-4">
+              {alertMessage}
+            </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="slug" className="block text-sm font-medium">
+                رقم الملف
+              </label>
+              <input
+                type="text"
+                id="slug"
+                name="slug"
+                value={caseData.slug}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="client_capacity" className="block text-sm font-medium">
+                صفة الإدعاء
+              </label>
+              <select
+                id="client_capacity"
+                name="client_capacity"
+                value={caseData.client_capacity}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500"
+                required
+              >
+                <option value="">اختر صفة الإدعاء</option>
+                <option value="مدعى عليه">مدعى عليه</option>
+                <option value="مجنى عليه">مجنى عليه</option>
+                <option value="مدعى">مدعى</option>
+                <option value="متهم">متهم</option>
+              </select>
+            </div>
+          </div>
+          {/* باقي الحقول بنفس الفلسفة */}
+          <div className="flex justify-end mt-6">
+            <button
+              type="button"
+              onClick={onClose}
+              className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded"
+            >
+              إلغاء
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded ml-2"
+            >
+              {isEditing ? 'تحديث' : 'حفظ'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
-export default LegalCasesIndex;
+export default AddEditLegCase;
