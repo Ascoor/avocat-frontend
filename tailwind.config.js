@@ -5,7 +5,6 @@ import cssVariablesPlugin from 'postcss-css-variables';
 import rtl from 'tailwindcss-rtl';
 import typography from '@tailwindcss/typography';
 import aspectRatio from '@tailwindcss/aspect-ratio';
-import lineClamp from '@tailwindcss/line-clamp';
 
 export default {
   mode: 'jit',
@@ -129,8 +128,7 @@ export default {
     forms,
     rtl,
     typography,
-    aspectRatio,
-    lineClamp,
+    aspectRatio, 
     plugin(({ addVariant, e }) => {
       addVariant('sidebar-expanded', ({ modifySelectors, separator }) => {
         modifySelectors(({ className }) => `.sidebar-expanded .${e(`sidebar-expanded${separator}${className}`)}`);

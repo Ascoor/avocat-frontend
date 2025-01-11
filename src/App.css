@@ -63,7 +63,7 @@ body {
   background-color: var(--light-mode-background);
   color: var(--day-text); /* Set the text color for light mode */
   transition: background-color 0.3s, color 0.3s;
-  font-family: 'almaria-font';
+  font-family: 'Cairo-bold';
 }
 /* From Uiverse.io by Z4drus */ 
 .spinner-container {

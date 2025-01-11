@@ -65,7 +65,8 @@ const Sidebar = () => {
         }`}
       > 
           {isSidebarOpen ? (
-            <LogoGlobal />
+     <LogoGlobal size="md" />
+
           ) : (
             <img
               src={LogoSuit}

@@ -63,10 +63,11 @@ import LogoGlobal from './partials/Tools/LogoGlobal';
         </animated.div>
 
         {/* الشعار */}
- <LogoGlobal className="w-64 h-32" />
+        <LogoGlobal size="lg" />
+
 
         {/* زر تسجيل الدخول */}
-        <div className="flex mr-4 p-4">
+        <div className="flex mt-6 mr-4 p-4">
        <button
          onClick={toggleLoginForm}
          className="bg-blue-600 hover:bg-blue-800 text-white px-6 py-2 rounded-lg shadow-lg transition-transform transform hover:scale-105"

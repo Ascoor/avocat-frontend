@@ -31,17 +31,27 @@ export default function useAuth() {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${API_CONFIG.baseURL}/api/login`, { email, password });
+      const response = await axios.post(
+        `${API_CONFIG.baseURL}/api/login`,
+        { email, password },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,  // ✅ تضمين CSRF Token
+          }
+        }
+      );
+  
       if (response.data.access_token && response.data.user) {
         saveToken(response.data.user, response.data.access_token);
         return true;
       }
     } catch (error) {
-      console.error('Error in login:', error);
+      console.error('Error in login:', error.response ? error.response.data : error.message);
     }
     return false;
   };
-
+  
 
   const logout = () => {
     sessionStorage.clear();
