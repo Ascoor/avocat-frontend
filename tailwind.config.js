@@ -1,3 +1,4 @@
+
 import plugin from 'tailwindcss/plugin';
 import forms from '@tailwindcss/forms';
 import cssVariablesPlugin from 'postcss-css-variables';
@@ -135,5 +136,6 @@ export default {
         modifySelectors(({ className }) => `.sidebar-expanded .${e(`sidebar-expanded${separator}${className}`)}`);
       });
     }),
-  ],
+  ], 
 };
+
