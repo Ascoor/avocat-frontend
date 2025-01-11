@@ -136,7 +136,6 @@ export default {
         modifySelectors(({ className }) => `.sidebar-expanded .${e(`sidebar-expanded${separator}${className}`)}`);
       });
     }),
-  ],
->>>>>>> b0293fb (dfdssasس)
+  ], 
 };
 
