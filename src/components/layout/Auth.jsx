@@ -1,36 +1,35 @@
 import React from 'react';
 import Sidebar from './partials/Sidebar';
 import Header from './partials/Header';
-import MainContent from './Tools/MainContent';
 import { useSidebar } from '../../utils/SidebarContext';
+import AuthRoutes from './Tools/AuthRoutes';
 
-const Auth = () => {
-  const { isSidebarOpen, isMobile } = useSidebar();
+const AuthWrapper = () => {
+  let sidebarState;
 
-  // Dynamic sidebar width
+  try {
+    sidebarState = useSidebar();
+  } catch (error) {
+    console.error('SidebarContext is missing:', error);
+    return <div>حدث خطأ في تحميل الشريط الجانبي. تأكد من إعدادات السياق.</div>;
+  }
+
+  const { isSidebarOpen, isMobile } = sidebarState;
+
   const sidebarWidth = !isMobile ? (isSidebarOpen ? '16rem' : '4rem') : '0';
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-lightBg dark:bg-gradient-night transition-colors duration-500">
-      {/* Sidebar */}
-      <div
-        style={{ width: sidebarWidth }}
-        className="transition-all duration-300 bg-white dark:bg-gray-800 shadow-lg"
-      >
+    <div className="flex flex-col md:flex-row h-screen font-['cairo'] bg-gray-50 dark:bg-gray-900 transition-all duration-500 ease-in-out">
+      <div style={{ width: sidebarWidth }} className="transition-all duration-500 ease-in-out">
         <Sidebar />
       </div>
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
+      <div className="flex-1 flex flex-col transition-all duration-500 ease-in-out">
         <Header />
-
-        {/* Page Content */}
         <div className="flex-1 overflow-y-auto p-4">
           <main className="grow">
             <div className="w-full max-w-9xl mx-auto">
-              <div className="card-main p-4 sm:p-6 lg:p-8 rounded bg-white dark:bg-gray-800 shadow-md relative transition-shadow duration-300 ease-in-out hover:shadow-lg">
-                <MainContent />
+              <div className="card-main p-4 sm:p-6 lg:p-8 rounded bg-white mt-4 dark:bg-gray-800 shadow-md relative transition-shadow duration-500 ease-in-out hover:shadow-lg">
+                <AuthRoutes />
               </div>
             </div>
           </main>
@@ -40,4 +39,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default AuthWrapper;

@@ -1,27 +1,5 @@
 /*####################### Arabic Font for App ########################*/
-/* استيراد الخطوط */
-@import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
-
-/* تعريف الخطوط */
-@font-face {
-  font-family: 'Thulth-font';
-  src: url('./assets/fonts/AM_Thulth_Regular_0.1.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'davat-font';
-  src: url('./assets/fonts/b-davat.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'almaria-font';
-  src: url('./assets/fonts/Almarai-Regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Cairo-bold';
-  src: url('./assets/fonts/static/Cairo-Bold.ttf') format('truetype');
-}
+/* استيراد الخطوط */ 
 /*####################### Color Variables ########################*/
 
 :root {

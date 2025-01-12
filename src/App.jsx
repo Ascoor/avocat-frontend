@@ -1,6 +1,6 @@
 import React from "react";
 import { SidebarProvider } from "./utils/SidebarContext";
-import Auth from "./components/layout/Auth";
+import AuthWrapper from "./components/layout/Auth";
 
 import { Route, Routes } from 'react-router-dom';
 import ThemeProvider from './utils/ThemeContext'; 
@@ -17,7 +17,7 @@ const App = () => {
 
         <Route
               path='*'
-              element={!getToken() ? <Guest /> : <Auth />}
+              element={!getToken() ? <Guest /> : <AuthWrapper />}
               />
               </Routes>
         </SidebarProvider>
