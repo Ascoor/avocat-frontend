@@ -1,24 +1,17 @@
-import React from 'react';
+import React from 'react'; 
 import Sidebar from './partials/Sidebar';
 import Header from './partials/Header';
 import { useSidebar } from '../../utils/SidebarContext';
 import AuthRoutes from './Tools/AuthRoutes';
 
 const AuthWrapper = () => {
-  let sidebarState;
+  const { isSidebarOpen, isMobile } = useSidebar();
 
-  try {
-    sidebarState = useSidebar();
-  } catch (error) {
-    console.error('SidebarContext is missing:', error);
-    return <div>حدث خطأ في تحميل الشريط الجانبي. تأكد من إعدادات السياق.</div>;
-  }
-
-  const { isSidebarOpen, isMobile } = sidebarState;
-
+  // عرض الشريط الجانبي المتجاوب
   const sidebarWidth = !isMobile ? (isSidebarOpen ? '16rem' : '4rem') : '0';
 
   return (
+    
     <div className="flex flex-col md:flex-row h-screen font-['cairo'] bg-gray-50 dark:bg-gray-900 transition-all duration-500 ease-in-out">
       <div style={{ width: sidebarWidth }} className="transition-all duration-500 ease-in-out">
         <Sidebar />

@@ -13,6 +13,7 @@ export { default as JudgeIcon } from './court_judge.png';
 export { default as BgFloat } from './bg-float.png';
 export { default as LogoNav } from './logo512.png';
 export { default as ServiceIcon }from './service-icon.png';
+export { default as ServiceSection }from './service-section.png';
 export { default as SearchIcon } from './search-icon.png';
 export { default as MainLegalCases } from '../icons/legcases-icon.png';
 export { default as MainSessions } from '../icons/sessions-icon.png';

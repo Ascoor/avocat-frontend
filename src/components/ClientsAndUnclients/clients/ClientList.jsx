@@ -1,83 +1,23 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
-import { AiFillCheckCircle, AiFillCloseCircle, AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import API_CONFIG from '../../../config';
 
 import { ClientSectionIcon } from '../../../assets/icons/index';
-
-import CustomPagination from '../../home_tools/Pagination';
 import SectionHeader from '../../home_tools/SectionHeader';
 import AddEditClient from './AddEditClient';
-
-// Styled Components
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-`;
-
-const Th = styled.th`
-  background-color: #f4f4f4;
-  padding: 10px;
-  text-align: left;
-`;
-
-const Td = styled.td`
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-`;
-
-const ActionButton = styled.span`
-  cursor: pointer;
-  margin-right: 10px;
-
-  &:hover {
-    opacity: 0.7;
-  }
-`;
-
-const SearchBar = styled.div`
-  margin: 10px 0;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Input = styled.input`
-  width: 70%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const Button = styled.button`
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
+import TableComponent from '../../global/TableComponent'; // ✅ مكون الجدول العالمي
 
 function ClientList() {
   const [clients, setClients] = useState([]);
-  const [filteredClients, setFilteredClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [itemsPerPage, setItemsPerPage] = useState(5);
-  const [clientsPage, setClientsPage] = useState(1);
-  const [alert, setAlert] = useState({ show: false, message: '', type: '' });
 
+  // ✅ جلب بيانات العملاء
   const fetchClients = useCallback(async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
       setClients(response.data.clients || []);
-      setFilteredClients(response.data.clients || []);
     } catch (error) {
       console.error('Error fetching clients:', error);
     }
@@ -87,29 +27,17 @@ function ClientList() {
     fetchClients();
   }, [fetchClients]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const filtered = clients.filter((client) =>
-        ['slug', 'identity_number', 'name', 'phone_number'].some((key) =>
-          client[key]?.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      );
-      setFilteredClients(filtered);
-    }, 300);
-    return () => clearTimeout(timeout);
-  }, [searchQuery, clients]);
-
+  // ✅ حذف عميل
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`${API_CONFIG.baseURL}/api/clients/${id}`);
+      await axios.delete(`${API_CONFIG.baseURL}/api/clients/${id}`);
       fetchClients();
-      setAlert({ show: true, message: response.data.message, type: 'success' });
     } catch (error) {
       console.error('Error deleting client:', error);
-      setAlert({ show: true, message: 'Failed to delete client.', type: 'error' });
     }
   };
 
+  // ✅ تغيير حالة العميل
   const handleToggleStatus = async (id) => {
     try {
       const client = clients.find((c) => c.id === id);
@@ -121,98 +49,80 @@ function ClientList() {
     }
   };
 
+  // ✅ فتح نافذة الإضافة أو التعديل
   const openAddEditModal = (client = null) => {
     setSelectedClient(client);
     setModalOpen(true);
   };
 
-  const startIndex = (clientsPage - 1) * itemsPerPage;
-  const paginatedClients = filteredClients.slice(startIndex, startIndex + itemsPerPage);
+  // ✅ إعداد رؤوس الجدول
+  const headers = [
+    { key: 'slug', text: 'الرمز' },
+    { key: 'name', text: 'الاسم' },
+    { key: 'identity_number', text: 'رقم الهوية' },
+    { key: 'address', text: 'العنوان' },
+    { key: 'phone_number', text: 'رقم الهاتف' },
+    { key: 'status', text: 'الحالة' },
+  ];
+
+  // ✅ عرض مخصص لحالة العميل
+  const customRenderers = {
+    status: (client) =>
+      client.status === 'active' ? (
+        <span
+          onClick={() => handleToggleStatus(client.id)}
+          className="flex items-center text-green-600 cursor-pointer"
+        >
+          <AiFillCheckCircle className="mr-1" /> نشط
+        </span>
+      ) : (
+        <span
+          onClick={() => handleToggleStatus(client.id)}
+          className="flex items-center text-red-600 cursor-pointer"
+        >
+          <AiFillCloseCircle className="mr-1" /> غير نشط
+        </span>
+      ),
+  };
+
+  // ✅ زر إضافة عميل
+  const renderAddButton = () => (
+    <button
+      onClick={() => openAddEditModal()}
+      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md transition duration-300"
+    >
+      إضافة عميل
+    </button>
+  );
 
   return (
     <>
+      {/* ✅ رأس القسم */}
       <SectionHeader
-        buttonName="Add Client"
-        listName="Client List"
-        icon={ClientSectionIcon}
-        setShowAddModal={() => openAddEditModal()}
-      />
-      <AddEditClient
-        client={selectedClient}
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        onSaved={fetchClients}
+        buttonName="عميل"
+        listName="العملاء"
+        icon={ClientSectionIcon} 
       />
 
-      {alert.show && <div className={`alert alert-${alert.type}`}>{alert.message}</div>}
-
-      <SearchBar>
-        <Input
-          type="text"
-          placeholder="Search clients..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+      {/* ✅ نافذة الإضافة أو التعديل */}
+      {isModalOpen && (
+        <AddEditClient
+          client={selectedClient}
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+          onSaved={fetchClients}
         />
-        <Button onClick={() => setClientsPage(1)}>Search</Button>
-      </SearchBar>
+      )}
 
-      <Table>
-        <thead>
-          <tr>
-            <Th>Slug</Th>
-            <Th>Name</Th>
-            <Th>Identity Number</Th>
-            <Th>Address</Th>
-            <Th>Phone Number</Th>
-            <Th>Status</Th>
-            <Th>Actions</Th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedClients.length > 0 ? (
-            paginatedClients.map((client) => (
-              <tr key={client.id}>
-                <Td>{client.slug}</Td>
-                <Td>{client.name}</Td>
-                <Td>{client.identity_number}</Td>
-                <Td>{client.address}</Td>
-                <Td>{client.phone_number}</Td>
-                <Td>
-                  {client.status === 'active' ? (
-                    <ActionButton onClick={() => handleToggleStatus(client.id)}>
-                      <AiFillCheckCircle color="green" />
-                      Active
-                    </ActionButton>
-                  ) : (
-                    <ActionButton onClick={() => handleToggleStatus(client.id)}>
-                      <AiFillCloseCircle color="red" />
-                      Inactive
-                    </ActionButton>
-                  )}
-                </Td>
-                <Td>
-                  <ActionButton onClick={() => openAddEditModal(client)}>
-                    <AiFillEdit color="blue" />
-                  </ActionButton>
-                  <ActionButton onClick={() => handleDelete(client.id)}>
-                    <AiFillDelete color="red" />
-                  </ActionButton>
-                </Td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <Td colSpan="7">No clients available.</Td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-
-      <CustomPagination
-        totalCount={filteredClients.length}
-        itemsPerPage={itemsPerPage}
-        currentPage={clientsPage}
-        onPageChange={setClientsPage}
+      {/* ✅ مكون الجدول العالمي */}
+      <TableComponent
+        data={clients}
+        headers={headers}
+        onEdit={(id) => openAddEditModal(clients.find((client) => client.id === id))}
+        onDelete={handleDelete}
+        sectionName="clients"
+        customRenderers={customRenderers}
+        renderAddButton={renderAddButton} // ✅ إضافة زر الإضافة إلى الجدول
       />
     </>
   );

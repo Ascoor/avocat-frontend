@@ -70,6 +70,10 @@ export default {
         'gradient-night': 'linear-gradient(135deg, #031023, #1b2b5a)',
         'gradient-orange-dark': 'linear-gradient(to bottom, #ffa726, #fb7921)',
         'gradient-blue-dark': 'linear-gradient(to bottom, #1b2b5a, #031023)',
+        // ☀️ الوضع الفاتح (Light Mode)
+        'gradient-orange-light': 'linear-gradient(to bottom, #ffcc80, #ffb74d)',
+        'gradient-blue-light': 'linear-gradient(to bottom, #bbdefb, #64b5f6)',
+
       },
       
         border: {

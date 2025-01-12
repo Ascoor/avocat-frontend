@@ -48,7 +48,7 @@ const Sidebar = () => {
     <> 
       <aside
         ref={sidebarRef}
-        className={`fixed inset-y-0 right-0 z-30 bg-gradient-orange-dark dark:bg-gradient-to-b from-avocat-blue-darker to-avocat-blue shadow-lg transform transition-transform duration-300
+        className={`fixed inset-y-0 right-0 z-30 bg-gradient-orange-light dark:bg-gradient-to-b from-avocat-blue-darker to-avocat-blue shadow-lg transform transition-transform duration-300
           ${isSidebarOpen ? 'translate-x-0 w-64' : 'w-16'}
           hidden md:block`}  
       >
@@ -56,7 +56,7 @@ const Sidebar = () => {
           {isSidebarOpen ? (
             <LogoGlobal size="md" />
           ) : (
-            <img src={LogoSuit} alt="Logo Suit" className="w-12 h-12 transition-transform duration-300" />
+            <img src={LogoSuit} alt="Logo Suit" className="w-16 h-12  mr-2transition-transform duration-300" />
           )}
         </div>
 

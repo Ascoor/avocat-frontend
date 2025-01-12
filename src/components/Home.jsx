@@ -60,10 +60,10 @@ const Home = () => {
 
   return (
     <div className="container mx-auto py-6 px-2   left-2">
-      <div className="bg-gradient-to-r from-avocat-blue-light to-avocat-blue-dark 
-  dark:from-avocat-blue-darker dark:to-avocat-orange-dark 
-  text-white text-center rounded-lg shadow-lg p-6 mb-8 animate-slideIn">
-  <h1 className="text-4xl font-bold">لوحة تحكم مكتب المحاماة</h1>
+      <div className="bg-gradient-orange-light 
+dark:bg-gradient-to-t  dark:from-avocat-blue-darker dark:to-avocat-orange-dark 
+  text-avocat-blue-light dark:text-white  text-center rounded-lg shadow-lg p-6 mb-8 animate-slideIn">
+  <h1 className="text-4xl font-bold d font-['tharwat']">  مكتب أفوكات</h1>
 </div>
 
 
