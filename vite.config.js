@@ -17,8 +17,10 @@ export default defineConfig({
     __APP_ENV__: process.env.APP_ENV,
   },
   server: {
-    host: '0.0.0.0',
-    port: 3000,
+    host: '0.0.0.0', // Accessible over the network
+    port: 3000,      // Dev server on port 3000
+    open: true,      // Auto-open browser
+    cors: true,      // Allow API requests across origins
   },
   build: {
     outDir: 'dist',

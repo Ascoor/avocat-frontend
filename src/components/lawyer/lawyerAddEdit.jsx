@@ -1,229 +1,107 @@
-import { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import { FaCalendarAlt } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Added for navigation
+import {
+  MainLawyers,
+  MainProcedures,
+  MainClients,
+  MainLegalCases,
+  MainSessions,
+  AdIcon,
+  ServiceIcon,
+} from '../../assets/icons/index'; // Updated path
+import axios from 'axios';
+import Calendar from '../home_tools/Calender';
+import API_CONFIG from '../../config';
 import moment from 'moment';
-import { ar } from 'date-fns/locale';
-import 'react-datepicker/dist/react-datepicker.css';
+import { useMediaQuery } from 'react-responsive';
+import MainCard from '../home_tools/MainCard';
+moment.locale('ar');
 
-const LawyerAddEdit = ({ onSubmit, initialValues }) => {
-  const [showAlert, setShowAlert] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [isUser, setIsUser] = useState(!!initialValues?.user_id);
-  const [name, setName] = useState(initialValues?.name || '');
-  const [birthdate, setBirthdate] = useState(initialValues?.birthdate || null);
-  const [identityNumber, setIdentityNumber] = useState(
-    initialValues?.identity_number || ''
-  );
-  const [lawRegNumber, setLawRegNumber] = useState(
-    initialValues?.law_reg_num || ''
-  );
-  const [lawyerClass, setLawyerClass] = useState(
-    initialValues?.lawyer_class || ''
-  );
-  const [email, setEmail] = useState(initialValues?.email || '');
-  const [phoneNumber, setPhoneNumber] = useState(
-    initialValues?.phone_number || ''
-  );
-  const [religion, setReligion] = useState(initialValues?.religion || '');
-  const [gender, setGender] = useState(initialValues?.gender || '');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPasswordInput, setShowPasswordInput] = useState(false);
+const Home = () => {
+  const [clientCount, setClientCount] = useState(0);
+  const [legCaseCount, setLegCaseCount] = useState(0);
+  const [procedureCount, setProcedureCount] = useState(0);
+  const [lawyerCount, setLawyerCount] = useState(0);
+  const [serviceCount, setServiceCount] = useState(0);
+  const [legalSessionCount, setLegalSessionCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const isValidDate = (date) => date !== null && date.toString() !== 'Invalid Date';
+  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
+
+  const toArabicNumeral = (en) => ('' + en).replace(/[0-9]/g, (t) => '٠١٢٣٤٥٦٧٨٩'.slice(+t, +t + 1));
 
   useEffect(() => {
-    setIsEditing(!!initialValues);
-    setIsUser(!!initialValues?.user_id);
-    if (initialValues?.user_id) {
-      setPassword('********');
-      setConfirmPassword('********');
+    fetchOfficeCount();
+  }, []);
+
+  const fetchOfficeCount = async () => {
+    try {
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/all_count_office`);
+      setClientCount(response.data.client_count || 0);
+      setLegCaseCount(response.data.leg_case_count || 0);
+      setProcedureCount(response.data.procedure_count || 0);
+      setLawyerCount(response.data.lawyer_count || 0);
+      setServiceCount(response.data.service_count || 0);
+      setLegalSessionCount(response.data.legal_session_count || 0);
+    } catch (error) {
+      console.error('Error fetching office count:', error);
+    } finally {
+      setLoading(false);
     }
-  }, [initialValues]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validateForm()) {
-      setShowAlert(true);
-      return;
-    }
-    setShowAlert(false);
-
-    const formattedBirthdate = moment(birthdate).format('YYYY-MM-DD');
-
-    const formData = {
-      name,
-      birthdate: formattedBirthdate,
-      identity_number: identityNumber,
-      law_reg_num: lawRegNumber,
-      lawyer_class: lawyerClass,
-      email,
-      phone_number: phoneNumber,
-      religion,
-      gender,
-    };
-
-    if (isUser && password !== '********') {
-      formData.password = password;
-      if (password !== confirmPassword) {
-        return;
-      }
-    }
-
-    onSubmit(formData);
   };
 
-  const validateForm = () => {
-    if (
-      !name ||
-      !isValidDate(birthdate) ||
-      !identityNumber ||
-      !lawRegNumber ||
-      !email ||
-      !phoneNumber ||
-      !religion ||
-      !gender
-    ) {
-      return false;
-    }
-    if (isUser && showPasswordInput && password !== confirmPassword) {
-      return false;
-    }
-    return true;
-  };
+  if (loading) {
+    return <div className="text-center py-20 text-gray-800 dark:text-gray-200">جاري التحميل...</div>;
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {showAlert && (
-        <div className="p-4 text-red-700 bg-red-100 rounded">
-          يرجى ملء جميع الحقول المطلوبة.
-        </div>
-      )}
-      <div className="flex items-center space-x-4">
-        <label className="flex items-center space-x-2">
-          <input
-            type="radio"
-            checked={isUser}
-            onChange={() => setIsUser(true)}
-            className="form-radio text-blue-500"
-          />
-          <span>حساب مستخدم</span>
-        </label>
-        <label className="flex items-center space-x-2">
-          <input
-            type="radio"
-            checked={!isUser}
-            onChange={() => setIsUser(false)}
-            className="form-radio text-blue-500"
-          />
-          <span>بدون حساب مستخدم</span>
-        </label>
-      </div>
-
-      {isUser && (
-        <>
-          <div>
-            <label className="block mb-2">كلمة المرور</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block mb-2">تأكيد كلمة المرور</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </>
-      )}
-
-      <div>
-        <label className="block mb-2">الاسم</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      <div>
-        <label className="block mb-2 flex items-center space-x-2">
-          <FaCalendarAlt /> <span>تاريخ الميلاد</span>
-        </label>
-        <DatePicker
-          selected={isValidDate(birthdate) ? birthdate : null}
-          onChange={(date) => setBirthdate(date)}
-          locale={ar}
-          dateFormat="yyyy-MM-dd"
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          placeholderText="اختر تاريخ الميلاد"
-        />
-      </div>
-
-      <div>
-        <label className="block mb-2">رقم التسجيل القانوني</label>
-        <input
-          type="text"
-          value={lawRegNumber}
-          onChange={(e) => setLawRegNumber(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      <div>
-        <label className="block mb-2">فئة المحامي</label>
-        <select
-          value={lawyerClass}
-          onChange={(e) => setLawyerClass(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          required
-        >
-          <option value="">اختر</option>
-          <option value="نقض">نقض</option>
-          <option value="إستئناف">إستئناف</option>
-          <option value="إبتدائي">إبتدائي</option>
-          <option value="جدول عام">جدول عام</option>
-        </select>
-      </div>
-
-      <div>
-        <label className="block mb-2">البريد الإلكتروني</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      <div>
-        <label className="block mb-2">رقم الهاتف</label>
-        <input
-          type="tel"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      <button
-        type="submit"
-        className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+    <div className="container mx-auto py-6 px-4">
+      <div
+        className="
+          bg-gradient-day 
+          dark:bg-gradient-night
+          text-white dark:text-gray-200
+          text-center rounded-lg shadow-xl
+          p-6 mb-8 transition-all duration-500 ease-in-out
+          hover:shadow-2xl hover:scale-105
+        "
       >
-        حفظ
-      </button>
-    </form>
+        <h1 className="text-4xl font-bold text-white dark:text-avocat-orange-light tracking-wide">
+          📊 لوحة التحكم - مكتب أفوكات
+        </h1>
+      </div>
+
+      <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'} gap-4`}>
+        <Link to="/sessions">
+          <MainCard count={toArabicNumeral(legalSessionCount)} icon={MainSessions} label="الجلسات" />
+        </Link>
+
+        <Link to="/cases">
+          <MainCard count={toArabicNumeral(legCaseCount)} icon={MainLegalCases} label="القضايا" />
+        </Link>
+
+        <Link to="/services">
+          <MainCard count={toArabicNumeral(serviceCount)} icon={ServiceIcon} label="الخدمات" />
+        </Link>
+
+        <Link to="/procedures">
+          <MainCard count={toArabicNumeral(procedureCount)} icon={MainProcedures} label="الإجراءات" />
+        </Link>
+
+        <Link to="/clients">
+          <MainCard count={toArabicNumeral(clientCount)} icon={MainClients} label="العملاء" />
+        </Link>
+
+        <Link to="/lawyers">
+          <MainCard count={toArabicNumeral(lawyerCount)} icon={MainLawyers} label="المحامون" />
+        </Link>
+      </div>
+
+      <div className="mt-8">
+        <Calendar />
+      </div>
+    </div>
   );
 };
 
-export default LawyerAddEdit;
+export default Home;

@@ -5,7 +5,7 @@ import UserMenu from '../../Tools/DropdownProfile';
 import ThemeToggle from '../../Tools/ThemeToggle';
 import HeaderToggle from './HeaderToggle';
 import { useSidebar } from '../../../utils/SidebarContext';
-import { FiMenu } from 'react-icons/fi';
+
 
 const Header = () => {  
   const { isSidebarOpen, isMobile } = useSidebar();
@@ -15,10 +15,19 @@ const Header = () => {
 
   return (
     <header
-  className={`bg-gradient-orange-dark dark:bg-gradient-blue-dark 
-    border-b border-gray-200 dark:border-gray-700 
-    fixed top-0 right-0 left-0 z-40 shadow-md transition-all duration-300`}
->  
+  className={`bg-gradient-to-l from-indigo-600 via-pink-600 to-indigo-500
+            dark:bg-gradient-blue-dark
+              border-b border-gray-200 dark:border-gray-700
+              fixed top-0 right-0 left-0 z-50 shadow-lg
+              backdrop-blur-md bg-opacity-80 dark:bg-opacity-70
+              transition-all duration-300  ease-in-out
+    ${
+      isSidebarOpen && !isMobile
+        ? 'md:mr-64'  // ✅ مساحة للشريط الجانبي المفتوح
+        : 'md:mr-16'  // ✅ مساحة للشريط الجانبي المغلق
+    }
+  `}
+>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         {/* ✅ الشعار وزر القائمة */}

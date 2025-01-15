@@ -1,152 +1,138 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState, useCallback } from 'react';
+import { getLawyers, createLawyer, updateLawyer, deleteLawyer } from '../../api/lawyers';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { LawyerIcon } from '../../assets/icons';
 import LawyerAddEdit from './lawyerAddEdit';
-import API_CONFIG from '../../config';
 import SectionHeader from '../home_tools/SectionHeader';
+import { LawyerIcon } from '../../assets/icons';
+import TableComponent from '../global/TableComponent';
 
 const Lawyers = () => {
   const [lawyers, setLawyers] = useState([]);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [selectedLawyer, setSelectedLawyer] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [editingLawyer, setEditingLawyer] = useState(null);
+
+  // ✅ جلب بيانات المحامين
+  const fetchLawyers = useCallback(async () => {
+    try {
+      const response = await getLawyers();
+      setLawyers(response.data);
+    } catch (error) {
+      console.error('حدث خطأ أثناء جلب المحامين:', error);
+    }
+  }, []);
 
   useEffect(() => {
     fetchLawyers();
-  }, []);
+  }, [fetchLawyers]);
 
-  const fetchLawyers = async () => {
-    try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/lawyers`);
-      setLawyers(response.data);
-    } catch (error) {
-      console.error('Error fetching lawyers:', error);
-    }
-  };
-
+  // ✅ إضافة محامي
   const handleAddLawyer = async (formData) => {
     try {
-      await axios.post(`${API_CONFIG.baseURL}/api/lawyers`, formData);
-      await fetchLawyers();
-      setShowAddModal(false);
+      await createLawyer(formData);
+      fetchLawyers();
+      setShowModal(false);
     } catch (error) {
-      console.error(error);
+      console.error('خطأ أثناء إضافة محامي:', error);
     }
   };
 
+  // ✅ تعديل محامي
   const handleEditLawyer = async (formData) => {
     try {
-      await axios.put(
-        `${API_CONFIG.baseURL}/api/lawyers/${selectedLawyer.id}`,
-        formData
-      );
-      await fetchLawyers();
-      setShowEditModal(false);
+      await updateLawyer(editingLawyer.id, formData);
+      fetchLawyers();
+      setShowModal(false);
     } catch (error) {
-      console.error(error);
+      console.error('خطأ أثناء تعديل محامي:', error);
     }
   };
 
+  // ✅ حذف محامي
   const handleDeleteLawyer = async (lawyerId) => {
     try {
-      await axios.delete(`${API_CONFIG.baseURL}/api/lawyers/${lawyerId}`);
-      await fetchLawyers();
+      await deleteLawyer(lawyerId);
+      fetchLawyers();
     } catch (error) {
-      console.error(error);
+      console.error('خطأ أثناء حذف محامي:', error);
     }
   };
 
-  const handleShowEditModal = (selectedLawyer) => {
-    setSelectedLawyer({
-      ...selectedLawyer,
-      birthdate: selectedLawyer.birthdate
-        ? new Date(selectedLawyer.birthdate)
-        : null,
-    });
-    setShowEditModal(true);
+  // ✅ عرض نافذة التعديل
+  const handleShowEditModal = (lawyer) => {
+    setEditingLawyer(lawyer);
+    setShowModal(true);
   };
+
+  // ✅ إعداد رؤوس الجدول
+  const headers = [
+    { key: 'name', text: 'الاسم' },
+    { key: 'birthdate', text: 'تاريخ الميلاد' },
+    { key: 'identity_number', text: 'رقم الهوية' },
+    { key: 'law_reg_num', text: 'رقم تسجيل المحاماة' },
+    { key: 'lawyer_class', text: 'فئة المحامي' },
+    { key: 'email', text: 'البريد الإلكتروني' },
+    { key: 'phone_number', text: 'رقم الهاتف' },
+  ];
+
+  // ✅ عرض مخصص للتحكم
+  const customRenderers = {
+    actions: (lawyer) => (
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => handleShowEditModal(lawyer)}
+          className="text-blue-500 hover:text-blue-700"
+        >
+          <FaEdit />
+        </button>
+        <button
+          onClick={() => handleDeleteLawyer(lawyer.id)}
+          className="text-red-500 hover:text-red-700"
+        >
+          <FaTrash />
+        </button>
+      </div>
+    ),
+  };
+
+  // ✅ زر إضافة محامي
+  const renderAddButton = () => (
+    <button
+      onClick={() => {
+        setEditingLawyer(null);
+        setShowModal(true);
+      }}
+      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow-md transition duration-300"
+    >
+      إضافة محامي
+    </button>
+  );
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <SectionHeader
-        listName="المحامين"
-        buttonName="محامي"
-        setShowAddModal={setShowAddModal}
-        icon={LawyerIcon}
+      <SectionHeader listName="المحامون" icon={LawyerIcon} />
+
+      <TableComponent
+        data={lawyers}
+        headers={headers}
+        customRenderers={customRenderers}
+        onEdit={handleShowEditModal}
+        onDelete={handleDeleteLawyer}
+        sectionName="lawyers"
+        renderAddButton={renderAddButton}
       />
 
-      <div className="bg-white shadow rounded-lg p-6">
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-auto border-collapse border border-gray-200 text-right">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="border border-gray-300 px-4 py-2">الاسم</th>
-                <th className="border border-gray-300 px-4 py-2">تاريخ الميلاد</th>
-                <th className="border border-gray-300 px-4 py-2">رقم الهوية</th>
-                <th className="border border-gray-300 px-4 py-2">رقم تسجيل المحاماة</th>
-                <th className="border border-gray-300 px-4 py-2">فئة المحامي</th>
-                <th className="border border-gray-300 px-4 py-2">البريد الإلكتروني</th>
-                <th className="border border-gray-300 px-4 py-2">رقم الهاتف</th>
-                <th className="border border-gray-300 px-4 py-2">التحكم</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lawyers.map((lawyer) => (
-                <tr key={lawyer.id} className="hover:bg-gray-50">
-                  <td className="border border-gray-300 px-4 py-2">{lawyer.name}</td>
-                  <td className="border border-gray-300 px-4 py-2">{lawyer.birthdate}</td>
-                  <td className="border border-gray-300 px-4 py-2">{lawyer.identity_number}</td>
-                  <td className="border border-gray-300 px-4 py-2">{lawyer.law_reg_num}</td>
-                  <td className="border border-gray-300 px-4 py-2">{lawyer.lawyer_class}</td>
-                  <td className="border border-gray-300 px-4 py-2">{lawyer.email}</td>
-                  <td className="border border-gray-300 px-4 py-2">{lawyer.phone_number}</td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    <button
-                      onClick={() => handleShowEditModal(lawyer)}
-                      className="text-blue-500 hover:text-blue-700"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteLawyer(lawyer.id)}
-                      className="text-red-500 hover:text-red-700 ml-4"
-                    >
-                      <FaTrash />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {showAddModal && (
+      {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-            <h3 className="text-xl font-semibold mb-4">إضافة محامي</h3>
-            <LawyerAddEdit onSubmit={handleAddLawyer} />
-            <button
-              onClick={() => setShowAddModal(false)}
-              className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-            >
-              إغلاق
-            </button>
-          </div>
-        </div>
-      )}
-
-      {showEditModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-            <h3 className="text-xl font-semibold mb-4">تعديل محامي</h3>
+            <h3 className="text-xl font-semibold mb-4">
+              {editingLawyer ? 'تعديل محامي' : 'إضافة محامي'}
+            </h3>
             <LawyerAddEdit
-              onSubmit={handleEditLawyer}
-              initialValues={selectedLawyer}
+              onSubmit={editingLawyer ? handleEditLawyer : handleAddLawyer}
+              initialValues={editingLawyer}
             />
             <button
-              onClick={() => setShowEditModal(false)}
+              onClick={() => setShowModal(false)}
               className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
             >
               إغلاق

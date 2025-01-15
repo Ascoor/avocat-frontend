@@ -27,22 +27,22 @@ const MainCard = ({ count, icon, label }) => {
       onMouseLeave={() => setIsInteracting(false)}
       onTouchStart={() => setIsInteracting(true)}
       onTouchEnd={() => setIsInteracting(false)}
-      className="bg-white dark:bg-gradient-to-b dark:from-blue-900 dark:to-blue-700 rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform transition-transform duration-300 hover:scale-105 cursor-pointer"
+      className="bg-gradient-to-b from-indigo-700 to-pink-500  dark:bg-gradient-to-b dark:from-blue-700 dark:to-blue-800 rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center text-center transform transition-transform duration-300 hover:scale-105 cursor-pointer"
     >
       {/* ✅ أيقونة داخل دائرة متدرجة اللون */}
       <div className="mb-4 w-24 h-24 flex items-center justify-center 
-        bg-gradient-to-b from-blue-400 to-indigo-600 
-        dark:from-orange-500 dark:to-orange-700 rounded-full shadow-md">
+        bg-gradient-to-b from-blue-400 to-indigo-900 
+        dark:from-orange-500 dark:to-orange-600 rounded-full shadow-md">
         <img src={icon} alt={label} className="w-16 h-16 object-contain" />
       </div>
 
       {/* ✅ العنوان */}
-      <div className="text-2xl font-semibold text-gray-800 dark:text-gray-100 font-['Cairo'] mb-2">
+      <div className="text-2xl font-semibold text-white dark:text-gray-100 font-['Cairo'] mb-2">
         {label}
       </div>
 
       {/* ✅ العداد */}
-      <div className="text-lg font-extrabold text-indigo-600 dark:text-orange-400">
+      <div className="text-lg font-extrabold text-indigo-300 dark:text-orange-400">
         {count}
       </div>
     </animated.div>

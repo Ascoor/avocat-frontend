@@ -13,7 +13,7 @@ const lightGradientStyles = rowIndex => {
   return `linear-gradient(135deg, ${start} 0%, ${end} 100%)`;
 };
 
-const hoverGradientStyle = 'linear-gradient(135deg, #a1c4fd 70%, ##86A8E7 40%)';
+const hoverGradientStyle = 'linear-gradient(135deg, #a1c4fd 90%, #86A8E7 40%)';
 
 const AnimatedRow = ({
   row,

@@ -1,17 +1,13 @@
-import React from 'react'; 
+import React, { useEffect } from 'react';
 import Sidebar from './partials/Sidebar';
 import Header from './partials/Header';
 import { useSidebar } from '../../utils/SidebarContext';
-import AuthRoutes from './Tools/AuthRoutes';
-
+import AuthRoutes from './Tools/AuthRoutes'; 
 const AuthWrapper = () => {
-  const { isSidebarOpen, isMobile } = useSidebar();
-
-  // عرض الشريط الجانبي المتجاوب
+  const { isSidebarOpen, isMobile } = useSidebar();  
   const sidebarWidth = !isMobile ? (isSidebarOpen ? '16rem' : '4rem') : '0';
-
+ 
   return (
-    
     <div className="flex flex-col md:flex-row h-screen font-['cairo'] bg-gray-50 dark:bg-gray-900 transition-all duration-500 ease-in-out">
       <div style={{ width: sidebarWidth }} className="transition-all duration-500 ease-in-out">
         <Sidebar />

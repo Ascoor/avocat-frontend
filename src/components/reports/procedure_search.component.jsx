@@ -3,6 +3,8 @@ import axios from 'axios';
 import API_CONFIG from '../../config';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import SectionHeader from '../home_tools/SectionHeader';
+import { SearchSectionIcon } from '../../assets/icons';
 
 const ProcedureSearch = () => {
   const [procedureTypes, setProcedureTypes] = useState([]);
@@ -73,7 +75,7 @@ const ProcedureSearch = () => {
 
   return (
     <div className="bg-gray-100 p-6 rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-4">بحث الإجراءات</h2>
+      <SectionHeader icon={SearchSectionIcon} listName="بحث الإجراءات" />  
       <form onSubmit={handleFormSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col">
           <label htmlFor="procedureType" className="mb-2 font-medium">نوع الإجراء</label>

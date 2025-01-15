@@ -1,233 +1,181 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { AiFillCheckCircle, AiFillCloseCircle, AiFillDelete, AiFillEye } from 'react-icons/ai';
+import { CiEdit } from 'react-icons/ci';
 
 import API_CONFIG from '../../config';
-import { CiEdit } from 'react-icons/ci';
 import AddEditLegCase from './AddEditLegCase';
 import SectionHeader from '../home_tools/SectionHeader';
-import CustomPagination from '../home_tools/Pagination';
+import TableComponent from '../global/TableComponent';
 import { LegCaseIcon } from '../../assets/icons';
 
 const LegalCasesIndex = () => {
   const [legCases, setLegCases] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState('');
   const [editingLegCase, setEditingLegCase] = useState(null);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertVariant, setAlertVariant] = useState('');
+
   const itemsPerPage = 10;
 
-  useEffect(() => {
-    fetchLegCases();
-  }, []);
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    if (successMessage) {
-      setAlertMessage(successMessage);
-      setAlertVariant('success');
-      setShowAlert(true);
-      setSuccessMessage('');
-    }
-    fetchLegCases(); // Re-fetch cases to update the list
-  };
-
-  const fetchLegCases = async () => {
+  // ✅ جلب القضايا القانونية
+  const fetchLegCases = useCallback(async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-cases`);
       setLegCases(response.data);
     } catch (error) {
-      console.error('Error fetching leg cases:', error);
+      console.error('Error fetching legal cases:', error);
     }
-  };
+  }, []);
 
-  const handleEditCase = (legCase) => {
+  useEffect(() => {
+    fetchLegCases();
+  }, [fetchLegCases]);
+
+  // ✅ فتح المودال للإضافة أو التعديل
+  const handleAddEditModal = (legCase = null) => {
     setEditingLegCase(legCase);
-    setIsEditing(true);
+    setIsEditing(!!legCase);
     setShowModal(true);
   };
 
-  const handleSearch = async () => {
-    try {
-      const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal-case-search?search=${searchQuery}`,
-      );
-      setLegCases(response.data);
-      setCurrentPage(1);
-    } catch (error) {
-      console.error('Error searching cases:', error);
+  // ✅ تأكيد وحذف القضية
+  const handleDeleteCase = async (id) => {
+    const confirmDelete = window.confirm('هل أنت متأكد من حذف هذه القضية؟');
+    if (confirmDelete) {
+      try {
+        await axios.delete(`${API_CONFIG.baseURL}/api/leg-cases/${id}`);
+        fetchLegCases();
+      } catch (error) {
+        console.error('Error deleting legal case:', error);
+      }
     }
   };
 
-  const deleteLegCase = async (id) => {
-    try {
-      await axios.delete(`${API_CONFIG.baseURL}/api/leg-cases/${id}`);
-      fetchLegCases(); // Re-fetch cases after deletion
-    } catch (error) {
-      console.error('Error deleting legal case:', error);
-    }
+  // ✅ إعداد رؤوس الجدول
+  const headers = [
+    { key: 'slug', text: 'رقم الملف' },
+    { key: 'clients', text: 'الموكل' },
+    { key: 'client_capacity', text: 'صفة الموكل' },
+    { key: 'title', text: 'الموضوع' },
+    { key: 'case_sub_type', text: 'نوع القضية' },
+    { key: 'courts', text: 'المحكمة' },
+    { key: 'status', text: 'الحالة' },
+    { key: 'actions', text: 'الإجراءات' }
+  ];
+
+  // ✅ تخصيص عرض بعض الأعمدة
+  const customRenderers = {
+    case_sub_type: (legCase) =>
+      legCase.case_sub_type && legCase.case_sub_type.name
+        ? legCase.case_sub_type.name
+        : 'غير محدد',
+    
+    courts: (legCase) =>
+      legCase.courts && legCase.courts.length > 0
+        ? legCase.courts.map((court, index) => (
+            <span key={index}>
+              {court.name}
+              {index < legCase.courts.length - 1 && ', '}
+            </span>
+          ))
+        : 'غير محدد',
+    
+    // عرض أسماء الموكلين مع تصميم محسن
+    clients: (legCase) =>
+      legCase.clients && legCase.clients.length > 0 ? (
+        legCase.clients.map((client, index) => (
+          <span
+            key={index}
+            className="inline-block bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-white px-2 py-1 rounded-full m-1"
+          >
+            {client.name}
+            {index < legCase.clients.length - 1 && ', '}
+          </span>
+        ))
+      ) : (
+        <span className="text-gray-400">لا يوجد عملاء</span>
+      ),
+
+    // عرض حالة القضية بشكل أفضل
+    status: (legCase) =>
+      legCase.status === 'مفتوحة' ? (
+        <span className="flex items-center gap-1 px-2 py-1 rounded bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
+          <AiFillCheckCircle /> مفتوحة
+        </span>
+      ) : (
+        <span className="flex items-center gap-1 px-2 py-1 rounded bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300">
+          <AiFillCloseCircle /> مغلقة
+        </span>
+      ),
+
+    // عرض إجراءات التحكم (تعديل - عرض - حذف)
+    actions: (legCase) => (
+      <div className="flex space-x-2">
+        <button
+          onClick={() => handleAddEditModal(legCase)}
+          className="text-blue-600 hover:text-blue-800 transition-transform hover:scale-110"
+          title="تعديل"
+        >
+          <CiEdit size={20} />
+        </button>
+        <Link
+          to={`/legcases/show/${legCase.id}`}
+          className="text-green-600 hover:text-green-800 transition-transform hover:scale-110"
+          title="عرض"
+        >
+          <AiFillEye size={20} />
+        </Link>
+        <button
+          onClick={() => handleDeleteCase(legCase.id)}
+          className="text-red-600 hover:text-red-800 transition-transform hover:scale-110"
+          title="حذف"
+        >
+          <AiFillDelete size={20} />
+        </button>
+      </div>
+    ),
   };
 
-  const paginatedLegCases = legCases.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+  // ✅ زر الإضافة داخل الجدول
+  const renderAddButton = () => (
+    <button
+      onClick={() => handleAddEditModal()}
+      className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
+    >
+      إضافة قضية جديدة
+    </button>
   );
 
   return (
-<>
-  <SectionHeader
-    setShowAddModal={() => {
-      setEditingLegCase(null);
-      setIsEditing(false);
-      setShowModal(true);
-    }}
-    listName="القضايا"
-    buttonName="قضية جديدة"
-    icon={LegCaseIcon}
-  />
-
-  {showModal && (
-    <AddEditLegCase
-      isEditing={isEditing}
-      editingLegCase={editingLegCase}
-      onClose={handleCloseModal}
-      fetchLegCases={fetchLegCases}
-    />
-  )}
-  <div className="bg-white shadow-md rounded-lg overflow-hidden">
-    <div className="p-4 border-b">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-        <div className="mb-3">
-          <div className="flex items-center">
-            <input
-              className="border rounded-l-md p-2 w-full"
-              placeholder="بحث..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button
-              className="bg-gray-200 border rounded-r-md px-4 py-2"
-              onClick={handleSearch}
-            >
-              بحث
-            </button>
-          </div>
-        </div>
-      </div>
-      <div>
-        {showAlert && (
-          <div className={`alert alert-${alertVariant} mb-4`} role="alert">
-            <div className="flex justify-between items-center">
-              <span>{alertMessage}</span>
-              <button onClick={() => setShowAlert(false)} className="close">
-                &times;
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-    <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th className="header-cell">رقم الملف</th>
-            <th className="header-cell">الموكل</th>
-            <th className="header-cell">صفة</th>
-            <th className="header-cell">الموضوع</th>
-            <th className="header-cell">نوع القضية</th>
-            <th className="header-cell">المحكمة</th>
-            <th className="header-cell">المحرر</th>
-            <th className="header-cell">الحالة</th>
-            <th className="header-cell">التحكم</th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {paginatedLegCases.map((legCase, index) => (
-            <tr key={index}>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <a
-                  className="text-blue-600 hover:underline"
-                  onClick={() => handleEditCase(legCase)}
-                >
-                  <CiEdit className="inline-block mb-1" />
-                  {legCase.slug}
-                </a>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {legCase.clients &&
-                  legCase.clients.map((client, clientIndex) => (
-                    <span key={clientIndex}>
-                      {client.name}
-                      {clientIndex < legCase.clients.length - 1 && ', '}
-                    </span>
-                  ))}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">{legCase.client_capacity}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{legCase.title}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{legCase.case_sub_type?.name || '-'}</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {legCase.courts &&
-                  legCase.courts.map((court, courtIndex) => (
-                    <span key={courtIndex}>
-                      {court.name}
-                      {courtIndex < legCase.courts.length - 1 && ', '}
-                    </span>
-                  ))}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {legCase.created_by && (
-                  <span className="text-red-600">
-                    تم تحرير البيانات بواسطة{' '}
-                    <strong className="text-blue-600 text-xs">{legCase.created_by.name}</strong>
-                  </span>
-                )}
-                <br />
-                {legCase.updated_by && legCase.created_by && <span>, </span>}
-                {legCase.updated_by && (
-                  <span className="text-red-600">
-                    تم تعديل البيانات بواسطة{' '}
-                    <strong className="text-blue-600 text-xs">{legCase.updated_by.name}</strong>
-                  </span>
-                )}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">{legCase.status}</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex justify-end space-x-2">
-                  <Link
-                    className="bg-gray-500 text-white px-4 py-2 rounded"
-                    to={`/legcases/show/${legCase.id}`}
-                  >
-                    عرض
-                  </Link>
-                  <button
-                    className="bg-red-500 text-white px-4 py-2 rounded"
-                    onClick={() => deleteLegCase(legCase.id)}
-                  >
-                    حذف
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    <div className="p-4">
-      <CustomPagination
-        totalCount={legCases.length}
-        itemsPerPage={itemsPerPage}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
+    <>
+      {/* ✅ رأس القسم */}
+      <SectionHeader
+        listName="القضايا" 
+        icon={LegCaseIcon}
       />
-    </div>
-  </div>
-</>
+
+      {/* ✅ المودال الخاص بالإضافة أو التعديل */}
+      {showModal && (
+        <AddEditLegCase
+          isEditing={isEditing}
+          editingLegCase={editingLegCase}
+          onClose={() => setShowModal(false)}
+          fetchLegCases={fetchLegCases}
+        />
+      )}
+
+      {/* ✅ جدول عرض القضايا */}
+      <TableComponent
+        data={legCases}
+        headers={headers}
+        onEdit={(id) => handleAddEditModal(legCases.find((legCase) => legCase.id === id))}
+        onDelete={handleDeleteCase}
+        sectionName="legal-cases"
+        customRenderers={customRenderers}
+        renderAddButton={renderAddButton}
+      />
+    </>
   );
 };
 

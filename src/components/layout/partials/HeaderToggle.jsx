@@ -6,7 +6,7 @@ function HeaderToggle() {
 
   return (
     <button
-      className='text-blue-500 mr-2 hover:text-green-400 dark:text-purple-300 dark:hover:text-pink-500 transition-colors duration-300 ease-in-out'
+      className='text-white mr-2 hover:text-green-400 dark:text-cyan-200 dark:hover:text-orange-400 transition-colors duration-300 ease-in-out'
       onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       aria-controls='sidebar'
       aria-expanded={isSidebarOpen}

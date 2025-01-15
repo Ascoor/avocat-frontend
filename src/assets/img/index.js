@@ -6,6 +6,7 @@ export { default as LogoText } from '../img/logo512.png';
 export { default as LogoPatren } from '../img/logo512.png';
 export { default as LogoSuit } from '../img/logo2.png';
 export { default as TeamWorkImage } from '../img/team-work.png';
+export { default as   LegalSpiner } from '../img/legal-spiner.png';
 
 export { default as LogoBlue } from '../img/logo-blue.png';
 export { default as WelcomeImage } from '../img/welcome.jpg';

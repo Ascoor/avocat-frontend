@@ -23,4 +23,5 @@ export { default as MainCourts } from '../icons/courts-icon.png';
 export { default as MainProceduresIcon } from '../icons/MainProcedures.png';
 export { default as MainSessionsIcon } from '../icons/main-session-icon.png';
 export { default as MainLawyers } from '../icons/lawyers-icon.png';
-export { default as ClientSectionIcon } from '../icons/ClientSection.png';
+export { default as ClientSectionIcon } from '../icons/client-section.png';
+export { default as SearchSectionIcon } from '../icons/search-section.png';

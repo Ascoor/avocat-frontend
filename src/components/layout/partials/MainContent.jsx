@@ -7,7 +7,7 @@ const MainContent = () => {
 
   return (
     <div
-      className={` transition-all duration-300 p-4 ${
+      className={`bg-gradient-blue-dark transition-all duration-300 p-4 ${
         isSidebarOpen && !isMobile
           ? 'md:mr-64' // ✅ إضافة مساحة لليمين عندما يكون الشريط مفتوحًا على الشاشات الكبيرة
           : 'mr-0'
