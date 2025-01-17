@@ -3,8 +3,7 @@ import { ProceduresTable, AnnouncementsTable, SessionsTable, TasksTable } from '
 import axios from 'axios';
 import API_CONFIG from '../config';
 import moment from 'moment';
-import { useMediaQuery } from 'react-responsive';
-import Calendar from './home_tools/Calender';
+import { useMediaQuery } from 'react-responsive'; 
 import MainCard from './home_tools/MainCard';
 import AnalogClock from './home_tools/AnalogClock';
 
@@ -17,6 +16,7 @@ import {
   ServiceIcon,
 } from '../assets/icons/index';
 import { LogoPatren } from '../assets/img';
+import CalendarPage from './calendar/CalendarPage';
 
 moment.locale('ar');
 
@@ -86,7 +86,7 @@ const Home = () => {
       </div>
 
       <div className="mt-10">
-        <Calendar />
+        <CalendarPage />
       </div>
     </div>
   );

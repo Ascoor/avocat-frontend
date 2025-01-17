@@ -46,18 +46,21 @@ export default {
           },
 
         // درجات البرتقالي
-        'avocat-orange': {
-          DEFAULT: '#fb9221',
-          dark: '#fb7921',
-          light: '#ffa726',
-        },
+     // درجات البرتقالي
+'avocat-orange': {
+  DEFAULT: '#fb9221',  // Original
+  dark: '#e06f1a',     // Darker but vibrant
+  darker: '#b95412',   // Deep, rich dark
+  light: '#ffb74d',    // Softer light shade
+},
 
-        // درجات التركواز
-        'avocat-terq': {
-          DEFAULT: '#3BAEA6',
-          light: '#A3DDCF',
-          dark: '#1A736A',
-        },
+// درجات النيلي
+'avocat-indigo': {
+  DEFAULT: '#3f51b5',  // Original
+  dark: '#303f9f',     // Darker for contrast
+  darker: '#1a237e',   // Much deeper, almost navy
+  light: '#7986cb',    // Subtle, soft indigo
+},
 
         // ألوان الخلفية
         lightBg: '#F3F4F6',   // خلفية فاتحة

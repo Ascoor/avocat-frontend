@@ -1,3 +1,4 @@
+// src/components/context/SpinnerContext.jsx
 import React, { createContext, useContext, useReducer } from "react";
 import GlobalSpinner from "../global/GlobalSpinner";
 
