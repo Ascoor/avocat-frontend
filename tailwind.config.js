@@ -111,7 +111,11 @@ export default {
         98: '0.98',
         102: '1.02',
       },
-      keyframes: {
+      slideInUp: {
+        '0%': { opacity: 0, transform: 'translateY(20px)' },
+        '100%': { opacity: 1, transform: 'translateY(0)' },
+      },
+    
         wiggle: {
           '0%, 100%': { transform: 'rotate(-3deg)' },
           '50%': { transform: 'rotate(3deg)' },
@@ -124,8 +128,10 @@ export default {
           from: { transform: 'translateX(-100%)' },
           to: { transform: 'translateX(0)' },
         },
-      },
-      animation: {
+ 
+      animation: { 
+
+        slideInUp: 'slideInUp 0.5s ease-out',
         wiggle: 'wiggle 1s ease-in-out infinite',
         fadeIn: 'fadeIn 0.5s ease-in-out',
         slideIn: 'slideIn 0.3s ease-out',

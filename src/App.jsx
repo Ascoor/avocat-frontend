@@ -4,10 +4,10 @@ import React from "react";
 import { SidebarProvider } from "./utils/SidebarContext";
 import ThemeProvider from "./utils/ThemeContext";
 import {   Routes, Route } from "react-router-dom";
-import AuthWrapper from "./components/layout/Auth";
-import Guest from "./components/layout/Guest";
-import useAuth from "./components/layout/AuthTool/AuthUser";
-import { SpinnerProvider } from "./components/context/SpinnerContext";
+import AuthWrapper from "./pages/DashboardPage";
+import HomePage from "./pages/HomePage";
+import useAuth from "./components/auth/AuthUser";
+import { SpinnerProvider } from "./context/SpinnerContext";
 import './App.css';
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
         <SidebarProvider>
  
             <Routes>
-              <Route path="*" element={!getToken() ? <Guest /> : <AuthWrapper />} />
+              <Route path="*" element={!getToken() ? <HomePage /> : <AuthWrapper />} />
             </Routes>
       
         </SidebarProvider>

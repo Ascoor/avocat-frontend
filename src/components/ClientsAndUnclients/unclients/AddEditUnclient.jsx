@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaOrcid, FaUserEdit, FaIdCard, FaMapMarkerAlt, FaCalendarAlt, FaEnvelope, FaPhone, FaBriefcase, FaPray } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
-import API_CONFIG from '../../../config';
+import API_CONFIG from '../../../config/config';
 
 function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
   const isEditMode = !!unclient?.id;
