@@ -8,7 +8,7 @@ const AuthWrapper = () => {
   const sidebarWidth = !isMobile ? (isSidebarOpen ? '16rem' : '4rem') : '0';
  
   return (
-    <div className="flex flex-col md:flex-row h-screen font-['amiri'] bg-gray-50 dark:bg-gray-900 transition-all duration-500 ease-in-out">
+    <div className="flex flex-col md:flex-row h-screen font-['cairo'] bg-gray-50 dark:bg-gray-900 transition-all duration-500 ease-in-out">
       <div style={{ width: sidebarWidth }} className="transition-all duration-500 ease-in-out">
         <Sidebar />
       </div>

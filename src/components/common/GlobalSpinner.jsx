@@ -13,26 +13,51 @@ const GlobalSpinner = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-avocat-indigo dark:bg-gradient-day bg-opacity-50 backdrop-blur-sm z-50">
-      {/* ✅ Spinner الدائري */}
-    
-<div className="spinner-container">
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-      </div>    </div>
+ 
+    <div className="loader">
+      <div className="tars">
+        <div className="container 1">
+          <div className="shape">
+            <div className="f"></div>
+            <div className="b"></div>
+            <div className="l"></div>
+            <div className="r"></div>
+            <div className="t"></div>
+            <div className="bot"></div>
+          </div>
+        </div>
+        <div className="container 2">
+          <div className="shape">
+            <div className="f"></div>
+            <div className="b"></div>
+            <div className="l"></div>
+            <div className="r"></div>
+            <div className="t"></div>
+            <div className="bot"></div>
+          </div>
+        </div>
+        <div className="container 3">
+          <div className="shape">
+            <div className="f"></div>
+            <div className="b"></div>
+            <div className="l"></div>
+            <div className="r"></div>
+            <div className="t"></div>
+            <div className="bot"></div>
+          </div>
+        </div>
+        <div className="container 4">
+          <div className="shape">
+            <div className="f"></div>
+            <div className="b"></div>
+            <div className="l"></div>
+            <div className="r"></div>
+            <div className="t"></div>
+            <div className="bot"></div>
+          </div>
+        </div>
+      </div>
+    </div> </div>
   );
 };
 
