@@ -57,9 +57,7 @@ const FinancialDashboard = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-6">
-        {renderContent()}
-      </div>
+      <div className="bg-white rounded-lg shadow-md p-6">{renderContent()}</div>
     </div>
   );
 };

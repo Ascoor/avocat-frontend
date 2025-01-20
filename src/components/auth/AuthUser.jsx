@@ -57,17 +57,14 @@ export default function useAuth() {
     sessionStorage.clear();
     navigate('/');
   };
-
   const http = axios.create({
     baseURL: `${API_CONFIG.baseURL}`,
     withCredentials: true,
     headers: {
-      Accept: 'application/json',
-      'X-CSRF-Token': csrfToken,
+      Authorization: `Bearer ${getToken()}`,
     },
   });
-
-  http.interceptors.request.use((config) => {
+  http.interceptors.request.use(config => {
     const token = getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -78,6 +75,7 @@ export default function useAuth() {
   return {
     setToken: saveToken,
     token,
+    getUser,
     user,
     login,
     getToken,

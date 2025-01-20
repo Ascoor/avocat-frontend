@@ -1,4 +1,3 @@
-// 📦 Sidebar Component for Legal Office Management
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSidebar } from '../../utils/SidebarContext';
@@ -6,23 +5,23 @@ import { useSpring, animated } from '@react-spring/web';
 
 import { LogoArt, LogoSuit } from '../../assets/images/index';
 import {
-  FaHome, FaBars, FaFolder, FaUsers, FaCogs,
-  FaFileInvoice, FaClipboardList, FaBriefcase,
-  FaBalanceScale, FaMoneyBillWave
+  FaHome,
+  FaBars,
+  FaFolder,
+  FaUsers,
+  FaCogs,
+  FaFileInvoice,
+  FaClipboardList,
+  FaBriefcase,
+  FaBalanceScale,
+  FaMoneyBillWave,
 } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
 
-// ✅ Sidebar Component
 const Sidebar = () => {
   const { isSidebarOpen, setIsSidebarOpen, isMobile } = useSidebar();
-  const [activeIndex, setActiveIndex] = useState(null);
-
-  // ✅ Toggle sidebar open/close
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-  // ✅ Toggle submenu expansion
-  const toggleSubmenu = (index) => setActiveIndex(activeIndex === index ? null : index);
 
-  // ✅ Sidebar menu items
   const menuItems = [
     { to: '/', icon: <FaHome />, label: 'الرئيسية' },
     { to: '/clients', icon: <FaUsers />, label: 'العملاء' },
@@ -35,76 +34,93 @@ const Sidebar = () => {
     { to: '/contracts', icon: <FaBriefcase />, label: 'العقود' },
   ];
 
-  // ✅ Sidebar animation for expand/collapse
   const sidebarAnimation = useSpring({
-    width: isSidebarOpen ? '16rem' : '5rem',
-    config: { tension: 220, friction: 20 },
-  });
-
-  // ✅ Logo animation for smooth transition
-  const logoAnimation = useSpring({
-    opacity: 1,
-    transform: isSidebarOpen ? 'scale(1)' : 'scale(0.8)',
+    width: isSidebarOpen ? '16rem' : '4rem',
     config: { tension: 220, friction: 20 },
   });
 
   return (
     <div className="flex">
-      {/* ✅ Sidebar for larger screens */}
-      <animated.div style={sidebarAnimation} className={`fixed top-0 right-0 h-full bg-gradient-to-b from-indigo-600 via-indigo-500 to-pink-300 dark:bg-gradient-blue-dark shadow-lg transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-16'} hidden md:flex flex-col`}>
+      <animated.div
+        style={sidebarAnimation}
+        className={`fixed top-0 right-0 h-full bg-gradient-to-b from-indigo-600 via-indigo-500 to-pink-300 dark:bg-gradient-blue-dark shadow-lg transition-all duration-300 ${
+          isSidebarOpen ? 'w-64' : 'w-16'
+        } hidden md:flex flex-col`}
+      >
+        {/* Logo */}
         <div className="flex items-center justify-center h-16">
-          <animated.div style={logoAnimation}>
-            {isSidebarOpen ? (
-              <img src={LogoArt} alt="Logo Art" className="w-28 h-14" />
-            ) : (
-              <img src={LogoSuit} alt="Logo Suit" className="mt-4 w-16 h-16" />
-            )}
-          </animated.div>
+          {isSidebarOpen ? (
+            <img src={LogoArt} alt="Logo Art" className="w-28 h-14" />
+          ) : (
+            <img src={LogoSuit} alt="Logo Suit" className="mt-4 w-12 h-12" />
+          )}
         </div>
 
+        {/* Menu */}
         <ul className="mt-8 flex-1">
           {menuItems.map((item, index) => (
             <li key={index} className="group relative">
               <NavLink
                 to={item.to}
                 className={({ isActive }) =>
-                  `flex items-center justify-start font-bold p-3 rounded-lg group transition-colors duration-300 ${
+                  `flex ${
+                    isSidebarOpen
+                      ? 'items-center space-x-4 pl-4'
+                      : 'items-center justify-center'
+                  } font-bold p-3 rounded-lg group transition-colors duration-300 ${
                     isActive
-                      ? 'bg-avocat-indigo-dark dark:bg-avocat-orange text-white shadow-xl'
-                      : 'text-indigo-50 hover:bg-avocat-orange-light hover:text-avocat-blue-dark dark:text-cyan-100 dark:hover:bg-avocat-orange-light dark:hover:text-avocat-indigo-dark'
+                      ? 'bg-pink-600 dark:bg-orange-500 text-white shadow-md'
+                      : 'text-gray-100 hover:bg-pink-300 hover:text-blue-900   dark:hover:bg-avocat-indigo-light'
                   }`
                 }
               >
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl mr-4">{item.icon}</span>
-                {isSidebarOpen && <span className="text-sm sm:text-base md:text-lg lg:text-xl">{item.label}</span>}
+                <span
+                  className={`text-xl ${
+                    isSidebarOpen ? 'ml-4' : 'text-center'
+                  }`}
+                >
+                  {item.icon}
+                </span>
+                {isSidebarOpen && (
+                  <span className="text-sm sm:text-base text-left">
+                    {item.label}
+                  </span>
+                )}
               </NavLink>
             </li>
           ))}
         </ul>
+
+        {/* Toggle Button */}
+        <button
+          onClick={toggleSidebar}
+          className="absolute bottom-4 right-4 p-2 bg-red-700 text-white rounded-full hover:bg-indigo-500 transition-colors"
+        >
+          {isSidebarOpen ? <IoMdClose /> : <FaBars />}
+        </button>
       </animated.div>
 
-      {/* ✅ Sidebar for mobile screens */}
+      {/* Mobile Sidebar */}
       {isMobile && (
         <div className="md:hidden">
-          <button onClick={toggleSidebar} className="p-3 fixed top-2 left-2 z-50 bg-gray-900 text-white rounded-full">
-            <FaBars />
-          </button>
           {isSidebarOpen && (
-            <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-b from-avocat-indigo via-avocat-indigo to-avocat-indigo-dark dark:bg-gradient-blue-dark text-white z-40 overflow-y-auto">
+            <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-b from-indigo-700 via-indigo-600 to-indigo-500 dark:bg-gradient-blue-dark text-white z-40">
               <div className="flex items-center justify-between p-4">
-                <h2 className="text-lg font-bold">القائمة</h2>
-                <button onClick={toggleSidebar} className="text-2xl focus:outline-none">
+                <button
+                  onClick={toggleSidebar}
+                  className="text-2xl focus:outline-none"
+                >
                   <IoMdClose />
                 </button>
               </div>
-              <ul>
+              <ul className="flex flex-col items-center">
                 {menuItems.map((item, index) => (
                   <li key={index} className="group">
                     <NavLink
                       to={item.to}
-                      className="flex items-center w-full p-3 hover:bg-gray-700 focus:outline-none"
+                      className="flex flex-col items-center w-full p-3 hover:bg-gray-700 focus:outline-none"
                     >
-                      <span className="text-xl mr-4">{item.icon}</span>
+                      <span className="text-xl mb-1">{item.icon}</span>
                       <span>{item.label}</span>
                     </NavLink>
                   </li>

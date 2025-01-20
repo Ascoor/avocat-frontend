@@ -27,12 +27,12 @@ function CSSTransition({
   children,
   ...rest
 }) {
-  const enterClasses = enter.split(' ').filter(s => s.length);
-  const enterStartClasses = enterStart.split(' ').filter(s => s.length);
-  const enterEndClasses = enterEnd.split(' ').filter(s => s.length);
-  const leaveClasses = leave.split(' ').filter(s => s.length);
-  const leaveStartClasses = leaveStart.split(' ').filter(s => s.length);
-  const leaveEndClasses = leaveEnd.split(' ').filter(s => s.length);
+  const enterClasses = enter.split(' ').filter((s) => s.length);
+  const enterStartClasses = enterStart.split(' ').filter((s) => s.length);
+  const enterEndClasses = enterEnd.split(' ').filter((s) => s.length);
+  const leaveClasses = leave.split(' ').filter((s) => s.length);
+  const leaveStartClasses = leaveStart.split(' ').filter((s) => s.length);
+  const leaveEndClasses = leaveEnd.split(' ').filter((s) => s.length);
   const removeFromDom = unmountOnExit;
 
   function addClasses(node, classes) {
@@ -52,7 +52,7 @@ function CSSTransition({
       nodeRef={nodeRef}
       unmountOnExit={removeFromDom}
       in={show}
-      addEndListener={done => {
+      addEndListener={(done) => {
         nodeRef.current.addEventListener('transitionend', done, false);
       }}
       onEnter={() => {

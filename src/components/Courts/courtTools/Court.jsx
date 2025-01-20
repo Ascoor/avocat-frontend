@@ -14,7 +14,11 @@ const Court = ({ show, handleClose }) => {
     name: '',
     address: '',
   });
-  const [alert, setAlert] = useState({ show: false, message: '', type: 'success' });
+  const [alert, setAlert] = useState({
+    show: false,
+    message: '',
+    type: 'success',
+  });
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -37,14 +41,22 @@ const Court = ({ show, handleClose }) => {
       const response = await axios.get(`${API_CONFIG.baseURL}${url}`);
       setState(response.data);
     } catch (error) {
-      setAlert({ show: true, message: 'حدث خطأ في جلب البيانات', type: 'danger' });
+      setAlert({
+        show: true,
+        message: 'حدث خطأ في جلب البيانات',
+        type: 'danger',
+      });
     }
     setLoading(false);
   };
 
   const handleAddCourt = async () => {
     if (!newCourt.typeId || !newCourt.levelId || !newCourt.name.trim()) {
-      setAlert({ show: true, message: 'يرجى ملء جميع الحقول المطلوبة', type: 'danger' });
+      setAlert({
+        show: true,
+        message: 'يرجى ملء جميع الحقول المطلوبة',
+        type: 'danger',
+      });
       return;
     }
 
@@ -57,10 +69,18 @@ const Court = ({ show, handleClose }) => {
         address: newCourt.address,
       });
       setCourts([...courts, response.data]);
-      setAlert({ show: true, message: 'تمت إضافة المحكمة بنجاح', type: 'success' });
+      setAlert({
+        show: true,
+        message: 'تمت إضافة المحكمة بنجاح',
+        type: 'success',
+      });
       handleClose();
     } catch (error) {
-      setAlert({ show: true, message: 'حدث خطأ أثناء إضافة المحكمة', type: 'danger' });
+      setAlert({
+        show: true,
+        message: 'حدث خطأ أثناء إضافة المحكمة',
+        type: 'danger',
+      });
     }
   };
 
@@ -68,9 +88,17 @@ const Court = ({ show, handleClose }) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/courts/${id}`);
       setCourts(courts.filter((court) => court.id !== id));
-      setAlert({ show: true, message: 'تم حذف المحكمة بنجاح', type: 'success' });
+      setAlert({
+        show: true,
+        message: 'تم حذف المحكمة بنجاح',
+        type: 'success',
+      });
     } catch (error) {
-      setAlert({ show: true, message: 'حدث خطأ أثناء حذف المحكمة', type: 'danger' });
+      setAlert({
+        show: true,
+        message: 'حدث خطأ أثناء حذف المحكمة',
+        type: 'danger',
+      });
     }
   };
 
@@ -81,7 +109,9 @@ const Court = ({ show, handleClose }) => {
 
   return (
     <div className="p-4">
-      {loading && <div className="text-center text-blue-500">جاري التحميل...</div>}
+      {loading && (
+        <div className="text-center text-blue-500">جاري التحميل...</div>
+      )}
 
       {alert.show && (
         <div
@@ -110,11 +140,21 @@ const Court = ({ show, handleClose }) => {
           <tbody>
             {currentItems.map((court) => (
               <tr key={court.id}>
-                <td className="px-4 py-2 border border-gray-300">{court.name}</td>
-                <td className="px-4 py-2 border border-gray-300">{court.court_type?.name}</td>
-                <td className="px-4 py-2 border border-gray-300">{court.court_sub_type?.name}</td>
-                <td className="px-4 py-2 border border-gray-300">{court.court_level?.name}</td>
-                <td className="px-4 py-2 border border-gray-300">{court.address}</td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {court.name}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {court.court_type?.name}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {court.court_sub_type?.name}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {court.court_level?.name}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {court.address}
+                </td>
                 <td className="px-4 py-2 border border-gray-300">
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
@@ -165,7 +205,9 @@ const Court = ({ show, handleClose }) => {
               <select
                 className="w-full p-2 border rounded"
                 value={newCourt.typeId}
-                onChange={(e) => setNewCourt({ ...newCourt, typeId: e.target.value })}
+                onChange={(e) =>
+                  setNewCourt({ ...newCourt, typeId: e.target.value })
+                }
               >
                 <option value="">اختر نوع المحكمة</option>
                 {courtTypes.map((type) => (
@@ -174,12 +216,16 @@ const Court = ({ show, handleClose }) => {
                   </option>
                 ))}
               </select>
-              <label className="block mt-4 mb-2 text-gray-700">اسم المحكمة:</label>
+              <label className="block mt-4 mb-2 text-gray-700">
+                اسم المحكمة:
+              </label>
               <input
                 type="text"
                 className="w-full p-2 border rounded"
                 value={newCourt.name}
-                onChange={(e) => setNewCourt({ ...newCourt, name: e.target.value })}
+                onChange={(e) =>
+                  setNewCourt({ ...newCourt, name: e.target.value })
+                }
               />
               <div className="flex justify-end mt-4">
                 <button

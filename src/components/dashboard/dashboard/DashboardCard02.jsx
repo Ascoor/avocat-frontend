@@ -91,54 +91,54 @@ function DashboardCard02() {
   };
 
   return (
-    <div className='flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl'>
-      <div className='px-5 pt-5'>
-        <header className='flex justify-between items-start mb-2'>
-          <h2 className='text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2'>
+    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+      <div className="px-5 pt-5">
+        <header className="flex justify-between items-start mb-2">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
             قسم التسويق
           </h2>
           {/* زر القائمة */}
-          <EditMenu align='right' className='relative inline-flex'>
+          <EditMenu align="right" className="relative inline-flex">
             <li>
               <Link
-                className='font-medium text-sm text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 flex py-1 px-3'
-                to='#0'
+                className="font-medium text-sm text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 flex py-1 px-3"
+                to="#0"
               >
                 خيار 1
               </Link>
             </li>
             <li>
               <Link
-                className='font-medium text-sm text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 flex py-1 px-3'
-                to='#0'
+                className="font-medium text-sm text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 flex py-1 px-3"
+                to="#0"
               >
                 خيار 2
               </Link>
             </li>
             <li>
               <Link
-                className='font-medium text-sm text-red-500 hover:text-red-600 flex py-1 px-3'
-                to='#0'
+                className="font-medium text-sm text-red-500 hover:text-red-600 flex py-1 px-3"
+                to="#0"
               >
                 إزالة
               </Link>
             </li>
           </EditMenu>
         </header>
-        <div className='text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1'>
+        <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">
           مصروفات الحملات التسويقية
         </div>
-        <div className='flex items-start'>
-          <div className='text-3xl font-bold text-gray-800 dark:text-gray-100 ml-2'>
+        <div className="flex items-start">
+          <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 ml-2">
             17,489 ر.س
           </div>
-          <div className='text-sm font-medium text-red-700 px-1.5 bg-red-500/20 rounded-full'>
+          <div className="text-sm font-medium text-red-700 px-1.5 bg-red-500/20 rounded-full">
             -14%
           </div>
         </div>
       </div>
       {/* الرسم البياني المبني باستخدام Chart.js 3 */}
-      <div className='grow max-sm:max-h-[128px] max-h-[128px]'>
+      <div className="grow max-sm:max-h-[128px] max-h-[128px]">
         {/* تغيير ارتفاع الرسم البياني */}
         <LineChart data={chartData} width={389} height={128} />
       </div>

@@ -27,7 +27,7 @@ export const chartAreaGradient = (ctx, chartArea, colorStops) => {
     0,
     chartArea.bottom,
     0,
-    chartArea.top
+    chartArea.top,
   );
   colorStops.forEach(({ stop, color }) => {
     gradient.addColorStop(stop, color);

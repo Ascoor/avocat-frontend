@@ -40,7 +40,7 @@ const AnalogClock = () => {
           fill="black"
         >
           {i}
-        </text>
+        </text>,
       );
     }
     return numbers;
@@ -48,7 +48,12 @@ const AnalogClock = () => {
 
   return (
     <svg width={2 * radius} height={2 * radius} className="drop-shadow-md">
-      <circle cx={center} cy={center} r={radius - 4} className="fill-white dark:fill-gray-300 stroke-gray-300 dark:stroke-orange-400 stroke-2" />
+      <circle
+        cx={center}
+        cy={center}
+        r={radius - 4}
+        className="fill-white dark:fill-gray-300 stroke-gray-300 dark:stroke-orange-400 stroke-2"
+      />
       {renderNumbers()}
       <line {...handStyle(hourAngle, radius * 0.5, 'black', 4)} />
       <line {...handStyle(minuteAngle, radius * 0.7, 'blue', 3)} />

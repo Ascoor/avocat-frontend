@@ -29,7 +29,7 @@ function DashboardCard05() {
   const generateDates = () => {
     const now = new Date();
     return data.map((_, i) =>
-      new Date(now - 2000 - i * 2000).toLocaleTimeString()
+      new Date(now - 2000 - i * 2000).toLocaleTimeString(),
     );
   };
 
@@ -37,20 +37,20 @@ function DashboardCard05() {
     data.slice(0, range).map((value, index) => ({
       name: generateDates()[index],
       value,
-    }))
+    })),
   );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCounter(prev => prev + 1);
+      setCounter((prev) => prev + 1);
     }, 2000);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    setIncrement(prev => prev + 1);
+    setIncrement((prev) => prev + 1);
     if (increment + range < data.length) {
-      setSlicedData(prev => [
+      setSlicedData((prev) => [
         ...prev.slice(1),
         {
           name: new Date().toLocaleTimeString(),
@@ -64,19 +64,19 @@ function DashboardCard05() {
   }, [counter]);
 
   return (
-    <div className='flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl'>
-      <header className='px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center'>
-        <h2 className='font-semibold text-gray-800 dark:text-gray-100'>
+    <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100">
           القيمة في الوقت الفعلي
         </h2>
-        <Tooltip className='ml-2'>
-          <div className='text-xs text-center whitespace-nowrap'>
+        <Tooltip className="ml-2">
+          <div className="text-xs text-center whitespace-nowrap">
             تم بناؤه باستخدام{' '}
             <a
-              className='underline'
-              href='https://recharts.org/'
-              target='_blank'
-              rel='noreferrer'
+              className="underline"
+              href="https://recharts.org/"
+              target="_blank"
+              rel="noreferrer"
             >
               Recharts
             </a>
@@ -85,17 +85,17 @@ function DashboardCard05() {
       </header>
 
       {/* رسم المخطط باستخدام Recharts */}
-      <div className='p-4' style={{ width: '100%', height: 400 }}>
+      <div className="p-4" style={{ width: '100%', height: 400 }}>
         <ResponsiveContainer>
           <LineChart data={slicedData}>
-            <CartesianGrid strokeDasharray='3 3' />
-            <XAxis dataKey='name' />
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
             <YAxis />
             <RechartsTooltip />
             <Line
-              type='monotone'
-              dataKey='value'
-              stroke='#8884d8'
+              type="monotone"
+              dataKey="value"
+              stroke="#8884d8"
               strokeWidth={2}
               dot={{ r: 4 }}
               activeDot={{ r: 8 }}

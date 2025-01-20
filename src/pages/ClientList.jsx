@@ -42,7 +42,9 @@ function ClientList() {
     try {
       const client = clients.find((c) => c.id === id);
       const newStatus = client.status === 'active' ? 'inactive' : 'active';
-      await axios.put(`${API_CONFIG.baseURL}/api/clients/${id}`, { status: newStatus });
+      await axios.put(`${API_CONFIG.baseURL}/api/clients/${id}`, {
+        status: newStatus,
+      });
       fetchClients();
     } catch (error) {
       console.error('Error toggling status:', error);
@@ -101,7 +103,7 @@ function ClientList() {
       <SectionHeader
         buttonName="عميل"
         listName="العملاء"
-        icon={ClientSectionIcon} 
+        icon={ClientSectionIcon}
       />
 
       {/* ✅ نافذة الإضافة أو التعديل */}
@@ -118,7 +120,9 @@ function ClientList() {
       <TableComponent
         data={clients}
         headers={headers}
-        onEdit={(id) => openAddEditModal(clients.find((client) => client.id === id))}
+        onEdit={(id) =>
+          openAddEditModal(clients.find((client) => client.id === id))
+        }
         onDelete={handleDelete}
         sectionName="clients"
         customRenderers={customRenderers}

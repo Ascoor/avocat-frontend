@@ -12,7 +12,11 @@ const CourtSubType = ({ show, handleClose }) => {
   const [modalMessage, setModalMessage] = useState(null);
   const [courtTypes, setCourtTypes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [alert, setAlert] = useState({ show: false, message: '', variant: 'success' });
+  const [alert, setAlert] = useState({
+    show: false,
+    message: '',
+    variant: 'success',
+  });
 
   const itemsPerPage = 10;
 
@@ -22,7 +26,11 @@ const CourtSubType = ({ show, handleClose }) => {
         const response = await axios.get(`${API_CONFIG.baseURL}${endpoint}`);
         setter(response.data);
       } catch (error) {
-        setAlert({ show: true, message: `Error fetching ${endpoint}`, variant: 'danger' });
+        setAlert({
+          show: true,
+          message: `Error fetching ${endpoint}`,
+          variant: 'danger',
+        });
       }
     };
 
@@ -51,14 +59,24 @@ const CourtSubType = ({ show, handleClose }) => {
 
   const handleAddCourtSubType = async () => {
     if (!newCourtSubType.name.trim() || !newCourtSubType.court_type_id) {
-      setModalMessage({ type: 'danger', text: 'برجاء إدخال البيانات المطلوبة.' });
+      setModalMessage({
+        type: 'danger',
+        text: 'برجاء إدخال البيانات المطلوبة.',
+      });
       return;
     }
 
     try {
-      const response = await axios.post(`${API_CONFIG.baseURL}/api/court_sub_types`, newCourtSubType);
+      const response = await axios.post(
+        `${API_CONFIG.baseURL}/api/court_sub_types`,
+        newCourtSubType,
+      );
       setCourtSubTypes([...courtSubTypes, response.data]);
-      setAlert({ show: true, message: 'تمت إضافة النوع الفرعي بنجاح.', variant: 'success' });
+      setAlert({
+        show: true,
+        message: 'تمت إضافة النوع الفرعي بنجاح.',
+        variant: 'success',
+      });
       setNewCourtSubType({ name: '', court_type_id: '' });
       handleClose();
     } catch (error) {
@@ -69,21 +87,31 @@ const CourtSubType = ({ show, handleClose }) => {
   const handleDeleteCourtSubType = async (id) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/court_sub_types/${id}`);
-      setCourtSubTypes(courtSubTypes.filter((courtSubType) => courtSubType.id !== id));
+      setCourtSubTypes(
+        courtSubTypes.filter((courtSubType) => courtSubType.id !== id),
+      );
       setAlert({ show: true, message: 'تم الحذف بنجاح.', variant: 'success' });
     } catch (error) {
-      setAlert({ show: true, message: 'حدث خطأ أثناء الحذف.', variant: 'danger' });
+      setAlert({
+        show: true,
+        message: 'حدث خطأ أثناء الحذف.',
+        variant: 'danger',
+      });
     }
   };
 
   return (
     <div className="p-4">
       <div className="mb-4 text-center">
-        <h3 className="text-2xl font-bold text-gray-800">أنواع المحاكم الفرعية</h3>
+        <h3 className="text-2xl font-bold text-gray-800">
+          أنواع المحاكم الفرعية
+        </h3>
       </div>
 
       {alert.show && (
-        <div className={`mb-4 p-4 text-white ${alert.variant === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
+        <div
+          className={`mb-4 p-4 text-white ${alert.variant === 'success' ? 'bg-green-500' : 'bg-red-500'}`}
+        >
           {alert.message}
         </div>
       )}
@@ -100,8 +128,12 @@ const CourtSubType = ({ show, handleClose }) => {
           <tbody>
             {currentItems.map((courtSubType) => (
               <tr key={courtSubType.id}>
-                <td className="px-4 py-2 border border-gray-300">{courtSubType.name}</td>
-                <td className="px-4 py-2 border border-gray-300">{courtSubType.court_type?.name}</td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {courtSubType.name}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {courtSubType.court_type?.name}
+                </td>
                 <td className="px-4 py-2 border border-gray-300">
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
@@ -152,7 +184,12 @@ const CourtSubType = ({ show, handleClose }) => {
               <select
                 className="w-full p-2 border rounded"
                 value={newCourtSubType.court_type_id}
-                onChange={(e) => setNewCourtSubType({ ...newCourtSubType, court_type_id: e.target.value })}
+                onChange={(e) =>
+                  setNewCourtSubType({
+                    ...newCourtSubType,
+                    court_type_id: e.target.value,
+                  })
+                }
               >
                 <option value="">اختر نوع المحكمة</option>
                 {courtTypes.map((courtType) => (
@@ -166,7 +203,12 @@ const CourtSubType = ({ show, handleClose }) => {
                 type="text"
                 className="w-full p-2 border rounded"
                 value={newCourtSubType.name}
-                onChange={(e) => setNewCourtSubType({ ...newCourtSubType, name: e.target.value })}
+                onChange={(e) =>
+                  setNewCourtSubType({
+                    ...newCourtSubType,
+                    name: e.target.value,
+                  })
+                }
               />
               {modalMessage && (
                 <p className="text-red-500 mt-2">{modalMessage.text}</p>

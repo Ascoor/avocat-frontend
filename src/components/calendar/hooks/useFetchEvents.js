@@ -25,4 +25,4 @@ const useFetchEvents = () => {
   return { events, loading, error };
 };
 
-export default useFetchEvents;  // ✅ التأكد من التصدير الصحيح
+export default useFetchEvents; // ✅ التأكد من التصدير الصحيح

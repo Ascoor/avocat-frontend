@@ -1,4 +1,3 @@
-
 // ➕ EventModal.jsx
 import { useState } from 'react';
 
@@ -43,8 +42,19 @@ const EventModal = ({ isOpen, onClose, onSave }) => {
             className="w-full mb-4 p-2 border rounded"
           />
           <div className="flex justify-end gap-2">
-            <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-400 text-white rounded">إلغاء</button>
-            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">حفظ</button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 bg-gray-400 text-white rounded"
+            >
+              إلغاء
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded"
+            >
+              حفظ
+            </button>
           </div>
         </form>
       </div>

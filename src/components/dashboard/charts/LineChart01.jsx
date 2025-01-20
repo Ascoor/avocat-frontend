@@ -24,7 +24,7 @@ Chart.register(
   PointElement,
   LinearScale,
   TimeScale,
-  Tooltip
+  Tooltip,
 );
 
 function LineChart01({ data, width, height }) {
@@ -62,7 +62,7 @@ function LineChart01({ data, width, height }) {
           tooltip: {
             callbacks: {
               title: () => false, // Disable tooltip title
-              label: context => formatValue(context.parsed.y),
+              label: (context) => formatValue(context.parsed.y),
             },
             bodyColor: darkMode
               ? tooltipBodyColor.dark

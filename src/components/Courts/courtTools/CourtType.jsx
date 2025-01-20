@@ -42,9 +42,12 @@ export default function CourtType({ show, handleClose }) {
     }
 
     try {
-      const response = await axios.post(`${API_CONFIG.baseURL}/api/court_types`, {
-        name: newCourtTypeName,
-      });
+      const response = await axios.post(
+        `${API_CONFIG.baseURL}/api/court_types`,
+        {
+          name: newCourtTypeName,
+        },
+      );
       setCourtTypes([...courtTypes, response.data]);
       setAlertMessage({ type: 'success', text: 'تم إضافة نوع المحكمة بنجاح' });
       setNewCourtTypeName('');
@@ -101,7 +104,9 @@ export default function CourtType({ show, handleClose }) {
           <tbody>
             {currentItems.map((courtType) => (
               <tr key={courtType.id}>
-                <td className="px-4 py-2 border border-gray-300">{courtType.name}</td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {courtType.name}
+                </td>
                 <td className="px-4 py-2 border border-gray-300">
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
@@ -148,7 +153,9 @@ export default function CourtType({ show, handleClose }) {
                 handleAddCourtType();
               }}
             >
-              <label className="block mb-2 text-gray-700">اسم نوع المحكمة:</label>
+              <label className="block mb-2 text-gray-700">
+                اسم نوع المحكمة:
+              </label>
               <input
                 type="text"
                 className="w-full p-2 border rounded"

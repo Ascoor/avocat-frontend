@@ -41,7 +41,8 @@ body {
   background-color: var(--light-mode-background);
   color: var(--day-text); /* Set the text color for light mode */
   transition: background-color 0.3s, color 0.3s;
-  font-family: 'Cairo-bold';
+
+  
 }
 /* From Uiverse.io by Z4drus */ 
 .spinner-container {
@@ -240,67 +241,19 @@ html {
 .dot:nth-child(13) {
   --uib-scale: 0.82;
 }
-.dot:nth-child(1) {
-  --uib-color: #1a1d91; /* أزرق داكن جدًا */
-}
 
-.dot:nth-child(2) {
-  --uib-color: #1c239a;
-}
 
-.dot:nth-child(3) {
-  --uib-color: #1e29a3;
-}
 
-.dot:nth-child(4) {
-  --uib-color: #202fac;
-}
 
-.dot:nth-child(5) {
-  --uib-color: #2235b5;
-}
 
-.dot:nth-child(6) {
-  --uib-color: #b52335; /* الانتقال إلى الأحمر الداكن */
-}
 
-.dot:nth-child(7) {
-  --uib-color: #bf2d40;
-}
 
-.dot:nth-child(8) {
-  --uib-color: #c8374a;
-}
 
-.dot:nth-child(9) {
-  --uib-color: #d14155;
-}
 
-.dot:nth-child(10) {
-  --uib-color: #db4b60; /* أحمر نابض بالحياة */
-}
 
-.dot:nth-child(11) {
-  --uib-color: #e5566b;
-}
 
-.dot:nth-child(12) {
-  --uib-color: #f06076; /* أحمر فاتح لامع */
-}
 
-.dot:nth-child(13) {
-  --uib-color: #271977; /* العودة إلى الأزرق الأحمر الممزوج */
-}
 
-.dot:nth-child(14) {
-  --uib-color: #271977; /* مزيج بين الأزرق الداكن والأحمر */
-}
 
-.dot:nth-child(15) {
-  --uib-color: #271977;
-}
 
-.dot:nth-child(16) {
-  --uib-color: #070a69; /* العودة إلى الأزرق الداكن */
-}
 

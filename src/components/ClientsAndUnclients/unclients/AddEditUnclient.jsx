@@ -1,5 +1,15 @@
 import { useState, useEffect } from 'react';
-import { FaOrcid, FaUserEdit, FaIdCard, FaMapMarkerAlt, FaCalendarAlt, FaEnvelope, FaPhone, FaBriefcase, FaPray } from 'react-icons/fa';
+import {
+  FaOrcid,
+  FaUserEdit,
+  FaIdCard,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaEnvelope,
+  FaPhone,
+  FaBriefcase,
+  FaPray,
+} from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import API_CONFIG from '../../../config/config';
@@ -26,7 +36,9 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
     if (isEditMode) {
       setFormData({
         ...unclient,
-        date_of_birth: unclient.date_of_birth ? new Date(unclient.date_of_birth) : '',
+        date_of_birth: unclient.date_of_birth
+          ? new Date(unclient.date_of_birth)
+          : '',
       });
     } else {
       resetForm();
@@ -89,9 +101,12 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
       const response = isEditMode
         ? await axios.put(
             `${API_CONFIG.baseURL}/api/unclients/${unclient.id}`,
-            formattedData
+            formattedData,
           )
-        : await axios.post(`${API_CONFIG.baseURL}/api/unclients`, formattedData);
+        : await axios.post(
+            `${API_CONFIG.baseURL}/api/unclients`,
+            formattedData,
+          );
 
       onSaved(response.data.message || 'تم الحفظ بنجاح');
       onClose();
@@ -171,7 +186,10 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
           {renderFormField('رقم العميل', 'slug', 'text', 'أدخل رقم العميل')}
           {renderFormField('الاسم', 'name', 'text', 'أدخل الاسم')}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="gender">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="gender"
+            >
               الجنس
             </label>
             <select
@@ -186,9 +204,17 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
               <option value="أنثى">أنثى</option>
             </select>
           </div>
-          {renderFormField('رقم الهوية', 'identity_number', 'number', 'أدخل رقم الهوية')}
+          {renderFormField(
+            'رقم الهوية',
+            'identity_number',
+            'number',
+            'أدخل رقم الهوية',
+          )}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="date_of_birth">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="date_of_birth"
+            >
               تاريخ الميلاد
             </label>
             <DatePicker
@@ -198,10 +224,23 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
             />
           </div>
           {renderFormField('العنوان', 'address', 'text', 'أدخل العنوان')}
-          {renderFormField('رقم الهاتف', 'phone_number', 'tel', 'أدخل رقم الهاتف')}
-          {renderFormField('البريد الإلكتروني', 'email', 'email', 'أدخل البريد الإلكتروني')}
+          {renderFormField(
+            'رقم الهاتف',
+            'phone_number',
+            'tel',
+            'أدخل رقم الهاتف',
+          )}
+          {renderFormField(
+            'البريد الإلكتروني',
+            'email',
+            'email',
+            'أدخل البريد الإلكتروني',
+          )}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="religion">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="religion"
+            >
               الديانة
             </label>
             <select
@@ -217,7 +256,12 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
             </select>
           </div>
           {renderFormField('الوظيفة', 'work', 'text', 'أدخل الوظيفة')}
-          {renderFormField('رقم الطوارئ', 'emergency_number', 'tel', 'أدخل رقم الطوارئ')}
+          {renderFormField(
+            'رقم الطوارئ',
+            'emergency_number',
+            'tel',
+            'أدخل رقم الطوارئ',
+          )}
 
           <div className="flex justify-end space-x-4">
             <button

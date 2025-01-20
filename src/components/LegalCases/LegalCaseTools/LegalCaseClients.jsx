@@ -6,33 +6,24 @@ import API_CONFIG from '../../../config/config';
 export default function LegalCaseClients({ legCaseId }) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [legCaseNewClients, setLegCaseNewClients] = useState([]);
+
   const [legCaseClients, setLegCaseClients] = useState([]);
-  const [clients, setClients] = useState([]);
+  const [legCaseNewClients, setLegCaseNewClients] = useState([]);
 
   useEffect(() => {
-    const fetchLegCaseClients = async () => {
+    const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}/clients`
+          `${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}`,
         );
-        setLegCaseClients(response.data);
+        const { clients } = response.data.leg_case; // البيانات المرتبطة بالعملاء
+        setLegCaseClients(clients);
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching legal case data:', error);
       }
     };
 
-    const fetchClients = async () => {
-      try {
-        const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
-        setClients(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchClients();
-    fetchLegCaseClients();
+    fetchData();
   }, [legCaseId]);
 
   const handleAddNewClient = () => {
@@ -41,7 +32,7 @@ export default function LegalCaseClients({ legCaseId }) {
 
   const handleRemoveNewClient = (index) => {
     setLegCaseNewClients((prevClients) =>
-      prevClients.filter((_, i) => i !== index)
+      prevClients.filter((_, i) => i !== index),
     );
   };
 
@@ -57,10 +48,18 @@ export default function LegalCaseClients({ legCaseId }) {
         `${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}/add_clients`,
         {
           clients: legCaseNewClients.filter((client) => client.client_id),
-        }
+        },
       );
       setSuccess(response.data.message);
       setError('');
+      setLegCaseClients((prevClients) => [
+        ...prevClients,
+        ...legCaseNewClients.map((client) => ({
+          ...client,
+          name: client.client_id, // أضف بيانات إضافية إذا كانت موجودة
+        })),
+      ]);
+      setLegCaseNewClients([]);
     } catch (error) {
       setError('Error adding clients: ' + error.message);
       setSuccess('');
@@ -70,11 +69,11 @@ export default function LegalCaseClients({ legCaseId }) {
   const handleRemoveClient = (clientId) => {
     axios
       .delete(
-        `${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}/remove_client/${clientId}`
+        `${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}/remove_client/${clientId}`,
       )
       .then(() => {
         setLegCaseClients((prevClients) =>
-          prevClients.filter((client) => client.id !== clientId)
+          prevClients.filter((client) => client.id !== clientId),
         );
       })
       .catch((error) => {
@@ -83,99 +82,95 @@ export default function LegalCaseClients({ legCaseId }) {
   };
 
   return (
-    <div>
-      <div className="bg-gray-100 p-4 rounded shadow">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-bold text-xl">بيانات الموكل</h3>
-          <div>
-            {error && <div className="text-red-500">{error}</div>}
-            {success && <div className="text-green-500">{success}</div>}
-          </div>
-          <button
-            className="bg-yellow-500 text-white px-4 py-2 rounded flex items-center"
-            onClick={handleAddNewClient}
-          >
-            إضافة موكل <BiPlusCircle className="ml-2" />
-          </button>
+    <div className="container mx-auto p-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+        <h3 className="text-2xl font-bold text-gray-700 dark:text-gray-200">
+          بيانات الموكل
+        </h3>
+        <button
+          onClick={handleAddNewClient}
+          className="flex items-center bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow-md transition duration-300"
+        >
+          إضافة موكل <BiPlusCircle className="ml-2" />
+        </button>
+      </div>
+
+      {error && (
+        <div className="bg-red-100 text-red-800 px-4 py-2 rounded mb-4">
+          {error}
         </div>
-        <div className="overflow-auto">
-          <table className="w-full border-collapse border border-gray-300">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="border border-gray-300 p-2">رقم المكتب</th>
-                <th className="border border-gray-300 p-2">اسم الموكل</th>
-                <th className="border border-gray-300 p-2">رقم الهاتف</th>
-                <th className="border border-gray-300 p-2">الحالة</th>
-                <th className="border border-gray-300 p-2">إجراء</th>
-              </tr>
-            </thead>
-            <tbody>
-              {legCaseClients && legCaseClients.length > 0 ? (
-                legCaseClients.map((client) => (
-                  <tr key={client.id}>
-                    <td className="border border-gray-300 p-2">{client.slug}</td>
-                    <td className="border border-gray-300 p-2">{client.name}</td>
-                    <td className="border border-gray-300 p-2">{client.phone_number}</td>
-                    <td
-                      className={`border border-gray-300 p-2 ${
-                        client.status === 'active' ? 'text-green-500' : 'text-red-500'
-                      }`}
+      )}
+      {success && (
+        <div className="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">
+          {success}
+        </div>
+      )}
+
+      <div className="overflow-auto mb-6">
+        <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300 border-collapse">
+          <thead className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100">
+            <tr>
+              <th className="px-4 py-2">رقم المكتب</th>
+              <th className="px-4 py-2">اسم الموكل</th>
+              <th className="px-4 py-2">رقم الهاتف</th>
+              <th className="px-4 py-2 text-center">إجراء</th>
+            </tr>
+          </thead>
+          <tbody>
+            {legCaseClients.length > 0 ? (
+              legCaseClients.map((client) => (
+                <tr
+                  key={client.id}
+                  className="hover:bg-gray-100 dark:hover:bg-gray-600"
+                >
+                  <td className="px-4 py-2">{client.slug}</td>
+                  <td className="px-4 py-2">{client.name}</td>
+                  <td className="px-4 py-2">{client.phone_number}</td>
+                  <td className="px-4 py-2 text-center">
+                    <button
+                      onClick={() => handleRemoveClient(client.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-md transition duration-300"
                     >
-                      {client.status}
-                    </td>
-                    <td className="border border-gray-300 p-2">
-                      <button
-                        className="bg-red-500 text-white px-2 py-1 rounded"
-                        onClick={() => handleRemoveClient(client.id)}
-                      >
-                        حذف
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="5" className="text-center p-4">
-                    لا يوجد عملاء مرتبطين بالقضية حاليًا
+                      حذف
+                    </button>
                   </td>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        <div className="mt-4">
-          {legCaseNewClients.map((client, index) => (
-            <div key={index} className="flex items-center gap-4 mb-2">
-              <select
-                value={client.client_id}
-                onChange={(e) => handleNewClientChange(e, index)}
-                className="border border-gray-300 p-2 rounded flex-1"
-              >
-                <option value="">اختر عميلًا</option>
-                {clients.map((client) => (
-                  <option key={client.id} value={client.id}>
-                    {client.name}
-                  </option>
-                ))}
-              </select>
-              <button
-                className="bg-red-500 text-white px-2 py-1 rounded"
-                onClick={() => handleRemoveNewClient(index)}
-              >
-                <BiMinusCircle />
-              </button>
-            </div>
-          ))}
-          {legCaseNewClients.length > 0 && (
-            <button
-              className="bg-green-500 text-white px-4 py-2 rounded"
-              onClick={handleAddLegCaseClients}
-            >
-              حفظ
-            </button>
-          )}
-        </div>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center py-4">
+                  لا يوجد عملاء مرتبطين بالقضية حاليًا
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
+
+      {legCaseNewClients.map((client, index) => (
+        <div key={index} className="flex items-center gap-4 mb-4">
+          <input
+            value={client.client_id}
+            onChange={(e) => handleNewClientChange(e, index)}
+            placeholder="اسم العميل"
+            className="border border-gray-300 rounded px-4 py-2 w-full"
+          />
+          <button
+            onClick={() => handleRemoveNewClient(index)}
+            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-md transition duration-300"
+          >
+            <BiMinusCircle />
+          </button>
+        </div>
+      ))}
+      {legCaseNewClients.length > 0 && (
+        <button
+          onClick={handleAddLegCaseClients}
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow-md transition duration-300"
+        >
+          حفظ
+        </button>
+      )}
     </div>
   );
 }

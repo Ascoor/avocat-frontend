@@ -62,9 +62,44 @@ export default {
   light: '#7986cb',    // Subtle, soft indigo
 },
 
-        // ألوان الخلفية
         lightBg: '#F3F4F6',   // خلفية فاتحة
         darkBg: '#1F2937',    // خلفية داكنة
+
+
+        'avocat-dot-1': '#1a1d91', // أزرق داكن جدًا
+        'avocat-dot-2': '#1c239a', // أزرق داكن
+        'avocat-dot-3': '#1e29a3', // أزرق
+        'avocat-dot-4': '#202fac', // أزرق فاتح
+        'avocat-dot-5': '#2235b5', // أزرق مشرق
+        'avocat-dot-6': '#b52335', // أحمر داكن
+        'avocat-dot-7': '#bf2d40', // أحمر
+        'avocat-dot-8': '#c8374a', // أحمر مشرق
+        'avocat-dot-9': '#d14155', // أحمر فاتح
+        'avocat-dot-10': '#db4b60', // أحمر نابض بالحياة
+        'avocat-dot-11': '#e5566b', // أحمر فاتح جدًا
+        'avocat-dot-12': '#f06076', // أحمر لامع
+        'avocat-dot-13': '#271977', // أزرق أحمر
+        'avocat-dot-14': '#070a69', // أزرق داكن جدًا (ليلي)
+        'avocat-dot-1': '#c8374a', // أزرق داكن جدًا (ليلي)
+      
+        
+        'avocat-dark-dot-1': '#FF1744', // أحمر فاقع
+        'avocat-dark-dot-2': '#FF6B81', // أحمر فاتح لامع
+        'avocat-dark-dot-3': '#FF4569', // أحمر زهري زاهي
+        'avocat-dark-dot-4': '#FF8C94', // وردي مائل للأحمر
+        'avocat-dark-dot-5': '#FFADB5', // وردي فاتح جدًا
+        // البرتقالي اللامع
+        'avocat-dark-dot-6': '#FF6D00', // برتقالي مشرق جدًا
+        'avocat-dark-dot-7': '#FFA726', // برتقالي لامع
+        'avocat-dark-dot-8': '#FFB74D', // برتقالي زهري فاتح
+        'avocat-dark-dot-9': '#FFD180', // برتقالي خوخي فاتح
+        'avocat-dark-dot-10': '#FFE5B4', // برتقالي باهت
+
+        'avocat-dark-dot-11': '#FF1744', // أحمر فاقع
+        'avocat-dark-dot-12': '#FF6B81', // أحمر فاتح لامع
+        'avocat-dark-dot-13': '#FF4569', // أحمر زهري زاهي
+        'avocat-dark-dot-14': '#FF8C94', // وردي مائل للأحمر
+        'avocat-dark-dot-5': '#FFADB5', // وردي فاتح جدًا
       },
 
       /*** 🌄 التدرجات اللونية ***/

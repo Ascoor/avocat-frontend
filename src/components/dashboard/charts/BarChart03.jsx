@@ -22,7 +22,7 @@ Chart.register(
   LinearScale,
   CategoryScale,
   Tooltip,
-  Legend
+  Legend,
 );
 
 function BarChart03({ data, width, height }) {
@@ -36,7 +36,7 @@ function BarChart03({ data, width, height }) {
   useEffect(() => {
     // Calculate sum of values
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const values = data.datasets.map(x => x.data.reduce(reducer));
+    const values = data.datasets.map((x) => x.data.reduce(reducer));
     const max = values.reduce(reducer);
 
     const ctx = canvas.current;
@@ -72,7 +72,7 @@ function BarChart03({ data, width, height }) {
           tooltip: {
             callbacks: {
               title: () => false, // Disable tooltip title
-              label: context => context.parsed.x,
+              label: (context) => context.parsed.x,
             },
             bodyColor: darkMode
               ? tooltipBodyColor.dark
@@ -107,7 +107,7 @@ function BarChart03({ data, width, height }) {
             }
             // Reuse the built-in legendItems generator
             const items = c.options.plugins.legend.labels.generateLabels(c);
-            items.forEach(item => {
+            items.forEach((item) => {
               const li = document.createElement('li');
               li.style.display = 'flex';
               li.style.justifyContent = 'space-between';
@@ -133,10 +133,10 @@ function BarChart03({ data, width, height }) {
                   : item.fillStyle;
               const theValue = c.data.datasets[item.datasetIndex].data.reduce(
                 (a, b) => a + b,
-                0
+                0,
               );
               const valueText = document.createTextNode(
-                `${parseInt((theValue / max) * 100)}%`
+                `${parseInt((theValue / max) * 100)}%`,
               );
               const labelText = document.createTextNode(item.text);
               value.appendChild(valueText);
@@ -172,16 +172,16 @@ function BarChart03({ data, width, height }) {
   }, [currentTheme]);
 
   return (
-    <div className='grow flex flex-col justify-center'>
+    <div className="grow flex flex-col justify-center">
       <div>
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>
-      <div className='px-5 pt-2 pb-2'>
+      <div className="px-5 pt-2 pb-2">
         <ul
           ref={legend}
-          className='text-sm divide-y divide-gray-100 dark:divide-gray-700/60'
+          className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60"
         ></ul>
-        <ul className='text-sm divide-y divide-gray-100 dark:divide-gray-700/60'></ul>
+        <ul className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60"></ul>
       </div>
     </div>
   );

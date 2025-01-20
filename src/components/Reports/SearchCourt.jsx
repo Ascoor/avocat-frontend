@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import API_CONFIG from '../../config/config'; 
+import API_CONFIG from '../../config/config';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const SearchCourt = () => {
@@ -125,7 +125,10 @@ const SearchCourt = () => {
                         caseType.court_value === selectedCourt,
                     )
                     .map((caseType) => (
-                      <option key={caseType.id} value={caseType.case_type_value}>
+                      <option
+                        key={caseType.id}
+                        value={caseType.case_type_value}
+                      >
                         {caseType.case_type_name}
                       </option>
                     ))}

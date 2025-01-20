@@ -1,4 +1,3 @@
-
 // 🔔 useNotifications.js
 import { useState, useEffect } from 'react';
 
@@ -11,10 +10,14 @@ const useNotifications = (events) => {
       const now = new Date().getTime();
       events.forEach((event) => {
         const eventTime = new Date(event.start).getTime();
-        if (eventTime - now < 3600000) { // Notify if the event is within the next hour
+        if (eventTime - now < 3600000) {
+          // Notify if the event is within the next hour
           setNotifications((prev) => [
             ...prev,
-            { id: event.id, message: `🔔 تذكير بحدث: ${event.title} يبدأ قريبًا!` },
+            {
+              id: event.id,
+              message: `🔔 تذكير بحدث: ${event.title} يبدأ قريبًا!`,
+            },
           ]);
         }
       });

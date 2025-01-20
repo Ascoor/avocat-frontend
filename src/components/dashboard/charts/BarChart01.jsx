@@ -22,7 +22,7 @@ Chart.register(
   LinearScale,
   TimeScale,
   Tooltip,
-  Legend
+  Legend,
 );
 
 function BarChart01({ data, width, height }) {
@@ -61,7 +61,7 @@ function BarChart01({ data, width, height }) {
             },
             ticks: {
               maxTicksLimit: 5,
-              callback: value => formatValue(value),
+              callback: (value) => formatValue(value),
               color: darkMode ? textColor.dark : textColor.light,
             },
             grid: {
@@ -95,7 +95,7 @@ function BarChart01({ data, width, height }) {
           tooltip: {
             callbacks: {
               title: () => false, // Disable tooltip title
-              label: context => formatValue(context.parsed.y),
+              label: (context) => formatValue(context.parsed.y),
             },
             bodyColor: darkMode
               ? tooltipBodyColor.dark
@@ -130,7 +130,7 @@ function BarChart01({ data, width, height }) {
             }
             // Reuse the built-in legendItems generator
             const items = c.options.plugins.legend.labels.generateLabels(c);
-            items.forEach(item => {
+            items.forEach((item) => {
               const li = document.createElement('li');
               // Button element
               const button = document.createElement('button');
@@ -140,7 +140,7 @@ function BarChart01({ data, width, height }) {
               button.onclick = () => {
                 c.setDatasetVisibility(
                   item.datasetIndex,
-                  !c.isDatasetVisible(item.datasetIndex)
+                  !c.isDatasetVisible(item.datasetIndex),
                 );
                 c.update();
               };
@@ -173,7 +173,7 @@ function BarChart01({ data, width, height }) {
                 tailwindConfig().theme.fontSize.sm[1].lineHeight;
               const theValue = c.data.datasets[item.datasetIndex].data.reduce(
                 (a, b) => a + b,
-                0
+                0,
               );
               const valueText = document.createTextNode(formatValue(theValue));
               const labelText = document.createTextNode(item.text);
@@ -218,10 +218,10 @@ function BarChart01({ data, width, height }) {
 
   return (
     <React.Fragment>
-      <div className='px-5 py-3'>
-        <ul ref={legend} className='flex flex-wrap gap-x-4'></ul>
+      <div className="px-5 py-3">
+        <ul ref={legend} className="flex flex-wrap gap-x-4"></ul>
       </div>
-      <div className='grow'>
+      <div className="grow">
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>
     </React.Fragment>

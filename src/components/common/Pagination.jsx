@@ -1,12 +1,17 @@
 import React from 'react';
 
-const CustomPagination = ({ totalCount, itemsPerPage, currentPage, onPageChange }) => {
+const CustomPagination = ({
+  totalCount,
+  itemsPerPage,
+  currentPage,
+  onPageChange,
+}) => {
   const totalPages = Math.ceil(totalCount / itemsPerPage);
 
   // إنشاء مصفوفة من أرقام الصفحات
   const generatePageNumbers = () => {
     const pages = [];
-    const maxPagesToShow = 5; 
+    const maxPagesToShow = 5;
 
     let startPage = Math.max(currentPage - Math.floor(maxPagesToShow / 2), 1);
     let endPage = startPage + maxPagesToShow - 1;

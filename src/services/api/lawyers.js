@@ -1,4 +1,3 @@
-
 // src/api/lawyers.js
 import api from './axiosConfig';
 

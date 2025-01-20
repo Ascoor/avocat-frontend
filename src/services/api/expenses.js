@@ -1,4 +1,3 @@
-
 // src/api/expenses.js
 import api from './axiosConfig';
 

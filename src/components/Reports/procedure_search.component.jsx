@@ -59,11 +59,14 @@ const ProcedureSearch = () => {
     if (selectedDateEnd) queryParams.date_end = selectedDateEnd;
     if (selectedLawyer) queryParams.lawyer_id = selectedLawyer;
     if (selectedCourt) queryParams.court_id = selectedCourt;
-    if (selectedProcedureType) queryParams.procedure_type_id = selectedProcedureType;
+    if (selectedProcedureType)
+      queryParams.procedure_type_id = selectedProcedureType;
     if (selectedStatus) queryParams.status = selectedStatus;
 
     axios
-      .get(`${API_CONFIG.baseURL}/api/procedures-search`, { params: queryParams })
+      .get(`${API_CONFIG.baseURL}/api/procedures-search`, {
+        params: queryParams,
+      })
       .then((response) => {
         setFilteredProcedures(response.data);
         setSearchError('');
@@ -75,10 +78,15 @@ const ProcedureSearch = () => {
 
   return (
     <div className="bg-gray-100 p-6 rounded-md shadow-md">
-      <SectionHeader icon={SearchSectionIcon} listName="بحث الإجراءات" />  
-      <form onSubmit={handleFormSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <SectionHeader icon={SearchSectionIcon} listName="بحث الإجراءات" />
+      <form
+        onSubmit={handleFormSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
         <div className="flex flex-col">
-          <label htmlFor="procedureType" className="mb-2 font-medium">نوع الإجراء</label>
+          <label htmlFor="procedureType" className="mb-2 font-medium">
+            نوع الإجراء
+          </label>
           <select
             id="procedureType"
             value={selectedProcedureType}
@@ -87,13 +95,17 @@ const ProcedureSearch = () => {
           >
             <option value="">اختر نوع الإجراء</option>
             {procedureTypes.map((type) => (
-              <option key={type.id} value={type.id}>{type.name}</option>
+              <option key={type.id} value={type.id}>
+                {type.name}
+              </option>
             ))}
           </select>
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="lawyer" className="mb-2 font-medium">المحامي</label>
+          <label htmlFor="lawyer" className="mb-2 font-medium">
+            المحامي
+          </label>
           <select
             id="lawyer"
             value={selectedLawyer}
@@ -102,7 +114,9 @@ const ProcedureSearch = () => {
           >
             <option value="">اختر المحامي</option>
             {lawyers.map((lawyer) => (
-              <option key={lawyer.id} value={lawyer.id}>{lawyer.name}</option>
+              <option key={lawyer.id} value={lawyer.id}>
+                {lawyer.name}
+              </option>
             ))}
           </select>
         </div>
@@ -126,7 +140,9 @@ const ProcedureSearch = () => {
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="court" className="mb-2 font-medium">المحكمة</label>
+          <label htmlFor="court" className="mb-2 font-medium">
+            المحكمة
+          </label>
           <select
             id="court"
             value={selectedCourt}
@@ -135,13 +151,17 @@ const ProcedureSearch = () => {
           >
             <option value="">اختر المحكمة</option>
             {courts.map((court) => (
-              <option key={court.id} value={court.id}>{court.name}</option>
+              <option key={court.id} value={court.id}>
+                {court.name}
+              </option>
             ))}
           </select>
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="status" className="mb-2 font-medium">الحالة</label>
+          <label htmlFor="status" className="mb-2 font-medium">
+            الحالة
+          </label>
           <select
             id="status"
             value={selectedStatus}
@@ -182,7 +202,9 @@ const ProcedureSearch = () => {
             <tbody>
               {filteredProcedures.map((procedure) => (
                 <tr key={procedure.id} className="hover:bg-gray-100">
-                  <td className="p-3 border">{procedure.procedure_type?.name}</td>
+                  <td className="p-3 border">
+                    {procedure.procedure_type?.name}
+                  </td>
                   <td className="p-3 border">{procedure.lawyer?.name}</td>
                   <td className="p-3 border">{procedure.court?.name}</td>
                   <td className="p-3 border">{procedure.date_start}</td>

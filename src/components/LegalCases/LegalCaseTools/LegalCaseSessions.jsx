@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import axios from 'axios';
-import useAuth from '../../auth/AuthUser';
+
 import API_CONFIG from '../../../config/config';
 import DatePicker from 'react-datepicker';
+import useAuth from '../../auth/AuthUser';
+
 const LegalCaseSessions = ({ legCaseId }) => {
   const { getUser } = useAuth();
   const user = getUser();
@@ -48,7 +50,6 @@ const LegalCaseSessions = ({ legCaseId }) => {
     }
   }, [legCaseId]);
 
-  // UseEffect for initial data fetch
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -65,102 +66,13 @@ const LegalCaseSessions = ({ legCaseId }) => {
     setOrders(legalSession.orders);
     setSelectedCourt(legalSession.court_id);
     setResult(legalSession.result);
-
     setShowAddLegalSessionModal(true);
-  };
-  const handleAddOrUpdateLegalSession = async () => {
-    const dateOnly = selectedDate
-      ? selectedDate.toISOString().split('T')[0]
-      : null;
-    const data = {
-      date: dateOnly,
-      lawyer_id: selectedLawyer,
-      roll_number: rollNumber,
-      orders,
-      court_id: selectedCourt,
-      result,
-      cost: selectedCost,
-      cost2: selectedCost2,
-      leg_case_id: legCaseId,
-      created_by: userId,
-    };
-
-    if (modalMode === 'edit') {
-      data.status = selectStatus;
-    }
-
-    // Include created_by only when creating a new record
-    if (modalMode === 'add') {
-      data.created_by = userId; // Include created_by when creating a new record
-    }
-
-    try {
-      if (modalMode === 'add') {
-        await axios.post(`${API_CONFIG.baseURL}/api/legal_sessions`, data);
-        fetchData();
-        setTimeout(() => {
-          setShowAlert(false);
-        }, 5000);
-
-        setAlert({ variant: 'info', message: 'تمت الإضافة بنجاح.' });
-        setShowAlert(true);
-      } else if (modalMode === 'edit') {
-        await axios.put(
-          `${API_CONFIG.baseURL}/api/legal_sessions/${selectedSession.id}`,
-          data,
-        );
-        fetchData();
-
-        setTimeout(() => {
-          setShowAlert(false);
-        }, 5000);
-
-        setAlert({ variant: 'info', message: 'تم التعديل بنجاح.' });
-        setShowAlert(true);
-      }
-
-      handleCloseModal();
-    } catch (error) {
-      console.log(error);
-
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 5000);
-
-      setAlert({
-        variant: 'danger',
-        message: 'حدث خطأ أثناء عملية التعديل.',
-      });
-      setShowAlert(true);
-    }
-  };
-
-  const handleAddLegalSession = () => {
-    setModalMode('add');
-    setShowAddLegalSessionModal(true);
-  };
-
-  const handleDeleteLegalSession = async (id) => {
-    try {
-      await axios.delete(`${API_CONFIG.baseURL}/api/legal_sessions/${id}`);
-      fetchData();
-      setAlert({ variant: 'success', message: 'تم الحذف بنجاح' });
-      setShowAlert(true);
-    } catch (error) {
-      console.log('خطأ في حذف الجلسة القانونية:', error);
-      setAlert({
-        variant: 'danger',
-        message: 'حدث خطأ أثناء حذف الجلسة القانونية',
-      });
-      setShowAlert(true);
-    }
   };
 
   const handleCloseModal = () => {
-    fetchData();
     setModalMode('');
     setSelectedSession({});
-    setSelectedDate('');
+    setSelectedDate(null);
     setSelectStatus('');
     setSelectedLawyer('');
     setRollNumber('');
@@ -171,205 +83,120 @@ const LegalCaseSessions = ({ legCaseId }) => {
   };
 
   return (
-    <>
-   <div className="flex flex-col">
-  {showAlert && (
-    <div className={`alert alert-${alert.variant} flex items-center justify-between`}>
-      <span>{alert.message}</span>
-      <button onClick={() => setShowAlert(false)} className="close-button">
-        &times;
-      </button>
-    </div>
-  )}
-</div>
+    <div className="p-6 bg-lightBg dark:bg-darkBg text-lightText dark:text-darkText rounded-lg shadow-lg">
+      {/* Alert */}
+      {showAlert && (
+        <div
+          className={`p-4 mb-4 rounded-lg shadow-md ${
+            alert?.variant === 'danger'
+              ? 'bg-red-500 text-white'
+              : 'bg-green-500 text-white'
+          }`}
+        >
+          {alert?.message}
+        </div>
+      )}
 
-<div className="bg-white shadow-md rounded-lg">
-  <div className="header flex justify-between items-center p-4">
-    <button
-      className="bg-green-500 text-white text-sm py-2 px-4 rounded"
-      onClick={handleAddLegalSession}
-    >
-      <BiPlusCircle className="mr-1" />
-      إضافة جلسة
-    </button>
-  </div>
-  <div className="body p-4">
-    <div className="overflow-x-auto">
-      <table className="min-w-full table-auto">
-        <thead>
-          <tr>
-            <th className="w-1/5">تاريخ الجلسة</th>
-            <th className="w-1/5">اسم المحامي</th>
-            <th className="w-1/5">الرول</th>
-            <th className="w-1/5">المحكمة</th>
-            <th className="w-1/5">الطلبات</th>
-            <th className="w-1/5">النتيجة</th>
-            <th className="w-1/5">الحالة</th>
-            <th className="w-1/5">تعديل</th>
-            <th className="w-1/5">حذف</th>
-          </tr>
-        </thead>
-        <tbody>
-          {legalSessions.map((legalSession) => (
-            <tr key={legalSession.id}>
-              <td>{legalSession.session_date}</td>
-              <td>{legalSession.lawyer.name}</td>
-              <td>{legalSession.legal_session_type.name}</td>
-              <td>{legalSession.court.name}</td>
-              <td>{legalSession.orders}</td>
-              <td>{legalSession.result}</td>
-              <td>{legalSession.status}</td>
-              <td>
-                <button
-                  className="bg-blue-500 text-white p-2 rounded"
-                  onClick={() => handleEditLegalSession(legalSession)}
-                >
-                  <BiPencil />
-                </button>
-              </td>
-              <td>
-                <button
-                  className="bg-red-500 text-white p-2 rounded"
-                  onClick={() => handleDeleteLegalSession(legalSession.id)}
-                >
-                  <BiTrash />
-                </button>
-              </td>
+      {/* Header */}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold">الجلسات القانونية</h2>
+        <button
+          className="flex items-center bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md"
+          onClick={() => setShowAddLegalSessionModal(true)}
+        >
+          <BiPlusCircle className="mr-2" />
+          إضافة جلسة
+        </button>
+      </div>
+
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto bg-white dark:bg-gray-800 rounded-lg shadow-md">
+          <thead className="bg-gray-200 dark:bg-gray-700">
+            <tr>
+              <th className="px-4 py-2 text-left">تاريخ الجلسة</th>
+              <th className="px-4 py-2 text-left">المحامي</th>
+              <th className="px-4 py-2 text-left">الرول</th>
+              <th className="px-4 py-2 text-left">المحكمة</th>
+              <th className="px-4 py-2 text-left">الطلبات</th>
+              <th className="px-4 py-2 text-left">النتيجة</th>
+              <th className="px-4 py-2 text-left">الحالة</th>
+              <th className="px-4 py-2 text-center">إجراءات</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-<div className={`fixed inset-0 flex items-center justify-center z-50 ${showAddLegalSessionModal ? 'block' : 'hidden'}`}>
-  <div className="bg-white rounded-lg shadow-lg max-w-lg w-full">
-    <div className="flex justify-between items-center p-4 border-b">
-      <h3 className="text-lg font-semibold">
-        {modalMode === 'add' ? 'إضافة جلسة جديدة' : 'تعديل جلسة'}
-      </h3>
-      <button onClick={handleCloseModal} className="text-gray-500 hover:text-gray-700">
-        &times;
-      </button>
-    </div>
-    <div className="p-4">
-      <form>
-        <div className="mb-4">
-          <label className="block text-sm font-medium">تاريخ الجلسة</label>
-          <DatePicker
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            dateFormat="yyyy-MM-dd"
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-          />
-        </div>
+          </thead>
+          <tbody>
+            {legalSessions.map((session) => (
+              <tr
+                key={session.id}
+                className="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                <td className="px-4 py-2">{session.session_date}</td>
+                <td className="px-4 py-2">{session.lawyer?.name || '-'}</td>
+                <td className="px-4 py-2">{session.roll_number || '-'}</td>
+                <td className="px-4 py-2">{session.court?.name || '-'}</td>
+                <td className="px-4 py-2">{session.orders || '-'}</td>
+                <td className="px-4 py-2">{session.result || '-'}</td>
+                <td className="px-4 py-2">{session.status || '-'}</td>
+                <td className="px-4 py-2 text-center flex justify-center gap-2">
+                  <button
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded"
+                    onClick={() => handleEditLegalSession(session)}
+                  >
+                    <BiPencil />
+                  </button>
+                  <button
+                    className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
+                    onClick={() => handleDeleteLegalSession(session.id)}
+                  >
+                    <BiTrash />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-        {modalMode === 'edit' && (
-          <div className="mb-4">
-            <label className="block text-sm font-medium">حالة الجلسة</label>
-            <select
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-              value={selectStatus}
-              onChange={(e) => setSelectStatus(e.target.value)}
-            >
-              <option value="">اختر حالة الجلسة</option>
-              <option value="منتهي">منتهي</option>
-              <option value="لم ينفذ">لم ينفذ</option>
-              <option value="قيد التنفيذ">قيد التنفيذ</option>
-            </select>
+      {/* Modal */}
+      {showAddLegalSessionModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+            <div className="p-4 border-b border-gray-300 dark:border-gray-700">
+              <h3 className="text-lg font-semibold">
+                {modalMode === 'add' ? 'إضافة جلسة جديدة' : 'تعديل جلسة'}
+              </h3>
+            </div>
+            <div className="p-4">
+              {/* Form fields */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium">
+                  تاريخ الجلسة
+                </label>
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg"
+                />
+              </div>
+              <div className="flex justify-end">
+                <button
+                  className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg"
+                  onClick={handleCloseModal}
+                >
+                  إلغاء
+                </button>
+                <button
+                  className="ml-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
+                  onClick={() => console.log('Save')}
+                >
+                  {modalMode === 'add' ? 'إضافة' : 'حفظ'}
+                </button>
+              </div>
+            </div>
           </div>
-        )}
-        <div className="mb-4">
-          <label className="block text-sm font-medium">اسم المحامي</label>
-          <select
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            value={selectedLawyer}
-            onChange={(e) => setSelectedLawyer(e.target.value)}
-          >
-            <option value="">اختر المحامي</option>
-            {lawyers.map((lawyer) => (
-              <option key={lawyer.id} value={lawyer.id}>
-                {lawyer.name}
-              </option>
-            ))}
-          </select>
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium">رقم الرول</label>
-          <input
-            type="text"
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            value={rollNumber}
-            onChange={(e) => setRollNumber(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium">الطلبات</label>
-          <textarea
-            rows={3}
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            value={orders}
-            onChange={(e) => setOrders(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium">المحكمة</label>
-          <select
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            value={selectedCourt}
-            onChange={(e) => setSelectedCourt(e.target.value)}
-          >
-            <option value="">اختر المحكمة</option>
-            {courts.map((court) => (
-              <option key={court.id} value={court.id}>
-                {court.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium">التكلفة</label>
-          <input
-            type="number"
-            placeholder="ادخل التكلفة"
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            value={selectedCost}
-            onChange={(e) => setSelectedCost(e.target.value)}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-sm font-medium">التكلفة 2</label>
-          <input
-            type="number"
-            placeholder="ادخل التكلفة 2"
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            value={selectedCost2 || ''}
-            onChange={(e) => setSelectedCost2(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium">النتيجة</label>
-          <textarea
-            rows={3}
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            value={result}
-            onChange={(e) => setResult(e.target.value)}
-          />
-        </div>
-      </form>
+      )}
     </div>
-    <div className="flex justify-end p-4 border-t">
-      <button onClick={handleCloseModal} className="mr-2 text-gray-500 hover:text-gray-700">
-        إلغاء
-      </button>
-      <button onClick={handleAddOrUpdateLegalSession} className="bg-blue-500 text-white py-2 px-4 rounded">
-        {modalMode === 'add' ? 'إضافة' : 'تعديل'}
-      </button>
-    </div>
-  </div>
-</div>
-    </>
   );
 };
 

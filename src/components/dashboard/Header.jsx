@@ -5,16 +5,12 @@ import ThemeToggle from '../common/ThemeToggle';
 import HeaderToggle from '../common/HeaderToggle';
 import { useSidebar } from '../../utils/SidebarContext';
 
-
-const Header = () => {  
+const Header = () => {
   const { isSidebarOpen, isMobile } = useSidebar();
- 
-
- 
 
   return (
     <header
-  className={`bg-gradient-to-l from-indigo-600 via-pink-600 to-indigo-500
+      className={`bg-gradient-to-l from-indigo-600 via-pink-600 to-indigo-500
             dark:bg-gradient-blue-dark
               border-b border-gray-200 dark:border-gray-700
               fixed top-0 right-0 left-0 z-20 shadow-lg
@@ -22,19 +18,15 @@ const Header = () => {
               transition-all duration-300  ease-in-out
     ${
       isSidebarOpen && !isMobile
-        ? 'md:mr-64'  // ✅ مساحة للشريط الجانبي المفتوح
-        : 'md:mr-16'  // ✅ مساحة للشريط الجانبي المغلق
+        ? 'md:mr-64' // ✅ مساحة للشريط الجانبي المفتوح
+        : 'md:mr-16' // ✅ مساحة للشريط الجانبي المغلق
     }
   `}
->
-
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         {/* ✅ الشعار وزر القائمة */}
- 
-          <HeaderToggle />
- 
- 
- 
+
+        <HeaderToggle />
 
         {/* ✅ الإشعارات وأدوات التحكم */}
         <div className="flex items-center space-x-6 space-x-reverse">
@@ -42,13 +34,10 @@ const Header = () => {
           <ThemeToggle />
           <hr className="w-px h-6 bg-gray-200 dark:bg-gray-700/60 border-none" />
           <UserMenu align="left" />
-          
-   
         </div>
       </div>
 
       {/* ✅ قائمة الجوال */}
-      
     </header>
   );
 };

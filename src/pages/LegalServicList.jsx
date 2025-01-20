@@ -89,11 +89,7 @@ const LegalServiceList = () => {
 
   return (
     <>
-    
-    <SectionHeader
-        listName="الخحدمات" 
-        icon={ServiceSection}
-      />
+      <SectionHeader listName="الخحدمات" icon={ServiceSection} />
       {showModal && (
         <AddEditServiceModal
           show={showModal}
@@ -109,7 +105,9 @@ const LegalServiceList = () => {
       <TableComponent
         data={services}
         headers={headers}
-        onEdit={(id) => handleEditService(services.find((service) => service.id === id))}
+        onEdit={(id) =>
+          handleEditService(services.find((service) => service.id === id))
+        }
         onDelete={handleDeleteService}
         sectionName="services"
         customRenderers={customRenderers}

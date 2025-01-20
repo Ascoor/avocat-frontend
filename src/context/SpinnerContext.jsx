@@ -1,14 +1,14 @@
 // src/components/context/SpinnerContext.jsx
-import React, { createContext, useContext, useReducer } from "react";
-import GlobalSpinner from "../components/common/GlobalSpinner";
+import React, { createContext, useContext, useReducer } from 'react';
+import GlobalSpinner from '../components/common/GlobalSpinner';
 
 const SpinnerContext = createContext();
 
 const spinnerReducer = (state, action) => {
   switch (action.type) {
-    case "SHOW_SPINNER":
+    case 'SHOW_SPINNER':
       return { loadingCount: state.loadingCount + 1 };
-    case "HIDE_SPINNER":
+    case 'HIDE_SPINNER':
       return { loadingCount: Math.max(state.loadingCount - 1, 0) };
     default:
       return state;
@@ -18,8 +18,8 @@ const spinnerReducer = (state, action) => {
 export const SpinnerProvider = ({ children }) => {
   const [state, dispatch] = useReducer(spinnerReducer, { loadingCount: 0 });
 
-  const showSpinner = () => dispatch({ type: "SHOW_SPINNER" });
-  const hideSpinner = () => dispatch({ type: "HIDE_SPINNER" });
+  const showSpinner = () => dispatch({ type: 'SHOW_SPINNER' });
+  const hideSpinner = () => dispatch({ type: 'HIDE_SPINNER' });
 
   return (
     <SpinnerContext.Provider value={{ showSpinner, hideSpinner }}>
@@ -32,7 +32,7 @@ export const SpinnerProvider = ({ children }) => {
 export const useSpinner = () => {
   const context = useContext(SpinnerContext);
   if (!context) {
-    throw new Error("useSpinner must be used within a SpinnerProvider");
+    throw new Error('useSpinner must be used within a SpinnerProvider');
   }
   return context;
 };

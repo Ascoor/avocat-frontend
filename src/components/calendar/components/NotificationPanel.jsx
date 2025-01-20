@@ -12,7 +12,7 @@ const NotificationPanel = ({ notifications = [], removeNotification }) => {
 
   useEffect(() => {
     const timers = notifications.map((note) =>
-      setTimeout(() => removeNotification(note.id), 5000)
+      setTimeout(() => removeNotification(note.id), 5000),
     );
     return () => timers.forEach((timer) => clearTimeout(timer));
   }, [notifications, removeNotification]);
@@ -25,7 +25,9 @@ const NotificationPanel = ({ notifications = [], removeNotification }) => {
           key={item.id}
           className="flex justify-between items-center bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 border-l-4 border-avocat-blue dark:border-avocat-orange"
         >
-          <span className="text-gray-800 dark:text-gray-200">{item.message}</span>
+          <span className="text-gray-800 dark:text-gray-200">
+            {item.message}
+          </span>
           <button onClick={() => removeNotification(item.id)}>
             <FaRegTrashAlt className="text-red-500 hover:text-red-700" />
           </button>

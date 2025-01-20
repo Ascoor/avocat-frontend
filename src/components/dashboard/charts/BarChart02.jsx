@@ -22,7 +22,7 @@ Chart.register(
   LinearScale,
   TimeScale,
   Tooltip,
-  Legend
+  Legend,
 );
 
 function BarChart02({ data, width, height }) {
@@ -62,7 +62,7 @@ function BarChart02({ data, width, height }) {
             beginAtZero: true,
             ticks: {
               maxTicksLimit: 5,
-              callback: value => formatValue(value),
+              callback: (value) => formatValue(value),
               color: darkMode ? textColor.dark : textColor.light,
             },
             grid: {
@@ -99,7 +99,7 @@ function BarChart02({ data, width, height }) {
           tooltip: {
             callbacks: {
               title: () => false, // Disable tooltip title
-              label: context => formatValue(context.parsed.y),
+              label: (context) => formatValue(context.parsed.y),
             },
             bodyColor: darkMode
               ? tooltipBodyColor.dark

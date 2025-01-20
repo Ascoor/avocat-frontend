@@ -71,7 +71,9 @@ const ProfileUser = () => {
       {showAlert && (
         <div
           className={`p-4 rounded mb-4 ${
-            alertVariant === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            alertVariant === 'success'
+              ? 'bg-green-100 text-green-700'
+              : 'bg-red-100 text-red-700'
           }`}
         >
           {alertMessage}
@@ -79,7 +81,10 @@ const ProfileUser = () => {
       )}
       <form className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
+          <label
+            htmlFor="name"
+            className="block text-gray-700 font-medium mb-2"
+          >
             الاسم
           </label>
           <input
@@ -91,7 +96,10 @@ const ProfileUser = () => {
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
+          <label
+            htmlFor="email"
+            className="block text-gray-700 font-medium mb-2"
+          >
             البريد الإلكتروني
           </label>
           <input
@@ -104,7 +112,10 @@ const ProfileUser = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-medium mb-2"
+            >
               كلمة المرور
             </label>
             <input
@@ -132,7 +143,10 @@ const ProfileUser = () => {
           </div>
         </div>
         <div>
-          <label htmlFor="role" className="block text-gray-700 font-medium mb-2">
+          <label
+            htmlFor="role"
+            className="block text-gray-700 font-medium mb-2"
+          >
             الدور
           </label>
           <select

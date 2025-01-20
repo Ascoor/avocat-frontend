@@ -26,7 +26,7 @@ const AuthRoutes = () => {
   useEffect(() => {
     const handleRouteChange = async () => {
       showSpinner();
-      await new Promise((resolve) => setTimeout(resolve, 300));  // تقليل وقت التحميل
+      await new Promise((resolve) => setTimeout(resolve, 300)); // تقليل وقت التحميل
       hideSpinner();
     };
 
@@ -43,7 +43,9 @@ const AuthRoutes = () => {
       )}
 
       {/* ✅ منطقة التنقل */}
-      <div className={`transition-opacity duration-300 ${loading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+      <div
+        className={`transition-opacity duration-300 ${loading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+      >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/procedures" element={<ProcedureSearch />} />

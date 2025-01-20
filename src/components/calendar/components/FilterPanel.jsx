@@ -1,4 +1,3 @@
-
 // FilterPanel.jsx
 import { useState } from 'react';
 

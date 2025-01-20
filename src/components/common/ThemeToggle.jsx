@@ -5,7 +5,9 @@ export default function ThemeToggle() {
 
   return (
     <button
-      onClick={() => changeCurrentTheme(currentTheme === 'light' ? 'dark' : 'light')}
+      onClick={() =>
+        changeCurrentTheme(currentTheme === 'light' ? 'dark' : 'light')
+      }
       className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
     >
       {currentTheme === 'light' ? '🌞' : '🌙'}

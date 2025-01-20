@@ -1,5 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { FaHome, FaUserFriends, FaCog, FaChartLine, FaBars, FaFolderOpen } from 'react-icons/fa';
+import {
+  FaHome,
+  FaUserFriends,
+  FaCog,
+  FaChartLine,
+  FaBars,
+  FaFolderOpen,
+} from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 
 // Create Sidebar Context
@@ -27,7 +34,9 @@ export const SidebarProvider = ({ children }) => {
   }, [location.pathname, isMobile]);
 
   return (
-    <SidebarContext.Provider value={{ isSidebarOpen, setIsSidebarOpen, isMobile }}>
+    <SidebarContext.Provider
+      value={{ isSidebarOpen, setIsSidebarOpen, isMobile }}
+    >
       {children}
     </SidebarContext.Provider>
   );

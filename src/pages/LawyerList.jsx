@@ -1,5 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
-import { getLawyers, createLawyer, updateLawyer, deleteLawyer } from '../services/api/lawyers';
+import {
+  getLawyers,
+  createLawyer,
+  updateLawyer,
+  deleteLawyer,
+} from '../services/api/lawyers';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import LawyerAddEdit from '../components/Lawyers/lawyerAddEdit';
 import SectionHeader from '../components/common/SectionHeader';

@@ -8,7 +8,11 @@ const CourtLevel = ({ show, handleClose }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 10;
-  const [alert, setAlert] = useState({ show: false, message: '', type: 'success' });
+  const [alert, setAlert] = useState({
+    show: false,
+    message: '',
+    type: 'success',
+  });
 
   useEffect(() => {
     fetchCourtLevels();
@@ -16,35 +20,55 @@ const CourtLevel = ({ show, handleClose }) => {
 
   useEffect(() => {
     if (alert.show) {
-      const timer = setTimeout(() => setAlert({ show: false, message: '', type: 'success' }), 3000);
+      const timer = setTimeout(
+        () => setAlert({ show: false, message: '', type: 'success' }),
+        3000,
+      );
       return () => clearTimeout(timer);
     }
   }, [alert]);
 
   const fetchCourtLevels = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/court_levels`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/court_levels`,
+      );
       setCourtLevels(response.data);
     } catch (e) {
-      setAlert({ show: true, message: 'حدث خطأ أثناء جلب بيانات درجات المحاكم', type: 'danger' });
+      setAlert({
+        show: true,
+        message: 'حدث خطأ أثناء جلب بيانات درجات المحاكم',
+        type: 'danger',
+      });
     }
   };
 
   const handleAddCourtLevel = async () => {
     if (!newCourtLevelName.trim()) {
-      setAlert({ show: true, message: 'برجاء إدخال اسم مستوى المحكمة', type: 'danger' });
+      setAlert({
+        show: true,
+        message: 'برجاء إدخال اسم مستوى المحكمة',
+        type: 'danger',
+      });
       return;
     }
     try {
-      const response = await axios.post(`${API_CONFIG.baseURL}/api/court_levels`, {
-        name: newCourtLevelName,
-      });
+      const response = await axios.post(
+        `${API_CONFIG.baseURL}/api/court_levels`,
+        {
+          name: newCourtLevelName,
+        },
+      );
       setCourtLevels([...courtLevels, response.data]);
       setAlert({ show: true, message: 'تمت الإضافة بنجاح', type: 'success' });
       setNewCourtLevelName('');
       handleClose();
     } catch (e) {
-      setAlert({ show: true, message: 'حدث خطأ أثناء الإضافة', type: 'danger' });
+      setAlert({
+        show: true,
+        message: 'حدث خطأ أثناء الإضافة',
+        type: 'danger',
+      });
     }
   };
 
@@ -54,7 +78,11 @@ const CourtLevel = ({ show, handleClose }) => {
       setCourtLevels(courtLevels.filter((courtLevel) => courtLevel.id !== id));
       setAlert({ show: true, message: 'تم الحذف بنجاح', type: 'success' });
     } catch (e) {
-      setAlert({ show: true, message: 'لا يمكن حذف هذا المستوى لارتباطه ببيانات أخرى', type: 'danger' });
+      setAlert({
+        show: true,
+        message: 'لا يمكن حذف هذا المستوى لارتباطه ببيانات أخرى',
+        type: 'danger',
+      });
     }
   };
 
@@ -72,7 +100,9 @@ const CourtLevel = ({ show, handleClose }) => {
       </div>
 
       {alert.show && (
-        <div className={`p-4 mb-4 text-white ${alert.type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
+        <div
+          className={`p-4 mb-4 text-white ${alert.type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}
+        >
           {alert.message}
         </div>
       )}
@@ -88,7 +118,9 @@ const CourtLevel = ({ show, handleClose }) => {
           <tbody>
             {currentItems.map((courtLevel) => (
               <tr key={courtLevel.id}>
-                <td className="px-4 py-2 border border-gray-300">{courtLevel.name}</td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {courtLevel.name}
+                </td>
                 <td className="px-4 py-2 border border-gray-300">
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
@@ -135,7 +167,9 @@ const CourtLevel = ({ show, handleClose }) => {
                 handleAddCourtLevel();
               }}
             >
-              <label className="block mb-2 text-gray-700">اسم مستوى المحكمة:</label>
+              <label className="block mb-2 text-gray-700">
+                اسم مستوى المحكمة:
+              </label>
               <input
                 type="text"
                 className="w-full p-2 border rounded"

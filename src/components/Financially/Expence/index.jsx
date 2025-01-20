@@ -15,7 +15,9 @@ const ExpenseIndex = () => {
   const [error, setError] = useState('');
 
   const isAtLeastOneFieldFilled = () => {
-    return identifier.trim() !== '' || category.trim() !== '' || startDate || endDate;
+    return (
+      identifier.trim() !== '' || category.trim() !== '' || startDate || endDate
+    );
   };
 
   useEffect(() => {
@@ -46,7 +48,7 @@ const ExpenseIndex = () => {
 
       const response = await axios.get(
         `${API_CONFIG.baseURL}/api/expenses/search`,
-        { params: searchCriteria }
+        { params: searchCriteria },
       );
       setExpenses(response.data.filtered_expenses || []);
       setError('');
@@ -137,10 +139,12 @@ const ExpenseIndex = () => {
                       {expense.service_id
                         ? expense.service.service_no
                         : expense.leg_case_id
-                        ? expense.leg_case.slug
-                        : ''}
+                          ? expense.leg_case.slug
+                          : ''}
                     </td>
-                    <td className="border px-4 py-2">{expense.expense_category?.name}</td>
+                    <td className="border px-4 py-2">
+                      {expense.expense_category?.name}
+                    </td>
                     <td className="border px-4 py-2">{expense.description}</td>
                     <td className="border px-4 py-2">{expense.note}</td>
                     <td className="border px-4 py-2">{expense.expense_date}</td>

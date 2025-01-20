@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import API_CONFIG from "../../config/config";
-import { JudgeIcon } from "../../assets/icons";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import API_CONFIG from '../../config/config';
+import { JudgeIcon } from '../../assets/icons';
 
 const CaseType = () => {
   const [procedureTypes, setProcedureTypes] = useState([]);
@@ -9,16 +9,17 @@ const CaseType = () => {
   const [caseSubTypes, setCaseSubTypes] = useState([]);
   const [legalAdTypes, setLegalAdTypes] = useState([]);
 
-  const [showAddProcedureTypeModal, setShowAddProcedureTypeModal] = useState(false);
+  const [showAddProcedureTypeModal, setShowAddProcedureTypeModal] =
+    useState(false);
   const [showAddCaseTypeModal, setShowAddCaseTypeModal] = useState(false);
   const [showAddCaseSubTypeModal, setShowAddCaseSubTypeModal] = useState(false);
   const [showAddLegalAdModal, setShowAddLegalAdModal] = useState(false);
 
-  const [newProcedureTypeName, setNewProcedureTypeName] = useState("");
-  const [newCaseTypeName, setNewCaseTypeName] = useState("");
-  const [newCaseSubTypeName, setNewCaseSubTypeName] = useState("");
-  const [newCaseTypeId, setNewCaseTypeId] = useState("");
-  const [newAdType, setNewAdType] = useState("");
+  const [newProcedureTypeName, setNewProcedureTypeName] = useState('');
+  const [newCaseTypeName, setNewCaseTypeName] = useState('');
+  const [newCaseSubTypeName, setNewCaseSubTypeName] = useState('');
+  const [newCaseTypeId, setNewCaseTypeId] = useState('');
+  const [newAdType, setNewAdType] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -26,7 +27,12 @@ const CaseType = () => {
 
   const fetchData = async () => {
     try {
-      const [procedureTypesResponse, caseTypesResponse, caseSubTypesResponse, legalAdTypesResponse] = await Promise.all([
+      const [
+        procedureTypesResponse,
+        caseTypesResponse,
+        caseSubTypesResponse,
+        legalAdTypesResponse,
+      ] = await Promise.all([
         axios.get(`${API_CONFIG.baseURL}/api/procedure_types/`),
         axios.get(`${API_CONFIG.baseURL}/api/case_types/`),
         axios.get(`${API_CONFIG.baseURL}/api/case_sub_types/`),
@@ -38,29 +44,33 @@ const CaseType = () => {
       setCaseSubTypes(caseSubTypesResponse.data);
       setLegalAdTypes(legalAdTypesResponse.data);
     } catch (error) {
-      console.error("Error fetching data: ", error);
+      console.error('Error fetching data: ', error);
     }
   };
 
   const handleAddProcedureType = async () => {
     try {
-      await axios.post(`${API_CONFIG.baseURL}/api/procedure_types/`, { name: newProcedureTypeName });
+      await axios.post(`${API_CONFIG.baseURL}/api/procedure_types/`, {
+        name: newProcedureTypeName,
+      });
       setShowAddProcedureTypeModal(false);
-      setNewProcedureTypeName("");
+      setNewProcedureTypeName('');
       fetchData();
     } catch {
-      console.error("Error adding Procedure Type");
+      console.error('Error adding Procedure Type');
     }
   };
 
   const handleAddCaseType = async () => {
     try {
-      await axios.post(`${API_CONFIG.baseURL}/api/case_types/`, { name: newCaseTypeName });
+      await axios.post(`${API_CONFIG.baseURL}/api/case_types/`, {
+        name: newCaseTypeName,
+      });
       setShowAddCaseTypeModal(false);
-      setNewCaseTypeName("");
+      setNewCaseTypeName('');
       fetchData();
     } catch {
-      console.error("Error adding Case Type");
+      console.error('Error adding Case Type');
     }
   };
 
@@ -71,22 +81,24 @@ const CaseType = () => {
         name: newCaseSubTypeName,
       });
       setShowAddCaseSubTypeModal(false);
-      setNewCaseSubTypeName("");
-      setNewCaseTypeId("");
+      setNewCaseSubTypeName('');
+      setNewCaseTypeId('');
       fetchData();
     } catch {
-      console.error("Error adding Case Sub Type");
+      console.error('Error adding Case Sub Type');
     }
   };
 
   const handleAddAdType = async () => {
     try {
-      await axios.post(`${API_CONFIG.baseURL}/api/legal_ad_types`, { name: newAdType });
+      await axios.post(`${API_CONFIG.baseURL}/api/legal_ad_types`, {
+        name: newAdType,
+      });
       setShowAddLegalAdModal(false);
-      setNewAdType("");
+      setNewAdType('');
       fetchData();
     } catch {
-      console.error("Error adding Ad Type");
+      console.error('Error adding Ad Type');
     }
   };
 
@@ -102,7 +114,10 @@ const CaseType = () => {
           <h3 className="font-bold text-lg mb-4">أنواع القضايا</h3>
           <ul className="list-disc pl-6">
             {caseTypes.map((caseType) => (
-              <li key={caseType.id} className="flex justify-between items-center">
+              <li
+                key={caseType.id}
+                className="flex justify-between items-center"
+              >
                 {caseType.name}
                 <button className="text-red-600 hover:underline">حذف</button>
               </li>

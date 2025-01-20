@@ -19,7 +19,7 @@ Chart.register(
   PointElement,
   LinearScale,
   TimeScale,
-  Tooltip
+  Tooltip,
 );
 
 function RealtimeChart({ data, width, height }) {

@@ -1,7 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { AiFillCheckCircle, AiFillCloseCircle, AiFillDelete, AiFillEye } from 'react-icons/ai';
+import {
+  AiFillCheckCircle,
+  AiFillCloseCircle,
+  AiFillDelete,
+  AiFillEye,
+} from 'react-icons/ai';
 import { CiEdit } from 'react-icons/ci';
 
 import API_CONFIG from '../config/config';
@@ -54,14 +59,13 @@ const LegalCasesIndex = () => {
 
   // ✅ إعداد رؤوس الجدول
   const headers = [
+    { key: 'actions', text: 'عرض' },
     { key: 'slug', text: 'رقم الملف' },
     { key: 'clients', text: 'الموكل' },
     { key: 'client_capacity', text: 'صفة الموكل' },
     { key: 'title', text: 'الموضوع' },
     { key: 'case_sub_type', text: 'نوع القضية' },
-    { key: 'courts', text: 'المحكمة' },
     { key: 'status', text: 'الحالة' },
-    { key: 'actions', text: 'الإجراءات' }
   ];
 
   // ✅ تخصيص عرض بعض الأعمدة
@@ -70,17 +74,7 @@ const LegalCasesIndex = () => {
       legCase.case_sub_type && legCase.case_sub_type.name
         ? legCase.case_sub_type.name
         : 'غير محدد',
-    
-    courts: (legCase) =>
-      legCase.courts && legCase.courts.length > 0
-        ? legCase.courts.map((court, index) => (
-            <span key={index}>
-              {court.name}
-              {index < legCase.courts.length - 1 && ', '}
-            </span>
-          ))
-        : 'غير محدد',
-    
+
     // عرض أسماء الموكلين مع تصميم محسن
     clients: (legCase) =>
       legCase.clients && legCase.clients.length > 0 ? (
@@ -112,27 +106,13 @@ const LegalCasesIndex = () => {
     // عرض إجراءات التحكم (تعديل - عرض - حذف)
     actions: (legCase) => (
       <div className="flex space-x-2">
-        <button
-          onClick={() => handleAddEditModal(legCase)}
-          className="text-blue-600 hover:text-blue-800 transition-transform hover:scale-110"
-          title="تعديل"
-        >
-          <CiEdit size={20} />
-        </button>
         <Link
           to={`/legcases/show/${legCase.id}`}
-          className="text-green-600 hover:text-green-800 transition-transform hover:scale-110"
+          className="text-orange-400 hover:text-orange-800 transition-transform hover:scale-110"
           title="عرض"
         >
           <AiFillEye size={20} />
         </Link>
-        <button
-          onClick={() => handleDeleteCase(legCase.id)}
-          className="text-red-600 hover:text-red-800 transition-transform hover:scale-110"
-          title="حذف"
-        >
-          <AiFillDelete size={20} />
-        </button>
       </div>
     ),
   };
@@ -150,10 +130,7 @@ const LegalCasesIndex = () => {
   return (
     <>
       {/* ✅ رأس القسم */}
-      <SectionHeader
-        listName="القضايا" 
-        icon={LegCaseIcon}
-      />
+      <SectionHeader listName="القضايا" icon={LegCaseIcon} />
 
       {/* ✅ المودال الخاص بالإضافة أو التعديل */}
       {showModal && (
@@ -169,7 +146,9 @@ const LegalCasesIndex = () => {
       <TableComponent
         data={legCases}
         headers={headers}
-        onEdit={(id) => handleAddEditModal(legCases.find((legCase) => legCase.id === id))}
+        onEdit={(id) =>
+          handleAddEditModal(legCases.find((legCase) => legCase.id === id))
+        }
         onDelete={handleDeleteCase}
         sectionName="legal-cases"
         customRenderers={customRenderers}

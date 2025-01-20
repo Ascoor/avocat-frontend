@@ -32,7 +32,7 @@ function UnclientList() {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/unclients-search?search=${searchQuery}`
+        `${API_CONFIG.baseURL}/api/unclients-search?search=${searchQuery}`,
       );
       setUnclients(response.data);
       setCurrentPage(1);
@@ -44,7 +44,7 @@ function UnclientList() {
   const deleteUnclient = async (id) => {
     try {
       const response = await axios.delete(
-        `${API_CONFIG.baseURL}/api/unclients/${id}`
+        `${API_CONFIG.baseURL}/api/unclients/${id}`,
       );
       fetchUnclients();
       setSuccessMessage(response.data.message || 'تم الحذف بنجاح');
@@ -61,7 +61,7 @@ function UnclientList() {
 
   const paginatedUnclients = unclients.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
 
   return (

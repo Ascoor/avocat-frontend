@@ -81,7 +81,7 @@ function DoughnutChart({ data, width, height }) {
             }
             // Reuse the built-in legendItems generator
             const items = c.options.plugins.legend.labels.generateLabels(c);
-            items.forEach(item => {
+            items.forEach((item) => {
               const li = document.createElement('li');
               li.style.margin = tailwindConfig().theme.margin[1];
               // Button element
@@ -94,7 +94,7 @@ function DoughnutChart({ data, width, height }) {
                 'dark:text-gray-400',
                 'shadow-sm',
                 'shadow-black/[0.08]',
-                'rounded-full'
+                'rounded-full',
               );
               button.style.opacity = item.hidden ? '.3' : '';
               button.onclick = () => {
@@ -148,12 +148,12 @@ function DoughnutChart({ data, width, height }) {
   }, [currentTheme]);
 
   return (
-    <div className='grow flex flex-col justify-center'>
+    <div className="grow flex flex-col justify-center">
       <div>
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>
-      <div className='px-5 pt-2 pb-6'>
-        <ul ref={legend} className='flex flex-wrap justify-center -m-1'></ul>
+      <div className="px-5 pt-2 pb-6">
+        <ul ref={legend} className="flex flex-wrap justify-center -m-1"></ul>
       </div>
     </div>
   );

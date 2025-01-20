@@ -1,6 +1,5 @@
- 
 // src/api/clients.js
-import useAuth from "../components /auth/AuthUser";
+import useAuth from '../components /auth/AuthUser';
 const { http } = useAuth();
 
 export const getClients = () => api.get('/api/clients');

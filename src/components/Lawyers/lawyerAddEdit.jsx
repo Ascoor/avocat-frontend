@@ -10,7 +10,7 @@ import {
   ServiceIcon,
 } from '../../assets/icons/index'; // Updated path
 import axios from 'axios';
- 
+
 import API_CONFIG from '../../config/config';
 import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
@@ -28,7 +28,8 @@ const Home = () => {
 
   const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
 
-  const toArabicNumeral = (en) => ('' + en).replace(/[0-9]/g, (t) => '٠١٢٣٤٥٦٧٨٩'.slice(+t, +t + 1));
+  const toArabicNumeral = (en) =>
+    ('' + en).replace(/[0-9]/g, (t) => '٠١٢٣٤٥٦٧٨٩'.slice(+t, +t + 1));
 
   useEffect(() => {
     fetchOfficeCount();
@@ -36,7 +37,9 @@ const Home = () => {
 
   const fetchOfficeCount = async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/all_count_office`);
+      const response = await axios.get(
+        `${API_CONFIG.baseURL}/api/all_count_office`,
+      );
       setClientCount(response.data.client_count || 0);
       setLegCaseCount(response.data.leg_case_count || 0);
       setProcedureCount(response.data.procedure_count || 0);
@@ -51,7 +54,11 @@ const Home = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-20 text-gray-800 dark:text-gray-200">جاري التحميل...</div>;
+    return (
+      <div className="text-center py-20 text-gray-800 dark:text-gray-200">
+        جاري التحميل...
+      </div>
+    );
   }
 
   return (
@@ -71,31 +78,57 @@ const Home = () => {
         </h1>
       </div>
 
-      <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'} gap-4`}>
+      <div
+        className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'} gap-4`}
+      >
         <Link to="/sessions">
-          <MainCard count={toArabicNumeral(legalSessionCount)} icon={MainSessions} label="الجلسات" />
+          <MainCard
+            count={toArabicNumeral(legalSessionCount)}
+            icon={MainSessions}
+            label="الجلسات"
+          />
         </Link>
 
         <Link to="/cases">
-          <MainCard count={toArabicNumeral(legCaseCount)} icon={MainLegalCases} label="القضايا" />
+          <MainCard
+            count={toArabicNumeral(legCaseCount)}
+            icon={MainLegalCases}
+            label="القضايا"
+          />
         </Link>
 
         <Link to="/services">
-          <MainCard count={toArabicNumeral(serviceCount)} icon={ServiceIcon} label="الخدمات" />
+          <MainCard
+            count={toArabicNumeral(serviceCount)}
+            icon={ServiceIcon}
+            label="الخدمات"
+          />
         </Link>
 
         <Link to="/procedures">
-          <MainCard count={toArabicNumeral(procedureCount)} icon={MainProcedures} label="الإجراءات" />
+          <MainCard
+            count={toArabicNumeral(procedureCount)}
+            icon={MainProcedures}
+            label="الإجراءات"
+          />
         </Link>
 
         <Link to="/clients">
-          <MainCard count={toArabicNumeral(clientCount)} icon={MainClients} label="العملاء" />
+          <MainCard
+            count={toArabicNumeral(clientCount)}
+            icon={MainClients}
+            label="العملاء"
+          />
         </Link>
 
         <Link to="/lawyers">
-          <MainCard count={toArabicNumeral(lawyerCount)} icon={MainLawyers} label="المحامون" />
+          <MainCard
+            count={toArabicNumeral(lawyerCount)}
+            icon={MainLawyers}
+            label="المحامون"
+          />
         </Link>
-      </div> 
+      </div>
     </div>
   );
 };

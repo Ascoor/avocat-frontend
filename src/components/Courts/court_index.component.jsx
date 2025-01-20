@@ -7,7 +7,8 @@ import Court from './courtTools/Court';
 
 const CourtSetting = () => {
   const [showAddCourtTypeModal, setShowAddCourtTypeModal] = useState(false);
-  const [showAddCourtSubTypeModal, setShowAddCourtSubTypeModal] = useState(false);
+  const [showAddCourtSubTypeModal, setShowAddCourtSubTypeModal] =
+    useState(false);
   const [showAddCourtLevelModal, setShowAddCourtLevelModal] = useState(false);
   const [showAddCourtModal, setShowAddCourtModal] = useState(false);
 

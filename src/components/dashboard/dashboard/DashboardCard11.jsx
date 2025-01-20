@@ -52,24 +52,24 @@ function DashboardCard11() {
   };
 
   return (
-    <div className='flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl'>
-      <header className='px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center'>
-        <h2 className='font-semibold text-gray-800 dark:text-gray-100'>
+    <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100">
           أسباب طلبات الاسترداد
         </h2>
       </header>
-      <div className='px-5 py-3'>
-        <div className='flex items-start'>
-          <div className='text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2'>
+      <div className="px-5 py-3">
+        <div className="flex items-start">
+          <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">
             449
           </div>
-          <div className='text-sm font-medium text-red-700 px-1.5 bg-red-500/20 rounded-full'>
+          <div className="text-sm font-medium text-red-700 px-1.5 bg-red-500/20 rounded-full">
             -22%
           </div>
         </div>
       </div>
       {/* Chart built with Chart.js 3 */}
-      <div className='grow'>
+      <div className="grow">
         {/* Change the height attribute to adjust the chart height */}
         <BarChart data={chartData} width={595} height={48} />
       </div>

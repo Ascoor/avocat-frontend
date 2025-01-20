@@ -1,4 +1,3 @@
-
 // Updated Guest Component
 import React, { useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
@@ -43,7 +42,9 @@ const HomePage = () => {
                 src={TeamWorkImage}
                 alt="Team Work Image"
                 className="mx-auto object-cover rounded-lg shadow-lg"
-                style={{ maskImage: 'linear-gradient(to top, transparent, black)' }}
+                style={{
+                  maskImage: 'linear-gradient(to top, transparent, black)',
+                }}
               />
             </animated.div>
 

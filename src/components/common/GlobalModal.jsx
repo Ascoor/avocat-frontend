@@ -1,8 +1,16 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { IoMdClose, IoMdPerson, IoMdMail, IoMdCall, IoMdCalendar, IoMdPin, IoMdConstruct } from 'react-icons/io';
+import {
+  IoMdClose,
+  IoMdPerson,
+  IoMdMail,
+  IoMdCall,
+  IoMdCalendar,
+  IoMdPin,
+  IoMdConstruct,
+} from 'react-icons/io';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; 
+import 'react-datepicker/dist/react-datepicker.css';
 // ✅ GlobalModal Component (Enhanced with Tailwind Styling)
 const GlobalModal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
   const sizeClasses = {
@@ -45,7 +53,10 @@ const GlobalModal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
                   <Dialog.Title className="text-3xl font-bold  ">
                     {title}
                   </Dialog.Title>
-                  <button onClick={onClose} className="text-gray-400 hover:text-red-500">
+                  <button
+                    onClick={onClose}
+                    className="text-gray-400 hover:text-red-500"
+                  >
                     <IoMdClose className="w-6 h-6" />
                   </button>
                 </div>
