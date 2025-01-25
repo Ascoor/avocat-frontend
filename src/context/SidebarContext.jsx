@@ -1,12 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import {
-  FaHome,
-  FaUserFriends,
-  FaCog,
-  FaChartLine,
-  FaBars,
-  FaFolderOpen,
-} from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 
 // Create Sidebar Context
@@ -33,9 +25,21 @@ export const SidebarProvider = ({ children }) => {
     if (isMobile) setIsSidebarOpen(false);
   }, [location.pathname, isMobile]);
 
+  // Determine layout direction
+  const layoutDirection = isMobile
+    ? isSidebarOpen
+      ? 'flex-col-reverse'
+      : 'flex-col'
+    : 'flex-row-reverse';
+
   return (
     <SidebarContext.Provider
-      value={{ isSidebarOpen, setIsSidebarOpen, isMobile }}
+      value={{
+        isSidebarOpen,
+        setIsSidebarOpen,
+        isMobile,
+        layoutDirection,
+      }}
     >
       {children}
     </SidebarContext.Provider>

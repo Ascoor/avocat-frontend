@@ -1,32 +1,27 @@
 import React from 'react';
 import BarChart from '../charts/BarChart01';
-import { tailwindConfig } from '../../../../utils/Utils';
+import { tailwindConfig } from '../../../utils/Utils';
 
 function DashboardCard04() {
   const chartData = {
     labels: [
-      '12-01-2022',
-      '01-01-2023',
-      '02-01-2023',
-      '03-01-2023',
-      '04-01-2023',
-      '05-01-2023',
+      'يناير 2024', 'فبراير 2024', 'مارس 2024', 'أبريل 2024', 'مايو 2024', 'يونيو 2024',
     ],
     datasets: [
       {
-        label: 'مباشر',
-        data: [800, 1600, 900, 1300, 1950, 1700],
-        backgroundColor: tailwindConfig().theme.colors.sky[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.sky[600],
+        label: 'القضايا الجنائية',
+        data: [500, 700, 800, 600, 900, 1100], // بيانات تمثل القضايا الجنائية
+        backgroundColor: tailwindConfig().theme.colors.red[500],
+        hoverBackgroundColor: tailwindConfig().theme.colors.red[600],
         barPercentage: 0.7,
         categoryPercentage: 0.7,
         borderRadius: 4,
       },
       {
-        label: 'غير مباشر',
-        data: [4900, 2600, 5350, 4800, 5200, 4800],
-        backgroundColor: tailwindConfig().theme.colors.violet[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.violet[600],
+        label: 'القضايا المدنية',
+        data: [3000, 2500, 2800, 3500, 3700, 3900], // بيانات تمثل القضايا المدنية
+        backgroundColor: tailwindConfig().theme.colors.blue[500],
+        hoverBackgroundColor: tailwindConfig().theme.colors.blue[600],
         barPercentage: 0.7,
         categoryPercentage: 0.7,
         borderRadius: 4,
@@ -35,10 +30,10 @@ function DashboardCard04() {
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+    <div className="bg-gray-100 dark:bg-gradient-night shadow rounded-lg p-4 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
-          مباشر مقابل غير مباشر
+          مقارنة القضايا الجنائية والقضايا المدنية
         </h2>
       </header>
       <div className="px-5 py-3">

@@ -3,7 +3,7 @@ import { chartAreaGradient } from '../charts/ChartjsConfig';
 import LineChart from '../charts/LineChart02';
 
 // Import utilities
-import { tailwindConfig } from '../../../../utils/Utils';
+import { tailwindConfig } from '../../../utils/Utils';
 
 function DashboardCard08() {
   const chartData = {
@@ -99,13 +99,16 @@ function DashboardCard08() {
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100 text-sm sm:text-base">
           المبيعات عبر الزمن (جميع الفروع)
         </h2>
       </header>
+
       {/* Chart built with Chart.js 3 */}
-      {/* Change the height attribute to adjust the chart height */}
-      <LineChart data={chartData} width={595} height={248} />
+      {/* Adjust chart height and width based on screen size */}
+      <div className="px-4 py-6">
+        <LineChart data={chartData} width={window.innerWidth < 640 ? 320 : 595} height={window.innerWidth < 640 ? 180 : 248} />
+      </div>
     </div>
   );
 }

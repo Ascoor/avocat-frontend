@@ -8,8 +8,8 @@ import CourtSearch from '../Reports/SearchCourt';
 import CaseTypeSet from '../Courts/case_index.component';
 import FinancialDashboard from '../Financially/index';
 import AddEditClient from '../ClientsAndUnclients/clients/AddEditClient';
-import ClientList from '../../pages/ClientList';
-import UnclientList from '../../pages/UnclientList';
+import ClientList from '../../components/ClientsAndUnclients/clients/index.jsx';
+import UnclientList from '../../components/ClientsAndUnclients/unclients/index.jsx';
 import LegalCasesIndex from '../../pages/LegalCaseList';
 import LegCaseDetail from '../LegalCases/LegalCaseDetails';
 import LegalServiceList from '../../pages/LegalServicList';
@@ -17,6 +17,11 @@ import ProcedureSearch from '../Reports/procedure_search.component';
 import ProfileUser from '../Settings/ProfileUser';
 import { useSpinner } from '../../context/SpinnerContext';
 import GlobalSpinner from '../common/GlobalSpinner';
+import Procedures from '../../pages/ProceduresList';
+import ClientUnclientList from '../../pages/ClientUnclientList.jsx';
+import ManagmentSettings from '../../pages/ManagmentSettings.jsx';
+import ServiceTypes from '../Settings/ServiceTypes.jsx';
+import LegcaseTypes from '../Settings/LegcaseTypes.jsx';
 
 const AuthRoutes = () => {
   const { showSpinner, hideSpinner, loading } = useSpinner();
@@ -48,13 +53,11 @@ const AuthRoutes = () => {
       >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/procedures" element={<ProcedureSearch />} />
-          <Route path="/clients" element={<ClientList />} />
-          <Route path="/unclients" element={<UnclientList />} />
-          <Route path="/courts" element={<CourtSetting />} />
-          <Route path="/legal-services" element={<LegalServiceList />} />
+          <Route path="/clients" element={<ClientUnclientList />} />
+          <Route path="/clients/regular" element={<ClientList />} />
+          <Route path="/clients/one-time" element={<UnclientList />} />
+          <Route path="/legcase-services" element={<LegalServiceList />} />
           <Route path="/court-search" element={<CourtSearch />} />
-          <Route path="/lawyers" element={<Lawyers />} />
           <Route path="/cases_setting" element={<CaseTypeSet />} />
           <Route path="/financial" element={<FinancialDashboard />} />
           <Route path="/legcases/show/:id" element={<LegCaseDetail />} />
@@ -63,6 +66,12 @@ const AuthRoutes = () => {
           <Route path="/client/create" element={<AddEditClient />} />
           <Route path="/client/edit/:id" element={<AddEditClient />} />
           <Route path="/lawyers/form" element={<LawyersAddEdit />} />
+          <Route path="/managment-settings" element={<ManagmentSettings />} />
+          <Route path="/managment-settings/courts" element={<CourtSetting />} />
+          <Route path="/managment-settings/procedures" element={<Procedures />} />
+          <Route path="/managment-settings/lawyers" element={<Lawyers />} />
+          <Route path="/managment-settings/service-types" element={<ServiceTypes />} />
+          <Route path="/managment-settings/legcase-types" element={<LegcaseTypes />} />
         </Routes>
       </div>
     </div>

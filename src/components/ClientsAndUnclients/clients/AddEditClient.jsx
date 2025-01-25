@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import axios from 'axios';
 import moment from 'moment';
+import axios from 'axios';
 import API_CONFIG from '../../../config/config';
 import GlobalModal from '../../common/GlobalModal';
 
@@ -34,6 +34,7 @@ const AddEditClient = ({ client = {}, isOpen, onClose, onSaved }) => {
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
   const handleDateChange = (date) =>
     setFormData({ ...formData, date_of_birth: date });
 
@@ -67,131 +68,44 @@ const AddEditClient = ({ client = {}, isOpen, onClose, onSaved }) => {
       isOpen={isOpen}
       onClose={onClose}
       title={client?.id ? 'تعديل العميل' : 'إضافة عميل'}
-      size="lg"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
+        {[
+          { name: 'name', label: 'الاسم الكامل', type: 'text' },
+          { name: 'slug', label: 'نوع العميل', type: 'text' },
+          { name: 'identity_number', label: 'رقم الهوية', type: 'text' },
+          { name: 'address', label: 'العنوان', type: 'text' },
+          { name: 'religion', label: 'الديانة', type: 'text' },
+          { name: 'work', label: 'الوظيفة', type: 'text' },
+          { name: 'email', label: 'البريد الإلكتروني', type: 'email' },
+          { name: 'phone_number', label: 'رقم الهاتف', type: 'text' },
+          { name: 'emergency_number', label: 'رقم الطوارئ', type: 'text' },
+        ].map(({ name, label, type }) => (
+          <div key={name}>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              {label}
+            </label>
+            <input
+              type={type}
+              name={name}
+              value={formData[name]}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-3 border rounded-lg bg-gray-50 dark:bg-gray-200 "
+            />
+          </div>
+        ))}
         <div>
-          <label className="block mb-1   text-right">الاسم الكامل</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-        </div>
-        <div>
-          <label className="block mb-1  text-right">نوع العميل</label>
-          <input
-            type="text"
-            name="slug"
-            value={formData.slug}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-        </div>
-        <div>
-          <label className="block mb-1  text-right">الجنس</label>
-          <select
-            name="gender"
-            value={formData.gender}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border rounded-lg"
-          >
-            <option value="">اختر الجنس</option>
-            <option value="ذكر">ذكر</option>
-            <option value="أنثى">أنثى</option>
-          </select>
-        </div>
-        <div>
-          <label className="block mb-1  text-right">رقم الهوية</label>
-          <input
-            type="text"
-            name="identity_number"
-            value={formData.identity_number}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-        </div>
-        <div>
-          <label className="block mb-1  text-right">تاريخ الميلاد</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            تاريخ الميلاد
+          </label>
           <DatePicker
             selected={formData.date_of_birth}
             onChange={handleDateChange}
-            className="w-full p-3 border rounded-lg"
+            className="w-full mt-1 p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-gray-100"
           />
         </div>
-        <div>
-          <label className="block mb-1  text-right">العنوان</label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-        </div>
-        <div>
-          <label className="block mb-1  text-right">الديانة</label>
-          <input
-            type="text"
-            name="religion"
-            value={formData.religion}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-        </div>
-        <div>
-          <label className="block mb-1  text-right">الوظيفة</label>
-          <input
-            type="text"
-            name="work"
-            value={formData.work}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-        </div>
-        <div>
-          <label className="block mb-1  text-right">البريد الإلكتروني</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-        </div>
-        <div>
-          <label className="block mb-1  text-right">رقم الهاتف</label>
-          <input
-            type="text"
-            name="phone_number"
-            value={formData.phone_number}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-        </div>
-        <div>
-          <label className="block mb-1  text-right">رقم الطوارئ</label>
-          <input
-            type="text"
-            name="emergency_number"
-            value={formData.emergency_number}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border rounded-lg"
-          />
-        </div>
-        <div className="flex justify-end gap-3">
+        <div className="flex justify-end space-x-3">
           <button
             type="button"
             onClick={onClose}
@@ -201,7 +115,7 @@ const AddEditClient = ({ client = {}, isOpen, onClose, onSaved }) => {
           </button>
           <button
             type="submit"
-            className="px-5 py-2 bg-blue-600 text-white rounded-lg"
+            className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             حفظ
           </button>

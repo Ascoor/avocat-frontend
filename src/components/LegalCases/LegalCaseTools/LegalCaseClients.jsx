@@ -83,16 +83,10 @@ export default function LegalCaseClients({ legCaseId }) {
 
   return (
     <div className="container mx-auto p-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-        <h3 className="text-2xl font-bold text-gray-700 dark:text-gray-200">
+      <div className="flex flex-col md:flex-row justify-center  items-center mb-6">
+        <h3 className="text-2xl font-bold text-avocat-indigo-dark  dark:text-avocat-orange">
           بيانات الموكل
         </h3>
-        <button
-          onClick={handleAddNewClient}
-          className="flex items-center bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow-md transition duration-300"
-        >
-          إضافة موكل <BiPlusCircle className="ml-2" />
-        </button>
       </div>
 
       {error && (
@@ -106,7 +100,13 @@ export default function LegalCaseClients({ legCaseId }) {
         </div>
       )}
 
-      <div className="overflow-auto mb-6">
+        <button
+          onClick={handleAddNewClient}
+          className="flex items-center bg-avocat-indigo-dark hover:bg-avocat-orange-dark text-white px-4 py-2 rounded shadow-md transition duration-300"
+        >
+          إضافة موكل <BiPlusCircle className="ml-2" />
+        </button>
+      <div className="overflow-auto mt-4">
         <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300 border-collapse">
           <thead className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100">
             <tr>

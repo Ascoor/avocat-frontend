@@ -1,5 +1,5 @@
 import React from 'react';
-import Tooltip from '../../Tools/Tooltip';
+import Tooltip from '../../common/Tooltip';
 import BarChart from '../charts/BarChart02';
 
 // Import utilities
@@ -40,8 +40,8 @@ function DashboardCard09() {
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
-      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
+    <div className="bg-gray-200 dark:bg-gradient-night shadow-sm rounded-xl p-5 col-span-full sm:col-span-6 xl:col-span-4 flex flex-col">
+        <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
           المبيعات مقابل المرتجعات
         </h2>

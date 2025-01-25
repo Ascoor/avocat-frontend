@@ -69,53 +69,54 @@ const LegalCasesIndex = () => {
   ];
 
   // ✅ تخصيص عرض بعض الأعمدة
-  const customRenderers = {
-    case_sub_type: (legCase) =>
-      legCase.case_sub_type && legCase.case_sub_type.name
-        ? legCase.case_sub_type.name
-        : 'غير محدد',
+    const customRenderers = {
+      case_sub_type: (legCase) =>
+        legCase.case_sub_type && legCase.case_sub_type.name
+          ? legCase.case_sub_type.name
+          : 'غير محدد',
 
-    // عرض أسماء الموكلين مع تصميم محسن
-    clients: (legCase) =>
-      legCase.clients && legCase.clients.length > 0 ? (
-        legCase.clients.map((client, index) => (
-          <span
-            key={index}
-            className="inline-block bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-white px-2 py-1 rounded-full m-1"
-          >
-            {client.name}
-            {index < legCase.clients.length - 1 && ', '}
+      // عرض أسماء الموكلين مع تصميم محسن
+      clients: (legCase) =>
+        legCase.clients && legCase.clients.length > 0 ? (
+          <div className="flex flex-wrap">
+            {legCase.clients.map((client, index) => (
+              <span
+                key={index}
+                className="inline-block bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-white px-2 py-1 rounded-full m-1"
+              >
+                {client.name}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <span className="text-gray-400">No Clients</span>
+        ),
+
+      // عرض حالة القضية بشكل أفضل
+      status: (legCase) =>
+        legCase.status === 'مفتوحة' ? (
+          <span className="flex items-center gap-1 px-2 py-1 rounded bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
+            <AiFillCheckCircle /> مفتوحة
           </span>
-        ))
-      ) : (
-        <span className="text-gray-400">لا يوجد عملاء</span>
-      ),
+        ) : (
+          <span className="flex items-center gap-1 px-2 py-1 rounded bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300">
+            <AiFillCloseCircle /> مغلقة
+          </span>
+        ),
 
-    // عرض حالة القضية بشكل أفضل
-    status: (legCase) =>
-      legCase.status === 'مفتوحة' ? (
-        <span className="flex items-center gap-1 px-2 py-1 rounded bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
-          <AiFillCheckCircle /> مفتوحة
-        </span>
-      ) : (
-        <span className="flex items-center gap-1 px-2 py-1 rounded bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300">
-          <AiFillCloseCircle /> مغلقة
-        </span>
+      // عرض إجراءات التحكم (تعديل - عرض - حذف)
+      actions: (legCase) => (
+        <div className="flex space-x-2">
+          <Link
+            to={`/legcases/show/${legCase.id}`}
+            className="text-orange-400 hover:text-orange-800 transition-transform hover:scale-110"
+            title="عرض"
+          >
+            <AiFillEye size={20} />
+          </Link>
+        </div>
       ),
-
-    // عرض إجراءات التحكم (تعديل - عرض - حذف)
-    actions: (legCase) => (
-      <div className="flex space-x-2">
-        <Link
-          to={`/legcases/show/${legCase.id}`}
-          className="text-orange-400 hover:text-orange-800 transition-transform hover:scale-110"
-          title="عرض"
-        >
-          <AiFillEye size={20} />
-        </Link>
-      </div>
-    ),
-  };
+    };
 
   // ✅ زر الإضافة داخل الجدول
   const renderAddButton = () => (
@@ -128,7 +129,8 @@ const LegalCasesIndex = () => {
   );
 
   return (
-    <>
+    
+    <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
       {/* ✅ رأس القسم */}
       <SectionHeader listName="القضايا" icon={LegCaseIcon} />
 
@@ -154,7 +156,7 @@ const LegalCasesIndex = () => {
         customRenderers={customRenderers}
         renderAddButton={renderAddButton}
       />
-    </>
+        </div>
   );
 };
 

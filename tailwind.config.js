@@ -104,6 +104,8 @@ export default {
 
       /*** 🌄 التدرجات اللونية ***/
       backgroundImage: {
+        'gradient-red-button': 'linear-gradient(to right, #ec4899, #db2777,#be185d)',
+        'gradient-blue-button': 'linear-gradient(to right, #60a5fa, #3b82f6,#2563eb)',
         'gradient-day': 'linear-gradient(to top, #396dcc, #0c3066)',
         'gradient-night': 'linear-gradient(135deg, #031023, #1b2b5a)',
         'gradient-orange-dark': 'linear-gradient(to bottom, #ffa726, #fb7921)',
@@ -163,14 +165,23 @@ export default {
           from: { transform: 'translateX(-100%)' },
           to: { transform: 'translateX(0)' },
         },
- 
+        keyframes: {
+          'fade-in-out': {
+            '0%': { opacity: '0', transform: 'translateY(-20px)' },
+            '10%': { opacity: '1', transform: 'translateY(0)' },
+            '90%': { opacity: '1' },
+            '100%': { opacity: '0', transform: 'translateY(-20px)' },
+          },
+        },
       animation: { 
 
+        'fade-in-out': 'fade-in-out 5s ease-in-out',
         slideInUp: 'slideInUp 0.5s ease-out',
         wiggle: 'wiggle 1s ease-in-out infinite',
         fadeIn: 'fadeIn 0.5s ease-in-out',
         slideIn: 'slideIn 0.3s ease-out',
       },
+      
       zIndex: {
         60: '60',
         70: '70',

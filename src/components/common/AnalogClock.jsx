@@ -52,7 +52,7 @@ const AnalogClock = () => {
         cx={center}
         cy={center}
         r={radius - 4}
-        className="fill-white dark:fill-gray-300 stroke-gray-300 dark:stroke-orange-400 stroke-2"
+        className="fill-white dark:fill-gray-300 stroke-avocat-blue  dark:stroke-orange-400 stroke-4"
       />
       {renderNumbers()}
       <line {...handStyle(hourAngle, radius * 0.5, 'black', 4)} />

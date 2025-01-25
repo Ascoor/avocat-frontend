@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 
-// ✅ هوك للرسوم المتحركة الخاصة بالبطاقة
 const useIconCardAnimation = () => {
   const [isInteracting, setIsInteracting] = useState(false);
 
@@ -18,7 +17,6 @@ const useIconCardAnimation = () => {
   return { animationStyles, setIsInteracting };
 };
 
-// ✅ مكون البطاقة الرئيسية
 const MainCard = ({ count, icon, label }) => {
   const { animationStyles, setIsInteracting } = useIconCardAnimation();
 
@@ -29,25 +27,24 @@ const MainCard = ({ count, icon, label }) => {
       onMouseLeave={() => setIsInteracting(false)}
       onTouchStart={() => setIsInteracting(true)}
       onTouchEnd={() => setIsInteracting(false)}
-      className="bg-gradient-to-b from-indigo-700 to-pink-500  dark:bg-gradient-to-t dark:from-avocat-blue-dark dark:to-avocat-indigo rounded-full shadow-lg p-6 flex flex-col items-center justify-center text-center transform transition-transform duration-300 hover:scale-105 cursor-pointer"
+      className="bg-gray-100 dark:bg-gradient-to-b dark:from-avocat-blue-dark dark:via-avocat-indigo-dark dark:to-avocat-orange-dark rounded-lg shadow-lg p-5 flex items-center justify-between w-full max-w-xs"
     >
-      {/* ✅ أيقونة داخل دائرة متدرجة اللون */}
-      <div
-        className="mb-4 w-24 h-24 flex items-center justify-center 
-        bg-gradient-day 
-        dark:bg-gradient-to-t dark:from-orange-500 dark:to-orange-600 rounded-full shadow-md"
-      >
-        <img src={icon} alt={label} className="w-21 h-21 object-contain" />
-      </div>
 
-      {/* ✅ العنوان */}
-      <div className="text-2xl font-semibold text-white dark:text-gray-100 font-['Cairo'] mb-2">
-        {label}
-      </div>
 
-      {/* ✅ العداد */}
-      <div className="text-lg font-extrabold text-indigo-300 dark:text-orange-400">
-        {count}
+
+      <div className="flex flex-col items-start ml-4">
+
+        <div className="text-lg font-semibold text-avocat-blue-dark dark:text-avocat-orange  font-['Cairo']">
+          {label}
+        </div>
+
+        <div className="text-xl font-extrabold text-avocat-indigo dark:text-white">
+          {count}
+        </div>
+
+      </div>
+      <div className="w-16 h-16 flex items-center justify-center bg-avocat-orange-dark dark:bg-gradient-to-t dark:from-avocat-blue dark:to-avocat-orange-darker rounded-full shadow-md">
+        <img src={icon} alt={label} className="w-10 h-10 object-contain" />
       </div>
     </animated.div>
   );

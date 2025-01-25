@@ -1,12 +1,9 @@
-import useAuth from "../../components/auth/AuthUser";
+import useAuth from "../../components/auth/AuthUser"; 
 
- 
-export const useLegalCaseApi = () => {
+export const useCourtsApi = () => {
   const { http } = useAuth();
 
-  const addLegalCaseCourts = (caseId, courts) => {
-    return http.post(`/api/legal-case/add_courts`, { courts });
-  };
+ 
 
   const getCourts = () => http.get('/api/courts');
   const getCourtById = (id) => http.get(`/api/courts/${id}`);
@@ -15,7 +12,6 @@ export const useLegalCaseApi = () => {
   const deleteCourt = (id) => http.delete(`/api/courts/${id}`);
 
   return {
-    addLegalCaseCourts,
     getCourts,
     getCourtById,
     createCourt,

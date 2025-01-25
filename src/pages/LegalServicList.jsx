@@ -7,11 +7,12 @@ import TableComponent from '../components/common/TableComponent';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 
 const LegalServiceList = () => {
+  // State Variables
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingService, setEditingService] = useState(null);
 
-  // ✅ جلب بيانات الخدمات
+  // ✅ Fetch Services
   const fetchServices = useCallback(async () => {
     try {
       const response = await getServices();
@@ -25,19 +26,19 @@ const LegalServiceList = () => {
     fetchServices();
   }, [fetchServices]);
 
-  // ✅ إضافة خدمة جديدة
+  // ✅ Handle Add Service
   const handleAddService = () => {
     setEditingService(null);
     setShowModal(true);
   };
 
-  // ✅ تعديل خدمة
+  // ✅ Handle Edit Service
   const handleEditService = (service) => {
     setEditingService(service);
     setShowModal(true);
   };
 
-  // ✅ حذف خدمة
+  // ✅ Handle Delete Service
   const handleDeleteService = async (serviceId) => {
     try {
       await deleteService(`/api/services/${serviceId}`);
@@ -47,7 +48,7 @@ const LegalServiceList = () => {
     }
   };
 
-  // ✅ إعداد رؤوس الجدول
+  // ✅ Table Headers
   const headers = [
     { key: 'slug', text: 'رقم الخدمة' },
     { key: 'service_type', text: 'نوع الخدمة' },
@@ -56,6 +57,7 @@ const LegalServiceList = () => {
     { key: 'status', text: 'الحالة' },
   ];
 
+  // ✅ Custom Renderers for Columns
   const customRenderers = {
     service_type: (service) =>
       service.service_type && service.service_type.name ? (
@@ -78,6 +80,7 @@ const LegalServiceList = () => {
       ),
   };
 
+  // ✅ Add Button
   const renderAddButton = () => (
     <button
       onClick={handleAddService}
@@ -88,8 +91,12 @@ const LegalServiceList = () => {
   );
 
   return (
-    <>
-      <SectionHeader listName="الخحدمات" icon={ServiceSection} />
+    
+    <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
+      {/* Section Header */}
+      <SectionHeader listName="الخدمات" icon={ServiceSection} />
+
+      {/* Modal for Add/Edit Service */}
       {showModal && (
         <AddEditServiceModal
           show={showModal}
@@ -102,6 +109,7 @@ const LegalServiceList = () => {
         />
       )}
 
+      {/* Table Component */}
       <TableComponent
         data={services}
         headers={headers}
@@ -113,7 +121,7 @@ const LegalServiceList = () => {
         customRenderers={customRenderers}
         renderAddButton={renderAddButton}
       />
-    </>
+    </div>
   );
 };
 

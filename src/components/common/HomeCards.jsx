@@ -3,14 +3,14 @@ import fakeData from '../../Data';
 import { FaBullhorn, FaClock, FaTasks } from 'react-icons/fa';
 
 const cardStyle =
-  'bg-white dark:bg-gray-800 p-5 rounded-lg border border-light dark:border-dark shadow-md';
+  'bg-white dark:bg-avocat-blue-darker p-5 rounded-lg border border-light dark:border-dark shadow-md';
 const tableStyle =
-  'w-full text-center border-collapse rounded-lg overflow-x-auto';
-const theadStyle = 'bg-avocat-blue text-white text-sm md:text-base';
+  'w-full text-center border-collapse  rounded-lg overflow-x-auto';
+const theadStyle = 'bg-avocat-indigo text-white text-sm md:text-base';
 const thTdStyle =
   'px-4 py-2 border-b border-light dark:border-dark text-gray-700 dark:text-gray-200';
 const rowHoverStyle =
-  'hover:bg-avocat-orange-light dark:hover:bg-avocat-orange-dark';
+  'bg-avocat-blue hover:bg-avocat-orange-light dark:hover:bg-avocat-orange-dark';
 
 const CardWrapper = ({ title, icon, children }) => (
   <div className={cardStyle}>

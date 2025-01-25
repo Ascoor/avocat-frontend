@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
-import {
-  ProceduresTable,
-  AnnouncementsTable,
-  SessionsTable,
-  TasksTable,
-} from '../common/HomeCards';
 import axios from 'axios';
-import API_CONFIG from '../../config/config';
 import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
 import MainCard from '../common/MainCard';
 import AnalogClock from '../common/AnalogClock';
+import CalendarPage from '../calendar/CalendarPage';
+import DashboardCard01 from './dashboard/DashboardCard01';
+import DashboardCard02 from './dashboard/DashboardCard02';
+import DashboardCard03 from './dashboard/DashboardCard03';
+import DashboardCard04 from './dashboard/DashboardCard04';
+import DashboardCard05 from './dashboard/DashboardCard05';
+import DashboardCard06 from './dashboard/DashboardCard06';
 
 import {
   MainLawyers,
@@ -21,7 +21,8 @@ import {
   ServiceIcon,
 } from '../../assets/icons/index';
 import { LogoPatren } from '../../assets/images/index';
-import CalendarPage from '../calendar/CalendarPage';
+import API_CONFIG from '../../config/config';
+import GlobalLogo from '../common/GlobalLogo';
 
 moment.locale('ar');
 
@@ -48,7 +49,7 @@ const Home = () => {
   const fetchOfficeCount = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/all_count_office`,
+        `${API_CONFIG.baseURL}/api/all_count_office`
       );
       setCounts({
         clientCount: response.data.client_count || 0,
@@ -66,22 +67,22 @@ const Home = () => {
   const cardsData = [
     { count: counts.legalSessionCount, icon: MainSessions, label: 'الجلسات' },
     { count: counts.legCaseCount, icon: MainLegalCases, label: 'القضايا' },
-    { count: counts.serviceCount, icon: ServiceIcon, label: 'الخدمات' },
     { count: counts.procedureCount, icon: MainProcedures, label: 'الإجراءات' },
     { count: counts.clientCount, icon: MainClients, label: 'العملاء' },
-    { count: counts.lawyerCount, icon: MainLawyers, label: 'المحامون' },
   ];
 
   return (
-    <div className="container mx-auto py-6 px-4">
-      <div className="flex flex-col md:flex-row items-center justify-between bg-gradient-to-l from-indigo-600 via-purple-600 to-pink-600 text-white dark:bg-gradient-blue-dark rounded-lg shadow-2xl p-6 mb-8 transform hover:scale-105 transition-transform duration-500">
-        <img className={` w-auto h-32`} src={LogoPatren} />
-        <AnalogClock />
+    <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row justify-between bg-gray-100 border-b border-avocat-blue-light dark:border-avocat-orange shadow-md dark:bg-gradient-to-l dark:from-avocat-blue-darker dark:via-avocat-blue-darker dark:to-avocat-blue-dark items-center m-4 p-4 rounded-full">
+        <GlobalLogo size="lg" />
+        <div className="mt-4 sm:mt-0">
+          <AnalogClock />
+        </div>
       </div>
 
-      <div
-        className={`grid ${isMobile ? 'grid-cols-1' : isTablet ? 'grid-cols-2' : 'grid-cols-3 lg:grid-cols-6'} gap-8`}
-      >
+      {/* Main Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 pb-4">
         {cardsData.map((card, index) => (
           <MainCard
             key={index}
@@ -92,13 +93,17 @@ const Home = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
-        <ProceduresTable />
-        <AnnouncementsTable />
-        <SessionsTable />
-        <TasksTable />
+      {/* Dashboard Cards */}
+      <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 pb-4">
+        <DashboardCard01 />
+        <DashboardCard02 />
+        <DashboardCard03 />
+        <DashboardCard04 />
+        <DashboardCard05 />
+        <DashboardCard06 />
       </div>
 
+      {/* Calendar Section */}
       <div className="mt-10">
         <CalendarPage />
       </div>

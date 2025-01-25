@@ -31,7 +31,7 @@ const AnimatedRow = ({
       style={springProps}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="text-gray-700 dark:text-gray-300"
+      className="text-gray-700 dark:text-black "
     >
       {onView && (
         <td className="px-4 py-2 text-center">

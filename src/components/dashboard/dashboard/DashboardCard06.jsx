@@ -2,24 +2,24 @@ import React from 'react';
 import DoughnutChart from '../charts/DoughnutChart';
 
 // استيراد الأدوات
-import { tailwindConfig } from '../../../../utils/Utils';
+import { tailwindConfig } from '../../../utils/Utils';
 
 function DashboardCard06() {
   const chartData = {
-    labels: ['الدمام', 'جدة', 'الرياض'],
+    labels: ['القاهرة', 'الإسكندرية', 'المنصورة'],
     datasets: [
       {
-        label: 'الدول الأكثر تأثيراً',
-        data: [35, 30, 35],
+        label: 'المدن الأكثر انتشار في مصر',
+        data: [50, 30, 20], // توزيع القيم بين المدن
         backgroundColor: [
-          tailwindConfig().theme.colors.violet[500],
-          tailwindConfig().theme.colors.sky[500],
-          tailwindConfig().theme.colors.violet[800],
+          '#58a6ed4a', // القاهرة
+          '#995df669', // الإسكندرية
+          '#6040b4', // المنصورة
         ],
         hoverBackgroundColor: [
-          tailwindConfig().theme.colors.violet[600],
-          tailwindConfig().theme.colors.sky[600],
-          tailwindConfig().theme.colors.violet[900],
+          '#ccd3f4', // القاهرة
+          '#FF5722', // الإسكندرية
+          '#6040b4', // المنصورة
         ],
         borderWidth: 0,
       },
@@ -27,14 +27,13 @@ function DashboardCard06() {
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+    <div className="bg-gray-100 dark:bg-gradient-night shadow rounded-lg p-4 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
-          المدن الأكثر إنتشار
+          مقارنة انتشار المدن في مصر
         </h2>
       </header>
       {/* الرسم البياني المبني باستخدام Chart.js 3 */}
-      {/* يمكن تعديل خاصية الارتفاع لتغيير ارتفاع الرسم البياني */}
       <DoughnutChart data={chartData} width={389} height={260} />
     </div>
   );

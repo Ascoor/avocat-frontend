@@ -22,7 +22,7 @@ const GlobalModal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={onClose}>
+      <Dialog as="div" className="relative z-50 " onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -47,15 +47,21 @@ const GlobalModal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className={`w-full ${sizeClasses[size]} transform overflow-hidden rounded-2xl bg-indigo-100 text-avocat-blue-dark font-bold dark:bg-gradient-night p-8 shadow-2xl transition-all`}
+                className={`w-full ${sizeClasses[size]} transform overflow-hidden rounded-2xl bg-indigo-100  font-bold dark:bg-gradient-night p-8 shadow-2xl transition-all`}
               >
                 <div className="flex justify-between items-center border-b pb-4 mb-6">
-                  <Dialog.Title className="text-3xl font-bold  ">
+                  <Dialog.Title className="text-3xl dark:text-white text-avocat-orange font-bold  ">
                     {title}
                   </Dialog.Title>
                   <button
                     onClick={onClose}
-                    className="text-gray-400 hover:text-red-500"
+                      className="
+    text-avocat-orange 
+    dark:text-white 
+    hover:text-avocat-red 
+    dark:hover:text-avocat-orange
+    transition-colors 
+    duration-300"
                   >
                     <IoMdClose className="w-6 h-6" />
                   </button>

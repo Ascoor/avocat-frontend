@@ -12,7 +12,7 @@ const GlobalSpinner = () => {
   return (
     <div className="absolute inset-0 flex items-center justify-center z-50">
       {/* الطبقة الحاجبة */}
-      <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-md"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-xxl"></div>
       {/* Spinner */}
       <div className="spinner-container flex flex-wrap gap-2 relative">
         <div className="dot w-4 h-4 rounded-full bg-avocat-dot-1 dark:bg-avocat-dark-dot-1"></div>

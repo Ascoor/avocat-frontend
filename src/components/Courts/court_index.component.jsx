@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { JudgeIcon } from '../../assets/icons/index';
-import CourtType from './courtTools/CourtType';
-import CourtSubType from './courtTools/CourtSubType';
+import CourtType from './courtTools/CourtType'; 
 import CourtLevel from './courtTools/CourtLevel';
 import Court from './courtTools/Court';
 
 const CourtSetting = () => {
-  const [showAddCourtTypeModal, setShowAddCourtTypeModal] = useState(false);
-  const [showAddCourtSubTypeModal, setShowAddCourtSubTypeModal] =
-    useState(false);
+  const [showAddCourtTypeModal, setShowAddCourtTypeModal] = useState(false); 
   const [showAddCourtLevelModal, setShowAddCourtLevelModal] = useState(false);
   const [showAddCourtModal, setShowAddCourtModal] = useState(false);
 
@@ -21,7 +18,7 @@ const CourtSetting = () => {
         </div>
       </div>
 
-      <div className="flex justify-center space-x-4">
+      <div className="flex justify-center m-4 space-x-2">
         <button
           onClick={() => setShowAddCourtTypeModal(true)}
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700"
@@ -34,12 +31,7 @@ const CourtSetting = () => {
         >
           إضافة درجة المحكمة
         </button>
-        <button
-          onClick={() => setShowAddCourtSubTypeModal(true)}
-          className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-700"
-        >
-          إضافة نوع فرعي للمحكمة
-        </button>
+  
         <button
           onClick={() => setShowAddCourtModal(true)}
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700"
@@ -48,7 +40,7 @@ const CourtSetting = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <CourtLevel
           show={showAddCourtLevelModal}
           handleClose={() => setShowAddCourtLevelModal(false)}
@@ -57,10 +49,7 @@ const CourtSetting = () => {
           show={showAddCourtTypeModal}
           handleClose={() => setShowAddCourtTypeModal(false)}
         />
-        <CourtSubType
-          show={showAddCourtSubTypeModal}
-          handleClose={() => setShowAddCourtSubTypeModal(false)}
-        />
+ 
       </div>
 
       <Court

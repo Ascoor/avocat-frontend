@@ -1,4 +1,3 @@
-// Updated Guest Component
 import React, { useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import Login from '../components/auth/Login';
@@ -8,6 +7,7 @@ import { TeamWorkImage, LogoPatren } from '../assets/images';
 const HomePage = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false); // حالة تحميل الصورة
 
   const handleFormClose = () => {
     setShowLoginForm(false);
@@ -25,8 +25,8 @@ const HomePage = () => {
   };
 
   const imageAnimation = useSpring({
-    from: { transform: 'translateY(100%)', opacity: 0 },
-    to: { transform: 'translateY(0%)', opacity: 1 },
+    transform: isImageLoaded ? 'translateY(0%)' : 'translateY(100%)',
+    opacity: isImageLoaded ? 1 : 0,
     config: { duration: 1000 },
   });
 
@@ -36,12 +36,13 @@ const HomePage = () => {
         <div className="absolute bg-gradient-day dark:via-gray-800 dark:to-gray-700 inset-0"></div>
 
         {!showLoginForm && !showRegisterForm && (
-          <div className="z-10 text-center text-white p-4 flex flex-col items-center">
-            <animated.div style={imageAnimation} className="mb-6">
+          <div className="z-50 text-center text-white p-4 flex flex-col items-center">
+            <animated.div style={imageAnimation} className="mb-6 z-50">
               <img
                 src={TeamWorkImage}
                 alt="Team Work Image"
                 className="mx-auto object-cover rounded-lg shadow-lg"
+                onLoad={() => setIsImageLoaded(true)} // عند تحميل الصورة
                 style={{
                   maskImage: 'linear-gradient(to top, transparent, black)',
                 }}

@@ -6,6 +6,12 @@ export { default as favicon } from './legcaseAdd.ico';
 export { default as LegCaseDetailsIcon } from './legalmain.png';
 export { default as ClientAddIcon } from './clientadd.png';
 export { default as AdIcon } from './adv-icon.png';
+//sections
+
+export { default as ProcedurePlaceIcon } from './procedure-place.png';
+export { default as ProcedureIcon } from './procedure-icon.png';
+export { default as LegCaseSection } from './section/leg-case-section.png';
+export { default as CaseDetails } from './section/case-details.png';
 
 export { default as CourtIcon } from './case.png';
 export { default as LawyerIcon } from './lawyer.png';
@@ -24,4 +30,5 @@ export { default as MainProceduresIcon } from '../icons/MainProcedures.png';
 export { default as MainSessionsIcon } from '../icons/main-session-icon.png';
 export { default as MainLawyers } from '../icons/lawyers-icon.png';
 export { default as ClientSectionIcon } from '../icons/client-section.png';
+export { default as UnclientSectionIcon } from '../icons/unclient-icon.png';
 export { default as SearchSectionIcon } from '../icons/search-section.png';

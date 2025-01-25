@@ -1,37 +1,37 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
-import API_CONFIG from '../config/config';
+import API_CONFIG from '../../../config/config';
 
-import { ClientSectionIcon } from '../assets/icons/index';
-import SectionHeader from '../components/common/SectionHeader';
-import AddEditClient from '../components/ClientsAndUnclients/clients/AddEditClient';
-import TableComponent from '../components/common/TableComponent'; // ✅ مكون الجدول العالمي
+import { ClientSectionIcon } from '../../../assets/icons/index';
+import SectionHeader from '../../common/SectionHeader';
+import AddEditClient from '../../ClientsAndUnclients/clients/AddEditClient';
+import TableComponent from '../../common/TableComponent'; // ✅ مكون الجدول العالمي
 
 function ClientList() {
-  const [clients, setClients] = useState([]);
+  const [clients, setUnclients] = useState([]);
   const [selectedClient, setSelectedClient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // ✅ جلب بيانات العملاء
-  const fetchClients = useCallback(async () => {
+  // ✅ جلب بيانات عملاء
+  const fetchUnclients = useCallback(async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
-      setClients(response.data.clients || []);
+      setUnclients(response.data.clients || []);
     } catch (error) {
       console.error('Error fetching clients:', error);
     }
   }, []);
 
   useEffect(() => {
-    fetchClients();
-  }, [fetchClients]);
+    fetchUnclients();
+  }, [fetchUnclients]);
 
   // ✅ حذف عميل
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${API_CONFIG.baseURL}/api/clients/${id}`);
-      fetchClients();
+      fetchUnclients();
     } catch (error) {
       console.error('Error deleting client:', error);
     }
@@ -45,7 +45,7 @@ function ClientList() {
       await axios.put(`${API_CONFIG.baseURL}/api/clients/${id}`, {
         status: newStatus,
       });
-      fetchClients();
+      fetchUnclients();
     } catch (error) {
       console.error('Error toggling status:', error);
     }
@@ -98,11 +98,12 @@ function ClientList() {
   );
 
   return (
-    <>
-      {/* ✅ رأس القسم */}
+
+    <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
+            {/* ✅ رأس القسم */}
       <SectionHeader
         buttonName="عميل"
-        listName="العملاء"
+        listName="عملاء"
         icon={ClientSectionIcon}
       />
 
@@ -112,7 +113,7 @@ function ClientList() {
           client={selectedClient}
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
-          onSaved={fetchClients}
+          onSaved={fetchUnclients}
         />
       )}
 
@@ -128,7 +129,7 @@ function ClientList() {
         customRenderers={customRenderers}
         renderAddButton={renderAddButton} // ✅ إضافة زر الإضافة إلى الجدول
       />
-    </>
+    </div>
   );
 }
 

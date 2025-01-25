@@ -113,7 +113,8 @@ const Lawyers = () => {
   );
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    
+    <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
       <SectionHeader listName="المحامون" icon={LawyerIcon} />
 
       <TableComponent
