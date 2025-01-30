@@ -1,8 +1,8 @@
 import axios from 'axios';
 import API_CONFIG from '../../config/config';
 
-const     api = axios.create({
-  baseURL: `${API_CONFIG.baseURL}`,
+const api = axios.create({
+  baseURL: API_CONFIG.baseURL,
   withCredentials: true,
   headers: {
     Accept: 'application/json',
@@ -10,7 +10,7 @@ const     api = axios.create({
   },
 });
 
-// ✅ إضافة Interceptor لإضافة التوكن
+// Add Interceptor to attach token to every request
 api.interceptors.request.use((config) => {
   const token = JSON.parse(sessionStorage.getItem('token'));
   if (token) {

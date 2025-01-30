@@ -5,7 +5,7 @@ import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
 import API_CONFIG from '../../config/config';
 import Procedure from './LegalCaseTools/LegalCaseProcedures';
 import LegalSession from './LegalCaseTools/LegalCaseSessions';
-import LegalAd from './LegalCaseTools/LegalCaseAds';
+import LegalCaseAds from './LegalCaseTools/LegalCaseAds';
 import LegCaseClients from './LegalCaseTools/LegalCaseClients';
 import { CaseDetails } from '../../assets/icons';
 import LegalCaseCourts from './LegalCaseTools/LegCaseCourts';
@@ -135,7 +135,22 @@ export default function LegCaseDetail() {
         <div className="p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg mt-4">
           {activeTab === 'procedure' && <Procedure legCaseId={id} />}
           {activeTab === 'session' && <LegalSession legCaseId={id} />}
-          {activeTab === 'legalAd' && <LegalAd legCaseId={id} />}
+          {activeTab === 'legalAd' && <AdsModal
+  isOpen={showModal}
+  onClose={() => setShowModal(false)}
+  mode={modalMode}
+  initialData={selectedAd}
+  onSubmit={(data) => {
+    if (modalMode === "add") {
+      setLegalAds([...legalAds, { ...data, id: Date.now() }]); // إضافة إعلان جديد
+    } else if (modalMode === "edit") {
+      setLegalAds(legalAds.map((ad) => (ad.id === data.id ? data : ad))); // تعديل الإعلان
+    }
+    setShowModal(false);
+  }}
+/>
+}
+
         </div>
       </div>
 

@@ -16,8 +16,8 @@ const AnimatedRow = ({
   rowIndex,
   onEdit,
   onDelete,
-  headers,
   onView,
+  headers,
   customRenderers,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -31,7 +31,7 @@ const AnimatedRow = ({
       style={springProps}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="text-gray-700 dark:text-black "
+      className="text-gray-700 dark:text-black"
     >
       {onView && (
         <td className="px-4 py-2 text-center">
@@ -103,17 +103,21 @@ const TableComponent = ({
 
   useEffect(() => {
     const filterData = () => {
-      const lowercasedQuery = searchQuery.toLowerCase();
-      const filtered = data.filter((item) =>
-        headers.some((header) => {
-          const value = item[header.key];
-          return (
-            value && value.toString().toLowerCase().includes(lowercasedQuery)
+      const keywords = searchQuery.trim().toLowerCase().split(/\s+/); // تقسيم النص المدخل إلى كلمات منفصلة
+
+      // تصفية البيانات بناءً على الكلمات المفتاحية في الأعمدة المحددة
+      const filtered = data.filter((item) => {
+        return keywords.every((keyword) => {
+          return headers.some((header) =>
+            header.key !== 'actions' &&
+            item[header.key]?.toString().toLowerCase().includes(keyword) // البحث في أي مكان داخل النص
           );
-        }),
-      );
+        });
+      });
+
       setFilteredData(filtered);
     };
+
     filterData();
   }, [searchQuery, data, headers]);
 
@@ -137,7 +141,7 @@ const TableComponent = ({
         <div>
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="ابحث في الموكل، الموضوع، رقم الملف، نوع القضية"
             className="border rounded-lg px-4 py-2 w-full md:w-64 focus:ring focus:ring-violet-400 dark:bg-gray-700 dark:text-gray-300"
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -148,14 +152,14 @@ const TableComponent = ({
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="bg-violet-600 text-white">
               <tr>
-                {onView && <th className="px-4 py-2 text-center">View</th>}
+                {onView && <th className="px-4 py-2 text-center">عرض</th>}
                 {headers.map((header) => (
                   <th key={header.key} className="px-4 py-2 text-center">
                     {header.text}
                   </th>
                 ))}
-                <th className="px-4 py-2 text-center">Edit</th>
-                <th className="px-4 py-2 text-center">Delete</th>
+                <th className="px-4 py-2 text-center">تعديل</th>
+                <th className="px-4 py-2 text-center">حذف</th>
               </tr>
             </thead>
             <tbody>
@@ -175,7 +179,7 @@ const TableComponent = ({
           </table>
         </div>
       ) : (
-        <p className="text-center text-gray-500 mt-4">No data available.</p>
+        <p className="text-center text-gray-500 mt-4">لا توجد بيانات.</p>
       )}
       <div className="flex justify-between items-center mt-4">
         <button
@@ -183,17 +187,17 @@ const TableComponent = ({
           disabled={currentPage === 1}
           className="px-4 py-2 bg-gray-300 rounded-lg disabled:opacity-50 hover:bg-violet-500 hover:text-white"
         >
-          Previous
+          سابِق
         </button>
         <span>
-          Page {currentPage} of {totalPages}
+          الصفحة {currentPage} من {totalPages}
         </span>
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           className="px-4 py-2 bg-gray-300 rounded-lg disabled:opacity-50 hover:bg-violet-500 hover:text-white"
         >
-          Next
+          التالي
         </button>
       </div>
     </div>

@@ -1,21 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAlert } from '../../context/AlertContext';
-import useLegalCaseApi from '../../services/api/legalCases';
+import {
+  getLegcaseTypes,
+  getLegcaseSubTypes,
+  createLegcaseType,
+  createLegcaseSubType,
+  updateLegcaseType,
+  updateLegcaseSubType,
+  deleteLegcaseType,
+  deleteLegcaseSubType,
+} from '../../services/api/legalCases';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import SectionHeader from '../common/SectionHeader';
 import { LegCaseIcon } from '../../assets/icons';
 
-const LegcaseTypes = () => {
-    const {
-        getLegcaseTypes,
-        getLegcaseSubTypes,
-        createLegcaseType,
-        createLegcaseSubType,
-        updateLegcaseType,
-        updateLegcaseSubType,
-        deleteLegcaseType,
-        deleteLegcaseSubType,
-    } = useLegalCaseApi(); 
+const LegcaseTypes = () => { 
     const [legcaseTypes, setLegcaseTypes] = useState([]); // تخزين أنواع القضايا
     const [legcaseSubTypes, setLegcaseSubTypes] = useState([]); // تخزين الأنواع الفرعية للقضايا
     const [currentPage, setCurrentPage] = useState(1); // الصفحة الحالية لأنواع القضايا

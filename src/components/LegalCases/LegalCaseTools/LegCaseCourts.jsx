@@ -1,12 +1,11 @@
   import { useState,useEffect } from 'react';
   import { BiPlusCircle, BiMinusCircle } from 'react-icons/bi';  
-import  useLegalCaseApi  from '../../../services/api/legalCases';
+import  { addLegalCaseCourts, getCourts,removeLegalCaseCourt }  from '../../../services/api/legalCases';
 import { useAlert } from '../../../context/AlertContext';
 import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
    
 
-  const LegalCaseCourts = ({ legCase, fetchLegCase }) => {
-    const { addLegalCaseCourts, getCourts,removeLegalCaseCourt } = useLegalCaseApi();
+  const LegalCaseCourts = ({ legCase, fetchLegCase }) => { 
     const [courtLevels, setCourtLevels] = useState([]);
     const [courts, setCourts] = useState([]);
     const [filteredCourts, setFilteredCourts] = useState([]);

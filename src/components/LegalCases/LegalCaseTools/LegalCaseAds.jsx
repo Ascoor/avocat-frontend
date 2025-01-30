@@ -1,200 +1,171 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
-import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
-import arEG from 'date-fns/locale/ar-EG';
+import { useEffect, useState } from "react";
+import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
+import AdsModal from "./Modals/AdsModal";
+import { getLegalAds, deleteLegalAd } from "../../../services/api/legalCases";
+import GlobalConfirmDeleteModal from "../../common/GlobalConfirmDeleteModal";
 
-import API_CONFIG from '../../../config/config';
-import useAuth from '../../auth/AuthUser';
-
-registerLocale('ar_eg', arEG);
-setDefaultLocale('ar_eg');
-
-const LegalCaseAds = ({ legCaseId }) => {
-  const { getUser } = useAuth();
-  const [alert, setAlert] = useState(null);
-  const [showAddLegalAdModal, setShowAddLegalAdModal] = useState(false);
-  const [modalMode, setModalMode] = useState('');
-  const [legalAdId, setLegalAdId] = useState(null);
+const LegalCaseAds = ({ legCase }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState("");
+  const [selectedAd, setSelectedAd] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [adToDelete, setAdToDelete] = useState(null);
   const [legalAds, setLegalAds] = useState([]);
-  const [courts, setCourts] = useState([]);
-  const [lawyers, setLawyers] = useState([]);
-  const [legalAdTypes, setLegalAdTypes] = useState([]);
-  const [selectedSendDate, setSelectedSendDate] = useState(null);
-  const [selectedRecivedDate, setSelectedRecivedDate] = useState(null);
-  const [selectedSendLawyer, setSelectedSendLawyer] = useState('');
-  const [selectedDescription, setSelectedDescription] = useState('');
-  const [selectedCourt, setSelectedCourt] = useState('');
-  const [selectedLegalAdType, setSelectedLegalAdType] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [selectedResults, setSelectedResults] = useState('');
-  const [selectedCost, setSelectedCost] = useState('');
-  const [selectedCost2, setSelectedCost2] = useState('');
-
-  const user = getUser();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchLegalAds = async () => {
+      try {
+        setError(null);
+        if (legCase && legCase.id) {
+          const response = await getLegalAds();
+          if (response.data && response.data.data) {
+            const filteredAds = response.data.data.filter((ad) => ad.leg_case_id === legCase.id);
+            setLegalAds(filteredAds);
+          } else {
+            throw new Error("Unexpected data format");
+          }
+        } else {
+          throw new Error("Case ID not found");
+        }
+      } catch (error) {
+        console.error("Error fetching legal ads:", error);
+        setError("تعذر تحميل الإعلانات القانونية. الرجاء المحاولة لاحقًا.");
+      }
+    };
     fetchLegalAds();
-    fetchCourts();
-    fetchLawyers();
-    fetchLegalAdTypes();
-  }, [legCaseId]);
+  }, [legCase]);
 
-  const fetchLegalAds = async () => {
+  const handleAddAd = () => {
+    setModalMode("add");
+    setSelectedAd(null);
+    setShowModal(true);
+  };
+
+  const handleEditAd = (ad) => {
+    setModalMode("edit");
+    setSelectedAd(ad);
+    setShowModal(true);
+  };
+
+  const handleDeleteAd = (ad) => {
+    setAdToDelete(ad);
+    setConfirmDelete(true);
+  };
+
+  const confirmDeleteAd = async () => {
     try {
-      const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal_ads?legCaseId=${legCaseId}`,
-      );
-      setLegalAds(response.data);
+      if (adToDelete) {
+        await deleteLegalAd(adToDelete.id);
+        setLegalAds((prevAds) => prevAds.filter((ad) => ad.id !== adToDelete.id));
+        setAdToDelete(null);
+        setConfirmDelete(false);
+      }
     } catch (error) {
-      console.error('Error fetching legal ads:', error);
+      console.error("Error deleting ad:", error);
+      setError("حدث خطأ أثناء حذف الإعلان. الرجاء المحاولة لاحقًا.");
     }
-  };
-
-  const fetchCourts = async () => {
-    try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/courts`);
-      setCourts(response.data);
-    } catch (error) {
-      console.error('Error fetching courts:', error);
-    }
-  };
-
-  const fetchLawyers = async () => {
-    try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/lawyers`);
-      setLawyers(response.data);
-    } catch (error) {
-      console.error('Error fetching lawyers:', error);
-    }
-  };
-
-  const fetchLegalAdTypes = async () => {
-    try {
-      const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal_ad_types`,
-      );
-      setLegalAdTypes(response.data);
-    } catch (error) {
-      console.error('Error fetching legal ad types:', error);
-    }
-  };
-
-  const handleAddLegalAd = () => {
-    setModalMode('add');
-    setShowAddLegalAdModal(true);
-  };
-
-  const handleModalClose = () => {
-    setShowAddLegalAdModal(false);
-    setModalMode('');
   };
 
   return (
-    <div className="p-6 bg-lightBg dark:bg-darkBg text-lightText dark:text-darkText rounded-lg shadow-lg">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">الإعلانات القانونية</h2>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
+      
+      {/* ✅ Header */}
+      <div className="p-6 shadow-lg flex justify-between items-center bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-gray-800 dark:to-gray-700 text-white rounded-b-lg">
+        <h2 className="text-2xl font-bold">📜 الإعلانات القانونية</h2>
         <button
-          className="flex items-center bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md"
-          onClick={handleAddLegalAd}
+          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105"
+          onClick={handleAddAd}
         >
-          <BiPlusCircle className="mr-2" />
-          إضافة إعلان قانوني
+          <BiPlusCircle className="text-xl" />
+          <span>إضافة إعلان قانوني</span>
         </button>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full table-auto bg-white dark:bg-gray-800 rounded-lg shadow-md">
-          <thead className="bg-gray-200 dark:bg-gray-700">
-            <tr>
-              <th className="px-4 py-2 text-left">نوع الإعلان</th>
-              <th className="px-4 py-2 text-left">تاريخ الإرسال</th>
-              <th className="px-4 py-2 text-left">تاريخ الاستلام</th>
-              <th className="px-4 py-2 text-left">المحامي المرسل</th>
-              <th className="px-4 py-2 text-left">المحامي المستلم</th>
-              <th className="px-4 py-2 text-left">الحالة</th>
-              <th className="px-4 py-2 text-center">إجراءات</th>
-            </tr>
-          </thead>
-          <tbody>
-            {legalAds.map((ad) => (
-              <tr
-                key={ad.id}
-                className="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <td className="px-4 py-2">{ad.legal_ad_type?.name || '-'}</td>
-                <td className="px-4 py-2">{ad.send_date || '-'}</td>
-                <td className="px-4 py-2">{ad.receive_date || '-'}</td>
-                <td className="px-4 py-2">{ad.lawyer_send?.name || '-'}</td>
-                <td className="px-4 py-2">{ad.lawyer_receive?.name || '-'}</td>
-                <td className="px-4 py-2">{ad.status || '-'}</td>
-                <td className="px-4 py-2 text-center flex justify-center gap-2">
-                  <button
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded"
-                    onClick={() => console.log('Edit')}
-                  >
-                    <BiPencil />
-                  </button>
-                  <button
-                    className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
-                    onClick={() => console.log('Delete')}
-                  >
-                    <BiTrash />
-                  </button>
-                </td>
+      {error && (
+        <div className="mb-4 text-red-500 font-semibold text-center mt-4">{error}</div>
+      )}
+
+      {/* ✅ جدول الإعلانات */}
+      <div className="p-6">
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            <thead>
+              <tr className="bg-blue-500 dark:bg-gray-900 text-white">
+                <th className="px-4 py-3 text-center dark:text-gray-300">نوع الإعلان</th>
+                <th className="px-4 py-3 text-center dark:text-gray-300">تاريخ التسليم</th>
+                <th className="px-4 py-3 text-center dark:text-gray-300">تاريخ الاستلام</th>
+                <th className="px-4 py-3 text-center dark:text-gray-300">المحكمة</th>
+                <th className="px-4 py-3 text-center dark:text-gray-300">الحالة</th>
+                <th className="px-4 py-3 text-center dark:text-gray-300">إجراءات</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {legalAds.length > 0 ? (
+                legalAds.map((ad) => (
+                  <tr
+                    key={ad.id}
+                    className="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                  >
+                    <td className="px-4 py-3 text-center dark:text-gray-200">{ad.legal_ad_type?.name || "-"}</td>
+                    <td className="px-4 py-3 text-center dark:text-gray-200">{ad.send_date || "-"}</td>
+                    <td className="px-4 py-3 text-center dark:text-gray-200">{ad.receive_date || "-"}</td>
+                    <td className="px-4 py-3 text-center dark:text-gray-200">{ad.court?.name || "-"}</td>
+                    <td className="px-4 py-3 text-center dark:text-gray-200">{ad.status || "-"}</td>
+                    <td className="px-4 py-3 text-center flex justify-center gap-3">
+                      <button
+                        className="text-green-500 hover:text-green-700 transition-all transform hover:scale-110"
+                        onClick={() => handleEditAd(ad)}
+                      >
+                        <BiPencil size={22} />
+                      </button>
+                      <button
+                        className="text-red-500 hover:text-red-700 transition-all transform hover:scale-110"
+                        onClick={() => handleDeleteAd(ad)}
+                      >
+                        <BiTrash size={22} />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center py-4 text-gray-600 dark:text-gray-400">
+                    🚫 لا توجد إعلانات قانونية مرتبطة بهذه القضية.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      {/* Modal */}
-      {showAddLegalAdModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
-            <div className="p-4 border-b border-gray-300 dark:border-gray-700">
-              <h3 className="text-lg font-semibold">
-                {modalMode === 'add'
-                  ? 'إضافة إعلان قانوني'
-                  : 'تعديل إعلان قانوني'}
-              </h3>
-            </div>
-            <div className="p-4">
-              {/* Form fields */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium">نوع الإعلان</label>
-                <select
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg"
-                  value={selectedLegalAdType}
-                  onChange={(e) => setSelectedLegalAdType(e.target.value)}
-                >
-                  <option value="">اختر نوع الإعلان</option>
-                  {legalAdTypes.map((type) => (
-                    <option key={type.id} value={type.id}>
-                      {type.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex justify-end">
-                <button
-                  className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg"
-                  onClick={handleModalClose}
-                >
-                  إلغاء
-                </button>
-                <button
-                  className="ml-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
-                  onClick={() => console.log('Save')}
-                >
-                  {modalMode === 'add' ? 'إضافة' : 'حفظ'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* ✅ Ads Modal */}
+      {showModal && (
+        <AdsModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          mode={modalMode}
+          initialData={selectedAd}
+          onSubmit={(data) => {
+            if (modalMode === "add") {
+              setLegalAds([...legalAds, data]);
+            } else if (modalMode === "edit") {
+              setLegalAds(legalAds.map((ad) => (ad.id === data.id ? data : ad)));
+            }
+            setShowModal(false);
+          }}
+        />
+      )}
+
+      {/* ✅ Confirmation Modal */}
+      {confirmDelete && (
+        <GlobalConfirmDeleteModal
+          isOpen={confirmDelete}
+          onClose={() => setConfirmDelete(false)}
+          onConfirm={confirmDeleteAd}
+          message={`هل تريد حذف الإعلان ${adToDelete?.legal_ad_type?.name || ""}؟`}
+        />
       )}
     </div>
   );

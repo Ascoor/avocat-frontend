@@ -7,13 +7,14 @@ import {   Routes, Route } from "react-router-dom";
 import AuthWrapper from "./pages/DashboardPage";
 import HomePage from "./pages/HomePage";
 import useAuth from "./components/auth/AuthUser";
+ 
 import { SpinnerProvider } from "./context/SpinnerContext";
 import './App.css';
 
 const App = () => {
   const { getToken } = useAuth();
 
-  return (
+  return ( 
     <ThemeProvider>
       <SpinnerProvider>
         <SidebarProvider>
@@ -24,7 +25,7 @@ const App = () => {
       
         </SidebarProvider>
       </SpinnerProvider>
-    </ThemeProvider>
+    </ThemeProvider> 
   );
 };
 

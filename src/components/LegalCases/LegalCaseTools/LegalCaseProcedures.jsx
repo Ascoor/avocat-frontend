@@ -1,65 +1,99 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi'; 
-import API_CONFIG from '../../../config/config';
-import useAuth from '../../auth/AuthUser';
+import React, { useEffect, useState } from 'react';
+import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
+import {
+  getProceduresByLegCaseId,
+  deleteProcedure,
+} from '../../../services/api/procedures';
+import ProcedureModal from './Modals/ProcedureModal';
+import ProcedureDetailsModal from './Modals/ProcedureDetailsModal';
+import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
+import { useAlert } from '../../../context/AlertContext';
 
 const LegalCaseProcedures = ({ legCaseId }) => {
-  const { getUser } = useAuth();
-  const [alert, setAlert] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
   const [procedures, setProcedures] = useState([]);
-  const [selectedTitle, setSelectedTitle] = useState('');
-  const [showAddProcedureModal, setShowAddProcedureModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({});
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedProcedure, setSelectedProcedure] = useState(null);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [procedureToDelete, setProcedureToDelete] = useState(null);
+  const { triggerAlert } = useAlert();
 
-  const user = getUser();
+  // Fetch procedures
+  const fetchProcedures = async () => {
+    try {
+      const response = await getProceduresByLegCaseId(legCaseId);
+      setProcedures(response.data);
+    } catch (error) {
+      console.error('Error fetching procedures:', error);
+      triggerAlert('error', 'حدث خطأ أثناء جلب البيانات.');
+    }
+  };
 
   useEffect(() => {
-    const fetchProcedures = async () => {
-      try {
-        const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/procedures/leg-case/${legCaseId}`,
-        );
-        setProcedures(response.data);
-      } catch (error) {
-        console.log('Error fetching procedures:', error);
-      }
-    };
     fetchProcedures();
   }, [legCaseId]);
 
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+  const handleRowClick = (procedure) => {
+    setSelectedProcedure(procedure);
+    setShowModal(false); // Close modal if open
+  };
+
+  const handleAddProcedure = () => {
+    setIsEditMode(false);
+    setModalData({});
+    setSelectedProcedure(null); // Close details modal
+    setShowModal(true);
+  };
+
+  const handleEditProcedure = (procedure) => {
+    setIsEditMode(true);
+    setModalData(procedure);
+    setSelectedProcedure(null); // Close details modal
+    setShowModal(true);
+  };
+
+  const handleDeleteClick = (procedure) => {
+    setProcedureToDelete(procedure); // تحديد الإجراء للحذف
+    setShowConfirmDelete(true); // فتح نافذة التأكيد
+  };
+
+  const handleConfirmDelete = async () => {
+    if (procedureToDelete) {
+      try {
+        await deleteProcedure(procedureToDelete.id); // حذف الإجراء من الخادم
+        triggerAlert('success', 'تم حذف الإجراء بنجاح'); // إظهار رسالة النجاح
+        fetchProcedures(); // Refresh procedures after deletion
+      } catch (error) {
+        console.error('Error deleting procedure:', error);
+        triggerAlert('error', 'حدث خطأ أثناء حذف الإجراء');
+      } finally {
+        setShowConfirmDelete(false);
+        setProcedureToDelete(null);
+      }
+    }
+  };
 
   return (
-    <div
-      className={` 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} min-h-screen`}
-    >
+    <div className="min-h-screen bg-lightBg dark:bg-darkBg text-gray-900 dark:text-gray-100">
       {/* Header */}
-      <div className="p-4 shadow-md flex justify-between items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-        <h1 className="text-lg font-bold">إجراءات القضايا القانونية</h1>
-      </div>
-
-      {/* Alert Message */}
-      {showAlert && alert && (
-        <div className="p-4 bg-green-500 text-white rounded-lg shadow-md my-4 mx-6">
-          {alert}
-        </div>
-      )}
-
-      {/* Procedures Table */}
-      <div className="p-6">
+      <div className="p-4 shadow-md flex justify-between items-center bg-gradient-day dark:bg-gradient-night text-white rounded-b-header">
+        <h1 className="text-lg font-bold">إجراءات القضية</h1>
         <button
-          onClick={() => setShowAddProcedureModal(true)}
-          className="flex items-center bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition"
+          onClick={handleAddProcedure}
+          className="flex items-center bg-gradient-blue-button hover:bg-gradient-red-button text-white px-4 py-2 rounded-full shadow-md hover:scale-102 transform transition-all duration-200 ease-in-out"
         >
           <BiPlusCircle className="mr-2" />
           إضافة إجراء
         </button>
+      </div>
 
+      {/* Procedures Table */}
+      <div className="p-6">
         <div className="overflow-x-auto mt-4">
-          <table className="min-w-full bg-white rounded-lg shadow-md overflow-hidden">
+          <table className="min-w-full bg-white dark:bg-gradient-blue-dark rounded-lg shadow-base overflow-hidden">
             <thead>
-              <tr className="bg-blue-600 text-white">
+              <tr className="bg-avocat-indigo dark:bg-avocat-blue text-white">
                 <th className="px-4 py-2 text-center">نوع الإجراء</th>
                 <th className="px-4 py-2 text-center">المحامي</th>
                 <th className="px-4 py-2 text-center">تاريخ البدء</th>
@@ -71,7 +105,8 @@ const LegalCaseProcedures = ({ legCaseId }) => {
               {procedures.map((procedure) => (
                 <tr
                   key={procedure.id}
-                  className="border-b hover:bg-gray-100 transition"
+                  className="border-b hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer"
+                  onClick={() => handleRowClick(procedure)}
                 >
                   <td className="px-4 py-2 text-center">
                     {procedure.procedure_type?.name || '-'}
@@ -79,22 +114,24 @@ const LegalCaseProcedures = ({ legCaseId }) => {
                   <td className="px-4 py-2 text-center">
                     {procedure.lawyer?.name || '-'}
                   </td>
-                  <td className="px-4 py-2 text-center">
-                    {procedure.date_start}
-                  </td>
-                  <td className="px-4 py-2 text-center">
-                    {procedure.date_end}
-                  </td>
+                  <td className="px-4 py-2 text-center">{procedure.date_start}</td>
+                  <td className="px-4 py-2 text-center">{procedure.date_end}</td>
                   <td className="px-4 py-2 text-center flex justify-center space-x-2">
                     <button
-                      onClick={() => console.log('Edit')}
-                      className="text-blue-500 hover:text-blue-700"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEditProcedure(procedure);
+                      }}
+                      className="text-blue-500 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-500 transition"
                     >
                       <BiPencil />
                     </button>
                     <button
-                      onClick={() => console.log('Delete')}
-                      className="text-red-500 hover:text-red-700"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteClick(procedure);
+                      }}
+                      className="text-red-500 dark:text-red-300 hover:text-red-700 dark:hover:text-red-500 transition"
                     >
                       <BiTrash />
                     </button>
@@ -106,33 +143,34 @@ const LegalCaseProcedures = ({ legCaseId }) => {
         </div>
       </div>
 
-      {/* Modal for Adding Procedure */}
-      {showAddProcedureModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-            <h2 className="text-xl font-bold mb-4">إضافة إجراء</h2>
-            <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="اسم الإجراء"
-                value={selectedTitle}
-                onChange={(e) => setSelectedTitle(e.target.value)}
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300"
-              />
-            </div>
-            <div className="flex justify-end mt-4">
-              <button
-                onClick={() => setShowAddProcedureModal(false)}
-                className="px-4 py-2 bg-gray-300 rounded mr-2"
-              >
-                إلغاء
-              </button>
-              <button className="px-4 py-2 bg-blue-500 text-white rounded">
-                حفظ
-              </button>
-            </div>
-          </div>
-        </div>
+      {/* Modals */}
+      {selectedProcedure && (
+        <ProcedureDetailsModal
+          isOpen={!!selectedProcedure}
+          onClose={() => setSelectedProcedure(null)}
+          procedure={selectedProcedure}
+        />
+      )}
+      {showModal && (
+        <ProcedureModal
+          legalCaseId={legCaseId}
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          onSubmit={() => {
+            fetchProcedures();
+            setShowModal(false);
+          }}
+          initialData={modalData}
+          isEdit={isEditMode}
+        />
+      )}
+      {showConfirmDelete && (
+        <GlobalConfirmDeleteModal
+          isOpen={showConfirmDelete}
+          onClose={() => setShowConfirmDelete(false)}
+          onConfirm={handleConfirmDelete}
+          itemName={procedureToDelete?.procedure_type?.name || 'الإجراء'}
+        />
       )}
     </div>
   );

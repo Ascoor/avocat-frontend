@@ -14,9 +14,15 @@ function DashboardCard02() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4">
-      <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">توزيع القضايا حسب المحامي</h3>
-      <Pie data={chartData} />
+    <div className="bg-gray-100 dark:bg-gradient-night shadow-lg rounded-lg p-4 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
+      <div className="flex justify-between items-center mb-2">
+        <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+          توزيع القضايا حسب المحامي
+        </h3>
+      </div>
+      <div className="flex justify-center">
+        <Pie data={chartData} />
+      </div>
     </div>
   );
 }
