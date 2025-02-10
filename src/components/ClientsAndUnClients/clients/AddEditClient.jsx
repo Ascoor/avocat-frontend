@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
-import axios from 'axios';
-import API_CONFIG from '../../../config/config';
+import moment from 'moment'; 
 import GlobalModal from '../../common/GlobalModal';
+import api from '../../../services/api/axiosConfig';
+import { useAlert } from '../../../context/AlertContext';
 
 const AddEditClient = ({ client = {}, isOpen, onClose, onSaved }) => {
   const [formData, setFormData] = useState({
@@ -17,12 +17,14 @@ const AddEditClient = ({ client = {}, isOpen, onClose, onSaved }) => {
       : new Date(),
     address: client?.address ?? '',
     religion: client?.religion ?? '',
+      nationality: client?.nationality ?? '',
     work: client?.work ?? '',
     email: client?.email ?? '',
     phone_number: client?.phone_number ?? '',
     emergency_number: client?.emergency_number ?? '',
   });
 
+  const { triggerAlert } = useAlert();
   useEffect(() => {
     setFormData({
       ...client,
@@ -49,17 +51,18 @@ const AddEditClient = ({ client = {}, isOpen, onClose, onSaved }) => {
 
     try {
       if (client.id) {
-        await axios.put(
-          `${API_CONFIG.baseURL}/api/clients/${client.id}`,
+        await api.put(`/api/clients/${client.id}`,
           clientData,
         );
+        
       } else {
-        await axios.post(`${API_CONFIG.baseURL}/api/clients`, clientData);
+        await api.post(`/api/clients`, clientData);
       }
       onSaved();
+      triggerAlert('success', 'تم حفظ العميل بنجاح');
       onClose();
     } catch (error) {
-      console.error('Error saving client:', error);
+      triggerAlert('error', 'حدث خطاء');
     }
   };
 
@@ -76,6 +79,7 @@ const AddEditClient = ({ client = {}, isOpen, onClose, onSaved }) => {
           { name: 'identity_number', label: 'رقم الهوية', type: 'text' },
           { name: 'address', label: 'العنوان', type: 'text' },
           { name: 'religion', label: 'الديانة', type: 'text' },
+          { name: 'nationality', label: 'الجنسية', type: 'text' },
           { name: 'work', label: 'الوظيفة', type: 'text' },
           { name: 'email', label: 'البريد الإلكتروني', type: 'email' },
           { name: 'phone_number', label: 'رقم الهاتف', type: 'text' },

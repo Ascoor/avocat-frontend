@@ -1,111 +1,193 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
-import API_CONFIG from '../../../config/config';
+import { addLegalCaseClients, removeLegalCaseClient } from '../../../services/api/legalCases';
+import { getClients } from '../../../services/api/clients';
+import { useAlert } from '../../../context/AlertContext';
+import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
 
-export default function LegalCaseClients({ legCaseId }) {
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcaseClients }) {
+  const { triggerAlert } = useAlert();
+  const [clientsData, setClientsData] = useState([]); 
+  const [clients, setClients] = useState([]); 
+  const [legCaseNewClients, setLegCaseNewClients] = useState([]); 
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const [filteredClients, setFilteredClients] = useState([]); 
+  const [activeIndex, setActiveIndex] = useState(null); 
+  const [currentPage, setCurrentPage] = useState(1); 
+  const clientsPerPage = 5; 
 
-  const [legCaseClients, setLegCaseClients] = useState([]);
-  const [legCaseNewClients, setLegCaseNewClients] = useState([]);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [clientToDelete, setClientToDelete] = useState({ id: null, name: '' }); 
+
+  const openDeleteModal = (clientId, clientName) => {
+    setClientToDelete({ id: clientId, name: clientName });
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setClientToDelete({ id: null, name: '' });
+  };
+
+  const handleDeleteClient = async () => {
+    if (!clientToDelete.id) return;
+
+    try {
+      await removeLegalCaseClient(legCaseId, clientToDelete.id);
+      triggerAlert('success', 'تم حذف الموكل بنجاح.');
+      fetchLegcaseClients(); 
+    } catch (error) {
+      triggerAlert('error', 'حدث خطأ أثناء حذف الموكل.');
+    } finally {
+      closeDeleteModal(); 
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      const clientsResponse = await getClients();
+      const fetchedClients = clientsResponse.data.clients;
+      setClientsData(Array.isArray(fetchedClients) ? fetchedClients : []);
+      setClients(Array.isArray(fetchedClients) ? fetchedClients : []);
+    } catch (error) {
+      triggerAlert('error', 'حدث خطأ أثناء جلب بيانات العملاء.');
+      setClients([]);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}`,
-        );
-        const { clients } = response.data.leg_case; // البيانات المرتبطة بالعملاء
-        setLegCaseClients(clients);
-      } catch (error) {
-        console.error('Error fetching legal case data:', error);
-      }
-    };
-
     fetchData();
   }, [legCaseId]);
 
+  useEffect(() => {
+    if (searchQuery && Array.isArray(clients)) {
+      const results = clients
+        .filter(client => client.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        .slice(0, 5); 
+      setFilteredClients(results);
+    } else {
+      setFilteredClients([]);
+    }
+  }, [searchQuery, clients]);
+
   const handleAddNewClient = () => {
-    setLegCaseNewClients((prevClients) => [...prevClients, { client_id: '' }]);
+    setLegCaseNewClients(prevClients => [...prevClients, { client_id: '', name: '' }]);
   };
 
-  const handleRemoveNewClient = (index) => {
-    setLegCaseNewClients((prevClients) =>
-      prevClients.filter((_, i) => i !== index),
-    );
+  const handleRemoveNewClient = index => {
+    setLegCaseNewClients(prevClients => prevClients.filter((_, i) => i !== index));
   };
 
   const handleNewClientChange = (e, index) => {
     const updatedClients = [...legCaseNewClients];
-    updatedClients[index].client_id = e.target.value;
+    updatedClients[index].name = e.target.value;
     setLegCaseNewClients(updatedClients);
+    setSearchQuery(e.target.value);
+    setActiveIndex(index);
+  };
+
+  const handleSelectClient = (client, index) => {
+    if (legcaseClients.some(existingClient => existingClient.id === client.id)) {
+      triggerAlert('error', 'هذا الموكل مضاف بالفعل.');
+      return;
+    }
+    const updatedClients = [...legCaseNewClients];
+    updatedClients[index] = { client_id: client.id, name: client.name };
+    setLegCaseNewClients(updatedClients);
+    setSearchQuery('');
+    setActiveIndex(null);
   };
 
   const handleAddLegCaseClients = async () => {
+    const validClients = legCaseNewClients.filter(client => client.client_id);
+
+    if (validClients.length === 0) {
+      triggerAlert('error', 'يجب اختيار موكل قبل الإضافة.');
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        `${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}/add_clients`,
-        {
-          clients: legCaseNewClients.filter((client) => client.client_id),
-        },
-      );
-      setSuccess(response.data.message);
-      setError('');
-      setLegCaseClients((prevClients) => [
-        ...prevClients,
-        ...legCaseNewClients.map((client) => ({
-          ...client,
-          name: client.client_id, // أضف بيانات إضافية إذا كانت موجودة
-        })),
-      ]);
+      await addLegalCaseClients(legCaseId, validClients);
+      triggerAlert('success', 'تمت إضافة الموكلين بنجاح.');
       setLegCaseNewClients([]);
+      fetchLegcaseClients(); 
     } catch (error) {
-      setError('Error adding clients: ' + error.message);
-      setSuccess('');
+      triggerAlert('error', 'حدث خطأ أثناء إضافة الموكلين.');
     }
   };
 
-  const handleRemoveClient = (clientId) => {
-    axios
-      .delete(
-        `${API_CONFIG.baseURL}/api/legal-cases/${legCaseId}/remove_client/${clientId}`,
-      )
-      .then(() => {
-        setLegCaseClients((prevClients) =>
-          prevClients.filter((client) => client.id !== clientId),
-        );
-      })
-      .catch((error) => {
-        console.error('Error removing client:', error);
-      });
+  const handleRemoveClient = async (clientId) => {
+    try {
+      await removeLegalCaseClient(legCaseId, clientId);
+      triggerAlert('success', 'تم حذف الموكل بنجاح.');
+      fetchLegcaseClients(); 
+    } catch (error) {
+      triggerAlert('error', 'حدث خطأ أثناء حذف الموكل.');
+    }
   };
+
+  const indexOfLastClient = currentPage * clientsPerPage;
+  const indexOfFirstClient = indexOfLastClient - clientsPerPage;
+  const currentClients = legcaseClients.slice(indexOfFirstClient, indexOfLastClient);
+  const totalPages = Math.ceil(legcaseClients.length / clientsPerPage);
 
   return (
     <div className="container mx-auto p-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
-      <div className="flex flex-col md:flex-row justify-center  items-center mb-6">
-        <h3 className="text-2xl font-bold text-avocat-indigo-dark  dark:text-avocat-orange">
-          بيانات الموكل
-        </h3>
-      </div>
+      <h3 className="text-2xl font-bold text-avocat-indigo-dark dark:text-avocat-orange mb-6 text-center">
+        بيانات الموكل
+      </h3>
 
-      {error && (
-        <div className="bg-red-100 text-red-800 px-4 py-2 rounded mb-4">
-          {error}
-        </div>
-      )}
-      {success && (
-        <div className="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">
-          {success}
-        </div>
-      )}
-
+      {}
+      <div className="mb-6">
         <button
           onClick={handleAddNewClient}
           className="flex items-center bg-avocat-indigo-dark hover:bg-avocat-orange-dark text-white px-4 py-2 rounded shadow-md transition duration-300"
         >
           إضافة موكل <BiPlusCircle className="ml-2" />
         </button>
+
+        {legCaseNewClients.map((client, index) => (
+          <div key={index} className="mt-4">
+            <input
+              type="text"
+              value={client.name}
+              onChange={(e) => handleNewClientChange(e, index)}
+              placeholder="ابحث عن الموكل"
+              className="w-full p-2 border rounded-lg focus:ring focus:ring-violet-400 dark:bg-gray-100 dark:text-gray-800"
+            />
+            {activeIndex === index && filteredClients.length > 0 && (
+              <ul className="mt-2 bg-white dark:bg-gradient-night dark:text-white border rounded-lg shadow-lg">
+                {filteredClients.map((filteredClient) => (
+                  <li
+                    key={filteredClient.id}
+                    onClick={() => handleSelectClient(filteredClient, index)}
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer"
+                  >
+                    {filteredClient.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <button
+              onClick={() => handleRemoveNewClient(index)}
+              className="mt-2 flex items-center text-red-500 hover:text-red-600"
+            >
+              <BiMinusCircle className="mr-1" /> إزالة
+            </button>
+          </div>
+        ))}
+
+        {legCaseNewClients.length > 0 && (
+          <button
+            onClick={handleAddLegCaseClients}
+            className="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow-md transition duration-300"
+          >
+            إضافة الموكلين
+          </button>
+        )}
+      </div>
+
+      {}
       <div className="overflow-auto mt-4">
         <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300 border-collapse">
           <thead className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100">
@@ -117,60 +199,53 @@ export default function LegalCaseClients({ legCaseId }) {
             </tr>
           </thead>
           <tbody>
-            {legCaseClients.length > 0 ? (
-              legCaseClients.map((client) => (
-                <tr
-                  key={client.id}
-                  className="hover:bg-gray-100 dark:hover:bg-gray-600"
-                >
-                  <td className="px-4 py-2">{client.slug}</td>
-                  <td className="px-4 py-2">{client.name}</td>
-                  <td className="px-4 py-2">{client.phone_number}</td>
-                  <td className="px-4 py-2 text-center">
-                    <button
-                      onClick={() => handleRemoveClient(client.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-md transition duration-300"
-                    >
-                      حذف
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="4" className="text-center py-4">
-                  لا يوجد عملاء مرتبطين بالقضية حاليًا
+            {currentClients.map(client => (
+              <tr key={client.id} className="hover:bg-gray-100 dark:hover:bg-gray-600">
+                <td className="px-4 py-2 font-semibold">{client.slug}</td>
+                <td className="px-4 py-2">{client.name}</td>
+                <td className="px-4 py-2">{client.phone_number || 'غير متوفر'}</td>
+                <td className="px-4 py-2 text-center">
+                  <button
+                  onClick={() => openDeleteModal(client.id, client.name)} 
+                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-md transition duration-300"
+                  >
+                    حذف
+                  </button>
                 </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
-      </div>
 
-      {legCaseNewClients.map((client, index) => (
-        <div key={index} className="flex items-center gap-4 mb-4">
-          <input
-            value={client.client_id}
-            onChange={(e) => handleNewClientChange(e, index)}
-            placeholder="اسم العميل"
-            className="border border-gray-300 rounded px-4 py-2 w-full"
-          />
-          <button
-            onClick={() => handleRemoveNewClient(index)}
-            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-md transition duration-300"
-          >
-            <BiMinusCircle />
-          </button>
-        </div>
-      ))}
-      {legCaseNewClients.length > 0 && (
-        <button
-          onClick={handleAddLegCaseClients}
-          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow-md transition duration-300"
-        >
-          حفظ
-        </button>
-      )}
+        {}
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
+            >
+              السابق
+            </button>
+
+            <span className="mx-4">صفحة {currentPage} من {totalPages}</span>
+
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
+            >
+              التالي
+            </button>
+          </div>
+        )}
+      </div>
+      <GlobalConfirmDeleteModal
+  isOpen={isDeleteModalOpen}
+  onClose={closeDeleteModal}
+  onConfirm={handleDeleteClient}
+  itemName={clientToDelete.name} 
+/>
     </div>
   );
 }

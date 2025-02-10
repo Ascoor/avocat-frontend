@@ -1,8 +1,11 @@
 // src/api/clients.js
-import useAuth from '../components /auth/AuthUser';
-const { http } = useAuth();
+
+import api from './axiosConfig'; // Import your Axios instance
+
+
 
 export const getClients = () => api.get('/api/clients');
+export const getUnClients = () => api.get('/api/unclients');
 export const getClientById = (id) => api.get(`/api/clients/${id}`);
 export const createClient = (data) => api.post('/api/clients', data);
 export const updateClient = (id, data) => api.put(`/api/clients/${id}`, data);

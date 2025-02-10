@@ -7,9 +7,9 @@ import CourtSetting from '../Courts/court_index.component';
 import CourtSearch from '../Reports/SearchCourt';
 import CaseTypeSet from '../Courts/case_index.component';
 import FinancialDashboard from '../Financially/index';
-import AddEditClient from '../ClientsAndUnclients/clients/AddEditClient';
-import ClientList from '../../components/ClientsAndUnclients/clients/index.jsx';
-import UnclientList from '../../components/ClientsAndUnclients/unclients/index.jsx';
+import AddEditClient from '../ClientsAndUnClients/clients/AddEditClient';
+import ClientList from '../../components/ClientsAndUnClients/clients/index.jsx';
+import UnClientList from '../../components/ClientsAndUnClients/unclients/index.jsx';
 import LegalCasesIndex from '../../pages/LegalCaseList';
 import LegCaseDetail from '../LegalCases/LegalCaseDetails';
 import LegalServiceList from '../../pages/LegalServicList';
@@ -18,10 +18,11 @@ import ProfileUser from '../Settings/ProfileUser';
 import { useSpinner } from '../../context/SpinnerContext';
 import GlobalSpinner from '../common/GlobalSpinner';
 import Procedures from '../../pages/ProceduresList';
-import ClientUnclientList from '../../pages/ClientUnclientList.jsx';
+import ClientUnClientList from '../../pages/ClientUnClientList.jsx';
 import ManagmentSettings from '../../pages/ManagmentSettings.jsx';
 import ServiceTypes from '../Settings/ServiceTypes.jsx';
 import LegcaseTypes from '../Settings/LegcaseTypes.jsx';
+import Expensecategorys from '../Settings/ExpenseCategorys.jsx';
 
 const AuthRoutes = () => {
   const { showSpinner, hideSpinner, loading } = useSpinner();
@@ -53,9 +54,9 @@ const AuthRoutes = () => {
       >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/clients" element={<ClientUnclientList />} />
+          <Route path="/clients" element={<ClientUnClientList />} />
           <Route path="/clients/regular" element={<ClientList />} />
-          <Route path="/clients/one-time" element={<UnclientList />} />
+          <Route path="/clients/one-time" element={<UnClientList />} />
           <Route path="/legcase-services" element={<LegalServiceList />} />
           <Route path="/court-search" element={<CourtSearch />} />
           <Route path="/cases_setting" element={<CaseTypeSet />} />
@@ -72,6 +73,7 @@ const AuthRoutes = () => {
           <Route path="/managment-settings/lawyers" element={<Lawyers />} />
           <Route path="/managment-settings/service-types" element={<ServiceTypes />} />
           <Route path="/managment-settings/legcase-types" element={<LegcaseTypes />} />
+          <Route path="/managment-settings/expense-categorys" element={<Expensecategorys />} />
         </Routes>
       </div>
     </div>

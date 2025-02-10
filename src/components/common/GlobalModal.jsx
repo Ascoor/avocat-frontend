@@ -50,7 +50,7 @@ const GlobalModal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
                 className={`w-full ${sizeClasses[size]} transform overflow-hidden rounded-2xl bg-indigo-100  font-bold dark:bg-gradient-night p-8 shadow-2xl transition-all`}
               >
                 <div className="flex justify-between items-center border-b pb-4 mb-6">
-                  <Dialog.Title className="text-3xl dark:text-white text-avocat-orange font-bold  ">
+                  <Dialog.Title className="text-3xl text-bold text-avocat-blue dark:text-avocat-orange  ">
                     {title}
                   </Dialog.Title>
                   <button

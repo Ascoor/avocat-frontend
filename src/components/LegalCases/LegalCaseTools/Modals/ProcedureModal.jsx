@@ -7,6 +7,7 @@ import {
 } from '../../../../services/api/procedures';
 import { getLawyers } from '../../../../services/api/lawyers';
 import useAuth from '../../../auth/AuthUser';
+import { useAlert } from '../../../../context/AlertContext';
 
 const ProcedureModal = ({
   isOpen,
@@ -16,13 +17,19 @@ const ProcedureModal = ({
   initialData = {},
   isEdit = false,
 }) => {
+  const { triggerAlert } = useAlert();
+  const { user } = useAuth();
+  const [procedureTypes, setProcedureTypes] = useState([]);
+  const [procedurePlaceTypes, setProcedurePlaceTypes] = useState([]);
+  const [lawyers, setLawyers] = useState([]);
+
   const [formData, setFormData] = useState({
     job: '',
     date_start: '',
     date_end: '',
-    cost: '',
-    cost2: '',
-    cost3: '',
+    cost: 0,
+    cost2: 0,
+    cost3: 0,
     procedure_type_id: '',
     lawyer_id: '',
     procedure_place_type_id: '',
@@ -30,12 +37,8 @@ const ProcedureModal = ({
     result: '',
     status: 'جاري التنفيذ',
     leg_case_id: legalCaseId,
+    created_by: user.id,
   });
-
-  const [procedureTypes, setProcedureTypes] = useState([]);
-  const [procedurePlaceTypes, setProcedurePlaceTypes] = useState([]);
-  const [lawyers, setLawyers] = useState([]);
-  const {user } =useAuth();
 
   useEffect(() => {
     const fetchDropdownData = async () => {
@@ -49,69 +52,32 @@ const ProcedureModal = ({
         setProcedurePlaceTypes(placesResponse.data);
         setLawyers(lawyersResponse.data);
       } catch (error) {
-        console.error('Error fetching dropdown data:', error);
+        triggerAlert('error', 'حدث خطأ أثناء تحميل البيانات.');
       }
     };
-
     fetchDropdownData();
   }, []);
-/**
-            'procedure_type_id' => 'required|exists:procedure_types,id',
-            'leg_case_id' => 'required|exists:leg_cases,id',
-            'procedure_place_name' => 'nullable|string',
-            'procedure_place_type_id' => 'nullable|exists:procedure_place_types,id',
-            'lawyer_id' => 'nullable|exists:lawyers,id',
-            'job' => 'required|string',
-            'result' => 'nullable|string',
-            'note' => 'nullable|string',
-            'status' => 'required|in:تمت,لم ينفذ,جاري التنفيذ',
-            'event_id' => 'nullable|exists:events,id',
-            'date_start' => 'nullable|date',
-            'date_end' => 'nullable|date',
-            'cost1' => 'nullable|numeric',
-            'cost2' => 'nullable|numeric',
-            'cost3' => 'nullable|numeric',
-            'created_by' => 'required|exists:users,id', */
   useEffect(() => {
     if (isEdit && initialData) {
       setFormData({
-      
-        job: initialData.job,
-        date_start: initialData.date_start,
-        date_end: initialData.date_end,
-        cost: initialData.cost,
-        cost2: initialData.cost2,
-        cost3: initialData.cost3,
-        procedure_type_id: initialData.procedure_type_id,
-        lawyer_id: initialData.lawyer_id,
-        procedure_place_type_id: initialData.procedure_place_type_id,
-        procedure_place_name: initialData.procedure_place_name,
-        result: initialData.result,
-        status: initialData.status,
+        job: initialData.job || '',
+        date_start: initialData.date_start || '',
+        date_end: initialData.date_end || '',
+        cost: initialData.cost ?? 0,
+        cost2: initialData.cost2 ?? 0,
+        cost3: initialData.cost3 ?? 0,
+        procedure_type_id: initialData.procedure_type_id || '',
+        lawyer_id: initialData.lawyer_id || '',
+        procedure_place_type_id: initialData.procedure_place_type_id || '',
+        procedure_place_name: initialData.procedure_place_name || '',
+        result: initialData.result || '',
+        status: initialData.status || 'جاري التنفيذ',
         leg_case_id: legalCaseId,
-        updated_by: user.id
-      });
-    } else {
-      setFormData({
-      
-        job: '',
-        date_start: '',
-        date_end: '',
-        cost: '',
-        cost2: '',
-        cost3: '',
-        procedure_type_id: '',
-        lawyer_id: '',
-        procedure_place_type_id: '',
-        procedure_place_name: '',
-        result: '',
-        status: 'جاري التنفيذ',
-        leg_case_id: legalCaseId,
-        created_by: user.id
+        updated_by: user.id,
       });
     }
   }, [isEdit, initialData, legalCaseId]);
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -119,20 +85,18 @@ const ProcedureModal = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       if (isEdit) {
-        const response = await updateProcedure(initialData.id, formData);
-        console.log('Procedure updated:', response);
+        await updateProcedure(initialData.id, formData);
+        triggerAlert('success', 'تم تحديث الإجراء بنجاح.');
       } else {
-        const response = await createProcedure(formData);
-        console.log('Procedure created:', response);
+        await createProcedure(formData);
+        triggerAlert('success', 'تم إضافة الإجراء بنجاح.');
       }
-
       onSubmit(formData);
       onClose();
     } catch (error) {
-      console.error('Error submitting procedure:', error);
+      triggerAlert('error', 'حدث خطأ أثناء حفظ الإجراء.');
     }
   };
 
@@ -140,44 +104,19 @@ const ProcedureModal = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full sm:max-w-md md:max-w-lg p-4 relative">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full sm:max-w-md md:max-w-lg p-6 relative">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100 transition"
         >
           &#x2715;
         </button>
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 text-center">
           {isEdit ? 'تحديث الإجراء' : 'إضافة إجراء جديد'}
         </h2>
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-6 max-h-[70vh] overflow-y-auto pr-4"
-        >
-          {[
-            { name: 'job', label: 'المطلوب', type: 'text' },
-            { name: 'date_start', label: 'تاريخ البدء', type: 'date' },
-            { name: 'date_end', label: 'تاريخ الانتهاء', type: 'date' },
-            { name: 'cost', label: 'التكلفة', type: 'number' },
-            { name: 'cost2', label: 'التكلفة 2', type: 'number' },
-            { name: 'cost3', label: 'التكلفة 3', type: 'number' },
-            { name: 'procedure_place_name', label: 'اسم الجهة', type: 'text' },
-            { name: 'result', label: 'النتيجة', type: 'text' },
-          ].map((field) => (
-            <div key={field.name}>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                {field.label}
-              </label>
-              <input
-                name={field.name}
-                type={field.type}
-                value={formData[field.name]}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:outline-none"
-                required={field.name !== 'cost2' && field.name !== 'cost3'}
-              />
-            </div>
-          ))}
+
+        <form onSubmit={handleSubmit} className="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+          {/* نوع الإجراء */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               نوع الإجراء
@@ -186,7 +125,7 @@ const ProcedureModal = ({
               name="procedure_type_id"
               value={formData.procedure_type_id}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:outline-none"
+              className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
               required
             >
               <option value="">اختر نوع الإجراء</option>
@@ -197,6 +136,73 @@ const ProcedureModal = ({
               ))}
             </select>
           </div>
+
+          {/* نوع الجهة */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+              نوع الجهة
+            </label>
+            <select
+              name="procedure_place_type_id"
+              value={formData.procedure_place_type_id}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+              required
+            >
+              <option value="">اختر نوع الجهة</option>
+              {procedurePlaceTypes.map((placeType) => (
+                <option key={placeType.id} value={placeType.id}>
+                  {placeType.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* اسم الجهة */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+              اسم الجهة
+            </label>
+            <input
+              name="procedure_place_name"
+              type="text"
+              value={formData.procedure_place_name}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+            />
+          </div>
+
+          {/* تاريخ البدء */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+              تاريخ البدء
+            </label>
+            <input
+              name="date_start"
+              type="date"
+              value={formData.date_start}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+              required
+            />
+          </div>
+
+          {/* تاريخ الانتهاء */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+              تاريخ الانتهاء
+            </label>
+            <input
+              name="date_end"
+              type="date"
+              value={formData.date_end}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+              required
+            />
+          </div>
+
+          {/* المحامي */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               المحامي
@@ -205,7 +211,7 @@ const ProcedureModal = ({
               name="lawyer_id"
               value={formData.lawyer_id}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:outline-none"
+              className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
               required
             >
               <option value="">اختر المحامي</option>
@@ -216,21 +222,98 @@ const ProcedureModal = ({
               ))}
             </select>
           </div>
-          <div className="flex justify-end space-x-4 mt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-600 transition"
-            >
-              إلغاء
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-            >
-              {isEdit ? 'تحديث' : 'إضافة'}
-            </button>
+
+          {/* المطلوب */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+              المطلوب
+            </label>
+            <input
+              name="job"
+              type="text"
+              value={formData.job}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+              required
+            />
           </div>
+
+          {/* النتيجة */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+              النتيجة
+            </label>
+            <input
+              name="result"
+              type="text"
+              value={formData.result}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+            />
+          </div>
+{/* حالة الإجراء (يظهر فقط في وضع التعديل) */}
+{isEdit && (
+  <div>
+    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+      حالة الإجراء
+    </label>
+    <select
+      name="status"
+      value={formData.status}
+      onChange={handleChange}
+      className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+      required
+    >
+      <option value="جاري التنفيذ">جاري التنفيذ</option>
+      <option value="تمت">تمت</option>
+      <option value="لم ينفذ">لم ينفذ</option>
+    </select>
+  </div>
+)}
+
+          {/* التكاليف */}
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                رسوم بإيصالات
+              </label>
+              <input
+                name="cost"
+                type="number"
+                value={formData.cost}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                أتعاب الإجراء
+              </label>
+              <input
+                name="cost2"
+                type="number"
+                value={formData.cost2}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                مصروفات أخرى
+              </label>
+              <input
+                name="cost3"
+                type="number"
+                value={formData.cost3}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+              />
+            </div>
+          </div>
+
+          <button type="submit" className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+            {isEdit ? 'تحديث' : 'إضافة'}
+          </button>
         </form>
       </div>
     </div>

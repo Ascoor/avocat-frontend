@@ -1,11 +1,13 @@
 import api from './axiosConfig';
 
 // Fetch all legal sessions
-export const getAllSessions = () => api.get('/api/legal_sessions');
+export const getAllSessions = () => api.get('/api/legal_sessions'); 
 
 // Fetch sessions by legal case ID
 export const getSessionsByLegCaseId = (legCaseId) =>
   api.get(`/api/legal_sessions/leg-case/${legCaseId}`);
+export const getLegalSessionTypes = () =>
+  api.get(`/api/legal_session_types/`);
 
 // Fetch sessions by court ID
 export const getSessionsByCourtId = (courtId) =>

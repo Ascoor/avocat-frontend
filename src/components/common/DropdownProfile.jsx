@@ -45,7 +45,7 @@ function UserMenu({ align = 'left' }) {
         {/* ✅ صورة المستخدم */}
         
         {/* ✅ اسم المستخدم يظهر في الشاشات الكبيرة فقط */}
-        <span className="hidden md:inline text-gray-100 ml-4 dark:text-gray-200 font-bold text-center">
+        <span className="hidden md:inline text-red-500 ml-4 dark:text-orange-200 font-bold text-center">
           {user?.name}
         </span>
 
@@ -57,7 +57,7 @@ function UserMenu({ align = 'left' }) {
           className="w-8 h-8 rounded-full object-cover"
         />
     <svg
-          className="w-3 h-3 shrink-0 mr-1 fill-current text-gray-100 dark:text-gray-500"
+          className="w-3 h-3 shrink-0 mr-1 fill-current text-gray-80 dark:text-gray-500"
           viewBox="0 0 12 12"
         >
           <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -66,7 +66,7 @@ function UserMenu({ align = 'left' }) {
 
       {/* ✅ القائمة المنسدلة */}
       <Transition
-        className={`origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1 ${
+        className={`origin-top-right top-11 z-10 absolute  min-w-44 bg-white dark:bg-gradient-night border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1 ${
           align === 'right' ? 'right-0' : 'left-0'
         }`}
         show={dropdownOpen}
@@ -82,7 +82,7 @@ function UserMenu({ align = 'left' }) {
             <li>
               <Link
                 to="/settings"
-                className="font-medium text-sm text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 flex items-center py-2 px-4"
+                className="font-medium text-sm text-violet-100 hover:text-violet-400 dark:hover:text-violet-400 flex items-center py-2 px-4"
                 onClick={() => setDropdownOpen(false)}
               >
                 الإعدادات

@@ -12,6 +12,7 @@ export { default as ProcedurePlaceIcon } from './procedure-place.png';
 export { default as ProcedureIcon } from './procedure-icon.png';
 export { default as LegCaseSection } from './section/leg-case-section.png';
 export { default as CaseDetails } from './section/case-details.png';
+export { default as ExpenseIcon } from './expense-icon.png';
 
 export { default as CourtIcon } from './case.png';
 export { default as LawyerIcon } from './lawyer.png';

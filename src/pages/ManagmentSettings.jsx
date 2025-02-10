@@ -8,6 +8,7 @@ const ManagementSettings = () => {
     { label: 'الإجراءات', to: '/managment-settings/procedures', icon: '📝' },
     { label: 'تصنيف القضايا', to: '/managment-settings/legcase-types    ', icon: '📝' },
     { label: 'أنواع الحدمات', to: '/managment-settings/service-types', icon: '📝' },
+    { label: 'أنواع  المصروفات', to: '/managment-settings/expense-categorys', icon: '📝' },
   ];
 
   return (

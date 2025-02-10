@@ -30,10 +30,6 @@ const Sidebar = () => {
       to: '/clients',
       icon: <FaUsers />,
       label: 'العملاء',
-      subItems: [
-        { to: '/clients/regular', label: 'عملاء الموكلين', icon: <FaUserTie  /> },
-        { to: '/clients/one-time', label: 'عملاء بدون وكالة', icon: <FaUserAltSlash /> },
-      ],
     },
     { to: '/legcase-services', icon: <FaCogs />, label: 'الخدمات' },
     { to: '/invoices', icon: <FaFileInvoice />, label: 'الفواتير' },
@@ -67,7 +63,7 @@ const Sidebar = () => {
     <div className="flex">
       <animated.div
         style={sidebarAnimation}
-        className="fixed top-0 right-0 h-full bg-gradient-to-t from-avocat-blue-dark via-avocat-indigo-dark to-avocat-orange dark:bg-gradient-to-t dark:from-avocat-indigo-darker dark:via-avocat-blue-darker dark:to-avocat-blue shadow-lg z-30 hidden md:flex flex-col"
+        className="fixed top-0 right-0 h-full bg-gradient-to-b from-avocat-blue-light via-avocat-indigo to-gray-300 dark:bg-gradient-to-t dark:from-avocat-indigo-darker dark:via-avocat-blue-darker dark:to-avocat-blue shadow-lg z-30 hidden md:flex flex-col"
       >
         {/* Logo */}
         <div className="flex items-center justify-center h-16">

@@ -5,10 +5,10 @@ import API_CONFIG from '../../../config/config';
 
 import { UnclientSectionIcon } from '../../../assets/icons/index';
 import SectionHeader from '../../common/SectionHeader';
-import AddEditUnclient from '../../ClientsAndUnclients/unclients/AddEditUnclient';
+import AddEditUnclient from './AddEditUnclient';
 import TableComponent from '../../common/TableComponent'; // ✅ مكون الجدول العالمي
 
-function UnclientList() {
+function UnClientList() {
   const [unclients, setUnunclients] = useState([]);
   const [selectedUnclient, setSelectedUnclient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -133,4 +133,4 @@ function UnclientList() {
   );
 }
 
-export default UnclientList;
+export default UnClientList;

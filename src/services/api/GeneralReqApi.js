@@ -94,7 +94,12 @@ export const updateService = (id, data) => api.put(`/api/services/${id}`, data);
 export const deleteService = (id) => api.delete(`/api/services/${id}`);
 
 
-  // Procedures 
+  // expenses categories
+  export const getExpensesCategories = () => api.get('/api/expense_categories');
+  export const getExpensesCategoryById = (id) => api.get(`/api/expense_categories/${id}`);
+  export const createExpenseCategory = (data) => api.post('/api/expense_categories', data);
+  export const updateExpenseCategory = (id, data) => api.put(`/api/expense_categories/${id}`, data);
+  export const deleteExpenseCategory = (id) => api.delete(`/api/expense_categories/${id}`);
 // ** Legal Sessions **
 export const getSessions = () => api.get('/api/legal_sessions');
 export const getSessionsByLegCaseId = (legCaseId) =>

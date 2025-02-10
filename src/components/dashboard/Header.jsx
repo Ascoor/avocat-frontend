@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <header
-      className={`bg-gradient-to-r from-avocat-blue-dark via-avocat-indigo-dark  to-avocat-orange dark:bg-gradient-to-r  dark:from-avocat-blue-darker dark:via-avocat-orange-darker dark:to-avocat-indigo-darker fixed top-0 right-0 left-0 z-20 shadow-lg -transition-all duration-300 ${
+      className={`bg-gradient-to-r from-gray-100 via-avocat-indigo   to-avocat-blue-light dark:bg-gradient-to-r  dark:from-avocat-blue-darker dark:via-avocat-indigo-darker dark:to-avocat-blue fixed top-0 right-0 left-0 z-20 shadow-lg -transition-all duration-300 ${
         isSidebarOpen && !isMobile ? 'md:mr-64' : 'md:mr-16'
       }`}
     >

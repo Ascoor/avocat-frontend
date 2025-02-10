@@ -81,7 +81,7 @@ const LegalCaseProcedures = ({ legCaseId }) => {
         <h1 className="text-lg font-bold">إجراءات القضية</h1>
         <button
           onClick={handleAddProcedure}
-          className="flex items-center bg-gradient-blue-button hover:bg-gradient-red-button text-white px-4 py-2 rounded-full shadow-md hover:scale-102 transform transition-all duration-200 ease-in-out"
+          className="flex items-center bg-gradient-day hover:bg-gradient-red-button text-white px-8 py-2 rounded-full shadow-md hover:scale-102 transform transition-all duration-200 ease-in-out"
         >
           <BiPlusCircle className="mr-2" />
           إضافة إجراء
@@ -91,32 +91,38 @@ const LegalCaseProcedures = ({ legCaseId }) => {
       {/* Procedures Table */}
       <div className="p-6">
         <div className="overflow-x-auto mt-4">
-          <table className="min-w-full bg-white dark:bg-gradient-blue-dark rounded-lg shadow-base overflow-hidden">
+          <table className="min-w-full table-auto bg-white dark:bg-gradient-blue-dark rounded-lg shadow-base overflow-hidden">
             <thead>
               <tr className="bg-avocat-indigo dark:bg-avocat-blue text-white">
-                <th className="px-4 py-2 text-center">نوع الإجراء</th>
-                <th className="px-4 py-2 text-center">المحامي</th>
-                <th className="px-4 py-2 text-center">تاريخ البدء</th>
-                <th className="px-4 py-2 text-center">تاريخ الانتهاء</th>
-                <th className="px-4 py-2 text-center">التحكم</th>
+                <th className="px-8 py-2 text-center"> الإجراء</th>
+                <th className="px-8 py-2 text-center">المحامي</th>
+                <th className="px-8 py-2 text-center">تاريخ الانتهاء</th>
+                <th className="px-8 py-2 text-center">المطلوب</th>
+                <th className="px-8 py-2 text-center">النتيجة </th>
+                <th className="px-8 py-2 text-center">حالة الإجراء</th>
+                <th className="px-8 py-2 text-center">التحكم</th>
               </tr>
             </thead>
             <tbody>
               {procedures.map((procedure) => (
                 <tr
                   key={procedure.id}
-                  className="border-b hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer"
+                  className="border-b bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer"
                   onClick={() => handleRowClick(procedure)}
                 >
-                  <td className="px-4 py-2 text-center">
+                  <td className="px-8 py-2 text-center">
                     {procedure.procedure_type?.name || '-'}
                   </td>
-                  <td className="px-4 py-2 text-center">
+                  <td className="px-8 py-2 text-center">
                     {procedure.lawyer?.name || '-'}
                   </td>
-                  <td className="px-4 py-2 text-center">{procedure.date_start}</td>
-                  <td className="px-4 py-2 text-center">{procedure.date_end}</td>
-                  <td className="px-4 py-2 text-center flex justify-center space-x-2">
+                  <td className="px-8 py-2 text-center">
+                    {procedure.date_end}
+                  </td>
+                  <td className="px-8 py-2 text-center">{procedure.job}</td>
+                  <td className="px-8 py-2 text-center">{procedure.result}</td>
+                  <td className="px-8 py-2 text-center">{procedure.status}</td>
+                  <td className="px-8 py-2 text-center flex justify-center space-x-2">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();

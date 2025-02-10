@@ -3,57 +3,57 @@ import axios from 'axios';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import API_CONFIG from '../../../config/config';
 
-import { ClientSectionIcon } from '../../../assets/icons/index';
+import { UnclientSectionIcon } from '../../../assets/icons/index';
 import SectionHeader from '../../common/SectionHeader';
-import AddEditClient from '../../ClientsAndUnclients/clients/AddEditClient';
+import AddEditUnclient from '../../ClientsAndUnClients/unclients/AddEditUnclient';
 import TableComponent from '../../common/TableComponent'; // ✅ مكون الجدول العالمي
 
-function ClientList() {
-  const [clients, setUnclients] = useState([]);
-  const [selectedClient, setSelectedClient] = useState(null);
+function UnClientList() {
+  const [unclients, setUnunclients] = useState([]);
+  const [selectedUnclient, setSelectedUnclient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // ✅ جلب بيانات عملاء
-  const fetchUnclients = useCallback(async () => {
+  // ✅ جلب بيانات عملاء بدون وكالة
+  const fetchUnunclients = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.baseURL}/api/clients`);
-      setUnclients(response.data.clients || []);
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/unclients`);
+      setUnunclients(response.data.unclients || []);
     } catch (error) {
-      console.error('Error fetching clients:', error);
+      console.error('Error fetching unclients:', error);
     }
   }, []);
 
   useEffect(() => {
-    fetchUnclients();
-  }, [fetchUnclients]);
+    fetchUnunclients();
+  }, [fetchUnunclients]);
 
-  // ✅ حذف عميل
+  // ✅ حذف عميل بدون وكالة
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API_CONFIG.baseURL}/api/clients/${id}`);
-      fetchUnclients();
+      await axios.delete(`${API_CONFIG.baseURL}/api/unclients/${id}`);
+      fetchUnunclients();
     } catch (error) {
-      console.error('Error deleting client:', error);
+      console.error('Error deleting unclient:', error);
     }
   };
 
-  // ✅ تغيير حالة العميل
+  // ✅ تغيير حالة العميل بدون وكالة
   const handleToggleStatus = async (id) => {
     try {
-      const client = clients.find((c) => c.id === id);
-      const newStatus = client.status === 'active' ? 'inactive' : 'active';
-      await axios.put(`${API_CONFIG.baseURL}/api/clients/${id}`, {
+      const unclient = unclients.find((c) => c.id === id);
+      const newStatus = unclient.status === 'active' ? 'inactive' : 'active';
+      await axios.put(`${API_CONFIG.baseURL}/api/unclients/${id}`, {
         status: newStatus,
       });
-      fetchUnclients();
+      fetchUnunclients();
     } catch (error) {
       console.error('Error toggling status:', error);
     }
   };
 
   // ✅ فتح نافذة الإضافة أو التعديل
-  const openAddEditModal = (client = null) => {
-    setSelectedClient(client);
+  const openAddEditModal = (unclient = null) => {
+    setSelectedUnclient(unclient);
     setModalOpen(true);
   };
 
@@ -67,19 +67,19 @@ function ClientList() {
     { key: 'status', text: 'الحالة' },
   ];
 
-  // ✅ عرض مخصص لحالة العميل
+  // ✅ عرض مخصص لحالة العميل بدون وكالة
   const customRenderers = {
-    status: (client) =>
-      client.status === 'active' ? (
+    status: (unclient) =>
+      unclient.status === 'active' ? (
         <span
-          onClick={() => handleToggleStatus(client.id)}
+          onClick={() => handleToggleStatus(unclient.id)}
           className="flex items-center text-green-600 cursor-pointer"
         >
           <AiFillCheckCircle className="mr-1" /> نشط
         </span>
       ) : (
         <span
-          onClick={() => handleToggleStatus(client.id)}
+          onClick={() => handleToggleStatus(unclient.id)}
           className="flex items-center text-red-600 cursor-pointer"
         >
           <AiFillCloseCircle className="mr-1" /> غير نشط
@@ -87,45 +87,45 @@ function ClientList() {
       ),
   };
 
-  // ✅ زر إضافة عميل
+  // ✅ زر إضافة عميل بدون وكالة
   const renderAddButton = () => (
     <button
       onClick={() => openAddEditModal()}
-      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md transition duration-300"
+      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md -transition duration-300"
     >
-      إضافة عميل
+      إضافة عميل بدون وكالة
     </button>
   );
 
   return (
 
-    <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
+    <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full " dir='rtl'>
             {/* ✅ رأس القسم */}
       <SectionHeader
-        buttonName="عميل"
-        listName="عملاء"
-        icon={ClientSectionIcon}
+        buttonName="عميل بدون وكالة"
+        listName="عملاء بدون وكالة"
+        icon={UnclientSectionIcon}
       />
 
       {/* ✅ نافذة الإضافة أو التعديل */}
       {isModalOpen && (
-        <AddEditClient
-          client={selectedClient}
+        <AddEditUnclient
+          unclient={selectedUnclient}
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
-          onSaved={fetchUnclients}
+          onSaved={fetchUnunclients}
         />
       )}
 
       {/* ✅ مكون الجدول العالمي */}
       <TableComponent
-        data={clients}
+        data={unclients}
         headers={headers}
         onEdit={(id) =>
-          openAddEditModal(clients.find((client) => client.id === id))
+          openAddEditModal(unclients.find((unclient) => unclient.id === id))
         }
         onDelete={handleDelete}
-        sectionName="clients"
+        sectionName="unclients"
         customRenderers={customRenderers}
         renderAddButton={renderAddButton} // ✅ إضافة زر الإضافة إلى الجدول
       />
@@ -133,4 +133,4 @@ function ClientList() {
   );
 }
 
-export default ClientList;
+export default UnClientList;

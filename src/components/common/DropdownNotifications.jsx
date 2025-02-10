@@ -53,7 +53,7 @@ function DropdownNotifications({ align }) {
 
       {/* القائمة المنسدلة */}
       <Transition
-        className={`origin-top-right z-20 absolute top-full right-0 w-[50vw] sm:w-64 md:w-72 lg:w-80 xl:w-96 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 py-2 rounded-2xl shadow-2xl overflow-hidden mt-2 transition-transform duration-300 ease-out`}
+        className={`origin-top-right z-20 absolute top-11 right-0 w-[50vw] sm:w-64 md:w-72 lg:w-80 xl:w-96 bg-white dark:bg-gradient-night border border-gray-200 dark:border-gray-700 py-2 rounded-2xl shadow-2xl overflow-hidden mt-2 transition-transform duration-300 ease-out`}
         show={dropdownOpen}
         enter='transition ease-out duration-200 transform'
         enterStart='opacity-0 -translate-y-3 scale-95'

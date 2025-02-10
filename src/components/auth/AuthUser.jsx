@@ -57,13 +57,17 @@ export default function useAuth() {
     sessionStorage.clear();
     navigate('/');
   };
+
+  // Axios instance with authorization
   const http = axios.create({
-    baseURL: `${API_CONFIG.baseURL}`,
+    baseURL: API_CONFIG.baseURL,
     withCredentials: true,
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
   });
+
+  // Axios request interceptor to include token
   http.interceptors.request.use(config => {
     const token = getToken();
     if (token) {

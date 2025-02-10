@@ -3,15 +3,33 @@ import { useSpring, animated } from "@react-spring/web";
 import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
 import { TeamWorkImage, LogoPatren } from "../assets/images";
+import { useAlert } from "../context/AlertContext";
+import GlobalSpinner from "../components/common/GlobalSpinner";
 
 const HomePage = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const { triggerAlert } = useAlert();
 
   const handleFormClose = () => {
     setShowLoginForm(false);
     setShowRegisterForm(false);
+  };
+
+  const handleAuthStart = () => {
+    setIsLoading(true);
+  };
+
+  const handleAuthComplete = (success, message) => {
+    setIsLoading(false);
+    if (success) {
+      handleFormClose();
+      triggerAlert("success", message);
+    } else {
+      triggerAlert("error", message);
+    }
   };
 
   const toggleLoginForm = () => {
@@ -54,34 +72,37 @@ const HomePage = () => {
             />
           </animated.div>
 
-          {/* Logo (Maintaining Aspect Ratio 2:1) */}
+
           <img
             src={LogoPatren}
             alt="Logo"
             className="mt-6 w-[288px] max-w-full aspect-[2/1] h-auto"
           />
 
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row items-center mt-6 space-y-4 sm:space-y-0 sm:space-x-4">
-            <button
-              onClick={toggleLoginForm}
-              className="px-6 py-2 text-lg font-bold text-white bg-red-500 border-2 border-black rounded-lg shadow-md transition-all duration-300 transform hover:bg-white hover:text-red-500 hover:border-red-500 hover:shadow-lg active:bg-yellow-400 active:translate-y-1"
-            >
+          <div className="flex flex-col sm:flex-row items-center mt-4 mr-4 space-y-4 sm:space-y-0 sm:space-x-4">
+            <button onClick={toggleLoginForm} className="px-6 py-2 text-lg font-bold bg-red-500 text-white rounded-lg">
               تسجيل الدخول
             </button>
-            <button
-              onClick={toggleRegisterForm}
-              className="px-6 py-2 text-lg font-bold text-white bg-green-500 border-2 border-black rounded-lg shadow-md transition-all duration-300 transform hover:bg-white hover:text-green-500 hover:border-green-500 hover:shadow-lg active:bg-yellow-400 active:translate-y-1"
-            >
+            <button onClick={toggleRegisterForm} className="px-6 py-2 text-lg font-bold bg-green-500 text-white rounded-lg">
               الاشتراك
             </button>
           </div>
         </div>
       )}
 
-      {/* Authentication Forms */}
-      {showLoginForm && <Login toggleRegisterForm={toggleRegisterForm} handleFormClose={handleFormClose} />}
-      {showRegisterForm && <Register toggleLoginForm={toggleLoginForm} handleFormClose={handleFormClose} />}
+      {/* ✅ عرض التحميل أثناء العملية */}
+      {isLoading && <GlobalSpinner />}
+
+      {/* ✅ نماذج تسجيل الدخول والتسجيل مع تحسين z-index */}
+      {showLoginForm && (
+    <Login onAuthStart={handleAuthStart} handleFormClose={handleFormClose} toggleRegisterForm={toggleRegisterForm} onAuthComplete={handleAuthComplete} />
+
+      )}
+
+      {showRegisterForm && (
+        <Register onAuthStart={handleAuthStart} handleFormClose={handleFormClose} onAuthComplete={handleAuthComplete} />
+         
+      )}
     </div>
   );
 };
