@@ -49,7 +49,7 @@ const Home = () => {
   const fetchOfficeCount = async () => {
     try {
       const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/all_count_office`
+        `${API_CONFIG.baseURL}/api/all_count_office`,
       );
       setCounts({
         clientCount: response.data.client_count || 0,

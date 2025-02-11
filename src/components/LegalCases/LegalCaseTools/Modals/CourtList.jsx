@@ -24,8 +24,12 @@ const CourtList = ({ courts, handleDelete }) => {
                   }`}
                 >
                   <td className="px-6 py-4 text-center">{court.name}</td>
-                  <td className="px-6 py-4 text-center">{court.pivot.case_year}</td>
-                  <td className="px-6 py-4 text-center">{court.pivot.case_number}</td>
+                  <td className="px-6 py-4 text-center">
+                    {court.pivot.case_year}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {court.pivot.case_number}
+                  </td>
                   <td className="px-6 py-4 text-center">
                     <button
                       onClick={() => handleDelete(court.id, court.name)}

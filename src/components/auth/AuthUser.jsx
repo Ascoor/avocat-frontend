@@ -6,7 +6,10 @@ import API_CONFIG from '../../config/config';
 export default function useAuth() {
   const navigate = useNavigate();
 
-  const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || null;
+  const csrfToken =
+    document
+      .querySelector('meta[name="csrf-token"]')
+      ?.getAttribute('content') || null;
 
   const getToken = () => {
     const tokenString = sessionStorage.getItem('token');
@@ -37,21 +40,23 @@ export default function useAuth() {
         {
           headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken,  // ✅ تضمين CSRF Token
-          }
-        }
+            'X-CSRF-TOKEN': csrfToken, // ✅ تضمين CSRF Token
+          },
+        },
       );
-  
+
       if (response.data.access_token && response.data.user) {
         saveToken(response.data.user, response.data.access_token);
         return true;
       }
     } catch (error) {
-      console.error('Error in login:', error.response ? error.response.data : error.message);
+      console.error(
+        'Error in login:',
+        error.response ? error.response.data : error.message,
+      );
     }
     return false;
   };
-  
 
   const logout = () => {
     sessionStorage.clear();
@@ -68,7 +73,7 @@ export default function useAuth() {
   });
 
   // Axios request interceptor to include token
-  http.interceptors.request.use(config => {
+  http.interceptors.request.use((config) => {
     const token = getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

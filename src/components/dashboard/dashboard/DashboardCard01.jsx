@@ -10,8 +10,19 @@ import { tailwindConfig, hexToRGB } from '../../../utils/Utils';
 function DashboardCard01() {
   const chartData = {
     labels: [
-      '01-2024', '02-2024', '03-2024', '04-2024', '05-2024', '06-2024',
-      '07-2024', '08-2024', '09-2024', '10-2024', '11-2024', '12-2024', '01-2025',
+      '01-2024',
+      '02-2024',
+      '03-2024',
+      '04-2024',
+      '05-2024',
+      '06-2024',
+      '07-2024',
+      '08-2024',
+      '09-2024',
+      '10-2024',
+      '11-2024',
+      '12-2024',
+      '01-2025',
     ],
     datasets: [
       {
@@ -75,7 +86,6 @@ function DashboardCard01() {
         <h2 className="text-base font-semibold text-gray-800 dark:text-gray-200">
           نمو القضايا والخدمات بالمكتب شهريًا
         </h2>
- 
       </div>
       <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">
         إحصائيات شهريًا

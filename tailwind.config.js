@@ -105,6 +105,9 @@ export default {
       /*** 🌄 التدرجات اللونية ***/
       backgroundImage: {
         'gradient-red-button': 'linear-gradient(to right, #ec4899, #db2777,#be185d)',
+        'gradient-green-button': 'linear-gradient(to right, #22c55e, #16a34a,#15803d)',
+        'gradient-yellow-button': 'linear-gradient(to right, #fbbf24, #f59e0b,#d97706)',
+
         'gradient-blue-button': 'linear-gradient(to right, #60a5fa, #3b82f6,#2563eb)',
         'gradient-day': 'linear-gradient(to top, #396dcc, #0c3066)',
         'gradient-night': 'linear-gradient(135deg, #031023, #1b2b5a)',
@@ -264,43 +267,43 @@ export default {
             fontFamily: 'Tajawal',
             fontStyle: 'normal',
             fontWeight: '400',
-            src: `url('./assets/fonts/Tajawal-Regular.ttf') format('truetype')`,
+            src: `url('./assets/fonts/Tajawal/Tajawal-Regular.ttf') format('truetype')`,
           },
           {
             fontFamily: 'Tajawal',
             fontStyle: 'normal',
             fontWeight: '700',
-            src: `url('./assets/fonts/Tajawal-Bold.ttf') format('truetype')`,
+            src: `url('./assets/fonts/Tajawal/Tajawal-Bold.ttf') format('truetype')`,
           },
           {
             fontFamily: 'Tajawal',
             fontStyle: 'normal',
             fontWeight: '300',
-            src: `url('./assets/fonts/Tajawal-Light.ttf') format('truetype')`,
+            src: `url('./assets/fonts/Tajawal/Tajawal-Light.ttf') format('truetype')`,
           },
           {
             fontFamily: 'Tajawal',
             fontStyle: 'normal',
             fontWeight: '500',
-            src: `url('./assets/fonts/Tajawal-Medium.ttf') format('truetype')`,
+            src: `url('./assets/fonts/Tajawal/Tajawal-Medium.ttf') format('truetype')`,
           },
           {
             fontFamily: 'Tajawal',
             fontStyle: 'normal',
             fontWeight: '800',
-            src: `url('./assets/fonts/Tajawal-ExtraBold.ttf') format('truetype')`,
+            src: `url('./assets/fonts/Tajawal/Tajawal-ExtraBold.ttf') format('truetype')`,
           },
           {
             fontFamily: 'Tajawal',
             fontStyle: 'normal',
             fontWeight: '200',
-            src: `url('./assets/fonts/Tajawal-ExtraLight.ttf') format('truetype')`,
+            src: `url('./assets/fonts/Tajawal/Tajawal-ExtraLight.ttf') format('truetype')`,
           },
           {
             fontFamily: 'Tajawal',
             fontStyle: 'normal',
             fontWeight: '900',
-            src: `url('./assets/fonts/Tajawal-Black.ttf') format('truetype')`,
+            src: `url('./assets/fonts/Tajawal/Tajawal-Black.ttf') format('truetype')`,
           },
         ],
       });

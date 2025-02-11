@@ -1,4 +1,3 @@
-
 import SectionHeader from '../components/common/SectionHeader';
 import { ProcedureIcon } from '../assets/icons';
 import ProcedurePlaceTypes from '../components/Procedures/ProcedurePlaceTypes';

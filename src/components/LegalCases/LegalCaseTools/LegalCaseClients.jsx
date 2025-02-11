@@ -1,23 +1,30 @@
 import { useState, useEffect } from 'react';
 import { BiMinusCircle, BiPlusCircle } from 'react-icons/bi';
-import { addLegalCaseClients, removeLegalCaseClient } from '../../../services/api/legalCases';
+import {
+  addLegalCaseClients,
+  removeLegalCaseClient,
+} from '../../../services/api/legalCases';
 import { getClients } from '../../../services/api/clients';
 import { useAlert } from '../../../context/AlertContext';
 import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
 
-export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcaseClients }) {
+export default function LegalCaseClients({
+  legCaseId,
+  fetchLegcaseClients,
+  legcaseClients,
+}) {
   const { triggerAlert } = useAlert();
-  const [clientsData, setClientsData] = useState([]); 
-  const [clients, setClients] = useState([]); 
-  const [legCaseNewClients, setLegCaseNewClients] = useState([]); 
-  const [searchQuery, setSearchQuery] = useState(''); 
-  const [filteredClients, setFilteredClients] = useState([]); 
-  const [activeIndex, setActiveIndex] = useState(null); 
-  const [currentPage, setCurrentPage] = useState(1); 
-  const clientsPerPage = 5; 
+  const [clientsData, setClientsData] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [legCaseNewClients, setLegCaseNewClients] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredClients, setFilteredClients] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const clientsPerPage = 5;
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [clientToDelete, setClientToDelete] = useState({ id: null, name: '' }); 
+  const [clientToDelete, setClientToDelete] = useState({ id: null, name: '' });
 
   const openDeleteModal = (clientId, clientName) => {
     setClientToDelete({ id: clientId, name: clientName });
@@ -35,11 +42,11 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
     try {
       await removeLegalCaseClient(legCaseId, clientToDelete.id);
       triggerAlert('success', 'تم حذف الموكل بنجاح.');
-      fetchLegcaseClients(); 
+      fetchLegcaseClients();
     } catch (error) {
       triggerAlert('error', 'حدث خطأ أثناء حذف الموكل.');
     } finally {
-      closeDeleteModal(); 
+      closeDeleteModal();
     }
   };
 
@@ -62,8 +69,10 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
   useEffect(() => {
     if (searchQuery && Array.isArray(clients)) {
       const results = clients
-        .filter(client => client.name.toLowerCase().includes(searchQuery.toLowerCase()))
-        .slice(0, 5); 
+        .filter((client) =>
+          client.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        )
+        .slice(0, 5);
       setFilteredClients(results);
     } else {
       setFilteredClients([]);
@@ -71,11 +80,16 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
   }, [searchQuery, clients]);
 
   const handleAddNewClient = () => {
-    setLegCaseNewClients(prevClients => [...prevClients, { client_id: '', name: '' }]);
+    setLegCaseNewClients((prevClients) => [
+      ...prevClients,
+      { client_id: '', name: '' },
+    ]);
   };
 
-  const handleRemoveNewClient = index => {
-    setLegCaseNewClients(prevClients => prevClients.filter((_, i) => i !== index));
+  const handleRemoveNewClient = (index) => {
+    setLegCaseNewClients((prevClients) =>
+      prevClients.filter((_, i) => i !== index),
+    );
   };
 
   const handleNewClientChange = (e, index) => {
@@ -87,7 +101,9 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
   };
 
   const handleSelectClient = (client, index) => {
-    if (legcaseClients.some(existingClient => existingClient.id === client.id)) {
+    if (
+      legcaseClients.some((existingClient) => existingClient.id === client.id)
+    ) {
       triggerAlert('error', 'هذا الموكل مضاف بالفعل.');
       return;
     }
@@ -99,7 +115,7 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
   };
 
   const handleAddLegCaseClients = async () => {
-    const validClients = legCaseNewClients.filter(client => client.client_id);
+    const validClients = legCaseNewClients.filter((client) => client.client_id);
 
     if (validClients.length === 0) {
       triggerAlert('error', 'يجب اختيار موكل قبل الإضافة.');
@@ -110,7 +126,7 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
       await addLegalCaseClients(legCaseId, validClients);
       triggerAlert('success', 'تمت إضافة الموكلين بنجاح.');
       setLegCaseNewClients([]);
-      fetchLegcaseClients(); 
+      fetchLegcaseClients();
     } catch (error) {
       triggerAlert('error', 'حدث خطأ أثناء إضافة الموكلين.');
     }
@@ -120,7 +136,7 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
     try {
       await removeLegalCaseClient(legCaseId, clientId);
       triggerAlert('success', 'تم حذف الموكل بنجاح.');
-      fetchLegcaseClients(); 
+      fetchLegcaseClients();
     } catch (error) {
       triggerAlert('error', 'حدث خطأ أثناء حذف الموكل.');
     }
@@ -128,7 +144,10 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
 
   const indexOfLastClient = currentPage * clientsPerPage;
   const indexOfFirstClient = indexOfLastClient - clientsPerPage;
-  const currentClients = legcaseClients.slice(indexOfFirstClient, indexOfLastClient);
+  const currentClients = legcaseClients.slice(
+    indexOfFirstClient,
+    indexOfLastClient,
+  );
   const totalPages = Math.ceil(legcaseClients.length / clientsPerPage);
 
   return (
@@ -199,14 +218,19 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
             </tr>
           </thead>
           <tbody>
-            {currentClients.map(client => (
-              <tr key={client.id} className="hover:bg-gray-100 dark:hover:bg-gray-600">
+            {currentClients.map((client) => (
+              <tr
+                key={client.id}
+                className="hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
                 <td className="px-4 py-2 font-semibold">{client.slug}</td>
                 <td className="px-4 py-2">{client.name}</td>
-                <td className="px-4 py-2">{client.phone_number || 'غير متوفر'}</td>
+                <td className="px-4 py-2">
+                  {client.phone_number || 'غير متوفر'}
+                </td>
                 <td className="px-4 py-2 text-center">
                   <button
-                  onClick={() => openDeleteModal(client.id, client.name)} 
+                    onClick={() => openDeleteModal(client.id, client.name)}
                     className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-md transition duration-300"
                   >
                     حذف
@@ -221,17 +245,21 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
         {totalPages > 1 && (
           <div className="flex justify-center mt-4">
             <button
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
             >
               السابق
             </button>
 
-            <span className="mx-4">صفحة {currentPage} من {totalPages}</span>
+            <span className="mx-4">
+              صفحة {currentPage} من {totalPages}
+            </span>
 
             <button
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
               disabled={currentPage === totalPages}
               className={`px-4 py-2 rounded ${currentPage === totalPages ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
             >
@@ -241,11 +269,11 @@ export default function LegalCaseClients({ legCaseId, fetchLegcaseClients,legcas
         )}
       </div>
       <GlobalConfirmDeleteModal
-  isOpen={isDeleteModalOpen}
-  onClose={closeDeleteModal}
-  onConfirm={handleDeleteClient}
-  itemName={clientToDelete.name} 
-/>
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={handleDeleteClient}
+        itemName={clientToDelete.name}
+      />
     </div>
   );
 }

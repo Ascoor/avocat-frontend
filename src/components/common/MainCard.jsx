@@ -29,11 +29,7 @@ const MainCard = ({ count, icon, label }) => {
       onTouchEnd={() => setIsInteracting(false)}
       className="bg-gray-100 dark:bg-gradient-to-b dark:from-avocat-blue-dark dark:via-avocat-indigo-dark dark:to-avocat-orange-dark rounded-lg shadow-lg p-5 flex items-center justify-between w-full max-w-xs"
     >
-
-
-
       <div className="flex flex-col items-start ml-4">
-
         <div className="text-lg font-semibold text-avocat-blue-dark dark:text-avocat-orange  font-['Cairo']">
           {label}
         </div>
@@ -41,7 +37,6 @@ const MainCard = ({ count, icon, label }) => {
         <div className="text-xl font-extrabold text-avocat-indigo dark:text-white">
           {count}
         </div>
-
       </div>
       <div className="w-16 h-16 flex items-center justify-center bg-avocat-orange-dark dark:bg-gradient-to-t dark:from-avocat-blue dark:to-avocat-orange-darker rounded-full shadow-md">
         <img src={icon} alt={label} className="w-10 h-10 object-contain" />

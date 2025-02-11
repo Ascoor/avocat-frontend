@@ -1,20 +1,21 @@
-import { useState, useEffect, useCallback } from "react";
-import { useAlert } from "../../context/AlertContext";
+import { useState, useEffect, useCallback } from 'react';
+import { useAlert } from '../../context/AlertContext';
 import {
   getProcedurePlaceTypes,
   createProcedurePlaceType,
   updateProcedurePlaceType,
   deleteProcedurePlaceType,
-} from "../../services/api/procedures";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import SectionHeader from "../common/SectionHeader";
-import { ProcedurePlaceIcon } from "../../assets/icons";
+} from '../../services/api/procedures';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import SectionHeader from '../common/SectionHeader';
+import { ProcedurePlaceIcon } from '../../assets/icons';
 
 const ProcedurePlaceTypes = () => {
   const [procedurePlaceTypes, setProcedurePlaceTypes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [editingProcedurePlaceType, setEditingProcedurePlaceType] = useState(null);
+  const [editingProcedurePlaceType, setEditingProcedurePlaceType] =
+    useState(null);
   const { triggerAlert } = useAlert();
   const itemsPerPage = 10;
 
@@ -24,8 +25,8 @@ const ProcedurePlaceTypes = () => {
       const response = await getProcedurePlaceTypes();
       setProcedurePlaceTypes(response.data);
     } catch (error) {
-      console.error("خطأ أثناء جلب البيانات:", error);
-      triggerAlert("error", "حدث خطأ أثناء جلب البيانات.");
+      console.error('خطأ أثناء جلب البيانات:', error);
+      triggerAlert('error', 'حدث خطأ أثناء جلب البيانات.');
     }
   }, [triggerAlert]);
 
@@ -39,10 +40,10 @@ const ProcedurePlaceTypes = () => {
       await createProcedurePlaceType(formData);
       fetchProcedurePlaceTypes();
       setShowModal(false);
-      triggerAlert("success", "تم إضافة جهة الإجراء بنجاح.");
+      triggerAlert('success', 'تم إضافة جهة الإجراء بنجاح.');
     } catch (error) {
-      console.error("خطأ أثناء إضافة الجهة:", error);
-      triggerAlert("error", "حدث خطأ أثناء إضافة الجهة.");
+      console.error('خطأ أثناء إضافة الجهة:', error);
+      triggerAlert('error', 'حدث خطأ أثناء إضافة الجهة.');
     }
   };
 
@@ -52,10 +53,10 @@ const ProcedurePlaceTypes = () => {
       await updateProcedurePlaceType(editingProcedurePlaceType.id, formData);
       fetchProcedurePlaceTypes();
       setShowModal(false);
-      triggerAlert("success", "تم تعديل جهة الإجراء بنجاح.");
+      triggerAlert('success', 'تم تعديل جهة الإجراء بنجاح.');
     } catch (error) {
-      console.error("خطأ أثناء تعديل الجهة:", error);
-      triggerAlert("error", "حدث خطأ أثناء تعديل الجهة.");
+      console.error('خطأ أثناء تعديل الجهة:', error);
+      triggerAlert('error', 'حدث خطأ أثناء تعديل الجهة.');
     }
   };
 
@@ -64,10 +65,10 @@ const ProcedurePlaceTypes = () => {
     try {
       await deleteProcedurePlaceType(procedurePlaceTypeId);
       fetchProcedurePlaceTypes();
-      triggerAlert("success", "تم حذف جهة الإجراء بنجاح.");
+      triggerAlert('success', 'تم حذف جهة الإجراء بنجاح.');
     } catch (error) {
-      console.error("خطأ أثناء حذف الجهة:", error);
-      triggerAlert("error", "حدث خطأ أثناء حذف الجهة.");
+      console.error('خطأ أثناء حذف الجهة:', error);
+      triggerAlert('error', 'حدث خطأ أثناء حذف الجهة.');
     }
   };
 
@@ -100,7 +101,10 @@ const ProcedurePlaceTypes = () => {
   // حساب الفهرس الأول والفهرس الأخير للصفوف التي سيتم عرضها
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = procedurePlaceTypes.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = procedurePlaceTypes.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
 
   // التعامل مع تغيير الصفحة
   const handlePageChange = (pageNumber) => {
@@ -124,15 +128,15 @@ const ProcedurePlaceTypes = () => {
   return (
     <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
       <SectionHeader listName="أنواع الجهات" icon={ProcedurePlaceIcon} />
-      <div className="flex justify-start mt-6">
-        {renderAddButton()}
-      </div>
+      <div className="flex justify-start mt-6">{renderAddButton()}</div>
       {/* نموذج إضافة/تعديل جهة الإجراء */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
             <h3 className="text-xl font-semibold mb-4">
-              {editingProcedurePlaceType ? "تعديل جهة الإجراء" : "إضافة جهة الإجراء"}
+              {editingProcedurePlaceType
+                ? 'تعديل جهة الإجراء'
+                : 'إضافة جهة الإجراء'}
             </h3>
             <form
               onSubmit={(e) => {
@@ -143,14 +147,17 @@ const ProcedurePlaceTypes = () => {
               }}
             >
               <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   اسم جهة الإجراء
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
-                  defaultValue={editingProcedurePlaceType?.name || ""}
+                  defaultValue={editingProcedurePlaceType?.name || ''}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md"
                   required
                 />
@@ -167,7 +174,9 @@ const ProcedurePlaceTypes = () => {
                   type="submit"
                   className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                 >
-                  {editingProcedurePlaceType ? "تعديل جهة الإجراء" : "إضافة جهة الإجراء"}
+                  {editingProcedurePlaceType
+                    ? 'تعديل جهة الإجراء'
+                    : 'إضافة جهة الإجراء'}
                 </button>
               </div>
             </form>
@@ -187,7 +196,9 @@ const ProcedurePlaceTypes = () => {
           <tbody>
             {currentItems.map((procedurePlaceType) => (
               <tr key={procedurePlaceType.id}>
-                <td className="px-4 py-2 border border-gray-300">{procedurePlaceType.name}</td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {procedurePlaceType.name}
+                </td>
                 <td className="px-4 py-2 border border-gray-300">
                   <div className="flex items-center gap-2">
                     <button
@@ -197,7 +208,9 @@ const ProcedurePlaceTypes = () => {
                       <FaEdit />
                     </button>
                     <button
-                      onClick={() => handleDeleteProcedurePlaceType(procedurePlaceType.id)}
+                      onClick={() =>
+                        handleDeleteProcedurePlaceType(procedurePlaceType.id)
+                      }
                       className="text-red-500 hover:text-red-700"
                     >
                       <FaTrash />
@@ -211,7 +224,6 @@ const ProcedurePlaceTypes = () => {
       </div>
 
       {/* زر إضافة جهة */}
-
 
       {/* التنقل بين الصفحات */}
       <div className="flex justify-between mt-6">

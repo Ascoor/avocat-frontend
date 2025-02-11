@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { BiPlusCircle } from 'react-icons/bi';
-import { addLegalCaseCourts, getCourts, removeLegalCaseCourt } from '../../../services/api/legalCases';
+import {
+  addLegalCaseCourts,
+  getCourts,
+  removeLegalCaseCourt,
+} from '../../../services/api/legalCases';
 import { useAlert } from '../../../context/AlertContext';
 import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
 import CourtModal from './Modals/CourtModal';
@@ -25,7 +29,10 @@ const LegalCaseCourts = ({ legCase, fetchLegCase }) => {
 
         const uniqueLevels = fetchedCourts
           .map((court) => court.court_level)
-          .filter((level, index, self) => level && self.findIndex((l) => l.id === level.id) === index);
+          .filter(
+            (level, index, self) =>
+              level && self.findIndex((l) => l.id === level.id) === index,
+          );
 
         setCourtLevels(uniqueLevels);
       } catch (error) {
@@ -53,7 +60,9 @@ const LegalCaseCourts = ({ legCase, fetchLegCase }) => {
 
     if (field === 'court_level_id') {
       updated[index].court_id = '';
-      const filtered = courts.filter((court) => court.court_level_id === parseInt(value));
+      const filtered = courts.filter(
+        (court) => court.court_level_id === parseInt(value),
+      );
       setFilteredCourts(filtered);
     }
 
@@ -67,10 +76,13 @@ const LegalCaseCourts = ({ legCase, fetchLegCase }) => {
     }
 
     const invalidCourt = legCaseNewCourts.find(
-      (court) => !court.case_number || !court.case_year || !court.court_id
+      (court) => !court.case_number || !court.case_year || !court.court_id,
     );
     if (invalidCourt) {
-      triggerAlert('error', 'جميع الحقول مطلوبة لكل محكمة. يرجى استكمال الحقول المفقودة.');
+      triggerAlert(
+        'error',
+        'جميع الحقول مطلوبة لكل محكمة. يرجى استكمال الحقول المفقودة.',
+      );
       return;
     }
 

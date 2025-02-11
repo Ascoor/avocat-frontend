@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useSprings, animated } from '@react-spring/web';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import API_CONFIG from '../config/config';
 import AddEditLegCase from '../components/LegalCases/AddEditLegCase';
 import SectionHeader from '../components/common/SectionHeader';
@@ -33,7 +33,10 @@ const LegalCasesIndex = () => {
 
   const fetchLegCases = useCallback(async () => {
     try {
-      const res = await getLegCases({ page: 1, sort: JSON.stringify({ createdAt: -1 }) });
+      const res = await getLegCases({
+        page: 1,
+        sort: JSON.stringify({ createdAt: -1 }),
+      });
       setLegCases(res.data);
     } catch (error) {
       console.error('Error fetching legal cases:', error);
@@ -85,25 +88,23 @@ const LegalCasesIndex = () => {
   ];
 
   const statusColors = {
-    "جارى التنفيذ": "text-yellow-500", // لون أصفر
-    "قيد التنفيذ": "text-orange-500", // لون برتقالي
-    "منتهية": "text-green-600", // لون أخضر
-    "متداولة": "text-blue-500", // لون أزرق
-    "استيفاء": "text-purple-500", // لون بنفسجي 
+    'جارى التنفيذ': 'text-yellow-500', // لون أصفر
+    'قيد التنفيذ': 'text-orange-500', // لون برتقالي
+    منتهية: 'text-green-600', // لون أخضر
+    متداولة: 'text-blue-500', // لون أزرق
+    استيفاء: 'text-purple-500', // لون بنفسجي
   };
-  
+
   const statusIcons = {
-    "جارى التنفيذ": <AiFillCheckCircle className="mr-1" />,
-    "قيد التنفيذ": <AiFillCheckCircle className="mr-1" />,
-    "منتهية": <AiFillCheckCircle className="mr-1" />,
-    "متداولة": <AiFillCheckCircle className="mr-1" />,
-    "استيفاء": <AiFillCheckCircle className="mr-1" />, 
+    'جارى التنفيذ': <AiFillCheckCircle className="mr-1" />,
+    'قيد التنفيذ': <AiFillCheckCircle className="mr-1" />,
+    منتهية: <AiFillCheckCircle className="mr-1" />,
+    متداولة: <AiFillCheckCircle className="mr-1" />,
+    استيفاء: <AiFillCheckCircle className="mr-1" />,
   };
-   
+
   const customRenderers = {
     case_sub_type: (legCase) => legCase.case_sub_type?.name || 'غير محدد',
-    
-    
 
     clients: (legCase) => {
       if (!legCase.clients || legCase.clients.length === 0) {
@@ -122,20 +123,20 @@ const LegalCasesIndex = () => {
         </div>
       );
     },
-  
+
     status: (service) => {
-      const statusText = service.status || "غير محدد";
-      const textColor = statusColors[statusText] || "text-gray-400";
+      const statusText = service.status || 'غير محدد';
+      const textColor = statusColors[statusText] || 'text-gray-400';
       const statusIcon = statusIcons[statusText] || null;
-  
+
       return (
         <span className={`flex items-center ${textColor}`}>
           {statusIcon} {statusText}
         </span>
       );
     },
-  
-  actions: (legCase) => (
+
+    actions: (legCase) => (
       <div className="flex space-x-2">
         <Link
           to={`/legcases/show/${legCase.id}`}
@@ -189,7 +190,9 @@ const LegalCasesIndex = () => {
       <TableComponent
         data={legCases}
         headers={headers}
-        onEdit={(id) => handleAddEditModal(legCases.find((legCase) => legCase.id === id))}
+        onEdit={(id) =>
+          handleAddEditModal(legCases.find((legCase) => legCase.id === id))
+        }
         onDelete={handleDeleteCase}
         sectionName="legal-cases"
         customRenderers={customRenderers}

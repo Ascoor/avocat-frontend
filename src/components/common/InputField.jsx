@@ -1,10 +1,23 @@
-import React from "react";
+import React from 'react';
 
-const InputField = ({ label, name, value, onChange, options, readOnly, placeholder, type, error, icon }) => {
+const InputField = ({
+  label,
+  name,
+  value,
+  onChange,
+  options,
+  readOnly,
+  placeholder,
+  type,
+  error,
+  icon,
+}) => {
   return (
     <div className="flex flex-col">
-      <label className="text-sm font-medium text-gray-700 dark:text-gray-200">{label}</label>
-      {type === "select" ? (
+      <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+        {label}
+      </label>
+      {type === 'select' ? (
         <select
           name={name}
           value={value}

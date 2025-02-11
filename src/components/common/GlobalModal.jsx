@@ -55,7 +55,7 @@ const GlobalModal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
                   </Dialog.Title>
                   <button
                     onClick={onClose}
-                      className="
+                    className="
     text-avocat-orange 
     dark:text-white 
     hover:text-avocat-red 

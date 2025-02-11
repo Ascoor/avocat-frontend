@@ -14,7 +14,10 @@ const AuthWrapper = () => {
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-gray-900">
       {/* Sidebar */}
-      <div style={{ width: sidebarWidth }} className="transition-all duration-300">
+      <div
+        style={{ width: sidebarWidth }}
+        className="transition-all duration-300"
+      >
         <Sidebar />
       </div>
 
@@ -35,6 +38,5 @@ const AuthWrapper = () => {
     </div>
   );
 };
-
 
 export default AuthWrapper;

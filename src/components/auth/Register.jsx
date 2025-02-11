@@ -27,8 +27,14 @@ const Register = ({ toggleLoginForm, handleFormClose }) => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-400 via-teal-500 to-blue-500">
       <div className="w-full max-w-sm bg-gray-900 text-white rounded-3xl p-8 shadow-lg transform hover:scale-105 transition-all duration-300">
-        <h2 className="text-3xl font-bold text-center text-green-400 mb-4">إنشاء حساب</h2>
-        {error && <p className="text-red-500 bg-red-100 dark:bg-red-800 p-2 rounded mb-4 text-center">{error}</p>}
+        <h2 className="text-3xl font-bold text-center text-green-400 mb-4">
+          إنشاء حساب
+        </h2>
+        {error && (
+          <p className="text-red-500 bg-red-100 dark:bg-red-800 p-2 rounded mb-4 text-center">
+            {error}
+          </p>
+        )}
         <form onSubmit={onSubmit} className="space-y-4">
           <input
             type="text"

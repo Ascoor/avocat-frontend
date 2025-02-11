@@ -4,7 +4,7 @@ import UserMenu from '../common/DropdownProfile';
 import ThemeToggle from '../common/ThemeToggle';
 import HeaderToggle from '../common/HeaderToggle';
 import { useSidebar } from '../../utils/SidebarContext';
- 
+
 const Header = () => {
   const { isSidebarOpen, isMobile } = useSidebar();
 
@@ -15,7 +15,6 @@ const Header = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-      
         <HeaderToggle />
 
         {/* ✅ الإشعارات وأدوات التحكم */}

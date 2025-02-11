@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const GlobalConfirmDeleteModal = ({ isOpen, onClose, onConfirm, itemName }) => {
   if (!isOpen) return null;
@@ -10,7 +10,7 @@ const GlobalConfirmDeleteModal = ({ isOpen, onClose, onConfirm, itemName }) => {
           تأكيد الحذف
         </h2>
         <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
-          هل أنت متأكد أنك تريد حذف{" "}
+          هل أنت متأكد أنك تريد حذف{' '}
           <span className="font-bold text-red-500">{itemName}</span>؟
         </p>
         <div className="flex justify-center gap-4">

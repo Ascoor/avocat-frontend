@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useSpring, animated } from "@react-spring/web";
-import Login from "../components/auth/Login";
-import Register from "../components/auth/Register";
-import { TeamWorkImage, LogoPatren } from "../assets/images";
-import { useAlert } from "../context/AlertContext";
-import GlobalSpinner from "../components/common/GlobalSpinner";
+import React, { useState } from 'react';
+import { useSpring, animated } from '@react-spring/web';
+import Login from '../components/auth/Login';
+import Register from '../components/auth/Register';
+import { TeamWorkImage, LogoPatren } from '../assets/images';
+import { useAlert } from '../context/AlertContext';
+import GlobalSpinner from '../components/common/GlobalSpinner';
 
 const HomePage = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -26,9 +26,9 @@ const HomePage = () => {
     setIsLoading(false);
     if (success) {
       handleFormClose();
-      triggerAlert("success", message);
+      triggerAlert('success', message);
     } else {
-      triggerAlert("error", message);
+      triggerAlert('error', message);
     }
   };
 
@@ -43,7 +43,7 @@ const HomePage = () => {
   };
 
   const imageAnimation = useSpring({
-    transform: isImageLoaded ? "translateY(0%)" : "translateY(100%)",
+    transform: isImageLoaded ? 'translateY(0%)' : 'translateY(100%)',
     opacity: isImageLoaded ? 1 : 0,
     config: { duration: 1000 },
   });
@@ -66,12 +66,11 @@ const HomePage = () => {
               className="object-cover w-full h-full rounded-lg shadow-lg"
               onLoad={() => setIsImageLoaded(true)}
               style={{
-                maskImage: "linear-gradient(to top, transparent, black)",
-                WebkitMaskImage: "linear-gradient(to top, transparent, black)",
+                maskImage: 'linear-gradient(to top, transparent, black)',
+                WebkitMaskImage: 'linear-gradient(to top, transparent, black)',
               }}
             />
           </animated.div>
-
 
           <img
             src={LogoPatren}
@@ -80,10 +79,16 @@ const HomePage = () => {
           />
 
           <div className="flex flex-col sm:flex-row items-center mt-4 mr-4 space-y-4 sm:space-y-0 sm:space-x-4">
-            <button onClick={toggleLoginForm} className="px-6 py-2 text-lg font-bold bg-red-500 text-white rounded-lg">
+            <button
+              onClick={toggleLoginForm}
+              className="px-6 py-2 text-lg font-bold bg-red-500 text-white rounded-lg"
+            >
               تسجيل الدخول
             </button>
-            <button onClick={toggleRegisterForm} className="px-6 py-2 text-lg font-bold bg-green-500 text-white rounded-lg">
+            <button
+              onClick={toggleRegisterForm}
+              className="px-6 py-2 text-lg font-bold bg-green-500 text-white rounded-lg"
+            >
               الاشتراك
             </button>
           </div>
@@ -95,13 +100,20 @@ const HomePage = () => {
 
       {/* ✅ نماذج تسجيل الدخول والتسجيل مع تحسين z-index */}
       {showLoginForm && (
-    <Login onAuthStart={handleAuthStart} handleFormClose={handleFormClose} toggleRegisterForm={toggleRegisterForm} onAuthComplete={handleAuthComplete} />
-
+        <Login
+          onAuthStart={handleAuthStart}
+          handleFormClose={handleFormClose}
+          toggleRegisterForm={toggleRegisterForm}
+          onAuthComplete={handleAuthComplete}
+        />
       )}
 
       {showRegisterForm && (
-        <Register onAuthStart={handleAuthStart} handleFormClose={handleFormClose} onAuthComplete={handleAuthComplete} />
-         
+        <Register
+          onAuthStart={handleAuthStart}
+          handleFormClose={handleFormClose}
+          onAuthComplete={handleAuthComplete}
+        />
       )}
     </div>
   );

@@ -113,7 +113,6 @@ const Lawyers = () => {
   );
 
   return (
-    
     <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
       <SectionHeader listName="المحامون" icon={LawyerIcon} />
 

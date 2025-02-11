@@ -26,7 +26,12 @@ function UserMenu({ align = 'left' }) {
   // إغلاق القائمة عند النقر خارجها
   useEffect(() => {
     const clickHandler = ({ target }) => {
-      if (!dropdown.current || dropdown.current.contains(target) || trigger.current.contains(target)) return;
+      if (
+        !dropdown.current ||
+        dropdown.current.contains(target) ||
+        trigger.current.contains(target)
+      )
+        return;
       setDropdownOpen(false);
     };
     document.addEventListener('click', clickHandler);
@@ -43,20 +48,19 @@ function UserMenu({ align = 'left' }) {
         onClick={() => setDropdownOpen(!dropdownOpen)}
       >
         {/* ✅ صورة المستخدم */}
-        
+
         {/* ✅ اسم المستخدم يظهر في الشاشات الكبيرة فقط */}
         <span className="hidden md:inline text-red-500 ml-4 dark:text-orange-200 font-bold text-center">
           {user?.name}
         </span>
 
-    
         <img
           src={userImage}
           onError={handleImageError}
           alt="صورة المستخدم"
           className="w-8 h-8 rounded-full object-cover"
         />
-    <svg
+        <svg
           className="w-3 h-3 shrink-0 mr-1 fill-current text-gray-80 dark:text-gray-500"
           viewBox="0 0 12 12"
         >

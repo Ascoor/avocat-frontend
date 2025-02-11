@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment'; 
+import moment from 'moment';
 import GlobalModal from '../../common/GlobalModal';
 import api from '../../../services/api/axiosConfig';
 import { useAlert } from '../../../context/AlertContext';
@@ -17,7 +17,7 @@ const AddEditClient = ({ client = {}, isOpen, onClose, onSaved }) => {
       : new Date(),
     address: client?.address ?? '',
     religion: client?.religion ?? '',
-      nationality: client?.nationality ?? '',
+    nationality: client?.nationality ?? '',
     work: client?.work ?? '',
     email: client?.email ?? '',
     phone_number: client?.phone_number ?? '',
@@ -51,10 +51,7 @@ const AddEditClient = ({ client = {}, isOpen, onClose, onSaved }) => {
 
     try {
       if (client.id) {
-        await api.put(`/api/clients/${client.id}`,
-          clientData,
-        );
-        
+        await api.put(`/api/clients/${client.id}`, clientData);
       } else {
         await api.post(`/api/clients`, clientData);
       }

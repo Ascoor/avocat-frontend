@@ -107,7 +107,11 @@ function DashboardCard08() {
       {/* Chart built with Chart.js 3 */}
       {/* Adjust chart height and width based on screen size */}
       <div className="px-4 py-6">
-        <LineChart data={chartData} width={window.innerWidth < 640 ? 320 : 595} height={window.innerWidth < 640 ? 180 : 248} />
+        <LineChart
+          data={chartData}
+          width={window.innerWidth < 640 ? 320 : 595}
+          height={window.innerWidth < 640 ? 180 : 248}
+        />
       </div>
     </div>
   );

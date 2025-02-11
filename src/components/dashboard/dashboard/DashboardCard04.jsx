@@ -5,7 +5,12 @@ import { tailwindConfig } from '../../../utils/Utils';
 function DashboardCard04() {
   const chartData = {
     labels: [
-      'يناير 2024', 'فبراير 2024', 'مارس 2024', 'أبريل 2024', 'مايو 2024', 'يونيو 2024',
+      'يناير 2024',
+      'فبراير 2024',
+      'مارس 2024',
+      'أبريل 2024',
+      'مايو 2024',
+      'يونيو 2024',
     ],
     datasets: [
       {

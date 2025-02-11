@@ -96,7 +96,7 @@ const CourtLevel = ({ show, handleClose }) => {
   return (
     <div className="p-4">
       <div className="text-center mb-6">
-        <h3 className="text-2xl font-bold text-gray-800">درجات المحاكم</h3>
+        <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">درجات المحاكم</h3>
       </div>
 
       {alert.show && (
@@ -108,20 +108,20 @@ const CourtLevel = ({ show, handleClose }) => {
       )}
 
       <div className="overflow-x-auto shadow rounded-lg">
-        <table className="w-full border-collapse border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-4 py-2 border border-gray-300">الاسم</th>
-              <th className="px-4 py-2 border border-gray-300">الإجراءات</th>
+        <table className="w-full border-collapse border   justify-center text-center border-gray-300 dark:border-gray-600">
+        <thead className="bg-gray-200 dark:bg-avocat-blue-dark">
+             <tr>
+              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">الاسم</th>
+              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">الإجراءات</th>
             </tr>
           </thead>
           <tbody>
             {currentItems.map((courtLevel) => (
-              <tr key={courtLevel.id}>
-                <td className="px-4 py-2 border border-gray-300">
+              <tr key={courtLevel.id} className="hover:bg-gray-300 dark:hover:bg-gradient-orange-light dark:hover:text-avocat-blue-dark  bg-gray-100 dark:bg-avocat-blue">
+                <td className="px-4 py-2 border border-gray-300 dark:border-gray-600">
                   {courtLevel.name}
                 </td>
-                <td className="px-4 py-2 border border-gray-300">
+                <td className="px-4 py-2 border border-gray-300 dark:border-gray-600">
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
                     onClick={() => handleDeleteCourtLevel(courtLevel.id)}
@@ -154,9 +154,9 @@ const CourtLevel = ({ show, handleClose }) => {
 
       {show && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 shadow-lg w-1/2">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg w-1/2">
             <div className="flex justify-between items-center mb-4">
-              <h4 className="text-xl font-bold">إضافة مستوى محكمة</h4>
+              <h4 className="text-xl font-bold text-gray-200 dark:text-gray-700">إضافة مستوى محكمة</h4>
               <button className="text-red-500" onClick={handleClose}>
                 &times;
               </button>
@@ -167,12 +167,12 @@ const CourtLevel = ({ show, handleClose }) => {
                 handleAddCourtLevel();
               }}
             >
-              <label className="block mb-2 text-gray-700">
+              <label className="block mb-2 text-gray-200 dark:text-gray-700">
                 اسم مستوى المحكمة:
               </label>
               <input
                 type="text"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded dark:border-gray-600"
                 value={newCourtLevelName}
                 onChange={(e) => setNewCourtLevelName(e.target.value)}
               />

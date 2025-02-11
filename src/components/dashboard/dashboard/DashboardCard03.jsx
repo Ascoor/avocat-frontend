@@ -29,7 +29,7 @@ function DashboardCard0() {
 
   return (
     <div className="bg-gray-100 dark:bg-gradient-night shadow rounded-lg p-4 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
-       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
+      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
           مقارنة الجلسات القانونية الناجحة والفاشلة
         </h2>

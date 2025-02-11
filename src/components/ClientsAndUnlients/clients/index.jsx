@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react'; 
-import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai'; 
+import React, { useState, useEffect, useCallback } from 'react';
+import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import { ClientSectionIcon } from '../../../assets/icons/index';
 import SectionHeader from '../../common/SectionHeader';
 import AddEditClient from '../../ClientsAndUnClients/clients/AddEditClient';
@@ -31,25 +31,30 @@ function ClientList() {
       await api.delete(`/api/clients/${id}`);
       fetchClients();
     } catch (error) {
-      triggerAlert: ('error', 'حدث خطاء'); }
+      triggerAlert: 'error', 'حدث خطاء';
+    }
   };
 
   // ✅ تغيير حالة العميل
   const handleToggleStatus = async (id) => {
     try {
       const updatedClients = clients.map((client) =>
-        client.id === id ? { ...client, status: client.status === "active" ? "inactive" : "active" } : client
+        client.id === id
+          ? {
+              ...client,
+              status: client.status === 'active' ? 'inactive' : 'active',
+            }
+          : client,
       );
       setClients(updatedClients);
-  
+
       await api.put(`/api/clients/${id}`, {
         status: updatedClients.find((c) => c.id === id).status,
       });
     } catch (error) {
-      console.error("Error toggling status:", error);
+      console.error('Error toggling status:', error);
     }
   };
-  
 
   // ✅ فتح نافذة الإضافة أو التعديل
   const openAddEditModal = (client = null) => {
@@ -98,9 +103,8 @@ function ClientList() {
   );
 
   return (
-
     <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
-            {/* ✅ رأس القسم */}
+      {/* ✅ رأس القسم */}
       <SectionHeader
         buttonName="عميل"
         listName="عملاء"

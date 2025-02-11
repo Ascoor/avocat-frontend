@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
-import GlobalAlert from "../components/common/GlobalAlert";
+import React, { createContext, useContext, useState } from 'react';
+import GlobalAlert from '../components/common/GlobalAlert';
 
 const AlertContext = createContext();
 

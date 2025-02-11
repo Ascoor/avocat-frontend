@@ -10,7 +10,6 @@ export const deleteService = (id) => api.delete(`/api/services/${id}`);
 export const getServiceTypes = () => api.get('/api/service-types');
 export const getServiceTypeById = (id) => api.get(`/api/service-types/${id}`);
 export const createServiceType = (data) => api.post('/api/service-types', data);
-export const updateServiceType = (id, data) => api.put(`/api/service-types/${id}`, data);
+export const updateServiceType = (id, data) =>
+  api.put(`/api/service-types/${id}`, data);
 export const deleteServiceType = (id) => api.delete(`/api/service-types/${id}`);
-
-

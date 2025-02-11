@@ -1,9 +1,7 @@
-import useAuth from "../../components/auth/AuthUser"; 
+import useAuth from '../../components/auth/AuthUser';
 
 export const useCourtsApi = () => {
   const { http } = useAuth();
-
- 
 
   const getCourts = () => http.get('/api/courts');
   const getCourtById = (id) => http.get(`/api/courts/${id}`);

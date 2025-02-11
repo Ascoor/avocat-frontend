@@ -2,8 +2,6 @@
 
 import api from './axiosConfig'; // Import your Axios instance
 
-
-
 export const getClients = () => api.get('/api/clients');
 export const getUnClients = () => api.get('/api/unclients');
 export const getClientById = (id) => api.get(`/api/clients/${id}`);

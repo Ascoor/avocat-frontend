@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { createSession, updateSession, getLegalSessionTypes } from "../../../../services/api/sessions";
-import { getCourts } from "../../../../services/api/legalCases";
-import { getLawyers } from "../../../../services/api/lawyers";
-import useAuth from "../../../auth/AuthUser";
-import { useAlert } from "../../../../context/AlertContext";
+import React, { useEffect, useState } from 'react';
+import {
+  createSession,
+  updateSession,
+  getLegalSessionTypes,
+} from '../../../../services/api/sessions';
+import { getCourts } from '../../../../services/api/legalCases';
+import { getLawyers } from '../../../../services/api/lawyers';
+import useAuth from '../../../auth/AuthUser';
+import { useAlert } from '../../../../context/AlertContext';
 
 const SessionModal = ({
   isOpen,
@@ -42,11 +46,12 @@ const SessionModal = ({
   useEffect(() => {
     const fetchDropdownData = async () => {
       try {
-        const [courtResponse, legalSessionTypeResponse, lawyersResponse] = await Promise.all([
-          getCourts(),
-          getLegalSessionTypes(),
-          getLawyers(),
-        ]);
+        const [courtResponse, legalSessionTypeResponse, lawyersResponse] =
+          await Promise.all([
+            getCourts(),
+            getLegalSessionTypes(),
+            getLawyers(),
+          ]);
 
         setCourts(courtResponse.data);
         setLegalSessionTypes(legalSessionTypeResponse.data);
@@ -62,19 +67,19 @@ const SessionModal = ({
     if (isEdit && initialData) {
       setFormData({
         ...initialData,
-        session_date: initialData.session_date || "",
-        session_roll: initialData.session_roll || "",
+        session_date: initialData.session_date || '',
+        session_roll: initialData.session_roll || '',
         cost1: initialData.cost1 || 0,
         cost2: initialData.cost2 || 0,
         cost3: initialData.cost3 || 0,
-        court_id: initialData.court_id || "",
-        legal_session_type_id: initialData.legal_session_type_id || "",
-        lawyer_id: initialData.lawyer_id || "",
-        court_department: initialData.court_department || "",
-        result: initialData.result || "",
-        orders: initialData.orders || "",
-        notes: initialData.notes || "",
-        status: initialData.status || "جارى التنفيذ",
+        court_id: initialData.court_id || '',
+        legal_session_type_id: initialData.legal_session_type_id || '',
+        lawyer_id: initialData.lawyer_id || '',
+        court_department: initialData.court_department || '',
+        result: initialData.result || '',
+        orders: initialData.orders || '',
+        notes: initialData.notes || '',
+        status: initialData.status || 'جارى التنفيذ',
         leg_case_id: legalCaseId,
         created_by: user.id,
         Judgment_operative: initialData.Judgment_operative || '',
@@ -159,7 +164,10 @@ const SessionModal = ({
                 >
                   <option value="">اختر نوع الجلسة</option>
                   {legalSessionTypes.map((legalSessionType) => (
-                    <option key={legalSessionType.id} value={legalSessionType.id}>
+                    <option
+                      key={legalSessionType.id}
+                      value={legalSessionType.id}
+                    >
                       {legalSessionType.name}
                     </option>
                   ))}
@@ -348,7 +356,10 @@ const SessionModal = ({
             </>
           )}
 
-          <button type="submit" className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+          <button
+            type="submit"
+            className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
             {isEdit ? 'تحديث' : 'إضافة'}
           </button>
         </form>

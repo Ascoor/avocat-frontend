@@ -98,9 +98,8 @@ function UnClientList() {
   );
 
   return (
-
-    <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full " dir='rtl'>
-            {/* ✅ رأس القسم */}
+    <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full " dir="rtl">
+      {/* ✅ رأس القسم */}
       <SectionHeader
         buttonName="عميل بدون وكالة"
         listName="عملاء بدون وكالة"

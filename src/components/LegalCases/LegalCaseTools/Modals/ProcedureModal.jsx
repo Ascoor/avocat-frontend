@@ -43,11 +43,12 @@ const ProcedureModal = ({
   useEffect(() => {
     const fetchDropdownData = async () => {
       try {
-        const [typesResponse, placesResponse, lawyersResponse] = await Promise.all([
-          getProcedureTypes(),
-          getProcedurePlaceTypes(),
-          getLawyers(),
-        ]);
+        const [typesResponse, placesResponse, lawyersResponse] =
+          await Promise.all([
+            getProcedureTypes(),
+            getProcedurePlaceTypes(),
+            getLawyers(),
+          ]);
         setProcedureTypes(typesResponse.data);
         setProcedurePlaceTypes(placesResponse.data);
         setLawyers(lawyersResponse.data);
@@ -77,7 +78,7 @@ const ProcedureModal = ({
       });
     }
   }, [isEdit, initialData, legalCaseId]);
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -115,7 +116,10 @@ const ProcedureModal = ({
           {isEdit ? 'تحديث الإجراء' : 'إضافة إجراء جديد'}
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6 max-h-[70vh] overflow-y-auto pr-2"
+        >
           {/* نوع الإجراء */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
@@ -251,25 +255,25 @@ const ProcedureModal = ({
               className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
             />
           </div>
-{/* حالة الإجراء (يظهر فقط في وضع التعديل) */}
-{isEdit && (
-  <div>
-    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-      حالة الإجراء
-    </label>
-    <select
-      name="status"
-      value={formData.status}
-      onChange={handleChange}
-      className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-      required
-    >
-      <option value="جاري التنفيذ">جاري التنفيذ</option>
-      <option value="تمت">تمت</option>
-      <option value="لم ينفذ">لم ينفذ</option>
-    </select>
-  </div>
-)}
+          {/* حالة الإجراء (يظهر فقط في وضع التعديل) */}
+          {isEdit && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                حالة الإجراء
+              </label>
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                required
+              >
+                <option value="جاري التنفيذ">جاري التنفيذ</option>
+                <option value="تمت">تمت</option>
+                <option value="لم ينفذ">لم ينفذ</option>
+              </select>
+            </div>
+          )}
 
           {/* التكاليف */}
           <div className="grid grid-cols-3 gap-4">
@@ -311,7 +315,10 @@ const ProcedureModal = ({
             </div>
           </div>
 
-          <button type="submit" className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+          <button
+            type="submit"
+            className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
             {isEdit ? 'تحديث' : 'إضافة'}
           </button>
         </form>

@@ -174,44 +174,42 @@ const TableComponent = ({
       </div>
       {filteredData.length > 0 ? (
         <div className="w-full overflow-x-auto">
-  <table className="w-full table-auto shadow-md">
-  <thead className="text-sm font-semibold tracking-wide text-center text-gray-100 bg-blue-500 dark:bg-gradient-night dark:text-avocat-orange-light uppercase border-b border-gray-600">
-    <tr>
-      {onView && <th className="px-4 py-3">عرض</th>}
-      {headers.map((header) => (
-        <th
-          key={header.key}
-          className="px-4 py-3 cursor-pointer"
-          onClick={() => handleSort(header.key)}
-        >
-          {header.text}
-          {sortKey === header.key && (
-            sortDirection === 'asc' ? <FaSortUp /> : <FaSortDown />
-          )}
-        </th>
-      ))}
-      <th className="px-4 py-3">تعديل</th>
-      <th className="px-4 py-3">حذف</th>
-    </tr>
-  </thead>
-  <tbody>
-    {paginatedData.map((row, index) => (
-      <AnimatedRow
-        key={row.id}
-        row={row}
-        rowIndex={index}
-        headers={headers}
-        onEdit={onEdit}
-        onDelete={onDelete}
-        onView={onView}
-        customRenderers={customRenderers}
-        sortKey={sortKey}
-        sortDirection={sortDirection}
-      />
-    ))}
-  </tbody>
-</table>
-
+          <table className="w-full table-auto shadow-md">
+            <thead className="text-sm font-semibold tracking-wide text-center text-gray-100 bg-blue-500 dark:bg-gradient-night dark:text-avocat-orange-light uppercase border-b border-gray-600">
+              <tr>
+                {onView && <th className="px-4 py-3">عرض</th>}
+                {headers.map((header) => (
+                  <th
+                    key={header.key}
+                    className="px-4 py-3 cursor-pointer"
+                    onClick={() => handleSort(header.key)}
+                  >
+                    {header.text}
+                    {sortKey === header.key &&
+                      (sortDirection === 'asc' ? <FaSortUp /> : <FaSortDown />)}
+                  </th>
+                ))}
+                <th className="px-4 py-3">تعديل</th>
+                <th className="px-4 py-3">حذف</th>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedData.map((row, index) => (
+                <AnimatedRow
+                  key={row.id}
+                  row={row}
+                  rowIndex={index}
+                  headers={headers}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                  onView={onView}
+                  customRenderers={customRenderers}
+                  sortKey={sortKey}
+                  sortDirection={sortDirection}
+                />
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
         <p className="text-center text-gray-500 mt-4">لا توجد بيانات.</p>

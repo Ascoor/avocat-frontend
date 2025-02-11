@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAlert } from '../../context/AlertContext';
-import { getServiceTypes, createServiceType, updateServiceType, deleteServiceType } from '../../services/api/services';
+import {
+  getServiceTypes,
+  createServiceType,
+  updateServiceType,
+  deleteServiceType,
+} from '../../services/api/services';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import SectionHeader from '../common/SectionHeader';
 import { ServiceIcon } from '../../assets/icons';
@@ -55,7 +60,10 @@ const ServiceTypes = () => {
         triggerAlert('success', 'Service type deleted successfully.');
       } catch (error) {
         console.error('Error deleting service type:', error);
-        triggerAlert('error', 'Failed to delete service type. Please try again.');
+        triggerAlert(
+          'error',
+          'Failed to delete service type. Please try again.',
+        );
       }
     }
   };
@@ -87,7 +95,7 @@ const ServiceTypes = () => {
           onClick={() => handleShowModal()}
           className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow-md transition"
         >
-     إضافة نوع حدمة
+          إضافة نوع حدمة
         </button>
       </div>
 
@@ -107,7 +115,10 @@ const ServiceTypes = () => {
               }}
             >
               <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-800 dark:text-gray-300">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-800 dark:text-gray-300"
+                >
                   إسم الخدمة
                 </label>
                 <input
@@ -154,7 +165,10 @@ const ServiceTypes = () => {
           </thead>
           <tbody>
             {currentItems.map((serviceType) => (
-              <tr key={serviceType.id} className="bg-white text-center dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700">
+              <tr
+                key={serviceType.id}
+                className="bg-white text-center dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
                 <td className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100">
                   {serviceType.name}
                 </td>

@@ -69,11 +69,23 @@ const AuthRoutes = () => {
           <Route path="/lawyers/form" element={<LawyersAddEdit />} />
           <Route path="/managment-settings" element={<ManagmentSettings />} />
           <Route path="/managment-settings/courts" element={<CourtSetting />} />
-          <Route path="/managment-settings/procedures" element={<Procedures />} />
+          <Route
+            path="/managment-settings/procedures"
+            element={<Procedures />}
+          />
           <Route path="/managment-settings/lawyers" element={<Lawyers />} />
-          <Route path="/managment-settings/service-types" element={<ServiceTypes />} />
-          <Route path="/managment-settings/legcase-types" element={<LegcaseTypes />} />
-          <Route path="/managment-settings/expense-categorys" element={<Expensecategorys />} />
+          <Route
+            path="/managment-settings/service-types"
+            element={<ServiceTypes />}
+          />
+          <Route
+            path="/managment-settings/legcase-types"
+            element={<LegcaseTypes />}
+          />
+          <Route
+            path="/managment-settings/expense-categorys"
+            element={<Expensecategorys />}
+          />
         </Routes>
       </div>
     </div>

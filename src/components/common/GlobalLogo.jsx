@@ -5,7 +5,7 @@ import { LogoBlue, LogoArt } from '../../assets/images/index';
 const GlobalLogo = ({ size = 'md', theme = 'auto' }) => {
   // تحديد حجم الشعار بناءً على قيمة prop
   const sizeClasses = {
-    sm: 'w-16 h-8',  // صغير
+    sm: 'w-16 h-8', // صغير
     md: 'w-28 h-12', // متوسط (افتراضي)
     lg: 'w-64 h-32', // كبير
   };

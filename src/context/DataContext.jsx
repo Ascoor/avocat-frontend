@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from 'react';
 import {
   getLawyers,
   getLegCases,
@@ -6,7 +6,7 @@ import {
   getSessions,
   getCourts,
   getServices,
-} from "../services/api/GeneralReqApi";
+} from '../services/api/GeneralReqApi';
 
 export const DataContext = createContext();
 
@@ -30,24 +30,24 @@ export const DataProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchData("lawyers", getLawyers);
-    fetchData("legCases", getLegCases);
-    fetchData("procedures", getProcedures);
-    fetchData("sessions", getSessions);
-    fetchData("courts", getCourts);
-    fetchData("services", getServices);
+    fetchData('lawyers', getLawyers);
+    fetchData('legCases', getLegCases);
+    fetchData('procedures', getProcedures);
+    fetchData('sessions', getSessions);
+    fetchData('courts', getCourts);
+    fetchData('services', getServices);
   }, []);
 
   return (
     <DataContext.Provider
       value={{
         ...data,
-        refetchLawyers: () => fetchData("lawyers", getLawyers),
-        refetchLegCases: () => fetchData("legCases", getLegCases),
-        refetchProcedures: () => fetchData("procedures", getProcedures),
-        refetchSessions: () => fetchData("sessions", getSessions),
-        refetchCourts: () => fetchData("courts", getCourts),
-        refetchServices: () => fetchData("services", getServices),
+        refetchLawyers: () => fetchData('lawyers', getLawyers),
+        refetchLegCases: () => fetchData('legCases', getLegCases),
+        refetchProcedures: () => fetchData('procedures', getProcedures),
+        refetchSessions: () => fetchData('sessions', getSessions),
+        refetchCourts: () => fetchData('courts', getCourts),
+        refetchServices: () => fetchData('services', getServices),
       }}
     >
       {children}

@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAlert } from '../../context/AlertContext';
-import { getProcedureTypes, createProcedureType, updateProcedureType, deleteProcedureType } from '../../services/api/procedures';
+import {
+  getProcedureTypes,
+  createProcedureType,
+  updateProcedureType,
+  deleteProcedureType,
+} from '../../services/api/procedures';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import SectionHeader from '../common/SectionHeader';
 import { ProcedureIcon } from '../../assets/icons';
@@ -11,7 +16,7 @@ const ProcedureTypes = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingProcedureType, setEditingProcedureType] = useState(null);
   const { triggerAlert } = useAlert();
-  const itemsPerPage = 10;  // عرض 10 صفوف في كل صفحة
+  const itemsPerPage = 10; // عرض 10 صفوف في كل صفحة
 
   // جلب البيانات
   const fetchProcedureTypes = useCallback(async () => {
@@ -122,9 +127,7 @@ const ProcedureTypes = () => {
       <SectionHeader listName="أنواع الإجراءات" icon={ProcedureIcon} />
 
       {/* زر إضافة نوع الإجراء */}
-      <div className="flex justify-start mt-6">
-        {renderAddButton()}
-      </div>
+      <div className="flex justify-start mt-6">{renderAddButton()}</div>
 
       {/* نموذج إضافة/تعديل نوع الإجراء */}
       {showModal && (
@@ -142,7 +145,10 @@ const ProcedureTypes = () => {
               }}
             >
               <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   اسم نوع الإجراء
                 </label>
                 <input
@@ -166,7 +172,9 @@ const ProcedureTypes = () => {
                   type="submit"
                   className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                 >
-                  {editingProcedureType ? 'تعديل نوع الإجراء' : 'إضافة نوع الإجراء'}
+                  {editingProcedureType
+                    ? 'تعديل نوع الإجراء'
+                    : 'إضافة نوع الإجراء'}
                 </button>
               </div>
             </form>
@@ -186,7 +194,9 @@ const ProcedureTypes = () => {
           <tbody>
             {currentItems.map((procedureType) => (
               <tr key={procedureType.id}>
-                <td className="px-4 py-2 border border-gray-300">{procedureType.name}</td>
+                <td className="px-4 py-2 border border-gray-300">
+                  {procedureType.name}
+                </td>
                 <td className="px-4 py-2 border border-gray-300">
                   <div className="flex items-center gap-2">
                     <button
@@ -196,7 +206,9 @@ const ProcedureTypes = () => {
                       <FaEdit />
                     </button>
                     <button
-                      onClick={() => handleDeleteProcedureType(procedureType.id)}
+                      onClick={() =>
+                        handleDeleteProcedureType(procedureType.id)
+                      }
                       className="text-red-500 hover:text-red-700"
                     >
                       <FaTrash />

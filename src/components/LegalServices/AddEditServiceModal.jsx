@@ -1,11 +1,22 @@
 import { useState, useEffect, useCallback } from 'react';
 import GlobalModal from '../common/GlobalModal';
-import { createService, updateService, getServiceTypes } from '../../services/api/services';
+import {
+  createService,
+  updateService,
+  getServiceTypes,
+} from '../../services/api/services';
 import { getClients, getUnClients } from '../../services/api/clients';
 import useAuth from '../auth/AuthUser';
 import { useAlert } from '../../context/AlertContext';
 
-const AddEditServiceModal = ({ show, handleClose, service, isEditing, isViewing, onSaved }) => {
+const AddEditServiceModal = ({
+  show,
+  handleClose,
+  service,
+  isEditing,
+  isViewing,
+  onSaved,
+}) => {
   const { user } = useAuth();
   const { triggerAlert } = useAlert();
 
@@ -19,7 +30,7 @@ const AddEditServiceModal = ({ show, handleClose, service, isEditing, isViewing,
     unclient_id: '',
     created_by: user?.id || '',
     updated_by: user?.id || '',
-    status:'جاري التنفيذ'
+    status: 'جاري التنفيذ',
   });
 
   const [serviceTypes, setServiceTypes] = useState([]);
@@ -39,9 +50,9 @@ const AddEditServiceModal = ({ show, handleClose, service, isEditing, isViewing,
       setClients(clientsRes.data.clients);
       setUnclients(unclientsRes.data.unclients);
     } catch (error) {
-    triggerAlert( 'error','خطاء في جلب البيانات');
+      triggerAlert('error', 'خطاء في جلب البيانات');
     }
-  }, []); 
+  }, []);
 
   useEffect(() => {
     if (show) {
@@ -59,7 +70,9 @@ const AddEditServiceModal = ({ show, handleClose, service, isEditing, isViewing,
           unclient_id: service.unclients?.[0]?.id || '',
         });
 
-        setSelectedUserType(service.clients?.length > 0 ? 'client' : 'unclient');
+        setSelectedUserType(
+          service.clients?.length > 0 ? 'client' : 'unclient',
+        );
       }
     }
   }, [show, fetchData, isEditing, isViewing, service, user]);
@@ -76,7 +89,7 @@ const AddEditServiceModal = ({ show, handleClose, service, isEditing, isViewing,
 
   const handleChange = (e) => {
     if (!isViewing) {
-      const { name, value } = e.target; 
+      const { name, value } = e.target;
       setFormData({ ...formData, [name]: value });
     }
   };
@@ -90,21 +103,22 @@ const AddEditServiceModal = ({ show, handleClose, service, isEditing, isViewing,
       const payload = {
         ...formData,
         client_id: selectedUserType === 'client' ? formData.client_id : null,
-        unclient_id: selectedUserType === 'unclient' ? formData.unclient_id : null,
+        unclient_id:
+          selectedUserType === 'unclient' ? formData.unclient_id : null,
       };
 
       if (isEditing) {
         await updateService(service.id, payload);
-        triggerAlert( 'success','تم تعديل الخدمة بنجاح!');
+        triggerAlert('success', 'تم تعديل الخدمة بنجاح!');
       } else {
         await createService(payload);
-        triggerAlert( 'success','تم اضافة الخدمة بنجاح!');
+        triggerAlert('success', 'تم اضافة الخدمة بنجاح!');
       }
 
       onSaved();
       handleClose();
     } catch (err) {
-   triggerAlert( 'error','خطاء في حفظ الخدمة');
+      triggerAlert('error', 'خطاء في حفظ الخدمة');
     } finally {
       setLoading(false);
     }
@@ -113,79 +127,174 @@ const AddEditServiceModal = ({ show, handleClose, service, isEditing, isViewing,
   if (!show) return null;
 
   return (
-    <GlobalModal  isOpen={show} onClose={handleClose} title={isViewing ? 'عرض الخدمة' : (isEditing ? 'تعديل الخدمة' : 'إضافة خدمة')} size="lg">
+    <GlobalModal
+      isOpen={show}
+      onClose={handleClose}
+      title={
+        isViewing ? 'عرض الخدمة' : isEditing ? 'تعديل الخدمة' : 'إضافة خدمة'
+      }
+      size="lg"
+    >
       <form onSubmit={handleSubmit} className="space-y-4 ">
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-1">رقم الخدمة</label>
-          <input type="text" name="slug" value={formData.slug} onChange={handleChange} readOnly={isViewing} className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white" required />
+          <label className="block text-gray-700 dark:text-gray-300 mb-1">
+            رقم الخدمة
+          </label>
+          <input
+            type="text"
+            name="slug"
+            value={formData.slug}
+            onChange={handleChange}
+            readOnly={isViewing}
+            className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white"
+            required
+          />
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-1">الوصف</label>
-          <input type="text" name="description" value={formData.description} onChange={handleChange} readOnly={isViewing} className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white" required />
+          <label className="block text-gray-700 dark:text-gray-300 mb-1">
+            الوصف
+          </label>
+          <input
+            type="text"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            readOnly={isViewing}
+            className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white"
+            required
+          />
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-1">نوع الخدمة</label>
-          <select name="service_type_id" value={formData.service_type_id} onChange={handleChange} readOnly={isViewing} className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white" required>
+          <label className="block text-gray-700 dark:text-gray-300 mb-1">
+            نوع الخدمة
+          </label>
+          <select
+            name="service_type_id"
+            value={formData.service_type_id}
+            onChange={handleChange}
+            readOnly={isViewing}
+            className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white"
+            required
+          >
             <option value="">اختر نوع الخدمة</option>
-            {serviceTypes.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
+            {serviceTypes.map((type) => (
+              <option key={type.id} value={type.id}>
+                {type.name}
+              </option>
+            ))}
           </select>
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-1">مكان الخدمة</label>
-          <input type="text" name="service_place_name" value={formData.service_place_name} onChange={handleChange} readOnly={isViewing} className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white" required />
+          <label className="block text-gray-700 dark:text-gray-300 mb-1">
+            مكان الخدمة
+          </label>
+          <input
+            type="text"
+            name="service_place_name"
+            value={formData.service_place_name}
+            onChange={handleChange}
+            readOnly={isViewing}
+            className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white"
+            required
+          />
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-1">سنة الخدمة</label>
-          <input type="text" name="service_year" value={formData.service_year} onChange={handleChange} readOnly={isViewing} className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white" required />
+          <label className="block text-gray-700 dark:text-gray-300 mb-1">
+            سنة الخدمة
+          </label>
+          <input
+            type="text"
+            name="service_year"
+            value={formData.service_year}
+            onChange={handleChange}
+            readOnly={isViewing}
+            className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white"
+            required
+          />
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-1">نوع المستخدم</label>
-          <select value={selectedUserType} onChange={handleUserTypeChange} readOnly={isViewing} className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white">
+          <label className="block text-gray-700 dark:text-gray-300 mb-1">
+            نوع المستخدم
+          </label>
+          <select
+            value={selectedUserType}
+            onChange={handleUserTypeChange}
+            readOnly={isViewing}
+            className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white"
+          >
             <option value="client">عميل مسجل</option>
             <option value="unclient">عميل غير مسجل</option>
           </select>
         </div>
         {selectedUserType === 'client' && (
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-1">اختر العميل</label>
-            <select name="client_id" value={formData.client_id} onChange={handleChange} readOnly={isViewing} className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white">
+            <label className="block text-gray-700 dark:text-gray-300 mb-1">
+              اختر العميل
+            </label>
+            <select
+              name="client_id"
+              value={formData.client_id}
+              onChange={handleChange}
+              readOnly={isViewing}
+              className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white"
+            >
               <option value="">اختر العميل</option>
-              {clients.map(client => <option key={client.id} value={client.id}>{client.name}</option>)}
+              {clients.map((client) => (
+                <option key={client.id} value={client.id}>
+                  {client.name}
+                </option>
+              ))}
             </select>
           </div>
         )}
         {selectedUserType === 'unclient' && (
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-1">اختر العميل غير المسجل</label>
-            <select name="unclient_id" value={formData.unclient_id} onChange={handleChange} readOnly={isViewing} className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white">
+            <label className="block text-gray-700 dark:text-gray-300 mb-1">
+              اختر العميل غير المسجل
+            </label>
+            <select
+              name="unclient_id"
+              value={formData.unclient_id}
+              onChange={handleChange}
+              readOnly={isViewing}
+              className="w-full border rounded-md p-2 dark:bg-gray-700 dark:text-white"
+            >
               <option value="">اختر العميل</option>
-              {unclients.map(unclient => <option key={unclient.id} value={unclient.id}>{unclient.name}</option>)}
+              {unclients.map((unclient) => (
+                <option key={unclient.id} value={unclient.id}>
+                  {unclient.name}
+                </option>
+              ))}
             </select>
           </div>
         )}
- {(isEditing || isViewing) && (
-  <div>
-    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">حالة الخدمة</label>
-    <select
-      name="status"
-      value={formData.status} 
-      onChange={handleChange}
-      disabled={isViewing} // ✅ عند العرض، لا يمكن تغييره ولكن يظهر
-      className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-      required
-    >
-      <option value="جاري التنفيذ">جاري التنفيذ</option>
-      <option value="قيد التنفيذ">قيد التنفيذ</option>
-      <option value="منتهية">منتهية</option>
-      <option value="متداولة">متداولة</option>
-      <option value="استيفاء">استيفاء</option>
-    </select>
-  </div>
-)}
+        {(isEditing || isViewing) && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+              حالة الخدمة
+            </label>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              disabled={isViewing} // ✅ عند العرض، لا يمكن تغييره ولكن يظهر
+              className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+              required
+            >
+              <option value="جاري التنفيذ">جاري التنفيذ</option>
+              <option value="قيد التنفيذ">قيد التنفيذ</option>
+              <option value="منتهية">منتهية</option>
+              <option value="متداولة">متداولة</option>
+              <option value="استيفاء">استيفاء</option>
+            </select>
+          </div>
+        )}
 
-        
         {!isViewing && (
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 py-2 rounded"
+          >
             {loading ? 'جاري الحفظ...' : isEditing ? 'تحديث' : 'إضافة'}
           </button>
         )}

@@ -7,10 +7,9 @@ const CourtSubType = ({ show, handleClose }) => {
     name: '',
     court_type_id: '',
   });
-  const [selectedCourtTypeId, setSelectedCourtTypeId] = useState('');
-  const [courtSubTypes, setCourtSubTypes] = useState([]);
   const [modalMessage, setModalMessage] = useState(null);
   const [courtTypes, setCourtTypes] = useState([]);
+  const [courtSubTypes, setCourtSubTypes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [alert, setAlert] = useState({
     show: false,
@@ -28,7 +27,7 @@ const CourtSubType = ({ show, handleClose }) => {
       } catch (error) {
         setAlert({
           show: true,
-          message: `Error fetching ${endpoint}`,
+          message: `حدث خطأ أثناء جلب البيانات من ${endpoint}`,
           variant: 'danger',
         });
       }
@@ -50,8 +49,6 @@ const CourtSubType = ({ show, handleClose }) => {
     }
   }, [alert, modalMessage]);
 
-  const handlePageChange = (newPage) => setCurrentPage(newPage);
-
   const currentItems = courtSubTypes.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
@@ -61,7 +58,7 @@ const CourtSubType = ({ show, handleClose }) => {
     if (!newCourtSubType.name.trim() || !newCourtSubType.court_type_id) {
       setModalMessage({
         type: 'danger',
-        text: 'برجاء إدخال البيانات المطلوبة.',
+        text: 'برجاء إدخال جميع البيانات المطلوبة.',
       });
       return;
     }
@@ -103,7 +100,7 @@ const CourtSubType = ({ show, handleClose }) => {
   return (
     <div className="p-4">
       <div className="mb-4 text-center">
-        <h3 className="text-2xl font-bold text-gray-800">
+        <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
           أنواع المحاكم الفرعية
         </h3>
       </div>
@@ -117,24 +114,24 @@ const CourtSubType = ({ show, handleClose }) => {
       )}
 
       <div className="overflow-x-auto shadow rounded-lg">
-        <table className="w-full border-collapse border border-gray-300">
-          <thead className="bg-gray-100">
+        <table className="w-full border-collapse   justify-center text-center border border-gray-300 dark:border-gray-600">
+          <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>
-              <th className="px-4 py-2 border border-gray-300">الاسم</th>
-              <th className="px-4 py-2 border border-gray-300">نوع المحكمة</th>
-              <th className="px-4 py-2 border border-gray-300">الإجراءات</th>
+              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">الاسم</th>
+              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">نوع المحكمة</th>
+              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">الإجراءات</th>
             </tr>
           </thead>
           <tbody>
             {currentItems.map((courtSubType) => (
-              <tr key={courtSubType.id}>
-                <td className="px-4 py-2 border border-gray-300">
+              <tr key={courtSubType.id} className="hover:bg-gray-200 dark:hover:bg-gray-700">
+                <td className="px-4 py-2 border border-gray-300 dark:border-gray-600">
                   {courtSubType.name}
                 </td>
-                <td className="px-4 py-2 border border-gray-300">
+                <td className="px-4 py-2 border border-gray-300 dark:border-gray-600">
                   {courtSubType.court_type?.name}
                 </td>
-                <td className="px-4 py-2 border border-gray-300">
+                <td className="px-4 py-2 border border-gray-300 dark:border-gray-600">
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
                     onClick={() => handleDeleteCourtSubType(courtSubType.id)}
@@ -167,9 +164,9 @@ const CourtSubType = ({ show, handleClose }) => {
 
       {show && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 shadow-lg w-1/2">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg w-1/2">
             <div className="flex justify-between items-center mb-4">
-              <h4 className="text-xl font-bold">إضافة نوع محكمة فرعية</h4>
+              <h4 className="text-xl font-bold text-gray-800 dark:text-gray-100">إضافة نوع محكمة فرعية</h4>
               <button className="text-red-500" onClick={handleClose}>
                 &times;
               </button>
@@ -180,9 +177,9 @@ const CourtSubType = ({ show, handleClose }) => {
                 handleAddCourtSubType();
               }}
             >
-              <label className="block mb-2 text-gray-700">نوع المحكمة:</label>
+              <label className="block mb-2 text-gray-700 dark:text-gray-300">نوع المحكمة:</label>
               <select
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded dark:border-gray-600"
                 value={newCourtSubType.court_type_id}
                 onChange={(e) =>
                   setNewCourtSubType({
@@ -198,10 +195,10 @@ const CourtSubType = ({ show, handleClose }) => {
                   </option>
                 ))}
               </select>
-              <label className="block mt-4 mb-2 text-gray-700">الاسم:</label>
+              <label className="block mt-4 mb-2 text-gray-700 dark:text-gray-300">الاسم:</label>
               <input
                 type="text"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded dark:border-gray-600"
                 value={newCourtSubType.name}
                 onChange={(e) =>
                   setNewCourtSubType({
