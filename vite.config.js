@@ -35,7 +35,7 @@ export default defineConfig({
 
   build: {
     outDir: '../public_html', // ✅ نقل ملفات الإنتاج مباشرة إلى public_html
-    emptyOutDir: true, // ✅ حذف الملفات القديمة قبل كل بناء جديد
+    emptyOutDir: false, // ✅ حذف الملفات القديمة قبل كل بناء جديد
     minify: 'esbuild',
     sourcemap: false, // ⬅️ يفضل تعطيله في الإنتاج لتقليل حجم الملفات
     rollupOptions: {
