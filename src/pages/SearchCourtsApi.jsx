@@ -76,7 +76,7 @@ const SearchCourtsApi = () => {
         }
 
         try {
-            const response = await axios.post('https://avocat.ask-ar.net/search-api/search', formData);
+            const response = await axios.post('https://search-api.ask-ar.net/search', formData);
             if (!response.data || Object.keys(response.data).length === 0) {
                 setSearchResults('<div>الدعوى غير مقيدة</div>');
             } else {
