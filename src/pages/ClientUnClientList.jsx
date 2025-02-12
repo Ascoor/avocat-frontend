@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { lazy, Suspense } from 'react';
 import { FaUserTie, FaUserAltSlash } from 'react-icons/fa';
-import ClientList from '../components/ClientsAndUnClients/clients';
-import UnClientList from '../components/ClientsAndUnClients/unclients';
+import GlobalSpinner from '../components/common/GlobalSpinner.jsx';
+
+const ClientList = lazy(() => import('../components/ClientsAndUnClients/clients/index.jsx'));
+const UnClientList = lazy(() => import('../components/ClientsAndUnClients/unclients/index.jsx'));
 
 const ClientUnclientList = () => {
   const [activeTab, setActiveTab] = useState('clients'); // ✅ تتبع التبويب النشط
@@ -32,11 +35,11 @@ const ClientUnclientList = () => {
           </button>
         ))}
       </div>
-
-      {/* ✅ عرض المكون المناسب حسب التبويب المحدد */}
+      <Suspense fallback={<div className="text-center text-gray-500"><GlobalSpinner /></div>}>
       <div className="mt-8 w-full max-w-5xl p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
         {activeTab === 'clients' ? <ClientList /> : <UnClientList />}
       </div>
+      </Suspense>
     </section>
   );
 };

@@ -3,7 +3,7 @@ import { useEffect, lazy, Suspense } from "react";
 import { useSpinner } from "../../context/SpinnerContext";
 import GlobalSpinner from "../common/GlobalSpinner";
 
-// ✅ Lazy load components to improve performance
+// ✅ Lazy Loading Components (Only Load When Needed)
 const Home = lazy(() => import("../dashboard/Dashboard"));
 const Lawyers = lazy(() => import("../../pages/LawyerList"));
 const LawyersAddEdit = lazy(() => import("../Lawyers/lawyerAddEdit"));
@@ -11,19 +11,11 @@ const CourtSetting = lazy(() => import("../Courts/court_index.component"));
 const CourtSearch = lazy(() => import("../Reports/SearchCourt"));
 const CaseTypeSet = lazy(() => import("../Courts/case_index.component"));
 const FinancialDashboard = lazy(() => import("../Financially/index"));
-const AddEditClient = lazy(() =>
-  import("../ClientsAndUnClients/clients/AddEditClient")
-);
-const ClientList = lazy(() =>
-  import("../../components/ClientsAndUnClients/clients/index.jsx")
-);
-const UnClientList = lazy(() =>
-  import("../../components/ClientsAndUnClients/unclients/index.jsx")
-);
+const AddEditClient = lazy(() => import("../ClientsAndUnClients/clients/AddEditClient"));
+const ClientList = lazy(() => import("../../components/ClientsAndUnClients/clients/index.jsx"));
+const UnClientList = lazy(() => import("../../components/ClientsAndUnClients/unclients/index.jsx"));
 const LegalCasesIndex = lazy(() => import("../../pages/LegalCaseList"));
-const LegCaseDetail = lazy(() =>
-  import("../LegalCases/LegalCaseDetails")
-);
+const LegCaseDetail = lazy(() => import("../LegalCases/LegalCaseDetails"));
 const LegalServiceList = lazy(() => import("../../pages/LegalServicList"));
 const ProcedureSearch = lazy(() => import("../Reports/procedure_search.component"));
 const ProfileUser = lazy(() => import("../Settings/ProfileUser"));
@@ -39,10 +31,11 @@ const AuthRoutes = () => {
   const { showSpinner, hideSpinner, loading } = useSpinner();
   const location = useLocation();
 
+  // ✅ Show loading spinner on route changes
   useEffect(() => {
     const handleRouteChange = async () => {
       showSpinner();
-      await new Promise((resolve) => setTimeout(resolve, 300)); // Smooth transition
+      await new Promise((resolve) => setTimeout(resolve, 250)); // Smooth transition effect
       hideSpinner();
     };
 
@@ -51,21 +44,16 @@ const AuthRoutes = () => {
 
   return (
     <div className="max-w-screen-lg mx-auto p-4 min-h-screen relative overflow-hidden">
-      {/* ✅ Show Spinner when loading */}
+      {/* ✅ Show Global Spinner when loading */}
       {loading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50 transition-opacity duration-300">
+        <>
           <GlobalSpinner />
-        </div>
+        </>
       )}
 
-      {/* ✅ Suspense fallback ensures smooth experience */}
+      {/* ✅ Wrap All Routes in Suspense */}
       <Suspense fallback={<GlobalSpinner />}>
-        <div
-          className={`transition-opacity duration-300 ${
-            loading ? "opacity-0 pointer-events-none" : "opacity-100"
-          }`}
-        >
-          <Routes>
+         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/clients" element={<ClientUnClientList />} />
             <Route path="/clients/regular" element={<ClientList />} />
@@ -89,7 +77,7 @@ const AuthRoutes = () => {
             <Route path="/managment-settings/legcase-types" element={<LegcaseTypes />} />
             <Route path="/managment-settings/expense-categorys" element={<Expensecategorys />} />
           </Routes>
-        </div>
+ 
       </Suspense>
     </div>
   );

@@ -1,40 +1,38 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Sidebar from '../components/dashboard/Sidebar';
 import Header from '../components/dashboard/Header';
 import { useSidebar } from '../utils/SidebarContext';
-import AuthRoutes from '../components/layout/AuthRoutes';
-import GlobalSpinner from '../components/common/GlobalSpinner';
+import AuthRoutes from '../components/layout/AuthRoutes'; 
 
 const AuthWrapper = () => {
   const { isSidebarOpen, isMobile } = useSidebar();
 
-  // عرض الشريط الجانبي المتجاوب
-  const sidebarWidth = !isMobile ? (isSidebarOpen ? '16rem' : '4rem') : '0';
-
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-gray-900 transition-all duration-300">
       {/* Sidebar */}
-      <div
-        style={{ width: sidebarWidth }}
-        className="transition-all duration-300"
-      >
-        <Sidebar />
-      </div>
+      {!isMobile && (
+        <div className={`transition-all z-50 duration-300 ${isSidebarOpen ? 'w-64' : 'w-16'}`}>
+          <Sidebar />
+        </div>
+      )}
 
-      {/* Main content area */}
-      <div className="flex-1 flex flex-col transition-all duration-300">
+      {/* Main Content */}
+      <div className="flex-1 flex z-50 flex-col">
         <Header />
+        
+        {/* Main Layout */}
         <div className="flex-1 overflow-y-auto p-4">
-          <main className="grow">
-            <div className="w-full max-w-9xl mx-auto">
-              <div className="card-main p-4 sm:p-6 lg:p-8 rounded bg-white mt-4 dark:bg-gray-800 shadow-md relative transition-shadow duration-300 ease-in-out hover:shadow-lg">
-                <AuthRoutes />
-              </div>
+          <main className="max-w-7xl mx-auto">
+            <div className="p-4 sm:p-6 lg:p-8 rounded bg-white dark:bg-gray-800 shadow-md transition-shadow duration-300 ease-in-out hover:shadow-lg">
+              
+              {/* ✅ Lazy Loaded Routes with Suspense Fallback */}
+               <AuthRoutes />
+             
+              
             </div>
           </main>
         </div>
-      </div>
-      <GlobalSpinner />
+      </div> 
     </div>
   );
 };
