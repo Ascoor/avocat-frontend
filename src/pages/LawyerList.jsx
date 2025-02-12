@@ -5,24 +5,26 @@ import {
   updateLawyer,
   deleteLawyer,
 } from '../services/api/lawyers';
-import { FaEdit, FaTrash } from 'react-icons/fa';
-import LawyerAddEdit from '../components/Lawyers/lawyerAddEdit';
+import { FaEdit, FaTrash } from 'react-icons/fa'; 
 import SectionHeader from '../components/common/SectionHeader';
 import { LawyerIcon } from '../assets/icons';
 import TableComponent from '../components/common/TableComponent';
+
+// Lazy-load LawyerAddEdit (improves performance)
+const LawyerAddEdit = lazy(() => import('../components/Lawyers/lawyerAddEdit'));
 
 const Lawyers = () => {
   const [lawyers, setLawyers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingLawyer, setEditingLawyer] = useState(null);
 
-  // ✅ جلب بيانات المحامين
+  // ✅ جلب بيانات المحامين بكفاءة
   const fetchLawyers = useCallback(async () => {
     try {
       const response = await getLawyers();
       setLawyers(response.data);
     } catch (error) {
-      console.error('حدث خطأ أثناء جلب المحامين:', error);
+      console.error('❌ خطأ أثناء جلب المحامين:', error);
     }
   }, []);
 
@@ -30,25 +32,18 @@ const Lawyers = () => {
     fetchLawyers();
   }, [fetchLawyers]);
 
-  // ✅ إضافة محامي
-  const handleAddLawyer = async (formData) => {
+  // ✅ إضافة أو تعديل محامي
+  const handleLawyerSubmit = async (formData) => {
     try {
-      await createLawyer(formData);
+      if (editingLawyer) {
+        await updateLawyer(editingLawyer.id, formData);
+      } else {
+        await createLawyer(formData);
+      }
       fetchLawyers();
       setShowModal(false);
     } catch (error) {
-      console.error('خطأ أثناء إضافة محامي:', error);
-    }
-  };
-
-  // ✅ تعديل محامي
-  const handleEditLawyer = async (formData) => {
-    try {
-      await updateLawyer(editingLawyer.id, formData);
-      fetchLawyers();
-      setShowModal(false);
-    } catch (error) {
-      console.error('خطأ أثناء تعديل محامي:', error);
+      console.error('❌ خطأ أثناء حفظ البيانات:', error);
     }
   };
 
@@ -58,7 +53,7 @@ const Lawyers = () => {
       await deleteLawyer(lawyerId);
       fetchLawyers();
     } catch (error) {
-      console.error('خطأ أثناء حذف محامي:', error);
+      console.error('❌ خطأ أثناء حذف محامي:', error);
     }
   };
 
@@ -85,13 +80,13 @@ const Lawyers = () => {
       <div className="flex items-center gap-2">
         <button
           onClick={() => handleShowEditModal(lawyer)}
-          className="text-blue-500 hover:text-blue-700"
+          className="text-blue-500 hover:text-blue-700 transition-all duration-200"
         >
           <FaEdit />
         </button>
         <button
           onClick={() => handleDeleteLawyer(lawyer.id)}
-          className="text-red-500 hover:text-red-700"
+          className="text-red-500 hover:text-red-700 transition-all duration-200"
         >
           <FaTrash />
         </button>
@@ -106,9 +101,9 @@ const Lawyers = () => {
         setEditingLawyer(null);
         setShowModal(true);
       }}
-      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow-md transition duration-300"
+      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow-md transition-all duration-300"
     >
-      إضافة محامي
+      ➕ إضافة محامي
     </button>
   );
 
@@ -126,24 +121,17 @@ const Lawyers = () => {
         renderAddButton={renderAddButton}
       />
 
+      {/* ✅ عرض المودال عند الحاجة فقط */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-            <h3 className="text-xl font-semibold mb-4">
-              {editingLawyer ? 'تعديل محامي' : 'إضافة محامي'}
-            </h3>
-            <LawyerAddEdit
-              onSubmit={editingLawyer ? handleEditLawyer : handleAddLawyer}
-              initialValues={editingLawyer}
-            />
-            <button
-              onClick={() => setShowModal(false)}
-              className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-            >
-              إغلاق
-            </button>
-          </div>
-        </div>
+        <LawyerModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          title={editingLawyer ? 'تعديل محامي' : 'إضافة محامي'}
+        >
+          <Suspense fallback={<p>جاري التحميل...</p>}>
+            <LawyerAddEdit onSubmit={handleLawyerSubmit} initialValues={editingLawyer} />
+          </Suspense>
+        </LawyerModal>
       )}
     </div>
   );
