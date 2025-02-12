@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import SearchResults from "./SearchResults"; // استيراد مكون عرض النتائج
+import axios from "axios"; 
+import SearchResults from "../components/layout/SearchResults";
 
 const SearchCourtsApi = () => {
   const [allData, setAllData] = useState({});
