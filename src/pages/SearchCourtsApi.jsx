@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import api from '../services/api/axiosConfig';
 const SearchCourtsApi = () => {
     const [allData, setAllData] = useState({});
     const [degree, setDegree] = useState('');
@@ -19,7 +19,7 @@ const SearchCourtsApi = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://avocat.ask-ar.net/avocatapp/api/search-court');
+                const response = await api.get('/search-court');
                 setAllData(response.data);
                 setOptions(response.data);
             } catch (error) {
