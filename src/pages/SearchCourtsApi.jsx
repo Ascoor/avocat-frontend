@@ -19,7 +19,7 @@ const SearchCourtsApi = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get('/search-court');
+                const response = await api.get('/api/search-court');
                 setAllData(response.data);
                 setOptions(response.data);
             } catch (error) {
