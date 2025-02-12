@@ -92,31 +92,32 @@ const SearchCourtsApi = () => {
           setSearchResults({ message: "حدث خطأ أثناء البحث، يرجى المحاولة مرة أخرى." });
       }
   };
-  
-    return (
-      <div className="container mx-auto p-4">
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-xl font-bold text-center text-purple-600 mb-4">بحث عن قضية</h2>
-  
+  return (
+    <div className=" font-sans leading-normaltracking-normal p-4"> 
+    <div className="flex flex-col md:flex-row justify-center  w-full  gap-4">
+      <div className="bg-gray-300 dark:bg-gray-900 shadow-lg rounded-lg p-4 w-full md:w-full">
+        <div className="bg-gradient-night shadow-md rounded-lg p-6">
+          <h2 className="text-xl font-bold text-center text-avocat-orange mb-4">بحث عن قضية</h2>
+  </div>
           {/* 📌 جعل الحقول صفين لكل سطر باستخدام Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 font-bold">الدرجة:</label>
+              <lael className="block p-4 text-gray-700 dark:text-green-100 text-center font-bold">الدرجة</lael>
               <select onChange={handleDegreeChange} className="w-full border rounded p-2">
-                <option value="">-- اختر --</option>
+                <option className="text-center" value="">-- اختر --</option>
                 {allData.search_degrees?.map(degree => (
-                  <option key={degree.degree_value} value={degree.degree_value}>{degree.degree_name}</option>
+                  <option className="text-center" key={degree.degree_value} value={degree.degree_value}>{degree.degree_name}</option>
                 ))}
               </select>
             </div>
             {showCourtGroup && (
   
             <div>
-              <label className="block text-gray-700 font-bold">المحكمة:</label>
+                <label className="block p-4 text-gray-700 dark:text-green-100 text-center font-bold">المحكمة</label>
               <select onChange={handleCourtChange} className="w-full border rounded p-2">
-                <option value="">-- اختر --</option>
+                <option className="text-center" value="">-- اختر --</option>
                 {courtOptions.map(court => (
-                  <option key={court.court_value} value={court.court_value}>{court.court_name}</option>
+                  <option className="text-center" key={court.court_value} value={court.court_value}>{court.court_name}</option>
                 ))}
               </select>
             </div>
@@ -125,23 +126,23 @@ const SearchCourtsApi = () => {
             {showCaseTypeGroup && (
  
             <div>
-              <label className="block text-gray-700 font-bold">نوع الدعوى:</label>
+             <label className="block p-4 text-gray-700 dark:text-green-100 text-center font-bold">نوع الدعوى</label>
               <select onChange={(e) => setCaseType(e.target.value)} className="w-full border rounded p-2">
-                <option value="">-- اختر --</option>
+                <option className="text-center" value="">-- اختر --</option>
                 {caseTypeOptions.map(caseType => (
-                  <option key={caseType.case_type_value} value={caseType.case_type_value}>{caseType.case_type_name}</option>
+                  <option className="text-center" key={caseType.case_type_value} value={caseType.case_type_value}>{caseType.case_type_name}</option>
                 ))}
               </select>
             </div>
                
               )}
             <div>
-              <label className="block text-gray-700 font-bold">سنة الدعوى:</label>
+            <label className="block p-4 text-gray-700 dark:text-green-100 text-center font-bold">سنة الدعوى</label>
               <input type="text" value={caseYear} onChange={(e) => setCaseYear(e.target.value)} className="w-full border rounded p-2" />
             </div>
   
             <div>
-              <label className="block text-gray-700 font-bold">رقم الدعوى:</label>
+            <label className="block p-4 text-gray-700 dark:text-green-100 text-center font-bold">رقم الدعوى</label>
               <input type="number" value={caseNumber} onChange={(e) => setCaseNumber(e.target.value)} className="w-full border rounded p-2" />
             </div>
           </div>
@@ -150,7 +151,7 @@ const SearchCourtsApi = () => {
             onClick={handleSubmit} 
             className="w-full mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700"
           >
-            {loading ? "جاري البحث..." : "بحث"}
+ 
           </button>
         </div>
         
@@ -163,6 +164,7 @@ const SearchCourtsApi = () => {
           )}
         {/* 📌 مكون النتائج */}
         {searchResults && <SearchResults data={searchResults} />}
+      </div>
       </div>
     );
   };
