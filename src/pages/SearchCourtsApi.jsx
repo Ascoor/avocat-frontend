@@ -68,26 +68,30 @@ const SearchCourtsApi = () => {
     };
 
     const performSearch = async () => {
-        const formData = { degree, court, caseType, caseYear, caseNumber };
-
-        if (!degree || !court || !caseType || !caseYear || !caseNumber) {
-            alert('Please fill in all required fields.');
-            return;
-        }
-
-        try {
-            const response = await axios.post('https://search-api.ask-ar.net/search', formData);
-            if (!response.data || Object.keys(response.data).length === 0) {
-                setSearchResults('<div>الدعوى غير مقيدة</div>');
-            } else {
-                setSearchResults(response.data);
-            }
-        } catch (error) {
-            console.error(error);
-            setSearchResults('<div>حدث خطأ أثناء البحث، يرجى المحاولة مرة أخرى.</div>');
-        }
-    };
-
+      const formData = { degree, court, caseType, caseYear, caseNumber };
+  
+      if (!degree || !court || !caseType || !caseYear || !caseNumber) {
+          alert('يرجى ملء جميع الحقول المطلوبة.');
+          return;
+      }
+  
+      try {
+          const response = await axios.post('https://search-api.ask-ar.net/search', formData, {
+              headers: { "x-request-source": "React" } // تحديد الطلب كمصدره React
+          });
+  
+          // التأكد من أن الرد يحتوي على بيانات صالحة
+          if (!response.data || Object.keys(response.data).length === 0) {
+              setSearchResults({ message: "الدعوى غير مقيدة" });
+          } else {
+              setSearchResults(response.data);
+          }
+      } catch (error) {
+          console.error(error);
+          setSearchResults({ message: "حدث خطأ أثناء البحث، يرجى المحاولة مرة أخرى." });
+      }
+  };
+  
     return (
         <div className=" font-sans leading-normaltracking-normal p-4"> 
           <div className="flex flex-col md:flex-row justify-center  w-full  gap-4">
