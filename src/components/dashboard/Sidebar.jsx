@@ -35,7 +35,7 @@ const Sidebar = () => {
     { to: '/invoices', icon: <FaFileInvoice />, label: 'الفواتير' },
     { to: '/consultations', icon: <FaBalanceScale />, label: 'الاستشارات' },
     { to: '/expenses', icon: <FaMoneyBillWave />, label: 'المصروفات' },
-    { to: '/contracts', icon: <FaBriefcase />, label: 'العقود' },
+    { to: '/search-courts-api', icon: <FaBriefcase />, label: 'بحث المحاكم' },
     {
       to: '/managment-settings',
       icon: <FaCogs />,

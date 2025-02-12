@@ -23,6 +23,7 @@ import ManagmentSettings from '../../pages/ManagmentSettings.jsx';
 import ServiceTypes from '../Settings/ServiceTypes.jsx';
 import LegcaseTypes from '../Settings/LegcaseTypes.jsx';
 import Expensecategorys from '../Settings/ExpenseCategorys.jsx';
+import SearchCourtsApi from '../../pages/SearchCourtsApi.jsx';
 
 const AuthRoutes = () => {
   const { showSpinner, hideSpinner, loading } = useSpinner();
@@ -69,6 +70,7 @@ const AuthRoutes = () => {
           <Route path="/lawyers/form" element={<LawyersAddEdit />} />
           <Route path="/managment-settings" element={<ManagmentSettings />} />
           <Route path="/managment-settings/courts" element={<CourtSetting />} />
+          <Route path="/search-courts-api" element={<SearchCourtsApi />} />
           <Route
             path="/managment-settings/procedures"
             element={<Procedures />}
