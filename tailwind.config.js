@@ -1,3 +1,4 @@
+
 import plugin from 'tailwindcss/plugin';
 import forms from '@tailwindcss/forms';
 import cssVariablesPlugin from 'postcss-css-variables';
@@ -14,15 +15,19 @@ export default {
     './node_modules/@headlessui/react/**/*.js',
   ],
   darkMode: 'class',
+
   theme: {
     extend: {
+
       fontFamily: {
         amiri: ['Amiri', 'serif'],
         tharwat: ['Tharwat', 'sans-serif'],
         tajawal: ['Tajawal', 'sans-serif'],
         cairo: ['Cairo', 'sans-serif'],
       },
+      /*** 🎨 ألوان الهوية ***/
       colors: {
+        // ألوان الأيقونات
         'icon-color': {
           fb: '#355cff',
           link: '#2561c2',
@@ -30,33 +35,37 @@ export default {
           twitter: '#3297f0',
           tube: '#ff1a30',
         },
-        'avocat-blue': {
-          light: '#396dcc',
-          DEFAULT: '#0c3066',
-          dark: '#1b2b5a',
-          darker: '#031023',
-        },
-        'avocat-orange': {
-          DEFAULT: '#fb9221',
-          dark: '#e06f1a',
-          darker: '#b95412',
-          light: '#ffb74d',
-        },
-        'avocat-indigo': {
-          DEFAULT: '#3f51b5',
-          dark: '#303f9f',
-          darker: '#1a237e',
-          light: '#7986cb',
-        },
-        'avocat-yellow': {
-          DEFAULT: '#ffeb3b',
-          dark: '#fdd835',
-          darker: '#fbc02d',
-          light: '#fff59d',
-        },
-        lightBg: '#F3F4F6',
-        darkBg: '#1F2937',
- 
+
+        // درجات الأزرق لمكتب المحاماة
+   
+          'avocat-blue': {
+            light: '#396dcc',
+            DEFAULT: '#0c3066',
+            dark: '#1b2b5a',
+            darker: '#031023',
+          },
+
+        // درجات البرتقالي
+     // درجات البرتقالي
+'avocat-orange': {
+  DEFAULT: '#fb9221',  // Original
+  dark: '#e06f1a',     // Darker but vibrant
+  darker: '#b95412',   // Deep, rich dark
+  light: '#ffb74d',    // Softer light shade
+},
+
+// درجات النيلي
+'avocat-indigo': {
+  DEFAULT: '#3f51b5',  // Original
+  dark: '#303f9f',     // Darker for contrast
+  darker: '#1a237e',   // Much deeper, almost navy
+  light: '#7986cb',    // Subtle, soft indigo
+},
+
+        lightBg: '#F3F4F6',   // خلفية فاتحة
+        darkBg: '#1F2937',    // خلفية داكنة
+
+
         'avocat-dot-1': '#1a1d91', // أزرق داكن جدًا
         'avocat-dot-2': '#1c239a', // أزرق داكن
         'avocat-dot-3': '#1e29a3', // أزرق
@@ -92,30 +101,34 @@ export default {
         'avocat-dark-dot-14': '#FF8C94', // وردي مائل للأحمر
         'avocat-dark-dot-5': '#FFADB5', // وردي فاتح جدًا
       },
- 
+
+      /*** 🌄 التدرجات اللونية ***/
       backgroundImage: {
         'gradient-red-button': 'linear-gradient(to right, #ec4899, #db2777,#be185d)',
-        'gradient-red-dark-button': 'linear-gradient(to right, #f43f5e, #ec4899,#db2777)',
         'gradient-green-button': 'linear-gradient(to right, #22c55e, #16a34a,#15803d)',
-        'gradient-green-dark-button': 'linear-gradient(to right, #34d399, #22c55e,#16a34a)',
         'gradient-yellow-button': 'linear-gradient(to right, #fbbf24, #f59e0b,#d97706)',
-        'gradient-yellow-dark-button': 'linear-gradient(to right, #fde68a, #fbbf24,#f59e0b)',
+
         'gradient-blue-button': 'linear-gradient(to right, #60a5fa, #3b82f6,#2563eb)',
         'gradient-day': 'linear-gradient(to top, #396dcc, #0c3066)',
         'gradient-night': 'linear-gradient(135deg, #031023, #1b2b5a)',
         'gradient-orange-dark': 'linear-gradient(to bottom, #ffa726, #fb7921)',
         'gradient-blue-dark': 'linear-gradient(to bottom, #1b2b5a, #031023)',
+        // ☀️ الوضع الفاتح (Light Mode)
         'gradient-orange-light': 'linear-gradient(to bottom, #ffcc80, #ffb74d)',
         'gradient-blue-light': 'linear-gradient(to bottom, #bbdefb, #64b5f6)',
+
       },
-      border: {
-        light: '#e2e8f0',
-        dark: '#1a202c',
-      },
-      text: {
-        light: '#1a1a1a',
-        dark: '#f7faff',
-      },
+      
+        border: {
+          light: '#e2e8f0', // لون الحدود في الوضع المضئ
+          dark: '#1a202c',  // لون الحدود في الوضع الداكن
+        },
+        text: {
+          light: '#1a1a1a',
+          dark: '#f7faff',
+        },
+      
+  
       borderWidth: {
         DEFAULT: '1px',
         thin: '0.5px',
@@ -142,33 +155,36 @@ export default {
         '0%': { opacity: 0, transform: 'translateY(20px)' },
         '100%': { opacity: 1, transform: 'translateY(0)' },
       },
-      wiggle: {
-        '0%, 100%': { transform: 'rotate(-3deg)' },
-        '50%': { transform: 'rotate(3deg)' },
-      },
-      fadeIn: {
-        from: { opacity: 0 },
-        to: { opacity: 1 },
-      },
-      slideIn: {
-        from: { transform: 'translateX(-100%)' },
-        to: { transform: 'translateX(0)' },
-      },
-      keyframes: {
-        'fade-in-out': {
-          '0%': { opacity: '0', transform: 'translateY(-20px)' },
-          '10%': { opacity: '1', transform: 'translateY(0)' },
-          '90%': { opacity: '1' },
-          '100%': { opacity: '0', transform: 'translateY(-20px)' },
+    
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
         },
-      },
-      animation: {
+        fadeIn: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        slideIn: {
+          from: { transform: 'translateX(-100%)' },
+          to: { transform: 'translateX(0)' },
+        },
+        keyframes: {
+          'fade-in-out': {
+            '0%': { opacity: '0', transform: 'translateY(-20px)' },
+            '10%': { opacity: '1', transform: 'translateY(0)' },
+            '90%': { opacity: '1' },
+            '100%': { opacity: '0', transform: 'translateY(-20px)' },
+          },
+        },
+      animation: { 
+
         'fade-in-out': 'fade-in-out 5s ease-in-out',
         slideInUp: 'slideInUp 0.5s ease-out',
         wiggle: 'wiggle 1s ease-in-out infinite',
         fadeIn: 'fadeIn 0.5s ease-in-out',
         slideIn: 'slideIn 0.3s ease-out',
       },
+      
       zIndex: {
         60: '60',
         70: '70',
@@ -177,8 +193,11 @@ export default {
     },
   },
   plugins: [
+    cssVariablesPlugin(),
     forms,
     rtl,
+    typography,
+    aspectRatio, 
     plugin(function ({ addBase }) {
       addBase({
         '@font-face': [
@@ -289,8 +308,11 @@ export default {
         ],
       });
     }),
-    typography,
-    aspectRatio,
-    cssVariablesPlugin,
-  ],
-}; 
+    plugin(({ addVariant, e }) => {
+      addVariant('sidebar-expanded', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => `.sidebar-expanded .${e(`sidebar-expanded${separator}${className}`)}`);
+      });
+    }),
+  ], 
+};
+
