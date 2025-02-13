@@ -3,34 +3,6 @@ import React from "react";
 const SearchResults = ({ data }) => {
   if (!data) return null;
 
-  // Function to render a new row if the condition is met
-  const renderLastSessionRow = (sessions) => {
-    const lastSession = sessions[sessions.length - 1];
-
-    // Check if the last session has one of the specified words in the decision
-    if (lastSession && lastSession["Session Decision"] && 
-        ["رفض", "قبول", "شطب"].some(word => lastSession["Session Decision"].includes(word))) {
-      
-      return (
-        <>
-          {/* Row for "حكمت المحكمة" */}
-          <tr className="bg-gray-100 dark:bg-gray-800">
-            <td colSpan="3" className="text-center text-gray-700 dark:text-gray-300 py-3">
-               حكمت المحكمة
-            </td>
-          </tr>
-          {/* Additional row showing the decision */}
-          <tr className="bg-gray-100 dark:bg-gray-800">
-            <td colSpan="3" className="text-center text-gray-700 dark:text-gray-300 py-3">
-              <strong>القرار: </strong>{lastSession["Session Decision"] || "لا يوجد قرار"}
-            </td>
-          </tr>
-        </>
-      );
-    }
-    return null;
-  };
-
   return (
     <div className="mt-6 bg-white dark:bg-gray-900 shadow-lg rounded-lg p-6 transition-all">
       <h3 className="text-2xl font-bold text-purple-600 dark:text-yellow-400 text-center mb-4">📜 نتيجة البحث</h3>
@@ -68,16 +40,13 @@ const SearchResults = ({ data }) => {
               </thead>
               <tbody>
                 {data["Case Sessions"]?.length > 0 ? (
-                  <>
-                    {data["Case Sessions"].map((session, index) => (
-                      <tr key={session?.session_id || index} className="border-b dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
-                        <td className="px-4 py-3">{session.DateSession}</td>
-                        <td className="px-4 py-3">{session["Session Decision"] || "لا يوجد قرار"}</td>
-                        <td className="px-4 py-3">{session["Next Session Date"] || "غير متوفرة"}</td>
-                      </tr>
-                    ))}
-                    {renderLastSessionRow(data["Case Sessions"])}
-                  </>
+                  data["Case Sessions"].map((session, index) => (
+                    <tr key={session?.session_id || index} className="border-b dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                      <td className="px-4 py-3">{session.DateSession}</td>
+                      <td className="px-4 py-3">{session["Session Decision"] || "لا يوجد قرار"}</td>
+                      <td className="px-4 py-3">{session["Next Session Date"] || "غير متوفرة"}</td>
+                    </tr>
+                  ))
                 ) : (
                   <tr>
                     <td colSpan="3" className="text-center text-gray-500 py-3">⚠️ لا توجد جلسات متاحة</td>
