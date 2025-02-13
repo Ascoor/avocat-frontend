@@ -1,30 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { useMediaQuery } from 'react-responsive';
 import MainCard from '../common/MainCard';
 import AnalogClock from '../common/AnalogClock';
-import CalendarPage from '../calendar/CalendarPage';
-import DashboardCard01 from './dashboard/DashboardCard01';
-import DashboardCard02 from './dashboard/DashboardCard02';
-import DashboardCard03 from './dashboard/DashboardCard03';
-import DashboardCard04 from './dashboard/DashboardCard04';
-import DashboardCard05 from './dashboard/DashboardCard05';
-import DashboardCard06 from './dashboard/DashboardCard06';
-
-import {
-  MainLawyers,
-  MainProcedures,
-  MainClients,
-  MainLegalCases,
-  MainSessions,
-  ServiceIcon,
-} from '../../assets/icons/index';
+import { MainLawyers, MainProcedures, MainClients, MainLegalCases, MainSessions } from '../../assets/icons/index';
 import { LogoPatren } from '../../assets/images/index';
 import API_CONFIG from '../../config/config';
 import GlobalLogo from '../common/GlobalLogo';
 
 moment.locale('ar');
+
+// Lazy loading components
+const DashboardCard01 = lazy(() => import('./dashboard/DashboardCard01'));
+const DashboardCard02 = lazy(() => import('./dashboard/DashboardCard02'));
+const DashboardCard03 = lazy(() => import('./dashboard/DashboardCard03'));
+const DashboardCard04 = lazy(() => import('./dashboard/DashboardCard04'));
+const DashboardCard05 = lazy(() => import('./dashboard/DashboardCard05'));
+const DashboardCard06 = lazy(() => import('./dashboard/DashboardCard06'));
+const CalendarPage = lazy(() => import('../calendar/CalendarPage'));
 
 const Home = () => {
   const [counts, setCounts] = useState({
@@ -48,9 +42,7 @@ const Home = () => {
 
   const fetchOfficeCount = async () => {
     try {
-      const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/all_count_office`,
-      );
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/all_count_office`);
       setCounts({
         clientCount: response.data.client_count || 0,
         legCaseCount: response.data.leg_case_count || 0,
@@ -93,20 +85,24 @@ const Home = () => {
         ))}
       </div>
 
-      {/* Dashboard Cards */}
-      <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 pb-4">
-        <DashboardCard01 />
-        <DashboardCard02 />
-        <DashboardCard03 />
-        <DashboardCard04 />
-        <DashboardCard05 />
-        <DashboardCard06 />
-      </div>
+      {/* Dashboard Cards - Lazy Loaded */}
+      <Suspense fallback={<div>Loading Dashboard Cards...</div>}>
+        <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 pb-4">
+          <DashboardCard01 />
+          <DashboardCard02 />
+          <DashboardCard03 />
+          <DashboardCard04 />
+          <DashboardCard05 />
+          <DashboardCard06 />
+        </div>
+      </Suspense>
 
-      {/* Calendar Section */}
-      <div className="mt-10">
-        <CalendarPage />
-      </div>
+      {/* Calendar Section - Lazy Loaded */}
+      <Suspense fallback={<div>Loading Calendar...</div>}>
+        <div className="mt-10">
+          <CalendarPage />
+        </div>
+      </Suspense>
     </div>
   );
 };
