@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import {
   getLawyers,
   createLawyer,
@@ -18,13 +18,13 @@ const Lawyers = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingLawyer, setEditingLawyer] = useState(null);
 
-  // ✅ جلب بيانات المحامين بكفاءة
+  // Fetch lawyers efficiently
   const fetchLawyers = useCallback(async () => {
     try {
       const response = await getLawyers();
       setLawyers(response.data);
     } catch (error) {
-      console.error('❌ خطأ أثناء جلب المحامين:', error);
+      console.error('❌ Error fetching lawyers:', error);
     }
   }, []);
 
@@ -32,7 +32,7 @@ const Lawyers = () => {
     fetchLawyers();
   }, [fetchLawyers]);
 
-  // ✅ إضافة أو تعديل محامي
+  // Handle lawyer submit (create or update)
   const handleLawyerSubmit = async (formData) => {
     try {
       if (editingLawyer) {
@@ -43,27 +43,27 @@ const Lawyers = () => {
       fetchLawyers();
       setShowModal(false);
     } catch (error) {
-      console.error('❌ خطأ أثناء حفظ البيانات:', error);
+      console.error('❌ Error saving lawyer data:', error);
     }
   };
 
-  // ✅ حذف محامي
+  // Delete lawyer
   const handleDeleteLawyer = async (lawyerId) => {
     try {
       await deleteLawyer(lawyerId);
       fetchLawyers();
     } catch (error) {
-      console.error('❌ خطأ أثناء حذف محامي:', error);
+      console.error('❌ Error deleting lawyer:', error);
     }
   };
 
-  // ✅ عرض نافذة التعديل
+  // Show edit modal
   const handleShowEditModal = (lawyer) => {
     setEditingLawyer(lawyer);
     setShowModal(true);
   };
 
-  // ✅ إعداد رؤوس الجدول
+  // Table headers setup
   const headers = [
     { key: 'name', text: 'الاسم' },
     { key: 'birthdate', text: 'تاريخ الميلاد' },
@@ -74,7 +74,7 @@ const Lawyers = () => {
     { key: 'phone_number', text: 'رقم الهاتف' },
   ];
 
-  // ✅ عرض مخصص للتحكم
+  // Custom renderer for table actions (edit, delete)
   const customRenderers = {
     actions: (lawyer) => (
       <div className="flex items-center gap-2">
@@ -94,7 +94,7 @@ const Lawyers = () => {
     ),
   };
 
-  // ✅ زر إضافة محامي
+  // Render the add lawyer button
   const renderAddButton = () => (
     <button
       onClick={() => {
@@ -121,7 +121,7 @@ const Lawyers = () => {
         renderAddButton={renderAddButton}
       />
 
-      {/* ✅ عرض المودال عند الحاجة فقط */}
+      {/* Display the modal only when necessary */}
       {showModal && (
         <LawyerModal
           isOpen={showModal}

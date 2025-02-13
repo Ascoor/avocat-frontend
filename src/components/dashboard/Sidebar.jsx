@@ -26,11 +26,7 @@ const Sidebar = () => {
   const menuItems = [
     { to: '/', icon: <FaHome />, label: 'الرئيسية' },
     { to: '/legcases', icon: <FaFolder />, label: 'القضايا' },
-    {
-      to: '/clients',
-      icon: <FaUsers />,
-      label: 'العملاء',
-    },
+    { to: '/clients', icon: <FaUsers />, label: 'العملاء' },
     { to: '/legcase-services', icon: <FaCogs />, label: 'الخدمات' },
     { to: '/invoices', icon: <FaFileInvoice />, label: 'الفواتير' },
     { to: '/consultations', icon: <FaBalanceScale />, label: 'الاستشارات' },
@@ -41,27 +37,14 @@ const Sidebar = () => {
       icon: <FaCogs />,
       label: 'إدارة المكتب',
       subItems: [
-        {
-          to: '/managment-settings/lawyers',
-          label: 'المحامون',
-          icon: <FaUsers />,
-        },
-        {
-          to: '/managment-settings/procedures',
-          label: 'الإجراءات',
-          icon: <FaUsers />,
-        },
-        {
-          to: '/managment-settings/courts',
-          label: 'المحاكم',
-          icon: <FaUsers />,
-        },
+        { to: '/managment-settings/lawyers', label: 'المحامون', icon: <FaUsers /> },
+        { to: '/managment-settings/procedures', label: 'الإجراءات', icon: <FaUsers /> },
+        { to: '/managment-settings/courts', label: 'المحاكم', icon: <FaUsers /> },
       ],
     },
   ];
 
   const [openSubMenu, setOpenSubMenu] = useState(null);
-
   const handleToggleSubMenu = (index) => {
     setOpenSubMenu(openSubMenu === index ? null : index);
   };
@@ -93,15 +76,16 @@ const Sidebar = () => {
               <NavLink
                 to={item.to}
                 onClick={() => item.subItems && handleToggleSubMenu(index)}
-                className={`flex items-center p-3 rounded-lg transition-colors duration-300 ${
-                  isSidebarOpen
-                    ? 'space-x-4 text-gray-100 hover:bg-pink-300 hover:text-blue-900 dark:hover:bg-avocat-indigo-light'
-                    : 'justify-center'
-                } ${
-                  openSubMenu === index
+                className={`flex items-center p-3 rounded-lg transition-colors duration-300
+                  ${
+                    isSidebarOpen
+                      ? 'space-x-4 text-gray-100 hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-400 hover:text-white dark:hover:bg-gradient-to-r dark:hover:from-indigo-600 dark:hover:to-blue-500 dark:hover:text-white'
+                      : 'justify-center'
+                  }
+                  ${openSubMenu === index
                     ? 'bg-pink-600 dark:bg-orange-500 text-white shadow-md'
-                    : 'text-gray-100'
-                }`}
+                    : 'text-gray-100'}
+                `}
               >
                 <span className="text-xl">{item.icon}</span>
                 {isSidebarOpen && <span className="flex-1">{item.label}</span>}
@@ -110,15 +94,13 @@ const Sidebar = () => {
               {/* Sub-menu */}
               {item.subItems && openSubMenu === index && (
                 <ul
-                  className={`mt-2 space-y-2 ${
-                    isSidebarOpen ? 'pl-10' : 'flex flex-col items-center'
-                  }`}
+                  className={`mt-2 space-y-2 ${isSidebarOpen ? 'pl-10' : 'flex flex-col items-center'}`}
                 >
                   {item.subItems.map((subItem, subIndex) => (
                     <li key={subIndex}>
                       <NavLink
                         to={subItem.to}
-                        className={`flex items-center p-2 text-gray-100 hover:bg-pink-300 dark:hover:bg-avocat-indigo-light ${
+                        className={`flex items-center p-2 text-gray-100 hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-400 dark:hover:bg-gradient-to-r dark:hover:from-indigo-600 dark:hover:to-blue-500 dark:text-white ${
                           isSidebarOpen ? 'space-x-4' : 'justify-center'
                         }`}
                       >
@@ -148,10 +130,7 @@ const Sidebar = () => {
           {isSidebarOpen && (
             <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-t from-avocat-blue-dark via-avocat-indigo-dark to-avocat-orange dark:bg-gradient-to-t dark:from-avocat-indigo-darker dark:via-avocat-blue-dark dark:to-avocat-indigo-darker text-white z-40">
               <div className="flex items-center justify-between p-4">
-                <button
-                  onClick={toggleSidebar}
-                  className="text-2xl focus:outline-none"
-                >
+                <button onClick={toggleSidebar} className="text-2xl focus:outline-none">
                   <IoMdClose />
                 </button>
               </div>
@@ -166,18 +145,16 @@ const Sidebar = () => {
                       <span className="text-lg">{item.label}</span>
                     </NavLink>
 
-                    {/* عرض الأيقونات الفرعية في الشريط الجوال */}
+                    {/* Display sub-icons in mobile sidebar */}
                     {item.subItems && (
                       <ul className="mt-2 space-y-2">
                         {item.subItems.map((subItem, subIndex) => (
                           <li key={subIndex} className="w-full">
                             <NavLink
                               to={subItem.to}
-                              className="flex flex-col items-center p-4 hover:bg-pink-300 dark:hover:bg-avocat-indigo-light text-center"
+                              className="flex flex-col items-center p-4 hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-400 dark:hover:bg-gradient-to-r dark:hover:from-indigo-600 dark:hover:to-blue-500 text-center"
                             >
-                              <span className="text-2xl mb-1">
-                                {subItem.icon}
-                              </span>
+                              <span className="text-2xl mb-1">{subItem.icon}</span>
                               <span className="text-sm">{subItem.label}</span>
                             </NavLink>
                           </li>

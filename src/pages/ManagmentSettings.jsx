@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import Lawyers from './LawyerList'; 
-import CourtSetting from '../components/Courts/court_index.component';
-import Procedures from './ProceduresList';
-import ServiceTypes from '../components/Settings/ServiceTypes'; 
-import ExpenseCategorys from '../components/Settings/ExpenseCategorys';
+import React, { useState, Suspense } from 'react';
+
+// Use React.lazy to dynamically import components
+const Lawyers = React.lazy(() => import('./LawyerList'));
+const CourtSetting = React.lazy(() => import('../components/Courts/court_index.component'));
+const Procedures = React.lazy(() => import('./ProceduresList'));
+const ServiceTypes = React.lazy(() => import('../components/Settings/ServiceTypes'));
+const ExpenseCategorys = React.lazy(() => import('../components/Settings/ExpenseCategorys'));
 
 const ManagementSettings = () => {
   const [activeTab, setActiveTab] = useState('lawyers');
@@ -22,13 +24,13 @@ const ManagementSettings = () => {
       case 'lawyers':
         return <Lawyers />;
       case 'courts':
-        return  <CourtSetting />;
+        return <CourtSetting />;
       case 'procedures':
         return <Procedures />;
       case 'case-types':
         return <div>محتوى تصنيف القضايا</div>;
       case 'service-types':
-        return <ServiceTypes  />;
+        return <ServiceTypes />;
       case 'expense-categories':
         return <ExpenseCategorys />;
       default:
@@ -56,7 +58,10 @@ const ManagementSettings = () => {
         ))}
       </div>
       <div className="w-full max-w-5xl p-4 bg-white dark:bg-gray-700 rounded-lg shadow-lg">
-        {renderTabContent()}
+        {/* Use Suspense to show a fallback loading state while the component is being loaded */}
+        <Suspense fallback={<div>جار التحميل...</div>}>
+          {renderTabContent()}
+        </Suspense>
       </div>
     </section>
   );

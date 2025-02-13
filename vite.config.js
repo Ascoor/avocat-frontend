@@ -6,7 +6,6 @@ import path from 'path';
 export default defineConfig({
   plugins: [
     react(),
-    
     compression({
       algorithm: 'brotliCompress',
       ext: '.br',
@@ -23,21 +22,19 @@ export default defineConfig({
   define: {
     'process.env': {},
     __APP_ENV__: process.env.APP_ENV,
-    'import.meta.hot': false, // ✅ Prevents issues with dynamic imports
+    'import.meta.hot': false,
   },
-
   server: {
     host: '0.0.0.0',
     port: 3000,
     open: true,
     cors: true,
-    historyApiFallback: true, // ✅ حل مشكلة 404 عند إعادة تحميل الصفحة
+    historyApiFallback: true,
+    hmr: true,  // Enable HMR in development
   },
-
   build: {
     rollupOptions: {
       output: {
-        // ✅ Auto split vendor chunks
         manualChunks(id) {
           if (id.includes("node_modules/react")) return "react";
           if (id.includes("node_modules/lodash")) return "lodash";
@@ -46,25 +43,23 @@ export default defineConfig({
           if (id.includes("src/components")) return "components";
           return "misc";
         },
-        
+        entryFileNames: '[name].[hash].js',
+        chunkFileNames: '[name].[hash].js',
+        assetFileNames: '[name].[hash][extname]',
       },
     },
-    chunkSizeWarningLimit: 500, // Adjust if needed
-  
-    outDir: '../public_html', // ✅ نقل ملفات الإنتاج مباشرة إلى public_html
-    emptyOutDir: false, // ✅ حذف الملفات القديمة قبل كل بناء جديد
+    chunkSizeWarningLimit: 1000,
+    outDir: '../public_html',
+    emptyOutDir: false,
     minify: 'esbuild',
-    sourcemap: false, // ⬅️ يفضل تعطيله في الإنتاج لتقليل حجم الملفات
-   
+    sourcemap: false,
   },
-
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@tailwindConfig': path.resolve(__dirname, './tailwind.config.js'),
     },
   },
-
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
     exclude: ['@fullcalendar/core'],

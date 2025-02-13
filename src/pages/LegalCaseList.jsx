@@ -8,6 +8,7 @@ import TableComponent from '../components/common/TableComponent';
 import { AiFillCheckCircle, AiFillEye } from 'react-icons/ai';
 import { LegCaseIcon } from '../assets/icons';
 import { getLegCases } from '../services/api/legalCases';
+import api from '../services/api/axiosConfig';
 
 // ✅ Lazy Load Add/Edit Modal Component
 const AddEditLegCase = lazy(() => import('../components/LegalCases/AddEditLegCase'));
@@ -53,8 +54,8 @@ const LegalCasesIndex = () => {
   const handleDeleteCase = async (id) => {
     if (window.confirm('هل أنت متأكد من حذف هذه القضية؟')) {
       try {
-        await axios.delete(`${API_CONFIG.baseURL}/api/leg-cases/${id}`);
-        fetchLegCases();
+        await api.delete(`/legal-cases/${id}`);
+        fetchLegCases();  // Refresh data after deletion
       } catch (error) {
         console.error('Error deleting legal case:', error);
       }
@@ -62,7 +63,7 @@ const LegalCasesIndex = () => {
   };
 
   // ✅ Table Animations
-  const [springs, api] = useSprings(legCases.length, (i) => ({
+  const [springs, apiSprings] = useSprings(legCases.length, (i) => ({
     opacity: 0,
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -70,8 +71,8 @@ const LegalCasesIndex = () => {
   }));
 
   useEffect(() => {
-    if (legCases.length > 0) api.start();
-  }, [legCases, api]);
+    if (legCases.length > 0) apiSprings.start();
+  }, [legCases, apiSprings]);
 
   // ✅ Table Headers
   const headers = [
@@ -117,8 +118,8 @@ const LegalCasesIndex = () => {
       );
     },
 
-    status: (service) => {
-      const statusText = service.status || 'غير محدد';
+    status: (legCase) => {
+      const statusText = legCase.status || 'غير محدد';
       const textColor = statusColors[statusText] || 'text-gray-400';
       const statusIcon = statusIcons[statusText] || null;
 

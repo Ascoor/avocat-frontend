@@ -17,14 +17,15 @@ const SearchCourtsApi = () => {
   const [countdown, setCountdown] = useState(5);
   const [showCountdown, setShowCountdown] = useState(false);
 
+  // Fetch data when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("/api/search-court");
+        const response = await api.get('/api/search-court');
         setAllData(response.data);
         setCourtOptions(response.data.search_degrees || []);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
     fetchData();
@@ -85,10 +86,16 @@ const SearchCourtsApi = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-gray-700 dark:text-gray-300 font-semibold">الدرجة:</label>
-            <select onChange={handleDegreeChange} className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white">
+            <select
+              onChange={handleDegreeChange}
+              className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white"
+              value={degree}
+            >
               <option value="">-- اختر --</option>
-              {allData.search_degrees?.map(degree => (
-                <option key={degree.degree_value} value={degree.degree_value}>{degree.degree_name}</option>
+              {allData.search_degrees?.map((degree, index) => (
+                <option key={index} value={degree.degree_value}>
+                  {degree.degree_name}
+                </option>
               ))}
             </select>
           </div>
@@ -96,10 +103,16 @@ const SearchCourtsApi = () => {
           {courtOptions.length > 0 && (
             <div>
               <label className="block text-gray-700 dark:text-gray-300 font-semibold">المحكمة:</label>
-              <select onChange={handleCourtChange} className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white">
+              <select
+                onChange={handleCourtChange}
+                className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white"
+                value={court}
+              >
                 <option value="">-- اختر --</option>
-                {courtOptions.map(court => (
-                  <option key={court.court_value} value={court.court_value}>{court.court_name}</option>
+                {courtOptions.map((court, index) => (
+                  <option key={index} value={court.court_value}>
+                    {court.court_name}
+                  </option>
                 ))}
               </select>
             </div>
@@ -108,10 +121,16 @@ const SearchCourtsApi = () => {
           {caseTypeOptions.length > 0 && (
             <div>
               <label className="block text-gray-700 dark:text-gray-300 font-semibold">نوع الدعوى:</label>
-              <select onChange={(e) => setCaseType(e.target.value)} className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white">
+              <select
+                onChange={(e) => setCaseType(e.target.value)}
+                className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white"
+                value={caseType}
+              >
                 <option value="">-- اختر --</option>
-                {caseTypeOptions.map(caseType => (
-                  <option key={caseType.case_type_value} value={caseType.case_type_value}>{caseType.case_type_name}</option>
+                {caseTypeOptions.map((caseType, index) => (
+                  <option key={index} value={caseType.case_type_value}>
+                    {caseType.case_type_name}
+                  </option>
                 ))}
               </select>
             </div>
@@ -119,17 +138,27 @@ const SearchCourtsApi = () => {
 
           <div>
             <label className="block text-gray-700 dark:text-gray-300 font-semibold">سنة الدعوى:</label>
-            <input type="text" value={caseYear} onChange={(e) => setCaseYear(e.target.value)} className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white" />
+            <input
+              type="text"
+              value={caseYear}
+              onChange={(e) => setCaseYear(e.target.value)}
+              className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white"
+            />
           </div>
 
           <div>
             <label className="block text-gray-700 dark:text-gray-300 font-semibold">رقم الدعوى:</label>
-            <input type="number" value={caseNumber} onChange={(e) => setCaseNumber(e.target.value)} className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white" />
+            <input
+              type="number"
+              value={caseNumber}
+              onChange={(e) => setCaseNumber(e.target.value)}
+              className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white"
+            />
           </div>
         </div>
 
-        <button 
-          onClick={handleSubmit} 
+        <button
+          onClick={handleSubmit}
           className="w-full mt-6 bg-purple-700 hover:bg-purple-800 dark:bg-yellow-500 dark:hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg transition-all"
         >
           {loading ? "جاري البحث..." : "🔍 بحث"}

@@ -1,7 +1,10 @@
+import { lazy, Suspense } from 'react';
 import SectionHeader from '../components/common/SectionHeader';
 import { ProcedureIcon } from '../assets/icons';
-import ProcedurePlaceTypes from '../components/Procedures/ProcedurePlaceTypes';
-import ProcedureTypes from '../components/Procedures/ProcedureTypes';
+
+// ✅ Lazy-load ProcedureTypes and ProcedurePlaceTypes
+const ProcedureTypes = lazy(() => import('../components/Procedures/ProcedureTypes'));
+const ProcedurePlaceTypes = lazy(() => import('../components/Procedures/ProcedurePlaceTypes'));
 
 const Procedures = () => {
   return (
@@ -11,10 +14,14 @@ const Procedures = () => {
       {/* جدولان في صف واحد متجاورين في الشاشات الكبيرة */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="col-span-1">
-          <ProcedureTypes />
+          <Suspense fallback={<div>جار التحميل...</div>}>
+            <ProcedureTypes />
+          </Suspense>
         </div>
         <div className="col-span-1">
-          <ProcedurePlaceTypes />
+          <Suspense fallback={<div>جار التحميل...</div>}>
+            <ProcedurePlaceTypes />
+          </Suspense>
         </div>
       </div>
     </div>

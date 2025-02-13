@@ -10,9 +10,9 @@ const GlobalSpinner = () => {
   if (!visible) return null;
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center z-50">
+    <div className="absolute inset-0 mt-6 flex items-center justify-center z-50">
       {/* الطبقة الحاجبة */}
-      <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800 bg-opacity-50 backdrop-blur-xxl"></div>
+      <div className="absolute inset-0  bg--white dark:bg-gradient-night bg-opacity-50 backdrop-blur-xxl"></div>
       {/* Spinner */}
       <div className="spinner-container flex flex-wrap gap-2 relative">
         <div className="dot w-4 h-4 rounded-full bg-avocat-dot-1 dark:bg-avocat-dark-dot-1"></div>

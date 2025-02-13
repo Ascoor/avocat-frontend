@@ -1,6 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { getServices, deleteService } from '../services/api/services';
-import AddEditServiceModal from '../components/LegalServices/AddEditServiceModal';
 import SectionHeader from '../components/common/SectionHeader';
 import { ServiceSection } from '../assets/icons/index';
 import TableComponent from '../components/common/TableComponent';
@@ -8,8 +7,10 @@ import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import GlobalConfirmDeleteModal from '../components/common/GlobalConfirmDeleteModal';
 import { useAlert } from '../context/AlertContext';
 
+const AddEditServiceModal = lazy(() => import('../components/LegalServices/AddEditServiceModal'));
+
 const LegalServiceList = () => {
-  // ✅ State Management
+
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingService, setEditingService] = useState(null);
@@ -18,8 +19,6 @@ const LegalServiceList = () => {
   const { triggerAlert } = useAlert();
   const [isViewing, setIsViewing] = useState(false);
 
-  // عند فتح المودال، يمكنك تعيين `isViewing` بناءً على حالة معينة
-  // ✅ Fetch Services
   const fetchServices = useCallback(async () => {
     try {
       const response = await getServices();
@@ -33,7 +32,6 @@ const LegalServiceList = () => {
     fetchServices();
   }, [fetchServices]);
 
-  // ✅ Handlers
   const handleAddService = () => {
     setEditingService(null);
     setShowModal(true);
@@ -64,7 +62,6 @@ const LegalServiceList = () => {
       await deleteService(serviceToDelete.id);
       triggerAlert('success', `تم حذف الخدمة   بنجاح`);
 
-      // تحديث قائمة الخدمات
       setServices((prev) => prev.filter((s) => s.id !== serviceToDelete.id));
     } catch (error) {
       triggerAlert('error', 'حدث خطأ أثناء حذف الخدمة');
@@ -73,7 +70,7 @@ const LegalServiceList = () => {
       setServiceToDelete(null);
     }
   };
-  // ✅ Table Configuration
+
   const tableHeaders = [
     { key: 'slug', text: 'رقم الخدمة' },
     { key: 'service_type', text: 'نوع الخدمة' },
@@ -81,12 +78,13 @@ const LegalServiceList = () => {
     { key: 'description', text: 'الوصف' },
     { key: 'status', text: 'الحالة' },
   ];
+
   const statusColors = {
-    'جارى التنفيذ': 'text-yellow-500', // لون أصفر
-    'قيد التنفيذ': 'text-orange-500', // لون برتقالي
-    منتهية: 'text-green-600', // لون أخضر
-    متداولة: 'text-blue-500', // لون أزرق
-    استيفاء: 'text-purple-500', // لون بنفسجي
+    'جارى التنفيذ': 'text-yellow-500', 
+    'قيد التنفيذ': 'text-orange-500', 
+    منتهية: 'text-green-600', 
+    متداولة: 'text-blue-500', 
+    استيفاء: 'text-purple-500', 
   };
 
   const statusIcons = {
@@ -124,6 +122,39 @@ const LegalServiceList = () => {
     <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
       <SectionHeader listName="الخدمات" icon={ServiceSection} />
 
+      {}
+      {showModal && (
+        <Suspense fallback={<div className="text-center text-gray-500">جار التحميل...</div>}>
+          <AddEditServiceModal
+            show={showModal}
+            handleClose={() => {
+              setShowModal(false);
+              setIsViewing(false); 
+              fetchServices();
+            }}
+            service={editingService || null}
+            isEditing={!!editingService && !isViewing} 
+            isViewing={isViewing} 
+            onSaved={fetchServices}
+          />
+        </Suspense>
+      )}
+
+      {}
+      {confirmDelete && (
+        <GlobalConfirmDeleteModal
+          isOpen={confirmDelete}
+          onClose={() => setConfirmDelete(false)}
+          onConfirm={confirmDeleteService}
+          itemName={
+            serviceToDelete?.service_type?.name ||
+            serviceToDelete?.slug ||
+            'الخدمة'
+          }
+        />
+      )}
+
+      {}
       <TableComponent
         data={services}
         headers={tableHeaders}
@@ -145,33 +176,6 @@ const LegalServiceList = () => {
           </button>
         )}
       />
-
-      {showModal && (
-        <AddEditServiceModal
-          show={showModal}
-          handleClose={() => {
-            setShowModal(false);
-            setIsViewing(false); // إعادة ضبط حالة العرض عند إغلاق المودال
-            fetchServices();
-          }}
-          service={editingService || null}
-          isEditing={!!editingService && !isViewing} // يكون true عند التحرير فقط وليس العرض
-          isViewing={isViewing} // تحديد إذا كان المودال في وضع العرض
-          onSaved={fetchServices}
-        />
-      )}
-      {confirmDelete && (
-        <GlobalConfirmDeleteModal
-          isOpen={confirmDelete}
-          onClose={() => setConfirmDelete(false)}
-          onConfirm={confirmDeleteService}
-          itemName={
-            serviceToDelete?.service_type?.name ||
-            serviceToDelete?.slug ||
-            'الخدمة'
-          }
-        />
-      )}
     </div>
   );
 };

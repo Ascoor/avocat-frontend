@@ -1,4 +1,4 @@
-// App.jsx
+
 import React from 'react';
 import { SidebarProvider } from './utils/SidebarContext';
 import ThemeProvider from './utils/ThemeContext';

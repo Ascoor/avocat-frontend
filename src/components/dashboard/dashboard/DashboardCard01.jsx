@@ -1,8 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'; 
 import LineChart from '../charts/LineChart01';
-import { chartAreaGradient } from '../charts/ChartjsConfig';
-import EditMenu from '../../../components/common/DropdownEditMenu';
+import { chartAreaGradient } from '../charts/ChartjsConfig'; 
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from '../../../utils/Utils';

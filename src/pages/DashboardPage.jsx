@@ -21,9 +21,9 @@ const AuthWrapper = () => {
         <Header />
         
         {/* Main Layout */}
-        <div className="flex-1 overflow-y-auto p-4">
-          <main className="max-w-7xl mx-auto">
-            <div className="p-4 sm:p-6 lg:p-8 rounded bg-white dark:bg-gray-800 shadow-md transition-shadow duration-300 ease-in-out hover:shadow-lg">
+        <div className="flex-1 overflow-y-auto p-4  bg-white dark:bg-gray-800">
+          <main className="max-w-7xl mx-auto ">
+            <div className="p-4 sm:p-6 lg:p-8 rounded shadow-md transition-shadow duration-300 ease-in-out hover:shadow-lg">
               
               {/* ✅ Lazy Loaded Routes with Suspense Fallback */}
                <AuthRoutes />

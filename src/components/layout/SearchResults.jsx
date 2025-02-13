@@ -41,7 +41,7 @@ const SearchResults = ({ data }) => {
               <tbody>
                 {data["Case Sessions"]?.length > 0 ? (
                   data["Case Sessions"].map((session, index) => (
-                    <tr key={index} className="border-b dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                    <tr key={session?.session_id || index} className="border-b dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
                       <td className="px-4 py-3">{session.DateSession}</td>
                       <td className="px-4 py-3">{session["Session Decision"] || "لا يوجد قرار"}</td>
                       <td className="px-4 py-3">{session["Next Session Date"] || "غير متوفرة"}</td>
