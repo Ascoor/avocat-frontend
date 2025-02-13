@@ -1,181 +1,95 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import SearchResults from "../components/layout/SearchResults"; // استيراد مكون النتائج
-import api from "../services/api/axiosConfig";
+import React from "react";
 
-const SearchCourtsApi = () => {
-  const [allData, setAllData] = useState({});
-  const [degree, setDegree] = useState("");
-  const [court, setCourt] = useState("");
-  const [caseType, setCaseType] = useState("");
-  const [caseYear, setCaseYear] = useState("");
-  const [caseNumber, setCaseNumber] = useState("");
-  const [courtOptions, setCourtOptions] = useState([]);
-  const [caseTypeOptions, setCaseTypeOptions] = useState([]);
-  const [searchResults, setSearchResults] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [countdown, setCountdown] = useState(5);
-  const [showCountdown, setShowCountdown] = useState(false);
+const SearchResults = ({ data }) => {
+  if (!data) return null;
 
-  // Fetch data when the component mounts
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get('/api/search-court');
-        setAllData(response.data);
-        setCourtOptions(response.data.search_degrees || []);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
+  // Function to render a new row if the condition is met
+  const renderLastSessionRow = (sessions) => {
+    const lastSession = sessions[sessions.length - 1];
 
-  const handleDegreeChange = (e) => {
-    setDegree(e.target.value);
-    setCourtOptions(allData.search_courts?.filter(item => item.degree_value === e.target.value) || []);
-  };
-
-  const handleCourtChange = (e) => {
-    setCourt(e.target.value);
-    setCaseTypeOptions(allData.search_case_types?.filter(item => item.degree_value === degree && item.court_value === e.target.value) || []);
-  };
-
-  const handleSubmit = () => {
-    setShowCountdown(true);
-    let counter = 5;
-    const interval = setInterval(() => {
-      setCountdown(counter);
-      counter -= 1;
-      if (counter < 0) {
-        clearInterval(interval);
-        performSearch();
-        setShowCountdown(false);
-      }
-    }, 1000);
-  };
-
-  const performSearch = async () => {
-    if (!degree || !court || !caseType || !caseYear || !caseNumber) {
-      alert("يرجى ملء جميع الحقول المطلوبة.");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const response = await axios.post("https://search-api.ask-ar.net/search", 
-        { degree, court, caseType, caseYear, caseNumber }, 
-        { headers: { "x-request-source": "React" } }
+    // Check if the last session has one of the specified words in the decision
+    if (lastSession && lastSession["Session Decision"] && 
+        ["رفض", "قبول", "شطب"].some(word => lastSession["Session Decision"].includes(word))) {
+      
+      return (
+        <>
+          {/* Row for "حكمت المحكمة" */}
+          <tr className="bg-gray-100 dark:bg-gray-800">
+            <td colSpan="3" className="text-center text-gray-700 dark:text-gray-300 py-3">
+               حكمت المحكمة
+            </td>
+          </tr>
+          {/* Additional row showing the decision */}
+          <tr className="bg-gray-100 dark:bg-gray-800">
+            <td colSpan="3" className="text-center text-gray-700 dark:text-gray-300 py-3">
+              <strong>القرار: </strong>{lastSession["Session Decision"] || "لا يوجد قرار"}
+            </td>
+          </tr>
+        </>
       );
-
-      setSearchResults(response.data || { message: "الدعوى غير مقيدة" });
-    } catch (error) {
-      console.error(error);
-      setSearchResults({ message: "حدث خطأ أثناء البحث، يرجى المحاولة مرة أخرى." });
-    } finally {
-      setLoading(false);
     }
+    return null;
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="bg-white dark:bg-gray-900 shadow-xl rounded-lg p-8">
-        <h2 className="text-2xl font-bold text-center text-purple-600 dark:text-yellow-400 mb-6">🔍 البحث عن دعوى</h2>
+    <div className="mt-6 bg-white dark:bg-gray-900 shadow-lg rounded-lg p-6 transition-all">
+      <h3 className="text-2xl font-bold text-purple-600 dark:text-yellow-400 text-center mb-4">📜 نتيجة البحث</h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-semibold">الدرجة:</label>
-            <select
-              onChange={handleDegreeChange}
-              className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white"
-              value={degree}
-            >
-              <option value="">-- اختر --</option>
-              {allData.search_degrees?.map((degree, index) => (
-                <option key={index} value={degree.degree_value}>
-                  {degree.degree_name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {courtOptions.length > 0 && (
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-semibold">المحكمة:</label>
-              <select
-                onChange={handleCourtChange}
-                className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white"
-                value={court}
-              >
-                <option value="">-- اختر --</option>
-                {courtOptions.map((court, index) => (
-                  <option key={index} value={court.court_value}>
-                    {court.court_name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          {caseTypeOptions.length > 0 && (
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-semibold">نوع الدعوى:</label>
-              <select
-                onChange={(e) => setCaseType(e.target.value)}
-                className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white"
-                value={caseType}
-              >
-                <option value="">-- اختر --</option>
-                {caseTypeOptions.map((caseType, index) => (
-                  <option key={index} value={caseType.case_type_value}>
-                    {caseType.case_type_name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-semibold">سنة الدعوى:</label>
-            <input
-              type="text"
-              value={caseYear}
-              onChange={(e) => setCaseYear(e.target.value)}
-              className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white"
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-semibold">رقم الدعوى:</label>
-            <input
-              type="number"
-              value={caseNumber}
-              onChange={(e) => setCaseNumber(e.target.value)}
-              className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white"
-            />
-          </div>
-        </div>
-
-        <button
-          onClick={handleSubmit}
-          className="w-full mt-6 bg-purple-700 hover:bg-purple-800 dark:bg-yellow-500 dark:hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg transition-all"
-        >
-          {loading ? "جاري البحث..." : "🔍 بحث"}
-        </button>
-
-        {showCountdown && (
-          <div className="flex items-center justify-center mt-4">
-            <div className="relative w-16 h-16 flex items-center justify-center bg-purple-600 dark:bg-yellow-500 text-white font-bold text-2xl rounded-full">
-              {countdown}
+      {data.message ? (
+        <p className="text-center text-red-500 dark:text-red-400">{data.message}</p>
+      ) : (
+        <>
+          {/* تفاصيل القضية */}
+          <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md mb-6">
+            <h4 className="text-lg font-semibold text-purple-700 dark:text-yellow-300 mb-2">⚖️ تفاصيل القضية:</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
+              <p><strong>رقم الدعوى:</strong> {data.CaseNumber}</p>
+              <p><strong>السنة:</strong> {data.CaseYear}</p>
+              <p><strong>نوع الدعوى:</strong> {data.CaseType}</p>
+              <p><strong>تاريخ القيد:</strong> {data.DateCreation}</p>
+              <p><strong>المدعي:</strong> {data.PlaintiffName}</p>
+              <p><strong>المدعى عليه:</strong> {data.DefendantName}</p>
+              <p className="md:col-span-2"><strong>الموضوع:</strong> {data.CaseSubject}</p>
+              <p><strong>آخر جلسة:</strong> {data.DateLastSession || "غير متوفر"}</p>
+              <p><strong>قرار آخر جلسة:</strong> {data.LastSessionDecision || "غير متوفر"}</p>
             </div>
           </div>
-        )}
-      </div>
 
-      {searchResults && <SearchResults data={searchResults} />}
+          {/* جدول الجلسات */}
+          <h4 className="text-xl font-bold text-purple-600 dark:text-yellow-300 mb-4 text-center">📅 جدول الجلسات:</h4>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 shadow-lg rounded-lg">
+              <thead className="bg-purple-600 dark:bg-yellow-500 text-white dark:text-gray-900">
+                <tr>
+                  <th className="px-4 py-3 border-b">📆 تاريخ الجلسة</th>
+                  <th className="px-4 py-3 border-b">📜 قرار الجلسة</th>
+                  <th className="px-4 py-3 border-b">⏭️ تاريخ الجلسة القادمة</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data["Case Sessions"]?.length > 0 ? (
+                  <>
+                    {data["Case Sessions"].map((session, index) => (
+                      <tr key={session?.session_id || index} className="border-b dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                        <td className="px-4 py-3">{session.DateSession}</td>
+                        <td className="px-4 py-3">{session["Session Decision"] || "لا يوجد قرار"}</td>
+                        <td className="px-4 py-3">{session["Next Session Date"] || "غير متوفرة"}</td>
+                      </tr>
+                    ))}
+                    {renderLastSessionRow(data["Case Sessions"])}
+                  </>
+                ) : (
+                  <tr>
+                    <td colSpan="3" className="text-center text-gray-500 py-3">⚠️ لا توجد جلسات متاحة</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 };
 
-export default SearchCourtsApi;
+export default SearchResults;
