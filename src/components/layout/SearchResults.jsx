@@ -30,7 +30,7 @@ const SearchResults = ({ data }) => {
           {/* جدول الجلسات */}
           <h4 className="text-xl font-bold text-purple-600 dark:text-yellow-300 mb-4 text-center">📅 جدول الجلسات:</h4>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 shadow-lg rounded-lg">
+            <table className="w-full text-sm text-right text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 shadow-lg rounded-lg">
               <thead className="bg-purple-600 dark:bg-yellow-500 text-white dark:text-gray-900">
                 <tr>
                   <th className="px-4 py-3 border-b">📆 تاريخ الجلسة</th>
