@@ -3,6 +3,7 @@ import React from "react";
 const SearchResults = ({ data }) => {
   if (!data) return null;
 
+  // Function to render a new row if the condition is met
   const renderLastSessionRow = (sessions) => {
     const lastSession = sessions[sessions.length - 1];
 
@@ -11,11 +12,20 @@ const SearchResults = ({ data }) => {
         ["رفض", "قبول", "شطب"].some(word => lastSession["Session Decision"].includes(word))) {
       
       return (
-        <tr className="bg-gray-100 dark:bg-gray-800">
-          <td colSpan="3" className="text-center text-gray-700 dark:text-gray-300 py-3">
-            حكمتَا لمحكمة
-          </td>
-        </tr>
+        <>
+          {/* Row for "حكمت المحكمة" */}
+          <tr className="bg-gray-100 dark:bg-gray-800">
+            <td colSpan="3" className="text-center text-gray-700 dark:text-gray-300 py-3">
+               حكمت المحكمة
+            </td>
+          </tr>
+          {/* Additional row showing the decision */}
+          <tr className="bg-gray-100 dark:bg-gray-800">
+            <td colSpan="3" className="text-center text-gray-700 dark:text-gray-300 py-3">
+              <strong>القرار: </strong>{lastSession["Session Decision"] || "لا يوجد قرار"}
+            </td>
+          </tr>
+        </>
       );
     }
     return null;
