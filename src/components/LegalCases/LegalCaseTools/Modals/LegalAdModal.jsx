@@ -8,6 +8,7 @@ import {
 } from '../../../../services/api/legalCases';
 import useAuth from '../../../auth/AuthUser';
 import { useAlert } from '../../../../context/AlertContext';
+import { motion } from 'framer-motion';
 
 const LegalAdModal = ({
   isOpen,
@@ -113,15 +114,22 @@ const LegalAdModal = ({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity duration-300">
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-5xl p-8 relative transform transition-all overflow-auto max-h-[90vh]">
+       <motion.header  initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative mb-4 flex justify-center bg-gray-200 dark:bg-gray-800">
+
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
         >
           &#x2715;
         </button>
-        <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-6">
+        <h2 className="text-2xl font-bold text-center mt-2  dark:text-green-200/90 text-avocat-blue mb-6">
           {isEdit ? 'تحديث الإعلان القانوني' : 'إضافة إعلان قانوني'}
         </h2>
+      </motion.header>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {[
@@ -138,17 +146,17 @@ const LegalAdModal = ({
             },
           ].map(({ label, name, options }) => (
             <div key={name}>
-              <label className="block text-sm font-bold text-blue-700 dark:text-gray-200">
+              <label className="block  text-center mb-2 text-sm font-bold text-blue-700 dark:text-gray-200">
                 {label}
               </label>
               <select
                 name={name}
                 value={formData[name]}
                 onChange={handleChange}
-                className="w-full px-6 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500"
+                className="w-full px-6  py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500"
                 required
               >
-                <option value="">اختر {label}</option>
+                <option className='text-center' value="">اختر  </option>
                 {options.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.name}
@@ -159,7 +167,7 @@ const LegalAdModal = ({
           ))}
 
           <div>
-            <label className="block text-sm font-bold text-blue-700 dark:text-gray-200">
+            <label className="block text-center mb-2 text-sm font-bold text-blue-700 dark:text-gray-200">
               الوصف
             </label>
             <input
@@ -173,7 +181,7 @@ const LegalAdModal = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-1 gap-4 items-center">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+            <label className="text-sm  text-center mb-2   text-blue-700 font-bold  dark:text-gray-200">
               تاريخ التسليم
             </label>
             <input
@@ -187,7 +195,7 @@ const LegalAdModal = ({
             {isEdit && (
               <>
                 <div>
-                  <label className="block text-sm font-bold text-blue-700 dark:text-gray-200">
+                  <label className="block text-sm  text-center mb-2 font-bold text-blue-700 dark:text-gray-200">
                     {' '}
                     المحامي المستلم{' '}
                   </label>
@@ -195,7 +203,7 @@ const LegalAdModal = ({
                     name="lawyer_receive_id"
                     value={formData.lawyer_receive_id}
                     onChange={handleChange}
-                    className="w-full px-6 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-6 py-3  rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500"
                     required
                   >
                     <option value=""> اختر المحامي </option>
@@ -206,7 +214,7 @@ const LegalAdModal = ({
                     ))}
                   </select>
                 </div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                <label className="text-sm font-medium  text-center mb-2 text-gray-700 dark:text-gray-200">
                   تاريخ الإستلام
                 </label>
                 <input
@@ -224,7 +232,7 @@ const LegalAdModal = ({
           {isEdit && (
             <>
               <div>
-                <label className="block text-sm font-bold text-blue-700 dark:text-gray-200">
+                <label className="block text-sm  text-center mb-2 font-bold text-blue-700 dark:text-gray-200">
                   النتائج
                 </label>
                 <input
@@ -237,7 +245,7 @@ const LegalAdModal = ({
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-blue-700 dark:text-gray-200">
+                <label className="block text-sm font-bold  text-center mb-2 text-blue-700 dark:text-gray-200">
                   الحالة
                 </label>
                 <select

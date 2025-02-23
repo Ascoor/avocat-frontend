@@ -72,15 +72,15 @@ function DashboardCard07() {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-      {/* 1. مؤشر عدد القضايا المفتوحة */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4 flex justify-center items-center">
-        <h3 className="font-semibold text-xl text-gray-800 dark:text-gray-100">
-          عدد القضايا المفتوحة
-        </h3>
-        <div className="text-4xl text-blue-500">{data.openCases}</div>
-      </div>
+    <div className="bg-gray-100 dark:bg-gradient-night dark:text-white text-gray-800 shadow rounded-lg p-2 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
+  
+      {/* العنوان */}
+      <header className="px-5 py-4 border-b border-gray-300 dark:border-gray-700 flex items-center">
+        <h2 className="font-semibold text-md"  >🎯 القضايا المتداولة</h2>
+      </header>
 
+        <div className="text-4xl text-blue-500">{data.openCases}</div>
+   
       {/* 2. مؤشر عدد الاستشارات */}
       <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4 flex justify-center items-center">
         <h3 className="font-semibold text-xl text-gray-800 dark:text-gray-100">
@@ -104,22 +104,7 @@ function DashboardCard07() {
         </h3>
         <Line data={caseTrendData} />
       </div>
-
-      {/* 5. مخطط دائري لتمثيل توزيع القضايا حسب الحالة */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4">
-        <h3 className="font-semibold text-xl text-gray-800 dark:text-gray-100">
-          توزيع القضايا حسب الحالة
-        </h3>
-        <Pie data={caseStatusData} />
-      </div>
-
-      {/* 6. مخطط عمودي لتمثيل عدد القضايا حسب المحامي */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4">
-        <h3 className="font-semibold text-xl text-gray-800 dark:text-gray-100">
-          عدد القضايا حسب المحامي
-        </h3>
-        <Bar data={lawyerCaseData} />
-      </div>
+ 
     </div>
   );
 }

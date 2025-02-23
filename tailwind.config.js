@@ -92,7 +92,6 @@ export default {
         'avocat-dark-dot-14': '#FF8C94', // وردي مائل للأحمر
         'avocat-dark-dot-5': '#FFADB5', // وردي فاتح جدًا
       },
- 
       backgroundImage: {
         'gradient-red-button': 'linear-gradient(to right, #ec4899, #db2777,#be185d)',
         'gradient-red-dark-button': 'linear-gradient(to right, #f43f5e, #ec4899,#db2777)',
@@ -107,7 +106,7 @@ export default {
         'gradient-blue-dark': 'linear-gradient(to bottom, #1b2b5a, #031023)',
         'gradient-orange-light': 'linear-gradient(to bottom, #ffcc80, #ffb74d)',
         'gradient-blue-light': 'linear-gradient(to bottom, #bbdefb, #64b5f6)',
-      },
+      },      
       border: {
         light: '#e2e8f0',
         dark: '#1a202c',
@@ -129,7 +128,8 @@ export default {
         xl: '1.5rem',
         full: '9999px',
       },
-      boxShadow: {
+      boxShadow: { 
+          top: '0 -4px 6px rgba(0, 0, 0, 0.1)',
         base: '0 1px 3px rgba(0, 0, 0, 0.1)',
         hover: '0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06)',
         focus: '0 0 0 4px rgba(60, 60, 220, 0.4)',
@@ -173,6 +173,12 @@ export default {
         60: '60',
         70: '70',
         80: '80',
+      },
+    },  
+    variants: {
+      extend: {
+        opacity: ['responsive', 'hover', 'focus', 'group-hover'],
+        transitionProperty: ['responsive', 'hover', 'focus'],
       },
     },
   },

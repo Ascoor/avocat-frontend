@@ -40,7 +40,7 @@ function DropdownNotifications({ align }) {
       {/* زر الإشعارات */}
       <button
         ref={trigger}
-        className={`w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700 rounded-full shadow-md transition-transform transform hover:scale-105 ${
+        className={`w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-gradient-to-b from-avocat-indigo-light to-avocat-indigo text-white hover:from-blue-600 hover:to-indigo-700 rounded-full shadow-md transition-transform transform hover:scale-105 ${
           dropdownOpen && 'ring-2 ring-blue-400'
         }`}
         aria-haspopup="true"

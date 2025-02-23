@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { lazy, Suspense } from 'react';
 import { FaUserTie, FaUserAltSlash } from 'react-icons/fa';
-import GlobalSpinner from '../components/common/GlobalSpinner.jsx';
+import GlobalSpinner from '../components/common/Spinners/GlobalSpinner';
 
 const ClientList = lazy(() => import('../components/ClientsAndUnClients/clients/index.jsx'));
 const UnClientList = lazy(() => import('../components/ClientsAndUnClients/unclients/index.jsx'));

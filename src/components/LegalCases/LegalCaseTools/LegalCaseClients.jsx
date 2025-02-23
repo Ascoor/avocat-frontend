@@ -160,7 +160,7 @@ export default function LegalCaseClients({
       <div className="mb-6">
         <button
           onClick={handleAddNewClient}
-          className="flex items-center bg-avocat-indigo-dark hover:bg-avocat-orange-dark text-white px-4 py-2 rounded shadow-md transition duration-300"
+          className="flex items-center bg-blue-600   hover:bg-blue-700   text-white px-4 py-2 rounded shadow-md transition duration-300"
         >
           إضافة موكل <BiPlusCircle className="ml-2" />
         </button>
@@ -199,7 +199,7 @@ export default function LegalCaseClients({
         {legCaseNewClients.length > 0 && (
           <button
             onClick={handleAddLegCaseClients}
-            className="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow-md transition duration-300"
+            className="mt-4   bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 shadow-lg transition duration-300"
           >
             إضافة الموكلين
           </button>

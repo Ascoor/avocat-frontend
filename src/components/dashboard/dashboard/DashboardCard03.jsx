@@ -1,46 +1,90 @@
-import React from 'react';
-import BarChart from '../charts/BarChart01';
-import { tailwindConfig } from '../../../utils/Utils';
+import React, { useState, useEffect } from "react";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-function DashboardCard0() {
+// تسجيل المكونات المطلوبة للمخطط
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+function DashboardCard03({ isDarkMode }) {
+  // بيانات متوسط مدة إنهاء القضايا حسب النوع
+  const [caseDurationData, setCaseDurationData] = useState({
+    labels: ["جنائي", "مدني", "تجاري", "عمالي", "إداري"],
+    durations: [180, 120, 90, 60, 45], // متوسط عدد الأيام لكل نوع قضية
+  });
+
+  // بيانات المخطط
   const chartData = {
-    labels: ['يناير 2024', 'فبراير 2024', 'مارس 2024', 'أبريل 2024'],
+    labels: caseDurationData.labels,
     datasets: [
       {
-        label: 'الجلسات الناجحة',
-        data: [100, 120, 140, 160],
-        backgroundColor: tailwindConfig().theme.colors.green[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.green[600],
-        barPercentage: 0.7,
-        categoryPercentage: 0.7,
-        borderRadius: 4,
-      },
-      {
-        label: 'الجلسات الفاشلة',
-        data: [20, 15, 10, 5],
-        backgroundColor: tailwindConfig().theme.colors.red[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.red[600],
-        barPercentage: 0.7,
-        categoryPercentage: 0.7,
-        borderRadius: 4,
+        label: "متوسط المدة (بالأيام)",
+        data: caseDurationData.durations,
+        backgroundColor: isDarkMode
+          ? ["#ffbb34", "#60A5FA", "#FBBF24", "#f2a33b", "#A78BFA"]
+          : ["#EF4444", "#3B82F6", "#F59E0B", "#f2a33b", "#8B5CF6"],
+        borderColor: isDarkMode ? "#FFF" : "#333",
+        borderWidth: 1,
+        borderRadius: 6,
+        barThickness: 50, // سمك الأعمدة
       },
     ],
   };
 
+  // خيارات المخطط
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top",
+        labels: {
+          color: isDarkMode ? "#DDD" : "#333",
+          font: { size: 14 },
+        },
+      },
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: isDarkMode ? "#DDD" : "#333" },
+      },
+      y: {
+        ticks: { color: isDarkMode ? "#DDD" : "#333", stepSize: 30 },
+      },
+    },
+  };
+
   return (
-    <div className="bg-gray-100 dark:bg-gradient-night shadow rounded-lg p-4 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
-      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">
-          مقارنة الجلسات القانونية الناجحة والفاشلة
-        </h2>
+    
+    
+    <div className="bg-gray-100 dark:bg-gradient-night dark:text-white text-gray-800 shadow rounded-lg p-2 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
+  
+    {/* العنوان */}
+    <header className="px-5 py-4 border-b border-gray-300 dark:border-gray-700 flex items-center">
+      <h2 className="font-semibold text-md">⏳ متوسط مدة إنهاء القضايا</h2>
       </header>
-      <div className="px-5 py-3">
-        {typeof window !== 'undefined' && (
-          <BarChart data={chartData} width={595} height={248} />
-        )}
+
+      {/* المحتوى */}
+      <div className="mt-4">
+        <p className="text-sm text-gray-500 dark:text-gray-300">
+          يعرض هذا المخطط متوسط المدة التي تستغرقها القضايا قبل الإغلاق، مما يساعد في تقييم أداء المكتب وتحسين العمليات.
+        </p>
+      </div>
+
+      {/* المخطط */}
+      <div className="w-full h-64 sm:h-80 md:h-96 mt-4">
+        <Bar data={chartData} options={chartOptions} />
       </div>
     </div>
   );
 }
 
-export default DashboardCard0;
+export default DashboardCard03;

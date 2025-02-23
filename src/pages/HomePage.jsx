@@ -1,119 +1,136 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';
-import { TeamWorkImage, LogoPatren } from '../assets/images';
-import { useAlert } from '../context/AlertContext';
-import GlobalSpinner from '../components/common/GlobalSpinner';
-
+import { TeamWorkImage, LogoPatren, WelcomeImage } from '../assets/images';
+import { useAlert } from '../context/AlertContext'; 
+import { motion } from 'framer-motion';
+import AuthSpinner from '../components/common/Spinners/AuthSpinner';
 const HomePage = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const { triggerAlert } = useAlert();
+  const { triggerAlert } = useAlert(); 
 
-  const handleFormClose = () => {
-    setShowLoginForm(false);
-    setShowRegisterForm(false);
-  };
+  const isModalOpen = showLoginForm || showRegisterForm || isLoading;
 
-  const handleAuthStart = () => {
-    setIsLoading(true);
-  };
-
-  const handleAuthComplete = (success, message) => {
-    setIsLoading(false);
-    if (success) {
-      handleFormClose();
-      triggerAlert('success', message);
-    } else {
-      triggerAlert('error', message);
-    }
-  };
-
-  const toggleLoginForm = () => {
-    setShowLoginForm(true);
-    setShowRegisterForm(false);
-  };
-
-  const toggleRegisterForm = () => {
-    setShowRegisterForm(true);
-    setShowLoginForm(false);
-  };
-
-  const imageAnimation = useSpring({
-    transform: isImageLoaded ? 'translateY(0%)' : 'translateY(100%)',
-    opacity: isImageLoaded ? 1 : 0,
-    config: { duration: 1000 },
-  });
+  // تأثير ظهور صورة الفريق بزوم ثم تلاشيها من المنتصف للأسفل
+  const teamImageAnimation = useSpring({
+    from: { opacity: 0, transform: 'scale(0.5) translateY(50px)' },
+    to: { opacity: 1, transform: 'scale(1) translateY(0px)' },
+    config: { duration: 1500 },
+  }); 
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-cover bg-center flex flex-col items-center justify-center">
-      {/* Background Overlay */}
-      <div className="absolute bg-gradient-day dark:via-gray-800 dark:to-gray-700 inset-0"></div>
+    <div className="relative w-full h-screen bg-gradient-night overflow-hidden flex flex-col items-center justify-center">
+ <motion.img
+        src={WelcomeImage} // رابط الصورة، يمكن تغييره
+        alt="Cover"
 
-      {!showLoginForm && !showRegisterForm && (
-        <div className="z-50 text-center text-white p-4 flex flex-col items-center">
-          {/* Teamwork Image with Mask */}
-          <animated.div
-            style={imageAnimation}
-            className="relative w-full max-w-[661px] aspect-[661/377] overflow-hidden"
+        className="absolute w-full h-full object-cover"
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{
+          duration: 30, // مدة الدورة الكاملة
+          repeat: Infinity, // تكرار لا نهائي
+          ease: "easeInOut",
+        }}
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+  
+    
+
+      {/* طبقة التدرج: داكنة في المنتصف مع جوانب واضحة */}
+    
+      {/* صورة الفريق: زووم ثم تدرج متلاشي من المنتصف للأسفل */}
+      {!isModalOpen && (
+        
+        <animated.div
+          style={teamImageAnimation}
+          className="absolute top-1/12 left-2/2 transform -translate-x-/2 -translate-y-1/2 max-w-[606px] aspect-[661/377] flex items-center justify-center"
           >
-            <img
-              src={TeamWorkImage}
-              alt="Team Work"
-              className="object-cover w-full h-full rounded-lg shadow-lg"
-              onLoad={() => setIsImageLoaded(true)}
-              style={{
-                maskImage: 'linear-gradient(to top, transparent, black)',
-                WebkitMaskImage: 'linear-gradient(to top, transparent, black)',
-              }}
-            />
-          </animated.div>
-
+ 
           <img
-            src={LogoPatren}
-            alt="Logo"
-            className="mt-6 w-[288px] max-w-full aspect-[2/1] h-auto"
-          />
+            src={TeamWorkImage}
+            alt="Team Work"
+            className="object-cover w-full h-full rounded-lg  shadow-lg"
+            style={{
+              maskImage: 'linear-gradient(to bottom, black 60%, rgba(0,0,0,0.6) 70%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.6) 40%, transparent 100%)',
+            }}
+            />
+  
+        </animated.div>
+      )} 
 
-          <div className="flex flex-col sm:flex-row items-center mt-4 mr-4 space-y-4 sm:space-y-0 sm:space-x-4">
-            <button
-              onClick={toggleLoginForm}
-              className="px-6 py-2 text-lg font-bold bg-red-500 text-white rounded-lg"
-            >
-              تسجيل الدخول
-            </button>
-            <button
-              onClick={toggleRegisterForm}
-              className="px-6 py-2 text-lg font-bold bg-green-500 text-white rounded-lg"
-            >
-              الاشتراك
-            </button>
+      {/* شعار الشركة مع أزرار الدخول والتسجيل */}
+      {!isModalOpen && (
+        <div className="z-50 text-center mt-56 text-white p-4 flex flex-col items-center">
+          <div className="relative flex- tems-center justify-center">
+            <img src={LogoPatren} alt="الشعار" className="w-[220px] sm:w-[250px] md:w-[288px] max-w-full h-auto" />
+          </div>
+
+          <div className="relative flex-1 items-center justify-center">
+            <div className="flex flex-row gap-4 justify-center items-cente">
+              <button
+                onClick={() => setShowLoginForm(true)}
+                className="px-6 py-2 text-lg font-bold bg-gradient-blue-button text-white rounded-lg"
+              >
+                تسجيل الدخول
+              </button>
+              <button
+                onClick={() => setShowRegisterForm(true)}
+                className="px-6 py-2 text-lg font-bold bg-green-500 text-white rounded-lg"
+                disabled={isLoading}
+              >
+                الاشتراك
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-      {/* ✅ عرض التحميل أثناء العملية */}
-      {isLoading && <GlobalSpinner />}
+      {/* مكون التحميل (Spinner) */}
+      {isLoading && <AuthSpinner />}
 
-      {/* ✅ نماذج تسجيل الدخول والتسجيل مع تحسين z-index */}
+      {/* نماذج تسجيل الدخول والتسجيل */}
       {showLoginForm && (
-        <Login
-          onAuthStart={handleAuthStart}
-          handleFormClose={handleFormClose}
-          toggleRegisterForm={toggleRegisterForm}
-          onAuthComplete={handleAuthComplete}
-        />
+           <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+           <Login
+             onAuthStart={() => setIsLoading(true)}
+             handleFormClose={() => setShowLoginForm(false)}
+             onAuthComplete={(success, message) => {
+               setTimeout(() => {
+                 setIsLoading(false);
+                 if (success) {
+                   setShowLoginForm(false);
+                   triggerAlert('success', message);
+                 } else {
+                   triggerAlert('error', message);
+                 }
+               }, 2000); // تأخير إخفاء التحميل لمدة ثانيتين بغض النظر عن النتيجة
+             }}
+           />
+         </div>
       )}
 
       {showRegisterForm && (
-        <Register
-          onAuthStart={handleAuthStart}
-          handleFormClose={handleFormClose}
-          onAuthComplete={handleAuthComplete}
-        />
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <Register
+            onAuthStart={() => setIsLoading(true)}
+            handleFormClose={() => setShowRegisterForm(false)}
+            onAuthComplete={(success, message) => {
+              setTimeout(() => {
+                setIsLoading(false);
+                if (success) {
+                  setShowLoginForm(false);
+                  triggerAlert('success', message);
+                } else {
+                  triggerAlert('error', message);
+                }
+              }, 2000); // تأخير إخفاء التحميل لمدة ثانيتين
+            }}
+          />
+        </div>
       )}
     </div>
   );

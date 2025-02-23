@@ -181,7 +181,6 @@ function BarChart03({ data, width, height }) {
           ref={legend}
           className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60"
         ></ul>
-        <ul className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60"></ul>
       </div>
     </div>
   );

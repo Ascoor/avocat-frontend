@@ -141,7 +141,7 @@ const LegalCasesIndex = () => {
 
   // ✅ Button for Adding a New Case
   const renderAddButton = () => (
-    <button onClick={() => handleAddEditModal()} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+    <button onClick={() => handleAddEditModal()} className="bg-gradient-green-button hover:bg-gradient-green-dark-button text-white px-4 py-2 rounded-lg  transition">
       + إضافة قضية جديدة
     </button>
   );

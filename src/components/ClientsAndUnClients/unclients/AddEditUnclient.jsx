@@ -1,21 +1,11 @@
-import { useState, useEffect } from 'react';
-import {
-  FaOrcid,
-  FaUserEdit,
-  FaIdCard,
-  FaMapMarkerAlt,
-  FaCalendarAlt,
-  FaEnvelope,
-  FaPhone,
-  FaBriefcase,
-  FaPray,
-} from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
-import axios from 'axios';
-import API_CONFIG from '../../../config/config';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useAlert } from '../../../context/AlertContext';
+import api from '../../../services/api/axiosConfig'; 
+import GlobalModal from '../../common/GlobalModal';
 
-function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
-  const isEditMode = !!unclient?.id;
+const AddEditUnclient = ({ unclient = {}, isOpen, onClose, onSaved }) => {
   const [formData, setFormData] = useState({
     name: '',
     gender: '',
@@ -32,6 +22,11 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
   const [validationErrors, setValidationErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
+  // Define isEditMode based on the presence of unclient.id
+  const isEditMode = unclient?.id ? true : false;
+
+
+  const { triggerAlert } = useAlert();
   useEffect(() => {
     if (isEditMode) {
       setFormData({
@@ -99,192 +94,93 @@ function AddEditUnclient({ unclient = {}, isOpen, onClose, onSaved }) {
 
     try {
       const response = isEditMode
-        ? await axios.put(
-            `${API_CONFIG.baseURL}/api/unclients/${unclient.id}`,
+        ? await api.put(
+            `/api/unclients/${unclient.id}`,
             formattedData,
           )
-        : await axios.post(
-            `${API_CONFIG.baseURL}/api/unclients`,
+        : await api.post(
+            `/api/unclients`,
             formattedData,
           );
 
-      onSaved(response.data.message || 'تم الحفظ بنجاح');
+      onSaved();
+      
+      triggerAlert('success', 'تم حفظ العميل بنجاح');
       onClose();
       resetForm();
     } catch (error) {
       if (error.response?.status === 422) {
         setValidationErrors(error.response.data.errors || {});
       } else {
-        console.error('Unexpected error:', error);
+
+      triggerAlert('error', 'حدث خطاء');
       }
     } finally {
       setIsLoading(false);
     }
   };
 
-  const renderFormField = (label, name, type = 'text', placeholder = '') => (
-    <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700" htmlFor={name}>
-        {label}
-      </label>
-      <input
-        type={type}
-        name={name}
-        id={name}
-        placeholder={placeholder}
-        value={formData[name]}
-        onChange={handleInputChange}
-        className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-          validationErrors[name] ? 'border-red-500' : 'border-gray-300'
-        }`}
-      />
-      {validationErrors[name] && (
-        <p className="mt-1 text-xs text-red-600">{validationErrors[name]}</p>
-      )}
-    </div>
-  );
-
   return (
-    <div
-      className={`fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50 ${
-        isOpen ? 'block' : 'hidden'
-      }`}
+    <GlobalModal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={unclient?.id ? 'تعديل العميل' : 'إضافة عميل'}
     >
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-semibold text-gray-900">
-            {isEditMode ? 'تعديل بيانات العميل' : 'إضافة عميل جديد'}
-          </h3>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 focus:outline-none"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {validationErrors.non_field_errors && (
-          <div className="mb-4 text-sm text-red-600">
-            {validationErrors.non_field_errors.join(', ')}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          {renderFormField('رقم العميل', 'slug', 'text', 'أدخل رقم العميل')}
-          {renderFormField('الاسم', 'name', 'text', 'أدخل الاسم')}
-          <div className="mb-4">
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="gender"
-            >
-              الجنس
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {[{ name: 'name', label: 'الاسم الكامل', type: 'text' },
+          { name: 'slug', label: 'رقم العميل', type: 'text' },
+          { name: 'identity_number', label: 'رقم الهوية', type: 'text' },
+          { name: 'address', label: 'العنوان', type: 'text' },
+          { name: 'religion', label: 'الديانة', type: 'text' },
+          { name: 'nationality', label: 'الجنسية', type: 'text' },
+          { name: 'work', label: 'الوظيفة', type: 'text' },
+          { name: 'email', label: 'البريد الإلكتروني', type: 'email' },
+          { name: 'phone_number', label: 'رقم الهاتف', type: 'text' },
+          { name: 'emergency_number', label: 'رقم الطوارئ', type: 'text' },
+        ].map(({ name, label, type }) => (
+          <div key={name}>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              {label}
             </label>
-            <select
-              name="gender"
-              id="gender"
-              value={formData.gender}
+            <input
+              type={type}
+              name={name}
+              value={formData[name]}
               onChange={handleInputChange}
-              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">اختر الجنس</option>
-              <option value="ذكر">ذكر</option>
-              <option value="أنثى">أنثى</option>
-            </select>
-          </div>
-          {renderFormField(
-            'رقم الهوية',
-            'identity_number',
-            'number',
-            'أدخل رقم الهوية',
-          )}
-          <div className="mb-4">
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="date_of_birth"
-            >
-              تاريخ الميلاد
-            </label>
-            <DatePicker
-              selected={formData.date_of_birth}
-              onChange={handleDateChange}
-              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+              className="w-full mt-1 p-3 border rounded-lg bg-gray-50 dark:bg-gray-200"
             />
           </div>
-          {renderFormField('العنوان', 'address', 'text', 'أدخل العنوان')}
-          {renderFormField(
-            'رقم الهاتف',
-            'phone_number',
-            'tel',
-            'أدخل رقم الهاتف',
-          )}
-          {renderFormField(
-            'البريد الإلكتروني',
-            'email',
-            'email',
-            'أدخل البريد الإلكتروني',
-          )}
-          <div className="mb-4">
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="religion"
-            >
-              الديانة
-            </label>
-            <select
-              name="religion"
-              id="religion"
-              value={formData.religion}
-              onChange={handleInputChange}
-              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">اختر الديانة</option>
-              <option value="مسلم">مسلم</option>
-              <option value="مسيحي">مسيحي</option>
-            </select>
-          </div>
-          {renderFormField('الوظيفة', 'work', 'text', 'أدخل الوظيفة')}
-          {renderFormField(
-            'رقم الطوارئ',
-            'emergency_number',
-            'tel',
-            'أدخل رقم الطوارئ',
-          )}
+        ))}
 
-          <div className="flex justify-end space-x-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-            >
-              إلغاء
-            </button>
-            <button
-              type="submit"
-              className={`px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 ${
-                isLoading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-              disabled={isLoading}
-            >
-              {isLoading ? 'جار التحميل...' : isEditMode ? 'تعديل' : 'إضافة'}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            تاريخ الميلاد
+          </label>
+          <DatePicker
+            selected={formData.date_of_birth}
+            onChange={handleDateChange}
+            className="w-full mt-1 p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-gray-100"
+          />
+        </div>
+        <div className="flex justify-end space-x-3">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-5 py-2 bg-gray-500 text-white rounded-lg"
+          >
+            إلغاء
+          </button>
+          <button
+            type="submit"
+            className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            حفظ
+          </button>
+        </div>
+      </form>
+    </GlobalModal>
   );
-}
+};
 
 export default AddEditUnclient;

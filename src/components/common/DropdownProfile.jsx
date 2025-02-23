@@ -61,7 +61,7 @@ function UserMenu({ align = 'left' }) {
           className="w-8 h-8 rounded-full object-cover"
         />
         <svg
-          className="w-3 h-3 shrink-0 mr-1 fill-current text-gray-80 dark:text-gray-500"
+          className="w-3 h-3 shrink-0 mr-1 fill-current text-white dark:text-gray-500"
           viewBox="0 0 12 12"
         >
           <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -86,7 +86,7 @@ function UserMenu({ align = 'left' }) {
             <li>
               <Link
                 to="/settings"
-                className="font-medium text-sm text-violet-100 hover:text-violet-400 dark:hover:text-violet-400 flex items-center py-2 px-4"
+                className="font-medium text-sm text-avocat-blue-dark dark:text-avocat-orange-light hover:text-violet-400 dark:hover:text-violet-400 flex items-center py-2 px-4"
                 onClick={() => setDropdownOpen(false)}
               >
                 الإعدادات

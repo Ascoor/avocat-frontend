@@ -47,19 +47,19 @@ const AnalogClock = () => {
   };
 
   return (
-    <svg width={2 * radius} height={2 * radius} className="drop-shadow-md">
-      <circle
-        cx={center}
-        cy={center}
-        r={radius - 4}
-        className="fill-white dark:fill-gray-300 stroke-avocat-blue  dark:stroke-orange-400 stroke-4"
-      />
-      {renderNumbers()}
-      <line {...handStyle(hourAngle, radius * 0.5, 'black', 4)} />
-      <line {...handStyle(minuteAngle, radius * 0.7, 'blue', 3)} />
-      <line {...handStyle(secondAngle, radius * 0.9, 'red', 1)} />
-      <circle cx={center} cy={center} r="2" className="fill-blue-800" />
-    </svg>
+      <svg width={2 * radius} height={2 * radius} className="drop-shadow-md ring-avocat-blue shadow-lg   shadow-avocat-blue dark:shadow-avocat-orange dark:shadow-top  rounded-full ">
+        <circle
+          cx={center}
+          cy={center}
+          r={radius - 4}
+          className="fill-white dark:fill-orange-200/80 stroke-avocat-blue   dark:stroke-orange-400 stroke-4"
+        />
+        {renderNumbers()}
+        <line {...handStyle(hourAngle, radius * 0.5, 'black', 4)} />
+        <line {...handStyle(minuteAngle, radius * 0.7, 'blue', 3)} />
+        <line {...handStyle(secondAngle, radius * 0.9, 'red', 1)} />
+        <circle cx={center} cy={center} r="2" className="fill-blue-800" />
+      </svg>
   );
 };
 

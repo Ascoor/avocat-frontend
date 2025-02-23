@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect ,useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchClients } from '../../../store/clientsSlice';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import { ClientSectionIcon } from '../../../assets/icons/index';
 import SectionHeader from '../../common/SectionHeader';
@@ -7,23 +9,15 @@ import TableComponent from '../../common/TableComponent'; // ✅ مكون الج
 import api from '../../../services/api/axiosConfig';
 
 function ClientList() {
-  const [clients, setClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // ✅ جلب بيانات عملاء
-  const fetchClients = useCallback(async () => {
-    try {
-      const response = await api.get(`/api/clients`);
-      setClients(response.data.clients || []);
-    } catch (error) {
-      triggerAlert('error', 'حدث خطاء');
-    }
-  }, []);
-
+  const dispatch = useDispatch();
+  const { clients, loading, error } = useSelector((state) => state.clients); // Select clients state from Redux
+  // Fetch clients on component mount
   useEffect(() => {
-    fetchClients();
-  }, [fetchClients]);
+    dispatch(fetchClients());  // Dispatch action to fetch clients
+  }, [dispatch]);
 
   // ✅ حذف عميل
   const handleDelete = async (id) => {
@@ -46,11 +40,11 @@ function ClientList() {
             }
           : client,
       );
-      setClients(updatedClients);
 
-      await api.put(`/api/clients/${id}`, {
-        status: updatedClients.find((c) => c.id === id).status,
-      });
+      dispatch({
+        type: 'clients/updateClientStatusInStore',
+        payload: { id, status: updatedClients.find((c) => c.id === id).status },
+      });      
     } catch (error) {
       console.error('Error toggling status:', error);
     }

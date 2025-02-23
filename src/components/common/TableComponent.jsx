@@ -194,26 +194,58 @@ const TableComponent = ({
               </tr>
             </thead>
             <tbody>
-              {paginatedData.map((row, index) => (
-                <AnimatedRow
-                  key={row.id}
-                  row={row}
-                  rowIndex={index}
-                  headers={headers}
-                  onEdit={onEdit}
-                  onDelete={onDelete}
-                  onView={onView}
-                  customRenderers={customRenderers}
-                  sortKey={sortKey}
-                  sortDirection={sortDirection}
-                />
+              {paginatedData.map((row, index) => ( 
+            <tr
+              key={row.id}
+              className="text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-200 border-b border-gray-200 dark:border-gray-600"
+            >
+              {onView && (
+                <td className="px-4 py-2 text-center">
+                  <button
+                    onClick={() => onView(row.id)}
+                    className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-300"
+                  >
+                    <MdVisibility />
+                  </button>
+                </td>
+              )} 
+              {headers.map((header) => (
+                <td
+                  key={`${row.id}-${header.key}`}
+                  className="px-4 py-2 text-center text-sm md:text-base lg:text-lg"
+                >
+                  {customRenderers[header.key] ? (
+                    customRenderers[header.key](row)
+                  ) : (
+                    row[header.key]
+                  )}
+                </td>
               ))}
+              <td className="px-4 py-2 text-center">
+                <button
+                  onClick={() => onEdit(row.id)}
+                  className="text-violet-600 hover:text-violet-800 dark:text-violet-400 dark:hover:text-violet-300 transition-colors duration-300"
+                >
+                  <MdEdit />
+                </button>
+              </td>
+              <td className="px-4 py-2 text-center">
+                <button
+                  onClick={() => onDelete(row)}
+                  className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-300"
+                >
+                  <FaTrashAlt />
+                </button>
+              </td>
+            </tr>
+          ))}
             </tbody>
           </table>
         </div>
       ) : (
-        <p className="text-center text-gray-500 mt-4">لا توجد بيانات.</p>
+        <p className="text-gray-800 dark:text-gray-200">لا يوجد بيانات</p>
       )}
+
       <div className="flex justify-between items-center mt-4">
         <button
           onClick={() => handlePageChange(currentPage - 1)}

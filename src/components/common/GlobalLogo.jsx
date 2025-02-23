@@ -7,7 +7,7 @@ const GlobalLogo = ({ size = 'md', theme = 'auto' }) => {
   const sizeClasses = {
     sm: 'w-16 h-8', // صغير
     md: 'w-28 h-12', // متوسط (افتراضي)
-    lg: 'w-64 h-32', // كبير
+    lg: 'w-40 h-21', // كبير
   };
 
   // تحديد نمط العرض بناءً على قيمة theme

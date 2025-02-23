@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
+import React, { useEffect, useState } from "react";
+import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
 import {
   getProceduresByLegCaseId,
   deleteProcedure,
-} from '../../../services/api/procedures';
-import ProcedureModal from './Modals/ProcedureModal';
-import ProcedureDetailsModal from './Modals/ProcedureDetailsModal';
-import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
-import { useAlert } from '../../../context/AlertContext';
+} from "../../../services/api/procedures";
+import ProcedureModal from "./Modals/ProcedureModal"; 
+import GlobalConfirmDeleteModal from "../../common/GlobalConfirmDeleteModal";
+import { useAlert } from "../../../context/AlertContext";
+import { motion } from "framer-motion";
 
 const LegalCaseProcedures = ({ legCaseId }) => {
   const [procedures, setProcedures] = useState([]);
@@ -18,55 +18,62 @@ const LegalCaseProcedures = ({ legCaseId }) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [procedureToDelete, setProcedureToDelete] = useState(null);
   const { triggerAlert } = useAlert();
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage =8;
+  
+  // Function to handle page change
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
-  // Fetch procedures
+  // Function to slice data for current page
+  const paginateData = (data) => {
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return data.slice(startIndex, endIndex);
+  };
+  const proceduresToDisplay = paginateData(procedures);
+  useEffect(() => {
+
+    fetchProcedures();
+  }, [legCaseId]);
+
   const fetchProcedures = async () => {
     try {
       const response = await getProceduresByLegCaseId(legCaseId);
       setProcedures(response.data);
     } catch (error) {
-      console.error('Error fetching procedures:', error);
-      triggerAlert('error', 'حدث خطأ أثناء جلب البيانات.');
+      triggerAlert("error", "حدث خطأ أثناء جلب البيانات.");
     }
-  };
-
-  useEffect(() => {
-    fetchProcedures();
-  }, [legCaseId]);
-
-  const handleRowClick = (procedure) => {
-    setSelectedProcedure(procedure);
-    setShowModal(false); // Close modal if open
   };
 
   const handleAddProcedure = () => {
     setIsEditMode(false);
     setModalData({});
-    setSelectedProcedure(null); // Close details modal
+    setSelectedProcedure(null);
     setShowModal(true);
   };
 
   const handleEditProcedure = (procedure) => {
     setIsEditMode(true);
     setModalData(procedure);
-    setSelectedProcedure(null); // Close details modal
+    setSelectedProcedure(null);
     setShowModal(true);
   };
 
   const handleDeleteClick = (procedure) => {
-    setProcedureToDelete(procedure); // تحديد الإجراء للحذف
-    setShowConfirmDelete(true); // فتح نافذة التأكيد
+    setProcedureToDelete(procedure);
+    setShowConfirmDelete(true);
   };
 
   const handleConfirmDelete = async () => {
     if (procedureToDelete) {
       try {
-        await deleteProcedure(procedureToDelete.id); // حذف الإجراء من الخادم
-        triggerAlert('success', 'تم حذف الإجراء بنجاح'); // إظهار رسالة النجاح
-        fetchProcedures(); // Refresh procedures after deletion
+        await deleteProcedure(procedureToDelete.id);
+        triggerAlert("success", "تم حذف الإجراء بنجاح");
+        fetchProcedures();
       } catch (error) {
-        console.error('Error deleting procedure:', error);
-        triggerAlert('error', 'حدث خطأ أثناء حذف الإجراء');
+        triggerAlert("error", "حدث خطأ أثناء حذف الإجراء");
       } finally {
         setShowConfirmDelete(false);
         setProcedureToDelete(null);
@@ -74,55 +81,71 @@ const LegalCaseProcedures = ({ legCaseId }) => {
     }
   };
 
+  const totalPages = Math.ceil(procedures.length / rowsPerPage);
   return (
     <div className="min-h-screen bg-lightBg dark:bg-darkBg text-gray-900 dark:text-gray-100">
-      {/* Header */}
-      <div className="p-4 shadow-md flex justify-between items-center bg-gradient-day dark:bg-gradient-night text-white rounded-b-header">
-        <h1 className="text-lg font-bold">إجراءات القضية</h1>
+      {/* ✅ Header Section */}
+      <motion.header
+        className="p-4 bg-gradient-blue-dark dark:bg-avocat-blue-dark flex justify-between items-center rounded-lg shadow-md"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {/* ✅ Button Positioned at Start */}
         <button
           onClick={handleAddProcedure}
-          className="flex items-center bg-gradient-day hover:bg-gradient-red-button text-white px-8 py-2 rounded-full shadow-md hover:scale-102 transform transition-all duration-200 ease-in-out"
+          className="px-2 py-2 text-sm rounded-lg font-bold bg-gradient-green-button hover:bg-gradient-green-dark-button text-white shadow-md hover:scale-105 transform transition-all"
         >
-          <BiPlusCircle className="mr-2" />
-          إضافة إجراء
+          <BiPlusCircle className="inline-block ml-2" />
+          إضافة 
         </button>
-      </div>
 
+        {/* ✅ Title Centered */}
+        <h1 className="text-lg font-bold text-white flex-1 text-center">
+          إجراءات القضية
+        </h1>
+      </motion.header>
+
+      {/* ✅ Floating Button for Mobile */}
+      <motion.button
+        onClick={handleAddProcedure}
+        className="fixed bottom-6 right-6 sm:hidden flex items-center bg-gradient-green-button text-white px-6 py-3 rounded-full shadow-lg transition hover:bg-gradient-green-dark-button"
+        whileHover={{ scale: 1.1 }}
+      >
+        <BiPlusCircle size={24} className="mr-2" />
+        إضافة
+      </motion.button>
+
+      {/* Repeat the same for the other tables (procedures, sessions) */}
       {/* Procedures Table */}
       <div className="p-6">
-        <div className="overflow-x-auto mt-4">
-          <table className="min-w-full table-auto bg-white dark:bg-gradient-blue-dark rounded-lg shadow-base overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[600px] table-auto bg-white dark:bg-gradient-blue-dark rounded-lg shadow-lg overflow-hidden">
             <thead>
-              <tr className="bg-avocat-indigo dark:bg-avocat-blue text-white">
-                <th className="px-8 py-2 text-center"> الإجراء</th>
-                <th className="px-8 py-2 text-center">المحامي</th>
-                <th className="px-8 py-2 text-center">تاريخ الانتهاء</th>
-                <th className="px-8 py-2 text-center">المطلوب</th>
-                <th className="px-8 py-2 text-center">النتيجة </th>
-                <th className="px-8 py-2 text-center">حالة الإجراء</th>
-                <th className="px-8 py-2 text-center">التحكم</th>
+              <tr className="bg-avocat-indigo dark:bg-avocat-blue text-white text-sm sm:text-base">
+                <th className="px-4 py-2">الإجراء</th>
+                <th className="px-4 py-2">المحامي</th>
+                <th className="px-4 py-2">تاريخ الانتهاء</th>
+                <th className="px-4 py-2">المطلوب</th>
+                <th className="px-4 py-2">النتيجة</th>
+                <th className="px-4 py-2">حالة الإجراء</th>
+                <th className="px-4 py-2">التحكم</th>
               </tr>
             </thead>
             <tbody>
-              {procedures.map((procedure) => (
+              {proceduresToDisplay.map((procedure) => (
                 <tr
                   key={procedure.id}
                   className="border-b bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer"
-                  onClick={() => handleRowClick(procedure)}
+                  onClick={() => setSelectedProcedure(procedure)}
                 >
-                  <td className="px-8 py-2 text-center">
-                    {procedure.procedure_type?.name || '-'}
-                  </td>
-                  <td className="px-8 py-2 text-center">
-                    {procedure.lawyer?.name || '-'}
-                  </td>
-                  <td className="px-8 py-2 text-center">
-                    {procedure.date_end}
-                  </td>
-                  <td className="px-8 py-2 text-center">{procedure.job}</td>
-                  <td className="px-8 py-2 text-center">{procedure.result}</td>
-                  <td className="px-8 py-2 text-center">{procedure.status}</td>
-                  <td className="px-8 py-2 text-center flex justify-center space-x-2">
+                  <td className="px-4 py-2 text-center">{procedure.procedure_type?.name || '-'}</td>
+                  <td className="px-4 py-2 text-center">{procedure.lawyer?.name || '-'}</td>
+                  <td className="px-4 py-2 text-center">{procedure.date_end}</td>
+                  <td className="px-4 py-2 text-center">{procedure.job}</td>
+                  <td className="px-4 py-2 text-center">{procedure.result}</td>
+                  <td className="px-4 py-2 text-center">{procedure.status}</td>
+                  <td className="px-4 py-2 flex justify-center space-x-2">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -145,27 +168,34 @@ const LegalCaseProcedures = ({ legCaseId }) => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table> 
+      </div>
+      <div className="flex justify-center mt-4">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+            className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+          >
+            السابق
+          </button>
+          <span className="flex items-center">{currentPage} / {totalPages}</span>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+            className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+          >
+            التالي
+          </button>
         </div>
       </div>
-
-      {/* Modals */}
-      {selectedProcedure && (
-        <ProcedureDetailsModal
-          isOpen={!!selectedProcedure}
-          onClose={() => setSelectedProcedure(null)}
-          procedure={selectedProcedure}
-        />
-      )}
+      
+      
       {showModal && (
         <ProcedureModal
           legalCaseId={legCaseId}
           isOpen={showModal}
           onClose={() => setShowModal(false)}
-          onSubmit={() => {
-            fetchProcedures();
-            setShowModal(false);
-          }}
+          onSubmit={fetchProcedures}
           initialData={modalData}
           isEdit={isEditMode}
         />
@@ -175,7 +205,7 @@ const LegalCaseProcedures = ({ legCaseId }) => {
           isOpen={showConfirmDelete}
           onClose={() => setShowConfirmDelete(false)}
           onConfirm={handleConfirmDelete}
-          itemName={procedureToDelete?.procedure_type?.name || 'الإجراء'}
+          itemName={procedureToDelete?.procedure_type?.name || "الإجراء"}
         />
       )}
     </div>

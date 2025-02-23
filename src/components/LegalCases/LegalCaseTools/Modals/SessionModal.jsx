@@ -126,9 +126,12 @@ const SessionModal = ({
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* الحقول الأساسية عند الإضافة */}
           {!isEdit && (
             <>
+            
               {/* المحكمة */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
@@ -362,6 +365,7 @@ const SessionModal = ({
           >
             {isEdit ? 'تحديث' : 'إضافة'}
           </button>
+      </div>
         </form>
       </div>
     </div>

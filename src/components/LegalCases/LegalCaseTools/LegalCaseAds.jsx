@@ -7,7 +7,7 @@ import {
 } from '../../../services/api/legalCases';
 import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
 import { useAlert } from '../../../context/AlertContext';
-
+import { motion } from "framer-motion";
 const LegalCaseAds = ({ legCaseId }) => {
   const { triggerAlert } = useAlert();
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +18,22 @@ const LegalCaseAds = ({ legCaseId }) => {
   const [legalAds, setLegalAds] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+ 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
+
+  // Function to handle page change
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Function to slice data for current page
+  const paginateData = (data) => {
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return data.slice(startIndex, endIndex);
+  };
 
   const fetchLegalAds = useCallback(async () => {
     setLoading(true);
@@ -97,36 +113,50 @@ const LegalCaseAds = ({ legCaseId }) => {
     });
     handleModalClose();
   };
+  
+
+  const legalAdsToDisplay = paginateData(legalAds);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(legalAds.length / rowsPerPage);
 
   return (
     <div className="min-h-screen bg-lightBg dark:bg-darkBg text-gray-900 dark:text-gray-100">
-      {/* Header */}
-      <div className="p-4 shadow-md flex justify-between items-center bg-gradient-day dark:bg-gradient-night text-white rounded-b-header">
-        <h1 className="text-lg font-bold">إعلانات القضية</h1>
-        <button
-          onClick={handleAddAd}
-          className="flex items-center bg-gradient-day hover:bg-gradient-red-button text-white px-8 py-2 rounded-full shadow-md hover:scale-102 transform transition-all duration-200 ease-in-out"
-        >
-          <BiPlusCircle className="mr-2" />
+    {/* ✅ Header Section */}
+    <motion.header
+      className="p-4 bg-gradient-blue-dark dark:bg-avocat-blue-dark flex justify-between items-center rounded-lg shadow-md"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* ✅ Button Positioned at Start */}
+      <button
+        onClick={handleAddAd}
+        className="px-2 py-2 text-sm rounded-lg font-bold bg-gradient-green-button hover:bg-gradient-green-dark-button text-white shadow-md hover:scale-105 transform transition-all"
+      >
+        <BiPlusCircle className="inline-block ml-2" />
+        إضافة 
+      </button>
 
-          <span>إضافة إعلان قانوني</span>
-        </button>
-      </div>
+      {/* ✅ Title Centered */}
+      <h1 className="text-lg font-bold text-white flex-1 text-center">
+        الإعلانات  
+      </h1>
+    </motion.header>
 
       {error && (
         <div className="mb-4 text-red-500 font-semibold text-center mt-4">
           {error}
         </div>
       )}
-
-      {loading ? (
+   {loading ? (
         <div className="text-center py-4">جاري تحميل الإعلانات...</div>
       ) : (
         <div className="p-6">
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <thead>
-                <tr className="bg-avocat-indigo dark:bg-avocat-blue text-white text-center ">
+                <tr className="bg-avocat-indigo dark:bg-avocat-blue text-white text-center">
                   <th className="px-4 py-2">نوع الإعلان</th>
                   <th className="px-4 py-2">تاريخ التسليم</th>
                   <th className="px-4 py-2">تاريخ الإستلام</th>
@@ -138,8 +168,8 @@ const LegalCaseAds = ({ legCaseId }) => {
                 </tr>
               </thead>
               <tbody>
-                {legalAds.length > 0 ? (
-                  legalAds.map((ad) => (
+                {legalAdsToDisplay.length > 0 ? (
+                  legalAdsToDisplay.map((ad) => (
                     <tr
                       key={ad.id}
                       className="border-b bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer text-center"
@@ -178,7 +208,7 @@ const LegalCaseAds = ({ legCaseId }) => {
                 ) : (
                   <tr>
                     <td
-                      colSpan="5"
+                      colSpan="8"
                       className="text-center py-4 text-gray-600 dark:text-gray-400"
                     >
                       🚫 لا توجد إعلانات قانونية مرتبطة بهذه القضية.
@@ -188,8 +218,29 @@ const LegalCaseAds = ({ legCaseId }) => {
               </tbody>
             </table>
           </div>
+          {/* Pagination Controls */}
+          <div className="flex justify-center mt-4">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => handlePageChange(currentPage - 1)}
+              className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+            >
+              السابق
+            </button>
+            <span className="flex items-center">
+              {currentPage} / {totalPages}
+            </span>
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => handlePageChange(currentPage + 1)}
+              className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+            >
+              التالي
+            </button>
+          </div>
         </div>
       )}
+
 
       {/* ✅ Ads Modal */}
       {showModal && (

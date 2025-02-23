@@ -1,30 +1,34 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import API_CONFIG from '../../config/config';
-import { CaseDetails } from '../../assets/icons';
+import { useState, useEffect, lazy, Suspense } from "react";
+import { useParams } from "react-router-dom";
+import GlobalSpinner from "../common/Spinners/GlobalSpinner";
+import axios from "axios";
+import API_CONFIG from "../../config/config";
+import { motion } from "framer-motion";
+import { CaseDetails } from "../../assets/icons";
 
-const Procedure = lazy(() => import('./LegalCaseTools/LegalCaseProcedures'));
-const LegalSession = lazy(() => import('./LegalCaseTools/LegalCaseSessions'));
-const LegalCaseAds = lazy(() => import('./LegalCaseTools/LegalCaseAds'));
-const LegCaseClients = lazy(() => import('./LegalCaseTools/LegalCaseClients'));
-const LegalCaseCourts = lazy(() => import('./LegalCaseTools/LegCaseCourts'));
+const Procedure = lazy(() => import("./LegalCaseTools/LegalCaseProcedures"));
+const LegalSession = lazy(() => import("./LegalCaseTools/LegalCaseSessions"));
+const LegalCaseAds = lazy(() => import("./LegalCaseTools/LegalCaseAds"));
+const LegCaseClients = lazy(() => import("./LegalCaseTools/LegalCaseClients"));
+const LegalCaseCourts = lazy(() => import("./LegalCaseTools/LegCaseCourts"));
 
-export default function LegCaseDetail() {
+export default function LegCaseDetails() {
   const { id } = useParams();
   const [legCase, setLegCase] = useState(null);
   const [legcaseClients, setLegcaseClients] = useState([]);
-  const [activeTab, setActiveTab] = useState('procedure');
+  const [activeTab, setActiveTab] = useState("procedure");
+  const [loading, setLoading] = useState(true); // ✅ حالة التحميل لمرة واحدة فقط
 
   const fetchLegCase = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `${API_CONFIG.baseURL}/api/legal-cases/${id}`,
-      );
+      const response = await axios.get(`${API_CONFIG.baseURL}/api/legal-cases/${id}`);
       setLegCase(response.data.leg_case);
       setLegcaseClients(response.data.leg_case.clients);
     } catch (error) {
-      console.error('Error fetching legal case details:', error);
+      console.error("Error fetching legal case details:", error);
+    } finally {
+      setLoading(false); // ✅ إيقاف التحميل بعد إتمام الجلب
     }
   };
 
@@ -32,86 +36,85 @@ export default function LegCaseDetail() {
     fetchLegCase();
   }, [id]);
 
-  if (!legCase) {
+  if (loading) {
     return (
-      <div className="text-center py-10 dark:text-gray-300">
-        جارٍ التحميل...
+      <div className="flex items-center justify-center min-h-screen">
+        <GlobalSpinner />
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-gray-50 dark:bg-gray-900 transition-all">
-      {}
-      <div className="dark:bg-gradient-to-r dark:from-indigo-600 dark:via-purple-600 dark:to-pink-600 bg-gradient-night p-6 rounded-lg shadow-lg flex items-center justify-center">
-        <img src={CaseDetails} alt="Case Icon" className="w-32 h-32 ml-4" />
-        <h2 className="text-3xl text-white ml-4 font-['tharwat] font-bold">
-          بيانات القضية
-        </h2>
-      </div>
+    <div className="max-w-7xl mx-auto p-6 bg-lightBg dark:bg-darkBg transition-all">
+      
+      {/* ✅ Header Section */}
+      <motion.div
+        className="bg-gradient-night p-6 rounded-xl shadow-lg flex items-center justify-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <img src={CaseDetails} alt="Case Icon" className="w-28 h-28 ml-4" />
+        <h2 className="text-4xl text-white font-bold">بيانات القضية</h2>
+      </motion.div>
 
+      {/* ✅ Clients Section */}
       <div className="mt-8">
-        <Suspense fallback={<div className="text-center py-10">جارٍ التحميل...</div>}>
-          <LegCaseClients
-            legCaseId={id}
-            fetchLegcaseClients={fetchLegCase}
-            legcaseClients={legcaseClients}
-          />
+        <Suspense fallback={<div className="text-center text-gray-500">جارٍ التحميل...</div>}>
+          <LegCaseClients legCaseId={id} fetchLegcaseClients={fetchLegCase} legcaseClients={legcaseClients} />
         </Suspense>
       </div>
 
-      {}
-      <div className="mt-8"></div>
-        <Suspense fallback={<div>جارٍ التحميل...</div>}>
-          <CaseDetails legCase={legCase} />
-        </Suspense>
-
-      {}
+      {/* ✅ Courts Section */}
       <div className="mt-8">
-        <Suspense fallback={<div>جارٍ التحميل...</div>}>
+        <Suspense fallback={<div className="text-center text-gray-500">جارٍ التحميل...</div>}>
           <LegalCaseCourts legCase={legCase} fetchLegCase={fetchLegCase} />
         </Suspense>
       </div>
 
-      {}
+      {/* ✅ Tabs Section */}
       <div className="mt-8">
-        <div className="flex border-b">
-          <button
-            onClick={() => setActiveTab('procedure')}
-            className={`px-6 py-3 text-sm font-medium transition-all ${activeTab === 'procedure' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 dark:text-gray-400 hover:text-blue-500'}`}
-          >
-            الإجراءات
-          </button>
-          <button
-            onClick={() => setActiveTab('session')}
-            className={`px-6 py-3 text-sm font-medium transition-all ${activeTab === 'session' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 dark:text-gray-400 hover:text-blue-500'}`}
-          >
-            الجلسات
-          </button>
-          <button
-            onClick={() => setActiveTab('legalAd')}
-            className={`px-6 py-3 text-sm font-medium transition-all ${activeTab === 'legalAd' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 dark:text-gray-400 hover:text-blue-500'}`}
-          >
-            الإعلانات
-          </button>
+        {/* ✅ Tabs Container */}
+        <div className="flex flex-wrap justify-center border-b border-green-400 dark:border-green-700">
+          {["procedure", "session", "legalAd"].map((tab) => (
+            <motion.button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-6 py-3 text-lg font-semibold transition-all rounded-t-lg sm:rounded-none ${
+                activeTab === tab
+                  ? "text-green-600 dark:text-green-300 border-b-4 border-green-400 dark:border-green-500"
+                  : "text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400"
+              }`}
+              whileHover={{ scale: 1.05 }}
+            >
+              {tab === "procedure" ? "الإجراءات" : tab === "session" ? "الجلسات" : "الإعلانات"}
+            </motion.button>
+          ))}
         </div>
-        <div className="p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg mt-4">
-          {activeTab === 'procedure' && (
-            <Suspense fallback={<div>جارٍ التحميل...</div>}>
+
+        {/* ✅ Tab Content */}
+        <motion.div
+          className="p-6 bg-white dark:bg-gray-800 shadow-xl rounded-xl mt-4 transition-all"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {activeTab === "procedure" && (
+            <Suspense fallback={<div className="text-center text-gray-500">جارٍ التحميل...</div>}>
               <Procedure legCaseId={id} />
             </Suspense>
           )}
-          {activeTab === 'session' && (
-            <Suspense fallback={<div>جارٍ التحميل...</div>}>
+          {activeTab === "session" && (
+            <Suspense fallback={<div className="text-center text-gray-500">جارٍ التحميل...</div>}>
               <LegalSession legCaseId={id} />
             </Suspense>
           )}
-          {activeTab === 'legalAd' && (
-            <Suspense fallback={<div>جارٍ التحميل...</div>}>
+          {activeTab === "legalAd" && (
+            <Suspense fallback={<div className="text-center text-gray-500">جارٍ التحميل...</div>}>
               <LegalCaseAds legCaseId={id} />
             </Suspense>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

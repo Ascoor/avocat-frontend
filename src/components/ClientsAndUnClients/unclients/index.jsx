@@ -7,11 +7,15 @@ import { UnclientSectionIcon } from '../../../assets/icons/index';
 import SectionHeader from '../../common/SectionHeader';
 import AddEditUnclient from './AddEditUnclient';
 import TableComponent from '../../common/TableComponent'; // ✅ مكون الجدول العالمي
+import api from '../../../services/api/axiosConfig';
+import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
 
 function UnClientList() {
   const [unclients, setUnunclients] = useState([]);
   const [selectedUnclient, setSelectedUnclient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false); // For delete confirmation modal
+  const [unclientToDelete, setUnclientToDelete] = useState(null); // For storing the unclient to be deleted
 
   // ✅ جلب بيانات عملاء بدون وكالة
   const fetchUnunclients = useCallback(async () => {
@@ -28,10 +32,14 @@ function UnClientList() {
   }, [fetchUnunclients]);
 
   // ✅ حذف عميل بدون وكالة
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
+    if (!unclientToDelete) return;
+
     try {
-      await axios.delete(`${API_CONFIG.baseURL}/api/unclients/${id}`);
-      fetchUnunclients();
+      // Proceed with deleting the unclient
+      await api.delete(`/api/unclients/${unclientToDelete.id}`);
+      fetchUnunclients(); // Refresh the client list after deletion
+      setDeleteModalOpen(false); // Close the delete confirmation modal
     } catch (error) {
       console.error('Error deleting unclient:', error);
     }
@@ -91,11 +99,17 @@ function UnClientList() {
   const renderAddButton = () => (
     <button
       onClick={() => openAddEditModal()}
-      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md -transition duration-300"
+      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md transition duration-300"
     >
       إضافة عميل بدون وكالة
     </button>
   );
+
+  // Open delete confirmation modal
+  const openDeleteModal = (unclient) => {
+    setUnclientToDelete(unclient);
+    setDeleteModalOpen(true);
+  };
 
   return (
     <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full " dir="rtl">
@@ -116,6 +130,16 @@ function UnClientList() {
         />
       )}
 
+      {/* ✅ Modal for Delete Confirmation */}
+      {isDeleteModalOpen && (
+        <GlobalConfirmDeleteModal
+          isOpen={isDeleteModalOpen}
+          onClose={() => setDeleteModalOpen(false)}
+          onConfirm={handleDelete} // Calls the handleDelete function on confirmation
+          itemName={unclientToDelete?.name || 'هذا العميل'} // Ensure a fallback name if not available
+        />
+      )}
+
       {/* ✅ مكون الجدول العالمي */}
       <TableComponent
         data={unclients}
@@ -123,7 +147,9 @@ function UnClientList() {
         onEdit={(id) =>
           openAddEditModal(unclients.find((unclient) => unclient.id === id))
         }
-        onDelete={handleDelete}
+        onDelete={(id) =>
+          openDeleteModal(unclients.find((unclient) => unclient.id === id))
+        }
         sectionName="unclients"
         customRenderers={customRenderers}
         renderAddButton={renderAddButton} // ✅ إضافة زر الإضافة إلى الجدول

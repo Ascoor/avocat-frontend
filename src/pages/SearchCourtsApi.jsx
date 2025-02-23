@@ -86,7 +86,7 @@ const SearchCourtsApi = () => {
           <div>
             <label className="block text-gray-700 dark:text-gray-300 font-semibold">الدرجة:</label>
            <select onChange={handleDegreeChange} className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white">
-  <option value="">-- اختر --</option>
+           <option className="text-center"  value="">-- اختر --</option>
   {allData.search_degrees?.map((degree, index) => (
   <option key={`${degree.degree_value}-${degree.degree_name}`} value={degree.degree_value}>
   {degree.degree_name}
@@ -101,7 +101,7 @@ const SearchCourtsApi = () => {
             <div>
               <label className="block text-gray-700 dark:text-gray-300 font-semibold">المحكمة:</label>
               <select onChange={handleCourtChange} className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white">
-                <option value="">-- اختر --</option>
+              <option className="text-center" value="">-- اختر --</option>
                 {courtOptions.map(court => (
                   <option key={court.court_value} value={court.court_value}>{court.court_name}</option>
                 ))}
@@ -113,7 +113,7 @@ const SearchCourtsApi = () => {
             <div>
               <label className="block text-gray-700 dark:text-gray-300 font-semibold">نوع الدعوى:</label>
               <select onChange={(e) => setCaseType(e.target.value)} className="w-full border rounded p-3 dark:bg-gray-800 dark:text-white">
-                <option value="">-- اختر --</option>
+                <option className="text-center" value="">-- اختر --</option>
                 {caseTypeOptions.map(caseType => (
                   <option key={caseType.case_type_value} value={caseType.case_type_value}>{caseType.case_type_name}</option>
                 ))}

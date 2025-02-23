@@ -5,15 +5,20 @@ import ThemeToggle from '../common/ThemeToggle';
 import HeaderToggle from '../common/HeaderToggle';
 import { useSidebar } from '../../utils/SidebarContext';
 
+import { useSpring, animated } from '@react-spring/web';
 const Header = () => {
   const { isSidebarOpen, isMobile } = useSidebar();
+ // Use spring to animate the header's margin when sidebar opens/closes
+ const headerStyle = useSpring({
+  marginRight: isSidebarOpen && !isMobile ? '-16rem' : '4rem',
+  config: { tension: 210, friction: 20 }, // Adjust speed and smoothness
+});
 
   return (
-    <header
-      className={`bg-gradient-to-r from-gray-100 via-avocat-indigo   to-avocat-blue-light dark:bg-gradient-to-r  dark:from-avocat-blue-darker dark:via-avocat-indigo-darker dark:to-avocat-blue fixed top-0 right-0 left-0 z-20 shadow-lg -transition-all duration-300 ${
-        isSidebarOpen && !isMobile ? 'md:mr-64' : 'md:mr-16'
-      }`}
-    >
+    <animated.header
+    style={headerStyle}
+    className={`bg-gradient-to-r from-avocat-indigo via-avocat-indigo to-avocat-blue-light dark:bg-gradient-to-r dark:from-avocat-blue-dark dark:via-avocat-indigo-darker dark:to-avocat-blue-darker fixed top-0 right-0 left-0 z-20 shadow-lg transition-all duration-300`}
+  >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         <HeaderToggle />
 
@@ -27,7 +32,7 @@ const Header = () => {
       </div>
 
       {/* ✅ قائمة الجوال */}
-    </header>
+    </animated.header>
   );
 };
 

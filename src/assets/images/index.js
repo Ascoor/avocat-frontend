@@ -10,6 +10,7 @@ export { default as LegalSpiner } from '../images/legal-spiner.png';
 
 export { default as LogoBlue } from '../images/logo-blue.png';
 export { default as WelcomeImage } from '../images/welcome.jpg';
+export { default as WelcomeBackground } from '../images/welcome.webp'; 
 export { default as WelcomePatren } from '../images/logo512.png';
 export { default as WelcomeLogo } from '../images/logo512.png';
 export { default as LandingPageImg } from '../images/landing.png';

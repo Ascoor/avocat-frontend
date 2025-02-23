@@ -1,193 +1,47 @@
-import React from 'react';
+import React from "react";
+import { FaCalendarCheck,FaBalanceScale , FaHistory, FaCalendarDay } from "react-icons/fa";
 
-function DashboardCard13() {
+const sessions = [
+  { id: 1, sessionLawyer: "محمد فاروق", sessionDate: "22/02/2025", sessionResult: "تم حضور الجلسة وحجزها", status: "completed", icon: <FaCalendarCheck /> },
+  { id: 2, sessionLawyer: "نهى الشريف", sessionDate: "25/02/2025", sessionResult: "تم تأجيل الجلسة", status: "delayed", icon: <FaHistory /> },
+  { id: 3, sessionLawyer: "كريم حسن", sessionDate: "28/02/2025", sessionResult: "الجلسة القادمة في موعدها", status: "upcoming", icon: <FaCalendarDay /> },
+];
+
+const SessionItem = ({ session, isDarkMode }) => {
   return (
-    <div className="bg-gray-200 dark:bg-gradient-night shadow-sm rounded-xl p-5 col-span-full sm:col-span-6 xl:col-span-4 flex flex-col">
-      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">
-          الدخل / النفقات
-        </h2>
+    <li className="flex items-center gap-4 p-3 rounded-lg transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+      <div className={`w-10 h-10 flex items-center justify-center rounded-full text-white bg-${session.status === "completed" ? "green-500" : session.status === "delayed" ? "yellow-500" : "blue-500"}`}>
+        {session.icon}
+      </div>
+      <div className={`flex-1 ${isDarkMode ? "text-gray-100" : "text-gray-800"}`}>
+        <p className="text-sm md:text-base font-semibold">{session.sessionLawyer}</p>
+        <p className="text-xs text-gray-500">{session.sessionDate}</p>
+        <p className={`text-sm font-medium ${session.status === "completed" ? "text-green-600" : session.status === "delayed" ? "text-yellow-600" : "text-blue-600"}`}>
+          {session.sessionResult}
+        </p>
+      </div>
+    </li>
+  );
+};
+
+const DashboardCard13 = ({ isDarkMode = false }) => {
+  return (
+      <div className="bg-gray-100 dark:bg-gradient-night dark:text-white text-gray-800 shadow rounded-lg p-4">
+        
+        {/* العنوان بمحاذاة وسط العنصر */}
+        <header className="py-4 border-b border-gray-300 dark:border-gray-700 flex justify-center items-center space-x-2">
+          <FaBalanceScale className="text-lg text-indigo-500 dark:text-indigo-300" />
+          <h2 className="font-semibold text-lg">📅 أهم جلسات الأسبوع</h2>
       </header>
       <div className="p-3">
-        {/* محتوى البطاقة */}
-        {/* مجموعة "اليوم" */}
-        <div>
-          <header className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700 dark:bg-opacity-50 rounded-sm font-semibold p-2">
-            اليوم
-          </header>
-          <ul className="my-1">
-            {/* عنصر */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-red-500 my-2 mr-3">
-                <svg
-                  className="w-9 h-9 fill-current text-white"
-                  viewBox="0 0 36 36"
-                >
-                  <path d="M17.7 24.7l1.4-1.4-4.3-4.3H25v-2H14.8l4.3-4.3-1.4-1.4L11 18z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-gray-100 dark:border-gray-700/60 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center">
-                    <a
-                      className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white"
-                      href="#0"
-                    >
-                      فاتورة Qonto
-                    </a>
-                  </div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-gray-800 dark:text-gray-100">
-                      -$49.88
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* عنصر */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-green-500 my-2 mr-3">
-                <svg
-                  className="w-9 h-9 fill-current text-white"
-                  viewBox="0 0 36 36"
-                >
-                  <path d="M18.3 11.3l-1.4 1.4 4.3 4.3H11v2h10.2l-4.3 4.3 1.4 1.4L25 18z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-gray-100 dark:border-gray-700/60 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center">
-                    <a
-                      className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white"
-                      href="#0"
-                    >
-                      Cruip.com
-                    </a>{' '}
-                    Market Ltd 70 Wilson St London
-                  </div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-green-600">+249.88</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* عنصر */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-green-500 my-2 mr-3">
-                <svg
-                  className="w-9 h-9 fill-current text-white"
-                  viewBox="0 0 36 36"
-                >
-                  <path d="M18.3 11.3l-1.4 1.4 4.3 4.3H11v2h10.2l-4.3 4.3 1.4 1.4L25 18z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-gray-100 dark:border-gray-700/60 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center">
-                    <a
-                      className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white"
-                      href="#0"
-                    >
-                      Notion Labs Inc
-                    </a>
-                  </div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-green-600">+99.99</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* عنصر */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-green-500 my-2 mr-3">
-                <svg
-                  className="w-9 h-9 fill-current text-white"
-                  viewBox="0 0 36 36"
-                >
-                  <path d="M18.3 11.3l-1.4 1.4 4.3 4.3H11v2h10.2l-4.3 4.3 1.4 1.4L25 18z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-gray-100 dark:border-gray-700/60 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center">
-                    <a
-                      className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white"
-                      href="#0"
-                    >
-                      Market Cap Ltd
-                    </a>
-                  </div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-green-600">
-                      +1,200.88
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* عنصر */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-gray-200 my-2 mr-3">
-                <svg
-                  className="w-9 h-9 fill-current text-gray-400"
-                  viewBox="0 0 36 36"
-                >
-                  <path d="M21.477 22.89l-8.368-8.367a6 6 0 008.367 8.367zm1.414-1.413a6 6 0 00-8.367-8.367l8.367 8.367zM18 26a8 8 0 110-16 8 8 0 010 16z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-gray-100 dark:border-gray-700/60 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center">
-                    <a
-                      className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white"
-                      href="#0"
-                    >
-                      App.com
-                    </a>{' '}
-                    Market Ltd 70 Wilson St London
-                  </div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-gray-800 dark:text-gray-100 line-through">
-                      +$99.99
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* عنصر */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-red-500 my-2 mr-3">
-                <svg
-                  className="w-9 h-9 fill-current text-white"
-                  viewBox="0 0 36 36"
-                >
-                  <path d="M17.7 24.7l1.4-1.4-4.3-4.3H25v-2H14.8l4.3-4.3-1.4-1.4L11 18z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center">
-                    <a
-                      className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white"
-                      href="#0"
-                    >
-                      App.com
-                    </a>{' '}
-                    Market Ltd 70 Wilson St London
-                  </div>
-                  <div className="shrink-0 self-start ml-2">
-                    <span className="font-medium text-gray-800 dark:text-gray-100">
-                      -$49.88
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
+        <ul className="space-y-3">
+          {sessions.map((session) => (
+            <SessionItem key={session.id} session={session} isDarkMode={isDarkMode} />
+          ))}
+        </ul>
       </div>
     </div>
   );
-}
+};
 
 export default DashboardCard13;

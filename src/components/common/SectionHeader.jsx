@@ -2,7 +2,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 
 const SectionHeader = ({ listName, icon, showBackButton }) => {
   return (
-    <div className="relative flex flex-col sm:flex-row items-center justify-center bg-gradient-day dark:bg-gradient-blue-dark text-orange-300 dark:text-avocat-orange rounded-full p-6 shadow-lg transition-all duration-300">
+    <div className="relative flex flex-col sm:flex-row items-center justify-center bg-gradient-day dark:bg-gradient-blue-dark text-white dark:text-avocat-orange rounded-full p-6 shadow-lg transition-all duration-300">
       {/* ✅ أيقونة كبيرة ومميزة في الجانب */}
       {icon && (
         <div className="absolute right-4 sm:left-6 top-1/2 transform -translate-y-1/2">
