@@ -24,7 +24,7 @@ const clientsSlice = createSlice({
     },
     updateClientStatusInStore: (state, action) => {
       const { id, status } = action.payload;
-      const client = state.clients.find(client => client.id === id);
+      const client = state.clients.find((client) => client.id === id);
       if (client) {
         client.status = status;
       }
@@ -33,7 +33,8 @@ const clientsSlice = createSlice({
 });
 
 // Export actions
-export const { setClients, setLoading, setError, updateClientStatusInStore } = clientsSlice.actions;
+export const { setClients, setLoading, setError, updateClientStatusInStore } =
+  clientsSlice.actions;
 
 // Fetch clients from the API with async thunk
 export const fetchClients = () => async (dispatch) => {
@@ -48,13 +49,12 @@ export const fetchClients = () => async (dispatch) => {
   }
 };
 export const updateClientStatusAsync = (id, status) => async (dispatch) => {
-    try {
-      const response = await updateClientStatus(id, status); // Update client status via API
-      dispatch(updateClientStatusInStore({ id, status: response.data.status })); // Update status in Redux store
-    } catch (error) {
-      console.error('Error updating client status:', error);
-    }
-  };
-  
+  try {
+    const response = await updateClientStatus(id, status); // Update client status via API
+    dispatch(updateClientStatusInStore({ id, status: response.data.status })); // Update status in Redux store
+  } catch (error) {
+    console.error('Error updating client status:', error);
+  }
+};
 
 export default clientsSlice.reducer;

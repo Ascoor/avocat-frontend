@@ -3,14 +3,14 @@ import { useSpring, animated } from '@react-spring/web';
 import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';
 import { TeamWorkImage, LogoPatren, WelcomeImage } from '../assets/images';
-import { useAlert } from '../context/AlertContext'; 
+import { useAlert } from '../context/AlertContext';
 import { motion } from 'framer-motion';
 import AuthSpinner from '../components/common/Spinners/AuthSpinner';
 const HomePage = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { triggerAlert } = useAlert(); 
+  const { triggerAlert } = useAlert();
 
   const isModalOpen = showLoginForm || showRegisterForm || isLoading;
 
@@ -19,54 +19,54 @@ const HomePage = () => {
     from: { opacity: 0, transform: 'scale(0.5) translateY(50px)' },
     to: { opacity: 1, transform: 'scale(1) translateY(0px)' },
     config: { duration: 1500 },
-  }); 
+  });
 
   return (
     <div className="relative w-full h-screen bg-gradient-night overflow-hidden flex flex-col items-center justify-center">
- <motion.img
+      <motion.img
         src={WelcomeImage} // رابط الصورة، يمكن تغييره
         alt="Cover"
-
         className="absolute w-full h-full object-cover"
         animate={{ scale: [1, 1.2, 1] }}
         transition={{
           duration: 30, // مدة الدورة الكاملة
           repeat: Infinity, // تكرار لا نهائي
-          ease: "easeInOut",
+          ease: 'easeInOut',
         }}
       />
       <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-  
-    
 
       {/* طبقة التدرج: داكنة في المنتصف مع جوانب واضحة */}
-    
+
       {/* صورة الفريق: زووم ثم تدرج متلاشي من المنتصف للأسفل */}
       {!isModalOpen && (
-        
         <animated.div
           style={teamImageAnimation}
           className="absolute top-1/12 left-2/2 transform -translate-x-/2 -translate-y-1/2 max-w-[606px] aspect-[661/377] flex items-center justify-center"
-          >
- 
+        >
           <img
             src={TeamWorkImage}
             alt="Team Work"
             className="object-cover w-full h-full rounded-lg  shadow-lg"
             style={{
-              maskImage: 'linear-gradient(to bottom, black 60%, rgba(0,0,0,0.6) 70%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.6) 40%, transparent 100%)',
+              maskImage:
+                'linear-gradient(to bottom, black 60%, rgba(0,0,0,0.6) 70%, transparent 100%)',
+              WebkitMaskImage:
+                'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.6) 40%, transparent 100%)',
             }}
-            />
-  
+          />
         </animated.div>
-      )} 
+      )}
 
       {/* شعار الشركة مع أزرار الدخول والتسجيل */}
       {!isModalOpen && (
-        <div className="z-50 text-center mt-56 text-white p-4 flex flex-col items-center">
+        <div className="z-50 text-center mt-56 text-white p-4 flex  flex-col items-center">
           <div className="relative flex- tems-center justify-center">
-            <img src={LogoPatren} alt="الشعار" className="w-[220px] sm:w-[250px] md:w-[288px] max-w-full h-auto" />
+            <img
+              src={LogoPatren}
+              alt="الشعار"
+              className="w-[220px] sm:w-[250px] md:w-[288px] max-w-full h-auto"
+            />
           </div>
 
           <div className="relative flex-1 items-center justify-center">
@@ -94,23 +94,23 @@ const HomePage = () => {
 
       {/* نماذج تسجيل الدخول والتسجيل */}
       {showLoginForm && (
-           <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-           <Login
-             onAuthStart={() => setIsLoading(true)}
-             handleFormClose={() => setShowLoginForm(false)}
-             onAuthComplete={(success, message) => {
-               setTimeout(() => {
-                 setIsLoading(false);
-                 if (success) {
-                   setShowLoginForm(false);
-                   triggerAlert('success', message);
-                 } else {
-                   triggerAlert('error', message);
-                 }
-               }, 2000); // تأخير إخفاء التحميل لمدة ثانيتين بغض النظر عن النتيجة
-             }}
-           />
-         </div>
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <Login
+            onAuthStart={() => setIsLoading(true)}
+            handleFormClose={() => setShowLoginForm(false)}
+            onAuthComplete={(success, message) => {
+              setTimeout(() => {
+                setIsLoading(false);
+                if (success) {
+                  setShowLoginForm(false);
+                  triggerAlert('success', message);
+                } else {
+                  triggerAlert('error', message);
+                }
+              }, 2000); // تأخير إخفاء التحميل لمدة ثانيتين بغض النظر عن النتيجة
+            }}
+          />
+        </div>
       )}
 
       {showRegisterForm && (

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import arEG from 'date-fns/locale/ar-EG';
-import { useSpring, animated } from '@react-spring/web';
-import 'react-datepicker/dist/react-datepicker.css';
+import { useSpring, animated } from '@react-spring/web'; 
 import useAuth from '../../auth/AuthUser';
 
 const ServiceProcedureModal = ({

@@ -5,15 +5,14 @@ import calendarService from '../services/calendarService';
 const useFetchEvents = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const data = await calendarService.getEvents(); // جلب الأحداث من API
         setEvents(data);
-      } catch (err) {
-        setError('❌ حدث خطأ أثناء جلب الأحداث');
+      } catch (error) {
+        console.error('Error fetching events:', error);
       } finally {
         setLoading(false);
       }
@@ -22,7 +21,7 @@ const useFetchEvents = () => {
     fetchEvents();
   }, []);
 
-  return { events, loading, error };
+  return { events, loading };
 };
 
-export default useFetchEvents; // ✅ التأكد من التصدير الصحيح
+export default useFetchEvents;

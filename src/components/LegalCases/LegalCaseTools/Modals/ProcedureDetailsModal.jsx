@@ -150,8 +150,7 @@ const ProcedureDetailsModal = ({ isOpen, onClose, procedure }) => {
               />
               {/* Date Start */}   {' '}
               <div>
-                <label className="dark:text-gray-200">ملاحظات:</label>
-                         {' '}
+                <label className="dark:text-gray-200">ملاحظات:</label>         {' '}
                 <textarea
                   readOnly
                   value={

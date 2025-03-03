@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
+import { useNavigate } from "react-router-dom";
 
 const useIconCardAnimation = () => {
   const [isInteracting, setIsInteracting] = useState(false);
@@ -18,8 +19,9 @@ const useIconCardAnimation = () => {
   return { animationStyles, setIsInteracting };
 };
 
-const MainCard = ({ count, icon, label }) => {
+const MainCard = ({ count, icon, label, route }) => {
   const { animationStyles, setIsInteracting } = useIconCardAnimation();
+  const navigate = useNavigate();
 
   return (
     <animated.div
@@ -28,7 +30,8 @@ const MainCard = ({ count, icon, label }) => {
       onMouseLeave={() => setIsInteracting(false)}
       onTouchStart={() => setIsInteracting(true)}
       onTouchEnd={() => setIsInteracting(false)}
-      className="bg-white/30 dark:bg-gray-800/40 backdrop-blur-lg rounded-full shadow-lg p-6 flex items-center justify-between w-full max-w-sm transition-all duration-300 ease-in-out transform hover:scale-105"
+      onClick={() => navigate(route)} // ✅ الآن التنقل سيحدث عند النقر في أي مكان على البطاقة
+      className="bg-white/30 cursor-pointer dark:bg-gray-800/40 backdrop-blur-lg rounded-full shadow-lg p-6 flex items-center justify-between w-full max-w-sm transition-all duration-300 ease-in-out transform hover:scale-105"
     >
       {/* المعلومات النصية */}
       <div className="flex flex-col items-start ml-4">

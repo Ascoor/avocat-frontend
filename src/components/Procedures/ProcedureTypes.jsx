@@ -17,7 +17,7 @@ const ProcedureTypes = () => {
   const [editingProcedureType, setEditingProcedureType] = useState(null);
   const { triggerAlert } = useAlert();
 
-  const itemsPerPage = 10; 
+  const itemsPerPage = 10;
 
   // Fetch procedure types
   const fetchProcedureTypes = useCallback(async () => {
@@ -128,7 +128,9 @@ const ProcedureTypes = () => {
           <div className="bg-white dark:bg-gray-800 dark:text-gray-200 rounded-lg shadow-lg p-6 w-full max-w-lg border border-avocat-yellow">
             <div className="flex justify-center items-center mb-4">
               <h3 className="text-xl font-semibold mb-4 text-avocat-yellow">
-                {editingProcedureType ? 'تعديل نوع الإجراء' : 'إضافة نوع الإجراء'}
+                {editingProcedureType
+                  ? 'تعديل نوع الإجراء'
+                  : 'إضافة نوع الإجراء'}
               </h3>
             </div>
             <form
@@ -186,7 +188,10 @@ const ProcedureTypes = () => {
           </thead>
           <tbody>
             {currentItems.map((procedureType) => (
-              <tr key={procedureType.id} className="dark:bg-gray-800 dark:text-gray-300">
+              <tr
+                key={procedureType.id}
+                className="dark:bg-gray-800 dark:text-gray-300"
+              >
                 <td className="px-4 py-2 border border-gray-300 bg-white dark:bg-gray-900">
                   {procedureType.name}
                 </td>
@@ -199,7 +204,9 @@ const ProcedureTypes = () => {
                       <FaEdit />
                     </button>
                     <button
-                      onClick={() => handleDeleteProcedureType(procedureType.id)}
+                      onClick={() =>
+                        handleDeleteProcedureType(procedureType.id)
+                      }
                       className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500"
                     >
                       <FaTrash />
@@ -214,44 +221,43 @@ const ProcedureTypes = () => {
 
       {/* Pagination Controls */}
       <div className="flex items-center justify-between mt-6">
-  {/* Previous Button */}
-  
-  <button
-    onClick={() => handlePageChange(currentPage + 1)}
-    disabled={currentPage === totalPages}
-    className="px-4 py-2 bg-gray-500 text-white rounded bg-gradient-yellow-button hover:bg-gradient-green-button font-bold"
-  >
-    التالي
-  </button>
-  {/* Page Numbers */}
-  <div className="flex items-center space-x-2">
-    {Array.from({ length: totalPages }, (_, index) => (
- <button
- key={index}
- onClick={() => handlePageChange(index + 1)}
- className={`px-4 py-2 rounded-md font-bold 
-   ${currentPage === index + 1
-     ? 'bg-gradient-yellow-dark-button hover:bg-gradient-green-button ml-2 text-white' // Highlight the current page
-     : 'bg-gray-500 hover:bg-gray-600 text-gray-300 ml-2 dark:bg-gradient-yellow-button dark:text-gray-800 dark:hover:bg-gradient-green-button dark:hover:bg-gray-400'} 
+        {/* Previous Button */}
+
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-gray-500 text-white rounded bg-gradient-yellow-button hover:bg-gradient-green-button font-bold"
+        >
+          التالي
+        </button>
+        {/* Page Numbers */}
+        <div className="flex items-center space-x-2">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-4 py-2 rounded-md font-bold 
+   ${
+     currentPage === index + 1
+       ? 'bg-gradient-yellow-dark-button hover:bg-gradient-green-button ml-2 text-white' // Highlight the current page
+       : 'bg-gray-500 hover:bg-gray-600 text-gray-300 ml-2 dark:bg-gradient-yellow-button dark:text-gray-800 dark:hover:bg-gradient-green-button dark:hover:bg-gray-400'
+   } 
  `}
->
- {index + 1}
-</button>
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
 
- 
-    ))}
-  </div>
-
-  {/* Next Button */}
-  <button
-    onClick={() => handlePageChange(currentPage - 1)}
-    disabled={currentPage === 1}
-    className="px-4 py-2 bg-gray-500 text-white rounded bg-gradient-yellow-button hover:bg-gradient-green-button font-bold"
-  >
-    السابق
-  </button>
-</div>
-
+        {/* Next Button */}
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-gray-500 text-white rounded bg-gradient-yellow-button hover:bg-gradient-green-button font-bold"
+        >
+          السابق
+        </button>
+      </div>
     </div>
   );
 };

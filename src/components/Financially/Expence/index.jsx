@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BiSearchAlt } from 'react-icons/bi';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import API_CONFIG from '../../../config/config';
 
 const ExpenseIndex = () => {

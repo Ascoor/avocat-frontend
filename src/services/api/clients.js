@@ -9,5 +9,5 @@ export const createClient = (data) => api.post('/api/clients', data);
 export const updateClient = (id, data) => api.put(`/api/clients/${id}`, data);
 export const deleteClient = (id) => api.delete(`/api/clients/${id}`);
 
-export const updateClientStatus = (id, status) => 
-    api.put(`/api/clients/${id}`, { status });
+export const updateClientStatus = (id, status) =>
+  api.put(`/api/clients/${id}`, { status });

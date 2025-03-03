@@ -1,4 +1,4 @@
-import React, { useEffect ,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchClients } from '../../../store/clientsSlice';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
@@ -16,7 +16,7 @@ function ClientList() {
   const { clients, loading, error } = useSelector((state) => state.clients); // Select clients state from Redux
   // Fetch clients on component mount
   useEffect(() => {
-    dispatch(fetchClients());  // Dispatch action to fetch clients
+    dispatch(fetchClients()); // Dispatch action to fetch clients
   }, [dispatch]);
 
   // ✅ حذف عميل
@@ -44,7 +44,7 @@ function ClientList() {
       dispatch({
         type: 'clients/updateClientStatusInStore',
         payload: { id, status: updatedClients.find((c) => c.id === id).status },
-      });      
+      });
     } catch (error) {
       console.error('Error toggling status:', error);
     }

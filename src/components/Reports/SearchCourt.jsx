@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import API_CONFIG from '../../config/config';
-import 'react-datepicker/dist/react-datepicker.css';
+import API_CONFIG from '../../config/config'; 
 
 const SearchCourt = () => {
   const [allData, setAllData] = useState({

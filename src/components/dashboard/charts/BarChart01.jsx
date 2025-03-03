@@ -13,7 +13,14 @@ import {
 import 'chartjs-adapter-moment';
 import { tailwindConfig, formatValue } from '../../../utils/Utils';
 
-Chart.register(BarController, BarElement, LinearScale, CategoryScale, Tooltip, Legend);
+Chart.register(
+  BarController,
+  BarElement,
+  LinearScale,
+  CategoryScale,
+  Tooltip,
+  Legend,
+);
 
 function BarChart01({ data, width, height }) {
   const [chart, setChart] = useState(null);
@@ -90,9 +97,15 @@ function BarChart01({ data, width, height }) {
                   maximumFractionDigits: 0,
                 }).format(context.raw)}`,
             },
-            bodyColor: darkMode ? tooltipBodyColor.dark : tooltipBodyColor.light,
-            backgroundColor: darkMode ? tooltipBgColor.dark : tooltipBgColor.light,
-            borderColor: darkMode ? tooltipBorderColor.dark : tooltipBorderColor.light,
+            bodyColor: darkMode
+              ? tooltipBodyColor.dark
+              : tooltipBodyColor.light,
+            backgroundColor: darkMode
+              ? tooltipBgColor.dark
+              : tooltipBgColor.light,
+            borderColor: darkMode
+              ? tooltipBorderColor.dark
+              : tooltipBorderColor.light,
             titleFont: {
               size: 11,
             },

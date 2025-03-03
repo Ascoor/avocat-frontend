@@ -9,8 +9,7 @@ import {
   IoMdPin,
   IoMdConstruct,
 } from 'react-icons/io';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker'; 
 // ✅ GlobalModal Component (Enhanced with Tailwind Styling)
 const GlobalModal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
   const sizeClasses = {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Bar } from "react-chartjs-2";
+import React, { useState, useEffect } from 'react';
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,15 +8,22 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from 'chart.js';
 
 // تسجيل المكونات المطلوبة للمخطط
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 function DashboardCard03({ isDarkMode }) {
   // بيانات متوسط مدة إنهاء القضايا حسب النوع
   const [caseDurationData, setCaseDurationData] = useState({
-    labels: ["جنائي", "مدني", "تجاري", "عمالي", "إداري"],
+    labels: ['جنائي', 'مدني', 'تجاري', 'عمالي', 'إداري'],
     durations: [180, 120, 90, 60, 45], // متوسط عدد الأيام لكل نوع قضية
   });
 
@@ -25,12 +32,12 @@ function DashboardCard03({ isDarkMode }) {
     labels: caseDurationData.labels,
     datasets: [
       {
-        label: "متوسط المدة (بالأيام)",
+        label: 'متوسط المدة (بالأيام)',
         data: caseDurationData.durations,
         backgroundColor: isDarkMode
-          ? ["#ffbb34", "#60A5FA", "#FBBF24", "#f2a33b", "#A78BFA"]
-          : ["#EF4444", "#3B82F6", "#F59E0B", "#f2a33b", "#8B5CF6"],
-        borderColor: isDarkMode ? "#FFF" : "#333",
+          ? ['#ffbb34', '#60A5FA', '#FBBF24', '#f2a33b', '#A78BFA']
+          : ['#EF4444', '#3B82F6', '#F59E0B', '#f2a33b', '#8B5CF6'],
+        borderColor: isDarkMode ? '#FFF' : '#333',
         borderWidth: 1,
         borderRadius: 6,
         barThickness: 50, // سمك الأعمدة
@@ -44,9 +51,9 @@ function DashboardCard03({ isDarkMode }) {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "top",
+        position: 'top',
         labels: {
-          color: isDarkMode ? "#DDD" : "#333",
+          color: isDarkMode ? '#DDD' : '#333',
           font: { size: 14 },
         },
       },
@@ -54,28 +61,26 @@ function DashboardCard03({ isDarkMode }) {
     scales: {
       x: {
         grid: { display: false },
-        ticks: { color: isDarkMode ? "#DDD" : "#333" },
+        ticks: { color: isDarkMode ? '#DDD' : '#333' },
       },
       y: {
-        ticks: { color: isDarkMode ? "#DDD" : "#333", stepSize: 30 },
+        ticks: { color: isDarkMode ? '#DDD' : '#333', stepSize: 30 },
       },
     },
   };
 
   return (
-    
-    
     <div className="bg-gray-100 dark:bg-gradient-night dark:text-white text-gray-800 shadow rounded-lg p-2 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
-  
-    {/* العنوان */}
-    <header className="px-5 py-4 border-b border-gray-300 dark:border-gray-700 flex items-center">
-      <h2 className="font-semibold text-md">⏳ متوسط مدة إنهاء القضايا</h2>
+      {/* العنوان */}
+      <header className="px-5 py-4 border-b border-gray-300 dark:border-gray-700 flex items-center">
+        <h2 className="font-semibold text-md">⏳ متوسط مدة إنهاء القضايا</h2>
       </header>
 
       {/* المحتوى */}
       <div className="mt-4">
         <p className="text-sm text-gray-500 dark:text-gray-300">
-          يعرض هذا المخطط متوسط المدة التي تستغرقها القضايا قبل الإغلاق، مما يساعد في تقييم أداء المكتب وتحسين العمليات.
+          يعرض هذا المخطط متوسط المدة التي تستغرقها القضايا قبل الإغلاق، مما
+          يساعد في تقييم أداء المكتب وتحسين العمليات.
         </p>
       </div>
 

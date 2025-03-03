@@ -1,9 +1,6 @@
 // 📁 services/calendarService.js
-import axios from 'axios';
-import fakeEventsData from '../data/fakeEventsData';
 
-// Base URL for the calendar API
-const API_BASE_URL = 'https://api.your-legaloffice.com';
+import fakeEventsData from '../data/fakeEventsData';
 
 // Service to handle all calendar-related API operations
 const calendarService = {

@@ -24,7 +24,6 @@ export const formatDate = (date) => {
 
 // Function to convert English numbers to Arabic Hindi numerals for localization support
 export const arabicToHindiNumbers = (num) => {
-  const arabicNumerals = '0123456789'; // Standard Arabic numerals
   const hindiNumerals = '٠١٢٣٤٥٦٧٨٩'; // Arabic Hindi numerals for localization
   return num.toString().replace(/[0-9]/g, (digit) => hindiNumerals[digit]); // Replace digits
 };

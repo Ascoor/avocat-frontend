@@ -2,10 +2,16 @@ import React, { useState, Suspense } from 'react';
 
 // Use React.lazy to dynamically import components
 const Lawyers = React.lazy(() => import('./LawyerList'));
-const CourtSetting = React.lazy(() => import('../components/Courts/court_index.component'));
+const CourtSetting = React.lazy(
+  () => import('../components/Courts/court_index.component'),
+);
 const Procedures = React.lazy(() => import('./ProceduresList'));
-const ServiceTypes = React.lazy(() => import('../components/Settings/ServiceTypes'));
-const ExpenseCategorys = React.lazy(() => import('../components/Settings/ExpenseCategorys'));
+const ServiceTypes = React.lazy(
+  () => import('../components/Settings/ServiceTypes'),
+);
+const ExpenseCategorys = React.lazy(
+  () => import('../components/Settings/ExpenseCategorys'),
+);
 
 const ManagementSettings = () => {
   const [activeTab, setActiveTab] = useState('lawyers');

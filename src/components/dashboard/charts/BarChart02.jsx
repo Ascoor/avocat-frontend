@@ -10,7 +10,14 @@ import {
   Legend,
 } from 'chart.js';
 
-Chart.register(BarController, BarElement, LinearScale, CategoryScale, Tooltip, Legend);
+Chart.register(
+  BarController,
+  BarElement,
+  LinearScale,
+  CategoryScale,
+  Tooltip,
+  Legend,
+);
 
 function BarChart01({ data, width, height }) {
   const [chart, setChart] = useState(null);
@@ -19,15 +26,18 @@ function BarChart01({ data, width, height }) {
   const darkMode = currentTheme === 'dark';
 
   // ✅ تعريف الألوان الديناميكية بناءً على `darkMode`
-  const colors = useMemo(() => ({
-    textColor: darkMode ? '#E5E7EB' : '#374151',
-    gridColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-    tooltipBodyColor: darkMode ? '#E5E7EB' : '#374151',
-    tooltipBgColor: darkMode ? '#1F2937' : '#fff',
-    tooltipBorderColor: darkMode ? '#4B5563' : '#D1D5DB',
-    barBackground: darkMode ? '#A78BFA' : '#F97316',
-    barBorder: darkMode ? '#7C3AED' : '#EA580C',
-  }), [darkMode]);
+  const colors = useMemo(
+    () => ({
+      textColor: darkMode ? '#E5E7EB' : '#374151',
+      gridColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+      tooltipBodyColor: darkMode ? '#E5E7EB' : '#374151',
+      tooltipBgColor: darkMode ? '#1F2937' : '#fff',
+      tooltipBorderColor: darkMode ? '#4B5563' : '#D1D5DB',
+      barBackground: darkMode ? '#A78BFA' : '#F97316',
+      barBorder: darkMode ? '#7C3AED' : '#EA580C',
+    }),
+    [darkMode],
+  );
 
   useEffect(() => {
     if (!canvas.current) return;

@@ -123,96 +123,105 @@ const ProcedurePlaceTypes = () => {
       <div className="flex justify-start mt-6">{renderAddButton()}</div>
       {}
       {showModal && (
-  <div className="fixed inset-0 flex items-center justify-center z-40 bg-gray-600 bg-opacity-50">
-    <div className="bg-white dark:bg-gray-800 dark:text-gray-200 rounded-lg shadow-lg p-6 w-full max-w-lg border border-avocat-yellow">
-      <div className="flex justify-center items-center mb-4">
-        <h3 className="text-xl font-semibold mb-4 text-avocat-yellow">
-          {editingProcedurePlaceType ? 'تعديل جهة الإجراء' : 'إضافة جهة الإجراء'}
-        </h3>
-      </div>
+        <div className="fixed inset-0 flex items-center justify-center z-40 bg-gray-600 bg-opacity-50">
+          <div className="bg-white dark:bg-gray-800 dark:text-gray-200 rounded-lg shadow-lg p-6 w-full max-w-lg border border-avocat-yellow">
+            <div className="flex justify-center items-center mb-4">
+              <h3 className="text-xl font-semibold mb-4 text-avocat-yellow">
+                {editingProcedurePlaceType
+                  ? 'تعديل جهة الإجراء'
+                  : 'إضافة جهة الإجراء'}
+              </h3>
+            </div>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          editingProcedurePlaceType
-            ? handleEditProcedurePlaceType(new FormData(e.target))
-            : handleAddProcedurePlaceType(new FormData(e.target));
-        }}
-      >
-        <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="block text-sm mb-4 font-medium text-gray-700 dark:text-gray-300"
-          >
-            اسم جهة الإجراء
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            defaultValue={editingProcedurePlaceType?.name || ''}
-            className="w-full px-4 py-2 border text-gray-800 bg-white dark:bg-gray-900 dark:text-gray-200 rounded-md border-avocat-yellow"
-            required
-          />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                editingProcedurePlaceType
+                  ? handleEditProcedurePlaceType(new FormData(e.target))
+                  : handleAddProcedurePlaceType(new FormData(e.target));
+              }}
+            >
+              <div className="mb-4">
+                <label
+                  htmlFor="name"
+                  className="block text-sm mb-4 font-medium text-gray-700 dark:text-gray-300"
+                >
+                  اسم جهة الإجراء
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  defaultValue={editingProcedurePlaceType?.name || ''}
+                  className="w-full px-4 py-2 border text-gray-800 bg-white dark:bg-gray-900 dark:text-gray-200 rounded-md border-avocat-yellow"
+                  required
+                />
+              </div>
+
+              <div className="flex justify-end space-x-2">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="px-6 py-3 bg-gradient-red-button text-white rounded-lg font-bold transition-all duration-300 transform hover:scale-105 hover:bg-gradient-red-dark-button hover:shadow-lg"
+                >
+                  إغلاق
+                </button>
+
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-gradient-green-button text-white rounded-lg font-bold transition-all duration-300 transform hover:scale-105 hover:bg-gradient-green-dark-button hover:shadow-lg"
+                >
+                  {editingProcedurePlaceType
+                    ? 'تعديل جهة الإجراء'
+                    : 'إضافة جهة الإجراء'}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-
-        <div className="flex justify-end space-x-2">
-          <button
-            type="button"
-            onClick={() => setShowModal(false)}
-            className="px-6 py-3 bg-gradient-red-button text-white rounded-lg font-bold transition-all duration-300 transform hover:scale-105 hover:bg-gradient-red-dark-button hover:shadow-lg"
-          >
-            إغلاق
-          </button>
-
-          <button
-            type="submit"
-            className="px-6 py-3 bg-gradient-green-button text-white rounded-lg font-bold transition-all duration-300 transform hover:scale-105 hover:bg-gradient-green-dark-button hover:shadow-lg"
-          >
-            {editingProcedurePlaceType ? 'تعديل جهة الإجراء' : 'إضافة جهة الإجراء'}
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
+      )}
 
       {}
       <div className="overflow-x-auto mt-6 shadow-lg  ">
-  <table className="w-full border-collapse border border-gray-300">
-    <thead className="bg-blue-100 text-blue-700 dark:bg-gray-700 dark:text-yellow-400">
-      <tr>
-        <th className="px-4 py-2 border border-gray-300">الاسم</th>
-        <th className="px-4 py-2 border border-gray-300">الإجراءات</th>
-      </tr>
-    </thead>
-    <tbody>
-      {currentItems.map((procedurePlaceType) => (
-        <tr key={procedurePlaceType.id} className="dark:bg-gray-800 dark:text-gray-300">
-          <td className="px-4 py-2 border border-gray-300 bg-white dark:bg-gray-900">
-            {procedurePlaceType.name}
-          </td>
-          <td className="px-4 py-2 border border-gray-300">
-            <div className="flex items-center justify-center gap-2">
-              <button
-                onClick={() => handleShowEditModal(procedurePlaceType)}
-                className="text-blue-600 hover:text-blue-700 ml-4 dark:text-blue-400 dark:hover:text-blue-500"
+        <table className="w-full border-collapse border border-gray-300">
+          <thead className="bg-blue-100 text-blue-700 dark:bg-gray-700 dark:text-yellow-400">
+            <tr>
+              <th className="px-4 py-2 border border-gray-300">الاسم</th>
+              <th className="px-4 py-2 border border-gray-300">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.map((procedurePlaceType) => (
+              <tr
+                key={procedurePlaceType.id}
+                className="dark:bg-gray-800 dark:text-gray-300"
               >
-                <FaEdit />
-              </button>
-              <button
-                onClick={() => handleDeleteProcedurePlaceType(procedurePlaceType.id)}
-                className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500"
-              >
-                <FaTrash />
-              </button>
-            </div>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+                <td className="px-4 py-2 border border-gray-300 bg-white dark:bg-gray-900">
+                  {procedurePlaceType.name}
+                </td>
+                <td className="px-4 py-2 border border-gray-300">
+                  <div className="flex items-center justify-center gap-2">
+                    <button
+                      onClick={() => handleShowEditModal(procedurePlaceType)}
+                      className="text-blue-600 hover:text-blue-700 ml-4 dark:text-blue-400 dark:hover:text-blue-500"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleDeleteProcedurePlaceType(procedurePlaceType.id)
+                      }
+                      className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {}
 
@@ -226,22 +235,22 @@ const ProcedurePlaceTypes = () => {
           التالي
         </button>
         <div className="flex items-center space-x-2">
-    {Array.from({ length: totalPages }, (_, index) => (
-      <button
-      key={index}
-      onClick={() => handlePageChange(index + 1)}
-      className={`px-4 py-2 rounded-md font-bold 
-        ${currentPage === index + 1
-          ? 'bg-gradient-yellow-dark-button hover:bg-gradient-green-button ml-2 text-white' // Highlight the current page
-          : 'bg-gray-500 hover:bg-gray-600 text-gray-300 ml-2 dark:bg-gradient-yellow-button dark:text-gray-800 dark:hover:bg-gradient-green-button dark:hover:bg-gray-400'} 
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-4 py-2 rounded-md font-bold 
+        ${
+          currentPage === index + 1
+            ? 'bg-gradient-yellow-dark-button hover:bg-gradient-green-button ml-2 text-white' // Highlight the current page
+            : 'bg-gray-500 hover:bg-gray-600 text-gray-300 ml-2 dark:bg-gradient-yellow-button dark:text-gray-800 dark:hover:bg-gradient-green-button dark:hover:bg-gray-400'
+        } 
       `}
-    >
-      {index + 1}
-    </button>
-    
-
-    ))}
-  </div>
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}

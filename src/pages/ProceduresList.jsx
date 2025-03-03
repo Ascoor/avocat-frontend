@@ -3,8 +3,12 @@ import SectionHeader from '../components/common/SectionHeader';
 import { ProcedureIcon } from '../assets/icons';
 
 // ✅ Lazy-load ProcedureTypes and ProcedurePlaceTypes
-const ProcedureTypes = lazy(() => import('../components/Procedures/ProcedureTypes'));
-const ProcedurePlaceTypes = lazy(() => import('../components/Procedures/ProcedurePlaceTypes'));
+const ProcedureTypes = lazy(
+  () => import('../components/Procedures/ProcedureTypes'),
+);
+const ProcedurePlaceTypes = lazy(
+  () => import('../components/Procedures/ProcedurePlaceTypes'),
+);
 
 const Procedures = () => {
   return (

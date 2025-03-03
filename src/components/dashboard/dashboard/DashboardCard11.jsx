@@ -1,51 +1,57 @@
-import React from "react";
-import BarChart from "../charts/BarChart03";
-import { FaBalanceScale, FaGavel, FaExclamationTriangle, FaRegSadCry, FaClipboardCheck } from "react-icons/fa";
+import React from 'react';
+import BarChart from '../charts/BarChart03';
+import {
+  FaBalanceScale,
+  FaGavel,
+  FaExclamationTriangle,
+  FaRegSadCry,
+  FaClipboardCheck,
+} from 'react-icons/fa';
 
 // Import utilities
-import { tailwindConfig } from "../../../utils/Utils";
+import { tailwindConfig } from '../../../utils/Utils';
 
 function DashboardCard11({ isDarkMode }) {
   const chartData = {
-    labels: ["الأسباب"],
+    labels: ['الأسباب'],
     datasets: [
       {
-        label: "⚖️ وجود صعوبات في استخدام المنتج",
+        label: '⚖️ وجود صعوبات في استخدام المنتج',
         data: [131],
-        backgroundColor: isDarkMode ? "#7B61FF" : "#4F46E5",
-        hoverBackgroundColor: isDarkMode ? "#5A48D6" : "#4338CA",
+        backgroundColor: isDarkMode ? '#7B61FF' : '#4F46E5',
+        hoverBackgroundColor: isDarkMode ? '#5A48D6' : '#4338CA',
         barPercentage: 1,
         categoryPercentage: 1,
       },
       {
-        label: "📜 نقص في الميزات المطلوبة",
+        label: '📜 نقص في الميزات المطلوبة',
         data: [100],
-        backgroundColor: isDarkMode ? "#9B67FF" : "#7C3AED",
-        hoverBackgroundColor: isDarkMode ? "#754BC6" : "#6D28D9",
+        backgroundColor: isDarkMode ? '#9B67FF' : '#7C3AED',
+        hoverBackgroundColor: isDarkMode ? '#754BC6' : '#6D28D9',
         barPercentage: 1,
         categoryPercentage: 1,
       },
       {
-        label: "❗ عدم الرضا عن جودة المنتج",
+        label: '❗ عدم الرضا عن جودة المنتج',
         data: [81],
-        backgroundColor: isDarkMode ? "#FF6347" : "#DC2626",
-        hoverBackgroundColor: isDarkMode ? "#CC5040" : "#B91C1C",
+        backgroundColor: isDarkMode ? '#FF6347' : '#DC2626',
+        hoverBackgroundColor: isDarkMode ? '#CC5040' : '#B91C1C',
         barPercentage: 1,
         categoryPercentage: 1,
       },
       {
-        label: "📜 المنتج لا يتطابق مع ما تم الإعلان عنه",
+        label: '📜 المنتج لا يتطابق مع ما تم الإعلان عنه',
         data: [65],
-        backgroundColor: isDarkMode ? "#32CD32" : "#16A34A",
-        hoverBackgroundColor: isDarkMode ? "#28A428" : "#15803D",
+        backgroundColor: isDarkMode ? '#32CD32' : '#16A34A',
+        hoverBackgroundColor: isDarkMode ? '#28A428' : '#15803D',
         barPercentage: 1,
         categoryPercentage: 1,
       },
       {
-        label: "❔ أخرى",
+        label: '❔ أخرى',
         data: [72],
-        backgroundColor: isDarkMode ? "#A0AEC0" : "#6B7280",
-        hoverBackgroundColor: isDarkMode ? "#718096" : "#4B5563",
+        backgroundColor: isDarkMode ? '#A0AEC0' : '#6B7280',
+        hoverBackgroundColor: isDarkMode ? '#718096' : '#4B5563',
         barPercentage: 1,
         categoryPercentage: 1,
       },
@@ -59,7 +65,7 @@ function DashboardCard11({ isDarkMode }) {
           ⚖️ أسباب طلبات الاسترداد
         </h2>
       </header>
-      
+
       {/* بيانات الإحصائيات */}
       <div className="px-5 py-3">
         <div className="flex items-center space-x-2">

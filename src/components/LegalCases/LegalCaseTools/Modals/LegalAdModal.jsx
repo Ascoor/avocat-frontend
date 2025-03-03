@@ -114,22 +114,23 @@ const LegalAdModal = ({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity duration-300">
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-5xl p-8 relative transform transition-all overflow-auto max-h-[90vh]">
-       <motion.header  initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-        className="relative mb-4 flex justify-center bg-gray-200 dark:bg-gray-800">
-
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+        <motion.header
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="relative mb-4 flex justify-center bg-gray-200 dark:bg-gray-800"
         >
-          &#x2715;
-        </button>
-        <h2 className="text-2xl font-bold text-center mt-2  dark:text-green-200/90 text-avocat-blue mb-6">
-          {isEdit ? 'تحديث الإعلان القانوني' : 'إضافة إعلان قانوني'}
-        </h2>
-      </motion.header>
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+          >
+            &#x2715;
+          </button>
+          <h2 className="text-2xl font-bold text-center mt-2  dark:text-green-200/90 text-avocat-blue mb-6">
+            {isEdit ? 'تحديث الإعلان القانوني' : 'إضافة إعلان قانوني'}
+          </h2>
+        </motion.header>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {[
@@ -156,7 +157,9 @@ const LegalAdModal = ({
                 className="w-full px-6  py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-500"
                 required
               >
-                <option className='text-center' value="">اختر  </option>
+                <option className="text-center" value="">
+                  اختر{' '}
+                </option>
                 {options.map((option) => (
                   <option key={option.id} value={option.id}>
                     {option.name}

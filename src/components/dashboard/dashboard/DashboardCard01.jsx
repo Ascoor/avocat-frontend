@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Line } from "react-chartjs-2";
+import React, { useState, useEffect, useRef } from 'react';
+import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,9 +9,17 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 function DashboardCard01({ isDarkMode }) {
   const chartRef = useRef(null);
@@ -21,42 +29,55 @@ function DashboardCard01({ isDarkMode }) {
     if (chartRef.current) {
       const ctx = chartRef.current.ctx;
       const gradientFill = ctx.createLinearGradient(0, 0, 0, 400);
-      
+
       if (isDarkMode) {
-        gradientFill.addColorStop(0, "#ad90f5"); // Lavender
-        gradientFill.addColorStop(0.5, "#9d78fc"); // Light Neon Green
-        gradientFill.addColorStop(1, "#ffbb34"); // Orange-Red
+        gradientFill.addColorStop(0, '#ad90f5'); // Lavender
+        gradientFill.addColorStop(0.5, '#9d78fc'); // Light Neon Green
+        gradientFill.addColorStop(1, '#ffbb34'); // Orange-Red
       } else {
-        gradientFill.addColorStop(0, "#f2a33b"); // Dodger Blue
-        gradientFill.addColorStop(0.5, "#4682B4"); // Steel Blue
-        gradientFill.addColorStop(1, "#87CEFA"); // Light Sky Blue
+        gradientFill.addColorStop(0, '#f2a33b'); // Dodger Blue
+        gradientFill.addColorStop(0.5, '#4682B4'); // Steel Blue
+        gradientFill.addColorStop(1, '#87CEFA'); // Light Sky Blue
       }
-      
+
       setGradient(gradientFill);
     }
   }, [isDarkMode]);
 
   // بيانات القضايا الشهرية
   const caseData = {
-    months: ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
+    months: [
+      'يناير',
+      'فبراير',
+      'مارس',
+      'أبريل',
+      'مايو',
+      'يونيو',
+      'يوليو',
+      'أغسطس',
+      'سبتمبر',
+      'أكتوبر',
+      'نوفمبر',
+      'ديسمبر',
+    ],
     cases: [20, 25, 22, 30, 45, 50, 48, 60, 55, 70, 65, 80], // عدد القضايا المفتوحة شهريًا
   };
 
   // إعدادات الألوان بناءً على وضع الشاشة
-  const textColor = isDarkMode ? "#DDD" : "#333";
+  const textColor = isDarkMode ? '#DDD' : '#333';
 
   // بيانات المخطط
   const chartData = {
     labels: caseData.months,
     datasets: [
       {
-        label: "عدد القضايا المفتوحة",
+        label: 'عدد القضايا المفتوحة',
         data: caseData.cases,
-        borderColor: gradient || (isDarkMode ? "#ffbb34" : "#f2a33b"), // استخدام التدرج أو اللون الأساسي
-        backgroundColor: gradient ? gradient : "rgba(0,0,0,0.1)", // استخدام التدرج إذا كان جاهزًا
+        borderColor: gradient || (isDarkMode ? '#ffbb34' : '#f2a33b'), // استخدام التدرج أو اللون الأساسي
+        backgroundColor: gradient ? gradient : 'rgba(0,0,0,0.1)', // استخدام التدرج إذا كان جاهزًا
         borderWidth: 3,
         pointRadius: 5,
-        pointBackgroundColor: isDarkMode ? "#9d78fc" : "#f2a33b", // الأخضر الفاتح ليلاً، الأزرق نهارًا
+        pointBackgroundColor: isDarkMode ? '#9d78fc' : '#f2a33b', // الأخضر الفاتح ليلاً، الأزرق نهارًا
         tension: 0.4, // انسيابية الخط
       },
     ],
@@ -95,7 +116,8 @@ function DashboardCard01({ isDarkMode }) {
       {/* وصف */}
       <div className="mt-4">
         <p className="text-sm text-gray-500 dark:text-gray-300">
-          يعرض هذا المخطط عدد القضايا المفتوحة في كل شهر لمتابعة تطور الأعمال القانونية.
+          يعرض هذا المخطط عدد القضايا المفتوحة في كل شهر لمتابعة تطور الأعمال
+          القانونية.
         </p>
       </div>
 

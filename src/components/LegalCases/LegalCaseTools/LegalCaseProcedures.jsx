@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { BiPlusCircle, BiPencil, BiTrash } from "react-icons/bi";
+import React, { useEffect, useState } from 'react';
+import { BiPlusCircle, BiPencil, BiTrash } from 'react-icons/bi';
 import {
   getProceduresByLegCaseId,
   deleteProcedure,
-} from "../../../services/api/procedures";
-import ProcedureModal from "./Modals/ProcedureModal"; 
-import GlobalConfirmDeleteModal from "../../common/GlobalConfirmDeleteModal";
-import { useAlert } from "../../../context/AlertContext";
-import { motion } from "framer-motion";
+} from '../../../services/api/procedures';
+import ProcedureModal from './Modals/ProcedureModal';
+import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
+import { useAlert } from '../../../context/AlertContext';
+import { motion } from 'framer-motion';
 
 const LegalCaseProcedures = ({ legCaseId }) => {
   const [procedures, setProcedures] = useState([]);
@@ -19,8 +19,8 @@ const LegalCaseProcedures = ({ legCaseId }) => {
   const [procedureToDelete, setProcedureToDelete] = useState(null);
   const { triggerAlert } = useAlert();
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage =8;
-  
+  const rowsPerPage = 8;
+
   // Function to handle page change
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -34,7 +34,6 @@ const LegalCaseProcedures = ({ legCaseId }) => {
   };
   const proceduresToDisplay = paginateData(procedures);
   useEffect(() => {
-
     fetchProcedures();
   }, [legCaseId]);
 
@@ -43,7 +42,7 @@ const LegalCaseProcedures = ({ legCaseId }) => {
       const response = await getProceduresByLegCaseId(legCaseId);
       setProcedures(response.data);
     } catch (error) {
-      triggerAlert("error", "حدث خطأ أثناء جلب البيانات.");
+      triggerAlert('error', 'حدث خطأ أثناء جلب البيانات.');
     }
   };
 
@@ -70,10 +69,10 @@ const LegalCaseProcedures = ({ legCaseId }) => {
     if (procedureToDelete) {
       try {
         await deleteProcedure(procedureToDelete.id);
-        triggerAlert("success", "تم حذف الإجراء بنجاح");
+        triggerAlert('success', 'تم حذف الإجراء بنجاح');
         fetchProcedures();
       } catch (error) {
-        triggerAlert("error", "حدث خطأ أثناء حذف الإجراء");
+        triggerAlert('error', 'حدث خطأ أثناء حذف الإجراء');
       } finally {
         setShowConfirmDelete(false);
         setProcedureToDelete(null);
@@ -97,7 +96,7 @@ const LegalCaseProcedures = ({ legCaseId }) => {
           className="px-2 py-2 text-sm rounded-lg font-bold bg-gradient-green-button hover:bg-gradient-green-dark-button text-white shadow-md hover:scale-105 transform transition-all"
         >
           <BiPlusCircle className="inline-block ml-2" />
-          إضافة 
+          إضافة
         </button>
 
         {/* ✅ Title Centered */}
@@ -139,9 +138,15 @@ const LegalCaseProcedures = ({ legCaseId }) => {
                   className="border-b bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer"
                   onClick={() => setSelectedProcedure(procedure)}
                 >
-                  <td className="px-4 py-2 text-center">{procedure.procedure_type?.name || '-'}</td>
-                  <td className="px-4 py-2 text-center">{procedure.lawyer?.name || '-'}</td>
-                  <td className="px-4 py-2 text-center">{procedure.date_end}</td>
+                  <td className="px-4 py-2 text-center">
+                    {procedure.procedure_type?.name || '-'}
+                  </td>
+                  <td className="px-4 py-2 text-center">
+                    {procedure.lawyer?.name || '-'}
+                  </td>
+                  <td className="px-4 py-2 text-center">
+                    {procedure.date_end}
+                  </td>
                   <td className="px-4 py-2 text-center">{procedure.job}</td>
                   <td className="px-4 py-2 text-center">{procedure.result}</td>
                   <td className="px-4 py-2 text-center">{procedure.status}</td>
@@ -168,9 +173,9 @@ const LegalCaseProcedures = ({ legCaseId }) => {
                 </tr>
               ))}
             </tbody>
-          </table> 
-      </div>
-      <div className="flex justify-center mt-4">
+          </table>
+        </div>
+        <div className="flex justify-center mt-4">
           <button
             disabled={currentPage === 1}
             onClick={() => handlePageChange(currentPage - 1)}
@@ -178,7 +183,9 @@ const LegalCaseProcedures = ({ legCaseId }) => {
           >
             السابق
           </button>
-          <span className="flex items-center">{currentPage} / {totalPages}</span>
+          <span className="flex items-center">
+            {currentPage} / {totalPages}
+          </span>
           <button
             disabled={currentPage === totalPages}
             onClick={() => handlePageChange(currentPage + 1)}
@@ -188,8 +195,7 @@ const LegalCaseProcedures = ({ legCaseId }) => {
           </button>
         </div>
       </div>
-      
-      
+
       {showModal && (
         <ProcedureModal
           legalCaseId={legCaseId}
@@ -205,7 +211,7 @@ const LegalCaseProcedures = ({ legCaseId }) => {
           isOpen={showConfirmDelete}
           onClose={() => setShowConfirmDelete(false)}
           onConfirm={handleConfirmDelete}
-          itemName={procedureToDelete?.procedure_type?.name || "الإجراء"}
+          itemName={procedureToDelete?.procedure_type?.name || 'الإجراء'}
         />
       )}
     </div>

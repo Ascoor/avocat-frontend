@@ -5,7 +5,7 @@ import {
   updateLawyer,
   deleteLawyer,
 } from '../services/api/lawyers';
-import { FaEdit, FaTrash } from 'react-icons/fa'; 
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import SectionHeader from '../components/common/SectionHeader';
 import { LawyerIcon } from '../assets/icons';
 import TableComponent from '../components/common/TableComponent';
@@ -129,7 +129,10 @@ const Lawyers = () => {
           title={editingLawyer ? 'تعديل محامي' : 'إضافة محامي'}
         >
           <Suspense fallback={<p>جاري التحميل...</p>}>
-            <LawyerAddEdit onSubmit={handleLawyerSubmit} initialValues={editingLawyer} />
+            <LawyerAddEdit
+              onSubmit={handleLawyerSubmit}
+              initialValues={editingLawyer}
+            />
           </Suspense>
         </LawyerModal>
       )}

@@ -117,14 +117,23 @@ const CourtSubType = ({ show, handleClose }) => {
         <table className="w-full border-collapse   justify-center text-center border border-gray-300 dark:border-gray-600">
           <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>
-              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">الاسم</th>
-              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">نوع المحكمة</th>
-              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">الإجراءات</th>
+              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">
+                الاسم
+              </th>
+              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">
+                نوع المحكمة
+              </th>
+              <th className="px-4 py-2 border border-gray-300 dark:border-gray-600">
+                الإجراءات
+              </th>
             </tr>
           </thead>
           <tbody>
             {currentItems.map((courtSubType) => (
-              <tr key={courtSubType.id} className="hover:bg-gray-200 dark:hover:bg-gray-700">
+              <tr
+                key={courtSubType.id}
+                className="hover:bg-gray-200 dark:hover:bg-gray-700"
+              >
                 <td className="px-4 py-2 border border-gray-300 dark:border-gray-600">
                   {courtSubType.name}
                 </td>
@@ -166,7 +175,9 @@ const CourtSubType = ({ show, handleClose }) => {
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg w-1/2">
             <div className="flex justify-between items-center mb-4">
-              <h4 className="text-xl font-bold text-gray-800 dark:text-gray-100">إضافة نوع محكمة فرعية</h4>
+              <h4 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+                إضافة نوع محكمة فرعية
+              </h4>
               <button className="text-red-500" onClick={handleClose}>
                 &times;
               </button>
@@ -177,7 +188,9 @@ const CourtSubType = ({ show, handleClose }) => {
                 handleAddCourtSubType();
               }}
             >
-              <label className="block mb-2 text-gray-700 dark:text-gray-300">نوع المحكمة:</label>
+              <label className="block mb-2 text-gray-700 dark:text-gray-300">
+                نوع المحكمة:
+              </label>
               <select
                 className="w-full p-2 border rounded dark:border-gray-600"
                 value={newCourtSubType.court_type_id}
@@ -195,7 +208,9 @@ const CourtSubType = ({ show, handleClose }) => {
                   </option>
                 ))}
               </select>
-              <label className="block mt-4 mb-2 text-gray-700 dark:text-gray-300">الاسم:</label>
+              <label className="block mt-4 mb-2 text-gray-700 dark:text-gray-300">
+                الاسم:
+              </label>
               <input
                 type="text"
                 className="w-full p-2 border rounded dark:border-gray-600"

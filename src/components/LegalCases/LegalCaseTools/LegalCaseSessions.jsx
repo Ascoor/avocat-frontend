@@ -8,7 +8,7 @@ import SessionModal from './Modals/SessionModal'; // Modal component for Add/Edi
 import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal'; // Confirmation modal
 import { useAlert } from '../../../context/AlertContext';
 import SessionDetailsModal from './Modals/SessionDetailsModal';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 const LegalCaseSessions = ({ legCaseId }) => {
   const [sessions, setSessions] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -101,30 +101,29 @@ const LegalCaseSessions = ({ legCaseId }) => {
   const totalPages = Math.ceil(sessions.length / rowsPerPage);
   return (
     <div className="min-h-screen bg-lightBg dark:bg-darkBg text-gray-900 dark:text-gray-100">
-    {/* ✅ Header Section */}
-    <motion.header
-      className="p-4 bg-gradient-blue-dark dark:bg-avocat-blue-dark flex justify-between items-center rounded-lg shadow-md"
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {/* ✅ Button Positioned at Start */}
-      <button
-        onClick={handleAddSession}
-        className="px-2 py-2 text-sm rounded-lg font-bold bg-gradient-green-button hover:bg-gradient-green-dark-button text-white shadow-md hover:scale-105 transform transition-all"
+      {/* ✅ Header Section */}
+      <motion.header
+        className="p-4 bg-gradient-blue-dark dark:bg-avocat-blue-dark flex justify-between items-center rounded-lg shadow-md"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
-        <BiPlusCircle className="inline-block ml-2" />
-        إضافة 
-      </button>
+        {/* ✅ Button Positioned at Start */}
+        <button
+          onClick={handleAddSession}
+          className="px-2 py-2 text-sm rounded-lg font-bold bg-gradient-green-button hover:bg-gradient-green-dark-button text-white shadow-md hover:scale-105 transform transition-all"
+        >
+          <BiPlusCircle className="inline-block ml-2" />
+          إضافة
+        </button>
 
-      {/* ✅ Title Centered */}
-      <h1 className="text-lg font-bold text-white flex-1 text-center">
-        جلسات القضية
-      </h1>
-    </motion.header>
+        {/* ✅ Title Centered */}
+        <h1 className="text-lg font-bold text-white flex-1 text-center">
+          جلسات القضية
+        </h1>
+      </motion.header>
 
-
-    <div className="p-6">
+      <div className="p-6">
         <div className="overflow-x-auto mt-4">
           <table className="min-w-full table-auto bg-white dark:bg-gradient-blue-dark rounded-lg shadow-base overflow-hidden">
             <thead>
@@ -146,13 +145,27 @@ const LegalCaseSessions = ({ legCaseId }) => {
                   className="border-b bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer"
                   onClick={() => handleRowClick(session)}
                 >
-                  <td className="px-2 py-2 text-center">{session.session_date}</td>
-                  <td className="px-2 py-2 text-center">{session.lawyer?.name || '-'}</td>
-                  <td className="px-2 py-2 text-center">{session.session_roll || '-'}</td>
-                  <td className="px-2 py-2 text-center">{session.court?.name || '-'}</td>
-                  <td className="px-2 py-2 text-center">{session.orders || '-'}</td>
-                  <td className="px-2 py-2 text-center">{session.result || '-'}</td>
-                  <td className="px-2 py-2 text-center">{session.status || '-'}</td>
+                  <td className="px-2 py-2 text-center">
+                    {session.session_date}
+                  </td>
+                  <td className="px-2 py-2 text-center">
+                    {session.lawyer?.name || '-'}
+                  </td>
+                  <td className="px-2 py-2 text-center">
+                    {session.session_roll || '-'}
+                  </td>
+                  <td className="px-2 py-2 text-center">
+                    {session.court?.name || '-'}
+                  </td>
+                  <td className="px-2 py-2 text-center">
+                    {session.orders || '-'}
+                  </td>
+                  <td className="px-2 py-2 text-center">
+                    {session.result || '-'}
+                  </td>
+                  <td className="px-2 py-2 text-center">
+                    {session.status || '-'}
+                  </td>
                   <td className="px-2 py-2 text-center flex justify-center space-x-2">
                     <button
                       onClick={(e) => {
@@ -186,7 +199,9 @@ const LegalCaseSessions = ({ legCaseId }) => {
           >
             السابق
           </button>
-          <span className="flex items-center">{currentPage} / {totalPages}</span>
+          <span className="flex items-center">
+            {currentPage} / {totalPages}
+          </span>
           <button
             disabled={currentPage === totalPages}
             onClick={() => handlePageChange(currentPage + 1)}
@@ -194,8 +209,7 @@ const LegalCaseSessions = ({ legCaseId }) => {
           >
             التالي
           </button>
-        </div> 
-
+        </div>
       </div>
       {/* Modals */}
       {selectedSession && (

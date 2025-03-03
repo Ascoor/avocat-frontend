@@ -7,10 +7,11 @@ import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import GlobalConfirmDeleteModal from '../components/common/GlobalConfirmDeleteModal';
 import { useAlert } from '../context/AlertContext';
 
-const AddEditServiceModal = lazy(() => import('../components/LegalServices/AddEditServiceModal'));
+const AddEditServiceModal = lazy(
+  () => import('../components/LegalServices/AddEditServiceModal'),
+);
 
 const LegalServiceList = () => {
-
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingService, setEditingService] = useState(null);
@@ -80,11 +81,11 @@ const LegalServiceList = () => {
   ];
 
   const statusColors = {
-    'جارى التنفيذ': 'text-yellow-500', 
-    'قيد التنفيذ': 'text-orange-500', 
-    منتهية: 'text-green-600', 
-    متداولة: 'text-blue-500', 
-    استيفاء: 'text-purple-500', 
+    'جارى التنفيذ': 'text-yellow-500',
+    'قيد التنفيذ': 'text-orange-500',
+    منتهية: 'text-green-600',
+    متداولة: 'text-blue-500',
+    استيفاء: 'text-purple-500',
   };
 
   const statusIcons = {
@@ -124,17 +125,21 @@ const LegalServiceList = () => {
 
       {}
       {showModal && (
-        <Suspense fallback={<div className="text-center text-gray-500">جار التحميل...</div>}>
+        <Suspense
+          fallback={
+            <div className="text-center text-gray-500">جار التحميل...</div>
+          }
+        >
           <AddEditServiceModal
             show={showModal}
             handleClose={() => {
               setShowModal(false);
-              setIsViewing(false); 
+              setIsViewing(false);
               fetchServices();
             }}
             service={editingService || null}
-            isEditing={!!editingService && !isViewing} 
-            isViewing={isViewing} 
+            isEditing={!!editingService && !isViewing}
+            isViewing={isViewing}
             onSaved={fetchServices}
           />
         </Suspense>

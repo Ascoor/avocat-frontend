@@ -40,7 +40,7 @@ export default function useAuth() {
         {
           headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken, // ✅ تضمين CSRF Token
+            'X-CSRF-TOKEN': csrfToken, 
           },
         },
       );
@@ -63,7 +63,6 @@ export default function useAuth() {
     navigate('/');
   };
 
-  // Axios instance with authorization
   const http = axios.create({
     baseURL: API_CONFIG.baseURL,
     withCredentials: true,
@@ -72,7 +71,6 @@ export default function useAuth() {
     },
   });
 
-  // Axios request interceptor to include token
   http.interceptors.request.use((config) => {
     const token = getToken();
     if (token) {

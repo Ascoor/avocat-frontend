@@ -1,8 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import React, { useState, useEffect, useRef } from 'react';
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 function DashboardCard04({ isDarkMode }) {
   const chartRef = useRef(null);
@@ -13,15 +28,21 @@ function DashboardCard04({ isDarkMode }) {
       const ctx = chartRef.current.ctx;
       const colors = lawyerPerformance.casesHandled.map((_, index) => {
         const gradient = ctx.createLinearGradient(0, 0, 400, 0);
-        
+
         if (isDarkMode) {
-          gradient.addColorStop(0, ["#E6E6FA", "#C3B1E1", "#9370DB", "#6A5ACD", "#483D8B"][index]); // تدرجات اللافندر من الفاتح إلى الداكن
-          gradient.addColorStop(1, "#2B1B50"); // تأثير الظل الغامق
+          gradient.addColorStop(
+            0,
+            ['#E6E6FA', '#C3B1E1', '#9370DB', '#6A5ACD', '#483D8B'][index],
+          ); // تدرجات اللافندر من الفاتح إلى الداكن
+          gradient.addColorStop(1, '#2B1B50'); // تأثير الظل الغامق
         } else {
-          gradient.addColorStop(0, ["#FFA500", "#10B981", "#FF5733", "#4682B4", "#FFD700"][index]); // البرتقالي، الأخضر، الأحمر، الأزرق، الذهبي
-          gradient.addColorStop(1, "#FFF5E1"); // تأثير فاتح
+          gradient.addColorStop(
+            0,
+            ['#FFA500', '#10B981', '#FF5733', '#4682B4', '#FFD700'][index],
+          ); // البرتقالي، الأخضر، الأحمر، الأزرق، الذهبي
+          gradient.addColorStop(1, '#FFF5E1'); // تأثير فاتح
         }
-        
+
         return gradient;
       });
       setGradientColors(colors);
@@ -30,36 +51,43 @@ function DashboardCard04({ isDarkMode }) {
 
   // بيانات أداء المحامين
   const lawyerPerformance = {
-    labels: ["أحمد العتيبي", "محمد القحطاني", "سارة الأنصاري", "نورة السبيعي", "عبدالله الدوسري"],
+    labels: [
+      'أحمد العتيبي',
+      'محمد القحطاني',
+      'سارة الأنصاري',
+      'نورة السبيعي',
+      'عبدالله الدوسري',
+    ],
     casesHandled: [50, 75, 40, 65, 55], // عدد القضايا التي تعامل معها كل محامٍ
     successRate: [85, 90, 75, 80, 70], // نسبة النجاح في القضايا المغلقة
   };
 
   // إعداد ألوان المخطط
-  const backgroundColors = gradientColors.length ? gradientColors : 
-    (isDarkMode
-      ? ["#E6E6FA", "#C3B1E1", "#9370DB", "#6A5ACD", "#483D8B"] // تدرجات اللافندر
-      : ["#FFA500", "#10B981", "#FF5733", "#4682B4", "#FFD700"]); // ألوان النهار
+  const backgroundColors = gradientColors.length
+    ? gradientColors
+    : isDarkMode
+      ? ['#E6E6FA', '#C3B1E1', '#9370DB', '#6A5ACD', '#483D8B'] // تدرجات اللافندر
+      : ['#FFA500', '#10B981', '#FF5733', '#4682B4', '#FFD700']; // ألوان النهار
 
   // بيانات المخطط
   const chartData = {
     labels: lawyerPerformance.labels,
     datasets: [
       {
-        label: "عدد القضايا",
+        label: 'عدد القضايا',
         data: lawyerPerformance.casesHandled,
         backgroundColor: backgroundColors,
-        borderColor: isDarkMode ? "#FFF" : "#333",
+        borderColor: isDarkMode ? '#FFF' : '#333',
         borderWidth: 1,
         borderRadius: 6,
         barThickness: 20,
-        hoverBackgroundColor: isDarkMode ? "#C3B1E1" : "#FFD700", // تأثير عند التحويم
+        hoverBackgroundColor: isDarkMode ? '#C3B1E1' : '#FFD700', // تأثير عند التحويم
       },
       {
-        label: "نسبة النجاح (%)",
+        label: 'نسبة النجاح (%)',
         data: lawyerPerformance.successRate,
-        backgroundColor: isDarkMode ? "#A57AFF" : "#1E90FF",
-        borderColor: isDarkMode ? "#7D5FB2" : "#104E8B",
+        backgroundColor: isDarkMode ? '#A57AFF' : '#1E90FF',
+        borderColor: isDarkMode ? '#7D5FB2' : '#104E8B',
         borderWidth: 1,
         borderRadius: 6,
         barThickness: 20,
@@ -69,37 +97,36 @@ function DashboardCard04({ isDarkMode }) {
 
   // خيارات المخطط
   const chartOptions = {
-    indexAxis: "y", // تحويل المخطط إلى أفقي
+    indexAxis: 'y', // تحويل المخطط إلى أفقي
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "top",
+        position: 'top',
         labels: {
-          color: isDarkMode ? "#DDD" : "#333",
+          color: isDarkMode ? '#DDD' : '#333',
           font: { size: 14 },
         },
       },
       tooltip: {
-        backgroundColor: isDarkMode ? "#2B1B50" : "#FFF",
-        titleColor: isDarkMode ? "#FFF" : "#000",
-        bodyColor: isDarkMode ? "#CCC" : "#444",
+        backgroundColor: isDarkMode ? '#2B1B50' : '#FFF',
+        titleColor: isDarkMode ? '#FFF' : '#000',
+        bodyColor: isDarkMode ? '#CCC' : '#444',
       },
     },
     scales: {
       x: {
-        ticks: { color: isDarkMode ? "#DDD" : "#333", stepSize: 10 },
+        ticks: { color: isDarkMode ? '#DDD' : '#333', stepSize: 10 },
       },
       y: {
         grid: { display: false },
-        ticks: { color: isDarkMode ? "#DDD" : "#333" },
+        ticks: { color: isDarkMode ? '#DDD' : '#333' },
       },
     },
   };
 
   return (
     <div className="bg-gray-100 dark:bg-gradient-night dark:text-white text-gray-800 shadow rounded-lg p-2 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
-      
       {/* العنوان */}
       <header className="px-5 py-4 border-b border-gray-300 dark:border-gray-700 flex items-center">
         <h2 className="font-semibold text-md">👨‍⚖️ أداء المحامين في المكتب</h2>
@@ -108,7 +135,8 @@ function DashboardCard04({ isDarkMode }) {
       {/* المحتوى */}
       <div className="mt-4">
         <p className="text-sm text-gray-500 dark:text-gray-300">
-          يعرض هذا المخطط عدد القضايا التي تعامل معها كل محامٍ، بالإضافة إلى نسبة النجاح في القضايا المغلقة.
+          يعرض هذا المخطط عدد القضايا التي تعامل معها كل محامٍ، بالإضافة إلى
+          نسبة النجاح في القضايا المغلقة.
         </p>
       </div>
 

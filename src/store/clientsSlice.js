@@ -1,3 +1,4 @@
+// 📁 src/store/clientsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { getClients, updateClientStatus } from '../services/api/clients'; // Importing the API method to fetch clients
 
@@ -31,6 +32,11 @@ const clientsSlice = createSlice({
     },
   },
 });
+
+// Selectors to retrieve state
+export const selectClients = (state) => state.clients.clients;
+export const selectLoading = (state) => state.clients.loading;
+export const selectError = (state) => state.clients.error; // Add this selector
 
 // Export actions
 export const { setClients, setLoading, setError, updateClientStatusInStore } = clientsSlice.actions;

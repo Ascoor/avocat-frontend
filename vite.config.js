@@ -30,14 +30,14 @@ export default defineConfig({
     port: 3000,
     open: true,
     cors: true,
-    historyApiFallback: true, // ✅ حل مشكلة 404 عند إعادة تحميل الصفحة
+    historyApiFallback: true, 
   },
 
   build: {
-    outDir: '../public_html', // ✅ نقل ملفات الإنتاج مباشرة إلى public_html
-    emptyOutDir: false, // ✅ حذف الملفات القديمة قبل كل بناء جديد
+    outDir: '../public_html', 
+    emptyOutDir: false, 
     minify: 'esbuild',
-    sourcemap: false, // ⬅️ يفضل تعطيله في الإنتاج لتقليل حجم الملفات
+    sourcemap: false, 
     rollupOptions: {
       output: {
         manualChunks: {

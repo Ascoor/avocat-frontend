@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker'; 
 import { useAlert } from '../../../context/AlertContext';
-import api from '../../../services/api/axiosConfig'; 
+import api from '../../../services/api/axiosConfig';
 import GlobalModal from '../../common/GlobalModal';
 
 const AddEditUnclient = ({ unclient = {}, isOpen, onClose, onSaved }) => {
@@ -24,7 +23,6 @@ const AddEditUnclient = ({ unclient = {}, isOpen, onClose, onSaved }) => {
 
   // Define isEditMode based on the presence of unclient.id
   const isEditMode = unclient?.id ? true : false;
-
 
   const { triggerAlert } = useAlert();
   useEffect(() => {
@@ -94,17 +92,11 @@ const AddEditUnclient = ({ unclient = {}, isOpen, onClose, onSaved }) => {
 
     try {
       const response = isEditMode
-        ? await api.put(
-            `/api/unclients/${unclient.id}`,
-            formattedData,
-          )
-        : await api.post(
-            `/api/unclients`,
-            formattedData,
-          );
+        ? await api.put(`/api/unclients/${unclient.id}`, formattedData)
+        : await api.post(`/api/unclients`, formattedData);
 
       onSaved();
-      
+
       triggerAlert('success', 'تم حفظ العميل بنجاح');
       onClose();
       resetForm();
@@ -112,8 +104,7 @@ const AddEditUnclient = ({ unclient = {}, isOpen, onClose, onSaved }) => {
       if (error.response?.status === 422) {
         setValidationErrors(error.response.data.errors || {});
       } else {
-
-      triggerAlert('error', 'حدث خطاء');
+        triggerAlert('error', 'حدث خطاء');
       }
     } finally {
       setIsLoading(false);
@@ -127,7 +118,8 @@ const AddEditUnclient = ({ unclient = {}, isOpen, onClose, onSaved }) => {
       title={unclient?.id ? 'تعديل العميل' : 'إضافة عميل'}
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        {[{ name: 'name', label: 'الاسم الكامل', type: 'text' },
+        {[
+          { name: 'name', label: 'الاسم الكامل', type: 'text' },
           { name: 'slug', label: 'رقم العميل', type: 'text' },
           { name: 'identity_number', label: 'رقم الهوية', type: 'text' },
           { name: 'address', label: 'العنوان', type: 'text' },

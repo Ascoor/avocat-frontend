@@ -1,4 +1,3 @@
-// ../assets/icons/index.js
 export { default as ClientIcon } from './clients.png';
 export { default as DashBoard } from './Dashboard.png';
 export { default as LegCaseIcon } from './legcase.png';
@@ -6,7 +5,6 @@ export { default as favicon } from './legcaseAdd.ico';
 export { default as LegCaseDetailsIcon } from './legalmain.png';
 export { default as ClientAddIcon } from './clientadd.png';
 export { default as AdIcon } from './adv-icon.png';
-//sections
 
 export { default as ProcedurePlaceIcon } from './procedure-place.png';
 export { default as ProcedureIcon } from './procedure-icon.png';

@@ -7,7 +7,7 @@ import {
 } from '../../../services/api/legalCases';
 import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
 import { useAlert } from '../../../context/AlertContext';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 const LegalCaseAds = ({ legCaseId }) => {
   const { triggerAlert } = useAlert();
   const [showModal, setShowModal] = useState(false);
@@ -18,7 +18,7 @@ const LegalCaseAds = ({ legCaseId }) => {
   const [legalAds, setLegalAds] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
- 
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
@@ -113,7 +113,6 @@ const LegalCaseAds = ({ legCaseId }) => {
     });
     handleModalClose();
   };
-  
 
   const legalAdsToDisplay = paginateData(legalAds);
 
@@ -122,34 +121,34 @@ const LegalCaseAds = ({ legCaseId }) => {
 
   return (
     <div className="min-h-screen bg-lightBg dark:bg-darkBg text-gray-900 dark:text-gray-100">
-    {/* ✅ Header Section */}
-    <motion.header
-      className="p-4 bg-gradient-blue-dark dark:bg-avocat-blue-dark flex justify-between items-center rounded-lg shadow-md"
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {/* ✅ Button Positioned at Start */}
-      <button
-        onClick={handleAddAd}
-        className="px-2 py-2 text-sm rounded-lg font-bold bg-gradient-green-button hover:bg-gradient-green-dark-button text-white shadow-md hover:scale-105 transform transition-all"
+      {/* ✅ Header Section */}
+      <motion.header
+        className="p-4 bg-gradient-blue-dark dark:bg-avocat-blue-dark flex justify-between items-center rounded-lg shadow-md"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
-        <BiPlusCircle className="inline-block ml-2" />
-        إضافة 
-      </button>
+        {/* ✅ Button Positioned at Start */}
+        <button
+          onClick={handleAddAd}
+          className="px-2 py-2 text-sm rounded-lg font-bold bg-gradient-green-button hover:bg-gradient-green-dark-button text-white shadow-md hover:scale-105 transform transition-all"
+        >
+          <BiPlusCircle className="inline-block ml-2" />
+          إضافة
+        </button>
 
-      {/* ✅ Title Centered */}
-      <h1 className="text-lg font-bold text-white flex-1 text-center">
-        الإعلانات  
-      </h1>
-    </motion.header>
+        {/* ✅ Title Centered */}
+        <h1 className="text-lg font-bold text-white flex-1 text-center">
+          الإعلانات
+        </h1>
+      </motion.header>
 
       {error && (
         <div className="mb-4 text-red-500 font-semibold text-center mt-4">
           {error}
         </div>
       )}
-   {loading ? (
+      {loading ? (
         <div className="text-center py-4">جاري تحميل الإعلانات...</div>
       ) : (
         <div className="p-6">
@@ -240,7 +239,6 @@ const LegalCaseAds = ({ legCaseId }) => {
           </div>
         </div>
       )}
-
 
       {/* ✅ Ads Modal */}
       {showModal && (

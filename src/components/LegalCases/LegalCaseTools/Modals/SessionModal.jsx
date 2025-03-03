@@ -126,246 +126,244 @@ const SessionModal = ({
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* الحقول الأساسية عند الإضافة */}
-          {!isEdit && (
-            <>
-            
-              {/* المحكمة */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  المحكمة
-                </label>
-                <select
-                  name="court_id"
-                  value={formData.court_id}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                  required
-                >
-                  <option value="">اختر المحكمة</option>
-                  {courts.map((court) => (
-                    <option key={court.id} value={court.id}>
-                      {court.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* نوع الجلسة */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  نوع الجلسة
-                </label>
-                <select
-                  name="legal_session_type_id"
-                  value={formData.legal_session_type_id}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                  required
-                >
-                  <option value="">اختر نوع الجلسة</option>
-                  {legalSessionTypes.map((legalSessionType) => (
-                    <option
-                      key={legalSessionType.id}
-                      value={legalSessionType.id}
-                    >
-                      {legalSessionType.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* دائرة المحكمة */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  دائرة المحكمة
-                </label>
-                <input
-                  name="court_department"
-                  type="text"
-                  value={formData.court_department}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                />
-              </div>
-
-              {/* رول القضية */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  رول القضية
-                </label>
-                <input
-                  name="session_roll"
-                  type="text"
-                  value={formData.session_roll}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                />
-              </div>
-
-              {/* تاريخ الجلسة */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  تاريخ الجلسة
-                </label>
-                <input
-                  name="session_date"
-                  type="date"
-                  value={formData.session_date}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                  required
-                />
-              </div>
-
-              {/* المحامي */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  المحامي
-                </label>
-                <select
-                  name="lawyer_id"
-                  value={formData.lawyer_id}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                  required
-                >
-                  <option value="">اختر المحامي</option>
-                  {lawyers.map((lawyer) => (
-                    <option key={lawyer.id} value={lawyer.id}>
-                      {lawyer.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* الطلبات */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  الطلبات
-                </label>
-                <input
-                  name="orders"
-                  type="text"
-                  value={formData.orders}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                  required
-                />
-              </div>
-
-              {/* ملاحظات */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  ملاحظات
-                </label>
-                <input
-                  name="notes"
-                  type="text"
-                  value={formData.notes}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                />
-              </div>
-            </>
-          )}
-
-          {/* إظهار الحقول الأخرى في وضع التعديل */}
-          {isEdit && (
-            <>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  النتيجة
-                </label>
-                <input
-                  name="result"
-                  type="text"
-                  value={formData.result}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  نص القرار أو الحكم
-                </label>
-                <textarea
-                  name="Judgment_operative"
-                  value={formData.Judgment_operative}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                  rows="3"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  حالة الجلسة
-                </label>
-                <select
-                  name="status"
-                  value={formData.status}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                  required
-                >
-                  <option value="جارى التنفيذ">جارى التنفيذ</option>
-                  <option value="تمت">تمت</option>
-                  <option value="لم ينفذ">لم ينفذ</option>
-                </select>
-              </div>
-
-              {/* التكاليف */}
-              <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* الحقول الأساسية عند الإضافة */}
+            {!isEdit && (
+              <>
+                {/* المحكمة */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    رسوم بإيصالات
+                    المحكمة
+                  </label>
+                  <select
+                    name="court_id"
+                    value={formData.court_id}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                    required
+                  >
+                    <option value="">اختر المحكمة</option>
+                    {courts.map((court) => (
+                      <option key={court.id} value={court.id}>
+                        {court.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* نوع الجلسة */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    نوع الجلسة
+                  </label>
+                  <select
+                    name="legal_session_type_id"
+                    value={formData.legal_session_type_id}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                    required
+                  >
+                    <option value="">اختر نوع الجلسة</option>
+                    {legalSessionTypes.map((legalSessionType) => (
+                      <option
+                        key={legalSessionType.id}
+                        value={legalSessionType.id}
+                      >
+                        {legalSessionType.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* دائرة المحكمة */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    دائرة المحكمة
                   </label>
                   <input
-                    name="cost1"
-                    type="number"
-                    value={formData.cost1}
+                    name="court_department"
+                    type="text"
+                    value={formData.court_department}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                  />
+                </div>
+
+                {/* رول القضية */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    رول القضية
+                  </label>
+                  <input
+                    name="session_roll"
+                    type="text"
+                    value={formData.session_roll}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                  />
+                </div>
+
+                {/* تاريخ الجلسة */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    تاريخ الجلسة
+                  </label>
+                  <input
+                    name="session_date"
+                    type="date"
+                    value={formData.session_date}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                    required
+                  />
+                </div>
+
+                {/* المحامي */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    المحامي
+                  </label>
+                  <select
+                    name="lawyer_id"
+                    value={formData.lawyer_id}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                    required
+                  >
+                    <option value="">اختر المحامي</option>
+                    {lawyers.map((lawyer) => (
+                      <option key={lawyer.id} value={lawyer.id}>
+                        {lawyer.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* الطلبات */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    الطلبات
+                  </label>
+                  <input
+                    name="orders"
+                    type="text"
+                    value={formData.orders}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                    required
+                  />
+                </div>
+
+                {/* ملاحظات */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    ملاحظات
+                  </label>
+                  <input
+                    name="notes"
+                    type="text"
+                    value={formData.notes}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                  />
+                </div>
+              </>
+            )}
+
+            {/* إظهار الحقول الأخرى في وضع التعديل */}
+            {isEdit && (
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                    النتيجة
+                  </label>
+                  <input
+                    name="result"
+                    type="text"
+                    value={formData.result}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    أتعاب الجلسة
+                    نص القرار أو الحكم
                   </label>
-                  <input
-                    name="cost2"
-                    type="number"
-                    value={formData.cost2}
+                  <textarea
+                    name="Judgment_operative"
+                    value={formData.Judgment_operative}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                    rows="3"
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                    مصروفات أخرى
+                    حالة الجلسة
                   </label>
-                  <input
-                    name="cost3"
-                    type="number"
-                    value={formData.cost3}
+                  <select
+                    name="status"
+                    value={formData.status}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
-                  />
+                    required
+                  >
+                    <option value="جارى التنفيذ">جارى التنفيذ</option>
+                    <option value="تمت">تمت</option>
+                    <option value="لم ينفذ">لم ينفذ</option>
+                  </select>
                 </div>
-              </div>
-            </>
-          )}
 
-          <button
-            type="submit"
-            className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-          >
-            {isEdit ? 'تحديث' : 'إضافة'}
-          </button>
-      </div>
+                {/* التكاليف */}
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                      رسوم بإيصالات
+                    </label>
+                    <input
+                      name="cost1"
+                      type="number"
+                      value={formData.cost1}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                      أتعاب الجلسة
+                    </label>
+                    <input
+                      name="cost2"
+                      type="number"
+                      value={formData.cost2}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                      مصروفات أخرى
+                    </label>
+                    <input
+                      name="cost3"
+                      type="number"
+                      value={formData.cost3}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
+            <button
+              type="submit"
+              className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            >
+              {isEdit ? 'تحديث' : 'إضافة'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
