@@ -52,9 +52,10 @@ const SearchCourt = () => {
       caseYear: selectedCaseYear,
       caseNumber: selectedCaseNumber,
     };
-
+    
     axios
-      .post('https:      .then((response) => {
+      .post('https://search-api.avocat.live/search', formData)
+      .then((response) => {
         setSearchResults(response.data);
       })
       .catch((error) => {
