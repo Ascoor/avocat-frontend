@@ -1,14 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getClients, updateClientStatus } from '../services/api/clients'; // Importing the API method to fetch clients
-
-// Initial state for clients
+import { getClients, updateClientStatus } from '../services/api/clients';
 const initialState = {
   clients: [],
   loading: false,
   error: null,
 };
 
-// Create slice for clients management
 const clientsSlice = createSlice({
   name: 'clients',
   initialState,
@@ -32,26 +29,24 @@ const clientsSlice = createSlice({
   },
 });
 
-// Export actions
 export const { setClients, setLoading, setError, updateClientStatusInStore } =
   clientsSlice.actions;
 
-// Fetch clients from the API with async thunk
 export const fetchClients = () => async (dispatch) => {
-  dispatch(setLoading(true)); // Set loading state to true
+  dispatch(setLoading(true));
   try {
-    const response = await getClients(); // Call the API to get clients
-    dispatch(setClients(response.data.clients)); // Dispatch clients to store
+    const response = await getClients();
+    dispatch(setClients(response.data.clients));
   } catch (error) {
-    dispatch(setError('Error fetching clients')); // Handle any errors
+    dispatch(setError('Error fetching clients'));
   } finally {
-    dispatch(setLoading(false)); // Set loading state to false after the API call
+    dispatch(setLoading(false));
   }
 };
 export const updateClientStatusAsync = (id, status) => async (dispatch) => {
   try {
-    const response = await updateClientStatus(id, status); // Update client status via API
-    dispatch(updateClientStatusInStore({ id, status: response.data.status })); // Update status in Redux store
+    const response = await updateClientStatus(id, status);
+    dispatch(updateClientStatusInStore({ id, status: response.data.status }));
   } catch (error) {
     console.error('Error updating client status:', error);
   }

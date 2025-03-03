@@ -10,7 +10,6 @@ import SectionHeader from '../components/common/SectionHeader';
 import { LawyerIcon } from '../assets/icons';
 import TableComponent from '../components/common/TableComponent';
 
-// Lazy-load LawyerAddEdit (improves performance)
 const LawyerAddEdit = lazy(() => import('../components/Lawyers/lawyerAddEdit'));
 
 const Lawyers = () => {
@@ -18,7 +17,6 @@ const Lawyers = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingLawyer, setEditingLawyer] = useState(null);
 
-  // Fetch lawyers efficiently
   const fetchLawyers = useCallback(async () => {
     try {
       const response = await getLawyers();
@@ -32,7 +30,6 @@ const Lawyers = () => {
     fetchLawyers();
   }, [fetchLawyers]);
 
-  // Handle lawyer submit (create or update)
   const handleLawyerSubmit = async (formData) => {
     try {
       if (editingLawyer) {
@@ -47,7 +44,6 @@ const Lawyers = () => {
     }
   };
 
-  // Delete lawyer
   const handleDeleteLawyer = async (lawyerId) => {
     try {
       await deleteLawyer(lawyerId);
@@ -57,13 +53,11 @@ const Lawyers = () => {
     }
   };
 
-  // Show edit modal
   const handleShowEditModal = (lawyer) => {
     setEditingLawyer(lawyer);
     setShowModal(true);
   };
 
-  // Table headers setup
   const headers = [
     { key: 'name', text: 'الاسم' },
     { key: 'birthdate', text: 'تاريخ الميلاد' },
@@ -74,7 +68,6 @@ const Lawyers = () => {
     { key: 'phone_number', text: 'رقم الهاتف' },
   ];
 
-  // Custom renderer for table actions (edit, delete)
   const customRenderers = {
     actions: (lawyer) => (
       <div className="flex items-center gap-2">
@@ -94,7 +87,6 @@ const Lawyers = () => {
     ),
   };
 
-  // Render the add lawyer button
   const renderAddButton = () => (
     <button
       onClick={() => {
@@ -121,7 +113,7 @@ const Lawyers = () => {
         renderAddButton={renderAddButton}
       />
 
-      {/* Display the modal only when necessary */}
+      {}
       {showModal && (
         <LawyerModal
           isOpen={showModal}

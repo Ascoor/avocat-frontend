@@ -120,7 +120,7 @@ const ProcedureModal = ({
           onSubmit={handleSubmit}
           className="space-y-6 max-h-[70vh] overflow-y-auto pr-2"
         >
-          {/* نوع الإجراء */}
+          {}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               نوع الإجراء
@@ -141,7 +141,7 @@ const ProcedureModal = ({
             </select>
           </div>
 
-          {/* نوع الجهة */}
+          {}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               نوع الجهة
@@ -162,7 +162,7 @@ const ProcedureModal = ({
             </select>
           </div>
 
-          {/* اسم الجهة */}
+          {}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               اسم الجهة
@@ -176,7 +176,7 @@ const ProcedureModal = ({
             />
           </div>
 
-          {/* تاريخ البدء */}
+          {}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               تاريخ البدء
@@ -191,7 +191,7 @@ const ProcedureModal = ({
             />
           </div>
 
-          {/* تاريخ الانتهاء */}
+          {}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               تاريخ الانتهاء
@@ -206,7 +206,7 @@ const ProcedureModal = ({
             />
           </div>
 
-          {/* المحامي */}
+          {}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               المحامي
@@ -227,7 +227,7 @@ const ProcedureModal = ({
             </select>
           </div>
 
-          {/* المطلوب */}
+          {}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               المطلوب
@@ -242,7 +242,7 @@ const ProcedureModal = ({
             />
           </div>
 
-          {/* النتيجة */}
+          {}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               النتيجة
@@ -255,7 +255,7 @@ const ProcedureModal = ({
               className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
             />
           </div>
-          {/* حالة الإجراء (يظهر فقط في وضع التعديل) */}
+          {}
           {isEdit && (
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
@@ -275,7 +275,7 @@ const ProcedureModal = ({
             </div>
           )}
 
-          {/* التكاليف */}
+          {}
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">

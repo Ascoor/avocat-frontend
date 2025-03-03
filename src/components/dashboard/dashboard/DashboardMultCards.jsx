@@ -68,7 +68,6 @@ const sessions = [
   },
 ];
 
-// ✅ بيانات الخدمات القانونية للأسبوع
 const services = [
   {
     id: 1,
@@ -107,14 +106,14 @@ const services = [
 const getServiceStyle = (status) => {
   switch (status) {
     case 'completed':
-      return { color: 'bg-green-500', icon: 'M10 20l5-5 5 5H10z' }; // ✅ مكتملة
+      return { color: 'bg-green-500', icon: 'M10 20l5-5 5 5H10z' };
     case 'in-progress':
-      return { color: 'bg-yellow-500', icon: 'M10 10h10v10H10V10z' }; // ⏳ قيد التنفيذ
+      return { color: 'bg-yellow-500', icon: 'M10 10h10v10H10V10z' };
     case 'pending':
       return {
         color: 'bg-red-500',
         icon: 'M12 20v-6h4v6h5v-8h3L12 3 2 12h3v8z',
-      }; // ❌ معلقة
+      };
     default:
       return {
         color: 'bg-gray-500',

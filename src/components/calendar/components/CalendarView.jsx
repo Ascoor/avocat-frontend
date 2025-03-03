@@ -1,12 +1,9 @@
-// 📅 CalendarView.jsx
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import useFetchEvents from '../hooks/useFetchEvents'; // ✅ استخدم التصدير الافتراضي
-
+import useFetchEvents from '../hooks/useFetchEvents';
 const CalendarView = () => {
-  const { events } = useFetchEvents(); // استدعاء هوك جلب الأحداث
-
+  const { events } = useFetchEvents();
   return (
     <div className="calendar-view">
       <FullCalendar

@@ -13,10 +13,9 @@ const DashboardSearch = ({
   const [selectedClient, setSelectedClient] = useState(null);
   const [activeTab, setActiveTab] = useState('legCases');
 
-  // ✅ مسح النتائج عند تغيير البحث
   useEffect(() => {
-    setSelectedClient(null); // إلغاء تحديد العميل
-    setActiveTab('legCases'); // إعادة تعيين التبويب
+    setSelectedClient(null);
+    setActiveTab('legCases');
   }, [filteredClients]);
 
   const handleClientClick = (client) => {
@@ -25,16 +24,16 @@ const DashboardSearch = ({
 
   return (
     <div className="w-full max-w-2xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-      {/* 🌀 تحميل البيانات */}
+      {}
       {loading && <AuthSpinner />}
       {error && <p className="text-red-500">{error}</p>}
 
-      {/* ✅ عرض رسالة إذا لم تكن هناك نتائج */}
+      {}
       {filteredClients?.length === 0 && (
         <p className="text-center text-gray-500">لم يتم العثور على نتائج.</p>
       )}
 
-      {/* 🟢 عرض جدول النتائج */}
+      {}
       {filteredClients.length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -96,7 +95,7 @@ const DashboardSearch = ({
         </motion.div>
       )}
 
-      {/* 🟢 عرض تفاصيل العميل المحدد */}
+      {}
       {selectedClient && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}

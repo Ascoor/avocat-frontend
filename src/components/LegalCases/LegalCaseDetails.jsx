@@ -17,8 +17,7 @@ export default function LegCaseDetails() {
   const [legCase, setLegCase] = useState(null);
   const [legcaseClients, setLegcaseClients] = useState([]);
   const [activeTab, setActiveTab] = useState('procedure');
-  const [loading, setLoading] = useState(true); // ✅ حالة التحميل لمرة واحدة فقط
-
+  const [loading, setLoading] = useState(true);
   const fetchLegCase = async () => {
     setLoading(true);
     try {
@@ -30,7 +29,7 @@ export default function LegCaseDetails() {
     } catch (error) {
       console.error('Error fetching legal case details:', error);
     } finally {
-      setLoading(false); // ✅ إيقاف التحميل بعد إتمام الجلب
+      setLoading(false);
     }
   };
 
@@ -48,7 +47,7 @@ export default function LegCaseDetails() {
 
   return (
     <div className="max-w-7xl mx-auto p-6 bg-lightBg dark:bg-darkBg transition-all">
-      {/* ✅ Header Section */}
+      {}
       <motion.div
         className="bg-gradient-night p-6 rounded-xl shadow-lg flex items-center justify-center"
         initial={{ opacity: 0, y: -20 }}
@@ -59,7 +58,7 @@ export default function LegCaseDetails() {
         <h2 className="text-4xl text-white font-bold">بيانات القضية</h2>
       </motion.div>
 
-      {/* ✅ Clients Section */}
+      {}
       <div className="mt-8">
         <Suspense
           fallback={
@@ -74,7 +73,7 @@ export default function LegCaseDetails() {
         </Suspense>
       </div>
 
-      {/* ✅ Courts Section */}
+      {}
       <div className="mt-8">
         <Suspense
           fallback={
@@ -85,9 +84,9 @@ export default function LegCaseDetails() {
         </Suspense>
       </div>
 
-      {/* ✅ Tabs Section */}
+      {}
       <div className="mt-8">
-        {/* ✅ Tabs Container */}
+        {}
         <div className="flex flex-wrap justify-center border-b border-green-400 dark:border-green-700">
           {['procedure', 'session', 'legalAd'].map((tab) => (
             <motion.button
@@ -109,7 +108,7 @@ export default function LegCaseDetails() {
           ))}
         </div>
 
-        {/* ✅ Tab Content */}
+        {}
         <motion.div
           className="p-6 bg-white dark:bg-gray-800 shadow-xl rounded-xl mt-4 transition-all"
           initial={{ opacity: 0, y: 10 }}

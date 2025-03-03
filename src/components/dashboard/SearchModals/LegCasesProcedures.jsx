@@ -1,7 +1,7 @@
 const LegCasesProcedures = ({ selectedCase, activeSubTab }) => {
   return (
     <>
-      {/* Tab content */}
+      {}
       {activeSubTab === 'procedures' && (
         <div>
           <h4 className="mt-4 text-lg font-semibold">الإجراءات:</h4>

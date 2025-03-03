@@ -2,7 +2,6 @@ import React from 'react';
 import { chartAreaGradient } from '../charts/ChartjsConfig';
 import LineChart from '../charts/LineChart02';
 
-// Import utilities
 import { tailwindConfig } from '../../../utils/Utils';
 
 function DashboardCard08() {
@@ -36,7 +35,6 @@ function DashboardCard08() {
       '01-01-2025',
     ],
     datasets: [
-      // Indigo line
       {
         label: 'الحالي',
         data: [
@@ -55,7 +53,6 @@ function DashboardCard08() {
         clip: 20,
         tension: 0.2,
       },
-      // Blue line
       {
         label: 'السابق',
         data: [
@@ -74,7 +71,6 @@ function DashboardCard08() {
         clip: 20,
         tension: 0.2,
       },
-      // Green line
       {
         label: 'المتوسط',
         data: [
@@ -104,8 +100,8 @@ function DashboardCard08() {
         </h2>
       </header>
 
-      {/* Chart built with Chart.js 3 */}
-      {/* Adjust chart height and width based on screen size */}
+      {}
+      {}
       <div className="px-4 py-6">
         <LineChart
           data={chartData}

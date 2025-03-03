@@ -11,7 +11,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
         className="fixed inset-0"
       >
         <section className="relative w-full max-w-lg max-h-[90vh] p-6 mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-y-auto">
-          {/* Close Button */}
+          {}
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none"
@@ -19,13 +19,13 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
             &#x2715;
           </button>
 
-          {/* Modal Title */}
+          {}
           <h2 className="text-xl font-bold text-center p-2 rounded-full bg-gradient-night text-white dark:text-avocat-indigo-light mb-4">
             تفاصيل الجلسة
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Session Date */}
+            {}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 تاريخ الجلسة
@@ -38,7 +38,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               />
             </div>
 
-            {/* Lawyer */}
+            {}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 المحامي
@@ -51,7 +51,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               />
             </div>
 
-            {/* Roll */}
+            {}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 الرول
@@ -64,7 +64,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               />
             </div>
 
-            {/* Court */}
+            {}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 المحكمة
@@ -77,7 +77,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               />
             </div>
 
-            {/* Session Type */}
+            {}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 نوع الجلسة
@@ -90,7 +90,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               />
             </div>
 
-            {/* Status */}
+            {}
             <div>
               <label className="text-avocat-indigo dark:text-avocat-indigo-light">
                 حالة الجلسة
@@ -108,7 +108,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               </div>
             </div>
 
-            {/* Orders */}
+            {}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 الطلبات
@@ -120,7 +120,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               ></textarea>
             </div>
 
-            {/* Result */}
+            {}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 النتيجة
@@ -132,7 +132,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               ></textarea>
             </div>
 
-            {/* Notes */}
+            {}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 الملاحظات
@@ -146,7 +146,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {/* Official Fees */}
+            {}
             <div>
               <label className="text-sm font-medium text-avocat-indigo dark:text-avocat-indigo-light">
                 رسوم رسمية
@@ -159,7 +159,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               />
             </div>
 
-            {/* Administrative Costs */}
+            {}
             <div>
               <label className="text-sm font-medium text-avocat-indigo dark:text-avocat-indigo-light">
                 مصاريف إدارية
@@ -172,7 +172,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               />
             </div>
 
-            {/* Tips */}
+            {}
             <div>
               <label className="text-sm font-medium text-avocat-indigo dark:text-avocat-indigo-light">
                 إكراميات
@@ -185,7 +185,7 @@ const SessionDetailsModal = ({ isOpen, onClose, session }) => {
               />
             </div>
 
-            {/* Created By */}
+            {}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 المحرر

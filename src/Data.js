@@ -1,4 +1,3 @@
-// Data.js
 const fakeData = {
   last_sessions: 8,
   general_procedures: 15,

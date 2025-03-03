@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import SectionHeader from '../components/common/SectionHeader';
 import { ProcedureIcon } from '../assets/icons';
 
-// ✅ Lazy-load ProcedureTypes and ProcedurePlaceTypes
 const ProcedureTypes = lazy(
   () => import('../components/Procedures/ProcedureTypes'),
 );
@@ -15,7 +14,7 @@ const Procedures = () => {
     <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
       <SectionHeader listName="الإجراءات" icon={ProcedureIcon} />
 
-      {/* جدولان في صف واحد متجاورين في الشاشات الكبيرة */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="col-span-1">
           <Suspense fallback={<div>جار التحميل...</div>}>

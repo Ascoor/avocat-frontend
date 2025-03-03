@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import API_CONFIG from '../../config/config';
-import DatePicker from 'react-datepicker'; 
+import DatePicker from 'react-datepicker';
 import SectionHeader from '../common/SectionHeader';
 import { SearchSectionIcon } from '../../assets/icons';
 

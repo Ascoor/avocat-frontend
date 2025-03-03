@@ -1,8 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSidebar } from '../../utils/SidebarContext';
-import { motion } from 'framer-motion'; // استيراد motion من framer-motion
-
+import { motion } from 'framer-motion';
 import { LogoArt, LogoSuit } from '../../assets/images/index';
 import {
   FaHome,
@@ -22,10 +21,9 @@ const Sidebar = () => {
   const { isSidebarOpen, setIsSidebarOpen, isMobile } = useSidebar();
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-  // حركات sidebar باستخدام motion من framer-motion
   const sidebarVariants = {
     open: {
-      width: isMobile ? '100%' : '18rem', // يعرض الشريط الجانبي كاملًا على الأجهزة الصغيرة
+      width: isMobile ? '100%' : '18rem',
       opacity: 1,
       x: 0,
       transition: {
@@ -35,8 +33,7 @@ const Sidebar = () => {
       },
     },
     closed: {
-      width: isMobile ? '0' : '5rem', // إخفاء الشريط الجانبي المصغر على الأجهزة الصغيرة
-
+      width: isMobile ? '0' : '4rem',
       opacity: 0.9,
       x: '0%',
       transition: {
@@ -66,20 +63,20 @@ const Sidebar = () => {
       animate={isSidebarOpen ? 'open' : 'closed'}
       className="fixed top-0 right-0 h-full bg-gradient-to-b from-avocat-indigo-dark via-avocat-indigo to-avocat-blue-light dark:bg-gradient-to-b dark:from-avocat-blue-darker dark:via-gradient-night dark:to-avocat-blue shadow-lg z-30 flex flex-col transition-all ease-in-out"
     >
-      {/* الشعار */}
+      {}
       <div
         className={` flex items-center justify-center h-16 ${isMobile ? 'mt-6' : 'mt-0'}`}
       >
         <img
           src={isSidebarOpen ? LogoArt : LogoSuit}
           alt="Logo"
-          className={isSidebarOpen ? 'w-28 h-16' : 'w-12 h-12 mt-2'}
+          className={isSidebarOpen ? 'w-28 h-16 mt-16' : 'w-12 h-12 mt-2'}
         />
       </div>
 
-      {/* القائمة */}
+      {}
       <ul
-        className={`mt-4 flex-1 transition-opacity ${isSidebarOpen ? 'opacity-100' : 'opacity-0 md:opacity-100'}`}
+        className={`mt-4 flex-1 transition-opacity ${isSidebarOpen ? 'opacity-100 mt-16' : 'opacity-0 md:opacity-100'}`}
       >
         {menuItems.map((item, index) => (
           <li key={index} className="group relative">
@@ -102,7 +99,7 @@ const Sidebar = () => {
         ))}
       </ul>
 
-      {/* زر فتح/إغلاق الشريط */}
+      {}
       <button
         onClick={toggleSidebar}
         className="absolute bottom-6 right-4 p-2 bg-indigo-700 dark:bg-purple-500/50 text-white rounded-full hover:bg-indigo-500 dark:hover:bg-yellow-500 shadow-lg transition-all duration-300 ease-in-out transform hover:scale-110"

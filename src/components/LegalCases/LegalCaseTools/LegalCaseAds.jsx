@@ -19,16 +19,13 @@ const LegalCaseAds = ({ legCaseId }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
-  // Function to handle page change
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  // Function to slice data for current page
   const paginateData = (data) => {
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
@@ -116,19 +113,18 @@ const LegalCaseAds = ({ legCaseId }) => {
 
   const legalAdsToDisplay = paginateData(legalAds);
 
-  // Calculate total pages
   const totalPages = Math.ceil(legalAds.length / rowsPerPage);
 
   return (
     <div className="min-h-screen bg-lightBg dark:bg-darkBg text-gray-900 dark:text-gray-100">
-      {/* ✅ Header Section */}
+      {}
       <motion.header
         className="p-4 bg-gradient-blue-dark dark:bg-avocat-blue-dark flex justify-between items-center rounded-lg shadow-md"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* ✅ Button Positioned at Start */}
+        {}
         <button
           onClick={handleAddAd}
           className="px-2 py-2 text-sm rounded-lg font-bold bg-gradient-green-button hover:bg-gradient-green-dark-button text-white shadow-md hover:scale-105 transform transition-all"
@@ -137,7 +133,7 @@ const LegalCaseAds = ({ legCaseId }) => {
           إضافة
         </button>
 
-        {/* ✅ Title Centered */}
+        {}
         <h1 className="text-lg font-bold text-white flex-1 text-center">
           الإعلانات
         </h1>
@@ -217,7 +213,7 @@ const LegalCaseAds = ({ legCaseId }) => {
               </tbody>
             </table>
           </div>
-          {/* Pagination Controls */}
+          {}
           <div className="flex justify-center mt-4">
             <button
               disabled={currentPage === 1}
@@ -240,7 +236,7 @@ const LegalCaseAds = ({ legCaseId }) => {
         </div>
       )}
 
-      {/* ✅ Ads Modal */}
+      {}
       {showModal && (
         <LegalAdModal
           isOpen={showModal}
@@ -252,7 +248,7 @@ const LegalCaseAds = ({ legCaseId }) => {
         />
       )}
 
-      {/* ✅ Confirmation Modal */}
+      {}
       {confirmDelete && (
         <GlobalConfirmDeleteModal
           isOpen={confirmDelete}

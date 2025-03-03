@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import SearchResults from '../components/layout/SearchResults'; // استيراد مكون النتائج
+import SearchResults from '../components/layout/SearchResults';
 import api from '../services/api/axiosConfig';
 
 const SearchCourtsApi = () => {
@@ -77,7 +77,6 @@ const SearchCourtsApi = () => {
         { degree, court, caseType, caseYear, caseNumber },
         { headers: { 'x-request-source': 'React' } },
       );
-
       setSearchResults(response.data || { message: 'الدعوى غير مقيدة' });
     } catch (error) {
       console.error(error);

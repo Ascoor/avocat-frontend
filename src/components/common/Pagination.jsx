@@ -8,7 +8,6 @@ const CustomPagination = ({
 }) => {
   const totalPages = Math.ceil(totalCount / itemsPerPage);
 
-  // إنشاء مصفوفة من أرقام الصفحات
   const generatePageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
@@ -30,11 +29,10 @@ const CustomPagination = ({
 
   const pageNumbers = generatePageNumbers();
 
-  if (totalPages <= 1) return null; // لا تعرض إذا كان هناك صفحة واحدة فقط
-
+  if (totalPages <= 1) return null;
   return (
     <div className="flex justify-center items-center space-x-2 mt-4">
-      {/* زر السابق */}
+      {}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
@@ -43,7 +41,7 @@ const CustomPagination = ({
         السابق
       </button>
 
-      {/* أرقام الصفحات */}
+      {}
       {pageNumbers.map((page) => (
         <button
           key={page}
@@ -58,7 +56,7 @@ const CustomPagination = ({
         </button>
       ))}
 
-      {/* زر التالي */}
+      {}
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}

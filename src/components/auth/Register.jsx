@@ -13,9 +13,7 @@ const Register = ({ toggleLoginForm, handleFormClose }) => {
       setError('كلمتا المرور غير متطابقتين.');
       return;
     }
-    // Simulate the register process
     try {
-      // Placeholder for actual registration logic
       setTimeout(() => {
         setError('');
       }, 2000);

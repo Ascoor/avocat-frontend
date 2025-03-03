@@ -1,4 +1,3 @@
-// FilterPanel.jsx
 import { useState } from 'react';
 
 const FilterPanel = ({ onFilter }) => {
@@ -6,7 +5,7 @@ const FilterPanel = ({ onFilter }) => {
 
   const handleFilter = () => {
     if (keyword.trim() !== '') {
-      onFilter(keyword); // Call the filter function when the keyword is valid
+      onFilter(keyword);
     }
   };
 

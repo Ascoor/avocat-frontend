@@ -13,7 +13,6 @@ import {
 } from 'chart.js';
 import 'chartjs-adapter-moment';
 
-// Import utilities
 import { tailwindConfig } from '../../../utils/Utils';
 
 Chart.register(
@@ -34,13 +33,11 @@ function BarChart03({ data, width, height }) {
   const { tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors;
 
   useEffect(() => {
-    // Calculate sum of values
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     const values = data.datasets.map((x) => x.data.reduce(reducer));
     const max = values.reduce(reducer);
 
     const ctx = canvas.current;
-    // eslint-disable-next-line no-unused-vars
     const newChart = new Chart(ctx, {
       type: 'bar',
       data: data,
@@ -71,7 +68,7 @@ function BarChart03({ data, width, height }) {
           },
           tooltip: {
             callbacks: {
-              title: () => false, // Disable tooltip title
+              title: () => false,
               label: (context) => context.parsed.x,
             },
             bodyColor: darkMode
@@ -101,11 +98,9 @@ function BarChart03({ data, width, height }) {
           afterUpdate(c, args, options) {
             const ul = legend.current;
             if (!ul) return;
-            // Remove old legend items
             while (ul.firstChild) {
               ul.firstChild.remove();
             }
-            // Reuse the built-in legendItems generator
             const items = c.options.plugins.legend.labels.generateLabels(c);
             items.forEach((item) => {
               const li = document.createElement('li');
@@ -153,7 +148,6 @@ function BarChart03({ data, width, height }) {
     });
     setChart(newChart);
     return () => newChart.destroy();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

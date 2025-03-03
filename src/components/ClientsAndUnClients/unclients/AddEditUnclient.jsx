@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker'; 
+import DatePicker from 'react-datepicker';
 import { useAlert } from '../../../context/AlertContext';
 import api from '../../../services/api/axiosConfig';
 import GlobalModal from '../../common/GlobalModal';
@@ -21,7 +21,6 @@ const AddEditUnclient = ({ unclient = {}, isOpen, onClose, onSaved }) => {
   const [validationErrors, setValidationErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  // Define isEditMode based on the presence of unclient.id
   const isEditMode = unclient?.id ? true : false;
 
   const { triggerAlert } = useAlert();

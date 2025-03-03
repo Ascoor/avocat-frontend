@@ -1,4 +1,3 @@
-// 📝 EventCard.jsx
 const EventCard = ({ title, description, date }) => {
   return (
     <div className="p-4 bg-white dark:bg-gray-800 shadow-md rounded-lg">

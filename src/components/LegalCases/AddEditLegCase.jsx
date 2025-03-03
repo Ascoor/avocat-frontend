@@ -36,12 +36,10 @@ const AddEditLegCase = ({
 
   useEffect(() => {
     fetchCaseTypes();
-  }, []); // إزالة التبعيات لتجنب التكرار المستمر
-
+  }, []);
   useEffect(() => {
     if (isEditing && editingLegCase) {
       setCaseData(editingLegCase);
-      // عند تعديل البيانات، تحدث قائمة الأنواع الفرعية
       updateSubTypes(editingLegCase.case_type_id);
     } else {
       resetForm();
@@ -87,10 +85,9 @@ const AddEditLegCase = ({
     setCaseData((prevData) => ({
       ...prevData,
       case_type_id: newCaseTypeId,
-      case_sub_type_id: '', // Reset the sub-type when the case type changes
+      case_sub_type_id: '',
     }));
 
-    // تحديث قائمة التصنيفات الفرعية بناءً على التصنيف المحدد
     updateSubTypes(newCaseTypeId);
   };
 
@@ -261,7 +258,6 @@ const AddEditLegCase = ({
   );
 };
 
-// Helper Components
 const LabelInput = ({ icon: Icon, label, as = 'input', ...props }) => (
   <div className="flex flex-col mb-3">
     <label className="block text-sm font-medium">{label}</label>

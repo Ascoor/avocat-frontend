@@ -9,7 +9,6 @@ function DropdownNotifications({ align }) {
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
-  // إغلاق القائمة عند النقر خارجها
   useEffect(() => {
     const clickHandler = ({ target }) => {
       if (!dropdown.current) return;
@@ -25,7 +24,6 @@ function DropdownNotifications({ align }) {
     return () => document.removeEventListener('click', clickHandler);
   }, [dropdownOpen]);
 
-  // إغلاق القائمة عند الضغط على زر "Esc"
   useEffect(() => {
     const keyHandler = ({ keyCode }) => {
       if (!dropdownOpen || keyCode !== 27) return;
@@ -37,7 +35,7 @@ function DropdownNotifications({ align }) {
 
   return (
     <div className="relative inline-flex">
-      {/* زر الإشعارات */}
+      {}
       <button
         ref={trigger}
         className={`w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-gradient-to-b from-avocat-indigo-light to-avocat-indigo text-white hover:from-blue-600 hover:to-indigo-700 rounded-full shadow-md transition-transform transform hover:scale-105 ${
@@ -51,7 +49,7 @@ function DropdownNotifications({ align }) {
         <div className="absolute top-0 left-0 w-2 h-2 md:w-2.5 md:h-2.5 bg-red-500 border-2 border-white dark:border-gray-900 rounded-full animate-ping"></div>
       </button>
 
-      {/* القائمة المنسدلة */}
+      {}
       <Transition
         className={`origin-top-right z-20 absolute top-11 right-0 w-[50vw] sm:w-64 md:w-72 lg:w-80 xl:w-96 bg-white dark:bg-gradient-night border border-gray-200 dark:border-gray-700 py-2 rounded-2xl shadow-2xl overflow-hidden mt-2 transition-transform duration-300 ease-out`}
         show={dropdownOpen}
@@ -67,7 +65,7 @@ function DropdownNotifications({ align }) {
             الإشعارات
           </div>
           <ul>
-            {/* ✅ إشعار 1 */}
+            {}
             <li className="border-b border-gray-200 dark:border-gray-700/60 last:border-0">
               <Link
                 className="flex items-start gap-3 py-3 px-5 hover:bg-blue-50 dark:hover:bg-gray-700/20 transition rounded-lg"
@@ -91,7 +89,7 @@ function DropdownNotifications({ align }) {
               </Link>
             </li>
 
-            {/* ✅ إشعار 2 */}
+            {}
             <li className="border-b border-gray-200 dark:border-gray-700/60 last:border-0">
               <Link
                 className="flex items-start gap-3 py-3 px-5 hover:bg-green-50 dark:hover:bg-gray-700/20 transition rounded-lg"

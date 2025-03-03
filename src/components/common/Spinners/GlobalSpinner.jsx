@@ -3,7 +3,7 @@ const GlobalSpinner = () => {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 1000); // Spinner يظهر لمدة 1 ثانية
+    const timer = setTimeout(() => setVisible(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -11,9 +11,9 @@ const GlobalSpinner = () => {
 
   return (
     <div className="absolute inset-0 mt-6 flex items-center justify-center z-50">
-      {/* الطبقة الحاجبة */}
+      {}
       <div className="absolute inset-0 backdrop-blur-xxl"></div>
-      {/* Spinner */}
+      {}
       <div className="spinner-container flex flex-wrap gap-2 relative">
         <div className="dot w-4 h-4 rounded-full bg-avocat-dot-1 dark:bg-avocat-dark-dot-1"></div>
         <div className="dot w-4 h-4 rounded-full bg-avocat-dot-1  dark:bg-avocat-dark-dot-1"></div>

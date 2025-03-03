@@ -5,7 +5,7 @@ import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import { ClientSectionIcon } from '../../../assets/icons/index';
 import SectionHeader from '../../common/SectionHeader';
 import AddEditClient from './AddEditClient';
-import TableComponent from '../../common/TableComponent'; // ✅ مكون الجدول العالمي
+import TableComponent from '../../common/TableComponent';
 import api from '../../../services/api/axiosConfig';
 
 function ClientList() {
@@ -13,13 +13,11 @@ function ClientList() {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const { clients, loading, error } = useSelector((state) => state.clients); // Select clients state from Redux
-  // Fetch clients on component mount
+  const { clients, loading, error } = useSelector((state) => state.clients);
   useEffect(() => {
-    dispatch(fetchClients()); // Dispatch action to fetch clients
+    dispatch(fetchClients());
   }, [dispatch]);
 
-  // ✅ حذف عميل
   const handleDelete = async (id) => {
     try {
       await api.delete(`/api/clients/${id}`);
@@ -29,7 +27,6 @@ function ClientList() {
     }
   };
 
-  // ✅ تغيير حالة العميل
   const handleToggleStatus = async (id) => {
     try {
       const updatedClients = clients.map((client) =>
@@ -50,13 +47,11 @@ function ClientList() {
     }
   };
 
-  // ✅ فتح نافذة الإضافة أو التعديل
   const openAddEditModal = (client = null) => {
     setSelectedClient(client);
     setModalOpen(true);
   };
 
-  // ✅ إعداد رؤوس الجدول
   const headers = [
     { key: 'slug', text: 'الرمز' },
     { key: 'name', text: 'الاسم' },
@@ -66,7 +61,6 @@ function ClientList() {
     { key: 'status', text: 'الحالة' },
   ];
 
-  // ✅ عرض مخصص لحالة العميل
   const customRenderers = {
     status: (client) =>
       client.status === 'active' ? (
@@ -86,7 +80,6 @@ function ClientList() {
       ),
   };
 
-  // ✅ زر إضافة عميل
   const renderAddButton = () => (
     <button
       onClick={() => openAddEditModal()}
@@ -98,14 +91,14 @@ function ClientList() {
 
   return (
     <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full">
-      {/* ✅ رأس القسم */}
+      {}
       <SectionHeader
         buttonName="عميل"
         listName="عملاء"
         icon={ClientSectionIcon}
       />
 
-      {/* ✅ نافذة الإضافة أو التعديل */}
+      {}
       {isModalOpen && (
         <AddEditClient
           client={selectedClient}
@@ -115,7 +108,7 @@ function ClientList() {
         />
       )}
 
-      {/* ✅ مكون الجدول العالمي */}
+      {}
       <TableComponent
         data={clients}
         headers={headers}
@@ -125,7 +118,7 @@ function ClientList() {
         onDelete={handleDelete}
         sectionName="clients"
         customRenderers={customRenderers}
-        renderAddButton={renderAddButton} // ✅ إضافة زر الإضافة إلى الجدول
+        renderAddButton={renderAddButton}
       />
     </div>
   );

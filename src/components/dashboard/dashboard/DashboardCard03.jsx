@@ -10,7 +10,6 @@ import {
   Legend,
 } from 'chart.js';
 
-// تسجيل المكونات المطلوبة للمخطط
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -21,13 +20,11 @@ ChartJS.register(
 );
 
 function DashboardCard03({ isDarkMode }) {
-  // بيانات متوسط مدة إنهاء القضايا حسب النوع
   const [caseDurationData, setCaseDurationData] = useState({
     labels: ['جنائي', 'مدني', 'تجاري', 'عمالي', 'إداري'],
-    durations: [180, 120, 90, 60, 45], // متوسط عدد الأيام لكل نوع قضية
+    durations: [180, 120, 90, 60, 45],
   });
 
-  // بيانات المخطط
   const chartData = {
     labels: caseDurationData.labels,
     datasets: [
@@ -40,12 +37,11 @@ function DashboardCard03({ isDarkMode }) {
         borderColor: isDarkMode ? '#FFF' : '#333',
         borderWidth: 1,
         borderRadius: 6,
-        barThickness: 50, // سمك الأعمدة
+        barThickness: 50,
       },
     ],
   };
 
-  // خيارات المخطط
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -71,12 +67,12 @@ function DashboardCard03({ isDarkMode }) {
 
   return (
     <div className="bg-gray-100 dark:bg-gradient-night dark:text-white text-gray-800 shadow rounded-lg p-2 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
-      {/* العنوان */}
+      {}
       <header className="px-5 py-4 border-b border-gray-300 dark:border-gray-700 flex items-center">
         <h2 className="font-semibold text-md">⏳ متوسط مدة إنهاء القضايا</h2>
       </header>
 
-      {/* المحتوى */}
+      {}
       <div className="mt-4">
         <p className="text-sm text-gray-500 dark:text-gray-300">
           يعرض هذا المخطط متوسط المدة التي تستغرقها القضايا قبل الإغلاق، مما
@@ -84,7 +80,7 @@ function DashboardCard03({ isDarkMode }) {
         </p>
       </div>
 
-      {/* المخطط */}
+      {}
       <div className="w-full h-64 sm:h-80 md:h-96 mt-4">
         <Bar data={chartData} options={chartOptions} />
       </div>

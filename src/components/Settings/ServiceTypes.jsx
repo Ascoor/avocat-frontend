@@ -18,7 +18,6 @@ const ServiceTypes = () => {
   const { triggerAlert } = useAlert();
   const itemsPerPage = 10;
 
-  // Fetch Service Types
   const fetchServiceTypes = useCallback(async () => {
     try {
       const response = await getServiceTypes();
@@ -33,7 +32,6 @@ const ServiceTypes = () => {
     fetchServiceTypes();
   }, [fetchServiceTypes]);
 
-  // Add or Edit Service Type
   const handleSaveServiceType = async (formData) => {
     try {
       if (editingServiceType) {
@@ -51,7 +49,6 @@ const ServiceTypes = () => {
     }
   };
 
-  // Delete Service Type
   const handleDeleteServiceType = async (serviceTypeId) => {
     if (window.confirm('Are you sure you want to delete this service type?')) {
       try {
@@ -68,13 +65,11 @@ const ServiceTypes = () => {
     }
   };
 
-  // Handle Modal
   const handleShowModal = (serviceType = null) => {
     setEditingServiceType(serviceType);
     setShowModal(true);
   };
 
-  // Pagination Logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = serviceTypes.slice(indexOfFirstItem, indexOfLastItem);
@@ -99,7 +94,7 @@ const ServiceTypes = () => {
         </button>
       </div>
 
-      {/* Modal */}
+      {}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-lg">
@@ -150,7 +145,7 @@ const ServiceTypes = () => {
         </div>
       )}
 
-      {/* Table */}
+      {}
       <div className="overflow-x-auto mt-6 shadow rounded-lg bg-gray-100 dark:bg-gray-800">
         <table className="w-full border-collapse border border-gray-300 dark:border-gray-700">
           <thead className="bg-gray-200 dark:bg-gray-700">
@@ -194,7 +189,7 @@ const ServiceTypes = () => {
         </table>
       </div>
 
-      {/* Pagination */}
+      {}
       <div className="flex justify-between items-center mt-6">
         <button
           onClick={() => handlePageChange(currentPage - 1)}

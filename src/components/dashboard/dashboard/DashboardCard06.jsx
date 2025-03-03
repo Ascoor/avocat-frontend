@@ -12,7 +12,6 @@ import {
   PointElement,
 } from 'chart.js';
 
-// تسجيل المكونات المطلوبة للمخطط
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -25,7 +24,6 @@ ChartJS.register(
 );
 
 function DashboardCard06({ isDarkMode }) {
-  // بيانات الإيرادات الشهرية
   const [revenueData, setRevenueData] = useState({
     labels: [
       'يناير',
@@ -44,14 +42,13 @@ function DashboardCard06({ isDarkMode }) {
     expectedRevenue: [
       20000, 25000, 22000, 27000, 30000, 31000, 33000, 35000, 34000, 38000,
       39000, 41000,
-    ], // الإيرادات المتوقعة
+    ],
     actualRevenue: [
       18000, 23000, 21000, 26000, 28000, 29000, 32000, 34000, 33000, 37000,
       38000, 40000,
-    ], // الإيرادات المحققة
+    ],
   });
 
-  // بيانات المخطط
   const chartData = {
     labels: revenueData.labels,
     datasets: [
@@ -63,7 +60,7 @@ function DashboardCard06({ isDarkMode }) {
         borderColor: isDarkMode ? '#2563EB' : '#1E40AF',
         borderWidth: 1,
         borderRadius: 6,
-        barThickness: 40, // سمك الأعمدة
+        barThickness: 40,
       },
       {
         type: 'line',
@@ -74,12 +71,11 @@ function DashboardCard06({ isDarkMode }) {
         borderWidth: 2,
         pointRadius: 5,
         pointBackgroundColor: isDarkMode ? '#34D399' : '#10B981',
-        tension: 0.4, // انسيابية في الخط
+        tension: 0.4,
       },
     ],
   };
 
-  // خيارات المخطط
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -105,12 +101,12 @@ function DashboardCard06({ isDarkMode }) {
 
   return (
     <div className="bg-gray-100 dark:bg-gradient-night dark:text-white text-gray-800 shadow rounded-lg p-2 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
-      {/* العنوان */}
+      {}
       <header className="px-5 py-4 border-b border-gray-300 dark:border-gray-700 flex items-center">
         <h2 className="font-semibold text-md">💰 الدخل المتوقع من القضايا</h2>
       </header>
 
-      {/* المحتوى */}
+      {}
       <div className="mt-4">
         <p className="text-sm text-gray-500 dark:text-gray-300">
           يعرض هذا المخطط مقارنة بين الإيرادات المتوقعة والمحققة من القضايا، مما
@@ -118,7 +114,7 @@ function DashboardCard06({ isDarkMode }) {
         </p>
       </div>
 
-      {/* المخطط */}
+      {}
       <div className="w-full h-64 sm:h-80 md:h-96 mt-4">
         <Bar data={chartData} options={chartOptions} />
       </div>

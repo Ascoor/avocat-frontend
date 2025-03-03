@@ -27,7 +27,7 @@ const AnimatedRow = ({
       style={{
         ...springProps,
         transform: springProps.scale.to((s) => `scale(${s})`),
-      }} // تحويل scale إلى CSS
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={rowClass}
@@ -263,8 +263,7 @@ const TableComponent = ({
           disabled={currentPage === totalPages}
           className={`px-4 py-2 rounded-full transition duration-300
             ${currentPage === totalPages ? 'opacity-50 cursor-default' : ''}
-            bg-gray-200 hover:bg-gray-300 text-gray-700 hover:scale-105 // تصميم الوضع النهاري فقط
-          `}
+            bg-gray-200 hover:bg-gray-300 text-gray-700 hover:scale-105           `}
         >
           التالي
         </button>

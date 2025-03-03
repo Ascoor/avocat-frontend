@@ -1,4 +1,3 @@
-// Toolbar.jsx
 const Toolbar = ({ onViewChange }) => {
   return (
     <div className="flex gap-2 mb-4">

@@ -5,25 +5,21 @@ import useAuth from '../auth/AuthUser';
 
 function UserMenu({ align = 'left' }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { user, logout } = useAuth(); // استدعاء user مباشرة من useAuth
-  const [userImage, setUserImage] = useState('/default-profile.png'); // الصورة الافتراضية
-
+  const { user, logout } = useAuth();
+  const [userImage, setUserImage] = useState('/default-profile.png');
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
   useEffect(() => {
-    // إذا كان لدى المستخدم صورة، قم بضبطها في الحالة
     if (user?.image) {
       setUserImage(user.image);
     }
   }, [user]);
 
   const handleImageError = () => {
-    // عند حدوث خطأ في تحميل الصورة، قم بضبط الصورة الافتراضية
     setUserImage('/default-profile.png');
   };
 
-  // إغلاق القائمة عند النقر خارجها
   useEffect(() => {
     const clickHandler = ({ target }) => {
       if (
@@ -47,9 +43,9 @@ function UserMenu({ align = 'left' }) {
         aria-expanded={dropdownOpen}
         onClick={() => setDropdownOpen(!dropdownOpen)}
       >
-        {/* ✅ صورة المستخدم */}
+        {}
 
-        {/* ✅ اسم المستخدم يظهر في الشاشات الكبيرة فقط */}
+        {}
         <span className="hidden md:inline text-red-500 ml-4 dark:text-orange-200 font-bold text-center">
           {user?.name}
         </span>
@@ -68,7 +64,7 @@ function UserMenu({ align = 'left' }) {
         </svg>
       </button>
 
-      {/* ✅ القائمة المنسدلة */}
+      {}
       <Transition
         className={`origin-top-right top-11 z-10 absolute  min-w-44 bg-white dark:bg-gradient-night border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1 ${
           align === 'right' ? 'right-0' : 'left-0'

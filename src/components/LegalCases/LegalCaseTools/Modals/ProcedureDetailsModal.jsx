@@ -11,7 +11,7 @@ const ProcedureDetailsModal = ({ isOpen, onClose, procedure }) => {
         className="fixed inset-0"
       >
         <section className="relative w-full max-w-lg max-h-[90vh] p-6 mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-y-auto">
-          {/* Close Button */}
+          {}
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none"
@@ -19,16 +19,16 @@ const ProcedureDetailsModal = ({ isOpen, onClose, procedure }) => {
             &#x2715;
           </button>
 
-          {/* Modal Title */}
+          {}
           <h2 className="text-xl font-bold text-center p-2 rounded-full bg-gradient-night text-gray-900 dark:text-white  mb-4">
             تفاصيل الإجراء
           </h2>
 
-          {/* Form Content */}
+          {}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Procedure Creator */}
+            {}
 
-            {/* Procedure Place */}
+            {}
             <div className="col-span-2">
               <div>
                 <label className="text-black dark:text-avocat-indigo-light">
@@ -53,7 +53,7 @@ const ProcedureDetailsModal = ({ isOpen, onClose, procedure }) => {
               />
             </div>
 
-            {/* Dates */}
+            {}
 
             <div>
               <label className="text-avocat-indigo dark:text-avocat-indigo-light">
@@ -105,7 +105,7 @@ const ProcedureDetailsModal = ({ isOpen, onClose, procedure }) => {
                 />
               </div>
 
-              {/* Date End */}
+              {}
               <div>
                 <label className="block text-avocat-blue-dark dark:text-avocat-indigo-light">
                   تاريخ الانتهاء
@@ -148,7 +148,7 @@ const ProcedureDetailsModal = ({ isOpen, onClose, procedure }) => {
                 readOnly
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
               />
-              {/* Date Start */}   {' '}
+              {}   {' '}
               <div>
                 <label className="dark:text-gray-200">ملاحظات:</label>         {' '}
                 <textarea
@@ -165,7 +165,7 @@ const ProcedureDetailsModal = ({ isOpen, onClose, procedure }) => {
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {/* Official Fees */}
+            {}
             <div>
               <label className="text-sm font-medium text-avocat-indigo dark:text-avocat-indigo-light">
                 رسوم بإيصالات
@@ -182,7 +182,7 @@ const ProcedureDetailsModal = ({ isOpen, onClose, procedure }) => {
               />
             </div>
 
-            {/* Administrative Costs */}
+            {}
             <div>
               <label className="text-sm font-medium text-avocat-indigo dark:text-avocat-indigo-light">
                 مصاريف إدارية
@@ -199,7 +199,7 @@ const ProcedureDetailsModal = ({ isOpen, onClose, procedure }) => {
               />
             </div>
 
-            {/* Tips */}
+            {}
             <div>
               <label className="text-sm font-medium text-avocat-indigo dark:text-avocat-indigo-light">
                 إكراميات

@@ -1,6 +1,5 @@
 import React, { useState, Suspense } from 'react';
 
-// Use React.lazy to dynamically import components
 const Lawyers = React.lazy(() => import('./LawyerList'));
 const CourtSetting = React.lazy(
   () => import('../components/Courts/court_index.component'),
@@ -64,7 +63,7 @@ const ManagementSettings = () => {
         ))}
       </div>
       <div className="w-full max-w-5xl p-4 bg-white dark:bg-gray-700 rounded-lg shadow-lg">
-        {/* Use Suspense to show a fallback loading state while the component is being loaded */}
+        {}
         <Suspense fallback={<div>جار التحميل...</div>}>
           {renderTabContent()}
         </Suspense>

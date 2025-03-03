@@ -3,22 +3,15 @@ import { useState } from 'react';
 const ClientAccounttIndex = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Handle search input changes
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  // Handle form submission for searching
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    // Perform the search using the 'searchQuery' state
-    // You can add your search logic here
   };
 
-  // Handle "Add Invoice" button click
-  const handleAddInvoiceClick = () => {
-    // Implement logic to add a new invoice
-  };
+  const handleAddInvoiceClick = () => {};
 
   return (
     <div className="search-form-container">

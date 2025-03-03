@@ -15,17 +15,15 @@ import SectionHeader from '../common/SectionHeader';
 import { LegCaseIcon } from '../../assets/icons';
 
 const LegcaseTypes = () => {
-  const [legcaseTypes, setLegcaseTypes] = useState([]); // تخزين أنواع القضايا
-  const [legcaseSubTypes, setLegcaseSubTypes] = useState([]); // تخزين الأنواع الفرعية للقضايا
-  const [currentPage, setCurrentPage] = useState(1); // الصفحة الحالية لأنواع القضايا
-  const [currentSubPage, setCurrentSubPage] = useState(1); // الصفحة الحالية للأنواع الفرعية
-  const [showModal, setShowModal] = useState(false); // حالة عرض النموذج
-  const [editingItem, setEditingItem] = useState(null); // العنصر الحالي للتعديل
-  const [isSubType, setIsSubType] = useState(false); // تحديد ما إذا كان التعديل على النوع الفرعي
-  const { triggerAlert } = useAlert(); // إشعارات المستخدم
-  const itemsPerPage = 10; // عدد العناصر في كل صفحة
-
-  // جلب أنواع القضايا
+  const [legcaseTypes, setLegcaseTypes] = useState([]);
+  const [legcaseSubTypes, setLegcaseSubTypes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentSubPage, setCurrentSubPage] = useState(1);
+  const [showModal, setShowModal] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
+  const [isSubType, setIsSubType] = useState(false);
+  const { triggerAlert } = useAlert();
+  const itemsPerPage = 10;
   const fetchLegcaseTypes = useCallback(async () => {
     try {
       const response = await getLegcaseTypes();
@@ -36,7 +34,6 @@ const LegcaseTypes = () => {
     }
   }, [triggerAlert]);
 
-  // جلب الأنواع الفرعية للقضايا
   const fetchLegcaseSubTypes = useCallback(async () => {
     try {
       const response = await getLegcaseSubTypes();
@@ -47,13 +44,11 @@ const LegcaseTypes = () => {
     }
   }, [triggerAlert]);
 
-  // تحميل البيانات عند تشغيل المكون
   useEffect(() => {
     fetchLegcaseTypes();
     fetchLegcaseSubTypes();
   }, [fetchLegcaseTypes, fetchLegcaseSubTypes]);
 
-  // حفظ النوع أو النوع الفرعي
   const handleSaveItem = async (formData) => {
     try {
       if (editingItem) {
@@ -80,7 +75,6 @@ const LegcaseTypes = () => {
     }
   };
 
-  // حذف النوع أو النوع الفرعي
   const handleDeleteItem = async (itemId, isSub) => {
     if (window.confirm('هل أنت متأكد أنك تريد حذف هذا العنصر؟')) {
       try {
@@ -99,14 +93,12 @@ const LegcaseTypes = () => {
     }
   };
 
-  // عرض النموذج لإضافة أو تعديل عنصر
   const handleShowModal = (item = null, subType = false) => {
     setEditingItem(item);
     setIsSubType(subType);
     setShowModal(true);
   };
 
-  // منطق التصفح بين الصفحات لأنواع القضايا والأنواع الفرعية
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentLegcaseTypes = legcaseTypes.slice(
@@ -131,7 +123,7 @@ const LegcaseTypes = () => {
         icon={LegCaseIcon}
       />
 
-      {/* أزرار لإضافة الأنواع والأنواع الفرعية */}
+      {}
       <div className="flex justify-between items-center mt-6">
         <button
           onClick={() => handleShowModal(null, false)}
@@ -147,7 +139,7 @@ const LegcaseTypes = () => {
         </button>
       </div>
 
-      {/* جدول أنواع القضايا */}
+      {}
       <h3 className="mt-8 mb-4 text-lg font-semibold text-gray-800 dark:text-gray-100">
         أنواع القضايا
       </h3>
@@ -194,7 +186,7 @@ const LegcaseTypes = () => {
         </table>
       </div>
 
-      {/* التصفح بين الصفحات لأنواع القضايا */}
+      {}
       <div className="flex justify-between items-center mt-4">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -217,7 +209,7 @@ const LegcaseTypes = () => {
         </button>
       </div>
 
-      {/* جدول الأنواع الفرعية */}
+      {}
       <h3 className="mt-8 mb-4 text-lg font-semibold text-gray-800 dark:text-gray-100">
         الأنواع الفرعية للقضايا
       </h3>
@@ -272,7 +264,7 @@ const LegcaseTypes = () => {
         </table>
       </div>
 
-      {/* التصفح بين الصفحات للأنواع الفرعية */}
+      {}
       <div className="flex justify-between items-center mt-4">
         <button
           onClick={() => setCurrentSubPage((prev) => Math.max(prev - 1, 1))}

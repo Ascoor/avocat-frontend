@@ -1,4 +1,3 @@
-// ➕ EventModal.jsx
 import { useState } from 'react';
 
 const EventModal = ({ isOpen, onClose, onSave }) => {

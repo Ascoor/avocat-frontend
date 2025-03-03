@@ -40,21 +40,18 @@ const statusColors = {
   ملغاة: 'bg-gray-500 text-white',
 };
 
-// ✅ دالة لمعالجة القيم الفارغة
 const getValue = (value) => (value && value !== 'null' ? value : 'غير متوفر');
 
 const ServicesModal = ({ selectedClient, activeTab }) => {
   const [selectedService, setSelectedService] = useState(null);
   const [activeSubTab, setActiveSubTab] = useState('procedures');
 
-  // ✅ إعادة ضبط `selectedService` عند تغيير `activeTab`
   useEffect(() => {
     if (activeTab === 'legCases') {
       setSelectedService(null);
     }
   }, [activeTab]);
 
-  // ✅ إعادة ضبط `selectedService` عند تغيير العميل أو إعادة البحث
   useEffect(() => {
     setSelectedService(null);
     setActiveSubTab('procedures');
@@ -71,11 +68,11 @@ const ServicesModal = ({ selectedClient, activeTab }) => {
 
   return (
     <div>
-      {/* ✅ عرض جدول الخدمات إذا لم يتم تحديد أي خدمة */}
+      {}
       {!selectedService && activeTab === 'services' && (
         <div className="overflow-hidden rounded-lg shadow-lg">
           <table className="w-full border-collapse bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
-            {/* ✅ رأس الجدول */}
+            {}
             <thead className="bg-gradient-to-r from-indigo-600 to-blue-500 text-white text-sm sm:text-base">
               <tr>
                 <th className="px-6 py-3 text-center">📌 الملف</th>
@@ -85,7 +82,7 @@ const ServicesModal = ({ selectedClient, activeTab }) => {
               </tr>
             </thead>
 
-            {/* ✅ جسم الجدول */}
+            {}
             <tbody className="divide-y divide-gray-300 dark:divide-gray-700">
               {selectedClient.services.length > 0 ? (
                 selectedClient.services.map((service) => (
@@ -128,10 +125,10 @@ const ServicesModal = ({ selectedClient, activeTab }) => {
         </div>
       )}
 
-      {/* ✅ عرض تفاصيل الخدمة المختارة */}
+      {}
       {selectedService && (
         <div className="mt-4 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg border font-['tajawal'] border-gray-200 dark:border-gray-700">
-          {/* 🔙 زر الرجوع */}
+          {}
           <button
             className="px-4 py-2 mb-4 bg-red-500 text-white font-bold rounded-lg shadow-md hover:bg-red-600 transition"
             onClick={handleBack}
@@ -144,7 +141,7 @@ const ServicesModal = ({ selectedClient, activeTab }) => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* رقم الملف */}
+            {}
             <div className="flex items-center space-x-3 border-b pb-2">
               {getIcon('fileNumber')}
               <p className="text-gray-700 dark:text-gray-300 font-semibold w-1/3">
@@ -155,7 +152,7 @@ const ServicesModal = ({ selectedClient, activeTab }) => {
               </span>
             </div>
 
-            {/* جهة الخدمة */}
+            {}
             <div className="flex items-center space-x-3 border-b pb-2">
               {getIcon('servicePlace')}
               <p className="text-gray-700 dark:text-gray-300 font-semibold w-1/3">
@@ -166,7 +163,7 @@ const ServicesModal = ({ selectedClient, activeTab }) => {
               </span>
             </div>
 
-            {/* تفاصيل الخدمة */}
+            {}
             <div className="flex items-center space-x-3 border-b pb-2">
               {getIcon('serviceDetails')}
               <p className="text-gray-700 dark:text-gray-300 font-semibold w-1/3">
@@ -177,7 +174,7 @@ const ServicesModal = ({ selectedClient, activeTab }) => {
               </span>
             </div>
 
-            {/* حالة الخدمة */}
+            {}
             <div className="flex items-center space-x-3 border-b pb-2">
               {getIcon('serviceStatus')}
               <p className="text-gray-700 dark:text-gray-300 font-semibold w-1/3">
@@ -192,7 +189,7 @@ const ServicesModal = ({ selectedClient, activeTab }) => {
             <ServiceProcedures serviceId={selectedService.id} />
           )}
 
-          {/* ✅ عرض مكونات الإجراءات الخاصة بالخدمة */}
+          {}
         </div>
       )}
     </div>

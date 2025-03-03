@@ -1,4 +1,3 @@
-// Home spinner
 import React from 'react';
 
 const HomeSpinner = () => {

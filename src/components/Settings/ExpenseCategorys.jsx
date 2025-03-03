@@ -33,7 +33,7 @@ const ExpenseCategorys = () => {
   const fetchExpenseCategorys = async () => {
     try {
       const response = await getExpensesCategories();
-      setExpenseCategorys(response.data[0] || []); // حل مشكلة القائمة داخل قائمة
+      setExpenseCategorys(response.data[0] || []);
     } catch (error) {
       triggerAlert('error', 'حدث خطأ في حفظ نوع المصروف');
     }
@@ -106,7 +106,7 @@ const ExpenseCategorys = () => {
           إضافة نوع المصروف
         </button>
       </div>
-      {/* Modal */}
+      {}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-lg">
@@ -158,7 +158,7 @@ const ExpenseCategorys = () => {
           </div>
         </div>
       )}
-      {/* Table */}
+      {}
       <div className="overflow-x-auto mt-6 shadow rounded-lg bg-gray-100 dark:bg-gray-800">
         <table className="w-full border-collapse border border-gray-300 dark:border-gray-700">
           <thead className="bg-gray-200 dark:bg-gray-700">
@@ -203,7 +203,7 @@ const ExpenseCategorys = () => {
           </tbody>
         </table>
       </div>
-      {/* Pagination */}
+      {}
       <div className="flex justify-between items-center mt-6">
         <button
           onClick={() => handlePageChange(currentPage - 1)}

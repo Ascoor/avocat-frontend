@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker'; 
+import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import GlobalModal from '../../common/GlobalModal';
 import api from '../../../services/api/axiosConfig';

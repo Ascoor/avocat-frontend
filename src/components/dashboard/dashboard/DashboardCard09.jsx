@@ -2,7 +2,6 @@ import React from 'react';
 import Tooltip from '../../common/Tooltip';
 import BarChart from '../charts/BarChart02';
 
-// Import utilities
 import { tailwindConfig } from '../../../utils/Utils';
 
 function DashboardCard09() {
@@ -16,7 +15,6 @@ function DashboardCard09() {
       '05-01-2023',
     ],
     datasets: [
-      // Light blue bars
       {
         label: 'المبيعات',
         data: [6200, 9200, 6600, 8800, 5200, 9200],
@@ -26,7 +24,6 @@ function DashboardCard09() {
         categoryPercentage: 0.7,
         borderRadius: 4,
       },
-      // Blue bars
       {
         label: 'المرتجعات',
         data: [-4000, -2600, -5350, -4000, -7500, -2000],
@@ -62,9 +59,9 @@ function DashboardCard09() {
           </div>
         </div>
       </div>
-      {/* Chart built with Chart.js 3 */}
+      {}
       <div className="grow">
-        {/* Change the height attribute to adjust the chart height */}
+        {}
         <BarChart data={chartData} width={595} height={248} />
       </div>
     </div>

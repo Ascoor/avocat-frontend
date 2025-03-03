@@ -25,7 +25,6 @@ function BarChart01({ data, width, height }) {
   const { currentTheme } = useThemeProvider();
   const darkMode = currentTheme === 'dark';
 
-  // ✅ تعريف الألوان الديناميكية بناءً على `darkMode`
   const colors = useMemo(
     () => ({
       textColor: darkMode ? '#E5E7EB' : '#374151',
@@ -45,7 +44,7 @@ function BarChart01({ data, width, height }) {
     const ctx = canvas.current.getContext('2d');
 
     if (chart) {
-      chart.destroy(); // 🔥 تدمير المخطط السابق لتجنب الأخطاء
+      chart.destroy();
     }
 
     const newChart = new Chart(ctx, {
@@ -91,8 +90,7 @@ function BarChart01({ data, width, height }) {
     setChart(newChart);
 
     return () => newChart.destroy();
-  }, [data, colors]); // 🔥 تحديث فقط عند تغيير البيانات أو الألوان
-
+  }, [data, colors]);
   return (
     <div className="w-full h-full">
       <canvas ref={canvas} width={width} height={height}></canvas>

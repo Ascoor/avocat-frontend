@@ -16,7 +16,7 @@ const Login = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     handleFormClose();
-    onAuthStart(); 
+    onAuthStart();
     const success = await login(email, password);
     if (success) {
       onAuthComplete(true, 'تم تسجيل الدخول بنجاح!');

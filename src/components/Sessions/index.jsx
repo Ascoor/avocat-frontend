@@ -1,29 +1,28 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { getAllSessions } from "../../services/api/sessions.js";
-import { useSpinner } from "../../context/SpinnerContext";
-import SectionHeader from "../common/SectionHeader.jsx";
-import { SearchIcon, SearchSectionIcon } from "../../assets/icons/index.js";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import SessionDetailsModal from "../LegalCases/LegalCaseTools/Modals/SessionDetailsModal.jsx";
-import { MdVisibility } from "react-icons/md";
+import React, { useState, useEffect, useMemo } from 'react';
+import { getAllSessions } from '../../services/api/sessions.js';
+import { useSpinner } from '../../context/SpinnerContext';
+import SectionHeader from '../common/SectionHeader.jsx';
+import { SearchIcon, SearchSectionIcon } from '../../assets/icons/index.js';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import SessionDetailsModal from '../LegalCases/LegalCaseTools/Modals/SessionDetailsModal.jsx';
+import { MdVisibility } from 'react-icons/md';
 
 const LegalSessions = () => {
   const { showSpinner, hideSpinner } = useSpinner();
-  const [allSessions, setAllSessions] = useState([]); // جميع الجلسات
-  const [sessions, setSessions] = useState([]); // ✅ أحدث 50 جلسة فقط
-  const [filteredSessions, setFilteredSessions] = useState([]); // الجلسات بعد الفلترة
+  const [allSessions, setAllSessions] = useState([]);
+  const [sessions, setSessions] = useState([]);
+  const [filteredSessions, setFilteredSessions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
- 
-  // ✅ متغيرات الفلاتر
-  const [selectedSessionType, setSelectedSessionType] = useState("");
-  const [selectedLawyer, setSelectedLawyer] = useState("");
+
+  const [selectedSessionType, setSelectedSessionType] = useState('');
+  const [selectedLawyer, setSelectedLawyer] = useState('');
   const [selectedDateStart, setSelectedDateStart] = useState(null);
   const [selectedDateEnd, setSelectedDateEnd] = useState(null);
-  const [selectedCourt, setSelectedCourt] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [searchTerm, setSearchTerm] = useState(""); // ✅ متغير البحث
+  const [selectedCourt, setSelectedCourt] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedSession, setSelectedSession] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
@@ -32,94 +31,126 @@ const LegalSessions = () => {
         showSpinner();
         const response = await getAllSessions();
         if (response?.data) {
-          const sortedSessions = response.data
-            .sort((a, b) => new Date(b.session_date) - new Date(a.session_date));
-  
-          setAllSessions(sortedSessions); // ✅ حفظ جميع الجلسات
-          setSessions(sortedSessions.slice(0, 50)); // ✅ عرض أحدث 50 جلسة فقط
-          setFilteredSessions(sortedSessions); // ✅ عرض جميع الجلسات عند التصفية
+          const sortedSessions = response.data.sort(
+            (a, b) => new Date(b.session_date) - new Date(a.session_date),
+          );
+
+          setAllSessions(sortedSessions);
+          setSessions(sortedSessions.slice(0, 50));
+          setFilteredSessions(sortedSessions);
         }
       } catch (error) {
-        console.error("Error fetching sessions:", error);
+        console.error('Error fetching sessions:', error);
         setAllSessions([]);
         setSessions([]);
       } finally {
         hideSpinner();
       }
     };
-  
+
     fetchSessions();
   }, []);
-  
 
-  // ✅ إنشاء قوائم القيم الفريدة للفلاتر باستخدام useMemo
-
-  // ✅ إنشاء قوائم الفلاتر باستخدام جميع الجلسات (`allSessions`)
   const sessionTypes = useMemo(
-    () => [...new Set(allSessions.map((session) => session.legal_session_type?.name))].filter(Boolean),
-    [allSessions]
-    
+    () =>
+      [
+        ...new Set(
+          allSessions.map((session) => session.legal_session_type?.name),
+        ),
+      ].filter(Boolean),
+    [allSessions],
   );
-    const lawyers = useMemo(
-      () => [...new Set(allSessions.map((session) => session.lawyer?.name))].filter(Boolean),
-      [allSessions]
-    );
-  
-    const courts = useMemo(
-      () => [...new Set(allSessions.map((session) => session.court?.name))].filter(Boolean),
-      [allSessions]
-    );
-    useEffect(() => {
-      let filtered;
-    
-      // ✅ إذا كانت الفلاتر فارغة، نعرض آخر 50 جلسة فقط
-      if (!selectedCourt && !selectedLawyer && !selectedSessionType && !selectedStatus && !selectedDateStart && !selectedDateEnd && !searchTerm) {
-        filtered = sessions.slice(0, 50);
-      } else {
-        // ✅ إذا تم استخدام فلاتر، نقوم بالتصفية على `allSessions`
-        filtered = [...allSessions];
-    
-        if (selectedCourt) {
-          filtered = filtered.filter(session => session.court?.name === selectedCourt);
-        }
-    
-        if (selectedLawyer) {
-          filtered = filtered.filter(session => session.lawyer?.name === selectedLawyer);
-        }
-    
-        if (selectedSessionType) {
-          filtered = filtered.filter(session => session.legal_session_type?.name === selectedSessionType);
-        }
-    
-        if (selectedStatus) {
-          filtered = filtered.filter(session => session.status === selectedStatus);
-        }
-    
-        if (selectedDateStart && selectedDateEnd) {
-          filtered = filtered.filter(session => {
-            const sessionDate = new Date(session.session_date);
-            return sessionDate >= selectedDateStart && sessionDate <= selectedDateEnd;
-          });
-        }
-    
-        if (searchTerm) {
-          filtered = filtered.filter(session =>
-            session.leg_case?.slug?.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-        }
+  const lawyers = useMemo(
+    () =>
+      [...new Set(allSessions.map((session) => session.lawyer?.name))].filter(
+        Boolean,
+      ),
+    [allSessions],
+  );
+
+  const courts = useMemo(
+    () =>
+      [...new Set(allSessions.map((session) => session.court?.name))].filter(
+        Boolean,
+      ),
+    [allSessions],
+  );
+  useEffect(() => {
+    let filtered;
+
+    if (
+      !selectedCourt &&
+      !selectedLawyer &&
+      !selectedSessionType &&
+      !selectedStatus &&
+      !selectedDateStart &&
+      !selectedDateEnd &&
+      !searchTerm
+    ) {
+      filtered = sessions.slice(0, 50);
+    } else {
+      filtered = [...allSessions];
+
+      if (selectedCourt) {
+        filtered = filtered.filter(
+          (session) => session.court?.name === selectedCourt,
+        );
       }
-    
-      setFilteredSessions(filtered);
-      setCurrentPage(1);
-    }, [selectedCourt, selectedLawyer, selectedSessionType, selectedStatus, selectedDateStart, selectedDateEnd, searchTerm, allSessions]);
-    
-  // ✅ تقسيم البيانات للصفحات
+
+      if (selectedLawyer) {
+        filtered = filtered.filter(
+          (session) => session.lawyer?.name === selectedLawyer,
+        );
+      }
+
+      if (selectedSessionType) {
+        filtered = filtered.filter(
+          (session) => session.legal_session_type?.name === selectedSessionType,
+        );
+      }
+
+      if (selectedStatus) {
+        filtered = filtered.filter(
+          (session) => session.status === selectedStatus,
+        );
+      }
+
+      if (selectedDateStart && selectedDateEnd) {
+        filtered = filtered.filter((session) => {
+          const sessionDate = new Date(session.session_date);
+          return (
+            sessionDate >= selectedDateStart && sessionDate <= selectedDateEnd
+          );
+        });
+      }
+
+      if (searchTerm) {
+        filtered = filtered.filter((session) =>
+          session.leg_case?.slug
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()),
+        );
+      }
+    }
+
+    setFilteredSessions(filtered);
+    setCurrentPage(1);
+  }, [
+    selectedCourt,
+    selectedLawyer,
+    selectedSessionType,
+    selectedStatus,
+    selectedDateStart,
+    selectedDateEnd,
+    searchTerm,
+    allSessions,
+  ]);
+
   const totalPages = Math.ceil(filteredSessions.length / rowsPerPage);
   const paginatedSessions = useMemo(() => {
     const startIndex = (currentPage - 1) * rowsPerPage;
     return filteredSessions.slice(startIndex, startIndex + rowsPerPage);
   }, [filteredSessions, currentPage]);
-
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -127,28 +158,24 @@ const LegalSessions = () => {
     }
   };
 
-
-  // ✅ تلوين الصفوف بناءً على الحالة
   const getSessionColor = (status) => {
     switch (status) {
-      case "جارى التنفيذ":
-        return "bg-red-500 text-white";
-      case "لم ينفذ":
-        return "bg-blue-500 text-white";
-      case "تمت":
-        return "bg-green-500 text-white";
+      case 'جارى التنفيذ':
+        return 'bg-red-500 text-white';
+      case 'لم ينفذ':
+        return 'bg-blue-500 text-white';
+      case 'تمت':
+        return 'bg-green-500 text-white';
       default:
-        return "bg-gray-500 text-white";
+        return 'bg-gray-500 text-white';
     }
   };
 
-  // ✅ تفعيل النافذة المنبثقة (`Modal`)
   const openModal = (session) => {
     setSelectedSession(session);
     setIsModalOpen(true);
   };
 
-  // ✅ إغلاق `Modal`
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedSession(null);
@@ -156,110 +183,133 @@ const LegalSessions = () => {
 
   return (
     <div className="p-6">
-      <SectionHeader icon={SearchIcon} listName="بحث الجلسات" /> 
-      {/* ✅ فلاتر البحث - الصف الأول (المحامي، نوع الجلسة، الحالة) */} 
+      <SectionHeader icon={SearchIcon} listName="بحث الجلسات" />
+      {}
 
-{/* ✅ الصف الثاني (المحكمة + الفترة الزمنية) */}
-<div className="p-6 bg-white mt-4 mb-4 dark:bg-gray-600/20 rounded-lg shadow-md shadow-avocat-blue dark:shadow-avocat-orange-dark bg-opacity-50 dark:bg-opacity-50">
-  {/* ✅ عنوان الفلاتر */}
-  <h3 className="text-xl font-bold text-gray-700 dark:text-gray-300 mb-4 text-center">
-    🔍 البحث والتصفية
-  </h3>
+      {}
+      <div className="p-6 bg-white mt-4 mb-4 dark:bg-gray-600/20 rounded-lg shadow-md shadow-avocat-blue dark:shadow-avocat-orange-dark bg-opacity-50 dark:bg-opacity-50">
+        {}
+        <h3 className="text-xl font-bold text-gray-700 dark:text-gray-300 mb-4 text-center">
+          🔍 البحث والتصفية
+        </h3>
 
-  {/* ✅ الحاوية الرئيسية */}
-  <div className="grid grid-cols-1 text-center md:grid-cols-2 lg:grid-cols-3 gap-6">
-    
-    {/* 🔹 حقل البحث برقم الملف */}
-    <div className="flex flex-col">
-      <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">بحث برقم الملف</label>
-      <input
-        type="text"
-        placeholder="أدخل رقم الملف..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="p-3 border     text-center rounded-md shadow-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-yellow-400"
-      />
-    </div>
+        {}
+        <div className="grid grid-cols-1 text-center md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {}
+          <div className="flex flex-col">
+            <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">
+              بحث برقم الملف
+            </label>
+            <input
+              type="text"
+              placeholder="أدخل رقم الملف..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="p-3 border     text-center rounded-md shadow-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-yellow-400"
+            />
+          </div>
 
-    {/* 🔹 اختيار المحكمة */}
-    <div className="flex flex-col">
-      <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">المحكمة</label>
-      <select
-        value={selectedCourt}
-        onChange={(event) => setSelectedCourt(event.target.value)}
-        className="p-3 border rounded-md shadow-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-yellow-400"
-      >
-        <option className="text-center" value="">اختر المحكمة</option>
-        {courts.map((court) => (
-          <option key={court} value={court}>{court}</option>
-        ))}
-      </select>
-    </div>
+          {}
+          <div className="flex flex-col">
+            <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">
+              المحكمة
+            </label>
+            <select
+              value={selectedCourt}
+              onChange={(event) => setSelectedCourt(event.target.value)}
+              className="p-3 border rounded-md shadow-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-yellow-400"
+            >
+              <option className="text-center" value="">
+                اختر المحكمة
+              </option>
+              {courts.map((court) => (
+                <option key={court} value={court}>
+                  {court}
+                </option>
+              ))}
+            </select>
+          </div>
 
-    {/* 🔹 اختيار نوع الجلسة */}
-    <div className="flex flex-col">
-      <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">نوع الجلسة</label>
-      <select
-        value={selectedSessionType}
-        onChange={(event) => setSelectedSessionType(event.target.value)}
-        className="p-3 border rounded-md shadow-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-yellow-400"
-      >
-       <option className="text-center" value="">اختر نوع الجلسة</option>
-        {sessionTypes.map((type) => (
-          <option key={type} value={type}>{type}</option>
-        ))}
-      </select>
-    </div>
-  </div>
+          {}
+          <div className="flex flex-col">
+            <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">
+              نوع الجلسة
+            </label>
+            <select
+              value={selectedSessionType}
+              onChange={(event) => setSelectedSessionType(event.target.value)}
+              className="p-3 border rounded-md shadow-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-yellow-400"
+            >
+              <option className="text-center" value="">
+                اختر نوع الجلسة
+              </option>
+              {sessionTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
 
-  {/* ✅ الصف الثاني - اختيار الفترة الزمنية */}
-  <div className="grid grid-cols-1 text-center  md:grid-cols-3 gap-6 mt-4">
-  <div className="flex flex-col">
-  <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">المحامي</label>
-    <select
-      value={selectedLawyer}
-      onChange={(event) => setSelectedLawyer(event.target.value)}
-      className="p-2 border rounded-md shadow-sm bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-    >
-        <option className="text-center" value="">اختر المحامي</option>
-      {lawyers.map((lawyer) => (
-        <option key={lawyer} value={lawyer}>{lawyer}</option>
-      ))}
-    </select>
-  </div>
-    {/* 🔹 تاريخ البدء */}
-    <div className="flex flex-col">
-      <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">تاريخ البدء</label>
-      <DatePicker
-        selected={selectedDateStart}
-        onChange={(date) => setSelectedDateStart(date)}
-        selectsStart
-        startDate={selectedDateStart}
-        endDate={selectedDateEnd}
-        dateFormat="yyyy/MM/dd"
-        placeholderText="اختر تاريخ البدء"
-        className="p-3 border rounded-md shadow-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-yellow-400"
-      />
-    </div>
+        {}
+        <div className="grid grid-cols-1 text-center  md:grid-cols-3 gap-6 mt-4">
+          <div className="flex flex-col">
+            <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">
+              المحامي
+            </label>
+            <select
+              value={selectedLawyer}
+              onChange={(event) => setSelectedLawyer(event.target.value)}
+              className="p-2 border rounded-md shadow-sm bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+            >
+              <option className="text-center" value="">
+                اختر المحامي
+              </option>
+              {lawyers.map((lawyer) => (
+                <option key={lawyer} value={lawyer}>
+                  {lawyer}
+                </option>
+              ))}
+            </select>
+          </div>
+          {}
+          <div className="flex flex-col">
+            <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">
+              تاريخ البدء
+            </label>
+            <DatePicker
+              selected={selectedDateStart}
+              onChange={(date) => setSelectedDateStart(date)}
+              selectsStart
+              startDate={selectedDateStart}
+              endDate={selectedDateEnd}
+              dateFormat="yyyy/MM/dd"
+              placeholderText="اختر تاريخ البدء"
+              className="p-3 border rounded-md shadow-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-yellow-400"
+            />
+          </div>
 
-    {/* 🔹 تاريخ الانتهاء */}
-    <div className="flex flex-col">
-      <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">تاريخ الانتهاء</label>
-      <DatePicker
-        selected={selectedDateEnd}
-        onChange={(date) => setSelectedDateEnd(date)}
-        selectsEnd
-        startDate={selectedDateStart}
-        endDate={selectedDateEnd}
-        dateFormat="yyyy/MM/dd"
-        placeholderText="اختر تاريخ الانتهاء"
-        className="p-3 border rounded-md shadow-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-yellow-400"
-      />
-    </div>
-  </div>
-</div>
+          {}
+          <div className="flex flex-col">
+            <label className="mb-2 font-semibold text-gray-700 dark:text-gray-300">
+              تاريخ الانتهاء
+            </label>
+            <DatePicker
+              selected={selectedDateEnd}
+              onChange={(date) => setSelectedDateEnd(date)}
+              selectsEnd
+              startDate={selectedDateStart}
+              endDate={selectedDateEnd}
+              dateFormat="yyyy/MM/dd"
+              placeholderText="اختر تاريخ الانتهاء"
+              className="p-3 border rounded-md shadow-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-yellow-400"
+            />
+          </div>
+        </div>
+      </div>
 
-      {/* ✅ الجدول */}
+      {}
       <div className="overflow-x-auto">
         <table className="w-full table-auto border-collapse border text-center border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
           <thead>
@@ -277,24 +327,44 @@ const LegalSessions = () => {
           </thead>
           <tbody>
             {paginatedSessions.map((session) => (
-              <tr key={session.id} className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
-                  <td className="border px-4 py-2">
+              <tr
+                key={session.id}
+                className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+              >
+                <td className="border px-4 py-2">
                   <button
                     onClick={() => openModal(session)}
                     className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-300"
-                   
                   >
                     <MdVisibility />
                   </button>
                 </td>
-                 <td className="border px-4 py-2">{session.leg_case?.slug || "غير متوفر"}</td>
-                <td className="border px-4 py-2">{session.legal_session_type?.name || "غير متوفر"}</td>
-                <td className="border px-4 py-2">{session.session_date || "غير متوفر"}</td>
-                <td className="border px-4 py-2">{session.court?.name || "غير متوفر"}</td>
-                <td className="border px-4 py-2">{session.court_session || "غير متوفر"}</td>
-                <td className="border px-4 py-2">{session.lawyer?.name || "غير متوفر"}</td>
-                <td className="border px-4 py-2">{session.result || "غير متوفر"}</td>
-                <td className={`border px-4 py-2 ${getSessionColor(session.status)}`}>{session.status || "N/A"}</td>
+                <td className="border px-4 py-2">
+                  {session.leg_case?.slug || 'غير متوفر'}
+                </td>
+                <td className="border px-4 py-2">
+                  {session.legal_session_type?.name || 'غير متوفر'}
+                </td>
+                <td className="border px-4 py-2">
+                  {session.session_date || 'غير متوفر'}
+                </td>
+                <td className="border px-4 py-2">
+                  {session.court?.name || 'غير متوفر'}
+                </td>
+                <td className="border px-4 py-2">
+                  {session.court_session || 'غير متوفر'}
+                </td>
+                <td className="border px-4 py-2">
+                  {session.lawyer?.name || 'غير متوفر'}
+                </td>
+                <td className="border px-4 py-2">
+                  {session.result || 'غير متوفر'}
+                </td>
+                <td
+                  className={`border px-4 py-2 ${getSessionColor(session.status)}`}
+                >
+                  {session.status || 'N/A'}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -314,7 +384,7 @@ const LegalSessions = () => {
             key={index + 1}
             onClick={() => handlePageChange(index + 1)}
             className={`px-4 py-2 ${
-              currentPage === index + 1 ? "bg-blue-500" : "bg-gray-400"
+              currentPage === index + 1 ? 'bg-blue-500' : 'bg-gray-400'
             } text-white rounded`}
           >
             {index + 1}
@@ -328,7 +398,7 @@ const LegalSessions = () => {
         >
           التالي
         </button>
-      </div> 
+      </div>
       {isModalOpen && (
         <SessionDetailsModal
           isOpen={isModalOpen}
@@ -336,8 +406,8 @@ const LegalSessions = () => {
           session={selectedSession}
         />
       )}
-      </div> 
-        );
+    </div>
+  );
 };
 
 export default LegalSessions;

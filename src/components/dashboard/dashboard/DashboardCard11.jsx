@@ -8,7 +8,6 @@ import {
   FaClipboardCheck,
 } from 'react-icons/fa';
 
-// Import utilities
 import { tailwindConfig } from '../../../utils/Utils';
 
 function DashboardCard11({ isDarkMode }) {
@@ -66,7 +65,7 @@ function DashboardCard11({ isDarkMode }) {
         </h2>
       </header>
 
-      {/* بيانات الإحصائيات */}
+      {}
       <div className="px-5 py-3">
         <div className="flex items-center space-x-2">
           <div className="text-3xl font-bold text-gray-800 dark:text-gray-100">
@@ -78,7 +77,7 @@ function DashboardCard11({ isDarkMode }) {
         </div>
       </div>
 
-      {/* أيقونات توضيحية للأسباب */}
+      {}
       <div className="flex justify-around text-gray-700 dark:text-gray-300 text-lg my-2">
         <span className="flex items-center space-x-1">
           <FaBalanceScale /> <span>صعوبات الاستخدام</span>
@@ -94,7 +93,7 @@ function DashboardCard11({ isDarkMode }) {
         </span>
       </div>
 
-      {/* المخطط */}
+      {}
       <div className="grow">
         <BarChart data={chartData} width={595} height={48} />
       </div>

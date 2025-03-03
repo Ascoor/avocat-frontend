@@ -37,7 +37,7 @@ const SessionModal = ({
     result: '',
     orders: '',
     notes: '',
-    status: 'جارى التنفيذ', // Default status
+    status: 'جارى التنفيذ',
     leg_case_id: legalCaseId,
     created_by: user.id,
     Judgment_operative: '',
@@ -127,10 +127,10 @@ const SessionModal = ({
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* الحقول الأساسية عند الإضافة */}
+            {}
             {!isEdit && (
               <>
-                {/* المحكمة */}
+                {}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                     المحكمة
@@ -151,7 +151,7 @@ const SessionModal = ({
                   </select>
                 </div>
 
-                {/* نوع الجلسة */}
+                {}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                     نوع الجلسة
@@ -175,7 +175,7 @@ const SessionModal = ({
                   </select>
                 </div>
 
-                {/* دائرة المحكمة */}
+                {}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                     دائرة المحكمة
@@ -189,7 +189,7 @@ const SessionModal = ({
                   />
                 </div>
 
-                {/* رول القضية */}
+                {}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                     رول القضية
@@ -203,7 +203,7 @@ const SessionModal = ({
                   />
                 </div>
 
-                {/* تاريخ الجلسة */}
+                {}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                     تاريخ الجلسة
@@ -218,7 +218,7 @@ const SessionModal = ({
                   />
                 </div>
 
-                {/* المحامي */}
+                {}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                     المحامي
@@ -239,7 +239,7 @@ const SessionModal = ({
                   </select>
                 </div>
 
-                {/* الطلبات */}
+                {}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                     الطلبات
@@ -254,7 +254,7 @@ const SessionModal = ({
                   />
                 </div>
 
-                {/* ملاحظات */}
+                {}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                     ملاحظات
@@ -270,7 +270,7 @@ const SessionModal = ({
               </>
             )}
 
-            {/* إظهار الحقول الأخرى في وضع التعديل */}
+            {}
             {isEdit && (
               <>
                 <div>
@@ -315,7 +315,7 @@ const SessionModal = ({
                   </select>
                 </div>
 
-                {/* التكاليف */}
+                {}
                 <div className="grid grid-cols-3 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">

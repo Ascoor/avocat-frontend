@@ -19,7 +19,6 @@ const ProcedureTypes = () => {
 
   const itemsPerPage = 10;
 
-  // Fetch procedure types
   const fetchProcedureTypes = useCallback(async () => {
     try {
       const response = await getProcedureTypes();
@@ -34,7 +33,6 @@ const ProcedureTypes = () => {
     fetchProcedureTypes();
   }, [fetchProcedureTypes]);
 
-  // Handle adding, editing, and deleting procedure types
   const handleAddProcedureType = async (formData) => {
     try {
       await createProcedureType(formData);
@@ -75,7 +73,6 @@ const ProcedureTypes = () => {
     setShowModal(true);
   };
 
-  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = procedureTypes.slice(indexOfFirstItem, indexOfLastItem);
@@ -122,7 +119,7 @@ const ProcedureTypes = () => {
       <SectionHeader listName="أنواع الإجراءات" icon={ProcedureIcon} />
       <div className="flex justify-start mt-6">{renderAddButton()}</div>
 
-      {/* Modal for adding/editing procedure type */}
+      {}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-40 bg-gray-600 bg-opacity-50">
           <div className="bg-white dark:bg-gray-800 dark:text-gray-200 rounded-lg shadow-lg p-6 w-full max-w-lg border border-avocat-yellow">
@@ -177,7 +174,7 @@ const ProcedureTypes = () => {
         </div>
       )}
 
-      {/* Table */}
+      {}
       <div className="overflow-x-auto mt-6 shadow-lg">
         <table className="w-full border-collapse border border-avocat-orange">
           <thead className="bg-blue-100 text-blue-700 dark:bg-gray-700 dark:text-yellow-400">
@@ -219,9 +216,9 @@ const ProcedureTypes = () => {
         </table>
       </div>
 
-      {/* Pagination Controls */}
+      {}
       <div className="flex items-center justify-between mt-6">
-        {/* Previous Button */}
+        {}
 
         <button
           onClick={() => handlePageChange(currentPage + 1)}
@@ -230,7 +227,7 @@ const ProcedureTypes = () => {
         >
           التالي
         </button>
-        {/* Page Numbers */}
+        {}
         <div className="flex items-center space-x-2">
           {Array.from({ length: totalPages }, (_, index) => (
             <button
@@ -239,7 +236,7 @@ const ProcedureTypes = () => {
               className={`px-4 py-2 rounded-md font-bold 
    ${
      currentPage === index + 1
-       ? 'bg-gradient-yellow-dark-button hover:bg-gradient-green-button ml-2 text-white' // Highlight the current page
+       ? 'bg-gradient-yellow-dark-button hover:bg-gradient-green-button ml-2 text-white'
        : 'bg-gray-500 hover:bg-gray-600 text-gray-300 ml-2 dark:bg-gradient-yellow-button dark:text-gray-800 dark:hover:bg-gradient-green-button dark:hover:bg-gray-400'
    } 
  `}
@@ -249,7 +246,7 @@ const ProcedureTypes = () => {
           ))}
         </div>
 
-        {/* Next Button */}
+        {}
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}

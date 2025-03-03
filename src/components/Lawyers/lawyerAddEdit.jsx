@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Added for navigation
+import { Link } from 'react-router-dom';
 import {
   MainLawyers,
   MainProcedures,
@@ -8,7 +8,7 @@ import {
   MainSessions,
   AdIcon,
   ServiceIcon,
-} from '../../assets/icons/index'; // Updated path
+} from '../../assets/icons/index';
 import axios from 'axios';
 
 import API_CONFIG from '../../config/config';

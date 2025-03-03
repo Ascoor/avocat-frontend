@@ -10,7 +10,7 @@ export const AlertProvider = ({ children }) => {
 
   const triggerAlert = (type, message) => {
     setAlert({ type, message });
-    setTimeout(() => setAlert(null), 5000); // إخفاء التنبيه بعد 5 ثوانٍ
+    setTimeout(() => setAlert(null), 5000);
   };
 
   return (

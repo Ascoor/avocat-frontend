@@ -2,11 +2,12 @@ import React, { useEffect, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useSpinner } from '../../context/SpinnerContext';
 import GlobalSpinner from '../common/Spinners/GlobalSpinner';
-import { lazy } from 'react'; 
+import { lazy } from 'react';
 
-// Lazy Load Components
 const Home = lazy(() => import('../dashboard/Dashboard'));
-const ClientsAndUnClients = lazy(() => import('../../pages/ClientUnClientList.jsx'));
+const ClientsAndUnClients = lazy(
+  () => import('../../pages/ClientUnClientList.jsx'),
+);
 const LegalServiceList = lazy(() => import('../../pages/LegalServicList'));
 const CourtSearch = lazy(() => import('../Reports/SearchCourt'));
 const CaseTypeSet = lazy(() => import('../Courts/case_index.component'));
@@ -18,8 +19,9 @@ const Procedures = lazy(() => import('../../pages/ProceduresList'));
 const SearchCourtsApi = lazy(() => import('../../pages/SearchCourtsApi.jsx'));
 const LegalSessions = lazy(() => import('../Sessions/index.jsx'));
 
-// Not Found Page Component
-const NotFound = () => <h1 className="text-center text-red-500">404 - Page Not Found</h1>;
+const NotFound = () => (
+  <h1 className="text-center text-red-500">404 - Page Not Found</h1>
+);
 
 const AuthRoutes = () => {
   const { showSpinner, hideSpinner, loading } = useSpinner();
@@ -32,7 +34,7 @@ const AuthRoutes = () => {
 
   return (
     <div className="max-w-screen-lg mx-auto p-4 min-h-screen relative overflow-hidden">
-      {/* Global Spinner when loading */}
+      {}
       {loading && <GlobalSpinner />}
 
       <Suspense fallback={<GlobalSpinner />}>
@@ -47,10 +49,13 @@ const AuthRoutes = () => {
           <Route path="/legcases" element={<LegalCasesIndex />} />
           <Route path="/legal-sessions" element={<LegalSessions />} />
           <Route path="/search-courts-api" element={<SearchCourtsApi />} />
-          <Route path="/managment-settings/procedures" element={<Procedures />} />
+          <Route
+            path="/managment-settings/procedures"
+            element={<Procedures />}
+          />
           <Route path="/financial-dashboard" element={<FinancialDashboard />} />
 
-          {/* Catch-all 404 route */}
+          {}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

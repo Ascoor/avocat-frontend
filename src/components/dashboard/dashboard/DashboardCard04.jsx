@@ -33,14 +33,14 @@ function DashboardCard04({ isDarkMode }) {
           gradient.addColorStop(
             0,
             ['#E6E6FA', '#C3B1E1', '#9370DB', '#6A5ACD', '#483D8B'][index],
-          ); // تدرجات اللافندر من الفاتح إلى الداكن
-          gradient.addColorStop(1, '#2B1B50'); // تأثير الظل الغامق
+          );
+          gradient.addColorStop(1, '#2B1B50');
         } else {
           gradient.addColorStop(
             0,
             ['#FFA500', '#10B981', '#FF5733', '#4682B4', '#FFD700'][index],
-          ); // البرتقالي، الأخضر، الأحمر، الأزرق، الذهبي
-          gradient.addColorStop(1, '#FFF5E1'); // تأثير فاتح
+          );
+          gradient.addColorStop(1, '#FFF5E1');
         }
 
         return gradient;
@@ -49,7 +49,6 @@ function DashboardCard04({ isDarkMode }) {
     }
   }, [isDarkMode]);
 
-  // بيانات أداء المحامين
   const lawyerPerformance = {
     labels: [
       'أحمد العتيبي',
@@ -58,18 +57,15 @@ function DashboardCard04({ isDarkMode }) {
       'نورة السبيعي',
       'عبدالله الدوسري',
     ],
-    casesHandled: [50, 75, 40, 65, 55], // عدد القضايا التي تعامل معها كل محامٍ
-    successRate: [85, 90, 75, 80, 70], // نسبة النجاح في القضايا المغلقة
+    casesHandled: [50, 75, 40, 65, 55],
+    successRate: [85, 90, 75, 80, 70],
   };
 
-  // إعداد ألوان المخطط
   const backgroundColors = gradientColors.length
     ? gradientColors
     : isDarkMode
-      ? ['#E6E6FA', '#C3B1E1', '#9370DB', '#6A5ACD', '#483D8B'] // تدرجات اللافندر
-      : ['#FFA500', '#10B981', '#FF5733', '#4682B4', '#FFD700']; // ألوان النهار
-
-  // بيانات المخطط
+      ? ['#E6E6FA', '#C3B1E1', '#9370DB', '#6A5ACD', '#483D8B']
+      : ['#FFA500', '#10B981', '#FF5733', '#4682B4', '#FFD700'];
   const chartData = {
     labels: lawyerPerformance.labels,
     datasets: [
@@ -81,7 +77,7 @@ function DashboardCard04({ isDarkMode }) {
         borderWidth: 1,
         borderRadius: 6,
         barThickness: 20,
-        hoverBackgroundColor: isDarkMode ? '#C3B1E1' : '#FFD700', // تأثير عند التحويم
+        hoverBackgroundColor: isDarkMode ? '#C3B1E1' : '#FFD700',
       },
       {
         label: 'نسبة النجاح (%)',
@@ -95,9 +91,8 @@ function DashboardCard04({ isDarkMode }) {
     ],
   };
 
-  // خيارات المخطط
   const chartOptions = {
-    indexAxis: 'y', // تحويل المخطط إلى أفقي
+    indexAxis: 'y',
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -127,12 +122,12 @@ function DashboardCard04({ isDarkMode }) {
 
   return (
     <div className="bg-gray-100 dark:bg-gradient-night dark:text-white text-gray-800 shadow rounded-lg p-2 col-span-full sm:col-span-6 xl:col-span-1 flex flex-col">
-      {/* العنوان */}
+      {}
       <header className="px-5 py-4 border-b border-gray-300 dark:border-gray-700 flex items-center">
         <h2 className="font-semibold text-md">👨‍⚖️ أداء المحامين في المكتب</h2>
       </header>
 
-      {/* المحتوى */}
+      {}
       <div className="mt-4">
         <p className="text-sm text-gray-500 dark:text-gray-300">
           يعرض هذا المخطط عدد القضايا التي تعامل معها كل محامٍ، بالإضافة إلى
@@ -140,7 +135,7 @@ function DashboardCard04({ isDarkMode }) {
         </p>
       </div>
 
-      {/* المخطط */}
+      {}
       <div className="w-full h-64 sm:h-80 md:h-96 mt-4">
         <Bar ref={chartRef} data={chartData} options={chartOptions} />
       </div>

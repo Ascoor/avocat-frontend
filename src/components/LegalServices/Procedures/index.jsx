@@ -25,7 +25,6 @@ const ServiceProcedures = ({ serviceId }) => {
     }
   }, [serviceId]);
 
-  // ✅ جلب بيانات الإجراءات
   const fetchServiceProcedures = async () => {
     try {
       const response = await getServiceProceduresByServiceId(serviceId);
@@ -36,7 +35,6 @@ const ServiceProcedures = ({ serviceId }) => {
     }
   };
 
-  // ✅ تقسيم البيانات للصفحات
   const paginateData = (data) => {
     if (!Array.isArray(data)) return [];
     const startIndex = (currentPage - 1) * rowsPerPage;
@@ -45,27 +43,23 @@ const ServiceProcedures = ({ serviceId }) => {
 
   const serviceProceduresToDisplay = paginateData(serviceProcedures);
 
-  // ✅ فتح نموذج الإضافة
   const handleAddServiceProcedure = () => {
     setIsEditMode(false);
     setSelectedProcedure(null);
     setShowModal(true);
   };
 
-  // ✅ فتح نموذج التعديل
   const handleEditServiceProcedure = (procedure) => {
     setIsEditMode(true);
     setSelectedProcedure(procedure);
     setShowModal(true);
   };
 
-  // ✅ فتح تأكيد الحذف
   const handleDeleteClick = (procedure) => {
     setProcedureToDelete(procedure);
     setShowConfirmDelete(true);
   };
 
-  // ✅ تأكيد الحذف
   const handleConfirmDelete = async () => {
     if (procedureToDelete) {
       try {
@@ -81,12 +75,11 @@ const ServiceProcedures = ({ serviceId }) => {
     }
   };
 
-  // ✅ حساب عدد الصفحات
   const totalPages = Math.ceil(serviceProcedures.length / rowsPerPage);
 
   return (
     <div className="min-h-screen bg-lightBg dark:bg-darkBg text-gray-900 dark:text-gray-100">
-      {/* ✅ Header Section */}
+      {}
       <div className="p-4 bg-blue-600 dark:bg-gray-800 flex justify-between items-center rounded-lg shadow-md">
         <button
           onClick={handleAddServiceProcedure}
@@ -100,7 +93,7 @@ const ServiceProcedures = ({ serviceId }) => {
         </h1>
       </div>
 
-      {/* ✅ جدول الإجراءات */}
+      {}
       <div className="p-6">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[600px] table-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
@@ -166,7 +159,7 @@ const ServiceProcedures = ({ serviceId }) => {
           </table>
         </div>
 
-        {/* ✅ أزرار التنقل بين الصفحات */}
+        {}
         <div className="flex justify-center mt-4">
           <button
             disabled={currentPage === 1}
@@ -188,7 +181,7 @@ const ServiceProcedures = ({ serviceId }) => {
         </div>
       </div>
 
-      {/* ✅ نموذج الإضافة والتعديل */}
+      {}
       <AddEditServiceProcedureModal
         show={showModal}
         handleClose={() => setShowModal(false)}

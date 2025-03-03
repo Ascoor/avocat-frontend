@@ -40,7 +40,7 @@ export default function useAuth() {
         {
           headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken, 
+            'X-CSRF-TOKEN': csrfToken,
           },
         },
       );

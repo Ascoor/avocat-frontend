@@ -242,7 +242,7 @@ const ProcedurePlaceTypes = () => {
               className={`px-4 py-2 rounded-md font-bold 
         ${
           currentPage === index + 1
-            ? 'bg-gradient-yellow-dark-button hover:bg-gradient-green-button ml-2 text-white' // Highlight the current page
+            ? 'bg-gradient-yellow-dark-button hover:bg-gradient-green-button ml-2 text-white'
             : 'bg-gray-500 hover:bg-gray-600 text-gray-300 ml-2 dark:bg-gradient-yellow-button dark:text-gray-800 dark:hover:bg-gradient-green-button dark:hover:bg-gray-400'
         } 
       `}

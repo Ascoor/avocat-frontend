@@ -14,7 +14,6 @@ import {
 } from 'chart.js';
 import 'chartjs-adapter-moment';
 
-// Import utilities
 import { tailwindConfig, formatValue } from '../../../utils/Utils';
 
 Chart.register(
@@ -43,7 +42,6 @@ function LineChart02({ data, width, height }) {
 
   useEffect(() => {
     const ctx = canvas.current;
-    // eslint-disable-next-line no-unused-vars
     const newChart = new Chart(ctx, {
       type: 'line',
       data: data,
@@ -94,7 +92,7 @@ function LineChart02({ data, width, height }) {
           },
           tooltip: {
             callbacks: {
-              title: () => false, // Disable tooltip title
+              title: () => false,
               label: (context) => formatValue(context.parsed.y),
             },
             bodyColor: darkMode
@@ -121,15 +119,12 @@ function LineChart02({ data, width, height }) {
           afterUpdate(c, args, options) {
             const ul = legend.current;
             if (!ul) return;
-            // Remove old legend items
             while (ul.firstChild) {
               ul.firstChild.remove();
             }
-            // Reuse the built-in legendItems generator
             const items = c.options.plugins.legend.labels.generateLabels(c);
             items.slice(0, 2).forEach((item) => {
               const li = document.createElement('li');
-              // Button element
               const button = document.createElement('button');
               button.style.display = 'inline-flex';
               button.style.alignItems = 'center';
@@ -141,7 +136,6 @@ function LineChart02({ data, width, height }) {
                 );
                 c.update();
               };
-              // Color box
               const box = document.createElement('span');
               box.style.display = 'block';
               box.style.width = tailwindConfig().theme.width[3];
@@ -152,7 +146,6 @@ function LineChart02({ data, width, height }) {
               box.style.borderColor =
                 c.data.datasets[item.datasetIndex].borderColor;
               box.style.pointerEvents = 'none';
-              // Label
               const label = document.createElement('span');
               label.classList.add('text-gray-500', 'dark:text-gray-400');
               label.style.fontSize = tailwindConfig().theme.fontSize.sm[0];
@@ -171,7 +164,6 @@ function LineChart02({ data, width, height }) {
     });
     setChart(newChart);
     return () => newChart.destroy();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -215,7 +207,7 @@ function LineChart02({ data, width, height }) {
           </div>
         </div>
       </div>
-      {/* Chart built with Chart.js 3 */}
+      {}
       <div className="grow">
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>

@@ -17,9 +17,9 @@ const AdsDetailsModal = ({ isOpen, onClose, adDetails }) => {
           </button>
         </div>
         <div className="p-4">
-          {/* Legal Ad Details */}
+          {}
           <div className="grid grid-cols-2 gap-4 mb-4">
-            {/* Legal Ad Type */}
+            {}
             <div>
               <label className="block text-sm font-medium">نوع الإعلان</label>
               <p className="text-gray-700 dark:text-gray-300">
@@ -27,7 +27,7 @@ const AdsDetailsModal = ({ isOpen, onClose, adDetails }) => {
               </p>
             </div>
 
-            {/* Court */}
+            {}
             <div>
               <label className="block text-sm font-medium">المحكمة</label>
               <p className="text-gray-700 dark:text-gray-300">
@@ -37,7 +37,7 @@ const AdsDetailsModal = ({ isOpen, onClose, adDetails }) => {
           </div>
 
           <div className="grid grid-cols-2 gap-4 mb-4">
-            {/* Lawyer Send */}
+            {}
             <div>
               <label className="block text-sm font-medium">
                 المحامي المرسل
@@ -47,7 +47,7 @@ const AdsDetailsModal = ({ isOpen, onClose, adDetails }) => {
               </p>
             </div>
 
-            {/* Lawyer Receive */}
+            {}
             <div>
               <label className="block text-sm font-medium">
                 المحامي المستلم
@@ -59,7 +59,7 @@ const AdsDetailsModal = ({ isOpen, onClose, adDetails }) => {
           </div>
 
           <div className="grid grid-cols-2 gap-4 mb-4">
-            {/* Send Date */}
+            {}
             <div>
               <label className="block text-sm font-medium">تاريخ الإرسال</label>
               <p className="text-gray-700 dark:text-gray-300">
@@ -67,7 +67,7 @@ const AdsDetailsModal = ({ isOpen, onClose, adDetails }) => {
               </p>
             </div>
 
-            {/* Receive Date */}
+            {}
             <div>
               <label className="block text-sm font-medium">
                 تاريخ الاستلام
@@ -78,7 +78,7 @@ const AdsDetailsModal = ({ isOpen, onClose, adDetails }) => {
             </div>
           </div>
 
-          {/* Status */}
+          {}
           <div className="mb-4">
             <label className="block text-sm font-medium">الحالة</label>
             <p
@@ -94,7 +94,7 @@ const AdsDetailsModal = ({ isOpen, onClose, adDetails }) => {
             </p>
           </div>
 
-          {/* Costs */}
+          {}
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-sm font-medium">التكلفة 1</label>
@@ -110,7 +110,7 @@ const AdsDetailsModal = ({ isOpen, onClose, adDetails }) => {
             </div>
           </div>
 
-          {/* Description */}
+          {}
           <div className="mb-4">
             <label className="block text-sm font-medium">الوصف</label>
             <p className="text-gray-700 dark:text-gray-300">
@@ -118,7 +118,7 @@ const AdsDetailsModal = ({ isOpen, onClose, adDetails }) => {
             </p>
           </div>
 
-          {/* Results */}
+          {}
           <div className="mb-4">
             <label className="block text-sm font-medium">النتائج</label>
             <p className="text-gray-700 dark:text-gray-300">

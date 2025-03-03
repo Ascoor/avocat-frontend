@@ -13,7 +13,6 @@ import {
   MainClients,
 } from '../../assets/icons/index';
 
-// Lazy loading components
 const DashboardCard01 = lazy(() => import('./dashboard/DashboardCard01'));
 const DashboardCard02 = lazy(() => import('./dashboard/DashboardCard02'));
 const DashboardCard03 = lazy(() => import('./dashboard/DashboardCard03'));
@@ -72,12 +71,12 @@ const Home = () => {
         client.slug.includes(normalizedSearchTerm),
     );
 
-    setFilteredClients(result.slice(0, 5)); // ✅ عرض أول 5 نتائج فقط
+    setFilteredClients(result.slice(0, 5));
   }, [searchTerm, clients]);
 
   return (
     <div className="p-4 mt-6 xl:max-w-7xl xl:mx-auto w-full">
-      {/* 🔍 مربع البحث */}
+      {}
       <div className="flex justify-center mb-6">
         <div className="flex w-full max-w-2xl bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg">
           <button
@@ -96,7 +95,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* ✅ عرض البحث أو الإحصائيات */}
+      {}
       {searchTerm ? (
         <DashboardSearch
           filteredClients={filteredClients}
@@ -105,13 +104,13 @@ const Home = () => {
         />
       ) : (
         <>
-          {/* ✅ عرض الإحصائيات */}
+          {}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 pb-4">
             <MainCard
               count={counts.legalSessionCount}
               icon={MainSessions}
               label="الجلسات"
-              route="/legal-sessions" 
+              route="/legal-sessions"
             />
             <MainCard
               count={counts.legCaseCount}
@@ -130,7 +129,7 @@ const Home = () => {
             />
           </div>
 
-          {/* ✅ عرض بطاقات المعلومات */}
+          {}
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 pb-4">
             <DashboardCard01 isDarkMode={isDarkMode} />
             <DashboardCard02 isDarkMode={isDarkMode} />
@@ -140,7 +139,7 @@ const Home = () => {
             <DashboardCard06 isDarkMode={isDarkMode} />
           </div>
 
-          {/* ✅ التقويم */}
+          {}
           <Suspense fallback={<HomeSpinner />}>
             <div className="mt-10">
               <CalendarPage />

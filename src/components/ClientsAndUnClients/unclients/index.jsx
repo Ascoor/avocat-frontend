@@ -6,7 +6,7 @@ import API_CONFIG from '../../../config/config';
 import { UnclientSectionIcon } from '../../../assets/icons/index';
 import SectionHeader from '../../common/SectionHeader';
 import AddEditUnclient from './AddEditUnclient';
-import TableComponent from '../../common/TableComponent'; // ✅ مكون الجدول العالمي
+import TableComponent from '../../common/TableComponent';
 import api from '../../../services/api/axiosConfig';
 import GlobalConfirmDeleteModal from '../../common/GlobalConfirmDeleteModal';
 
@@ -14,10 +14,8 @@ function UnClientList() {
   const [unclients, setUnunclients] = useState([]);
   const [selectedUnclient, setSelectedUnclient] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false); // For delete confirmation modal
-  const [unclientToDelete, setUnclientToDelete] = useState(null); // For storing the unclient to be deleted
-
-  // ✅ جلب بيانات عملاء بدون وكالة
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [unclientToDelete, setUnclientToDelete] = useState(null);
   const fetchUnunclients = useCallback(async () => {
     try {
       const response = await axios.get(`${API_CONFIG.baseURL}/api/unclients`);
@@ -31,21 +29,18 @@ function UnClientList() {
     fetchUnunclients();
   }, [fetchUnunclients]);
 
-  // ✅ حذف عميل بدون وكالة
   const handleDelete = async () => {
     if (!unclientToDelete) return;
 
     try {
-      // Proceed with deleting the unclient
       await api.delete(`/api/unclients/${unclientToDelete.id}`);
-      fetchUnunclients(); // Refresh the client list after deletion
-      setDeleteModalOpen(false); // Close the delete confirmation modal
+      fetchUnunclients();
+      setDeleteModalOpen(false);
     } catch (error) {
       console.error('Error deleting unclient:', error);
     }
   };
 
-  // ✅ تغيير حالة العميل بدون وكالة
   const handleToggleStatus = async (id) => {
     try {
       const unclient = unclients.find((c) => c.id === id);
@@ -59,13 +54,11 @@ function UnClientList() {
     }
   };
 
-  // ✅ فتح نافذة الإضافة أو التعديل
   const openAddEditModal = (unclient = null) => {
     setSelectedUnclient(unclient);
     setModalOpen(true);
   };
 
-  // ✅ إعداد رؤوس الجدول
   const headers = [
     { key: 'slug', text: 'الرمز' },
     { key: 'name', text: 'الاسم' },
@@ -75,7 +68,6 @@ function UnClientList() {
     { key: 'status', text: 'الحالة' },
   ];
 
-  // ✅ عرض مخصص لحالة العميل بدون وكالة
   const customRenderers = {
     status: (unclient) =>
       unclient.status === 'active' ? (
@@ -95,7 +87,6 @@ function UnClientList() {
       ),
   };
 
-  // ✅ زر إضافة عميل بدون وكالة
   const renderAddButton = () => (
     <button
       onClick={() => openAddEditModal()}
@@ -105,7 +96,6 @@ function UnClientList() {
     </button>
   );
 
-  // Open delete confirmation modal
   const openDeleteModal = (unclient) => {
     setUnclientToDelete(unclient);
     setDeleteModalOpen(true);
@@ -113,14 +103,14 @@ function UnClientList() {
 
   return (
     <div className="p-6 mt-12 xl:max-w-7xl xl:mx-auto w-full " dir="rtl">
-      {/* ✅ رأس القسم */}
+      {}
       <SectionHeader
         buttonName="عميل بدون وكالة"
         listName="عملاء بدون وكالة"
         icon={UnclientSectionIcon}
       />
 
-      {/* ✅ نافذة الإضافة أو التعديل */}
+      {}
       {isModalOpen && (
         <AddEditUnclient
           unclient={selectedUnclient}
@@ -130,17 +120,17 @@ function UnClientList() {
         />
       )}
 
-      {/* ✅ Modal for Delete Confirmation */}
+      {}
       {isDeleteModalOpen && (
         <GlobalConfirmDeleteModal
           isOpen={isDeleteModalOpen}
           onClose={() => setDeleteModalOpen(false)}
-          onConfirm={handleDelete} // Calls the handleDelete function on confirmation
-          itemName={unclientToDelete?.name || 'هذا العميل'} // Ensure a fallback name if not available
+          onConfirm={handleDelete}
+          itemName={unclientToDelete?.name || 'هذا العميل'}
         />
       )}
 
-      {/* ✅ مكون الجدول العالمي */}
+      {}
       <TableComponent
         data={unclients}
         headers={headers}
@@ -152,7 +142,7 @@ function UnClientList() {
         }
         sectionName="unclients"
         customRenderers={customRenderers}
-        renderAddButton={renderAddButton} // ✅ إضافة زر الإضافة إلى الجدول
+        renderAddButton={renderAddButton}
       />
     </div>
   );

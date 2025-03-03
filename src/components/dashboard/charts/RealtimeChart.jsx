@@ -9,9 +9,7 @@ import {
   TimeScale,
   Tooltip,
 } from 'chart.js';
-import 'chartjs-adapter-moment'; // دعم عرض التاريخ والوقت
-
-// تسجيل المكونات المطلوبة في Chart.js
+import 'chartjs-adapter-moment';
 Chart.register(
   LineController,
   LineElement,
@@ -26,10 +24,8 @@ function RealtimeChart({ data, width, height }) {
   const canvas = useRef(null);
 
   useEffect(() => {
-    // تأكد من أن الكانفاس جاهز
     if (!canvas.current) return;
 
-    // إنشاء المخطط
     const ctx = canvas.current.getContext('2d');
     const chartInstance = new Chart(ctx, {
       type: 'line',
@@ -38,7 +34,7 @@ function RealtimeChart({ data, width, height }) {
         responsive: true,
         scales: {
           x: {
-            type: 'time', // الوقت
+            type: 'time',
             time: {
               unit: 'second',
             },
@@ -57,7 +53,6 @@ function RealtimeChart({ data, width, height }) {
       },
     });
 
-    // تنظيف عند تدمير المكون
     return () => {
       chartInstance.destroy();
     };

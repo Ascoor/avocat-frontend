@@ -1,6 +1,3 @@
-// 📁 data/fakeEventsData.js
-
-// Sample Arabic data for legal office calendar events
 const fakeEventsData = [
   {
     id: 1,

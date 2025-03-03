@@ -16,36 +16,31 @@ const LegCasesModal = ({ selectedClient, activeTab }) => {
   const [selectedCase, setSelectedCase] = useState(null);
   const [activeSubTab, setActiveSubTab] = useState('procedures');
 
-  // ✅ إعادة ضبط `selectedCase` عند تغيير `activeTab`
   useEffect(() => {
     if (activeTab === 'services') {
       setSelectedCase(null);
     }
   }, [activeTab]);
 
-  // ✅ إعادة ضبط `selectedCase` عند تغيير العميل أو إعادة البحث
   useEffect(() => {
     setSelectedCase(null);
     setActiveSubTab('procedures');
   }, [selectedClient]);
 
-  // ✅ استبدال القيم غير المتوفرة بـ "غير متوفر"
   const getValue = (value) => (value && value !== 'null' ? value : 'غير متوفر');
 
-  // ✅ عند اختيار قضية، يتم تخزينها وإخفاء القائمة الأصلية
   const handleCaseSelect = (caseItem) => {
     setSelectedCase(caseItem);
     setActiveSubTab('procedures');
   };
 
-  // ✅ عند الضغط على زر الرجوع، يتم عرض جميع القضايا مجددًا
   const handleBack = () => {
     setSelectedCase(null);
   };
 
   return (
     <div>
-      {/* ✅ إذا لم يتم تحديد أي قضية، يتم عرض جميع القضايا */}
+      {}
       {!selectedCase && activeTab === 'legCases' && (
         <table className="w-full table-auto shadow-md rounded-lg bg-white dark:bg-gray-800">
           <thead className="text-sm font-semibold text-center text-gray-100 bg-blue-500 dark:bg-gradient-night dark:text-avocat-orange-light uppercase border-b border-gray-600">
@@ -105,10 +100,10 @@ const LegCasesModal = ({ selectedClient, activeTab }) => {
         </table>
       )}
 
-      {/* ✅ عند تحديد قضية، يتم عرض تفاصيلها مع زر الرجوع */}
+      {}
       {selectedCase && (
         <div className="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-          {/* 🔙 زر الرجوع لإعادة عرض جميع القضايا */}
+          {}
           <button
             className="px-4 py-2 mb-4 bg-red-500 text-white font-bold rounded-lg shadow-md hover:bg-red-600 transition"
             onClick={handleBack}
@@ -132,7 +127,7 @@ const LegCasesModal = ({ selectedClient, activeTab }) => {
             </div>
           </div>
 
-          {/* ✅ تبويبات الإجراءات والجلسات والإعلانات */}
+          {}
           <div className="flex border-b mb-4">
             <button
               className={`flex-1 py-2 text-center font-semibold transition-all duration-200 
@@ -169,7 +164,7 @@ const LegCasesModal = ({ selectedClient, activeTab }) => {
             </button>
           </div>
 
-          {/* ✅ عرض مكونات القضية المختارة */}
+          {}
           {activeSubTab === 'procedures' && (
             <LegalCaseProcedures legCaseId={selectedCase.id} />
           )}

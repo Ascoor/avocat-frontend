@@ -11,8 +11,7 @@ const UnClientList = lazy(
 );
 
 const ClientUnclientList = () => {
-  const [activeTab, setActiveTab] = useState('clients'); // ✅ تتبع التبويب النشط
-
+  const [activeTab, setActiveTab] = useState('clients');
   const tabs = [
     { key: 'clients', label: 'عملاء بوكالة', icon: <FaUserTie /> },
     { key: 'unclients', label: 'عملاء بدون وكالة', icon: <FaUserAltSlash /> },
@@ -20,7 +19,7 @@ const ClientUnclientList = () => {
 
   return (
     <section className="flex flex-col items-center justify-start min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
-      {/* ✅ أزرار التبويبات */}
+      {}
       <div className="flex space-x-4 bg-white dark:bg-gray-800 shadow-md rounded-lg p-2 mt-4">
         {tabs.map((tab) => (
           <button

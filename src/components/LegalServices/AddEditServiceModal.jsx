@@ -96,7 +96,7 @@ const AddEditServiceModal = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isViewing) return; // Prevent submission in view mode
+    if (isViewing) return;
     setLoading(true);
 
     try {
@@ -277,7 +277,7 @@ const AddEditServiceModal = ({
               name="status"
               value={formData.status}
               onChange={handleChange}
-              disabled={isViewing} // ✅ عند العرض، لا يمكن تغييره ولكن يظهر
+              disabled={isViewing}
               className="w-full px-4 py-3 rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
               required
             >

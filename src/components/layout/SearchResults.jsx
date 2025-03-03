@@ -15,7 +15,7 @@ const SearchResults = ({ data }) => {
         </p>
       ) : (
         <>
-          {/* تفاصيل القضية */}
+          {}
           <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md mb-6">
             <h4 className="text-lg font-semibold text-purple-700 dark:text-yellow-300 mb-2">
               ⚖️ تفاصيل القضية:
@@ -52,7 +52,7 @@ const SearchResults = ({ data }) => {
             </div>
           </div>
 
-          {/* جدول الجلسات */}
+          {}
           <h4 className="text-xl font-bold text-purple-600 dark:text-yellow-300 mb-4 text-center">
             📅 جدول الجلسات:
           </h4>

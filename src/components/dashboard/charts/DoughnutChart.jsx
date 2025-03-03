@@ -11,7 +11,6 @@ import {
 } from 'chart.js';
 import 'chartjs-adapter-moment';
 
-// Import utilities
 import { tailwindConfig } from '../../../utils/Utils';
 
 Chart.register(DoughnutController, ArcElement, TimeScale, Tooltip);
@@ -34,7 +33,7 @@ function DoughnutChart({ data, width, height }) {
       type: 'doughnut',
       data: data,
       options: {
-        cutout: '70%', // ✅ تحسين حجم الفجوة الوسطى
+        cutout: '70%',
         layout: { padding: 10 },
         plugins: {
           legend: { display: false },

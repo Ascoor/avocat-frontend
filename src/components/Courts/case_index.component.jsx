@@ -150,7 +150,7 @@ const CaseType = () => {
         </div>
       </div>
 
-      {/* Additional UI for other sections can be added similarly */}
+      {}
     </div>
   );
 };

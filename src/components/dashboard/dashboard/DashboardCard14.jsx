@@ -1,7 +1,6 @@
 import React from 'react';
 import { FaBalanceScale } from 'react-icons/fa';
 
-// ✅ بيانات الخدمات القانونية للأسبوع
 const services = [
   {
     id: 1,
@@ -40,14 +39,14 @@ const services = [
 const getServiceStyle = (status) => {
   switch (status) {
     case 'completed':
-      return { color: 'bg-green-500', icon: 'M10 20l5-5 5 5H10z' }; // ✅ مكتملة
+      return { color: 'bg-green-500', icon: 'M10 20l5-5 5 5H10z' };
     case 'in-progress':
-      return { color: 'bg-yellow-500', icon: 'M10 10h10v10H10V10z' }; // ⏳ قيد التنفيذ
+      return { color: 'bg-yellow-500', icon: 'M10 10h10v10H10V10z' };
     case 'pending':
       return {
         color: 'bg-red-500',
         icon: 'M12 20v-6h4v6h5v-8h3L12 3 2 12h3v8z',
-      }; // ❌ معلقة
+      };
     default:
       return {
         color: 'bg-gray-500',
@@ -56,7 +55,6 @@ const getServiceStyle = (status) => {
   }
 };
 
-// ✅ عرض كل خدمة في القائمة
 const ServiceItem = ({ service, isDarkMode }) => {
   const { color, icon } = getServiceStyle(service.status);
 
@@ -93,11 +91,10 @@ const ServiceItem = ({ service, isDarkMode }) => {
   );
 };
 
-// ✅ المكون الرئيسي لعرض "أهم خدمات الأسبوع"
 const DashboardCard14 = ({ isDarkMode = false }) => {
   return (
     <div className="bg-gray-100 dark:bg-gradient-night dark:text-white text-gray-800 shadow rounded-lg p-4">
-      {/* العنوان بمحاذاة وسط العنصر */}
+      {}
       <header className="py-4 border-b border-gray-300 dark:border-gray-700 flex justify-center items-center space-x-2">
         <FaBalanceScale className="text-lg text-indigo-500 dark:text-indigo-300" />
         <h2 className="font-semibold text-lg">أهم خدمات الأسبوع</h2>

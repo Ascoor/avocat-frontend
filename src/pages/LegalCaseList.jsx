@@ -10,12 +10,10 @@ import { LegCaseIcon } from '../assets/icons';
 import { getLegCases } from '../services/api/legalCases';
 import api from '../services/api/axiosConfig';
 
-// ✅ Lazy Load Add/Edit Modal Component
 const AddEditLegCase = lazy(
   () => import('../components/LegalCases/AddEditLegCase'),
 );
 
-// ✅ Status Styles
 const statusValues = { 'قيد التجهيز': 0, متداولة: 1, منتهية: 2, معلقة: 3 };
 const statusStyles = [
   { bgColor: 'bg-yellow-100', textColor: 'text-yellow-700' },
@@ -24,14 +22,12 @@ const statusStyles = [
   { bgColor: 'bg-red-100', textColor: 'text-red-700' },
 ];
 
-// ✅ Main Component
 const LegalCasesIndex = () => {
   const [legCases, setLegCases] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingLegCase, setEditingLegCase] = useState(null);
 
-  // ✅ Fetch Data (Memoized)
   const fetchLegCases = useCallback(async () => {
     try {
       const res = await getLegCases({
@@ -48,26 +44,23 @@ const LegalCasesIndex = () => {
     fetchLegCases();
   }, [fetchLegCases]);
 
-  // ✅ Handle Add/Edit Modal
   const handleAddEditModal = (legCase = null) => {
     setEditingLegCase(legCase);
     setIsEditing(!!legCase);
     setShowModal(true);
   };
 
-  // ✅ Delete Case
   const handleDeleteCase = async (id) => {
     if (window.confirm('هل أنت متأكد من حذف هذه القضية؟')) {
       try {
         await api.delete(`/legal-cases/${id}`);
-        fetchLegCases(); // Refresh data after deletion
+        fetchLegCases();
       } catch (error) {
         console.error('Error deleting legal case:', error);
       }
     }
   };
 
-  // ✅ Table Animations
   const [springs, apiSprings] = useSprings(legCases.length, (i) => ({
     opacity: 0,
     from: { opacity: 0 },
@@ -79,7 +72,6 @@ const LegalCasesIndex = () => {
     if (legCases.length > 0) apiSprings.start();
   }, [legCases, apiSprings]);
 
-  // ✅ Table Headers
   const headers = [
     { key: 'actions', text: 'عرض' },
     { key: 'slug', text: 'رقم الملف' },
@@ -90,7 +82,6 @@ const LegalCasesIndex = () => {
     { key: 'status', text: 'الحالة' },
   ];
 
-  // ✅ Status Colors & Icons
   const statusColors = {
     'جارى التنفيذ': 'text-yellow-500',
     'قيد التنفيذ': 'text-orange-500',
@@ -107,7 +98,6 @@ const LegalCasesIndex = () => {
     استيفاء: <AiFillCheckCircle className="mr-1" />,
   };
 
-  // ✅ Custom Table Renderers
   const customRenderers = {
     case_sub_type: (legCase) => legCase.case_sub_type?.name || 'غير محدد',
 
@@ -153,7 +143,6 @@ const LegalCasesIndex = () => {
     ),
   };
 
-  // ✅ Button for Adding a New Case
   const renderAddButton = () => (
     <button
       onClick={() => handleAddEditModal()}
@@ -167,7 +156,7 @@ const LegalCasesIndex = () => {
     <div className="p-6 mt-12 w-full">
       <SectionHeader listName="القضايا" icon={LegCaseIcon} />
 
-      {/* ✅ Lazy Load Modal Inside Suspense */}
+      {}
       {showModal && (
         <Suspense
           fallback={
@@ -183,7 +172,7 @@ const LegalCasesIndex = () => {
         </Suspense>
       )}
 
-      {/* ✅ Table Component */}
+      {}
       <TableComponent
         data={legCases}
         headers={headers}

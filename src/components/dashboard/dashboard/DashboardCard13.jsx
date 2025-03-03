@@ -61,7 +61,7 @@ const SessionItem = ({ session, isDarkMode }) => {
 const DashboardCard13 = ({ isDarkMode = false }) => {
   return (
     <div className="bg-gray-100 dark:bg-gradient-night dark:text-white text-gray-800 shadow rounded-lg p-4">
-      {/* العنوان بمحاذاة وسط العنصر */}
+      {}
       <header className="py-4 border-b border-gray-300 dark:border-gray-700 flex justify-center items-center space-x-2">
         <FaBalanceScale className="text-lg text-indigo-500 dark:text-indigo-300" />
         <h2 className="font-semibold text-lg">📅 أهم جلسات الأسبوع</h2>

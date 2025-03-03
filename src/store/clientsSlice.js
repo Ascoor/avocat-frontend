@@ -25,7 +25,7 @@ const clientsSlice = createSlice({
     },
     updateClientStatusInStore: (state, action) => {
       const { id, status } = action.payload;
-      const client = state.clients.find(client => client.id === id);
+      const client = state.clients.find((client) => client.id === id);
       if (client) {
         client.status = status;
       }
@@ -39,7 +39,8 @@ export const selectLoading = (state) => state.clients.loading;
 export const selectError = (state) => state.clients.error; // Add this selector
 
 // Export actions
-export const { setClients, setLoading, setError, updateClientStatusInStore } = clientsSlice.actions;
+export const { setClients, setLoading, setError, updateClientStatusInStore } =
+  clientsSlice.actions;
 
 // Fetch clients from the API with async thunk
 export const fetchClients = () => async (dispatch) => {

@@ -46,7 +46,6 @@ const AddEditServiceProcedureModal = ({
   const [serviceTypes, setServiceTypes] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // ✅ جلب بيانات المراجع عند فتح النافذة
   useEffect(() => {
     if (show) {
       fetchReferences();
@@ -74,7 +73,6 @@ const AddEditServiceProcedureModal = ({
     }
   }, [show, isEditing, procedure, user]);
 
-  // ✅ جلب بيانات (المحامين - أماكن الإجراءات - أنواع الخدمات)
   const fetchReferences = async () => {
     try {
       const [lawyersRes, placesRes, serviceTypesRes] = await Promise.all([
@@ -90,7 +88,6 @@ const AddEditServiceProcedureModal = ({
     }
   };
 
-  // ✅ التعامل مع تغييرات الحقول
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -99,7 +96,6 @@ const AddEditServiceProcedureModal = ({
     }));
   };
 
-  // ✅ إرسال البيانات عند الحفظ
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -137,7 +133,7 @@ const AddEditServiceProcedureModal = ({
       size="lg"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* ✅ عنوان الإجراء */}
+        {}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">
             عنوان الإجراء
@@ -152,7 +148,7 @@ const AddEditServiceProcedureModal = ({
           />
         </div>
 
-        {/* ✅ اختيار المحامي */}
+        {}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">
             المحامي
@@ -173,7 +169,7 @@ const AddEditServiceProcedureModal = ({
           </select>
         </div>
 
-        {/* ✅ تاريخ البدء والانتهاء */}
+        {}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-700 dark:text-gray-300 mb-1">
@@ -203,7 +199,7 @@ const AddEditServiceProcedureModal = ({
           </div>
         </div>
 
-        {/* ✅ المهمة */}
+        {}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">
             المهمة
@@ -218,7 +214,7 @@ const AddEditServiceProcedureModal = ({
           />
         </div>
 
-        {/* ✅ الملاحظات */}
+        {}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-1">
             الملاحظات
@@ -231,7 +227,7 @@ const AddEditServiceProcedureModal = ({
           />
         </div>
 
-        {/* ✅ عرض الحقول الإضافية عند التعديل */}
+        {}
         {isEditing && (
           <>
             <div>
@@ -249,7 +245,7 @@ const AddEditServiceProcedureModal = ({
           </>
         )}
 
-        {/* ✅ زر الحفظ */}
+        {}
         <button
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded w-full"

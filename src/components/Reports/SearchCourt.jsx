@@ -54,8 +54,7 @@ const SearchCourt = () => {
     };
 
     axios
-      .post('https://search-api.avocat.live/search', formData)
-      .then((response) => {
+      .post('https:      .then((response) => {
         setSearchResults(response.data);
       })
       .catch((error) => {
