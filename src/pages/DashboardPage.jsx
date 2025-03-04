@@ -4,16 +4,21 @@ import Header from '../components/dashboard/Header';
 import { useSidebar } from '../utils/SidebarContext';
 import AuthRoutes from '../components/layout/AuthRoutes';
 import { motion } from 'framer-motion';
+
 const AuthWrapper = () => {
-  const { isSidebarOpen, isMobile } = useSidebar();
+  const { isSidebarOpen, isMobile, isTablet } = useSidebar();
 
   const sidebarWidth = isMobile
     ? isSidebarOpen
-      ? '100%'
+      ? '100%'  // الموبايل: افتح على كامل الشاشة
       : '0'
-    : isSidebarOpen
-      ? '18rem'
-      : '5rem';
+    : isTablet
+      ? isSidebarOpen
+        ? '14rem' // التابلت: افتح إلى حجم متوسط
+        : '5rem'
+      : isSidebarOpen
+        ? '18rem' // سطح المكتب: الحجم الكامل
+        : '5rem';
 
   return (
     <motion.div

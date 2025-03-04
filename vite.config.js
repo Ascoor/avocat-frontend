@@ -1,17 +1,58 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
+
 import compression from 'vite-plugin-compression';
 import path from 'path';
 
 export default defineConfig({
   plugins: [
     react(),
-    compression({
-      algorithm: 'brotliCompress',
-      ext: '.br',
-      threshold: 1024,
-      deleteOriginFile: false,
-    }),
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        short_name: 'Avocat',
+        name: 'نظام إدارة مكاتب المحاماة',
+        description: 'Comprehensive Law Firm Management System',
+        lang: 'ar',
+        dir: 'rtl',
+        icons: [
+          {
+            src: 'favicon.ico',
+            sizes: '64x64 32x32 24x24 16x16',
+            type: 'image/x-icon'
+          },
+          {
+            src: 'splash-image.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'maskable'
+          },
+          {
+            src: 'splash-image.jpg',
+            type: 'image/png',
+            sizes: '192x192'
+          },
+          {
+            src: 'splash-image.png',
+            type: 'image/png',
+            sizes: '512x512'
+          }
+        ],
+        start_url: '.',
+        display: 'standalone',
+        orientation: 'portrait',
+        theme_color: '#0d3346',
+        background_color: '#0d3346',
+        splash_pages: [
+          {
+            src: 'splash-image.png',
+            sizes: '1280x720',
+            type: 'image/jpeg'
+          }
+        ],
+      },  
+    }), 
     compression({
       algorithm: 'gzip',
       ext: '.gz',

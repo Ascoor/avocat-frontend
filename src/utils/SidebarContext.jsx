@@ -8,24 +8,27 @@ export const useSidebar = () => useContext(SidebarContext);
 export const SidebarProvider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 640);
+  const [isTablet, setIsTablet] = useState(window.innerWidth > 640 && window.innerWidth <= 1024);
   const location = useLocation();
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 640);
-      if (window.innerWidth > 640) {
-        setIsSidebarOpen(false);
+      setIsTablet(window.innerWidth > 640 && window.innerWidth <= 1024);
+      if (window.innerWidth > 1024) {
+        setIsSidebarOpen(false); // أغلق القائمة عند التبديل إلى سطح المكتب
       }
     };
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
-    if (isMobile) {
+    if (isMobile || isTablet) {
       setIsSidebarOpen(false);
     }
-  }, [location.pathname, isMobile]);
+  }, [location.pathname, isMobile, isTablet]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -35,14 +38,14 @@ export const SidebarProvider = ({ children }) => {
       }
     };
 
-    if (isMobile && isSidebarOpen) {
+    if ((isMobile || isTablet) && isSidebarOpen) {
       document.addEventListener('click', handleClickOutside);
     } else {
       document.removeEventListener('click', handleClickOutside);
     }
 
     return () => document.removeEventListener('click', handleClickOutside);
-  }, [isMobile, isSidebarOpen]);
+  }, [isMobile, isTablet, isSidebarOpen]);
 
   return (
     <SidebarContext.Provider
@@ -50,6 +53,7 @@ export const SidebarProvider = ({ children }) => {
         isSidebarOpen,
         setIsSidebarOpen,
         isMobile,
+        isTablet,
       }}
     >
       {children}

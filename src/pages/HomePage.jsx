@@ -33,7 +33,7 @@ const HomePage = () => {
           ease: 'easeInOut',
         }}
       />
-      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       {}
 
@@ -41,7 +41,7 @@ const HomePage = () => {
       {!isModalOpen && (
         <animated.div
           style={teamImageAnimation}
-          className="absolute top-1/12 left-2/2 transform -translate-x-/2 -translate-y-1/2 max-w-[606px] aspect-[661/377] flex items-center justify-center"
+          className="absolute top-1/4 left-2/2 transform -translate-x-/2 -translate-y-1/2 max-w-[506px] aspect-[661/377] flex items-center justify-center"
         >
           <img
             src={TeamWorkImage}
@@ -59,7 +59,7 @@ const HomePage = () => {
 
       {}
       {!isModalOpen && (
-        <div className="z-50 text-center mt-56 text-white p-4 flex  flex-col items-center">
+        <div className="z-50 text-center mt-24 text-white p-4 flex  flex-col items-center">
           <div className="relative flex- tems-center justify-center">
             <img
               src={LogoPatren}
