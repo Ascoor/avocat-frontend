@@ -46,7 +46,7 @@ function UserMenu({ align = 'left' }) {
         {}
 
         {}
-        <span className="hidden md:inline text-red-500 ml-4 dark:text-orange-200 font-bold text-center">
+        <span className="hidden md:inline text-blue-100 ml-4 font-['tharwat'] dark:text-orange-200 font-bold text-center">
           {user?.name}
         </span>
 

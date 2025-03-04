@@ -35,7 +35,7 @@ const Sidebar = () => {
     closed: {
       width: isMobile ? '0' : '4rem',
       opacity: 0.9,
-      x: '0%',
+      y: '0%',
       transition: {
         type: 'spring',
         stiffness: 300,
@@ -76,7 +76,7 @@ const Sidebar = () => {
 
       {}
       <ul
-        className={`mt-4 flex-1 transition-opacity ${isSidebarOpen ? 'opacity-100 mt-16' : 'opacity-0 md:opacity-100'}`}
+        className={`mt-4 flex-1 transition-opacity ${isSidebarOpen ? 'opacity-100 mt-14' : 'opacity-0 md:opacity-100'}`}
       >
         {menuItems.map((item, index) => (
           <li key={index} className="group relative">

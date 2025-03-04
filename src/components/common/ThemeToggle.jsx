@@ -1,6 +1,7 @@
 import { useThemeProvider } from '../../utils/ThemeContext';
+import { FaSun, FaMoon } from 'react-icons/fa';
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ size = 'md' }) {
   const { currentTheme, changeCurrentTheme } = useThemeProvider();
 
   return (
@@ -8,9 +9,18 @@ export default function ThemeToggle() {
       onClick={() =>
         changeCurrentTheme(currentTheme === 'light' ? 'dark' : 'light')
       }
-      className="p-2 bg-blue-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-avocat-indigo transition"
+      className={`flex items-center justify-center w-12 h-12 rounded-full shadow-lg transition-all duration-300 
+                 ${
+                   currentTheme === 'light'
+                     ? 'bg-avocat-orange-light text-white hover:bg-avocat-orange'
+                     : 'bg-gray-300 dark:bg-avocat-indigo text-yellow-400  hover:bg-avocat-orange  dark:hover:bg-avocat-indigo-light'
+                 }`}
     >
-      {currentTheme === 'light' ? '🌞' : '🌙'}
+      {currentTheme === 'light' ? (
+        <FaSun className="w-6 h-6 transition-all duration-300" />
+      ) : (
+        <FaMoon className="w-6 h-6 transition-all duration-300" />
+      )}
     </button>
   );
 }

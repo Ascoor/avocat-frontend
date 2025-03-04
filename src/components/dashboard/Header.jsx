@@ -22,7 +22,7 @@ const Header = () => {
       initial="hidden"
       animate="visible"
       className={`bg-gradient-to-l from-avocat-indigo via-avocat-indigo to-avocat-blue-light dark:bg-gradient-to-r dark:from-avocat-blue-dark dark:via-avocat-indigo-darker dark:to-avocat-blue-darker fixed top-0 right-0 left-0 z-20 shadow-lg transition-all duration-300 ${
-       isSidebarOpen   ? 'md:mr-64' : 'mr-16'
+       isSidebarOpen   ? 'md:mr-64' : 'md:mr-16'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
