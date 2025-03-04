@@ -9,9 +9,7 @@ const useIconCardAnimation = () => {
     transform: isInteracting
       ? 'scale(1.1) translateY(-10px)'
       : 'scale(1) translateY(0)',
-    boxShadow: isInteracting
-      ? '0 20px 40px rgba(0, 0, 0, 0.3)'
-      : '0 10px 30px rgba(0, 0, 0, 0.15)',
+
     backdropFilter: isInteracting ? 'blur(15px)' : 'blur(5px)',
     config: { mass: 1, tension: 350, friction: 25 },
   });
@@ -31,7 +29,7 @@ const MainCard = ({ count, icon, label, route }) => {
       onTouchStart={() => setIsInteracting(true)}
       onTouchEnd={() => setIsInteracting(false)}
       onClick={() => navigate(route)}
-      className="bg-white/30 cursor-pointer dark:bg-gray-800/40 backdrop-blur-lg rounded-full shadow-lg p-6 flex items-center justify-between w-full max-w-sm transition-all duration-300 ease-in-out transform hover:scale-105"
+      className="  cursor-pointer dark:bg-gradient-night   bg-gray-100 rounded-full backdrop-blur backdrop-filter shadow-lg shadow-avocat-orange p-6 flex items-center justify-between w-full max-w-sm transition-all duration-300 ease-in-out transform hover:scale-105"
     >
       {}
       <div className="flex flex-col items-start ml-4">

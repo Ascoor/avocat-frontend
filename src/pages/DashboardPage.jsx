@@ -27,7 +27,7 @@ const AuthWrapper = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      {}
+      {/* Sidebar */}
       <motion.div
         style={{ width: sidebarWidth }}
         className="transition-all duration-500 ease-in-out shadow-lg dark:shadow-neon"
@@ -38,9 +38,9 @@ const AuthWrapper = () => {
         <Sidebar />
       </motion.div>
 
-      {}
+      {/* Main Content */}
       <div className="flex-1 flex flex-col transition-all duration-500 ease-in-out">
-        {}
+        {/* Header */}
         <motion.div
           className="shadow-md dark:shadow-neon border-b border-gray-200 dark:border-gray-800"
           initial={{ y: '-100%' }}
@@ -50,10 +50,10 @@ const AuthWrapper = () => {
           <Header />
         </motion.div>
 
-        {}
+        {/* AuthRoutes Content */}
         <div className="flex-1 overflow-y-auto p-6 md:p-8 bg-gray-200 dark:bg-gray-700/50">
-          <div className="mx-auto max-w-7xldark:shadow-xl rounded-lg p-0">
-            <main className="grow">
+          <div className="w-full flex justify-center">
+            <main className="w-full max-w-screen-xl p-4 md:p-6 lg:p-8 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
               <AuthRoutes />
             </main>
           </div>

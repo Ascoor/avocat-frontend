@@ -49,16 +49,17 @@ export default function DropdownNotifications() {
           <IoMdNotificationsOutline className="w-6 h-6" />
         )}
         {/* نقطة التنبيه */}
-        <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 border-2 border-white dark:border-gray-900 rounded-full animate-ping"></div>
+        <div className="absolute top-2 right-2 w-3 h-3 bg-red-400 border-2 border-white dark:border-gray-900 rounded-full animate-ping"></div>
       </button>
 
       {/* قائمة الإشعارات */}
       {dropdownOpen && (
         <div
           ref={dropdown}
-          className="absolute top-14 left-0 w-[90vw] sm:w-64 md:w-72 lg:w-80 xl:w-96
+          className="absolute top-14 left-1/2 sm:left-auto sm:right-0 transform -translate-x-1/2 sm:translate-x-0
+                    w-[90vw] sm:w-64 md:w-72 lg:w-80 xl:w-96
                     bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700
-                    py-2 rounded-2xl shadow-2xl mt-2 transition-all duration-300 ease-out transform
+                    py-2 rounded-2xl shadow-2xl mt-2 transition-all duration-300 ease-out 
                     origin-top-right scale-100 opacity-100"
         >
           <div className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase px-5 py-2">

@@ -75,7 +75,7 @@ const Home = () => {
   }, [searchTerm, clients]);
 
   return (
-    <div className="p-4 mt-6 xl:max-w-7xl xl:mx-auto w-full">
+    <div className="p-4 mt-16 xl:max-w-7xl xl:mx-auto w-full">
       {}
       <div className="flex justify-center mb-6">
         <div className="flex w-full max-w-2xl bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg">
